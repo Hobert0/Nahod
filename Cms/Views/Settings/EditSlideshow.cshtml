@@ -1,0 +1,161 @@
+﻿@model Cms.Models.SlideshowModel
+@using Cms.Models
+@{
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+    ViewBag.Title = "Editácia slideshow";
+}
+<style>
+    .sidenav a:nth-child(6) {
+        border-left: 5px solid #9706bb;
+        color: #f1f1f1;
+        background-color: #464646;
+    }
+
+    .dropdown-container {
+        display: block;
+    }
+</style>
+
+<h4>@ViewBag.Title</h4>
+<hr />
+@using (Html.BeginForm("AddSlideshowImage", "Settings", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+{
+
+    <div class="form-group">
+        <div class="row">
+
+            @{ViewBag.Title = "Editovať Slideshow - " + Model.Title; }
+            @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control", style = "display:none !important;"} })
+            @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control", style = "display:none !important;" } })
+            @Html.EditorFor(model => model.Page, new { htmlAttributes = new { @class = "form-control", style = "display:none !important;" } })
+            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", style = "display:none !important;" } })
+
+            <div class="col">
+                <div class="col-md-14 btnvyber">
+                    <strong>@Html.LabelFor(model => model.TitleImage, "Pridať obrázok do slideshow", htmlAttributes: new { @class = "control-label col-md-12 vyberf px-0" })</strong>
+                    <p>Odporúčaný rozmer na šírku je minimálne<strong>1920px.</strong>.</p>
+                    <a id="btn_vis" style="cursor:pointer">Vyber fotografie</a>
+                    @Html.TextBoxFor(model => model.TitleImage, "", new { @type = "file", @class = "form-control", @accept = "jpg|png|jpeg|gif", @style = "max-width: 67%;height:60px;display:none;", @id = "bttn", @onchange = "pressed()" })
+                    <label id="fileLabel">Nie je vybratá žiadna fotografia.</label>
+                    @Html.ValidationMessageFor(model => model.TitleImage, "", new { @class = "text-danger" })
+                </div>
+                <br />
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Url, new { htmlAttributes = new { @class = "form-control", placeholder = "Zadajte odkaz v tvare http://www...", Value = "" } })
+                    @Html.ValidationMessageFor(model => model.Url, "", new { @class = "text-danger" })
+                </div>
+
+
+                <br />
+                <div class="form-group">
+                    <div>
+                        <input type="submit" value="Nahrať nový obrázok" class="btn btn-success" onclick="validateForm();"/>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <hr />
+}
+<div class="jumbotron">
+    @foreach (var imgPath in Directory.GetFiles(Server.MapPath("~/Uploads/slideshow/" + Html.DisplayTextFor(model => model.Page))))
+    {
+        var img = new FileInfo(imgPath);
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-5">
+                        <a href="@Url.Content(String.Format("~/Uploads/slideshow/" + Html.DisplayTextFor(model => model.Page) + "/" + "{0}", img.Name))" data-toggle="lightbox" data-gallery="example-gallery" style="padding:5px 1px 0 0;display: inline-block;">
+                            <img style="width:100%; height:250px;float:left;object-fit: cover;" src="@Url.Content(String.Format("~/Uploads/slideshow/" + Html.DisplayTextFor(model => model.Page) + "/" + "{0}", img.Name))" class="img-fluid" />
+                        </a>
+                        @{Entities db = new Entities();
+                            var count = 0;
+                            foreach (var group in db.slideshow.Where(i => i.page == Model.Page).GroupBy(item => item.page))
+                            {
+                                count = group.Count();
+                            }
+                        }
+                        @foreach (var item in db.slideshow.Where(i => i.page == Model.Page && i.image == Model.Page + "/" + img.Name))
+                        {
+                            if (count > 1)
+                            {
+                                @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteSlide", new { id = item.id, url = String.Format("~/Uploads/slideshow/" + Html.DisplayTextFor(model => model.Page) + "/" + "{0}", img.Name), page = Html.DisplayTextFor(model => model.Page) }, new { onclick = "return confirm('Naozaj chcete vymazať fotografiu zo slideshow?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete slide.", style = "position: absolute; margin-top: -44px;" })
+                            }
+
+                        }
+                    </div>
+                    <div class="col-md-4">
+                        <b>@Html.LabelFor(model => model.Url, "Url", htmlAttributes: new { @class = "control-label px-0" })</b>
+
+                        @foreach (var item in db.slideshow.Where(i => i.page == Model.Page))
+                        {
+                            if (Html.DisplayTextFor(model => model.Page).ToString() + "/" + img.Name == item.image)
+                            {
+                                @Html.EditorFor(modelItem => item.url, new { htmlAttributes = new { @class = "form-control ", placeholder = "Slide je bez odkazu", disabled = "disabled" } })
+                            }
+                        }
+                        <br />
+                        <p>Editovať URL je možné po vymazaní a opätovnom nahratí slid-u.</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+    <ul class="list-group" id="uploadedFiles"></ul>
+</div>
+
+<script src="http://malsup.github.com/jquery.form.js"></script>
+
+    <script>
+        $("#btn_vis").click(function () {
+            $("#bttn").trigger('click');
+        });
+
+        window.pressed = function () {
+            var a = document.getElementById('bttn');
+            if (a.files.length > 1) {
+                fileLabel.innerHTML = "Boli vybraté " + a.files.length + " fotografie.";
+            }
+            else if (a.files.length = 1) {
+                fileLabel.innerHTML = "Bola vybratá " + a.files.length + " fotografia.";
+            }
+        };
+
+        $("#bttn_vis").click(function () {
+            $("#btttn").trigger('click');
+        });
+
+        window.press = function () {
+            var a = document.getElementById('btttn');
+            if (a.files.length > 1) {
+                fileLabell.innerHTML = "Boli vybraté " + a.files.length + " fotografie.";
+            }
+            else if (a.files.length = 1) {
+                fileLabell.innerHTML = "Bola vybratá " + a.files.length + " fotografia.";
+            }
+        };
+    </script>
+<script type="text/javascript">
+
+
+
+    function validateForm() {
+        var a = document.forms["Myform"]["TitleImage"].value;
+
+        if ((a == "") || (a == null)) {
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    }
+</script>
+
+
+

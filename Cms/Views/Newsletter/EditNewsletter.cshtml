@@ -1,0 +1,104 @@
+﻿@model Cms.Models.NewsletterModel
+@{
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+    ViewBag.Title = "Editovať newsletter";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("EditNewsletterInDB", "Newsletter", FormMethod.Post, new { model = Model }))
+{
+    <div>
+        @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control", style = "display:none !important;" } })
+        <!-- This will contain your HtmlContent and use the TinyMCE editor-->
+        <div class="form-group">
+            <div class="col-md-5">
+                @Html.EditorFor(m => m.Subject, new { htmlAttributes = new { @class = "form-control", placeholder = "Nadpis" } })
+            </div>
+            <br />
+            <div class="col-md-12">
+                @Html.TextAreaFor(m => m.Body)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div style="text-align: right">
+                <input type="submit" value="Uložiť zmeny" class="btn btn-success" onchange="$('#my_form').submit();this.value = '';" />
+            </div>
+        </div>
+
+    </div>
+}
+<script type="text/javascript">
+    // Initialize your tinyMCE Editor with your preferred options
+    tinyMCE.init({
+        // General options
+        mode: "textareas",
+        theme: "modern",
+        branding: false,
+        elementpath: false,
+        height: 600,
+        convert_fonts_to_spans: false,
+        entity_encoding: "numeric",
+        selector: "textarea",
+        plugins:
+        'print preview searchreplace autolink directionality visualblocks visualchars fullscreen link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount image contextmenu colorpicker textpattern help imagetools save insertdatetime preview media searchreplace print contextmenu paste directionality fullscreen noneditable visualchars nonbreaking template wordcount advlist autosave',
+        toolbar1:
+        'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat | mybutton | upload',
+
+        templates: [
+            { title: 'Test template 1', content: 'Test 1' },
+            { title: 'Test template 2', content: 'Test 2' }
+        ],
+        content_css: "/Content/Site.css",
+        paste_data_images: false,
+        images_upload_url: '/upload-image',
+        images_upload_base_path: '/Uploads/images',
+        setup: function (editor) {
+            var inp = $('<input id="tinymce-uploader" type="file" name="pic" style="display:none">');
+            $(editor.getElement()).parent().append(inp);
+
+            inp.on("change",
+                function () {
+                    uploadFile($(this), editor);
+                });
+
+            editor.addButton('upload',
+                {
+                    text: "Nahrať PDF",
+                    icon: false,
+                    onclick: function (e) {
+                        inp.trigger('click');
+                    }
+                });
+        }
+    });
+
+    function uploadFile(inp, editor) {
+        var input = inp.get(0);
+        var data = new FormData();
+        data.append('file', input.files[0]);
+
+        $.ajax({
+            url: '/upload-image',
+            type: 'POST',
+            data: data,
+            processData: false, // Don't process the files
+            contentType:
+            false, // Set content type to false as jQuery will tell the server its a query string request
+            success: function (data, textStatus, jqXHR) {
+                editor.insertContent('<a target="_blank" class="content-img" href="/Uploads/images/' + data.location + '">Pomenuj svoje PDF. (Klikni pravým tlačidlom, stlač Link a uprav sekciu Text to display)</a>');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.responseText) {
+                    errors = JSON.parse(jqXHR.responseText).errors
+                    alert('Error uploading image: ' +
+                        errors.join(", ") +
+                        '. Make sure the file is an image and has extension jpg/jpeg/png.');
+                }
+            }
+        });
+    }
+
+
+</script>

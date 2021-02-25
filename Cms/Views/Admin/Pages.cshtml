@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Cms.Models.pages>
+
+@{
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+    ViewBag.Title = "Stránky";
+    var modelItems = Model;
+}
+<style>
+    .sidenav a:nth-child(6) {
+        border-left: 5px solid #89bf46;
+        color: #f1f1f1;
+        background-color: #464646;
+    }
+</style>
+
+<h2>Stránky</h2>
+<hr />
+<table class="table" style="font-size: 14px;">
+    <thead class="thead-dark autoprofblue">
+        <tr>
+            <th style="width: 45vw;">Názov</th>
+            <th>Dátum publikovania</th>
+            <th style="text-align: center">Editovať | Vymazať</th>
+        </tr>
+    </thead>
+    @if (ViewBag.Details == null)
+    {
+        foreach (var item in modelItems)
+        {
+            <tr>
+                <td><strong>@Html.DisplayFor(modelItem => item.title)</strong></td>
+                <td>@Html.DisplayFor(modelItem => item.date)</td>
+                <td align="center">@Html.ActionLink("Editovať", "EditPage", "Pages", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeletePage", "Pages", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať túto stránku a všetok jej obsah?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete stránku." })</td>
+            </tr>
+        }
+
+
+    }
+
+
+</table>

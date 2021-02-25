@@ -1,0 +1,88 @@
+﻿@model Cms.Models.MultipleIndexModel
+@{
+    var authorized = Request.QueryString["authorize"];
+if (authorized == "False")
+    {
+<style>
+.modal{ display: block; }
+    .wrongpass {
+        display: block !important;
+    }
+    </style>
+}
+    
+}
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-login container">
+        <div class="row" style="display: block;">
+            <span class="close">&times;</span>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <h3>Prihlásenie</h3>
+                @using (Html.BeginForm("UserLogin", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.LabelFor(model => model.AdminLoginModel.Username, "Meno", htmlAttributes: new { @class = "control-label" })
+
+                        <div class="form-group row ml-0 p-0 col mb-1">
+                            <div class="col-md-8 p-0">
+                                @Html.EditorFor(model => model.AdminLoginModel.Username, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.AdminLoginModel.Username, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @Html.LabelFor(model => model.AdminLoginModel.Password, "Heslo", htmlAttributes: new { @class = "control-label" })
+
+                        <div class="form-group row ml-0 p-0 col">
+                            <div class="col-md-8 p-0 ">
+                                @Html.PasswordFor(model => model.AdminLoginModel.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.AdminLoginModel.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="right">
+                                <input type="submit" value="Prihlásiť sa" class="btn btn-color-blue col-5" />
+                            </div>
+                            <div class="col-md-10 text-danger p-0 mt-2 wrongpass" style="display: none;">
+                                Meno alebo heslo je zadané nesprávne!
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-12 col-md-6">
+                <h3>Registrácia</h3>
+                <hr />
+                <h4>Aké výhody získate registráciou?</h4>
+                <strong>Jednoduchší a rýchlejší proces objednávky</strong>
+                <ul>
+                    <li> - Systém si pamätá Vašu adresu, takže ju nemusíte zadávať znovu pri ďalšom nákupe</li>
+                    <li> - Urýchlené vyhľadanie Vašej objednávky</li>
+                </ul>
+                <br />
+                <strong>Všetky objednávky su zaznamenané v zákazníckej sekcii</strong>
+                <ul>
+                    <li> - História všetkých objednávok</li>
+                    <li> - Spätná kontrola obsahu Vašich objednávok</li>
+                </ul>
+                <br />
+                <strong>Prehľad o aktuálnych akciách a zľavách</strong>
+                <ul>
+                    <li> - Budete informovaný o zľavách, akciách,...</li>
+                    <li> - Určité zľavy sú prístupné len registrovaným</li>
+                </ul>
+                <br />
+                <button class="btn btn-color col-5" id="modalRegister">Registrovať sa</button>
+            </div>
+        </div>
+    </div>
+
+</div>

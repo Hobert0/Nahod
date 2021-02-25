@@ -1,0 +1,134 @@
+﻿@model Cms.Models.MultipleIndexModel
+@{
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+    ViewBag.Title = "Správa používateľov";
+    var passwordTest = "";
+    var userRole = "";
+}
+
+<h2>Správa používateľov</h2>
+<hr />
+<p><b>Pridať používateľa</b></p>
+@using (Html.BeginForm("AddUser", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-2" style="padding:0">
+                @Html.EditorFor(model => Model.UsersModel.Username, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
+                @Html.ValidationMessageFor(model => model.UsersModel.Username, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row" style="margin:0">
+            <div class="col-md-2" style="padding:0">
+                <div class="form-group">
+                    <div class="col-md-13">
+                        @Html.PasswordFor(model => model.UsersModel.Password, new { @class = "form-control", placeholder = "Heslo", id = "heslo" })
+                        @Html.ValidationMessageFor(model => model.UsersModel.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2" style="padding:0">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.PasswordFor(model => passwordTest, new { @class = "form-control", placeholder = "Overenie hesla", id = "overheslo" })
+                        @Html.ValidationMessageFor(model => passwordTest, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" style="margin:0">
+            <div class="col-md-2" style="padding:0">
+                <div class="form-group">
+                    <div class="col-md-13">
+                        @Html.DropDownListFor(model => model.UsersModel.Role, (IEnumerable<SelectListItem>)ViewData["Rola"], new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.UsersModel.Role, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="alert" class="text-danger" style="display: none;">Zadané heslá sa nezhodujú!</div>
+        <div class="form-group">
+            <div>
+                <input type="submit" value="Pridať používateľa" class="btn btn-success submitbtn" onclick="if (validateForm() != true) { return false;}" />
+            </div>
+        </div>
+    </div>
+
+}
+<hr />
+<table class="table" style="">
+    <thead class="thead-dark autoprofblue">
+        <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>Meno</th>
+            <th>Priezvisko</th>
+            <th>Tel.č.</th>
+            <th>Mesto</th>
+            <th>Rola</th>
+            <th style="text-align: center">Vymazať</th>
+        </tr>
+    </thead>
+    @if (ViewBag.Details == null)
+    {
+        foreach (var item in Model.AllUsersPaged.OrderBy(i => i.id))
+        {
+            if (item.role == 1) { userRole = "Zákazník"; }
+            else if (item.role == 0) { userRole = "Admin"; }
+            else if (item.role == 2) { userRole = "Newsletter subscriber"; }
+<tr>
+    <td>@Html.DisplayFor(modelItem => item.id)</td>
+
+    <td><strong>@Html.DisplayFor(modelItem => item.username)</strong></td>
+    @foreach (var meta in Model.AllUsersMetaModel.Where(u => u.userid == item.id))
+    {
+        <td>@Html.DisplayFor(modelItem => meta.name, new { @value = " fghfg" })</td>
+        <td>@Html.DisplayFor(modelItem => meta.surname, new { htmlAttributes = new { @Value = " " } })</td>
+        <td>@Html.DisplayFor(modelItem => meta.phone, new { htmlAttributes = new { @Value = " " } })</td>
+        <td>@Html.DisplayFor(modelItem => meta.city, new { htmlAttributes = new { @Value = " " } })</td>
+    }
+    <td>@Html.Raw(userRole)</td>
+    <td align="center"> @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteAccount", "Home", new { userId = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tohoto zamestnanca?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete zamestnanca." })</td>
+    @{ var user = Model.AllWishlistModel.Where(i => i.userid == item.id).SingleOrDefault();
+        if (user != null)
+        {
+            <td align="center"><a href="@Url.Action("Oblubene", "Admin", new { id = item.id })">@HttpUtility.HtmlDecode("&#10084;")</a></td>
+        }
+    }
+</tr>
+        }
+    }
+
+
+</table>
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script src="http://malsup.github.com/jquery.form.js"></script>
+
+<script type="text/javascript">
+    function validateForm() {
+        var heslo = document.getElementById("heslo").value;
+        var overheslo = document.getElementById("overheslo").value;
+
+        if (heslo == overheslo) {
+
+            return true;
+            }
+        else {
+            document.getElementById("alert").style = "display: block;";
+            return false;
+            }
+
+    }
+
+
+</script>
+

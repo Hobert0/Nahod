@@ -1,0 +1,99 @@
+﻿@using System.Globalization
+@model Cms.Models.MultipleIndexModel
+@{
+    ViewBag.Title = "Ďakujeme za objednávku.";
+
+}
+<style>
+    #front-picture, #services {
+        display: none !important;
+    }
+</style>
+<div class="py-5">
+    <h2 style="font-size: 3em;">Ďakujeme za objednávku.</h2>
+    <h3>Vaša objednávka bola prijatá a bude vybavená v čo najkratšom čase.</h3>
+    <p><i>Všetky potrebné informácie o Vašej objednávke Vám boli zaslané mailom.</i></p>
+
+    <a class="btn btn-danger mt-4" href="@Url.Action("Index", "Home")">NÁVRAT DO OBCHODU</a>
+    <hr class="py-2" />
+    <h2>Zhrnutie obednávky:</h2>
+    @foreach (var ord in Model.OrderDataModel)
+    {
+        var nameshipp = ord.name_shipp;
+        var surnameshipp = ord.surname_shipp;
+        var addrship = ord.address_shipp;
+        var zipship = ord.zip_shipp;
+        var cityship = ord.city_shipp;
+        var companyship = ord.companyname_shipp;
+        var phoneship = ord.phone_shipp;
+        if (nameshipp == "")
+        {
+            nameshipp = ord.name;
+            surnameshipp = ord.surname;
+            addrship = ord.address;
+            zipship = ord.zip;
+            cityship = ord.city;
+            companyship = ord.companyname;
+            phoneship = ord.phone;
+        }
+
+        <div class="row">
+            <div class="col">
+                <h3>Fakturačné údaje</h3>
+                <strong>Meno a priezvisko:</strong> @ord.name @ord.surname<br />
+                <strong>Adresa:</strong> @ord.address, @ord.zip @ord.city<br />
+                <strong>E-mail:</strong> @ord.email<br />
+                <strong>Telefón:</strong> @ord.phone<br /><br />
+                <strong>Názov spoločnosti:</strong> @ord.companyname<br />
+                <strong>IČO:</strong> @ord.ico<br />
+                <strong>DIČ:</strong> @ord.dic<br />
+                <strong>IČ DPH:</strong> @ord.icdph<br /><br />
+                <h3>Poznámka k objednávke</h3>
+                <p>@ord.comment</p>
+            </div>
+            <div class="col">
+                <h3>Dodacie údaje</h3>
+                <strong>Meno a priezvisko:</strong> @nameshipp @surnameshipp<br />
+                <strong>Adresa:</strong> @addrship, @zipship @cityship<br />
+                <strong>Telefón:</strong> @phoneship<br />
+                <strong>Názov spoločnosti:</strong> @companyship
+            </div>
+            <div class="col">
+
+                <div class="jumbotron">
+                    <h3>Finálna cena</h3>
+                    @if (ord.usedcoupon != "")
+                    {
+                        <span>Použitý zľavový kupón <strong>@ord.usedcoupon</strong></span><br />
+                    }
+                    <strong style="font-size: 2em;">@{decimal final = decimal.Parse(ord.finalprice, CultureInfo.InvariantCulture);} @final.ToString("N")€</strong>
+                    @{
+                        var cenabezdph = Convert.ToDecimal(final * 100 / 120).ToString("N");
+                    }
+                    <br />
+                    <i>Cena bez DPH @cenabezdph€</i>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                @foreach (var set in Model.EsettingsModel)
+                {
+                    <hr />
+                    <h3>Pokyny pri platbe bankovým prevodom</h3>
+                    <strong>IBAN: </strong>@set.accountnumber<br />
+                    <strong>Variabilný symbol: </strong>@ord.ordernumber<br />
+                    <i>Tovar bude odoslaný po obdržaní platby.</i>
+                }
+
+            </div>
+        </div>
+    }
+</div>
+<script>
+
+        $( document ).ready(function() {
+            localStorage.clear();
+            sessionStorage.clear();
+        });
+</script>

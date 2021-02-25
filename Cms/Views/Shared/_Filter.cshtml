@@ -1,0 +1,110 @@
+﻿@model Cms.Models.MultipleIndexModel
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css" integrity="sha512-3q8fi8M0VS+X/3n64Ndpp6Bit7oXSiyCnzmlx6IDBLGlY5euFySyJ46RUlqIVs0DPCGOypqP8IRk/EyPvU28mQ==" crossorigin="anonymous" />
+<link href="~/Content/filter.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js" integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA==" crossorigin="anonymous"></script>
+@{
+    var minKw = ViewData["minKw"].ToString().Replace(",", ".");
+    var maxKw = ViewData["maxKw"].ToString().Replace(",", ".");
+    var minM2 = ViewData["minM2"].ToString().Replace(",", ".");
+    var maxM2 = ViewData["maxM2"].ToString().Replace(",", ".");
+}
+
+<div class="col-12 filter-container">
+    <div class="form-group">
+        <div class="row">
+            @if (ViewData["typ"] != null)
+            {
+                <div class="col-lg-3 col-md-6 px-2" style="text-align: left; display: inline-block;">
+                    <div>
+                        <small><strong>@Html.Label("Typ:", htmlAttributes: new { @class = "control-label col-md-12 px-0" })</strong></small>
+                        @Html.DropDownList("Typ", (IEnumerable<SelectListItem>)ViewData["typ"], new { @class = "form-control productfilter" })
+                    </div>
+                </div>
+            }
+            @if (ViewData["znacka"] != null)
+            {
+                <div class="col-lg-3 col-md-6 px-2" style="text-align: left; display: inline-block;">
+                    <div>
+                        <small>
+                            <strong>
+                                @Html.Label("Výrobca:", htmlAttributes: new { @class = "control-label col-md-12 px-0" })
+                            </strong>
+                        </small>
+                        @Html.DropDownList("Výrobca", (IEnumerable<SelectListItem>)ViewData["znacka"], "", new { @class = "form-control productfilter", id = "Vyrobca" })
+                    </div>
+                </div>
+            }
+
+            <div class="col-md-6 px-2 pl-4 range-container pricerange" style="text-align: left; display: inline-block;">
+                <div class="pt-4">
+                    <small>
+                        <strong>Cena od - do:</strong>
+                    </small>
+                    <div class="range">
+                        <small class="pr-3">@ViewData["minPrice"] €</small> <input id="ex3" type="text" class="span2 productfilter" value="" data-slider-min="@ViewData["minPrice"]" data-slider-max="@ViewData["maxPrice"]" data-slider-step="200" data-slider-value="[@ViewData["minPrice"],@ViewData["maxPrice"]]" /> <small class="pl-3">@ViewData["maxPrice"] €</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-5 col-md-6 px-2 range-container performance-range" style="text-align: left; display: inline-block;">
+                <div>
+                    <div class="pt-3">
+                        <small>
+                            <strong>Výkon:</strong>
+                        </small>
+                        <div class="range">
+                            <small class="pr-3">@minKw kW</small> <input id="ex1" type="text" class="span2 productfilter" value="" data-slider-min="@minKw" data-slider-max="@maxKw" data-slider-step="1" data-slider-value="[@minKw,@maxKw]" /> <small class="pl-3">@maxKw kW</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5 col-md-6 px-2 range-container" style="text-align: left; display: inline-block;">
+                <div>
+                    <div class="pt-3">
+                        <small>
+                            <strong>Rozloha miestnosti:</strong>
+                        </small>
+                        <div class="range">
+                            <small class="pr-3">@minM2 m<sup>2</sup></small> <input id="ex2" type="text" class="span2 productfilter" value="" data-slider-min="@minM2" data-slider-max="@maxM2" data-slider-step="1" data-slider-value="[@minM2,@maxM2]" /> <small class="pl-3">@maxM2 m<sup>2</sup></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 px-2" style="text-align: left; display: inline-block;">
+                <div class="pt-4 mt-3">
+                    <small>
+                        <strong id="sortbyprice" style="cursor:pointer">Zoradiť podľa ceny ></strong>
+                    </small>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-5 px-2" style="text-align: left; display: inline-block;">
+                <div>
+                    <div class="pt-3">
+                            <small id="resetfilter" style="cursor:pointer;display:none;"><img src="~/Content/images/red-x.svg" width="20px"/> <strong>Resetovať filter</strong></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    // With JQuery
+    $("#ex1").slider({});
+    $("#ex2").slider({});
+    $("#ex3").slider({});
+
+    // Without JQuery
+    var slider = new Slider('#ex1', {});
+    var slider2 = new Slider('#ex2', {});
+    var slider3 = new Slider('#ex3', {});
+
+</script>

@@ -1,0 +1,654 @@
+﻿@using System.Globalization
+@using Cms.Models
+@using System.Linq;
+@using Newtonsoft.Json.Linq
+@using Newtonsoft.Json;
+@model Cms.Models.MultipleIndexModel
+
+@{
+    ViewBag.Title = "Wishlist";
+    ViewBag.Shipping = "";
+    ViewBag.Payment = "";
+}
+
+<style>
+    #front-picture, #services{
+        display: none !important;
+    }
+</style>
+@using (Html.BeginForm("NewOrder", "Orders", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform", name = "", onsubmit = "return validateWishlistForm()" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div id="wishlist">
+            <div class="row basket py-0 py-sm-5">
+                <div class="col active"><i class="far fa-heart"></i>Wishlist</div>
+                <div class="col"><img src="~/Content/images/car_white.svg" alt="Doprava a platba" style="width: 30px; margin-right: 10px;" />Doprava a platba</div>
+                <div class="col"><img src="~/Content/images/mail_white.svg" alt="Adresa" style="width: 30px; margin-right: 10px;" />Adresa</div>
+                <div class="col"><img src="~/Content/images/Infobox_info_icon_white.svg" alt="Zhrnutie objednávky" style="width: 30px; margin-right: 10px;" />Zhrnutie objednávky</div>
+            </div>
+
+            <table class="table mt-2 mt-sm-0" style="font-size: 14px;" id="myTable">
+                @{
+                    List<dynamic> wishlist = new List<dynamic>();
+                    wishlist = (List<dynamic>)Session["wishitems"];
+                    List<products> allTheData = new List<products>();
+
+                    var productprice = "";
+                    decimal quantity = 0;
+                    List<decimal> finalprice = new List<decimal>();
+                    if (wishlist != null)
+                    {
+                        foreach (var product in wishlist.Select(i => i.product.Value))
+                        {
+                            foreach (var items in Model.ProductModel.Where(i => i.id == product).Distinct())
+                            {
+                                allTheData.Add(items);
+                            }
+                        }
+
+                        foreach (var group in allTheData.Distinct())
+                        {
+                            foreach (var qantty in wishlist.Where(o => o.product.Value == group.id))
+                            {
+                                if (decimal.Parse(qantty.quantity.Value) > 0)
+                                {
+                                    <tr>
+                                        <td style="width: 70px"><img src="~/Uploads/@Html.DisplayFor(modelItem => group.image)" style="width: 50px" /></td>
+                                        <td><strong>@Html.Raw(group.title)</strong></td>
+
+                                        @foreach (var size in wishlist.Where(o => o.product.Value == group.id && o.id == qantty.id))
+                                        {
+                                            <td style="text-align: center;">
+                                                @Html.Raw(size.size) @Html.Raw(size.size2)
+                                            </td>
+                                        }
+                                        @foreach (var qty in wishlist.Where(o => o.product.Value == group.id && o.id == qantty.id))
+                                        {
+                                            quantity = decimal.Parse(qty.quantity.Value);
+                                            <td style="text-align: center;">
+                                                <div class="wishlist-item-amount">
+                                                    <button type="button" onclick="decreaseCount(@Html.Raw(qty.id));" class="">−</button>
+                                                    <input type="number" data-inventory_id="@Html.Raw(qty.id)" name="amount[1050506]" value="@Html.Raw(qty.quantity.Value)" min="1" max="30000" class="" id="quantity-@Html.Raw(qty.id)">
+                                                    <button type="button" onclick="increaseCount(@Html.Raw(qty.id));" class="">+</button>
+                                                </div>
+                                            </td>
+                                        }
+                                        @{
+                                            productprice = group.price;
+                                            if (group.discountprice != null && group.discountprice != "")
+                                            {
+                                                productprice = group.discountprice;
+                                            }
+                                        }
+                                        <td><strong style="font-size: 16px;">@decimal.Parse(productprice, CultureInfo.InvariantCulture).ToString("N2") €</strong></td>
+                                    @foreach (var qty in wishlist.Where(o => o.product.Value == group.id && o.id == qantty.id))
+                                    {
+                                        <td><div class="removeWish" id="@Html.Raw(qty.id)" style="cursor:pointer;">&times;</div> </td>
+                                    }
+                                    </tr>
+                                    finalprice.Add(quantity * decimal.Parse(productprice, CultureInfo.InvariantCulture));
+                                }
+                            }
+                        }
+
+
+                    }
+                    else
+                    {
+                        <h3 class="pt-2">Váš Wishlist je prázdny.</h3>
+                    }
+
+                }
+
+
+            </table>
+
+            <div class="form-group pb-4 mt-4" style="border-top: 1px solid rgba(0, 0, 0, .1)">
+                <a href="#" onclick="refreshWishlist();" class="btn btn-light mt-2" style="font-size: 14px;float:right">&#x21bb; Aktualizovať wishlist</a>
+                @if (TempData["Error"] == "true")
+                {<p class="mt-2" style="font-size: 14px;color: #ff0101;">Zadali ste neplatný zľavový kupón.</p>}
+                @if (TempData["LimitError"] == "true")
+                {<p class="mt-2" style="font-size: 14px;color: #ff0101;">Limit použitia kupónu bol dosiahnutý.</p>}
+                <input type="text" class="form-control mt-2" id="coupon" style="font-size: 14px;width:200px;" placeholder="Zľavový kupón" />
+                <a href="#" onclick="useCoupon();" class="btn mt-2" style="font-size: 14px;background:#008fd3; color: #fff;">Uplatniť zľavový kupón</a>
+
+                <div style="text-align: right">
+                    @{if (@TempData["Coupons"] != null)
+                        {
+                            var tempamount = @TempData["Amount"];
+                            decimal coupondiscount = Convert.ToDecimal(tempamount) / 100;
+                            <p class="mt-2" style="font-size: 14px;"><strong>Zľavový kupón: </strong>@TempData["Coupons"]  -@TempData["Amount"] %</p>
+                            <span>Zľava: - @(Html.Raw((finalprice.Sum() * coupondiscount).ToString("#.##").Replace(",", ".")))€</span><br />
+                            <span>Celkom bez DPH €@(Html.Raw(((finalprice.Sum() * 100 / 120) * (1 - coupondiscount)).ToString("#.##").Replace(",", ".")))</span><br />
+                            <strong style="float: right; font-size: 20px">K úhrade €@(Html.Raw((finalprice.Sum() * (1 - coupondiscount)).ToString("#.00").Replace(",", ".")))</strong>
+                            <script>
+                        var pricedph = @(Html.Raw(((finalprice.Sum() * 100 / 120) * (1 - coupondiscount)).ToString("#.##").Replace(",", ".")));
+                        var finalprice = @(Html.Raw((finalprice.Sum() * (1 - coupondiscount)).ToString("#.00").Replace(",", ".")));
+                            </script>
+                        }
+                        else
+                        {
+                            <span>Celkom bez DPH €@(Html.Raw((finalprice.Sum() * 100 / 120).ToString("#.##").Replace(",", ".")))</span><br />
+                            <strong style="float: right; font-size: 20px">K úhrade €@(Html.Raw(finalprice.Sum().ToString("#.00").Replace(",", ".")))</strong>
+                            <script>
+                        var pricedph = @(Html.Raw((finalprice.Sum() * 100 / 120).ToString("#.##").Replace(",", ".")));
+                        var finalprice = @(Html.Raw(finalprice.Sum().ToString("#.00").Replace(",", ".")));
+                            </script>
+                        }
+                    }
+                </div>
+
+
+            </div>
+
+            <div class="form-group">
+                <div style="text-align: right">
+                    @if (wishlist != null)
+                    {
+                        <a class="btn btn-danger my-4" style="color: #ffffff" onclick="showShipping()">Pokračovať v objednávke</a>
+                    }
+                    else
+                    {
+                        <div class="p-2"></div>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+        <div id="shipping" style="display: none;">
+            <div class="row basket py-0 py-sm-5">
+                <div class="col old"><a onclick="showWishlist()" style="cursor: pointer;"><i class="far fa-heart"></i> &nbsp; Wishlist</a></div>
+                <div class="col active"><img src="~/Content/images/car_white.svg" alt="Doprava a platba" style="width: 30px; margin-right: 10px;" />Doprava a platba</div>
+                <div class="col"><img src="~/Content/images/mail_white.svg" alt="Adresa" style="width: 30px; margin-right: 10px;" />Adresa</div>
+                <div class="col"><img src="~/Content/images/Infobox_info_icon_white.svg" alt="Zhrnutie objednávky" style="width: 30px; margin-right: 10px;" />Zhrnutie objednávky</div>
+            </div>
+
+
+            <script>
+                var transfer1 = "0";
+                var transfer2 = "0";
+                var transfer3 = "0";
+                var transfer4 = "0";
+            </script>
+
+            @foreach (var item in Model.EsettingsModel.OrderBy(x => x.id))
+            {
+                if (item.pay1_enbl && item.pay1 != null)
+                {
+                    <script>var pay1 = @item.pay1;</script>
+                }
+                if (item.pay2_enbl && item.pay2 != null)
+                {
+                    <script>var pay2 = @item.pay2;</script>
+                }
+                if (item.pay3_enbl && item.pay3 != null)
+                {
+                    <script>var pay3 = @item.pay3; </script>
+                }
+                if (item.pay4_enbl && item.pay4 != null)
+                {
+                    <script>var pay4 = @item.pay4;</script>
+                }
+                if (item.transfer1_enbl && item.transfer1 != null)
+                {
+                    <script>transfer1 = @item.transfer1;</script>
+                }
+                if (item.transfer2_enbl && item.transfer2 != null)
+                {
+                    <script>transfer2 = @item.transfer2; </script>
+                }
+                if (item.transfer3_enbl && item.transfer3 != null)
+                {
+                    <script>
+                transfer3 = @item.transfer3;
+                    </script>
+
+                }
+                if (Convert.ToDecimal(item.transfer5) < finalprice.Sum())
+                {
+                    <script>
+                        transfer1 = "0";
+                        transfer2 = "0";
+                        transfer3 = "0";
+                        transfer4 = "0";
+                    </script>
+                }
+                else if (finalprice.Sum() <= 100)
+                {
+                    <script>
+                        transfer1 = "@item.deliveryprice1";
+                        transfer2 = "@item.deliveryprice1";
+                        transfer3 = "0";
+                        transfer4 = "@item.deliveryprice1";
+                    </script>
+                }
+                else if (100 < finalprice.Sum() && finalprice.Sum() <= 500)
+                {
+                    <script>
+                        transfer1 = "@item.deliveryprice2";
+                        transfer2 = "@item.deliveryprice2";
+                        transfer3 = "0";
+                        transfer4 = "@item.deliveryprice2";
+                    </script>
+                }
+                else if (finalprice.Sum() > 500)
+                {
+                    <script>
+                        transfer1 = "@item.deliveryprice3";
+                        transfer2 = "@item.deliveryprice3";
+                        transfer3 = "0";
+                        transfer4 = "@item.deliveryprice3";
+                    </script>
+                }
+
+                <div class="row">
+                    <div class="col-12 col-sm-6 pt-3 pt-sm-0">
+                        <h3>Zvoľte spôsob dopravy</h3>
+                        <hr />
+                        <div class="form-row">
+                            <div class="col-md-10">
+                                @if (item.transfer1_enbl && item.transfer1 != null)
+                                {
+                                    <label class="cont" id="transfer1">
+                                        Kuriérska spoločnosť<strong style="float: right">
+                                            <script>document.write(transfer1);</script> €
+                                        </strong>
+                                        <input type="radio" name="transfer" value="transfer1" onclick="checkTransfer();shippPay();">
+                                        <span class="checkmar"></span>
+                                    </label>
+                                }
+                                @if (item.transfer2_enbl && item.transfer2 != null)
+                                {
+                                    <label class="cont" id="transfer2">
+                                        Slovenská pošta<strong style="float: right">
+                                            <script>document.write(transfer2);</script> €
+                                        </strong>
+                                        <input type="radio" name="transfer" value="transfer2" onclick="checkTransfer();shippPay();">
+                                        <span class="checkmar"></span>
+                                    </label>
+                                }
+                                @if (item.transfer3_enbl && item.transfer3 != null)
+                                {
+                                    <label class="cont" id="transfer3">
+                                        Osobný odber<strong style="float: right">
+                                            <script>document.write(transfer3);</script> €
+                                        </strong>
+                                        <input type="radio" name="transfer" value="transfer3" onclick="checkTransfer();shippPay();">
+                                        <span class="checkmar"></span>
+                                    </label>
+                                }
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-sm-6 py-3 py-sm-0">
+                        <h3>Zvoľte spôsob platby</h3>
+                        <hr />
+                        <div class="form-row">
+                            <div class="col-md-10">
+                                @if (item.pay1_enbl && item.pay1 != null)
+                                {
+                                    <label class="cont" id="pay1">
+                                        V hotovosti pri osobnom odbere<strong style="float: right"> @item.pay1 €</strong>
+                                        <input type="radio" name="payment" value="pay1" onclick="checkPayment();payMent();">
+                                        <span class="checkmar"></span>
+                                    </label>
+                                }
+                                @if (item.pay2_enbl && item.pay2 != null)
+                                {
+                                    <label class="cont" id="pay2">
+                                        Kartou<strong style="float: right"> @item.pay2 €</strong>
+                                        <input type="radio" name="payment" value="pay2" onclick="checkPayment();payMent();">
+                                        <span class="checkmar"></span>
+                                    </label>
+                                }
+                                @if (item.pay3_enbl && item.pay3 != null)
+                                {
+                                    <label class="cont" id="pay3">
+                                        Bankovým prevodom<strong style="float: right">@item.pay3 €</strong>
+                                        <input type="radio" name="payment" value="pay3" onclick="checkPayment();payMent();">
+                                        <span class="checkmar"></span>
+                                    </label>
+                                }
+
+                                @if (item.pay4_enbl && item.pay4 != null)
+                                {
+                                    <label class="cont" id="pay4">
+                                        Dobierkou<strong style="float: right"> @item.pay4 €</strong>
+                                        <input type="radio" name="payment" value="pay4" onclick="checkPayment();payMent();">
+                                        <span class="checkmar"></span>
+                                    </label>
+                                }
+
+                            </div>
+                        </div>
+                        @Html.EditorFor(model => model.OrdersModel.Shipping, new { htmlAttributes = new { @class = "form-control", placeholder = "Doprava", id = "ship", style = "display:none;" } })
+                        @Html.EditorFor(model => model.OrdersModel.Payment, new { htmlAttributes = new { @class = "form-control", placeholder = "Platba", id = "platba", style = "display:none;" } })
+                    </div>
+                </div>
+                <div class="form-group pb-4 mt-4" style="border-top: 1px solid rgba(0,0,0,.1)">
+                    <div style="text-align: right">
+                        @{if (@TempData["Coupons"] != null)
+                            {
+                                var tempamount = @TempData["Amount"];
+                                decimal coupondiscount = Convert.ToDecimal(tempamount) / 100;
+                                <p class="mt-2" style="font-size: 14px;"><strong>Zľavový kupón: </strong>@TempData["Coupons"]  -@TempData["Amount"] %</p>
+                                <span>Zľava: - @(Html.Raw((finalprice.Sum() * coupondiscount).ToString("#.##").Replace(",", ".")))€</span><br />
+                                <span>Celkom bez DPH €</span><span id="pricedph" value="">
+                                    <script type="text/javascript">document.write(pricedph)</script>
+                                </span><br />
+                                <strong style="float: right; font-size:20px">
+                                    K úhrade €<span id="final" value="">
+                                        <script type="text/javascript">document.write(finalprice.toFixed(2))</script>
+                                    </span>
+                                </strong>
+                            }
+                            else
+                            {
+                                <span>Celkom bez DPH €</span><span id="pricedph" value="">
+                                    <script type="text/javascript">document.write(pricedph)</script>
+                                </span><br />
+                                <strong style="float: right; font-size:20px">
+                                    K úhrade €<span id="final" value="">
+                                        <script type="text/javascript">document.write(finalprice.toFixed(2))</script>
+                                    </span>
+                                </strong>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div style="text-align: right">
+                        <a class="btn btn-danger my-4" style="color: #ffffff" onclick="showAddress(@Session["userid"])">Pokračovať v objednávke</a>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div id="address" style="display: none;">
+            <div class="row basket py-0 py-sm-5">
+                <div class="col old"><a onclick="showWishlist()" style="cursor: pointer;"><i class="far fa-heart"></i> &nbsp; Wishlist</a></div>
+                <div class="col old"><a onclick="showShipping()" style="cursor: pointer;"><img src="~/Content/images/car_white.svg" alt="Doprava a platba" style="width: 30px; margin-right: 10px;" />Doprava a platba</a></div>
+                <div class="col active"><img src="~/Content/images/mail_white.svg" alt="Adresa" style="width: 30px; margin-right: 10px;" />Adresa</div>
+                <div class="col"><img src="~/Content/images/Infobox_info_icon_white.svg" alt="Zhrnutie objednávky" style="width: 30px; margin-right: 10px;" />Zhrnutie objednávky</div>
+            </div>
+            <p class="small"><i>Údaje označené hviezdičkou(*) sú povinné.</i></p><br />
+            <div class="row">
+
+                <div class="col-12 col-sm-6 pt-3 pt-sm-0">
+                    <h3>Fakturačné údaje</h3>
+                    <hr />
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="col-md-14">
+                                    @Html.EditorFor(model => model.OrdersModel.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Meno*" } })
+                                    @Html.ValidationMessageFor(model => model.OrdersModel.Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="col-md-14">
+                                    @Html.EditorFor(model => model.OrdersModel.Surname, new { htmlAttributes = new { @class = "form-control", placeholder = "Priezvisko*" } })
+                                    @Html.ValidationMessageFor(model => model.OrdersModel.Surname, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="col-md-14">
+                                    @Html.EditorFor(model => model.OrdersModel.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Ulica, číslo domu*" } })
+                                    @Html.ValidationMessageFor(model => model.OrdersModel.Address, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="col-md-14">
+                                    @Html.EditorFor(model => model.OrdersModel.City, new { htmlAttributes = new { @class = "form-control", placeholder = "Mesto*" } })
+                                    @Html.ValidationMessageFor(model => model.OrdersModel.City, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="col-md-14">
+                                    @Html.EditorFor(model => model.OrdersModel.Zip, new { htmlAttributes = new { @class = "form-control", placeholder = "PSČ*" } })
+                                    @Html.ValidationMessageFor(model => model.OrdersModel.Zip, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="col-md-14">
+                                    @Html.EditorFor(model => model.OrdersModel.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Telefón*" } })
+                                    @Html.ValidationMessageFor(model => model.OrdersModel.Phone, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="col-md-14">
+                                    @Html.EditorFor(model => model.OrdersModel.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Váš e-mail*" } })
+                                    @Html.ValidationMessageFor(model => model.OrdersModel.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="col-md-14">
+                                    @Html.EditorFor(model => model.OrdersModel.Companyname, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov firmy" } })
+                                    @Html.ValidationMessageFor(model => model.OrdersModel.Companyname, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="col-md-14">
+                                    @Html.EditorFor(model => model.OrdersModel.Ico, new { htmlAttributes = new { @class = "form-control", placeholder = "IČO" } })
+                                    @Html.ValidationMessageFor(model => model.OrdersModel.Ico, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="col-md-14">
+                                    @Html.EditorFor(model => model.OrdersModel.Dic, new { htmlAttributes = new { @class = "form-control", placeholder = "DIČ" } })
+                                    @Html.ValidationMessageFor(model => model.OrdersModel.Dic, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="col-md-14">
+                                    @Html.EditorFor(model => model.OrdersModel.Icdph, new { htmlAttributes = new { @class = "form-control", placeholder = "IČ DPH" } })
+                                    @Html.ValidationMessageFor(model => model.OrdersModel.Icdph, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="col-md-14">
+                                    @Html.TextAreaFor(model => model.OrdersModel.Comment, new { @class = "form-control", placeholder = "Poznámka k objednávke", rows = "6" })
+                                    @Html.ValidationMessageFor(model => model.OrdersModel.Comment, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 pt-3 pt-sm-0">
+                    <label class="con">
+                        <strong>Tovar chcem doručiť na inú adresu</strong>
+                        <input id="myCheck" type="checkbox" onclick="shippingAddr()">
+                        <span class="checkmark"></span>
+                    </label>
+                    <div id="shippingAdr" style="display: none;">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="col-md-14">
+                                        @Html.EditorFor(model => model.OrdersModel.NameShipp, new { htmlAttributes = new { @class = "form-control", placeholder = "Meno" } })
+                                        @Html.ValidationMessageFor(model => model.OrdersModel.NameShipp, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="col-md-14">
+                                        @Html.EditorFor(model => model.OrdersModel.SurnameShipp, new { htmlAttributes = new { @class = "form-control", placeholder = "Priezvisko" } })
+                                        @Html.ValidationMessageFor(model => model.OrdersModel.SurnameShipp, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="col-md-14">
+                                        @Html.EditorFor(model => model.OrdersModel.AddressShipp, new { htmlAttributes = new { @class = "form-control", placeholder = "Ulica, číslo domu" } })
+                                        @Html.ValidationMessageFor(model => model.OrdersModel.AddressShipp, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="col-md-14">
+                                        @Html.EditorFor(model => model.OrdersModel.CityShipp, new { htmlAttributes = new { @class = "form-control", placeholder = "Mesto" } })
+                                        @Html.ValidationMessageFor(model => model.OrdersModel.CityShipp, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="col-md-14">
+                                        @Html.EditorFor(model => model.OrdersModel.ZipShipp, new { htmlAttributes = new { @class = "form-control", placeholder = "PSČ" } })
+                                        @Html.ValidationMessageFor(model => model.OrdersModel.ZipShipp, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="col-md-14">
+                                        @Html.EditorFor(model => model.OrdersModel.PhoneShipp, new { htmlAttributes = new { @class = "form-control", placeholder = "Telefón" } })
+                                        @Html.ValidationMessageFor(model => model.OrdersModel.PhoneShipp, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="py-4" />
+                    <label class="con">
+                        Oboznámil som sa s <a href="/s/obchodne-podmienky" target="_blank"><strong>obchodnými podmienkami</strong></a>
+                        <input id="conditionwish" type="checkbox">
+                        <span class="checkmark" id="conditioncheckwish"></span>
+                    </label>
+                    <i>
+                        Účel spracovania osobných údajov je doručenie tovaru správnej osobe (meno, priezvisko, kontaktná adresa a tel. číslo), zaslanie potvrdenia objednávky, informovanie o jej stave a event. zasielanie obchodných oznamov (email, tel. číslo). Bližšie informácie o spracovaní osobných údajov nájdete v sekcii <a href="/ochrana-osobnych-udajov" target="_blank"><strong>Ochrana osobných údajov</strong></a>.
+                    </i>
+                </div>
+            </div>
+            <div class="form-group pb-4 mt-4" style="border-top: 1px solid rgba(0,0,0,.1)">
+                <div style="text-align: right">
+                    @{if (@TempData["Coupons"] != null)
+                        {
+                            var tempamount = @TempData["Amount"];
+                            decimal coupondiscount = Convert.ToDecimal(tempamount) / 100;
+                            <p class="mt-2" style="font-size: 14px;"><strong>Zľavový kupón: </strong>@TempData["Coupons"]  -@TempData["Amount"] %</p>
+                            <span>Zľava: - @(Html.Raw((finalprice.Sum() * coupondiscount).ToString("#.##").Replace(",", ".")))€</span><br />
+                            <span>
+                                Celkom bez DPH €<span id="pricedph2" value=""></span>
+                            </span><br />
+                            <strong style="float: right; font-size:20px">
+                                K úhrade €<span id="final2" value=""></span>
+                            </strong>
+                        }
+                        else
+                        {
+                            <span>
+                                Celkom bez DPH €<span id="pricedph2" value=""></span>
+                            </span><br />
+                            <strong style="float: right; font-size:20px">
+                                K úhrade €<span id="final2" value=""></span>
+                            </strong>
+                        }
+                    }
+                </div>
+                @Html.EditorFor(model => model.OrdersModel.Finalprice, new { htmlAttributes = new { @class = "form-control", placeholder = "Finalnacena", id = "final3", style = "display:none;" } })
+                @Html.EditorFor(model => model.OrdersModel.UsedCoupon, new { htmlAttributes = new { @class = "form-control", id = "usecoupon", style = "display:none;" } })
+            </div>
+            <div class="form-group">
+                <div style="text-align:right">
+                    <input type="submit" class="btn btn-danger my-4" value="Dokončiť objednávku s povinnosťou platby">
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+<input id="myDiv" value="@JsonConvert.SerializeObject(Session["wishitems"], Formatting.Indented)" style="display: none;"></input>
+<script src="~/Scripts/wishlist.js"></script>
+<script src="~/Scripts/wishlist_session.js"></script>
+
+<script>
+    function useCoupon() {
+        var coupon = document.getElementById("coupon").value;
+
+        if (coupon == "") {
+            toastr["warning"]("Údaje nie sú vyplnené alebo sú vyplnené nesprávne.");
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            return false;
+        } else {
+            var link = '@Url.Action("UseCoupon", "Orders", new { coupon = "1", page = "wishlist" })';
+            link = link.replace("1", coupon);
+            location.href = link;
+        }
+
+    }
+    isusedcoupon();
+    function isusedcoupon() {
+        var usedcoup = '@TempData["Coupons"]';
+        document.getElementById("usecoupon").value = usedcoup;
+    }
+
+    $('.removeWish').click(function (data) {
+        removeFromWishlist(data.target.id);
+    });
+</script>

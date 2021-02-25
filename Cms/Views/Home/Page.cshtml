@@ -1,0 +1,19 @@
+﻿@model Cms.Models.MultipleIndexModel
+<style>
+    #front-picture, #services{
+        display: none !important;
+    }
+</style>
+<section id="page" class="py-4">
+    <div class="container">
+
+        @foreach (var prod in Model.PagesModel)
+        {
+            ViewBag.Title = prod.title;
+        <div class="page-@prod.id">           
+            <h1 class="pb-4">@Html.Raw(prod.title)</h1>
+            @Html.Raw(prod.content)
+        </div>
+        }
+    </div>
+</section>

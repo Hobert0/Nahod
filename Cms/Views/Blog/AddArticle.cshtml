@@ -1,0 +1,231 @@
+﻿@model Cms.Models.BlogModel
+@{
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+    ViewBag.Title = "Pridať článok";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+@using (Html.BeginForm("Add", "Blog", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+{
+    @Html.AntiForgeryToken()
+<div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <!-- This will contain your HtmlContent and use the TinyMCE editor-->
+    <div class="form-group">
+        <div class="col-md-5">
+            @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Nadpis", id = "categoryname"  } })
+        </div>
+        <br />
+            <div class="col-md-5">
+                @Html.EditorFor(m => m.Slug, new { htmlAttributes = new { @class = "form-control", placeholder = "Slug", id = "slug", onclick = "createSlug()" } })
+                @Html.ValidationMessageFor(m => m.Slug, "", new { @class = "text-danger" })
+            </div>
+
+        <br /><br />
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 145px;">
+                <strong>Titulná fotografia</strong>
+            </div>
+            <div class="col-5">
+                <div class="form-group">
+                    <div class="col-md-12 btnvyber">
+                        <a id="btn_vis" style="cursor:pointer">Vyber fotografie</a>
+                        @Html.TextBoxFor(model => model.TitleImage, "", new { @type = "file", @class = "form-control", @accept = "jpg|png|jpeg|gif", @style = "max-width: 67%;height:60px;display:none;", @id = "bttn", @onchange = "pressed()" })
+                        <label id="fileLabel">Nie je vybratá žiadna fotografia.</label>
+                        @Html.ValidationMessageFor(model => model.TitleImage, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="col-md-12">
+            @Html.EditorFor(m => m.Excerpt, new { htmlAttributes = new { @class = "form-control", placeholder = "Excerpt (krátky popis článku)" } })
+        </div>
+        <br />
+        <div class="col-md-12">
+            @Html.TextAreaFor(m => m.Content)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="mt-1 text-right" style="width: 180px;">
+            <strong>Obrázky do fotogalérie</strong>
+        </div>
+        <div class="col-5">
+            <div class="form-group">
+                <div class="col btnvyber">
+                    <a id="bttn_vis" style="cursor:pointer">Vyber fotografie</a>
+                    @Html.TextBoxFor(model => model.ImageGallery, "", new { @type = "file", @class = "form-control", @multiple = "multiple", @accept = "jpg|png|jpeg|gif", @style = "max-width: 67%;height:60px;display:none;", @id = "btttn", @onchange = "press()" })
+                    <label id="fileLabell">Nie je vybratá žiadna fotografia.</label>
+                    @Html.ValidationMessageFor(model => model.ImageGallery, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div style="text-align: right">
+            <input type="submit" value="Uložiť zmeny" class="btn btn-success"/>
+        </div>
+    </div>
+
+</div>
+}
+<script type="text/javascript">
+    // Initialize your tinyMCE Editor with your preferred options
+    tinyMCE.init({
+        // General options
+        mode: "textareas",
+        theme: "modern",
+        branding: false,
+        elementpath: false,
+        height: 300,
+        convert_fonts_to_spans: false,
+        entity_encoding: "numeric",
+        selector: "textarea",
+        plugins:
+            'print preview searchreplace autolink directionality visualblocks visualchars fullscreen link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount image contextmenu colorpicker textpattern help imagetools save insertdatetime preview media searchreplace print contextmenu paste directionality fullscreen noneditable visualchars nonbreaking template wordcount advlist autosave',
+        toolbar1:
+            'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat | mybutton | upload',
+
+        templates: [
+            { title: 'Test template 1', content: 'Test 1' },
+            { title: 'Test template 2', content: 'Test 2' }
+        ],
+        content_css: "/Content/Site.css",
+        paste_data_images: false,
+        images_upload_url: '/upload-image',
+        images_upload_base_path: '/Uploads/images',
+        setup: function (editor) {
+            var inp = $('<input id="tinymce-uploader" type="file" name="pic" style="display:none">');
+            $(editor.getElement()).parent().append(inp);
+
+            inp.on("change",
+                function () {
+                    uploadFile($(this), editor);
+                });
+
+            editor.addButton('upload',
+                {
+                    text: "Nahrať PDF",
+                    icon: false,
+                    onclick: function (e) {
+                        inp.trigger('click');
+                    }
+                });
+        }
+    });
+
+    function uploadFile(inp, editor) {
+        var input = inp.get(0);
+        var data = new FormData();
+        data.append('file', input.files[0]);
+
+        $.ajax({
+            url: '/upload-image',
+            type: 'POST',
+            data: data,
+            processData: false, // Don't process the files
+            contentType:
+                false, // Set content type to false as jQuery will tell the server its a query string request
+            success: function (data, textStatus, jqXHR) {
+                editor.insertContent('<a target="_blank" class="content-img" href="/Uploads/images/' + data.location + '">Pomenuj svoje PDF. (Klikni pravým tlačidlom, stlač Link a uprav sekciu Text to display)</a>');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.responseText) {
+                    errors = JSON.parse(jqXHR.responseText).errors
+                    alert('Error uploading image: ' +
+                        errors.join(", ") +
+                        '. Make sure the file is an image and has extension jpg/jpeg/png.');
+                }
+            }
+        });
+    }
+
+
+</script>
+
+<script src="/Scripts/umd/popper.min.js"></script>
+<script src="/Scripts/bootstrap.min.js"></script>
+
+<script src="http://malsup.github.com/jquery.form.js"></script>
+
+<script>
+    $("#btn_vis").click(function () {
+        $("#bttn").trigger('click');
+    });
+
+    window.pressed = function () {
+        var a = document.getElementById('bttn');
+        if (a.files.length > 1) {
+            fileLabel.innerHTML = "Boli vybraté " + a.files.length + " fotografie.";
+        }
+        else if (a.files.length = 1) {
+            fileLabel.innerHTML = "Bola vybratá " + a.files.length + " fotografia.";
+        }
+    };
+
+    $("#bttn_vis").click(function () {
+        $("#btttn").trigger('click');
+    });
+
+    window.press = function () {
+        var a = document.getElementById('btttn');
+        if (a.files.length > 1) {
+            fileLabell.innerHTML = "Boli vybraté " + a.files.length + " fotografie.";
+        }
+        else if (a.files.length = 1) {
+            fileLabell.innerHTML = "Bola vybratá " + a.files.length + " fotografia.";
+        }
+    };
+
+     function createSlug() {
+        var catName = document.getElementById("categoryname").value;
+        var newSlug = string_to_slug(catName);
+        document.getElementById("slug").value = newSlug;
+    }
+    function string_to_slug (text) {
+        text = text.toString().toLowerCase().trim();
+
+        const sets = [
+            {to: 'a', from: '[ÀÁÂÃÄÅÆĀĂĄẠẢẤẦẨẪẬẮẰẲẴẶ]'},
+            {to: 'c', from: '[ÇĆĈČ]'},
+            {to: 'd', from: '[ÐĎĐÞ]'},
+            {to: 'e', from: '[ÈÉÊËĒĔĖĘĚẸẺẼẾỀỂỄỆ]'},
+            {to: 'g', from: '[ĜĞĢǴ]'},
+            {to: 'h', from: '[ĤḦ]'},
+            {to: 'i', from: '[ÌÍÎÏĨĪĮİỈỊ]'},
+            {to: 'j', from: '[Ĵ]'},
+            {to: 'ij', from: '[Ĳ]'},
+            {to: 'k', from: '[Ķ]'},
+            {to: 'l', from: '[ĹĻĽŁ]'},
+            {to: 'm', from: '[Ḿ]'},
+            {to: 'n', from: '[ÑŃŅŇ]'},
+            {to: 'o', from: '[ÒÓÔÕÖØŌŎŐỌỎỐỒỔỖỘỚỜỞỠỢǪǬƠ]'},
+            {to: 'oe', from: '[Œ]'},
+            {to: 'p', from: '[ṕ]'},
+            {to: 'r', from: '[ŔŖŘ]'},
+            {to: 's', from: '[ßŚŜŞŠ]'},
+            {to: 't', from: '[ŢŤ]'},
+            {to: 'u', from: '[ÙÚÛÜŨŪŬŮŰŲỤỦỨỪỬỮỰƯ]'},
+            {to: 'w', from: '[ẂŴẀẄ]'},
+            {to: 'x', from: '[ẍ]'},
+            {to: 'y', from: '[ÝŶŸỲỴỶỸ]'},
+            {to: 'z', from: '[ŹŻŽ]'},
+            {to: '-', from: '[·/_,:;\']'}
+        ];
+
+        sets.forEach(set => {
+            text = text.replace(new RegExp(set.from,'gi'), set.to)
+        });
+
+        return text
+            .replace(/\s+/g, '-')    // Replace spaces with -
+            .replace(/[^\w-]+/g, '') // Remove all non-word chars
+            .replace(/--+/g, '-')    // Replace multiple - with single -
+            .replace(/^-+/, '')      // Trim - from start of text
+            .replace(/-+$/, '')      // Trim - from end of text
+
+    }
+</script>

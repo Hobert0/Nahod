@@ -1,0 +1,147 @@
+﻿@model Cms.Models.MultipleIndexModel
+@using System.Collections
+@using Cms.Controllers
+@using System.Globalization
+
+@{
+    HelperController helper = new HelperController();
+}
+
+<div class="col-lg-3 col-md-4">
+    <h2 class="categories">Kategórie</h2>
+    <div class="sub_cats py-1">
+        <div class="categories sidenav">
+            <a href="/kat/novinky" class="sub_catsmenu"><h3 style="padding: 10px 0 10px;">Novinky</h3></a>
+            <a href="/kat/zlavy" class="sub_catsmenu"><h3 style="padding: 0 0 10px 0;">Produkty v zľave</h3></a>
+            @foreach (var cat in Model.CategoriesModel.Where(i => i.maincat == "Žiadna"))
+            {
+                <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(cat.slug)})" class="sub_catsmenu">
+                    <h3 class="firstcat">@Html.Raw(cat.name)</h3>
+                </a>
+                <ul>
+
+                    @foreach (var subcat in Model.CategoriesModel.Where(o => (o.maincat == cat.name && o.topcat == "") || (o.maincat == cat.name && o.topcat == "Žiadna")))
+                    {
+                        var dropdowncounter = 0;
+                        <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(cat.slug), subslug = @Html.Raw(subcat.slug)})" class="sub_catsmenu"><li><strong>@Html.Raw(subcat.name)</strong></li></a>
+
+                        foreach (var isdropdown in Model.CategoriesModel.Where(o => o.topcat == subcat.name && o.maincat == cat.name))
+                        {
+                            dropdowncounter++;
+                        }
+
+                        if (dropdowncounter > 1)
+                        {
+                            /*If is more than one element in menu*/
+                            <i class="fa fa-caret-down dropdown-btn"></i>
+
+
+
+                            <div class="dropdown-container">
+                                @foreach (var subcat2 in Model.CategoriesModel.Where(o => o.topcat == subcat.name && o.maincat == cat.name && o.topcat2 == "Žiadna"))
+                                {
+                                    var dropdowncount = 0;
+                                    <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(cat.slug), subslug = @Html.Raw(subcat.slug), subslug2 = @Html.Raw(subcat2.slug)})" class="sub_catsmenu"><li>@Html.Raw(subcat2.name)</li></a>
+                                    foreach (var isdropdown in Model.CategoriesModel.Where(o => o.topcat2 == subcat2.name && o.topcat == subcat.name))
+                                    {
+                                        dropdowncount++;
+                                    }
+                                    if (dropdowncount > 1)
+                                    {
+                                        /*If is more than one element in menu*/
+                                        <i class="fa fa-caret-down dropdown-btn"></i>
+                                        <div class="dropdown-container">
+                                            @foreach (var subcat3 in Model.CategoriesModel.Where(o => o.topcat2 == subcat2.name && o.topcat == subcat.name))
+                                            {
+                                                <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(cat.slug), subslug = @Html.Raw(subcat.slug), subslug2 = @Html.Raw(subcat2.slug), subslug3 = @Html.Raw(subcat3.slug)})" class="sub_catsmenu"><li>@Html.Raw(subcat3.name)</li></a>
+                                            }
+                                        </div>
+
+                                    }
+                                }
+                            </div>
+                        }
+                    }
+
+                </ul>
+            }
+
+            <h2 class="categories pt-4">Značky</h2>
+            <div class="py-1">
+                <ul>
+                    @foreach (var brand in Model.BrandsModel.OrderBy(o => o.priority))
+                    {
+                        <a href="@Url.Action("Brand", "Home", new {brand = @Html.Raw(brand.slug)})" class="sub_catsmenu"><li>@Html.Raw(brand.name)</li></a>
+                    }
+                </ul>
+            </div>
+            <h2 class="pt-4">Novinky</h2>
+            <div class="row py-2 py-sm-4 pr-0 pr-sm-4 news">
+                @if (ViewBag.Details == null)
+                {
+                    int counter = 0;
+                    foreach (var item in Model.ProductModel.OrderByDescending(x => x.id).Take(4))
+                    {
+                        var price = item.price.ToString();
+                        var slug = helper.ToUrlSlug(item.title);
+
+                        <div class="col-4 col-lg-4 col-md-12 p-md-0 p-lg-2">
+                            <a href="@Url.Action("ProductDetail", "Home", new {id = item.id, slug = slug})" class="product_detail">
+                                <div style="overflow: hidden;">
+                                    <div class="thumb" style="background-image: url('/Uploads/@Html.DisplayFor(modelItem => item.image)'); height: 4vw;"></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-8 col-lg-8 col-md-12 mt-2">
+                            <div class="row image-container">
+                                <a href="@Url.Action("ProductDetail", "Home", new {id = item.id, slug = slug})" class="product_detail">
+                                    <p>
+                                        @Html.DisplayFor(modelItem => item.title)
+                                    </p>
+                                </a>
+                            </div>
+                            <div class="row mt-1 description-container">
+<!--                                <div class="col-sm-8 col-8 p-0" style="line-height: 35px; font-size: 13px;">-->
+								<div class="col-12 p-0" style="line-height: 35px; font-size: 13px;">
+
+                                    @if (item.discountprice != "" && item.discountprice != null)
+                                    {
+                                        <span>@decimal.Parse(item.discountprice, CultureInfo.InvariantCulture).ToString("#.00")€</span>
+                                        <del>@decimal.Parse(item.price, CultureInfo.InvariantCulture).ToString("#.00")€</del>
+                                    }
+                                    else
+                                    {
+                                        if (item.custom6 != null && (item.custom6).ToString() == "True")
+                                        {
+                                            <span>od @decimal.Parse(item.price, CultureInfo.InvariantCulture).ToString("#.00")€</span>
+                                        }
+                                        else
+                                        {
+                                            if (item.price == "0")
+                                            {
+                                                <small>Cena na vyžiadanie</small>
+                                            }
+                                            else
+                                            {
+                                                <span>@decimal.Parse(item.price, CultureInfo.InvariantCulture).ToString("#.00")€</span>
+                                            }
+
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12">
+                            <hr />
+                        </div>
+                        counter++;
+
+                    }
+                }
+
+
+            </div>
+        </div>
+    </div>
+</div>

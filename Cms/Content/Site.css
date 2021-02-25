@@ -1,0 +1,288 @@
+﻿body {
+    border-top: 7px solid #00abba;
+}
+h3 {
+    font-size: 22px;
+}
+
+.table td, .table th {
+    vertical-align: middle;
+}
+
+.hideonpc{
+    display: none;
+}
+
+.logobg {
+    background-image: linear-gradient(90deg, #018fa5, #00afaa);
+    padding: 25px 0;
+}
+
+.loginform{    background-image: linear-gradient(90deg, #018fa5, #00afaa);
+    border-radius:15px;
+    margin: 0 auto;
+    width: 50%;
+    text-align: center;
+    padding: 50px 20px;
+    margin-bottom:100px;
+    -webkit-box-shadow: 0px 0px 20px 0px rgba(201,201,201,1);
+-moz-box-shadow: 0px 0px 20px 0px rgba(201,201,201,1);
+box-shadow: 0px 0px 20px 0px rgba(201,201,201,1);
+}
+
+.menu_icon {
+    width: 30px;
+    margin-right: 10px;
+}
+
+.logout img {
+    width: 40px;
+    margin-right: 10px;
+}
+
+.logout {
+    z-index: 9;
+    background-color: #00abba;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+    margin-right: 50px;
+    font-size: 14px;
+    color: #ffffff;
+    display: block;
+    right: 0;
+    top: 0;
+    position: absolute;
+    border-radius: 0 0 0.8em 0.8em / 0 0 0.8em 0.8em;
+}
+
+    .logout:hover {
+        background-color: #0092af !important;
+        text-decoration: none;
+        color: #ffffff;
+    }
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+    float: right;
+    margin-top: 8px;
+    padding-right: 22px;
+}
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container, .dropdown-container2 {
+    display: none;
+}
+
+.sidenav {
+    height: 100%;
+    width: 220px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #353535;
+    overflow-x: hidden;
+    border-top: 7px solid #00abba;
+}
+
+    .sidenav a {
+        padding: 10px 8px 10px 20px;
+        text-decoration: none;
+        font-size: 14px;
+        color: #ffffff;
+        display: block;
+        border-bottom: 1px solid #464646;
+    }
+
+        .sidenav a:hover, .sidenav a:focus {
+            color: #f1f1f1;
+            background-color: #464646;
+        }
+
+        .sidenav > a:nth-child(2):hover, .sidenav > a:nth-child(2):focus {
+            border-left: 5px solid #e80000;
+        }
+
+        .sidenav > a:nth-child(3):hover, .sidenav > a:nth-child(3):focus {
+            border-left: 5px solid #00abe8;
+        }
+
+        .sidenav > a:nth-child(5):hover, .sidenav > a:nth-child(5):focus {
+            border-left: 5px solid #e89300;
+        }
+
+        .sidenav > a:nth-child(6):hover, .sidenav > a:nth-child(6):focus {
+            border-left: 5px solid #89bf46;
+        }
+
+        .sidenav > a:nth-child(7):hover, .sidenav > a:nth-child(7):focus {
+            border-left: 5px solid #9706bb;
+        }
+
+.main {
+    margin-left: 160px; /* Same as the width of the sidenav */
+    font-size: 28px; /* Increased text to enable scrolling */
+    padding: 0px 10px;
+}
+
+.addPage {
+    margin: 50px 0 30px;
+    float: right;
+}
+
+.greenthick {
+    color: #00abba;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+    .greenthick:hover, .greenthick:focus {
+        text-decoration: none;
+        font-size: 26px;
+    }
+
+.redX {
+    color: #d9534f;
+    font-weight: bold;
+    font-size: 24px;
+    -moz-transition: 0.1s linear;
+}
+
+    .redX:hover, .redX:focus {
+        color: #d9534f;
+        font-weight: bold;
+        font-size: 26px;
+        text-decoration: none;
+    }
+
+.hobtable thead {
+    background-color: #00abba;
+    color: #ffffff;
+    border: none;
+}
+
+    .hobtable thead tr th {
+        padding: 15px 15px;
+        font-weight: normal;
+        border: none;
+    }
+.btn-login {
+    background-color: #ffffff !important;
+    border: 1px solid #fff;
+    padding: 10px 40px;
+    font-size: 14px;
+    color: #444444;
+}
+.btn-login:hover {
+    background-color: #018fa5 !important;
+    color: #fff;
+}
+
+.btn-success {
+    background-color: #0092af !important;
+    border: none !important;
+    padding: 10px 20px;
+}
+
+    .btn-success:hover {
+        background-color: #00abba !important;
+    }
+
+#btn_vis {
+    background-color: #ce1720;
+    color: #fff;
+    margin-top: 10px;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+    #btn_vis:hover {
+        background-color: #ff2a56;
+    }
+
+#bttn_vis {
+    background-color: #ce1720;
+    color: #fff;
+    margin-top: 10px;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+    #bttn_vis:hover {
+        background-color: #ff2a56;
+    }
+
+#tinymce {
+    border-top: none;
+}
+
+.popover__title {
+    font-size: 14px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.popover__wrapper {
+    position: relative;
+    display: inline-block;
+    vertical-align: text-bottom;
+    margin-left: 5px;
+}
+
+.popover__content {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    left: -10px;
+    top: 50px;
+    z-index: 99999;
+    font-size: 14px;
+    transform: translate(0,10px);
+    background-color: #ffffff;
+    padding: 1rem;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    width: auto;
+}
+
+    .popover__content:before {
+        position: absolute;
+        z-index: -1;
+        content: '';
+        right: calc(50% - 10px);
+        top: -8px;
+        border-style: solid;
+        border-width: 0 10px 10px 10px;
+        border-color: transparent transparent #ffffff transparent;
+        transition-duration: 0.3s;
+        transition-property: transform;
+    }
+
+.popover__wrapper:hover .popover__content {
+    z-index: 10;
+    opacity: 1;
+    visibility: visible;
+    transform: translate(0,-20px);
+    transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+}
+
+.popover__message {
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.explain {
+    font-size: 14px;
+    font-style: italic;
+}
+
+
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+        .sidenav a {
+            font-size: 18px;
+        }
+}

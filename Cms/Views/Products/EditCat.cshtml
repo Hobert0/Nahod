@@ -1,0 +1,213 @@
+﻿@model Cms.Models.CategoriesModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+    ViewBag.Title = "Editovať kategóriu";
+
+}
+<style>
+    .sidenav > a:nth-child(3) {
+        border-left: 5px solid #00abe8;
+        color: #f1f1f1;
+        background-color: #464646;
+    }
+
+    .dropdown-container2 {
+        display: block;
+    }
+</style>
+<h2>Editovať kategóriu</h2>
+
+@using (Html.BeginForm("UploadImageCategories", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+{
+    @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control", style = "display:none !important;" } })
+    @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control", style = "display:none !important;" } })
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="col-md-14">
+                    <img src="~/Uploads/@Html.DisplayTextFor(model => model.Image)" style="width: 100%;" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="col-md-14 btnvyber">
+                    <strong>@Html.LabelFor(model => model.TitleImage, "Zmeniť titulnú fotografiu", htmlAttributes: new { @class = "control-label col-md-12 vyberf" })</strong>
+                    <br /><br />
+                    <a id="btn_vis" style="cursor:pointer">Vyber fotografie</a>
+                    @Html.TextBoxFor(model => model.TitleImage, "", new { @type = "file", @class = "form-control", @accept = "png|jpg|jpeg|gif", @style = "max-width: 67%;height:60px;display:none;", @id = "bttn", @onchange = "pressed()" })
+                    <label id="fileLabel">Nie je vybratá žiadna fotografia.</label>
+                    @Html.ValidationMessageFor(model => model.TitleImage, "", new { @class = "text-danger" })
+                </div>
+                <br />
+                <div class="form-group">
+                    <div>
+                        <input type="submit" value="Nahrať novú titulnú fotografiu" class="btn btn-success" onclick="validateForm();" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+}
+
+@using (Html.BeginForm("EditCatSave", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control", id = "e-id-" + Model.Id, style = "display:none;" } })
+    <div class="form-horizontal">
+
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Názov</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Slug</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Slug, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov" } })
+                        @Html.ValidationMessageFor(model => model.Slug, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>@Html.LabelFor(model => model.Maincat, "Hlavná kategória")</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.Maincat, (IEnumerable<SelectListItem>)ViewData["maincat"], Model.Maincat, new { onchange = "maincatfuncedit(this.value," + Model.Id + ")", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Maincat, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>@Html.LabelFor(model => model.Topcat, "Nadradená kategória")</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.Topcat, (IEnumerable<SelectListItem>)ViewData["topcat"], Model.Topcat, new { onchange = "catfuncedit(this.value," + Model.Id + ")", @class = "form-control", id = "e-top-" + Model.Id })
+                        @Html.ValidationMessageFor(model => model.Topcat, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>@Html.LabelFor(model => model.Topcat2, "Nadradená kategória 2")</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.Topcat2, (IEnumerable<SelectListItem>)ViewData["topcat2"], Model.Topcat2, new { @class = "form-control", id = "e-top2-" + Model.Id })
+                        @Html.ValidationMessageFor(model => model.Topcat2, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>@Html.LabelFor(model => model.Description, "Popis")</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Popis kategórie", id = "e-des-" + Model.Id, value = Model.Description })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div style="text-align:right">
+                <input type="submit" value="Uložiť zmeny" id="btnSubmit" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<script src="/Scripts/umd/popper.min.js"></script>
+<script src="/Scripts/bootstrap.min.js"></script>
+
+<script src="http://malsup.github.com/jquery.form.js"></script>
+
+<script>
+    $("#btn_vis").click(function () {
+        $("#bttn").trigger('click');
+    });
+
+    window.pressed = function () {
+        var a = document.getElementById('bttn');
+        if (a.files.length > 1) {
+            fileLabel.innerHTML = "Boli vybraté " + a.files.length + " fotografie.";
+        } else if (a.files.length = 1) {
+            fileLabel.innerHTML = "Bola vybratá " + a.files.length + " fotografia.";
+        }
+    };
+
+    $("#bttn_vis").click(function () {
+        $("#btttn").trigger('click');
+    });
+
+    window.press = function () {
+        var a = document.getElementById('btttn');
+        if (a.files.length > 1) {
+            fileLabell.innerHTML = "Boli vybraté " + a.files.length + " fotografie.";
+        } else if (a.files.length = 1) {
+            fileLabell.innerHTML = "Bola vybratá " + a.files.length + " fotografia.";
+        }
+    };
+
+
+
+
+</script>
+
+<script>
+    function catfuncedit(value, id) {
+        var url = '@Url.Action("FetchCategories", "Products")'; // Don't hard code your url's!
+        var categories = $("#e-top2-"+id); // cache it
+        var id = value; // Use $(this) so you don't traverse the DOM again
+        $.getJSON(url, { category: id }, function(response) {
+            categories.empty(); // remove any existing options
+            categories.append($('<option> </option>').text(""));
+            $.each(response, function (index, item) {
+                categories.append($('<option></option>').text(item.Text));
+            });
+        });
+    }
+
+    function maincatfuncedit(value, id) {
+        var url = '@Url.Action("FetchCategories", "Products")'; // Don't hard code your url's!
+        var categories = $("#e-top-"+id); // cache it
+        var id = value; // Use $(this) so you don't traverse the DOM again
+        $.getJSON(url, { maincat: id }, function(response) {
+            categories.empty(); // remove any existing options
+            categories.append($('<option> </option>').text(""));
+            $.each(response, function (index, item) {
+                categories.append($('<option></option>').text(item.Text));
+            });
+        });
+    }
+</script>
+
+

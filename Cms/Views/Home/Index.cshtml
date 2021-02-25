@@ -1,0 +1,304 @@
+﻿@using System.Globalization
+@using System.Text.RegularExpressions
+@using Cms.Models
+@using Cms.Controllers
+@model Cms.Models.MultipleIndexModel
+
+@{
+    var count = 0;
+    var pocitadlo = 0;
+    var variableproduct = "false";
+    var isvariablecolor = "false";
+    ViewBag.Description = "";
+    var homepage = ViewData["Homepage"].ToString();
+    HelperController helper = new HelperController();
+}
+@{ if (homepage == "true")
+    {
+        <style>
+            .topmenu-col {
+                position: absolute;
+            }
+        </style>
+    }
+}
+<section class="product-section">
+        <div class="col-md-12 text-center">
+            <h2><b>NOVINKY</b> NA E-SHOPE</h2>
+            <div class="row">
+                <!-- Item slider-->
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="customer-logos slider">
+                                @if (ViewBag.Details == null)
+                                {
+                                    int counter = 0;
+                                    foreach (var item in Model.ProductModel.OrderByDescending(x => x.id).Take(16))
+                                    {
+                                        var price = item.price.ToString();
+                                        var slug = helper.ToUrlSlug(item.title);
+                                        variableproduct = "false";
+                                        isvariablecolor = "false";
+
+
+                                        if (item.custom4 != null && item.custom4 != "")
+                                        {
+                                            variableproduct = "true";
+                                        }
+                                        if (item.custom7 != null)
+                                        {
+                                            isvariablecolor = "true";
+                                        }
+                                        <div class="col-6 col-md-6 col-lg-3 pb-5 slide">
+                                            <a href="@Url.Action("ProductDetail", "Home", new { id = item.id, slug = slug })" class="product_detail">
+                                                <div style="overflow:hidden;">
+
+                                                    <div class="thumb" style="background-image: url('/Uploads/@Html.DisplayFor(modelItem => item.image)');height: 320px;background-size: contain;"></div>
+                                                    @if (item.price == "0") //ak je zadana suma nula
+                                                    {
+                                                        if (item.custom6 != null && (item.custom6).ToString() == "True") //ak je zadane ze cena je od
+                                                        {
+                                                            <a href="@Url.Action("ProductDetail", "Home", new { id = item.id, slug = slug })" id="" style="cursor: pointer;" class="col-4 cartproduct"><div style="text-align: center;"><img src="~/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>
+                                                        }
+
+                                                        <a href="@Url.Action("ProductDetail", "Home", new { id = item.id, slug = slug })" id="" style="cursor: pointer;" class="col-4 cartproduct"><div style="text-align: center;"><img src="~/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>
+
+                                                    }
+                                                    else //ak je cena v pohode
+                                                    {
+                                                        <a onclick="addToCart(@item.id,@variableproduct, @isvariablecolor)" style="cursor: pointer;" class="col-4 cartproduct"><div style="text-align: center;"><img src="~/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>
+                                                    }
+
+
+                                                </div>
+                                                <p class="title" style="line-height: 18px;">@Html.DisplayFor(modelItem => item.title)</p>
+
+                                            </a>
+                                            <div style="display: flex;">
+                                                <div class="col price">
+
+                                                    @if (item.discountprice != "" && item.discountprice != null)
+                                                    {
+                                                        <span>@decimal.Parse(item.discountprice, CultureInfo.InvariantCulture).ToString("#.00")€</span>
+                                                        <del>@decimal.Parse(item.price, CultureInfo.InvariantCulture).ToString("#.00")€</del>
+                                                    }
+                                                    else
+                                                    {
+                                                        if (item.custom6 != null && (item.custom6).ToString() == "True")
+                                                        {
+                                                            <span>od @decimal.Parse(item.price, CultureInfo.InvariantCulture).ToString("#.00")€</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            if (item.price == "0")
+                                                            {
+                                                                <span>Cena na vyžiadanie</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span>@decimal.Parse(item.price, CultureInfo.InvariantCulture).ToString("#.00")€</span>
+                                                            }
+
+                                                        }
+
+                                                    }
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        counter++;
+
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Item slider end-->
+
+            </div>
+        </div>
+</section>
+<section class="product-section">
+    <div class="row">
+
+        <div class="col-md-12 text-center">
+            <h2><b>ODPORÚČANÉ</b> PRODUKTY</h2>
+			<!-- Item slider-->
+            <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="customer-logos slider">
+                                @if (ViewBag.Details == null)
+                                {
+                                    int counter = 0;
+                                    foreach (var item in Model.ProductModel.OrderBy(x => Guid.NewGuid()).Where(i => i.recommended).Take(16))
+                                    {
+                                        var price = item.price.ToString();
+                                        var slug = helper.ToUrlSlug(item.title);
+                                        variableproduct = "false";
+                                        isvariablecolor = "false";
+
+                                        if (item.custom4 != null && item.custom4 != "")
+                                        {
+                                            variableproduct = "true";
+                                        }
+                                        if (item.custom7 != null)
+                                        {
+                                            isvariablecolor = "true";
+                                        }
+                                        <div class="col-6 col-md-6 col-lg-3 pb-5 slide">
+                                            <a href="@Url.Action("ProductDetail", "Home", new { id = item.id, slug = slug })" class="product_detail">
+                                                <div style="overflow:hidden;">
+                                                    <div class="thumb" style="background-image: url('/Uploads/@Html.DisplayFor(modelItem => item.image)');height: 320px;background-size: contain;"></div>
+                                                    @if (item.price == "0") //ak je zadana suma nula
+                                                    {
+                                                        if (item.custom6 != null && (item.custom6).ToString() == "True") //ak je zadane ze cena je od
+                                                        {
+                                                            <a href="@Url.Action("ProductDetail", "Home", new { id = item.id, slug = slug })" id="" style="cursor: pointer;" class="col-4 cartproduct"><div style="text-align: center;"><img src="~/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>
+                                                        }
+
+                                                        <a href="@Url.Action("ProductDetail", "Home", new { id = item.id, slug = slug })" id="" style="cursor: pointer;" class="col-4 cartproduct"><div style="text-align: center;"><img src="~/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>
+
+                                                    }
+                                                    else //ak je cena v pohode
+                                                    {
+                                                        <a onclick="addToCart(@item.id,@variableproduct, @isvariablecolor)" style="cursor: pointer;" class="col-4 cartproduct"><div style="text-align: center;"><img src="~/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>
+                                                    }
+
+
+                                                </div>
+                                                <p class="title" style="line-height: 18px;">@Html.DisplayFor(modelItem => item.title)</p>
+
+                                            </a>
+                                            <div style="display: flex;">
+                                                <div class="col price">
+
+                                                    @if (item.discountprice != "" && item.discountprice != null)
+                                                    {
+                                                        <span>@decimal.Parse(item.discountprice, CultureInfo.InvariantCulture).ToString("#.00")€</span>
+                                                        <del>@decimal.Parse(item.price, CultureInfo.InvariantCulture).ToString("#.00")€</del>
+                                                    }
+                                                    else
+                                                    {
+                                                        if (item.custom6 != null && (item.custom6).ToString() == "True")
+                                                        {
+                                                            <span>od @decimal.Parse(item.price, CultureInfo.InvariantCulture).ToString("#.00")€</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            if (item.price == "0")
+                                                            {
+                                                                <span>Cena na vyžiadanie</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span>@decimal.Parse(item.price, CultureInfo.InvariantCulture).ToString("#.00")€</span>
+                                                            }
+
+                                                        }
+
+                                                    }
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        counter++;
+
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!-- Item slider end-->
+        </div>
+    </div>
+</section>
+</div>
+<div class="container-fluid">
+    <section id="blog">
+        <div class="row py-0">
+
+            <div class="col-md-12">
+                <div class="row katbg">
+                    <div class="container firstcont"></div>
+                    <div class="container">
+                        <div class="col-12 pb-5 mt-5 text-center" id="klima-otazky">
+                            <h2>
+                                Ako vlastne funguje klimatizácia?
+                            </h2>
+                            <h2>
+                                Aký typ vnútornej jednotky si mám vybrať ?
+                            </h2>
+                            <p class="pt-3 pb-4">
+                                Odpoveď na tieto otázky a mnoho ďalších nájdete v našej <strong>sekci často kladené otázky</strong>. Ak vás zaujímajú
+                                <strong>najnovšie trendy v oblasi klimatizácie a vzduchotechniky</strong> určite navštívte sekciu s aktualitami.
+                            </p>
+
+                            <a href="https://bimklima.sk/blog" class="product_detail">
+                                <p class="btn btn-color-white">RADY A AKTUALITY</p>
+                            </a>
+                            <a href="/s/faq" class="product_detail">
+                                <p class="btn btn-color-white">ČASTO KLADENÉ OTÁZKY</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="~/Scripts/add_to_session.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script>
+    <script type="text/javascript" src="~/Scripts/slick.min.js"></script>
+    <script src="~/Scripts/product_slider.js"></script>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        }
+        /*LOAD MORE FUNCTION*/
+        $(document).ready(function () {
+            $(".categorycontent").slice(0, 6).show();
+            $("#loadLess").hide();
+            $("#loadMore").on("click", function (e) {
+                e.preventDefault();
+                $(".categorycontent:hidden").slice(0, 6).slideDown();
+                if ($(".categorycontent:hidden").length == 0) {
+                    $("#loadMore").hide();
+                }
+
+                if ($(".categorycontent:hidden").length >= 0) {
+                    $("#loadLess").show();
+                } else {
+                    $("#loadLess").hide();
+                }
+
+            });
+            $("#loadLess").on("click", function (e) {
+                e.preventDefault();
+                var size = $(".categorycontent").length - $(".categorycontent:hidden").length;
+                $(".categorycontent").slice(size - 6, size).slideUp();
+                if (size < 13) {
+                    $("#loadLess").hide();
+                }
+                if ($(".categorycontent:hidden").length >= 0) {
+                    $("#loadMore").show();
+                }
+            });
+        });
+    </script>

@@ -1,0 +1,100 @@
+﻿@model Cms.Models.MultipleIndexModel
+@{
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+    ViewBag.Title = "SendNewsletter";
+    var idOfTemplate = ViewContext.RouteData.Values["newsletterId"];
+}
+
+<h2>Odoslať newsletter</h2>
+
+<table class="table" style="">
+    <thead class="thead-dark autoprofblue">
+        <tr>
+            <th></th>
+            <th>Email</th>
+            <th>Meno</th>
+            <th>Priezvisko</th>
+            <th>Tel.č.</th>
+            <th>Mesto</th>
+        </tr>
+    </thead>
+
+    @if (ViewBag.Details == null)
+    {
+
+        foreach (var item in Model.AllUsersPaged.OrderBy(i => i.id))
+        {
+            <tr>
+                @*<td><strong>@Html.DisplayFor(modelItem => item.email)</strong></td>*@
+                @foreach (var meta in Model.AllUsersMetaModel.Where(u => u.userid == item.id))
+                {
+                    <td>@Html.CheckBox("emailSend", true, new { @id = meta.id, @email = meta.email })</td>
+                    <td>@Html.DisplayFor(modelItem => meta.email)</td>
+                    <td>@Html.DisplayFor(modelItem => meta.name, new { @value = " fghfg" })</td>
+                    <td>@Html.DisplayFor(modelItem => meta.surname, new { htmlAttributes = new { @Value = " " } })</td>
+                    <td>@Html.DisplayFor(modelItem => meta.phone, new { htmlAttributes = new { @Value = " " } })</td>
+                    <td>@Html.DisplayFor(modelItem => meta.city, new { htmlAttributes = new { @Value = " " } })</td>
+
+                }
+            </tr>
+        }
+    }
+
+
+</table>
+<hr />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <a id="buttonDeselect"><u>Odznačiť všetkých | Označiť všetkých</u></a>
+        </div>
+            <div class="col" style="text-align: right;">
+                @Html.ActionLink("Odoslať všetkým", "SendAllNewsletter", "Newsletter", new { id = idOfTemplate }, new { @class = "btn btn-warning" })
+                <input type="button" id="buttonSelected" value="Odoslať vybraným" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            var isAllCheck = true;
+            $("#buttonDeselect").click(function (e) {
+                var cbarray = document.getElementsByName("emailSend");
+                for (var i = 0; i < cbarray.length; i++) {
+                    cbarray[i].checked = !isAllCheck
+                }
+                isAllCheck = !isAllCheck;
+            });
+        });
+    </script>
+
+    <script>
+    $(document).ready(function () {
+        $("#buttonSelected").click(function (e) {
+            var cbarray = document.getElementsByName("emailSend");
+            var emailElement = "";
+            var listOfObjects = [];
+            for (var i = 0; i < cbarray.length; i++) {
+                if (cbarray[i].checked) {
+                    var element = cbarray[i].id;
+                    emailElement = document.getElementById(element);
+                    var attribute = emailElement.getAttribute("email");
+                    listOfObjects.push(attribute);
+
+                }
+            }
+
+            dataToPost = JSON.stringify({ methodParam: listOfObjects });
+
+            $.ajax({
+                type: "POST",
+                url: "/send-newsletter-selected/"+@idOfTemplate,
+                contentType: "application/json; charset=utf-8", // specify the content type
+                dataType: 'JSON', // make sure you use the correct case for dataType
+                data: dataToPost,
+                traditional: true
+            });
+            window.location.href = "/newsletter";
+        });
+    });
+    </script>

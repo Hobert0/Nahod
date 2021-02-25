@@ -1,0 +1,1071 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
+using System.Linq;
+using System.Net.Mail;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Helpers;
+using System.Web.Mvc;
+using Cms.Models;
+
+namespace Cms.Controllers
+{
+    public class ProductsController : Controller
+    {
+        Entities db = new Entities();
+
+        [Route("produkty/kategorie")]
+        public ActionResult ProductCats()
+        {
+            if (Session["username"] != null && Session["role"].ToString() == "0")
+            {
+                MultipleIndexModel model = new MultipleIndexModel();
+                model.CategoriesModel = db.categories.OrderByDescending(a => a.id).ToList();
+                ViewData["Maincat"] = SelectionKategorieMain();
+                ViewData["Topcat"] = SelectionKategorieNew();
+                ViewData["Topcat2"] = SelectionKategoria();
+                return View(model);
+            }
+            else { return RedirectToAction("Admin", "Admin"); }
+        }
+
+        [Route("produkty/editovat-kategoriu/{id}")]
+        public ActionResult EditCat(int? id) //editacia kategorie
+        {
+            if(Session["username"] != null && Session["role"].ToString() == "0")
+            {
+                var allCategories = db.categories.Where(item => item.id == id).ToList();
+                CategoriesModel model = new CategoriesModel();
+                foreach(var category in allCategories)
+                {
+                    model.Id = category.id;
+                    model.Name = category.name;
+                    model.Slug = category.slug;
+                    model.Topcat = category.topcat;
+                    model.Topcat2 = category.topcat2;
+                    model.Maincat = category.maincat;
+                    model.Description = category.description;
+                    model.Image = category.image;
+                    ViewData["maincat"] = SelectionKategorieMain();
+                    ViewData["topcat"] = SelectionKategorieNew();
+                    ViewData["topcat2"] = SelectionKategoria();
+                }
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Admin", "Admin");
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> EditCatSave(CategoriesModel model)
+        {
+            var o = db.categories.Single(i => i.id == model.Id);
+
+            o.name = model.Name;
+            o.slug = model.Slug;
+            o.maincat = model.Maincat ?? "Žiadna";
+            o.topcat = model.Topcat ?? "Žiadna";
+            o.topcat2 = model.Topcat2 ?? "Žiadna";
+            o.description = model.Description ?? "";
+            db.SaveChanges();
+
+            return RedirectToAction("ProductCats", "Products");
+        }
+
+        [Route("produkty/znacky")]
+        public ActionResult ProductBrands()
+        {
+            if (Session["username"] != null && Session["role"].ToString() == "0")
+            {
+                MultipleIndexModel model = new MultipleIndexModel();
+                model.BrandsModel = db.brands.OrderByDescending(a => a.id).ToList();
+                return View(model);
+            }
+            else { return RedirectToAction("Admin", "Admin"); }
+        }
+
+        [Route("produkty/editovat-znacku/{id}")] //editacia brands
+        public ActionResult EditBrand(int? id)
+        {
+            if(Session["username"] != null && Session["role"].ToString() == "0")
+            {
+                var allBrands = db.brands.Where(item => item.id == id);
+                BrandsModel model = new BrandsModel();
+                foreach(var brand in allBrands)
+                {
+                    model.Id = brand.id;
+                    model.Name = brand.name;
+                    model.Slug = brand.slug;
+                    model.Description = brand.description;
+                    model.Image = brand.image;
+                }
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Admin", "Admin");
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> EditBrandSave(BrandsModel model)
+        {
+            var o = db.brands.Single(i => i.id == model.Id);
+            o.name = model.Name;
+            o.slug = model.Slug;
+            o.description = model.Description;
+            db.SaveChanges();
+            return RedirectToAction("Productbrands", "Products");
+        }
+
+        [Route("produkty/zlavove-kupony")]
+        public ActionResult Coupons()
+        {
+            if (Session["username"] != null && Session["role"].ToString() == "0")
+            {
+                MultipleIndexModel model = new MultipleIndexModel();
+                model.CouponsModel = db.coupons.OrderByDescending(a => a.id).ToList();
+                return View(model);
+            }
+            else { return RedirectToAction("Admin", "Admin"); }
+        }
+
+
+        [Route("produkty/pridat-produkt")]
+        public ActionResult AddProduct()
+        {
+            if (Session["username"] != null && Session["role"].ToString() == "0")
+            {
+                ProductModel pm = new ProductModel();
+                ViewData["hmotnostj"] = pm.SelectionHmotnost();
+                ViewData["mernaj"] = pm.SelectionMernaJ();
+                ViewData["kategoria"] = SelectionKategoria();
+                ViewData["znacka"] = SelectionBrand();
+                ViewData["typ"] = pm.SelectionTyp();
+
+                return View();
+            }
+            else { return RedirectToAction("Admin", "Admin"); }
+        }
+
+        /*Brands - products*/
+        public List<SelectListItem> SelectionBrand()
+        {
+            List<SelectListItem> brand = new List<SelectListItem>();
+            foreach (var cat in db.brands)
+            {
+                brand.Add(new SelectListItem { Text = cat.name, Value = cat.id.ToString() });
+            }
+            return brand;
+        }
+        /*Category - Add category*/
+        public List<SelectListItem> SelectionKategorieMain()
+        {
+            List<SelectListItem> kategoria = new List<SelectListItem>();
+            kategoria.Add(new SelectListItem { Text = "", Value = "" });
+            foreach (var cat in db.categories.Where(i => i.maincat == "Žiadna"))
+            {
+                kategoria.Add(new SelectListItem { Text = cat.name, Value = cat.name.ToString() });
+            }
+            return kategoria;
+        }
+
+
+        /*Category - products - get categories*/
+        public List<SelectListItem> SelectionKategoria()
+        {
+            List<SelectListItem> znacka = new List<SelectListItem>();
+            znacka.Add(new SelectListItem { Text = "", Value = "" });
+            foreach (var cat in db.categories)
+            {
+
+                if (cat.topcat2 == "" || cat.topcat2 == "Žiadna")
+                {
+                    znacka.Add(new SelectListItem {Text = cat.name + " → " + cat.topcat, Value = cat.id.ToString()});
+                }
+                else
+                {
+                    znacka.Add(new SelectListItem { Text = cat.name + " → " + cat.topcat2 + " → " + cat.topcat, Value = cat.id.ToString() });
+               }
+
+            }
+            return znacka;
+        }
+
+
+        /*Category - Add category*/
+        public List<SelectListItem> SelectionKategorieNew()
+        {
+            List<SelectListItem> znacka = new List<SelectListItem>();
+            znacka.Add(new SelectListItem { Text = "", Value = "" });
+            foreach (var cat in db.categories.Where(i => i.topcat == "Žiadna" && i.maincat != "Žiadna"))
+            {
+                znacka.Add(new SelectListItem { Text = cat.name, Value = cat.name.ToString() });
+            }
+            return znacka;
+        }
+
+
+
+        public JsonResult FetchCategories(string category, string maincat) // its a GET, not a POST
+        {
+            IQueryable categories = null;
+            if (maincat != null)
+            {
+                categories = db.categories.Where(c => (c.maincat == maincat && c.topcat == "Žiadna")).Select(c => new
+                {
+                    ID = c.id,
+                    Text = c.name
+                });
+            }
+
+            if (category != null)
+            {
+                categories = db.categories.Where(c => (c.topcat == category && c.topcat2 == "Žiadna")).Select(c => new
+                {
+                    ID = c.id,
+                    Text = c.name
+                });
+            }
+
+            return Json(categories, JsonRequestBehavior.AllowGet);
+
+
+
+        }
+
+        [Route("produkty/editovat-produkt/{id}")]
+        public ActionResult EditProduct(int? id)
+        {
+            if (Session["username"] != null && Session["role"].ToString() == "0")
+            {
+                var allproducts = db.products.Where(item => item.id == id).ToList();
+                ProductModel model = new ProductModel();
+                foreach (var product in allproducts)
+                {
+                    model.Id = product.id;
+                    model.Title = product.title;
+                    model.Image = product.image;
+                    model.Description = product.description;
+                    model.Gallery = product.gallery;
+                    model.Recommended = product.recommended;
+                    model.Weightunit = product.weightunit;
+                    model.Category = product.category;
+                    model.Weight = product.weight;
+                    model.Discountprice = product.discountprice;
+                    model.Price = product.price;
+                    model.Number = product.number;
+                    model.Stock = product.stock;
+                    model.Custom1 = product.custom1;
+                    model.Custom2 = product.custom2;
+                    model.Custom3 = product.custom3;
+                    model.Custom4 = product.custom4; //sizes + stock
+                    model.Custom6 = bool.Parse(product.custom6); //cena od
+                    model.Custom7 = product.custom7; //color
+                    model.Custom8 = product.custom8; //typ
+                    model.Custom9 = product.custom9; //vykon
+                    model.Custom10 = product.custom10; //plocha
+
+                }
+
+                ProductModel pm = new ProductModel();
+                ViewData["hmotnostj"] = pm.SelectionHmotnost();
+                ViewData["mernaj"] = pm.SelectionMernaJ();
+                ViewData["kategoria"] = SelectionKategoria();
+                ViewData["znacka"] = SelectionBrand();
+                ViewData["typ"] = pm.SelectionTyp();
+
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Admin", "Admin");
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult> SaveProduct(ProductModel model)
+        {
+            products o = new products();
+            var nazovSuboru = string.Empty;
+
+            if (model.TitleImage != null) { 
+                HttpPostedFileBase[] subor = model.TitleImage;
+                if (model.TitleImage[0] != null)
+                {
+                    foreach (HttpPostedFileBase file in subor)
+                    {
+                        nazovSuboru = Path.GetFileName(file.FileName);
+                    }
+                }
+            }
+
+            var ulozObrazok = DateTime.Now.Date.ToString("dd.MM.yyyy") + "/" + DateTime.Now.ToString("HHmmss") + "/";
+
+            if (nazovSuboru == "")
+            {
+                nazovSuboru = "avatar_product.jpg";
+            }
+            if (model.Price != null){model.Price = model.Price.Replace(",", ".");}
+            if (model.Discountprice != null){model.Discountprice = model.Discountprice.Replace(",", ".");}
+
+            o.title = model.Title;
+            o.image = ulozObrazok + nazovSuboru;
+            o.number = model.Number;
+            o.stock = model.Stock;
+            o.price = model.Price;
+            o.category = model.Category;
+            o.weight = model.Weight;
+            o.weightunit = model.Weightunit;
+            o.recommended = model.Recommended;
+            o.description = model.Description;
+            o.discountprice = model.Discountprice;
+            o.custom2 = model.Custom2;
+            o.custom1 = model.Custom1;
+            o.custom3 = model.Custom3;
+            if (model.Custom5 == "1") { 
+                o.custom4 = model.Custom4.ToString();
+            }
+            if(model.Custom6 == true) //cena od hodnota
+            {
+                o.custom6 = "True";
+            }
+            else
+            {
+                o.custom6 = "False";
+            }
+            ///o.custom6 = (model.Custom6).ToString();
+            o.custom7 = model.Custom7;
+            o.custom8 = model.Custom8; //typ
+            o.custom9 = model.Custom9; //vykon
+            o.custom10 = model.Custom10; //plocha
+
+            o.date = DateTime.Now.ToString();
+            o.gallery = ulozObrazok + "gallery/" ?? "";
+
+            db.products.Add(o);
+            db.SaveChanges();
+
+            if (model.TitleImage != null)
+            {
+                if (model.TitleImage[0] != null)
+                {
+                    await UploadFiles(model.TitleImage, ulozObrazok);
+                    await UploadFiles(model.ImageGallery, o.gallery);
+                }
+                else
+                {
+                    var sourcePath = HttpContext.Server.MapPath("~/Uploads/avatar_product.jpg");
+                    var destinationPath = HttpContext.Server.MapPath("~/Uploads/" + o.image);
+                    var miestoUlozenia = "~/Uploads/" + ulozObrazok;
+                    var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia));
+                    if (System.IO.File.Exists(sourcePath))
+                    {
+                        System.IO.File.Copy(sourcePath, destinationPath);
+                    }
+                    await UploadFiles(model.ImageGallery, o.gallery);
+
+                }
+            }
+            else
+            {
+                /*AK duplikujeme produkt vytvori nove foldre*/
+                var sourcePath = HttpContext.Server.MapPath("~/Uploads/avatar_product.jpg");
+                var destinationPath = HttpContext.Server.MapPath("~/Uploads/" + o.image);
+                var miestoUlozenia = "~/Uploads/" + ulozObrazok;
+                var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia));
+                if (System.IO.File.Exists(sourcePath))
+                {
+                    System.IO.File.Copy(sourcePath, destinationPath);
+                }
+                await UploadFiles(model.ImageGallery, o.gallery);
+            }
+            TempData["IsValid"] = true;
+            ViewBag.IsValid = true;
+            return RedirectToAction("Products", "Admin");
+        }
+
+
+        public ActionResult DeleteProduct(int? id, bool confirm)
+        {
+            var data = db.products.Find(id);
+            if (true)
+            {
+                ViewBag.Status = true;
+                db.products.Remove(data);
+                db.SaveChanges();
+            }
+            else { ViewBag.Status = false; }
+
+
+            return RedirectToAction("Products", "Admin");
+        }
+
+
+        public ActionResult DuplicateProduct(int? id)
+        {
+            var data = db.products.Single(i => i.id == id);
+            ProductModel model = new ProductModel();
+            model.Category = data.category;
+            model.Custom1 = data.custom1;
+            model.Custom10 = data.custom10;
+            model.Custom2 = data.custom2;
+            model.Custom3 = data.custom3;
+            model.Custom4 = data.custom4;
+            model.Custom5 = data.custom5;
+            model.Custom6 = bool.Parse(data.custom6);
+            model.Custom7 = data.custom7;
+            model.Custom8 = data.custom8;
+            model.Custom9 = data.custom9;
+            model.Date = data.date;
+            model.Description = data.description;
+            model.Discountprice = data.discountprice;
+            model.Gallery = data.gallery;
+            model.Image = data.image;
+            model.Number = data.number;
+            model.Price = data.price;
+            model.Recommended = data.recommended;
+            model.Stock = data.stock;
+            model.Title = data.title;
+            model.Weight = data.weight;
+            model.Weightunit = data.weightunit;
+            model.TitleImage = null;
+
+            _ = SaveProduct(model);
+
+            return RedirectToAction("Products", "Admin");
+        }
+
+
+        [HttpPost, Route("produkty/editovat-produkt/{id}")]
+        public async Task<ActionResult> EditProduct(ProductModel model)
+        {
+
+            var o = db.products.Single(i => i.id == model.Id);
+
+            if (model.Price != null) { model.Price = model.Price.Replace(",", "."); }
+            if (model.Discountprice != null) { model.Discountprice = model.Discountprice.Replace(",", "."); }
+
+            o.title = model.Title ?? "";
+            o.number = model.Number;
+            o.stock = model.Stock;
+            o.price = model.Price;
+            o.category = model.Category;
+            o.weight = model.Weight;
+            o.weightunit = model.Weightunit;
+            o.recommended = model.Recommended;
+            o.description = model.Description;
+            o.discountprice = model.Discountprice;
+            o.custom1 = model.Custom1;
+            o.custom2 = model.Custom2;
+            o.custom3 = model.Custom3;
+            if (model.Custom5 == "1")
+            {
+                o.custom4 = model.Custom4;
+                o.stock = "";
+            }
+            else {
+                o.custom4 = "";
+            }
+            if (model.Custom6 == true) //cena od hodnota
+            {
+                o.custom6 = "True";
+            }
+            else
+            {
+                o.custom6 = "False";
+            }
+            o.custom7 = model.Custom7; //color
+            o.custom8 = model.Custom8; //typ
+            o.custom9 = model.Custom9; //vykon
+            o.custom10 = model.Custom10; //plocha
+            db.SaveChanges();
+
+            return RedirectToAction("EditProduct", new { model.Id });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UpdateBrand(MultipleIndexModel model)
+        {
+
+            var o = db.brands.Single(i => i.id == model.BrandsEditModel.Id);
+
+            o.name = model.BrandsEditModel.Name;
+            o.slug = model.BrandsEditModel.Slug;
+            o.description = model.BrandsEditModel.Description ?? "";
+
+            db.SaveChanges();
+
+            return RedirectToAction("ProductBrands");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UpdateCoupon(MultipleIndexModel model)
+        {
+
+            var o = db.coupons.Single(i => i.id == model.CouponsEditModel.Id);
+
+            o.coupon = model.CouponsEditModel.Coupon;
+            o.amount = model.CouponsEditModel.Amount;
+            o.limit = model.CouponsEditModel.Limit ?? 0;
+            o.active = model.CouponsEditModel.Active;
+
+            db.SaveChanges();
+
+            return RedirectToAction("Coupons");
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult> UploadFiles(HttpPostedFileBase[] files, string foto)
+        {
+            //Ensure model state is valid  
+            //iterating through multiple file collection   
+            var miestoUlozenia = "~/Uploads/" + foto;
+            var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia));
+
+
+            foreach (HttpPostedFileBase file in files)
+            {
+
+                //Checking file is available to save.  
+                if (file != null)
+                {
+                    var InputFileName = Path.GetFileName(file.FileName);
+                    var ServerSavePath = Path.Combine(Server.MapPath(miestoUlozenia) + InputFileName);
+
+                    byte[] fileByte;
+                    using (var reader = new BinaryReader(file.InputStream))
+                    {
+                        fileByte = reader.ReadBytes(file.ContentLength);
+                    }
+                    WebImage img = new WebImage(fileByte);
+                    if (img.Width > 1000)
+                    {
+                        img.Resize(1000 + 1, 1000 + 1, true).Crop(1, 1);
+                    }
+                    img.Save(ServerSavePath);
+                    //assigning file uploaded status to ViewBag for showing message to user.  
+                    ViewBag.UploadStatus = files.Count().ToString() + " files uploaded successfully.";
+                }
+
+            }
+            // ReSharper disable once Mvc.ViewNotResolved
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult UploadImageCategories(CategoriesModel model)
+        {
+            //Zmena titulnej fotky
+            if (model.TitleImage != null)
+            {
+                HttpPostedFileBase[] subor = model.TitleImage;
+                var miestoUlozenia = "~/Uploads/" + model.Image;
+                miestoUlozenia = miestoUlozenia.Substring(0, miestoUlozenia.LastIndexOf("/") + 1);
+                string fullPath = Request.MapPath(miestoUlozenia);
+
+                if (System.IO.File.Exists(fullPath))
+                {
+                    System.IO.File.Delete(fullPath);
+                }
+
+                foreach (HttpPostedFileBase file in subor)
+                {
+                    //Checking file is available to save.  
+                    if (file != null)
+                    {
+                        var InputFileName = Path.GetFileName(file.FileName);
+                        var ServerSavePath = Path.Combine(Server.MapPath(miestoUlozenia + InputFileName));
+                        //Save file to server folder  
+                        byte[] fileByte;
+                        using (var reader = new BinaryReader(file.InputStream))
+                        {
+                            fileByte = reader.ReadBytes(file.ContentLength);
+                        }
+                        WebImage img = new WebImage(fileByte);
+                        if (img.Width > 1000)
+                        {
+                            img.Resize(1000+1, 1000+1, true).Crop(1, 1);
+                        }
+                        img.Save(ServerSavePath);
+
+                        var isTheSameImage = model.Image.Substring(0, model.Image.LastIndexOf("/") + 1) + InputFileName;
+                        if (model.Image != isTheSameImage)
+                        {                            
+                            var data = db.categories.Single(i => i.id == model.Id);
+                            data.image = isTheSameImage;
+                            db.SaveChanges();
+                        }
+                        //assigning file uploaded status to ViewBag for showing message to user.  
+                        ViewBag.UploadStatus = subor.Count().ToString() + " files uploaded successfully.";
+                    }
+
+                }
+
+            }
+            else { }
+            return RedirectToAction("ProductCats");
+        }
+
+        /**HROMADNE CROPNUTIE PRETOZE RESIZE ZANECHAVAL NA FOTKACH 1px BORDER*/
+        public void BulkCrop()
+        {
+            foreach (string d in Directory.GetDirectories(Server.MapPath("~/Uploads")))
+            {
+                foreach (string imgPath in Directory.GetFiles(d))
+                {
+                    var img = new FileInfo(imgPath);
+                    if(img.Extension == ".jpg" || img.Extension == ".jpeg" || img.Extension == ".png") { 
+                        WebImage imag = new WebImage(imgPath);
+                        imag.Crop(1, 1);
+                        imag.Save(imgPath);
+                    }
+                }
+                foreach (string k in Directory.GetDirectories(d)) { 
+
+                    foreach (string imgPath in Directory.GetFiles(k))
+                    {
+                        var img = new FileInfo(imgPath);
+                        if (img.Extension == ".jpg" || img.Extension == ".jpeg" || img.Extension == ".png")
+                        {
+
+                            WebImage imag = new WebImage(imgPath);
+                            imag.Crop(1, 1);
+                            imag.Save(imgPath);
+                        }
+                    }
+                    foreach (string x in Directory.GetDirectories(k))
+                    {
+                        foreach (string imgPath in Directory.GetFiles(x))
+                        {
+                            var img = new FileInfo(imgPath);
+                            if (img.Extension == ".jpg" || img.Extension == ".jpeg" || img.Extension == ".png")
+                            {
+
+                                WebImage imag = new WebImage(imgPath);
+                                imag.Crop(1, 1);
+                                imag.Save(imgPath);
+                            }
+                        }
+                    }
+            }
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UploadImageBrands(BrandsModel model)
+        {
+            //Zmena titulnej fotky
+            if (model.TitleImage != null)
+            {
+                HttpPostedFileBase[] subor = model.TitleImage;
+                var miestoUlozenia = "~/Uploads/" + model.Image;
+                miestoUlozenia = miestoUlozenia.Substring(0, miestoUlozenia.LastIndexOf("/") + 1);
+                string fullPath = Request.MapPath(miestoUlozenia);
+
+                if (System.IO.File.Exists(fullPath))
+                {
+                    System.IO.File.Delete(fullPath);
+                }
+
+                foreach (HttpPostedFileBase file in subor)
+                {
+
+                    //Checking file is available to save.  
+                    if (file != null)
+                    {
+                        var InputFileName = Path.GetFileName(file.FileName);
+                        var ServerSavePath = Path.Combine(Server.MapPath(miestoUlozenia + InputFileName));
+                        //Save file to server folder  
+                        byte[] fileByte;
+                        using (var reader = new BinaryReader(file.InputStream))
+                        {
+                            fileByte = reader.ReadBytes(file.ContentLength);
+                        }
+                        WebImage img = new WebImage(fileByte);
+                        if (img.Width > 1000)
+                        {
+                            img.Resize(1000 + 1, 1000 + 1, true).Crop(1, 1);
+                        }
+                        img.Save(ServerSavePath);
+
+                        var isTheSameImage = model.Image.Substring(0, model.Image.LastIndexOf("/") + 1) + InputFileName;
+                        if (model.Image != isTheSameImage)
+                        {
+                            var data = db.brands.Single(i => i.id == model.Id);
+                            data.image = isTheSameImage;
+                            db.SaveChanges();
+                        }
+                        //assigning file uploaded status to ViewBag for showing message to user.  
+                        ViewBag.UploadStatus = subor.Count().ToString() + " files uploaded successfully.";
+                    }
+
+                }
+
+            }
+            else { }
+            return RedirectToAction("ProductBrands");
+        }
+
+
+        [HttpPost]
+        public ActionResult UploadImages(ProductModel model)
+        {
+            //Zmena fotiek v galerii
+            var id = model.Id;
+            if (model.Gallery != null)
+            {
+                HttpPostedFileBase[] files = model.ImageGallery;
+                //iterating through multiple file collection   
+                var miestoUlozenia = "~/Uploads/" + model.Gallery;
+                var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia));
+
+                foreach (HttpPostedFileBase file in files)
+                {
+
+                    //Checking file is available to save.  
+                    if (file != null)
+                    {
+                        var InputFileName = Path.GetFileName(file.FileName);
+                        var ServerSavePath = Path.Combine(Server.MapPath(miestoUlozenia) + InputFileName);
+                        //Save file to server folder  
+                        byte[] fileByte;
+                        using (var reader = new BinaryReader(file.InputStream))
+                        {
+                            fileByte = reader.ReadBytes(file.ContentLength);
+                        }
+                        WebImage img = new WebImage(fileByte);
+                        if (img.Width > 1000)
+                        {
+                            img.Resize(1000 + 1, 1000 + 1, true).Crop(1, 1);
+                        }
+                        img.Save(ServerSavePath);
+                        //assigning file uploaded status to ViewBag for showing message to user.  
+                        ViewBag.UploadStatus = files.Count().ToString() + " files uploaded successfully.";
+                    }
+
+                }
+                return RedirectToAction("EditProduct", new { id });
+            }
+            //Zmena titulnej fotky
+            else  //Zmena titulnej fotky
+            if (model.TitleImage != null)
+            {
+                HttpPostedFileBase[] subor = model.TitleImage;
+                var miestoUlozenia = "~/Uploads/" + model.Image;
+                miestoUlozenia = miestoUlozenia.Substring(0, miestoUlozenia.LastIndexOf("/") + 1);
+                string fullPath = Request.MapPath(miestoUlozenia);
+
+                if (System.IO.File.Exists(fullPath))
+                {
+                    System.IO.File.Delete(fullPath);
+                }
+
+                foreach (HttpPostedFileBase file in subor)
+                {
+
+                    //Checking file is available to save.  
+                    if (file != null)
+                    {
+                        var InputFileName = Path.GetFileName(file.FileName);
+                        var ServerSavePath = Path.Combine(Server.MapPath(miestoUlozenia + InputFileName));
+                        //Save file to server folder  
+                        byte[] fileByte;
+                        using (var reader = new BinaryReader(file.InputStream))
+                        {
+                            fileByte = reader.ReadBytes(file.ContentLength);
+                        }
+                        WebImage img = new WebImage(fileByte);
+                        if (img.Width > 1000)
+                        {
+                            img.Resize(1000 + 1, 1000 + 1, true).Crop(1, 1);
+                        }
+                        img.Save(ServerSavePath);
+
+                        var isTheSameImage = model.Image.Substring(0, model.Image.LastIndexOf("/") + 1) + InputFileName;
+                        if (model.Image != isTheSameImage)
+                        {
+                            var data = db.products.Single(i => i.id == model.Id);
+                            data.image = isTheSameImage;
+                            db.SaveChanges();
+                        }
+                        //assigning file uploaded status to ViewBag for showing message to user.  
+                        ViewBag.UploadStatus = subor.Count().ToString() + " files uploaded successfully.";
+                    }
+
+                }
+
+            }
+            else { }
+            return RedirectToAction("EditProduct", new { id });
+        }
+
+
+        public ActionResult DeletePicture(string url, int id)
+        {
+            string fullPath = Request.MapPath(url);
+
+            if (System.IO.File.Exists(fullPath))
+            {
+                System.IO.File.Delete(fullPath);
+            }
+            return Redirect(Url.Content("~/produkty/editovat-produkt/" + id) + "#galleria");
+        }
+
+
+        public ActionResult DeleteCategory(int? id, bool confirm)
+        {
+            var data = db.categories.Find(id);
+            if (true)
+            {
+                ViewBag.Status = true;
+                db.categories.Remove(data);
+                db.SaveChanges();
+            }
+            else { ViewBag.Status = false; }
+
+
+            return RedirectToAction("ProductCats");
+        }
+
+        public ActionResult DeleteBrand(int? id, bool confirm)
+        {
+            var data = db.brands.Find(id);
+            if (true)
+            {
+                ViewBag.Status = true;
+                db.brands.Remove(data);
+                db.SaveChanges();
+            }
+            else { ViewBag.Status = false; }
+
+
+            return RedirectToAction("ProductBrands");
+        }
+
+        public ActionResult DeleteCoupon(int? id, bool confirm)
+        {
+            var data = db.coupons.Find(id);
+            if (true)
+            {
+                ViewBag.Status = true;
+                db.coupons.Remove(data);
+                db.SaveChanges();
+            }
+            else { ViewBag.Status = false; }
+
+
+            return RedirectToAction("Coupons");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddCategory(MultipleIndexModel model)
+        {
+            categories o = new categories();
+            var nazovSuboru = string.Empty;
+
+            if(model.Categories.TitleImage != null)
+            {
+                HttpPostedFileBase[] subor = model.Categories.TitleImage;
+                if(model.Categories.TitleImage[0] != null)
+                {
+                    foreach(HttpPostedFileBase file in subor)
+                    {
+                        nazovSuboru = Path.GetFileName(file.FileName);
+                    }
+                }
+            }
+
+            var ulozObrazok = DateTime.Now.Date.ToString("dd.MM.yyyy") + "/" + DateTime.Now.ToString("HHmmss") + "/";
+
+            if (nazovSuboru == "")
+            {
+                nazovSuboru = "avatar_product.jpg";
+            }
+
+            o.name = model.Categories.Name;
+            o.slug = model.Categories.Slug;
+            o.description = model.Categories.Description ?? "";
+            o.maincat = model.Categories.Maincat ?? "Žiadna";
+            o.topcat = model.Categories.Topcat ?? "Žiadna";
+            o.topcat2 = model.Categories.Topcat2 ?? "Žiadna";
+            o.image = ulozObrazok + nazovSuboru;
+
+            db.categories.Add(o);
+            db.SaveChanges();
+
+            if (model.Categories.TitleImage != null)
+            {
+                if (model.Categories.TitleImage[0] != null)
+                {
+                    await UploadFiles(model.Categories.TitleImage, ulozObrazok);
+                }
+                else
+                {
+                    var sourcePath = HttpContext.Server.MapPath("~/Uploads/avatar_product.jpg");
+                    var destinationPath = HttpContext.Server.MapPath("~/Uploads/" + o.image);
+                    var miestoUlozenia = "~/Uploads/" + ulozObrazok;
+                    var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia));
+                    if (System.IO.File.Exists(sourcePath))
+                    {
+                        System.IO.File.Copy(sourcePath, destinationPath);
+                    }
+                    
+
+                }
+            }
+            else
+            {
+                /*AK duplikujeme produkt vytvori nove foldre*/
+                var sourcePath = HttpContext.Server.MapPath("~/Uploads/avatar_product.jpg");
+                var destinationPath = HttpContext.Server.MapPath("~/Uploads/" + o.image);
+                var miestoUlozenia = "~/Uploads/" + ulozObrazok;
+                var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia));
+                if (System.IO.File.Exists(sourcePath))
+                {
+                    System.IO.File.Copy(sourcePath, destinationPath);
+                }
+                
+            }
+
+            return RedirectToAction("ProductCats");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddBrand(MultipleIndexModel model)
+        {
+            brands o = new brands();
+            var nazovSuboru = string.Empty;
+
+            if (model.Brands.TitleImage != null)
+            {
+                HttpPostedFileBase[] subor = model.Brands.TitleImage;
+                if (model.Brands.TitleImage[0] != null)
+                {
+                    foreach (HttpPostedFileBase file in subor)
+                    {
+                        nazovSuboru = Path.GetFileName(file.FileName);
+                    }
+                }
+            }
+
+            var ulozObrazok = DateTime.Now.Date.ToString("dd.MM.yyyy") + "/" + DateTime.Now.ToString("HHmmss") + "/";
+
+            if (nazovSuboru == "")
+            {
+                nazovSuboru = "avatar_product.jpg";
+            }
+
+            o.name = model.Brands.Name;
+            o.slug = model.Brands.Slug;
+            o.description = model.Brands.Description ?? "";
+            o.image = ulozObrazok + nazovSuboru;
+
+            db.brands.Add(o);
+            db.SaveChanges();
+
+            if (model.Brands.TitleImage != null)
+            {
+                if (model.Brands.TitleImage[0] != null)
+                {
+                    await UploadFiles(model.Brands.TitleImage, ulozObrazok);
+                }
+                else
+                {
+                    var sourcePath = HttpContext.Server.MapPath("~/Uploads/avatar_product.jpg");
+                    var destinationPath = HttpContext.Server.MapPath("~/Uploads/" + o.image);
+                    var miestoUlozenia = "~/Uploads/" + ulozObrazok;
+                    var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia));
+                    if (System.IO.File.Exists(sourcePath))
+                    {
+                        System.IO.File.Copy(sourcePath, destinationPath);
+                    }
+
+
+                }
+            }
+            else
+            {
+                /*AK duplikujeme produkt vytvori nove foldre*/
+                var sourcePath = HttpContext.Server.MapPath("~/Uploads/avatar_product.jpg");
+                var destinationPath = HttpContext.Server.MapPath("~/Uploads/" + o.image);
+                var miestoUlozenia = "~/Uploads/" + ulozObrazok;
+                var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia));
+                if (System.IO.File.Exists(sourcePath))
+                {
+                    System.IO.File.Copy(sourcePath, destinationPath);
+                }
+
+            }
+
+            return RedirectToAction("ProductBrands");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddCoupon(MultipleIndexModel model)
+        {
+            coupons o = new coupons();
+
+            o.coupon = model.Coupons.Coupon;
+            o.amount = model.Coupons.Amount;
+            o.limit = model.Coupons.Limit ?? 0;
+            o.active = true;
+
+            db.coupons.Add(o);
+            db.SaveChanges();
+
+            return RedirectToAction("Coupons");
+        }
+
+        public void PassSizes(List<SizesModel> sizes)
+        {
+            var t = sizes;
+        }
+        public ActionResult askForPrice(MultipleIndexModel model,int? id)
+        {
+            var settings = db.settings.SingleOrDefault().email;
+                     
+                MailMessage mailMessage = new MailMessage();
+            
+                mailMessage.From = new MailAddress(model.EmailSendModel.Email);
+                mailMessage.Subject = model.EmailSendModel.Subject;
+                mailMessage.Body = model.EmailSendModel.Message;
+                mailMessage.IsBodyHtml = true;
+
+                mailMessage.To.Add(new MailAddress(settings));
+
+                SmtpClient smtp = new SmtpClient();
+
+                smtp.Host = ConfigurationManager.AppSettings["Host"];
+
+                smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
+
+                System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
+
+                NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"]; //reading from web.config  
+
+                NetworkCred.Password = ConfigurationManager.AppSettings["Password"]; //reading from web.config  
+
+                smtp.UseDefaultCredentials = true;
+
+                smtp.Credentials = NetworkCred;
+
+                smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
+
+                smtp.Send(mailMessage);
+
+            ViewBag.emailStatus = "true";
+
+            return RedirectToAction("ProductDetail", "Home", new { id = id, sent = "true" });
+
+        }
+
+
+    }
+}

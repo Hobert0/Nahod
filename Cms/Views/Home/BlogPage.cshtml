@@ -1,0 +1,51 @@
+﻿@model Cms.Models.MultipleIndexModel
+<style>
+    #front-picture, #services{
+        display: none !important;
+    }
+</style>
+@{
+
+    var aktualid = 0;
+}
+
+@foreach (var item in Model.BlogModel)
+{
+    aktualid = item.id;
+}
+<section id="page-blog" class="py-4 post-id-@aktualid">
+    <div class="container">
+        @foreach (var prod in Model.BlogModel)
+
+        {
+            ViewBag.Title = prod.title;
+            aktualid = prod.id;
+
+            <h1 class="pb-4">@prod.title</h1>
+             <img src="/Uploads/@prod.image" alt="@prod.title" style="width: 50%;float: left;" />
+             <p>@Html.Raw(prod.content)</p>
+             <div class="clearfix"></div>
+            <div class="row">
+                <div class="col obsah">
+                    
+                    <hr />
+                    @if (Directory.Exists(Server.MapPath("~/Uploads/" + prod.gallery)))
+                    {
+                        foreach (var imgPath in Directory.GetFiles(Server.MapPath("~/Uploads/" + prod.gallery)))
+                        {
+                            var img = new FileInfo(imgPath);
+                            <a href="@Url.Content(String.Format("~/Uploads/" + prod.gallery+ "{0}", img.Name))" data-toggle="lightbox" data-gallery="example-gallery" style="padding:5px 1px 0 0;display: inline-block;width:22%;">
+                                <div class="thumb img-fluid" style="background-image: url('@Url.Content(String.Format("~/Uploads/" + prod.gallery + "{0}", img.Name))');height:150px;float:left;background-size: cover;"></div>
+                            </a>
+                        }
+                    }
+                    else
+                    { }
+
+                </div>
+
+            </div>
+
+        }
+    </div>
+</section>

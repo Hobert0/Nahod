@@ -1,0 +1,217 @@
+﻿@model Cms.Models.MultipleIndexModel
+@{
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+    ViewBag.Title = "Značky produktov";
+}
+<style>
+    .sidenav > a:nth-child(3) {
+        border-left: 5px solid #00abe8;
+        color: #f1f1f1;
+        background-color: #464646;
+    }
+
+    .dropdown-container2 {
+        display: block;
+    }
+</style>
+
+<h2>Značky produktov</h2>
+
+<hr />
+
+@using (Html.BeginForm("AddBrand", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4>Pridať značku produktov</h4>
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <br />
+        <div class="form-group">
+            <div class="col-md-8" style="padding:0">
+                <div class="form-group">
+                    <div class="col-md-12 btnvyber" style="padding:0">
+                        <a id="btn_vis" style="cursor:pointer">Vyber fotografie</a>
+                        @Html.TextBoxFor(model => model.Brands.TitleImage, "", new { @type = "file", @class = "form-control", @accept = "jpg|png|jpeg|gif", @style = "max-width: 67%;height:60px;display:none;", @id = "bttn", @onchange = "pressed()" })
+                        <label id="fileLabel">Nie je vybratá žiadna fotografia.</label>
+                        @Html.ValidationMessageFor(model => model.Brands.Image, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-8" style="padding:0">
+                @Html.EditorFor(model => model.Brands.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov značky", id = "categoryname" } })
+                @Html.ValidationMessageFor(model => model.Brands.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-8" style="padding:0">
+                @Html.EditorFor(model => model.Brands.Slug, new { htmlAttributes = new { @class = "form-control", placeholder = "Slug", id = "slug", onclick = "createSlug()" } })
+                @Html.ValidationMessageFor(model => model.Brands.Slug, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-8" style="padding:0">
+                @Html.TextAreaFor(model => model.Brands.Description, new { @class = "form-control", placeholder = "Popis značky", id = "overheslo" })
+                @Html.ValidationMessageFor(model => model.Brands.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <input type="submit" value="Pridať značku" class="btn btn-success submitbtn" />
+            </div>
+        </div>
+    </div>
+
+}
+<hr />
+<table class="table" style="">
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Fotografia</th>
+            <th>Názov</th>
+            <th>Slug</th>
+            <th>Popis</th>
+            <th style="text-align:center">Vymazať</th>
+        </tr>
+    </thead>
+    @if (ViewBag.Details == null)
+    {
+        foreach (var item in Model.BrandsModel)
+        {
+<tr>
+    <td>@Html.DisplayFor(modelItem => item.id)</td>
+    <td id="foto-@item.id"><img src="~/Uploads/@Html.DisplayTextFor(modelItem => item.image)" style="height: 40px;" /></td>
+    <td><strong id="name-@item.id">@Html.DisplayFor(modelItem => item.name)</strong></td>
+    <td id="slug-@item.id">@Html.DisplayFor(modelItem => item.slug)</td>
+    <td id="des-@item.id">@Html.DisplayFor(modelItem => item.description)</td>
+    <td align="center"> @Html.ActionLink("Editovať", "EditBrand", "Products", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteBrand", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať túto značku?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete značku." })</td>
+</tr>
+            <tr id="cat-@item.id" style="display: none;">
+                @using (Html.BeginForm("UpdateBrand", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.EditorFor(model => model.BrandsEditModel.Id, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov značky", id = "e-id-" + item.id, style = "display: none;" } })
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <td>
+
+                        @Html.EditorFor(model => model.BrandsEditModel.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov značky", id = "e-name-" + item.id } })
+                        @Html.ValidationMessageFor(model => model.BrandsEditModel.Name, "", new { @class = "text-danger" })
+
+                    </td>
+                    <td>
+
+                        @Html.EditorFor(model => model.BrandsEditModel.Slug, new { htmlAttributes = new { @class = "form-control", placeholder = "Slug", id = "e-slug-" + item.id, onclick = "createSlug()" } })
+                        @Html.ValidationMessageFor(model => model.BrandsEditModel.Slug, "", new { @class = "text-danger" })
+
+                    </td>
+
+                    <td>
+                        @Html.TextAreaFor(model => model.BrandsEditModel.Description, new { @class = "form-control", placeholder = "Popis značky", id = "e-des-" + item.id, value = item.description })
+                        @Html.ValidationMessageFor(model => model.BrandsEditModel.Description, "", new { @class = "text-danger" })
+
+                    </td>
+                    <td>
+                        <div>
+                            <input type="submit" value="Aktualizovať značku" class="btn btn-success" />
+                        </div>
+                    </td>
+
+
+                }
+            </tr>
+        }
+    }
+
+
+</table>
+
+<script>
+    function editCat(id) {
+        if (document.getElementById("cat-" + id + "").style.display == "none") {
+            document.getElementById("cat-" + id + "").style.display = "table-row";
+        } else {
+            document.getElementById("cat-" + id + "").style.display = "none";
+        }
+
+        var name = document.getElementById("name-" + id + "").innerHTML;
+        var slug = document.getElementById("slug-" + id + "").innerHTML;
+        var des = document.getElementById("des-" + id + "").innerHTML;
+        document.getElementById("e-name-" + id + "").value = name;
+        document.getElementById("e-slug-" + id + "").value = slug;
+        document.getElementById("e-des-" + id + "").value = des;
+        document.getElementById("e-id-" + id + "").value = id;
+
+    }
+    function createSlug() {
+        var catName = document.getElementById("categoryname").value;
+        var newSlug = string_to_slug(catName);
+        document.getElementById("slug").value = newSlug;
+    }
+    function string_to_slug(text) {
+        text = text.toString().toLowerCase().trim();
+
+        const sets = [
+            { to: 'a', from: '[ÀÁÂÃÄÅÆĀĂĄẠẢẤẦẨẪẬẮẰẲẴẶ]' },
+            { to: 'c', from: '[ÇĆĈČ]' },
+            { to: 'd', from: '[ÐĎĐÞ]' },
+            { to: 'e', from: '[ÈÉÊËĒĔĖĘĚẸẺẼẾỀỂỄỆ]' },
+            { to: 'g', from: '[ĜĞĢǴ]' },
+            { to: 'h', from: '[ĤḦ]' },
+            { to: 'i', from: '[ÌÍÎÏĨĪĮİỈỊ]' },
+            { to: 'j', from: '[Ĵ]' },
+            { to: 'ij', from: '[Ĳ]' },
+            { to: 'k', from: '[Ķ]' },
+            { to: 'l', from: '[ĹĻĽŁ]' },
+            { to: 'm', from: '[Ḿ]' },
+            { to: 'n', from: '[ÑŃŅŇ]' },
+            { to: 'o', from: '[ÒÓÔÕÖØŌŎŐỌỎỐỒỔỖỘỚỜỞỠỢǪǬƠ]' },
+            { to: 'oe', from: '[Œ]' },
+            { to: 'p', from: '[ṕ]' },
+            { to: 'r', from: '[ŔŖŘ]' },
+            { to: 's', from: '[ßŚŜŞŠ]' },
+            { to: 't', from: '[ŢŤ]' },
+            { to: 'u', from: '[ÙÚÛÜŨŪŬŮŰŲỤỦỨỪỬỮỰƯ]' },
+            { to: 'w', from: '[ẂŴẀẄ]' },
+            { to: 'x', from: '[ẍ]' },
+            { to: 'y', from: '[ÝŶŸỲỴỶỸ]' },
+            { to: 'z', from: '[ŹŻŽ]' },
+            { to: '-', from: '[·/_,:;\']' }
+        ];
+
+        sets.forEach(set => {
+            text = text.replace(new RegExp(set.from, 'gi'), set.to)
+        });
+
+        return text
+            .replace(/\s+/g, '-')    // Replace spaces with -
+            .replace(/[^\w-]+/g, '') // Remove all non-word chars
+            .replace(/--+/g, '-')    // Replace multiple - with single -
+            .replace(/^-+/, '')      // Trim - from start of text
+            .replace(/-+$/, '')      // Trim - from end of text
+
+    }
+</script>
+
+<script>
+    $("#btn_vis").click(function () {
+        $("#bttn").trigger('click');
+    });
+
+    window.pressed = function () {
+        var a = document.getElementById('bttn');
+        if (a.files.length > 1) {
+            fileLabel.innerHTML = "Boli vybraté " + a.files.length + " fotografie.";
+        }
+        else if (a.files.length = 1) {
+            fileLabel.innerHTML = "Bola vybratá " + a.files.length + " fotografia.";
+        }
+    };
+
+</script>

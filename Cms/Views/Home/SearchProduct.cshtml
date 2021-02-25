@@ -1,0 +1,28 @@
+﻿@model Cms.Models.MultipleIndexModel
+@{
+    var search = ViewData["Search"].ToString();
+    ViewBag.Title = "Výsledky vyhľadávania: " + search + " - ";
+}
+<style>
+    #front-picture, #services {
+        display: none !important;
+    }
+</style>
+<div class="row py-0 py-sm-4">
+    @{
+        Html.RenderPartial("_SidebarCategories");
+    }
+    <div class="col-md-8">
+        <h2>Výsledky vyhľadávania: <i>@search</i></h2>
+        @if (!Model.ProductsPaged.Any())
+        {
+            <p>Požadovaný produkt sa nenašiel.</p>
+        }
+        @{
+            Html.RenderPartial("_ProductGrid");
+        }
+
+    </div>
+
+</div>
+<script src="~/Scripts/add_to_session.js"></script>

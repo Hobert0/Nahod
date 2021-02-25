@@ -1,0 +1,62 @@
+﻿@using Cms.Models
+@using System.Web.Script.Serialization
+@model Cms.Models.MultipleIndexModel
+@{
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+    ViewBag.Title = "Produkty vo wishliste";
+
+
+
+}
+
+    <h2>Produkty vo wishliste</h2>
+
+<table class="table" style="">
+    <thead class="thead-dark autoprofblue">
+        <tr>
+            <th>Produkt</th>
+            <th>Množstvo</th>
+            <th>Veľkosti</th>
+            <th>Cena</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+            @if (ViewBag.Details == null)
+            {
+
+                var item = Model.AllWishlistModel.Single();
+
+                JavaScriptSerializer js = new JavaScriptSerializer();
+
+                dynamic json = js.Deserialize<dynamic>(item.data);
+
+
+                foreach (var polozka in json)
+                {
+
+                    var product = "";
+                    var size = "";
+                    var size2 = "";
+                    var quantity = "";
+
+                    product = polozka["product"].ToString();
+                    quantity = polozka["quantity"].ToString();
+                    size = polozka["size"].ToString();
+                    size2 = polozka["size2"].ToString();
+
+                    var produkt = Model.ProductModel.Where(i => i.id == Int32.Parse(product)).Single();
+
+                    
+
+                    <tr>
+                        <td><a href="@Url.Action("ProductDetail", "Home", new { id = produkt.id })">@produkt.title</a></td>
+                        <td>@quantity</td>
+                        <td>@size @size2</td>
+                        <td>@produkt.price €</td>
+                    </tr>
+                }
+            }
+        
+    </tbody>
+</table>

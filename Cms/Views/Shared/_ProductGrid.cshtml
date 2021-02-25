@@ -1,0 +1,108 @@
+﻿@model Cms.Models.MultipleIndexModel
+@using System.Globalization
+@using Cms.Controllers
+@using PagedList.Mvc;
+
+@{
+    HelperController helper = new HelperController();
+    var count = 0;
+    var variableproduct = "false";
+    var isvariablecolor = "false";
+
+    var catID = 0;
+    if (ViewData["CatId"] != null && ViewData["CatId"] != "")
+    {
+        catID = Int32.Parse(ViewData["CatId"].ToString());
+    }
+
+}
+
+<div class="row py-4">
+
+    @foreach (var item in Model.ProductsPaged.OrderByDescending(i => i.id))
+    {
+        var price = item.price.ToString();
+        var discountprice = price;
+        var slug = helper.ToUrlSlug(item.title);
+        var brandID = Int32.Parse(item.custom3);
+        var brand = Model.BrandsModel.Where(i => i.id == brandID).SingleOrDefault().name;
+        variableproduct = "false";
+        isvariablecolor = "false";
+
+        if (item.custom4 != null && item.custom4 != "")
+        {
+            variableproduct = "true";
+        }
+        if (item.custom7 != null)
+        {
+            isvariablecolor = "true";
+        }
+        <div class="col-6 col-md-6 col-lg-4 productcontent" vyrobca="@brand" typ="@item.custom8" vykon="@item.custom9" rozloha="@item.custom10">
+            <div style="overflow:hidden;">
+                <a href="@Url.Action("ProductDetail", "Home", new { id = item.id, slug = slug })" class="product_detail">
+                    <div class="thumb" style="background-image: url('/Uploads/@Html.DisplayFor(modelItem => item.image)');height: 320px;background-size: contain;"></div>
+                </a>
+                @if (item.price == "0") //ak je zadana suma nula
+                {
+                    if (item.custom6 != null && (item.custom6).ToString() == "True") //ak je zadane ze cena je od
+                    {
+                        <a href="@Url.Action("ProductDetail", "Home", new { id = item.id, slug = slug })" id="" style="cursor: pointer;" class="col-sm-2 col-4 cartproduct"><div style="text-align: center;"><img src="~/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>
+                    }
+
+                    <a href="@Url.Action("ProductDetail", "Home", new { id = item.id, slug = slug })" id="" style="cursor: pointer;" class="col-sm-2 col-4 cartproduct"><div style="text-align: center;"><img src="~/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>
+
+                }
+                else //ak je cena v pohode
+                {
+                    <a onclick="addToCart(@item.id,@variableproduct,@isvariablecolor)" style="cursor: pointer;" class="col-sm-2 col-4 cartproduct"><div style="text-align: center;"><img src="~/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>
+                }
+            </div>
+            <a href="@Url.Action("ProductDetail", "Home", new { id = item.id, slug = slug })" class="product_detail">
+                <p class="title category" style="line-height: 18px;">@Html.DisplayFor(modelItem => item.title)</p>
+            </a>
+
+
+            <div style="display: flex;">
+                <div class="col price">
+
+                    @if (item.discountprice != "" && item.discountprice != null)
+                    {
+                        <span>@decimal.Parse(item.discountprice, CultureInfo.InvariantCulture).ToString("#.00")€</span>
+                        <del>@decimal.Parse(item.price, CultureInfo.InvariantCulture).ToString("#.00")€</del>
+                    }
+                    else
+                    {
+                        if (item.custom6 != null && (item.custom6).ToString() == "True")
+                        {
+                            <span>od @decimal.Parse(item.price, CultureInfo.InvariantCulture).ToString("#.00")€</span>
+                        }
+                        else
+                        {
+                            if (item.price == "0")
+                            {
+                                <span>Cena na vyžiadanie</span>
+                            }
+                            else
+                            {
+                                <span>@decimal.Parse(item.price, CultureInfo.InvariantCulture).ToString("#.00")€</span>
+                            }
+
+                        }
+                    }
+
+                </div>
+
+            </div>
+        </div>
+        count++;
+
+    }
+
+
+
+    @foreach (var cat in Model.CategoriesModel.Where(o => o.id == catID))
+    {
+        @Html.PagedListPager(Model.ProductsPaged, page => Url.Action("Category", new { kategoria = @Html.Raw(cat.name), id = catID.ToString(), page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+    }
+</div>

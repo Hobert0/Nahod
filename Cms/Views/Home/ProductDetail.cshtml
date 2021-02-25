@@ -1,0 +1,488 @@
+﻿@using System.Globalization
+@model Cms.Models.MultipleIndexModel
+
+@{
+var category = "";
+var id = "";
+List<SelectListItem> emptylist = new List<SelectListItem>();
+	bool isvariableproduct = false;
+	bool isvariablecolor = false;
+	var variableproduct = "false";
+	var isvariablecolors = "false";
+	}
+	<style>
+		#front-picture, #services {
+			display: none !important;
+		}
+	</style>
+
+	@if (Request.Params["sent"] == "true")
+	{
+	<div class="alert alert-success" role="alert">
+		Vaša žiadosť bola odoslaná.
+	</div>
+	}
+
+	<section id="product">
+		<div class="container">
+
+			@if (ViewBag.Detaily != null)
+			{
+
+			foreach (var prod in (IEnumerable<Cms.Models.products>)ViewBag.Detaily)
+			{
+			var desc = Html.Raw(prod.description).ToString();
+			ViewBag.Title = prod.title + " -";
+			ViewBag.Image = "https://shop.bimklima.sk/Uploads/" + prod.image;
+			ViewBag.Description = desc;
+			category = prod.category;
+			id = prod.id.ToString();
+			<script>
+				var id = @id;
+			</script>
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item" style="text-decoration: underline"><a href="\">Domov</a></li>
+					@foreach (var cat in Model.CategoriesModel.Where(i => i.id == Int32.Parse(prod.category)))
+					{
+					foreach (var topcat in Model.CategoriesModel.Where(o => o.name == cat.name))
+					{
+					var categoryname = "";
+					if (topcat.maincat == "Žiadna")
+					{ categoryname = topcat.name; }
+					else
+					{
+					categoryname = topcat.maincat;
+					}
+
+					<li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(topcat.slug) })">@categoryname</a></li>
+					if (topcat.maincat != "Žiadna") {
+					foreach (var subcat in Model.CategoriesModel.Where(o => o.name == cat.name && o.maincat == cat.maincat))
+					{
+					<li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(topcat.slug), subslug = @Html.Raw(subcat.slug) })">@subcat.name</a></li>
+
+					@*<li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(topcat.slug), subslug = @Html.Raw(subcat.slug), subslug2 = @Html.Raw(cat.slug) })">@cat.name</a></li>*@
+					}
+					}
+					}
+					}
+					<li class="breadcrumb-item active" aria-current="page">@prod.title</li>
+				</ol>
+			</nav>
+
+			<div class="row product-detail">
+				<div class="col-12 col-md-6">
+
+					<div class="show-mobile">
+						<h2 class="pb-2">@prod.title</h2><br/>
+					</div>
+
+					<a href="~/Uploads/@prod.image" data-toggle="lightbox" data-gallery="example-gallery">
+						<img src="~/Uploads/@prod.image" alt="@prod.title" style="width: 90%;" class="galleryimg" />
+					</a>
+					@if (Directory.Exists(Server.MapPath("~/Uploads/" + prod.gallery)))
+					{
+					foreach (var imgPath in Directory.GetFiles(Server.MapPath("~/Uploads/" + prod.gallery)))
+					{
+					var img = new FileInfo(imgPath);
+					<a href="@Url.Content(String.Format("~/Uploads/" + prod.gallery + "{0}", img.Name))" data-toggle="lightbox" data-gallery="example-gallery" style="padding:5px 1px 0 0;display: inline-block;width:22%;">
+					<img style="width:100%; height:120px;float:left;object-fit: cover;" src="@Url.Content(String.Format("~/Uploads/" + prod.gallery + "{0}", img.Name))" class="img-fluid galleryimg-small" />
+					</a>
+					}
+					}
+					else
+					{ }
+
+					<br>
+					<br>
+				</div>
+				<div class="col-12 col-md-6">
+					<div class="hide-mobile">
+						<h2 class="pb-2 hide-mobile">@prod.title</h2>
+					</div>
+					<p style="font-size: 12px;"><strong>Kód produktu: </strong>@prod.number<br /></p>
+					<p>@Html.Raw(prod.description)<br/><br/></p>
+
+					<hr />
+					<p style="font-size: 16px;">
+						@{ var onStock = "";
+						if (prod.custom1 == "" || prod.custom1 == null)
+						{
+						prod.custom1 = "20";
+						}
+						if (prod.stock != null && prod.stock != "")
+						{
+						if (decimal.Parse(prod.stock) > decimal.Parse(prod.custom1))
+						{
+						onStock = "<span style='color:#1e7e34;'>Produkt je na sklade</span>";
+						}
+						else if (decimal.Parse(prod.stock) <= decimal.Parse(prod.custom1) && decimal.Parse(prod.stock) > 0)
+						{
+						onStock = "<span style='color:#e89300;'>Pozor, skladom menej ako " + prod.stock + " ks</span>";
+						}
+						else if (decimal.Parse(prod.stock) == 0)
+						{
+						onStock = "<span style='color:#008fd3;'>Momentálne vypredané</span>";
+						}
+						else if (decimal.Parse(prod.stock) < 0)
+						{
+						onStock = "<span>Produkt na objednávku</span>";
+						}
+
+						}
+						else
+						{
+						onStock = "<span style='color:#1e7e34;'>Produkt je na sklade</span>";
+						}
+						}
+						<strong>Dostupnosť: </strong>@Html.Raw(onStock)<br />
+						@foreach (var brand in Model.BrandsModel.Where(i => i.id == Int32.Parse(prod.custom3)))
+						{
+						<strong>Výrobca: </strong>@Html.Raw(brand.name)<br />
+						}
+						@Html.Raw((prod.custom8 != "" && prod.custom8 != null) ? "<strong>Typ: </strong>" + Html.Raw(prod.custom8) + "<br />" : "")
+						@Html.Raw((prod.custom9 != "" && prod.custom9 != null) ? "<strong>Výkon: </strong>" + Html.Raw(prod.custom9) + " kW<br />" : "")
+						@Html.Raw((prod.custom10 != "" && prod.custom10 != null) ? "<strong>Rozloha miestnosti: </strong>" + Html.Raw(prod.custom10) + " m<sup>2</sup><br />" : "")
+
+					<hr />
+
+					<div class="clearfix"></div>
+					@{ decimal cena = 0;
+					decimal povodnacena = 0;
+					}
+
+					<div class="product-cart-container">
+
+						@if (prod.discountprice != null && prod.discountprice != "")
+						{
+						cena = decimal.Parse(prod.discountprice, CultureInfo.InvariantCulture);
+						<p style="text-align: right;font-size:25px; margin: 20px 0 0;color: #008fd3;">Akciová cena <strong style="font-size:30px;">@cena.ToString("N2") €</strong> </p>
+						}
+						@{
+						if (prod.discountprice != null && prod.discountprice != "")
+						{
+						povodnacena = decimal.Parse(prod.price, CultureInfo.InvariantCulture);
+						<div style="text-align: right;font-size:25px;">
+							<strong><del>@povodnacena.ToString("N2") €</del></strong>
+						</div>
+						}
+						else
+						{
+						cena = decimal.Parse(prod.price, CultureInfo.InvariantCulture);
+						if ((prod.custom6).ToString() == "True")
+						{
+						<div style="text-align: right;font-size:30px;color: #008fd3;"><strong>od @cena.ToString("N2") €</strong></div>
+						}
+						else
+						{
+						if (prod.price == "0")
+						{
+						<div style="text-align: right;font-size:25px;color: #008fd3;"><strong>Cena na vyžiadanie</strong></div>
+						}
+						else
+						{
+						<div style="text-align: right;font-size:30px;color: #008fd3;"><strong>@cena.ToString("N2") €</strong></div>
+						}
+
+						}
+
+
+						}
+
+						var cenabezdph = Convert.ToDecimal(cena * 100 / 120).ToString("N");
+
+						if (prod.price == "0")
+						{
+						//hlaska na vyjadrenie co tu ak je na vyziadanie
+						}
+						else
+						{
+						<p style="font-size: 14px; text-align: right;">cena bez DPH @(cenabezdph) €</p>
+						}
+
+
+						if (prod.price == "0") //ak je zadana suma nula
+						{
+						if (prod.custom6 != null && (prod.custom6).ToString() == "True") //ak je zadane ze cena je od
+						{
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalForAsk">
+							Vyžiadať cenu
+						</button>
+						}
+
+						<button type="button" class="btn btn-color addtocart" data-toggle="modal" data-target="#myModalForAsk">
+							<img src="/Content/images/Infobox_info_icon_white.svg" style="width: 20px;" alt="search">Vyžiadať cenu
+						</button>
+						}
+						else //ak je cena normalna
+						{
+						<div class="product-cart row">
+							<div class="col-lg-4 col-sm-6 col-12 product-variation">
+								<p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;">MNOŽSTVO</p>
+								<div class="cart-item-amount">
+									<button type="button" class="inc button">−</button>
+									<input type="number" name="amount[1050506]" value="1" min="1" max="30000" class="" id="quantity">
+									<button type="button" class="dec button">+</button>
+								</div>
+							</div>
+							<div class="add-to-cart col-lg-8">
+								<button id="addproductbtn" isvariableproduct="@isvariableproduct.ToString()" isvariablecolor="@isvariablecolor.ToString()" class="btn btn-color addtocart"><img src="/Content/images/cart_white.svg" style="width: 20px;" alt="search">PRIDAŤ DO KOŠÍKA</button>
+
+							</div>
+						</div>
+
+						}
+
+						<div class="clearfix"></div>
+
+						<div id="result"></div>
+						}
+
+					</div>
+				</div>
+			</div>
+			}
+			}
+			<div class="py-4 suggested-products">
+				<h2>Odporúčané produkty</h2>
+				<hr />
+				<div class="row">
+					@if (ViewBag.Details == null)
+					{
+					int counter = 0;
+					foreach (var item in Model.ProductModel.OrderBy(x => Guid.NewGuid()).Where(i => i.recommended).Take(4))
+					{
+					var price = item.price;
+					var discountprice = price;
+					variableproduct = "false";
+					if (item.custom4 != null && item.custom4 != "")
+					{
+					variableproduct = "true";
+					}
+					if (item.custom7 != null)
+					{
+					isvariablecolors = "true";
+					}
+					<div class="col-6 col-sm-3 bluebg">
+						<a href="@Url.Action("ProductDetail", "Home", new{ id= item.id})" class="product_detail">
+						<div style="overflow:hidden;">
+										<div class="thumb" style="background-image: url('/Uploads/@Html.DisplayFor(modelItem => item.image)');height: 320px;background-size: contain;"></div>
+							@if (item.price == "0") //ak je zadana suma nula
+							{
+							if (item.custom6 != null && (item.custom6).ToString() == "True") //ak je zadane ze cena je od
+							{
+							<a href="@Url.Action("ProductDetail", "Home", new { id = item.id })" id="" style="cursor: pointer;" class="col-sm-3 col-4 cartproduct"><div style="text-align: center;"><img src="~/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>
+							}
+
+							<a href="@Url.Action("ProductDetail", "Home", new { id = item.id })" id="" style="cursor: pointer;" class="col-sm-3 col-4 cartproduct"><div style="text-align: center;"><img src="~/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>
+
+							}
+							else //ak je cena v pohode
+							{
+							<a onclick="addToCart(@item.id,@variableproduct, @isvariablecolors)" style="cursor: pointer;" class="col-sm-3 col-4 cartproduct"><div style="text-align: center;"><img src="~/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>
+							}
+						</div>
+						<p class="title">@Html.DisplayFor(modelItem => item.title)</p>
+						</a>
+						<div style="display: flex;">
+							<div class="col price">
+								@if (item.discountprice != "" && item.discountprice != null)
+								{
+								<span>@decimal.Parse(item.discountprice, CultureInfo.InvariantCulture).ToString("#.00")€</span>
+								<del>@decimal.Parse(item.price, CultureInfo.InvariantCulture).ToString("#.00")€</del>
+								}
+								else
+								{
+								if (item.custom6 != null && (item.custom6).ToString() == "True")
+								{
+								<span>od @decimal.Parse(item.price, CultureInfo.InvariantCulture).ToString("#.00")€</span>
+								}
+								else
+								{
+								if (item.price == "0")
+								{
+								<span>Cena na vyžiadanie</span>
+								}
+								else
+								{
+								<span>@decimal.Parse(item.price, CultureInfo.InvariantCulture).ToString("#.00")€</span>
+								}
+
+								}
+
+								}
+							</div>
+
+						</div>
+					</div>
+					counter++;
+
+					}
+					}
+
+
+
+				</div>
+
+			</div>
+		</div>
+	</section>
+
+	<!-- The Modal -->
+	<div id="myModalForAsk" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+
+		<!-- Modal content -->
+		<div class="modal-login container">
+			<div class="row" style="display: block;">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			@using (Html.BeginForm("askForPrice", "Products", new { id = id }, FormMethod.Post, new { enctype = "multipart/form-data", @class = "text-center" }))
+			{
+			foreach (var prod in (IEnumerable<Cms.Models.products>)ViewBag.Detaily)
+			{
+			var validationEmail = "";
+			if (Model.AllUsersMetaModel != null)
+			{
+			foreach (var user in Model.AllUsersMetaModel)
+			{
+			validationEmail = user.email;
+			}
+			}
+			<h3>Vaše informácie</h3>
+			<hr />
+			<div class="row">
+
+				<div class="col-12">
+
+					@Html.AntiForgeryToken()
+
+					<div class="form-horizontal">
+
+						@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+						@Html.LabelFor(model => model.EmailSendModel.Subject, "Predmet", htmlAttributes: new { @class = "control-label" })
+
+						<div class="form-group row ml-0 p-0 col mb-1">
+							<div class="col-md-8 p-0" style="margin: 0 auto;">
+								@Html.EditorFor(model => model.EmailSendModel.Subject, new { htmlAttributes = new { @class = "form-control", @Value = "Žiadam o cenu produktu: " + prod.title } })
+								@Html.ValidationMessageFor(model => model.EmailSendModel.Subject, "", new { @class = "text-danger" })
+							</div>
+						</div>
+						@Html.LabelFor(model => model.EmailSendModel.Email, "Váš e-mail", htmlAttributes: new { @class = "control-label" })
+
+						<div class="form-group row ml-0 p-0 col mb-1">
+							<div class="col-md-8 p-0" style="margin: 0 auto;">
+								@Html.EditorFor(model => model.EmailSendModel.Email, new { htmlAttributes = new { @class = "form-control", @Value = validationEmail } })
+								@Html.ValidationMessageFor(model => model.EmailSendModel.Email, "", new { @class = "text-danger" })
+							</div>
+						</div>
+
+					</div>
+					@Html.LabelFor(model => model.EmailSendModel.Message, "Správa", htmlAttributes: new { @class = "control-label" })
+
+					<div class="form-group row ml-0 p-0 col mb-1">
+						<div class="col-md-8 p-0" style="margin: 0 auto;">
+							@Html.TextAreaFor(model => model.EmailSendModel.Message, htmlAttributes: new { @class = "form-control", @rows = "5" })
+							@Html.ValidationMessageFor(model => model.EmailSendModel.Message, "", new { @class = "text-danger" })
+						</div>
+					</div>
+					<br />
+					<div class="form-group">
+						<div class="right">
+							<input type="submit" value="Vyžiadať cenu" class="btn btn-color col-5" />
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+
+			}
+			}
+		</div>
+
+	</div>
+
+	@foreach (var prod in (IEnumerable<Cms.Models.products>)ViewBag.Detaily)
+		{
+		<script>
+			/*GET SIZES from database*/
+
+			if ('@prod.custom4' != "") {
+
+				var j = '@Html.Raw(prod.custom4)';
+				var json = $.parseJSON(j);
+				var countofsize = json.length;
+				var inputs = "";
+				var selectbox = document.getElementsByClassName('select-box')[0];
+				var selectbox2 = document.getElementsByClassName('select-box2')[0];
+
+				json = Array.from(new Set(json.map(x => x.size1))).map(size1 => { return {size1: json.find(s => s.size1 === size1).size1}});
+
+				$(json).each(function(i, val) {
+					if (val.size2 == null && isNaN(val.size1)) {
+						var option = document.createElement("option");
+						option.value = val.size1;
+						option.text = val.size1;
+						selectbox.appendChild(option);
+					} else if (val.size2 == null && !isNaN(val.size1)) {
+						var option = document.createElement("option");
+						option.value = val.size1;
+						option.text = val.size1;
+						selectbox.appendChild(option);
+					} else {
+						var option = document.createElement("option");
+						option.value = val.size1;
+						option.text = val.size1;
+						selectbox.appendChild(option);
+					}
+				});
+
+
+			}
+			function showSize() {
+				var j = '@Html.Raw(prod.custom4)';
+				var json = $.parseJSON(j);
+				var selectbox = document.getElementsByClassName('select-box')[0].value;
+				var selectbox2 = document.getElementsByClassName('select-box2')[0];
+				selectbox2.options.length = 0;
+
+				$(json).each(function(i, val) {
+					if (val.size1 == selectbox && val.size2 != null ) {
+						var option = document.createElement("option");
+						option.value = val.size2;
+						option.text = val.size2;
+						selectbox2.appendChild(option);
+						selectbox2.style.display = "block";
+					} else{
+					}
+				});
+			}
+
+			/*GET COLORS from database*/
+
+			if ('@prod.custom7' != "") {
+
+				var j = '@Html.Raw(prod.custom7)';
+				var json = $.parseJSON(j);
+				var countofsize = json.length;
+				var inputs = "";
+				var selectbox = document.getElementsByClassName('color-box')[0];
+
+				json = Array.from(new Set(json.map(x => x.color))).map(color=> { return {color: json.find(s => s.color === color).color}});
+
+				$(json).each(function(i, val) {
+					var option = document.createElement("option");
+					option.value = val.color;
+					option.text = val.color;
+					selectbox.appendChild(option);
+				});
+
+
+			}
+		</script>
+		}
+		<script src="~/Scripts/add_product_to_cart.js"></script>
+
+

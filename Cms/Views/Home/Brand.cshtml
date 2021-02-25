@@ -1,0 +1,53 @@
+﻿@using System.Collections
+@using Cms.Controllers
+@model Cms.Models.MultipleIndexModel
+@{
+    var kategoria = ViewData["Category"].ToString();
+    var catID = Int32.Parse(ViewData["CatId"].ToString());
+    HelperController helper = new HelperController();
+}
+<style>
+    #front-picture, #services {
+        display: none !important;
+    }
+
+    .pricerange{padding-left:.5rem !important;}
+</style>
+<div class="row py-0 py-sm-4">
+
+    @{
+        Html.RenderPartial("_SidebarCategories");
+    }
+
+    <div class="col-md-9">
+        @foreach (var cat in Model.BrandsModel.Where(i => i.id == catID))
+        {
+            ViewBag.Title = cat.name + " -";
+            ViewBag.Description = cat.description;
+            <h2>@Html.Raw(cat.name)</h2>
+            <div class="row">
+                <div class="col-4">
+                    <img src="/Uploads/@cat.image" alt="@cat.name" class="w-100" />
+                </div>
+                <div class="col-8">
+                    <p class="text-justify p-4">@Html.Raw(cat.description)</p>
+                </div>
+            </div>
+
+        }
+
+        @{
+            Html.RenderPartial("_Filter");
+        }
+        <div id="ajaxProducts"></div>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination" id="pagination">
+            </ul>
+        </nav>
+
+    </div>
+
+</div>
+<script src="~/Scripts/fetchProducts.js"></script>
+<script src="~/Scripts/add_to_session.js"></script>

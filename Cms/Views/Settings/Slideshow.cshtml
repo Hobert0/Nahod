@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Cms.Models.SlideshowModel>
+@{
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+    ViewBag.Title = "Slideshow";
+}
+<style>
+    .sidenav a:nth-child(7) {
+        border-left: 5px solid #9706bb;
+        color: #f1f1f1;
+        background-color: #464646;
+    }
+
+    .dropdown-container {
+        display: block;
+    }
+</style>
+
+<h2>Nastavenie slideshow</h2>
+<hr />
+
+<table class="table" style="">
+    <p class="mb-0 mt-1" style="font-size:15px;">Nektívne slideshow sú zvýraznené <strong>červenou farbou.</strong></p>
+    <table class="table" style="">
+        <thead class="thead-dark autoprofblue">
+            <tr>
+                <th>Názov</th>
+                <th>Počet slidov</th>
+                <th style="text-align:center">Editovať</th>
+                <th style="text-align:center">Aktivovať/Deaktivovať</th>
+            </tr>
+        </thead>
+        @if (ViewBag.Details == null)
+        {
+            foreach (var group in Model.GroupBy(item => item.Title).Distinct())
+            {
+                foreach (var item in group.GroupBy(item => item.Active))
+                {
+                    @(item.Key == 0 ? Html.Raw("<tr style='background-color:#ffe9e9 !important;'>") : Html.Raw("<tr>"))
+                }
+                <td><strong>@Html.Raw(group.Key)</strong></td>
+                <td style="background-color: lightyellow;text-align: center;"><strong>@Html.Raw(group.Count())</strong></td>
+                foreach (var item in group.GroupBy(item => item.Page))
+                {
+                    <td align="center">@Html.ActionLink("Editovať slideshow", "EditSlideshow", new { stranka = item.Key }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" })</td>
+                    <td align="center">@Html.ActionLink("✔", "ActivateSlideshow", new { stranka = item.Key })</td>
+
+                }
+                foreach (var item in group.GroupBy(item => item.Active))
+                {
+                    @(item.Key == 1 ? Html.Raw("</tr>") : Html.Raw("</tr>"))
+                }
+
+
+
+
+            }
+        }
+
+
+    </table>
+
+
+</table>

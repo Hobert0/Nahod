@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Example 2</title>
+    <style>
+ 
+        .clearfix:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        a {
+            color: #0087C3;
+            text-decoration: none;
+        }
+
+        .body {
+            position: relative;
+            width: 100%;
+            height: auto;
+            margin: 0 auto;
+            color: #555555;
+            background: #FFFFFF;
+        }
+        .header {
+            padding: 15px 0 10px;
+            border-bottom: 1px solid #AAAAAA;
+            width: 100%;
+        }
+
+        #logo {
+            float: left;
+            text-align: left;
+        }
+
+            #logo img {
+                width: 150px;
+            }
+
+        #company {
+            float: right;
+            text-align: right;
+        }
+
+
+        #details {
+            margin-top: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        #client {
+            padding-left: 6px;
+            border-left: 6px solid #0087C3;
+            float: left;
+            text-align: left;
+            color: #777777;
+        }
+
+        #to {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        #too {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+
+
+        h2.name {
+            font-size: 1.4em;
+            font-weight: normal;
+            margin: 0;
+        }
+
+        #invoice {
+            float: right;
+            text-align: right;
+        }
+
+            #invoice h2 {
+                color: #0087C3;
+                font-size: 20px;
+                font-weight: normal;
+                margin: 0;
+            }
+
+            #invoice .date {
+                color: #777777;
+            }
+
+        table {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        table tr td:last-child {
+            border: none;
+        }
+
+       #thanks {
+            font-size: 1.5em;
+            margin-bottom: 50px;
+        }
+        #tabulka {
+            padding: 0;
+        }
+
+        #notices {
+            padding-left: 6px;
+            border-left: 6px solid #0087C3;
+        }
+
+        #bottom {
+            margin-top: 50px;
+        }
+
+            #notices .notice {
+                font-size: 1.2em;
+            }
+
+        .footer {
+            color: #777777;
+            width: 100%;
+            height: 30px;
+            position: absolute;
+            bottom: 0;
+            border-top: 1px solid #AAAAAA;
+            padding: 8px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="body">
+    <div class="clearfix header" width="100%">
+        <table>
+            <tr>
+                <td id="logo">
+                        <!-- LOGO - ZMENIT -->
+                        <img src="https://shop.bimklima.sk/content/images/logo.png" alt="" title="" />
+                </td>
+                <td id="company">
+                        {CompanyData}
+                        <div>{CustomerService}</div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="main" width="100%">
+        <table id="details" class="clearfix">
+            <tr>
+                <td id="client">
+                    <p id="to">Odberateľ:</p><h2 class="name">{FirstName} {Surname}</h2><div class="address">{Address}, {Zip} {City}</div><div class="email">{Email}</div><div>Názov firmy: {Company}</div><div>IČO: {ICO}</div><div>DIČ: {DIC}</div><div>IČ DPH: {ICDPH}</div>
+                </td>
+                <td id="invoice">
+                    <h2>Faktúra č. {OrderNumber}</h2><div>Dátum: {Date}</div>
+                </td>
+            </tr>
+        </table>
+        <table width="600" cellspacing="0">
+            <tr>
+                <td><p id="too">Dátum vystavenia:</p>{Date}</td>
+                <td><p id="too">Dátum dodania:</p>{Date}</td>
+                <td><p id="too">Dátum splatnosti:</p>14 dní od objednávky</td>
+            </tr>
+        </table>
+        <div id="tabulka">
+            <table width="600" cellspacing="0" border="0">
+                <tr style="font-family:Arial,Helvetica,Verdana,sans-serif;font-size:10px">
+                    <th width="10" class="m_7781255819648751505item-table-padding" align="left" valign="middle" style="width:9px;border-bottom:1px solid #c8c8c8;padding-top:12px;padding-bottom:12px;text-align:left;font-weight:bold;text-transform:uppercase"> </th>
+                    <th align="left" valign="middle" style="border-bottom:1px solid #c8c8c8;padding-top:12px;padding-bottom:12px;text-align:left;font-weight:bold;text-transform:uppercase">NÁZOV</th>
+                    <th align="left" valign="middle" style="border-bottom:1px solid #c8c8c8;padding-top:12px;padding-bottom:12px;text-align:left;font-weight:bold;text-transform:uppercase">Výkon</th>
+                    <th align="left" valign="middle" style="border-bottom:1px solid #c8c8c8;padding-top:12px;padding-bottom:12px;text-align:left;font-weight:bold;text-transform:uppercase">MNOŽSTVO</th>
+                    <th width="65" align="center" valign="middle" style="border-bottom:1px solid #c8c8c8;padding-top:12px;padding-bottom:12px;text-align:left;font-weight:bold;text-transform:uppercase">CENA</th>
+                    <th width="10" class="m_7781255819648751505item-table-padding" align="left" valign="middle" style="width:50px;border-bottom:0px solid #c8c8c8;text-transform:uppercase;padding-top:12px;padding-bottom:12px;text-align:left;font-weight:bold"> </th>
+                </tr>
+
+                {Products}
+            </table>
+            <br style="line-height:20px">
+
+            <table width="800">
+                <tr style="font-family:Arial,Helvetica,Verdana,sans-serif; font-size: 11px;">
+                    <td width="200" style="margin-top:0;margin-bottom:0; color:#000000; line-height: 1.36;"> </td>
+                    <td style="margin-top:0; margin-bottom:0; color:#000000; line-height: 1.36;">
+                        <table align="right" cellspacing="0" cellpadding="0" border="0" style="text-transform:uppercase">
+                            <tr style="font-family:Arial,Helvetica,Verdana,sans-serif; font-size: 11px;">
+                                <td nowrap align="right" style="margin-top:0; margin-bottom:0; color:#000000; line-height:16px;  padding-top:11px;">PLATBA:  {PaymentPrice} €</td>
+                            </tr>
+                            <tr style="font-family:Arial,Helvetica,Verdana,sans-serif; font-size: 11px;">
+                                <td nowrap align="right" style="margin-top:0; margin-bottom:0; color:#000000; line-height:16px;">
+                                    DORUČENIE:  {ShippingPrice} €
+                                </td>
+                            </tr>
+                            <tr style="font-family:Arial,Helvetica,Verdana,sans-serif; font-size: 11px;">
+                                <td align="right" style="margin-top:0; margin-bottom:0; color:#000000; line-height:16px; border-top:1px solid #c8c8c8; padding-top:11px; font-weight: bold;">
+                                    <p style="font-size: 13px;font-weight: bold; padding: 0; margin-bottom: 0;">ZÁKLAD 20%: {FinalpriceNoDPH} €</p>
+                                    <p id="too" style="margin-top: 0;">DPH 20%: {DPH} €</p>
+                                    <p id="too" style="margin-top: 0;">CELKOM S DPH:  {Finalprice} €</p>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                    <td width="25"> </td>
+                </tr>
+            </table>
+        </div>
+        <br />
+        <div id="bottom">
+            <div id="thanks">Ďakujeme!</div>
+            <div id="notices">
+                <div style="font-weight: bold;">POKYNY K PLATBE:</div>
+                <div class="notice">IBAN: {IBAN}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;VARIABILNÝ SYMBOL: {OrderNumber}</div>
+            </div>
+
+            <div class="footer">
+                Created by HOBERTO.com
+            </div>
+        </div>
+    </div>
+</body>
+</html>

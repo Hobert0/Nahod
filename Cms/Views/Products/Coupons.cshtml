@@ -1,0 +1,143 @@
+﻿@model Cms.Models.MultipleIndexModel
+@{
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+    ViewBag.Title = "Zľavové kupóny";
+}
+<style>
+    .sidenav > a:nth-child(3) {
+        border-left: 5px solid #00abe8;
+        color: #f1f1f1;
+        background-color: #464646;
+    }
+
+    .dropdown-container2 {
+        display: block;
+    }
+</style>
+
+<h2>Zľavové kupóny</h2>
+
+<hr />
+
+@using (Html.BeginForm("AddCoupon", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4>Pridať značku produktov</h4>
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-8" style="padding:0">
+                @Html.EditorFor(model => model.Coupons.Coupon, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov kupónu", id = "categoryname" } })
+                @Html.ValidationMessageFor(model => model.Coupons.Coupon, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-8" style="padding:0">
+                @Html.EditorFor(model => model.Coupons.Amount, new { htmlAttributes = new { @class = "form-control", placeholder = "Percentuálna hodnota zľavy", id = "slug"} })
+                @Html.ValidationMessageFor(model => model.Coupons.Amount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-8" style="padding:0">
+                @Html.TextAreaFor(model => model.Coupons.Limit, new { @class = "form-control", placeholder = "Limit použitia kupónu (0 = neobmedzené použitie)", id = "overheslo" })
+                @Html.ValidationMessageFor(model => model.Coupons.Limit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <input type="submit" value="Pridať značku" class="btn btn-success submitbtn" />
+            </div>
+        </div>
+    </div>
+
+}
+<hr />
+<table class="table" style="">
+    <thead class="thead-dark">
+        <tr>
+            <th>Kupón</th>
+            <th>Percentuálna zľava (%)</th>
+            <th>Limit použitia</th>
+            <th>Kupón je aktívny?</th>
+            <th style="text-align:center">Vymazať</th>
+        </tr>
+    </thead>
+    @if (ViewBag.Details == null)
+    {
+        foreach (var item in Model.CouponsModel)
+        {
+    <tr>
+        <td><strong id="name-@item.id">@Html.DisplayFor(modelItem => item.coupon)</strong></td>
+        <td id="slug-@item.id">@Html.DisplayFor(modelItem => item.amount)</td>
+        <td id="des-@item.id">@Html.DisplayFor(modelItem => item.limit)</td>
+        <td>@Html.DisplayFor(modelItem => item.active)</td>
+        <td align="center"> <button onclick="editCat(@item.id)" class="btn btn-warning" style="color: #ffffff;">Editovať</button> @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteCoupon", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tento kupón?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete kupón." })</td>
+    </tr>
+    <tr id="cat-@item.id" style="display: none;">
+        @using (Html.BeginForm("UpdateCoupon", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.EditorFor(model => model.CouponsEditModel.Id, new { htmlAttributes = new { @class = "form-control", id = "e-id-" + item.id, style = "display: none;" } })
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <td>
+
+                @Html.EditorFor(model => model.CouponsEditModel.Coupon, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov kupónu", id = "e-name-" + item.id } })
+                @Html.ValidationMessageFor(model => model.CouponsEditModel.Coupon, "", new { @class = "text-danger" })
+
+            </td>
+            <td>
+
+                @Html.EditorFor(model => model.CouponsEditModel.Amount, new { htmlAttributes = new { @class = "form-control", placeholder = "Percentuálna hodnota zľavy", id = "e-slug-" + item.id } })
+                @Html.ValidationMessageFor(model => model.CouponsEditModel.Amount, "", new { @class = "text-danger" })
+
+            </td>
+
+            <td>
+                @Html.TextAreaFor(model => model.CouponsEditModel.Limit, new { @class = "form-control", placeholder = "Limit použitia kupónu (0 = neobmedzené použitie)", id = "e-des-" + item.id, value = item.limit })
+                @Html.ValidationMessageFor(model => model.CouponsEditModel.Limit, "", new { @class = "text-danger" })
+
+            </td>
+            <td>
+                @Html.CheckBoxFor(model => model.CouponsEditModel.Active, new { @class = "form-control", style= "width: 20px;" })
+                @Html.ValidationMessageFor(model => model.CouponsEditModel.Active, "", new { @class = "text-danger" })
+
+            </td>
+            <td>
+                <div>
+                    <input type="submit" value="Aktualizovať kupón" class="btn btn-success" />
+                </div>
+            </td>
+
+
+        }
+    </tr>
+        }
+    }
+
+
+</table>
+
+<script>
+    function editCat(id) {
+        if (document.getElementById("cat-" + id + "").style.display == "none") {
+            document.getElementById("cat-" + id + "").style.display = "table-row";
+        } else {
+            document.getElementById("cat-" + id + "").style.display = "none";
+        }
+
+        var name = document.getElementById("name-" + id + "").innerHTML;
+        var slug = document.getElementById("slug-" + id + "").innerHTML;
+        var des = document.getElementById("des-" + id + "").innerHTML;
+        document.getElementById("e-name-" + id + "").value = name;
+        document.getElementById("e-slug-" + id + "").value = slug;
+        document.getElementById("e-des-" + id + "").value = des;
+        document.getElementById("e-id-" + id + "").value = id;
+
+    }
+    
+</script>

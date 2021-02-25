@@ -1,0 +1,104 @@
+﻿@using System.Collections
+@using Cms.Controllers
+@model Cms.Models.MultipleIndexModel
+@{
+    HelperController helper = new HelperController();
+
+    var kategoria = ViewData["Category"].ToString();
+
+    if (ViewData["Sub"] != null)
+    {
+        var sub = ViewData["Sub"].ToString();
+    }
+    var nameofcat = ViewContext.RouteData.Values["catslug"];
+
+    var catID = 0;
+    if (ViewData["CatId"] != null && ViewData["CatId"] != "")
+    {
+        catID = Int32.Parse(ViewData["CatId"].ToString());
+    }
+}
+<style>
+    #front-picture, #services {
+        display: none !important;
+    }
+</style>
+<div class="row py-0 py-sm-4">
+    @{
+        Html.RenderPartial("_SidebarCategories");
+    }
+    <div class="col-lg-9 col-md-8">
+
+        @if (catID != 0)
+        {
+            foreach (var cat in Model.CategoriesModel.Where(i => i.id == catID))
+            {
+                ViewBag.Title = cat.name + " -";
+                ViewBag.Description = cat.description;
+
+                if (cat.maincat == "Žiadna")
+                {
+                    <h2>@Html.Raw(cat.name)</h2>
+                }
+                else if (cat.topcat == "" || cat.topcat == "Žiadna")
+                {
+                    <h2>@Html.Raw(cat.maincat) / @Html.Raw(cat.name)</h2>
+                }
+                else if (cat.topcat2 == "" || cat.topcat2 == "Žiadna")
+                {
+                    <h2>@Html.Raw(cat.topcat) / @Html.Raw(cat.name)</h2>
+                }
+                else
+                {
+                    <h2>@Html.Raw(cat.topcat2) / @Html.Raw(cat.name)</h2>
+                }
+            }
+        }
+        else if (nameofcat.ToString() == "novinky")
+        {
+            <h2>Novinky</h2>
+            ViewBag.Title = "Novinky -";
+        }
+        else if (nameofcat.ToString() == "zlavy")
+        {
+            <h2>Produkty v zľave</h2>
+            ViewBag.Title = "Produkty v zľave -";
+        }
+
+
+
+        @foreach (var cat in Model.CategoriesModel.Where(i => i.id == catID))
+        {
+            if (cat.name != "E-shop")
+            {
+                <div class="row">
+                    <div class="col-4">
+                        <img src="/Uploads/@cat.image" alt="@cat.name" class="w-100" />
+                    </div>
+                    <div class="col-8">
+                        <p class="text-justify p-4">@Html.Raw(cat.description)</p>
+                    </div>
+                </div>
+            }
+
+        }
+
+        <hr />
+
+        @{
+            Html.RenderPartial("_Filter");
+        }
+        <div id="ajaxProducts"></div>
+
+        <nav class="pagination-container" aria-label="Page navigation example">
+            <ul class="pagination" id="pagination">
+            </ul>
+        </nav>
+
+    </div>
+
+</div>
+<script src="~/Scripts/fetchProducts.js"></script>
+<script src="~/Scripts/filterProducts.js"></script>
+
+<script src="~/Scripts/add_to_session.js"></script>

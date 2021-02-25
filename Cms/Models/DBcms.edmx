@@ -1,0 +1,876 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="hobcModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="blog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="slug" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="content" Type="text" Nullable="false" />
+          <Property Name="title" Type="text" Nullable="false" />
+          <Property Name="date" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="meno" Type="bool" Nullable="false" />
+          <Property Name="excerpt" Type="text" Nullable="false" />
+          <Property Name="image" Type="text" Nullable="false" />
+          <Property Name="gallery" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="brands">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="slug" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="description" Type="text" Nullable="false" />
+          <Property Name="image" Type="text" Nullable="false" />
+          <Property Name="priority" Type="int" />
+        </EntityType>
+        <EntityType Name="categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="slug" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="maincat" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="topcat" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="description" Type="text" />
+          <Property Name="topcat2" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="image" Type="text" />
+          <Property Name="priority" Type="int" />
+        </EntityType>
+        <EntityType Name="coupons">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="coupon" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="amount" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="limit" Type="int" />
+          <Property Name="active" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="deliver_city">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="city" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="e-settings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="companyname" Type="varchar" MaxLength="200" />
+          <Property Name="address" Type="varchar" MaxLength="300" />
+          <Property Name="city" Type="varchar" MaxLength="150" />
+          <Property Name="state" Type="varchar" MaxLength="100" />
+          <Property Name="ico" Type="varchar" MaxLength="20" />
+          <Property Name="dic" Type="varchar" MaxLength="20" />
+          <Property Name="icdph" Type="varchar" MaxLength="20" />
+          <Property Name="accountnumber" Type="varchar" MaxLength="50" />
+          <Property Name="transfer1" Type="varchar" MaxLength="100" />
+          <Property Name="transfer2" Type="varchar" MaxLength="100" />
+          <Property Name="transfer3" Type="varchar" MaxLength="100" />
+          <Property Name="transfer4" Type="varchar" MaxLength="100" />
+          <Property Name="transfer5" Type="varchar" MaxLength="100" />
+          <Property Name="pay1" Type="varchar" MaxLength="1000" />
+          <Property Name="pay1_enbl" Type="bool" Nullable="false" />
+          <Property Name="pay2" Type="varchar" MaxLength="100" />
+          <Property Name="pay2_enbl" Type="bool" Nullable="false" />
+          <Property Name="pay3" Type="varchar" MaxLength="100" />
+          <Property Name="pay3_enbl" Type="bool" Nullable="false" />
+          <Property Name="pay4" Type="varchar" MaxLength="100" />
+          <Property Name="pay4_enbl" Type="bool" Nullable="false" />
+          <Property Name="transfer1_enbl" Type="bool" Nullable="false" />
+          <Property Name="transfer2_enbl" Type="bool" Nullable="false" />
+          <Property Name="transfer3_enbl" Type="bool" Nullable="false" />
+          <Property Name="transfer4_enbl" Type="bool" Nullable="false" />
+          <Property Name="custom" Type="text" />
+          <Property Name="deliveryprice1" Type="text" />
+          <Property Name="deliveryprice2" Type="text" />
+          <Property Name="deliveryprice3" Type="text" />
+        </EntityType>
+        <EntityType Name="newsletter">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="subject" Type="text" Nullable="false" />
+          <Property Name="body" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ordermeta">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ordernumber" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="product" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="productid" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="pieces" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="productimage" Type="text" Nullable="false" />
+          <Property Name="price" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="size" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="color" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ordernumber" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="surname" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="address" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="city" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="zip" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="phone" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="companyname" Type="varchar" MaxLength="150" />
+          <Property Name="ico" Type="varchar" MaxLength="20" />
+          <Property Name="dic" Type="varchar" MaxLength="20" />
+          <Property Name="icdph" Type="varchar" MaxLength="20" />
+          <Property Name="date" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="payment" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="shipping" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="finalprice" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="billnumber" Type="varchar" MaxLength="10" />
+          <Property Name="name_shipp" Type="varchar" MaxLength="200" />
+          <Property Name="surname_shipp" Type="varchar" MaxLength="200" />
+          <Property Name="address_shipp" Type="varchar" MaxLength="200" />
+          <Property Name="companyname_shipp" Type="varchar" MaxLength="150" />
+          <Property Name="city_shipp" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="zip_shipp" Type="varchar" MaxLength="10" />
+          <Property Name="phone_shipp" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="comment" Type="text" />
+          <Property Name="usedcoupon" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="userid" Type="int" />
+        </EntityType>
+        <EntityType Name="pages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="slug" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="content" Type="longtext" Nullable="false" />
+          <Property Name="title" Type="text" Nullable="false" />
+          <Property Name="date" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="menu" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="products">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="text" />
+          <Property Name="image" Type="text" />
+          <Property Name="number" Type="varchar" MaxLength="100" />
+          <Property Name="recommended" Type="bool" Nullable="false" />
+          <Property Name="stock" Type="varchar" MaxLength="10" />
+          <Property Name="price" Type="varchar" MaxLength="30" />
+          <Property Name="date" Type="varchar" MaxLength="100" />
+          <Property Name="gallery" Type="text" />
+          <Property Name="category" Type="varchar" MaxLength="300" />
+          <Property Name="weight" Type="varchar" MaxLength="10" />
+          <Property Name="weightunit" Type="varchar" MaxLength="5" />
+          <Property Name="description" Type="text" />
+          <Property Name="discountprice" Type="varchar" MaxLength="10" />
+          <Property Name="custom1" Type="text" />
+          <Property Name="custom2" Type="text" />
+          <Property Name="custom3" Type="text" />
+          <Property Name="custom4" Type="text" />
+          <Property Name="custom5" Type="text" />
+          <Property Name="custom6" Type="text" />
+          <Property Name="custom7" Type="text" />
+          <Property Name="custom8" Type="text" />
+          <Property Name="custom9" Type="text" />
+          <Property Name="custom10" Type="text" />
+        </EntityType>
+        <EntityType Name="settings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="500" />
+          <Property Name="email" Type="varchar" MaxLength="200" />
+          <Property Name="indexed" Type="int" />
+          <Property Name="googleanalyt" Type="varchar" MaxLength="100" />
+          <Property Name="facebook" Type="varchar" MaxLength="500" />
+          <Property Name="instagram" Type="varchar" MaxLength="500" />
+          <Property Name="adress" Type="varchar" MaxLength="500" />
+          <Property Name="psc" Type="varchar" MaxLength="20" />
+          <Property Name="city" Type="varchar" MaxLength="50" />
+          <Property Name="phone" Type="varchar" MaxLength="50" />
+          <Property Name="custom1" Type="text" />
+          <Property Name="custom2" Type="text" />
+          <Property Name="custom3" Type="text" />
+          <Property Name="custom4" Type="text" />
+          <Property Name="custom5" Type="text" />
+          <Property Name="custom6" Type="text" />
+          <Property Name="custom7" Type="text" />
+          <Property Name="custom8" Type="text" />
+          <Property Name="custom9" Type="text" />
+          <Property Name="custom10" Type="text" />
+        </EntityType>
+        <EntityType Name="slideshow">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="page" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="image" Type="text" Nullable="false" />
+          <Property Name="url" Type="text" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="active" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="role" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usersmeta">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userid" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="surname" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="address" Type="text" Nullable="false" />
+          <Property Name="city" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="zip" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="phone" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="email" Type="text" Nullable="false" />
+          <Property Name="companyname" Type="text" />
+          <Property Name="ico" Type="varchar" MaxLength="15" />
+          <Property Name="dic" Type="varchar" MaxLength="20" />
+          <Property Name="icdph" Type="varchar" MaxLength="20" />
+          <Property Name="news" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="wishlist">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userid" Type="int" Nullable="false" />
+          <Property Name="data" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="hobcModelStoreContainer">
+          <EntitySet Name="blog" EntityType="Self.blog" Schema="bimklimashop" store:Type="Tables" />
+          <EntitySet Name="brands" EntityType="Self.brands" Schema="bimklimashop" store:Type="Tables" />
+          <EntitySet Name="categories" EntityType="Self.categories" Schema="bimklimashop" store:Type="Tables" />
+          <EntitySet Name="coupons" EntityType="Self.coupons" Schema="bimklimashop" store:Type="Tables" />
+          <EntitySet Name="deliver_city" EntityType="Self.deliver_city" Schema="bimklimashop" store:Type="Tables" />
+          <EntitySet Name="e-settings" EntityType="Self.e-settings" Schema="bimklimashop" store:Type="Tables" />
+          <EntitySet Name="newsletter" EntityType="Self.newsletter" Schema="bimklimashop" store:Type="Tables" />
+          <EntitySet Name="ordermeta" EntityType="Self.ordermeta" Schema="bimklimashop" store:Type="Tables" />
+          <EntitySet Name="orders" EntityType="Self.orders" Schema="bimklimashop" store:Type="Tables" />
+          <EntitySet Name="pages" EntityType="Self.pages" Schema="bimklimashop" store:Type="Tables" />
+          <EntitySet Name="products" EntityType="Self.products" Schema="bimklimashop" store:Type="Tables" />
+          <EntitySet Name="settings" EntityType="Self.settings" Schema="bimklimashop" store:Type="Tables" />
+          <EntitySet Name="slideshow" EntityType="Self.slideshow" Schema="bimklimashop" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="bimklimashop" store:Type="Tables" />
+          <EntitySet Name="usersmeta" EntityType="Self.usersmeta" Schema="bimklimashop" store:Type="Tables" />
+          <EntitySet Name="wishlist" EntityType="Self.wishlist" Schema="bimklimashop" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="hobcModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="blog" EntityType="hobcModel.blog" />
+          <EntitySet Name="brands" EntityType="hobcModel.brands" />
+          <EntitySet Name="categories" EntityType="hobcModel.categories" />
+          <EntitySet Name="coupons" EntityType="hobcModel.coupons" />
+          <EntitySet Name="deliver_city" EntityType="hobcModel.deliver_city" />
+          <EntitySet Name="e_settings" EntityType="hobcModel.e_settings" />
+          <EntitySet Name="newsletter" EntityType="hobcModel.newsletter" />
+          <EntitySet Name="ordermeta" EntityType="hobcModel.ordermeta" />
+          <EntitySet Name="orders" EntityType="hobcModel.orders" />
+          <EntitySet Name="pages" EntityType="hobcModel.pages" />
+          <EntitySet Name="products" EntityType="hobcModel.products" />
+          <EntitySet Name="settings" EntityType="hobcModel.settings" />
+          <EntitySet Name="slideshow" EntityType="hobcModel.slideshow" />
+          <EntitySet Name="users" EntityType="hobcModel.users" />
+          <EntitySet Name="usersmeta" EntityType="hobcModel.usersmeta" />
+          <EntitySet Name="wishlist" EntityType="hobcModel.wishlist" />
+        </EntityContainer>
+        <EntityType Name="blog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="slug" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="content" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="date" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="meno" Type="Boolean" Nullable="false" />
+          <Property Name="excerpt" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="image" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="gallery" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="brands">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="slug" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="image" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="priority" Type="Int32" />
+        </EntityType>
+        <EntityType Name="categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="slug" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="topcat" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="topcat2" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="image" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="priority" Type="Int32" />
+          <Property Name="maincat" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="coupons">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="coupon" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="amount" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="limit" Type="Int32" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="deliver_city">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="city" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="e_settings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="companyname" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ico" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="dic" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="icdph" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="accountnumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="transfer1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="transfer2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="transfer3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="transfer4" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="transfer5" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pay1" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="pay1_enbl" Type="Boolean" Nullable="false" />
+          <Property Name="pay2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pay2_enbl" Type="Boolean" Nullable="false" />
+          <Property Name="pay3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pay3_enbl" Type="Boolean" Nullable="false" />
+          <Property Name="pay4" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pay4_enbl" Type="Boolean" Nullable="false" />
+          <Property Name="transfer1_enbl" Type="Boolean" Nullable="false" />
+          <Property Name="transfer2_enbl" Type="Boolean" Nullable="false" />
+          <Property Name="transfer3_enbl" Type="Boolean" Nullable="false" />
+          <Property Name="transfer4_enbl" Type="Boolean" Nullable="false" />
+          <Property Name="custom" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="deliveryprice1" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="deliveryprice2" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="deliveryprice3" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="newsletter">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="subject" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="body" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ordermeta">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ordernumber" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="product" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="productid" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="pieces" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="productimage" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="size" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="color" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ordernumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="surname" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="zip" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="companyname" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ico" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="dic" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="icdph" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="date" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="payment" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="shipping" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="finalprice" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="billnumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="name_shipp" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="surname_shipp" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="address_shipp" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="companyname_shipp" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="city_shipp" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="zip_shipp" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="phone_shipp" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="comment" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="usedcoupon" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="userid" Type="Int32" />
+        </EntityType>
+        <EntityType Name="pages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="slug" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="content" Type="String" Nullable="false" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="date" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="menu" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="products">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="image" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="number" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="recommended" Type="Boolean" Nullable="false" />
+          <Property Name="stock" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="date" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="gallery" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="category" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="weight" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="weightunit" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="discountprice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="custom1" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom2" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom3" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom4" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom5" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom6" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom7" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom8" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom9" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom10" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="settings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="indexed" Type="Int32" />
+          <Property Name="googleanalyt" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="facebook" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="instagram" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="adress" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="psc" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="custom1" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom2" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom3" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom4" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom5" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom6" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom7" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom8" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom9" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom10" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="slideshow">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="page" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="image" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="url" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="active" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="role" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usersmeta">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="surname" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="zip" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="companyname" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="ico" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="dic" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="icdph" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="news" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="wishlist">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="data" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="hobcModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="blog">
+            <EntityTypeMapping TypeName="hobcModel.blog">
+              <MappingFragment StoreEntitySet="blog">
+                <ScalarProperty Name="gallery" ColumnName="gallery" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="excerpt" ColumnName="excerpt" />
+                <ScalarProperty Name="meno" ColumnName="meno" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="slug" ColumnName="slug" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="brands">
+            <EntityTypeMapping TypeName="hobcModel.brands">
+              <MappingFragment StoreEntitySet="brands">
+                <ScalarProperty Name="priority" ColumnName="priority" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="slug" ColumnName="slug" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="hobcModel.categories">
+              <MappingFragment StoreEntitySet="categories">
+                <ScalarProperty Name="maincat" ColumnName="maincat" />
+                <ScalarProperty Name="priority" ColumnName="priority" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="topcat2" ColumnName="topcat2" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="topcat" ColumnName="topcat" />
+                <ScalarProperty Name="slug" ColumnName="slug" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="coupons">
+            <EntityTypeMapping TypeName="hobcModel.coupons">
+              <MappingFragment StoreEntitySet="coupons">
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="limit" ColumnName="limit" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="coupon" ColumnName="coupon" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="deliver_city">
+            <EntityTypeMapping TypeName="hobcModel.deliver_city">
+              <MappingFragment StoreEntitySet="deliver_city">
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="e_settings">
+            <EntityTypeMapping TypeName="hobcModel.e_settings">
+              <MappingFragment StoreEntitySet="e-settings">
+                <ScalarProperty Name="deliveryprice3" ColumnName="deliveryprice3" />
+                <ScalarProperty Name="deliveryprice2" ColumnName="deliveryprice2" />
+                <ScalarProperty Name="deliveryprice1" ColumnName="deliveryprice1" />
+                <ScalarProperty Name="custom" ColumnName="custom" />
+                <ScalarProperty Name="transfer4_enbl" ColumnName="transfer4_enbl" />
+                <ScalarProperty Name="transfer3_enbl" ColumnName="transfer3_enbl" />
+                <ScalarProperty Name="transfer2_enbl" ColumnName="transfer2_enbl" />
+                <ScalarProperty Name="transfer1_enbl" ColumnName="transfer1_enbl" />
+                <ScalarProperty Name="pay4_enbl" ColumnName="pay4_enbl" />
+                <ScalarProperty Name="pay4" ColumnName="pay4" />
+                <ScalarProperty Name="pay3_enbl" ColumnName="pay3_enbl" />
+                <ScalarProperty Name="pay3" ColumnName="pay3" />
+                <ScalarProperty Name="pay2_enbl" ColumnName="pay2_enbl" />
+                <ScalarProperty Name="pay2" ColumnName="pay2" />
+                <ScalarProperty Name="pay1_enbl" ColumnName="pay1_enbl" />
+                <ScalarProperty Name="pay1" ColumnName="pay1" />
+                <ScalarProperty Name="transfer5" ColumnName="transfer5" />
+                <ScalarProperty Name="transfer4" ColumnName="transfer4" />
+                <ScalarProperty Name="transfer3" ColumnName="transfer3" />
+                <ScalarProperty Name="transfer2" ColumnName="transfer2" />
+                <ScalarProperty Name="transfer1" ColumnName="transfer1" />
+                <ScalarProperty Name="accountnumber" ColumnName="accountnumber" />
+                <ScalarProperty Name="icdph" ColumnName="icdph" />
+                <ScalarProperty Name="dic" ColumnName="dic" />
+                <ScalarProperty Name="ico" ColumnName="ico" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="companyname" ColumnName="companyname" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="newsletter">
+            <EntityTypeMapping TypeName="hobcModel.newsletter">
+              <MappingFragment StoreEntitySet="newsletter">
+                <ScalarProperty Name="body" ColumnName="body" />
+                <ScalarProperty Name="subject" ColumnName="subject" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ordermeta">
+            <EntityTypeMapping TypeName="hobcModel.ordermeta">
+              <MappingFragment StoreEntitySet="ordermeta">
+                <ScalarProperty Name="color" ColumnName="color" />
+                <ScalarProperty Name="size" ColumnName="size" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="productimage" ColumnName="productimage" />
+                <ScalarProperty Name="pieces" ColumnName="pieces" />
+                <ScalarProperty Name="productid" ColumnName="productid" />
+                <ScalarProperty Name="product" ColumnName="product" />
+                <ScalarProperty Name="ordernumber" ColumnName="ordernumber" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orders">
+            <EntityTypeMapping TypeName="hobcModel.orders">
+              <MappingFragment StoreEntitySet="orders">
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="usedcoupon" ColumnName="usedcoupon" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="phone_shipp" ColumnName="phone_shipp" />
+                <ScalarProperty Name="zip_shipp" ColumnName="zip_shipp" />
+                <ScalarProperty Name="city_shipp" ColumnName="city_shipp" />
+                <ScalarProperty Name="companyname_shipp" ColumnName="companyname_shipp" />
+                <ScalarProperty Name="address_shipp" ColumnName="address_shipp" />
+                <ScalarProperty Name="surname_shipp" ColumnName="surname_shipp" />
+                <ScalarProperty Name="name_shipp" ColumnName="name_shipp" />
+                <ScalarProperty Name="billnumber" ColumnName="billnumber" />
+                <ScalarProperty Name="finalprice" ColumnName="finalprice" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="shipping" ColumnName="shipping" />
+                <ScalarProperty Name="payment" ColumnName="payment" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="icdph" ColumnName="icdph" />
+                <ScalarProperty Name="dic" ColumnName="dic" />
+                <ScalarProperty Name="ico" ColumnName="ico" />
+                <ScalarProperty Name="companyname" ColumnName="companyname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="zip" ColumnName="zip" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ordernumber" ColumnName="ordernumber" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pages">
+            <EntityTypeMapping TypeName="hobcModel.pages">
+              <MappingFragment StoreEntitySet="pages">
+                <ScalarProperty Name="menu" ColumnName="menu" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="slug" ColumnName="slug" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="hobcModel.products">
+              <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="custom10" ColumnName="custom10" />
+                <ScalarProperty Name="custom9" ColumnName="custom9" />
+                <ScalarProperty Name="custom8" ColumnName="custom8" />
+                <ScalarProperty Name="custom7" ColumnName="custom7" />
+                <ScalarProperty Name="custom6" ColumnName="custom6" />
+                <ScalarProperty Name="custom5" ColumnName="custom5" />
+                <ScalarProperty Name="custom4" ColumnName="custom4" />
+                <ScalarProperty Name="custom3" ColumnName="custom3" />
+                <ScalarProperty Name="custom2" ColumnName="custom2" />
+                <ScalarProperty Name="custom1" ColumnName="custom1" />
+                <ScalarProperty Name="discountprice" ColumnName="discountprice" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="weightunit" ColumnName="weightunit" />
+                <ScalarProperty Name="weight" ColumnName="weight" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="gallery" ColumnName="gallery" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="recommended" ColumnName="recommended" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="settings">
+            <EntityTypeMapping TypeName="hobcModel.settings">
+              <MappingFragment StoreEntitySet="settings">
+                <ScalarProperty Name="custom10" ColumnName="custom10" />
+                <ScalarProperty Name="custom9" ColumnName="custom9" />
+                <ScalarProperty Name="custom8" ColumnName="custom8" />
+                <ScalarProperty Name="custom7" ColumnName="custom7" />
+                <ScalarProperty Name="custom6" ColumnName="custom6" />
+                <ScalarProperty Name="custom5" ColumnName="custom5" />
+                <ScalarProperty Name="custom4" ColumnName="custom4" />
+                <ScalarProperty Name="custom3" ColumnName="custom3" />
+                <ScalarProperty Name="custom2" ColumnName="custom2" />
+                <ScalarProperty Name="custom1" ColumnName="custom1" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="psc" ColumnName="psc" />
+                <ScalarProperty Name="adress" ColumnName="adress" />
+                <ScalarProperty Name="instagram" ColumnName="instagram" />
+                <ScalarProperty Name="facebook" ColumnName="facebook" />
+                <ScalarProperty Name="googleanalyt" ColumnName="googleanalyt" />
+                <ScalarProperty Name="indexed" ColumnName="indexed" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="slideshow">
+            <EntityTypeMapping TypeName="hobcModel.slideshow">
+              <MappingFragment StoreEntitySet="slideshow">
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="page" ColumnName="page" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="hobcModel.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usersmeta">
+            <EntityTypeMapping TypeName="hobcModel.usersmeta">
+              <MappingFragment StoreEntitySet="usersmeta">
+                <ScalarProperty Name="news" ColumnName="news" />
+                <ScalarProperty Name="icdph" ColumnName="icdph" />
+                <ScalarProperty Name="dic" ColumnName="dic" />
+                <ScalarProperty Name="ico" ColumnName="ico" />
+                <ScalarProperty Name="companyname" ColumnName="companyname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="zip" ColumnName="zip" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="wishlist">
+            <EntityTypeMapping TypeName="hobcModel.wishlist">
+              <MappingFragment StoreEntitySet="wishlist">
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,211 @@
+﻿@using System.Globalization
+@model Cms.Models.MultipleIndexModel
+@{
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+    ViewBag.Title = "Administrácia";
+    var modelItems = Model;
+    var datumDnes = "";
+    var datumObjed = "";
+    var count = 0;
+    var count_lastmonth = 0;
+    decimal monthprice = 0;
+    decimal monthprice_last = 0;
+}
+
+<style>
+    .sidenav a:nth-child(2) {
+        border-left: 5px solid #e80000;
+        color: #f1f1f1;
+        background-color: #464646;
+    }
+</style>
+<script>
+    window.onload = function () {
+
+        var result = @Html.Raw(ViewBag.DataPoints);
+        var dataPoints = [];
+        for (var i = 0; i < result.length; i++) {
+            var mydate = result[i].date;
+            var myformat='dd/mm/yyyy HH:MM:ss';
+
+
+            var dtsplit=mydate.split(/[\/ .:]/);
+            var dfsplit=myformat.split(/[\/ .:]/);
+
+            // creates assoc array for date
+            var df = new Array();
+            for(var dc=0;dc<6;dc++) {
+                df[dfsplit[dc]]=dtsplit[dc];
+            }
+
+            // uses assc array for standard mysql format
+            var dstring;
+            dstring = + df['mm'] + '-' + df['dd'] + '-' + df['yyyy'];
+
+            var datum = parseDate(dstring);
+            var x = new Date();
+            var y = new Date(datum);
+            var datumobj = y.getMonth() + 1;
+            var datumdnes = x.getMonth() + 1;
+
+            if (datumobj == datumdnes) {
+                dataPoints.push({ x: parseInt(result[i].date), label: result[i].date, y: parseFloat(result[i].finalprice) });
+            }
+        }
+
+        const monthNames = ["Január", "Február", "Marec", "Apríl", "Máj", "Jún",
+            "Júl", "August", "September", "Október", "November", "December"
+        ];
+
+        const d = new Date();
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                title: {
+                    text: "Mesačný prehľad tržieb - " + monthNames[d.getMonth()],
+                    fontSize: 30,
+                    fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"',
+                    fontWeight: "bold",
+                },
+                axisY: {
+                    valueFormatString: "####.# €",
+        },
+            data: [
+                {
+                    type: "column",
+                    yValueFormatString:"#######.## €",
+                    dataPoints: dataPoints,
+                }
+            ]
+        });
+        chart.render();
+
+    };
+
+function parseDate(input) {
+  var format = format || 'mm-dd-yyyy'; // default format
+  var parts = input.match(/(\d+)/g), 
+      i = 0, fmt = {};
+  // extract date-part indexes from the format
+  format.replace(/(yyyy|dd|mm)/g, function(part) { fmt[part] = i++; });
+
+  return new Date(parts[fmt['yyyy']], parts[fmt['mm']]-1, parts[fmt['dd']]);
+}
+</script>
+<div id="chartContainer" style="margin-top: 50px; height: 370px; width: 100%;"></div>
+
+<div style="margin-top: 30px;background: #f9f9f9">
+    <div class="row" style="text-align: center">
+        <div class="col p-4  border-right">
+            <span class="small"><strong>Predaj</strong></span><br />
+        @foreach (var price in modelItems.OrderDataModel)
+        {
+            DateTime ordDate = DateTime.ParseExact(price.date, "d.M.yyyy HH:mm:ss", null);
+            if (ordDate.Month == DateTime.Now.Month)
+            {
+                monthprice += decimal.Parse(price.finalprice, CultureInfo.InvariantCulture);
+            }
+            var month = DateTime.Now.Month-1;
+            if (month < 1)
+            {
+                month = 12;
+            }
+
+            if (ordDate.Month == month)
+            {
+                monthprice_last += decimal.Parse(price.finalprice, CultureInfo.InvariantCulture);
+
+            }
+        }
+            <span class="smallonmob" style="font-size: 35px; color: #00abba;line-height: 35px;">€ @monthprice</span><br />
+            <span class="small">Minulý mesiac: € @monthprice_last</span>
+        </div>
+        <div class="col p-4 border-right">
+            <span class="small"><strong>Počet objednávok</strong></span><br />
+            @foreach (var numb in modelItems.OrderDataModel)
+            {
+                DateTime ordDate = DateTime.ParseExact(numb.date, "d.M.yyyy HH:mm:ss", null);
+                if (ordDate.Month == DateTime.Now.Month)
+                {
+                    count++;
+                }
+                var month = DateTime.Now.Month-1;
+                if (month < 1)
+                {
+                    month = 12;
+                }
+
+                if (ordDate.Month == month)
+                {
+                    count_lastmonth++;
+                }
+
+            }
+            <span class="smallonmob" style="font-size: 35px; color:#00abba;line-height: 35px;">@count</span><br />
+            <span class="small" style="margin-top: -5px;">Minulý mesiac: @count_lastmonth</span>
+        </div>
+        <div class="col p-4">
+            <span class="small"><strong>Počet návštevníkov</strong></span><br />
+            <span class="smallonmob" style="font-size: 35px; color:#00abba;line-height: 35px;">1500</span><br />
+            <span class="small">Minulý mesiac: 1250</span>
+        </div>
+    </div>
+</div>
+
+<h3 class="pt-5 pb-2">Najnovšie objednávky</h3>
+<table class="table" style="font-size: 14px;">
+    <thead class="thead-light">
+        <tr>
+            <th>Č. ob.</th>
+            <th style="width: 25vw;">Meno a priezvisko, adresa</th>
+            <th>Dátum</th>
+            <th>Doprava</th>
+            <th>Cena spolu</th>
+            <th>PDF faktúra</th>
+            <th style="text-align: center">Detail | Vybaviť</th>
+        </tr>
+    </thead>
+    @if (ViewBag.Details == null)
+    {
+        foreach (var item in modelItems.OrderDataModel.OrderByDescending(i => i.id).Take(4))
+        {
+            var trans = "";
+            if (item.shipping == "transfer1")
+            {
+                trans = "Kuriérska spoločnosť";
+            }
+            else if (item.shipping == "transfer2")
+            {
+                trans = "Slovenská pošta";
+            }
+            else if (item.shipping == "transfer3")
+            {
+                trans = "Osobný odber";
+            }
+            var visibility = "";
+            if (item.status == 1)
+            {
+                visibility = "visibility: hidden !important;";
+            }
+            else
+            {
+                visibility = "visibility: visible !important;";
+            }
+
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.ordernumber)</td>
+                <td><strong>@Html.DisplayFor(modelItem => item.name) @Html.DisplayFor(modelItem => item.surname)</strong>&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.address), @Html.DisplayFor(modelItem => item.city) @Html.DisplayFor(modelItem => item.zip)</td>
+                <td>@Html.DisplayFor(modelItem => item.date)</td>
+                <td>@trans</td>
+                <td style="background-color: #e4ffe3; text-align: center;"><strong>@Html.DisplayFor(modelItem => item.finalprice) €</strong></td>
+                <td><a href="@Url.Action("PdfOrder", "Orders", new { orderNumber = item.ordernumber })"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF faktúra" /></a></td>
+                <td align="center">@Html.ActionLink("Detail", "OrderDetail", "Orders", new { orderNumber = item.ordernumber }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#10003;"), "FinishedOrder", "Orders", new { orderNumber = item.ordernumber, confirm = true }, new { onclick = "return confirm('Naozaj chcete potvdiť objednávku ako odoslanú?')", @class = "btn btn-success finished", style = "padding:.375rem .75rem !important;" + visibility + "", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne potvrdíte objednávku." })</td>
+            </tr>
+        }
+
+
+    }
+
+
+</table>
+<script src="~/Scripts/canvasjs.min.js"></script>

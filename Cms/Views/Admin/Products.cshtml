@@ -1,0 +1,115 @@
+﻿@model Cms.Models.MultipleIndexModel
+@{
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+    ViewBag.Title = "Produkty";
+    var modelItems = Model.ProductModel;
+    var sizes = "";
+    var onstockrange = "";
+    var counter = 0;
+}
+<script>
+    /*GET HOW MANY ON STOCK from database*/
+    function Onstock(size, counter, onstockrange) {
+
+        var mycounter = counter;
+        var prod_row = document.getElementById("product_row-" + mycounter);
+        var infoicon = document.getElementById("info-" + mycounter);
+
+        if (size != "" && isNaN(size)) {
+            var j = size;
+            var json = $.parseJSON(j);
+            var countofsize = json.length;
+            var inputs = "";
+            $(json).each(function (i, val) {
+                if (val.stock <= onstockrange) {
+                    prod_row.style.background = "#ffe2e2";
+                    infoicon.style.display = "inline-block";
+                }
+            });
+        } else if (size != "" && !isNaN(size)) {
+            if (size <= onstockrange) {
+                prod_row.style.background = "#ffe2e2";
+                infoicon.style.display = "inline-block";
+            }
+        }
+    }
+</script>
+
+<style>
+    .sidenav > a:nth-child(3) {
+        border-left: 5px solid #00abe8;
+        color: #f1f1f1;
+        background-color: #464646;
+    }
+
+    .dropdown-container2 {
+        display: block;
+    }
+</style>
+
+<h2>Produkty v eshope</h2>
+<hr />
+<button class="btn btn-success" type="button" value="Create" style="margin: 5px 0 10px;padding: 7px 22px;font-size: 16px;" onclick="location.href='@Url.Action("AddProduct", "Products")'">+ Pridať produkt</button>
+<table id="myTable" class="table" style="font-size: 14px;">
+    <thead>
+        <tr>
+            <th>Kód produktu</th>
+            <th>Náhľad</th>
+            <th style="width: 350px;">Názov</th>
+            <th>Cena</th>
+            <th>Cena po zľave</th>
+            <th>Kategória</th>
+            <th>Dátum</th>
+            <th>Odporúčané</th>
+            <th style="text-align: center">Editovať | Vymazať</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (ViewBag.Details == null)
+        {
+            foreach (var item in modelItems)
+            {
+                sizes = item.custom4;
+                if (sizes == "" || sizes == null)
+                {
+                    sizes = item.stock;
+                }
+
+                onstockrange = item.custom1;
+                <tr id="product_row-@counter">
+
+                    <td>@Html.DisplayFor(modelItem => item.number)</td>
+                    <td><img src="~/Uploads/@Html.DisplayFor(modelItem => item.image)" style="width: 50px;" /></td>
+                    <td><strong>@Html.DisplayFor(modelItem => item.title)</strong></td>
+                    <td style="background-color: lightyellow; text-align: center;"><strong>@Html.DisplayFor(modelItem => item.price)&nbsp;€</strong></td>
+                    <td style="background-color: lightcyan; text-align: center;"><strong>@Html.DisplayFor(modelItem => item.discountprice)&nbsp;€</strong></td>
+                    @foreach (var cat in Model.CategoriesModel.Where(o => o.id == Int32.Parse(item.category)))
+                    {
+                        <td>@Html.Raw(cat.name)</td>
+                    }
+                    <td>@Html.DisplayFor(modelItem => item.date)</td>
+                    <td>@Html.DisplayFor(modelItem => item.recommended)</td>
+                    <td align="center">
+                        @Html.ActionLink("Editovať", "EditProduct", "Products", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" }) <a href="@Url.Action("DuplicateProduct", "Products", new { id = item.id })" class="btn btn-success" style="padding: 7px 10px;" title="Duplikovať produkt"><img src="~/Content/images/duplicate.png" width="15" style="margin-top: -3px;"></a> @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteProduct", "Products", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tento produkt?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete produkt." })
+                        <div class="popover__wrapper" id="info-@counter" style="display:none;">
+                            <a href="#">
+                                <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
+                            </a>
+                            <div class="push popover__content">
+                                <p class="popover__message">Skladové zásoby pod hraničnou hodnotou!</p>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+                <script>
+                Onstock('@Html.Raw(sizes)', @(counter), @(onstockrange));
+                </script>
+                counter++;
+            }
+
+
+        }
+    </tbody>
+</table>
+

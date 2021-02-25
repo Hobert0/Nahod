@@ -1,0 +1,39 @@
+﻿@model Cms.Models.MultipleIndexModel
+@{
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+    ViewBag.Title = "Zoznam newsletter-ov";
+}
+
+<h2>Správa newsletter-ov</h2>
+<br />
+<div align="left">
+    <a class="btn btn-primary" href="@Url.Action("Addnewsletter", "Newsletter")">Pridať šablónu</a>
+</div>
+
+<hr />
+
+<table class="table" style="">
+    <thead class="thead-dark autoprofblue">
+        <tr>
+            <th>Predmet</th>
+            @*<th>Správa</th>*@
+            <th style="text-align: center">Editovať | Vymazať</th>
+            <th style="text-align: center">Odoslať</th>
+        </tr>
+    </thead>
+    @if (ViewBag.Details == null)
+    {
+        foreach (var item in Model.AllNewslettersPaged.OrderBy(i => i.id))
+        {
+            <tr>
+                <td><strong>@Html.DisplayFor(modelItem => item.subject)</strong></td>
+                @*<td>@if(item.body.Length > 50) { @Html.Raw(item.body.Substring(0, 50) + "...")}else { @Html.Raw(item.body)}</td>*@
+                <td align="center">@Html.ActionLink(HttpUtility.HtmlDecode("&#9999;"), "EditNewsletter", "Newsletter", new { newsletterId = item.id }, new { @class = "btn btn-warning", @style = "font-size: 20px" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteNewsletter", "Newsletter", new { newsletterId = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tento newsletter?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete newsletter.", @style = "font-size: 20px" })</td>
+                <td align="center">@Html.ActionLink(HttpUtility.HtmlDecode("&#10004;"), "SendNewsletter","Newsletter", new { newsletterId = item.id }, new { @class = "btn btn-success"})</td>
+
+            </tr>
+        }
+    }
+
+
+</table>
