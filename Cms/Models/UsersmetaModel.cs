@@ -21,5 +21,6 @@ namespace Cms.Models
         public string Dic { get; set; }
         public string Icdph { get; set; }
         public bool News { get; set; }
+        public bool Gdpr { get; set; }
     }
 }

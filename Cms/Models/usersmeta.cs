@@ -29,5 +29,9 @@ namespace Cms.Models
         public string icdph { get; set; }
         public bool news { get; set; }
         public bool gdpr { get; set; }
+        public bool to_remove { get; set; }
+        public sbyte category { get; set; }
+        public double sum { get; set; }
+        public string created { get; set; }
     }
 }

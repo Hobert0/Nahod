@@ -258,6 +258,10 @@
           <Property Name="icdph" Type="varchar" MaxLength="20" />
           <Property Name="news" Type="bool" Nullable="false" />
           <Property Name="gdpr" Type="bool" Nullable="false" />
+          <Property Name="to_remove" Type="bool" Nullable="false" />
+          <Property Name="category" Type="tinyint" Nullable="false" />
+          <Property Name="sum" Type="double" Nullable="false" />
+          <Property Name="created" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="wishlist">
           <Key>
@@ -304,8 +308,8 @@
           <EntitySet Name="settings" EntityType="hobcModel.settings" />
           <EntitySet Name="slideshow" EntityType="hobcModel.slideshow" />
           <EntitySet Name="users" EntityType="hobcModel.users" />
-          <EntitySet Name="usersmeta" EntityType="hobcModel.usersmeta" />
           <EntitySet Name="wishlist" EntityType="hobcModel.wishlist" />
+          <EntitySet Name="usersmeta" EntityType="hobcModel.usersmeta" />
         </EntityContainer>
         <EntityType Name="blog">
           <Key>
@@ -541,6 +545,14 @@
           <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="role" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="wishlist">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="data" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="usersmeta">
           <Key>
             <PropertyRef Name="id" />
@@ -560,14 +572,10 @@
           <Property Name="icdph" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="news" Type="Boolean" Nullable="false" />
           <Property Name="gdpr" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="wishlist">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="userid" Type="Int32" Nullable="false" />
-          <Property Name="data" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="to_remove" Type="Boolean" Nullable="false" />
+          <Property Name="category" Type="SByte" Nullable="false" />
+          <Property Name="sum" Type="Double" Nullable="false" />
+          <Property Name="created" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -823,9 +831,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="wishlist">
+            <EntityTypeMapping TypeName="hobcModel.wishlist">
+              <MappingFragment StoreEntitySet="wishlist">
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="usersmeta">
             <EntityTypeMapping TypeName="hobcModel.usersmeta">
               <MappingFragment StoreEntitySet="usersmeta">
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="sum" ColumnName="sum" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="to_remove" ColumnName="to_remove" />
                 <ScalarProperty Name="gdpr" ColumnName="gdpr" />
                 <ScalarProperty Name="news" ColumnName="news" />
                 <ScalarProperty Name="icdph" ColumnName="icdph" />
@@ -839,15 +860,6 @@
                 <ScalarProperty Name="address" ColumnName="address" />
                 <ScalarProperty Name="surname" ColumnName="surname" />
                 <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="userid" ColumnName="userid" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="wishlist">
-            <EntityTypeMapping TypeName="hobcModel.wishlist">
-              <MappingFragment StoreEntitySet="wishlist">
-                <ScalarProperty Name="data" ColumnName="data" />
                 <ScalarProperty Name="userid" ColumnName="userid" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

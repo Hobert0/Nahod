@@ -4,12 +4,13 @@
     ViewBag.Title = "Správa používateľov";
     var passwordTest = "";
     var userRole = "";
+    var category = "";
 }
 
 <h2>Správa používateľov</h2>
 <hr />
-<p><b>Pridať používateľa</b></p>
-@using (Html.BeginForm("AddUser", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+<p><b>Pridať admina</b></p>
+@using (Html.BeginForm("AddAdmin", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
@@ -42,7 +43,7 @@
             </div>
         </div>
 
-
+        <!--
         <div class="row" style="margin:0">
             <div class="col-md-2" style="padding:0">
                 <div class="form-group">
@@ -53,22 +54,25 @@
                 </div>
             </div>
         </div>
-
+        -->
 
         <div id="alert" class="text-danger" style="display: none;">Zadané heslá sa nezhodujú!</div>
         <div class="form-group">
             <div>
-                <input type="submit" value="Pridať používateľa" class="btn btn-success submitbtn" onclick="if (validateForm() != true) { return false;}" />
+                <input type="submit" value="Pridať admina" class="btn btn-success submitbtn" onclick="if (validateForm() != true) { return false;}" />
             </div>
         </div>
     </div>
 
 }
 <hr />
+<a href="@Url.Action("UserCreate", "Admin")" class="btn btn-danger">Pridať používateľa</a>
+<hr />
 <table id="myTable" class="table" style="font-size: 14px;">
     <thead class="thead-dark autoprofblue">
         <tr>
             <th>Id</th>
+            <th>Rola</th>
             <th>Používateľské meno</th>
             <th>Meno</th>
             <th>Priezvisko</th>
@@ -79,16 +83,12 @@
             <th>PSČ</th>
             <th>Novinky</th>
             <th>GDPR</th>
-
-
+            <th>Registrácia</th>
+            <th>Žiadosť o odstránenie</th>
             <th>Kategória</th>
             <th>Výška obratu</th>
 
-            <th>Registrácia</th>
-            <th>Žiadosť o odstránenie</th>
-
             <th style="text-align: center">Vymazať</th>
-            <th>Rola</th>
         </tr>
     </thead>
     @if (ViewBag.Details == null)
@@ -98,8 +98,10 @@
             if (item.role == 1) { userRole = "Zákazník"; }
             else if (item.role == 0) { userRole = "Admin"; }
             else if (item.role == 2) { userRole = "Newsletter subscriber"; }
+
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.id)</td>
+                <td>@Html.Raw(userRole)</td>
 
                 <td><strong>@Html.DisplayFor(modelItem => item.username)</strong></td>
                 @foreach (var meta in Model.AllUsersMetaModel.Where(u => u.userid == item.id))
@@ -114,20 +116,28 @@
 
                     if (item.role == 1)
                     {
+                        if (meta.category == 1) { category = "Bronzový"; }
+                        else if (meta.category == 2) { category = "Strieborný"; }
+                        else if (meta.category == 3) { category = "Zlatý"; }
+
                         <td>@Html.DisplayFor(modelItem => meta.news, new { htmlAttributes = new { @Value = " " } })</td>
                         <td>@Html.DisplayFor(modelItem => meta.gdpr, new { htmlAttributes = new { @Value = " " } })</td>
+                        <td>@Html.DisplayFor(modelItem => meta.created, new { htmlAttributes = new { @Value = " " } })</td>
+                        <td>@Html.DisplayFor(modelItem => meta.to_remove, new { htmlAttributes = new { @Value = " " } })</td>
+                        <td>@category</td>
+                        <td>@Html.DisplayFor(modelItem => meta.sum, new { htmlAttributes = new { @Value = " " } })</td>
                     }
-                    else { 
-                        <td></td><td></td>
+                    else
+                    {
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     }
                 }
 
-
-
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
 
                 <td align="center"> @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteAccount", "Home", new { userId = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tohoto zamestnanca?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete zamestnanca." })</td>
                 @{ var user = Model.AllWishlistModel.Where(i => i.userid == item.id).SingleOrDefault();
@@ -136,7 +146,7 @@
                         <td align="center"><a href="@Url.Action("Oblubene", "Admin", new { id = item.id })">@HttpUtility.HtmlDecode("&#10084;")</a></td>
                     }
                 }
-                <td>@Html.Raw(userRole)</td>
+
             </tr>
         }
     }
@@ -150,18 +160,49 @@
     function validateForm() {
         var heslo = document.getElementById("heslo").value;
         var overheslo = document.getElementById("overheslo").value;
+        var valid = true;
 
-        if (heslo == overheslo) {
-
-            return true;
-        }
-        else {
+        if (heslo != overheslo) {
             document.getElementById("alert").style = "display: block;";
-            return false;
+            valid = false;
+        } else {
+            document.getElementById("alert").style = "display: none;";
         }
 
+        if ($("#UsersModel_Username").val() == "" || !checkUsername($("#UsersModel_Username").val())) {
+            $("#UsersModel_Username").addClass("error");
+
+            valid = false;
+        } else {
+            $("#UsersModel_Username").removeClass("error");
+        }
+
+        return valid;
     }
 
+    function checkUsername(email) {
+        var bool = false;
+        $.ajax({
+            type: "POST",
+            url: 'Admin/EmailExist',
+            async: false,
+            data: { email: email },
+            success: function (response) {
+                //call is successfully completed and we got result in data
+                if (response.success) {
+                    // success code here
+                    bool = true;
+                } else {
+                    // error code here
+                    bool = false;
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                //some errror, some show err msg to user and log the error  
+            }
+        });
+        return bool;
+    }
 
 </script>
 

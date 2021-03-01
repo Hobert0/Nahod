@@ -766,6 +766,7 @@
     <Content Include="Views\Shared\_ProductGrid.cshtml" />
     <Content Include="Views\Shared\_Filter.cshtml" />
     <Content Include="Views\Helper\Error.cshtml" />
+    <Content Include="Views\Admin\UserCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -221,6 +221,7 @@ namespace Cms.Controllers
             um.ico = model.UsersmetaModel.Dic;
             um.name = model.UsersmetaModel.Name;
             um.news = model.UsersmetaModel.News;
+            um.gdpr = true;
             um.phone = model.UsersmetaModel.Phone;
             um.surname = model.UsersmetaModel.Surname;
             um.zip = model.UsersmetaModel.Zip;
@@ -428,6 +429,52 @@ namespace Cms.Controllers
             }
         }
 
+        [Route("pouzivatelia-vytvor")]
+        public ActionResult UserCreate()
+        {
+            if (Session["username"] != null && Session["role"].ToString() == "0")
+            {
+                
+                var model = new MultipleIndexModel();
+
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Admin");
+            }
+        }
+
+        [HttpPost, Route("ulozadmin")]
+        public async Task<ActionResult> AddAdmin(MultipleIndexModel model)
+        {
+            users o = new users();
+
+            MD5CryptoServiceProvider md5provider = new MD5CryptoServiceProvider();
+            md5provider.ComputeHash(ASCIIEncoding.ASCII.GetBytes(model.UsersModel.Password));
+            byte[] overHeslo = md5provider.Hash;
+            StringBuilder hesloDb = new StringBuilder();
+
+            for (int i = 0; i < overHeslo.Length; i++)
+            {
+                hesloDb.Append(overHeslo[i].ToString("x2"));
+            }
+            string heslo = hesloDb.ToString();
+
+            o.username = model.UsersModel.Username;
+            o.password = heslo;
+            o.role = 0;
+            o.email = model.UsersModel.Username;
+
+
+            db.users.Add(o);
+            db.SaveChanges();
+            TempData["IsValid"] = true;
+            ViewBag.IsValid = true;
+
+            return RedirectToAction("Users", "Admin");
+        }
+
         [HttpPost, Route("ulozpouziv")]
         public async Task<ActionResult> AddUser(MultipleIndexModel model)
         {
@@ -446,17 +493,40 @@ namespace Cms.Controllers
 
             o.username = model.UsersModel.Username;
             o.password = heslo;
-            o.role = model.UsersModel.Role;
+            o.role = 1;
             o.email = model.UsersModel.Username;
-
 
             db.users.Add(o);
             db.SaveChanges();
-            TempData["IsValid"] = true;
-            ViewBag.IsValid = true;
+
+            usersmeta u = new usersmeta();
+
+            var thisId = db.users.Where(i => i.username == model.UsersModel.Username).SingleOrDefault().id;
+
+            u.userid = thisId;
+            u.name = model.UsersmetaModel.Name;
+            u.surname = model.UsersmetaModel.Surname;
+            u.address = model.UsersmetaModel.Address;
+            u.city = model.UsersmetaModel.City;
+            u.zip = model.UsersmetaModel.Zip;
+            u.phone = model.UsersmetaModel.Phone;
+            u.email = model.UsersmetaModel.Name;
+            u.companyname = model.UsersmetaModel.Companyname;
+            u.ico = model.UsersmetaModel.Ico;
+            u.dic = model.UsersmetaModel.Dic;
+            u.icdph = model.UsersmetaModel.Icdph;
+            u.news = true;
+            u.gdpr = true;
+            u.created = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
+
+            db.usersmeta.Add(u);
+            db.SaveChanges();
+            //TempData["IsValid"] = true;
+            //ViewBag.IsValid = true;
 
             return RedirectToAction("Users", "Admin");
         }
+
         public ActionResult OrdersCount()
         {
             var countOrders = db.orders.Where(i => i.status != 1).Count().ToString();
