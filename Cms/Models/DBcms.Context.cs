@@ -39,7 +39,7 @@ namespace Cms.Models
         public virtual DbSet<settings> settings { get; set; }
         public virtual DbSet<slideshow> slideshow { get; set; }
         public virtual DbSet<users> users { get; set; }
-        public virtual DbSet<usersmeta> usersmeta { get; set; }
         public virtual DbSet<wishlist> wishlist { get; set; }
+        public virtual DbSet<usersmeta> usersmetaSet { get; set; }
     }
 }

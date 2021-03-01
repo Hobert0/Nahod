@@ -66,7 +66,8 @@ namespace Cms.Controllers
                     Zip = a.zip,
                     AddressShipp = a.address_shipp,
                     CityShipp = a.city_shipp,
-                    ZipShipp = a.zip_shipp
+                    ZipShipp = a.zip_shipp,
+                    Comment = a.comment
                 }).ToList();
 
 

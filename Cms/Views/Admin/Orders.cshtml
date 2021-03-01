@@ -15,10 +15,15 @@
             <th>Č. ob.</th>
             <th style="width: 25vw;">Meno a priezvisko, adresa</th>
             <th>Dátum</th>
+            <th>Platba</th>
             <th>Doprava</th>
             <th>Cena spolu</th>
+            <th>Stav</th>
+            <th>Poznámka</th>
+            <th style="text-align: center; width: 25vw;">Detail | Vybaviť</th>
             <th>PDF faktúra</th>
-            <th style="text-align: center">Detail | Vybaviť</th>
+            <th>Typ zákazníka</th>
+            <th>Kategória zákazníka</th>
         </tr>
     </thead>
     @if (ViewBag.Details == null)
@@ -26,6 +31,7 @@
         foreach (var item in modelItems.OrderByDescending(i => i.Id))
         {
             var trans = "";
+            var status = "";
             if (item.Shipping == "transfer1")
             {
                 trans = "Kuriérska spoločnosť";
@@ -43,15 +49,18 @@
             if (item.Status == 1)
             {
                 visibility = "visibility: hidden !important;";
+                status = "Čakajúca";
             }
             else if (item.Status == 2)
             {
                 visibility = "visibility: hidden !important;";
                 stornostyle = "opacity: .2 !important;";
+                status = "Vybavená";
             }
             else
             {
                 visibility = "visibility: visible !important;";
+                status = "Storno";
             }
 
             <tr>
@@ -71,25 +80,53 @@
                     else
                     {
                         <td class="p-0" style="width: 1px;"></td>
-}
+                    }
                 }
 
 
                 <td style="@stornostyle">@Html.DisplayFor(modelItem => item.Ordernumber)</td>
-                <td style="@stornostyle"><strong>@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Surname)</strong>&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Address), @Html.DisplayFor(modelItem => item.City) @Html.DisplayFor(modelItem => item.Zip)</td>
+                <td style="@stornostyle"><strong>@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Surname)</strong><br>@Html.DisplayFor(modelItem => item.Address), @Html.DisplayFor(modelItem => item.City) @Html.DisplayFor(modelItem => item.Zip)</td>
                 <td style="@stornostyle">@Html.DisplayFor(modelItem => item.Date)</td>
+                <td style="@stornostyle"></td>
                 <td style="@stornostyle">@trans</td>
                 <td style="background-color: #e4ffe3; text-align: center;@stornostyle"><strong>@Html.DisplayFor(modelItem => item.Finalprice) €</strong></td>
-                <td><a style="@stornostyle" href="@Url.Action("PdfOrder", "Orders", new { orderNumber = item.Ordernumber })"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF faktúra" title="PDF faktúra" /></a> @{if (item.Status == 2)
-                    {<a href="@Url.Action("PdfStorno", "Orders", new { orderNumber = item.Ordernumber })"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF dobropis" title="PDF dobropis" /></a>}}</td>
+                <td style="@stornostyle">@status</td>
+                <td style="@stornostyle">
+                    @using (Html.BeginForm("UpdateOrderNote", "Orders", FormMethod.Post, new { id = "NoteForm" }))
+                    {
+                        @Html.TextArea("orderNote", new { @class = "form-control", placeholder = "Poznámka", Name = "orderNote", Value = item.Comment })
+                        @Html.Hidden("orderId", item.Id)
+
+                        <div class="form-group" style="margin-bottom:0px;">
+                            <div style="text-align: right">
+                                <input type="submit" value="Uložiť" class="btn btn-success" style="font-size:10px;margin: 0 auto;display: block;" />
+                            </div>
+                        </div>
+                    }
+                </td>
                 <td style="@stornostyle" align="center">@Html.ActionLink("Detail", "OrderDetail", "Orders", new { orderNumber = item.Ordernumber }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#10003;"), "FinishedOrder", "Orders", new { orderNumber = item.Ordernumber, confirm = true }, new { onclick = "return confirm('Naozaj chcete potvdiť objednávku ako odoslanú?')", @class = "btn btn-success finished", style = "padding:.375rem .75rem !important;" + visibility + "", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne potvrdíte objednávku." })</td>
+                <td>
+                    <a style="@stornostyle" href="@Url.Action("PdfOrder", "Orders", new { orderNumber = item.Ordernumber })"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF faktúra" title="PDF faktúra" /></a> @{if (item.Status == 2)
+                        {<a href="@Url.Action("PdfStorno", "Orders", new { orderNumber = item.Ordernumber })"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF dobropis" title="PDF dobropis" /></a>}}
+                </td>
+                <td style="@stornostyle"></td>
+                <td style="@stornostyle"></td>
+
+
             </tr>
         }
-
-
     }
 
 
 </table>
 
-  
+<script>
+    $(document).ready(function () {
+        //dopisanie value textarei a prepisanie buttonu ak uz existuje text z Vytvorit poznamku na Upravit poznamku
+        if ($("#NoteForm textarea").attr("value") != "") {
+            $("#NoteForm textarea").text($("#NoteForm textarea").attr("value"));
+        }
+    });
+</script>
+
+

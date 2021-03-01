@@ -3929,7 +3929,7 @@ body {
     background-color: #2f4050;
     font-size: 13px;
     color: #676a6c;
-    overflow-x: hidden;
+    /*overflow-x: hidden;*/
 }
 
 html,
@@ -4087,7 +4087,7 @@ video {
 /* WRAPPERS */
 #wrapper {
     width: 100%;
-    overflow-x: hidden;
+    /*overflow-x: hidden;*/
 }
 
 .wrapper {

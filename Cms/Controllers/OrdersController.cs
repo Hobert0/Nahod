@@ -865,5 +865,17 @@ namespace Cms.Controllers
 
         }
 
+        [HttpPost]
+        public ActionResult UpdateOrderNote(string orderNote, int orderId)
+        {
+
+            var order = db.orders.Single(i => i.id == orderId);
+            order.comment = orderNote;
+
+            db.SaveChanges();
+
+            return RedirectToAction("Orders", "Admin");
+        }
+
     }
 }
