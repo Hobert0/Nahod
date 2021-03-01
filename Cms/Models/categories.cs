@@ -17,11 +17,11 @@ namespace Cms.Models
         public int id { get; set; }
         public string name { get; set; }
         public string slug { get; set; }
+        public string maincat { get; set; }
         public string topcat { get; set; }
         public string description { get; set; }
         public string topcat2 { get; set; }
         public string image { get; set; }
         public Nullable<int> priority { get; set; }
-        public string maincat { get; set; }
     }
 }
