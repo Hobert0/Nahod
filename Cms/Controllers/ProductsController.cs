@@ -146,6 +146,10 @@ namespace Cms.Controllers
                 ViewData["kategoria"] = SelectionKategoria();
                 ViewData["znacka"] = SelectionBrand();
                 ViewData["typ"] = pm.SelectionTyp();
+                ViewData["velkost"] = pm.SelectionSize();
+                ViewData["shoes"] = pm.SelectionShoes();
+                ViewData["kosiky"] = pm.SelectionSizeBra1();
+                ViewData["obvod"] = pm.SelectionSizeBra2();
 
                 return View();
             }
@@ -278,6 +282,10 @@ namespace Cms.Controllers
                 ViewData["kategoria"] = SelectionKategoria();
                 ViewData["znacka"] = SelectionBrand();
                 ViewData["typ"] = pm.SelectionTyp();
+                ViewData["velkost"] = pm.SelectionSize();
+                ViewData["shoes"] = pm.SelectionShoes();
+                ViewData["kosiky"] = pm.SelectionSizeBra1();
+                ViewData["obvod"] = pm.SelectionSizeBra2();
 
                 return View(model);
             }
