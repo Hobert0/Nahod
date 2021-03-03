@@ -217,14 +217,27 @@ List<SelectListItem> emptylist = new List<SelectListItem>();
 						else //ak je cena normalna
 						{
 						<div class="product-cart row">
-							<div class="col-lg-4 col-sm-6 col-12 product-variation">
-								<p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;">MNOŽSTVO</p>
-								<div class="cart-item-amount">
-									<button type="button" class="inc button">−</button>
-									<input type="number" name="amount[1050506]" value="1" min="1" max="30000" class="" id="quantity">
-									<button type="button" class="dec button">+</button>
-								</div>
-							</div>
+                            <div class="col-lg-4 col-sm-6 col-12 product-variation">
+                                @if (prod.custom6 != null && prod.custom6 != "")
+                                {
+                                    isvariablecolor = true;
+                                    <p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;margin-top:-80px;">FARBA</p>
+                                    @Html.DropDownList("color", emptylist, "", new { @class = "form-control color-box" })
+                                }
+                                @if (prod.custom4 != null && prod.custom4 != "")
+                                {
+                                    isvariableproduct = true;
+                                    <p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;">VEĽKOSŤ</p>
+                                    @Html.DropDownList("size", emptylist, "", new { @class = "form-control select-box", onchange = "showSize()" })
+                                    @Html.DropDownList("size2", emptylist, "", new { @class = "form-control select-box2", style = "display:none;margin-top:10px;" })
+                                }
+                                <p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;">MNOŽSTVO</p>
+                                <div class="cart-item-amount">
+                                    <button type="button" class="inc button">−</button>
+                                    <input type="number" name="amount[1050506]" value="1" min="1" max="30000" class="" id="quantity">
+                                    <button type="button" class="dec button">+</button>
+                                </div>
+                            </div>
 							<div class="add-to-cart col-lg-8">
 								<button id="addproductbtn" isvariableproduct="@isvariableproduct.ToString()" isvariablecolor="@isvariablecolor.ToString()" class="btn btn-color addtocart"><img src="/Content/images/cart_white.svg" style="width: 20px;" alt="search">PRIDAŤ DO KOŠÍKA</button>
 
