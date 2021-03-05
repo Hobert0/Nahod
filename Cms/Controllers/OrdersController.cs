@@ -865,6 +865,7 @@ namespace Cms.Controllers
 
         }
 
+        /*
         [HttpPost]
         public ActionResult UpdateOrderNote(string orderNote, int orderId)
         {
@@ -876,6 +877,6 @@ namespace Cms.Controllers
 
             return RedirectToAction("Orders", "Admin");
         }
-
+        */
     }
 }

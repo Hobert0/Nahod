@@ -1,4 +1,5 @@
-﻿@model Cms.Models.ProductModel
+﻿
+@model Cms.Models.ProductModel
 
 @{
     Layout = "~/Views/Shared/_LayoutCms.cshtml";
@@ -22,439 +23,580 @@
 @using (Html.BeginForm("SaveProduct", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
 {
     @Html.AntiForgeryToken()
-<div class="form-horizontal">
-    <hr />
+    <div class="form-horizontal">
+        <hr />
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="row">
-        <div class="mt-1 text-right" style="width: 180px;">
-            <strong>Názov produktu</strong>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <div class="col-md-12">
-                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov" } })
-                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-    <hr />
-    <div class="row">
-        <div class="mt-1 text-right" style="width: 180px;">
-            <strong>Titulná fotografia</strong>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <div class="col-md-12 btnvyber">
-                    <a id="btn_vis" style="cursor:pointer">Vyber fotografie</a>
-                    @Html.TextBoxFor(model => model.TitleImage, "", new { @type = "file", @class = "form-control", @accept = "jpg|png|jpeg|gif", @style = "max-width: 67%;height:60px;display:none;", @id = "bttn", @onchange = "pressed()" })
-                    <label id="fileLabel">Nie je vybratá žiadna fotografia.</label>
-                    @Html.ValidationMessageFor(model => model.TitleImage, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="mt-1 text-right" style="width: 180px;">
-            <strong>Kategória</strong>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <div class="col-md-12">
-                    @Html.DropDownListFor(model => model.Category, (IEnumerable<SelectListItem>)ViewData["kategoria"], new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="mt-1 text-right" style="width: 180px;">
-            <strong>Značka</strong>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <div class="col-md-12">
-                    @Html.DropDownListFor(model => model.Custom3, (IEnumerable<SelectListItem>)ViewData["znacka"], new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Custom3, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="mt-1 text-right" style="width: 180px;">
-            <strong>Typ</strong>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <div class="col-md-12">
-                    @Html.DropDownListFor(model => model.Custom8, (IEnumerable<SelectListItem>)ViewData["typ"], new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Custom8, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="mt-1 text-right" style="width: 180px;">
-            <strong>Výkon</strong>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <div class="col-md-12">
-                    @Html.EditorFor(model => model.Custom9, new { htmlAttributes = new { @class = "form-control", placeholder = "Výkon (kW)" } })
-                    @Html.ValidationMessageFor(model => model.Custom9, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="mt-1 text-right" style="width: 180px;">
-            <strong>Plocha</strong>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <div class="col-md-12">
-                    @Html.EditorFor(model => model.Custom10, new { htmlAttributes = new { @class = "form-control", placeholder = "Plocha (m2)" } })
-                    @Html.ValidationMessageFor(model => model.Custom10, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="mt-1 text-right" style="width: 180px;">
-            <strong>Farebné varianty?</strong>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <div class="col-md-12">
-                    <input type="checkbox" name="colorvariable" id="colorvariable" value="" style="margin-top: 10px;" onclick="colorVariable();">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="colorVariableProduct" class="row clrSection" style="display: none;">
-
-        <div class="mt-1 text-right" style="width: 180px;">
-            <strong>Dostupné farebné varianty</strong>
-            <a id="btnAddcolor"><img style="cursor:pointer;margin-left: 10px" src="~/Content/images/plus.svg" width="25" /></a><a id="btnDelcolor"><img src="~/Content/images/negative.svg" width="25" style="cursor:pointer;margin-left: 5px" /></a>
-        </div>
-
-        <div id="colorSection1" class="colorSection row m-0 activeInputColor">
-            <div class="mt-1 text-right" style="width: 15px;">
-            </div>
-            <div class="colorInput col-4">
-                <div class="form-group">
-                    <div style="width: 150px;">
-                        @Html.Editor("color", new { htmlAttributes = new { @class = "form-control", placeholder = "Farebná varianta" } })
-                        <input type="hidden" value="1" id="total_chq">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="mt-1 text-right" style="width: 180px;">
-            <strong>Kód produktu</strong>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <div class="col-md-12">
-                    @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control", placeholder = "Kód produktu" } })
-                    @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row" id="stock" style="display: flex;">
-        <div class="mt-1 text-right" style="width: 180px;">
-            <strong>Stav skladu</strong>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <div class="col-md-12">
-                    @Html.EditorFor(model => model.Stock, new { htmlAttributes = new { @class = "form-control", placeholder = "Sklad (ks)" } })
-                    @Html.ValidationMessageFor(model => model.Stock, "", new { @class = "text-danger" })
-                    <small>0 - momentálne vypredané, -1 - produkt na objednávku</small>
-                </div>
-            </div>
-        </div>
-        <div class="col-2" style="margin-left:-50px;">
-            <div class="form-group">
-                <div class="col-md-12">
-                    @Html.DropDownListFor(model => model.Custom2, (IEnumerable<SelectListItem>)ViewData["mernaj"], new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Custom2, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="mt-1 text-right" style="width: 180px;">
-            <strong>Hraničná hodnota</strong>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <div class="col-md-12">
-                    @Html.EditorFor(model => model.Custom1, new { htmlAttributes = new { @class = "form-control", placeholder = "Hraničná hodnota skladu" } })
-                    @Html.ValidationMessageFor(model => model.Custom1, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="mt-1 text-right" style="width: 180px;">
-            <strong>Hmotnosť</strong>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <div class="col-md-12">
-                    @Html.EditorFor(model => model.Weight, new { htmlAttributes = new { @class = "form-control", placeholder = "Hmotnosť" } })
-                    @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-        <div class="col-2" style="margin-left:-50px;">
-            <div class="form-group">
-                <div class="col-md-12">
-                    @Html.DropDownListFor(model => model.Weightunit, (IEnumerable<SelectListItem>)ViewData["hmotnostj"], new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Weightunit, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="mt-1 text-right" style="width: 180px;">
-            <strong>Cena s DPH</strong>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <div class="col-md-12">
-                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
-                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-                    <small>Ak bude hodnota 0, pri produkte bude informácia: Cena na vyžiadanie</small>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="mt-1 text-right" style="width: 180px;">
-            <strong>Cena od?</strong>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <div class="col-md-12">
-                    @Html.CheckBoxFor(model => model.Custom6, new { style = "margin-top: 10px;" })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="mt-1 text-right" style="width: 180px;">
-            <strong>Akciová cena s DPH</strong>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <div class="col-md-12">
-                    @Html.EditorFor(model => model.Discountprice, new { htmlAttributes = new { @class = "form-control", placeholder = "Akciová cena" } })
-                    @Html.ValidationMessageFor(model => model.Discountprice, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="mt-1 text-right" style="width: 180px;">
-            <strong>Variabilný produkt?</strong>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <div class="col-md-12">
-                    <input type="checkbox" name="variableproduct" id="variableproduct" value="" style="margin-top: 10px;" onclick="checkVariable();">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-2" id="underVariableProduct" style="display: none;">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
             <div class="mt-1 text-right" style="width: 180px;">
-                <strong>Zobraziť veľkosti podprseniek?</strong>
+                <strong>Názov produktu</strong>
             </div>
             <div class="col-4">
                 <div class="form-group">
                     <div class="col-md-12">
-                        <input type="checkbox" name="variableunderwear" id="variableunderwear" value="" style="margin-top: 10px;" onclick="checkVariable();">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-2" id="shoeVariableProduct" style="display: none;">
+        <hr />
+        <div class="row">
             <div class="mt-1 text-right" style="width: 180px;">
-                <strong>Zobraziť veľkosti tenisiek?</strong>
+                <strong>Titulná fotografia</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12 btnvyber">
+                        <a id="btn_vis" style="cursor:pointer">Vyber fotografie</a>
+                        @Html.TextBoxFor(model => model.TitleImage, "", new { @type = "file", @class = "form-control", @accept = "jpg|png|jpeg|gif", @style = "max-width: 67%;height:60px;display:none;", @id = "bttn", @onchange = "pressed()" })
+                        <label id="fileLabel">Nie je vybratá žiadna fotografia.</label>
+                        @Html.ValidationMessageFor(model => model.TitleImage, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Kategória</strong>
             </div>
             <div class="col-4">
                 <div class="form-group">
                     <div class="col-md-12">
-                        <input type="checkbox" name="variableshoes" id="variableshoes" value="" style="margin-top: 10px;" onclick="checkVariable();">
+                        @Html.DropDownListFor(model => model.Category, (IEnumerable<SelectListItem>)ViewData["kategoria"], new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
+
         </div>
-    </div>
-    <hr />
-    <div id="regularVariableProduct" class="row cloneSection pl-5" style="display: none;">
-
-        <div class="mt-1 pb-3 row col-12">
-            <strong>Dostupné veľkosti / varianty</strong>
-            <a id="btnAdd"><img style="cursor:pointer;margin-left: 10px" src="~/Content/images/plus.svg" width="25" /></a><a id="btnDel"><img src="~/Content/images/negative.svg" width="25" style="cursor:pointer;margin-left: 5px" /></a>
-        </div>
-
-        <div id="clonedSection1" class="clonedSection row m-0 activeInputSize" style="width: 800px;">
-            <div class="clonedInput">
-                <div class="form-group">
-                    <div style="width: 150px;">
-                        @Html.DropDownList("size1", (IEnumerable<SelectListItem>)ViewData["velkost"], new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Weightunit, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Značka</strong>
             </div>
-            <div class="clonedInputTwo">
+            <div class="col-4">
                 <div class="form-group">
-                    <div style="width: 150px; margin-left: 20px;">
-                        @Html.Editor("stock", new { htmlAttributes = new { @class = "form-control", placeholder = "Ks na sklade" } })
-                        @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
-                        <input type="hidden" value="1" id="total_chq">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div id="shoesVariableProduct" class="row shoeSection pl-5" style="display: none;">
-
-        <div class="mt-1 pb-3 row col-12">
-            <strong>Dostupné veľkosti / varianty</strong>
-            <a id="btnAdd3"><img style="cursor:pointer;margin-left: 10px" src="~/Content/images/plus.svg" width="25" /></a><a id="btnDel3"><img src="~/Content/images/negative.svg" width="25" style="cursor:pointer;margin-left: 5px" /></a>
-        </div>
-
-        <div id="shoesSection1" class="shoesSection row m-0 activeInputShoes" style="width: 800px;">
-            <div class="shoesInput">
-                <div class="form-group">
-                    <div style="width: 150px;">
-                        @Html.DropDownList("size1", (IEnumerable<SelectListItem>)ViewData["shoes"], new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Weightunit, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-            <div class="shoesInputTwo">
-                <div class="form-group">
-                    <div style="width: 150px; margin-left: 20px;">
-                        @Html.Editor("stock", new { htmlAttributes = new { @class = "form-control", placeholder = "Ks na sklade" } })
-                        @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
-                        <input type="hidden" value="1" id="total_chq">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <div id="underwearVariableProduct" class="row undersection pl-5" style="display: none;">
-
-        <div class="mt-1 pb-3 row col-12">
-            <strong>Dostupné veľkosti / varianty</strong>
-            <a id="btnAdd2"><img style="cursor:pointer;margin-left: 10px" src="~/Content/images/plus.svg" width="25" /></a><a id="btnDel2"><img src="~/Content/images/negative.svg" width="25" style="cursor:pointer;margin-left: 5px" /></a>
-        </div>
-        <div id="underwearSection1" class="underwearSection row m-0 activeInput" style="width: 800px;">
-            <div class="underwearInput">
-                <div class="form-group">
-                    <div style="width: 150px;">
-                        @Html.DropDownList("size1", (IEnumerable<SelectListItem>)ViewData["kosiky"], new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Weightunit, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-            <div class="underwearInputTree">
-                <div class="form-group">
-                    <div style="width: 150px;margin-left: 20px;">
-                        @Html.DropDownList("size2", (IEnumerable<SelectListItem>)ViewData["obvod"], new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Weightunit, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-            <div class="underwearInputTwo">
-                <div class="form-group">
-                    <div style="width: 150px; margin-left: 20px;">
-                        @Html.Editor("stock", new { htmlAttributes = new { @class = "form-control", placeholder = "Ks na sklade" } })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.Custom3, (IEnumerable<SelectListItem>)ViewData["znacka"], new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.Custom3, "", new { @class = "text-danger" })
-                        <input type="hidden" value="1" id="total_chq">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Typ</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.Custom8, (IEnumerable<SelectListItem>)ViewData["typ"], new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Custom8, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Výkon</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Custom9, new { htmlAttributes = new { @class = "form-control", placeholder = "Výkon (kW)" } })
+                        @Html.ValidationMessageFor(model => model.Custom9, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
         </div>
 
-    </div>
-    <div class="row">
-        <div class="mt-1 text-right" style="width: 200px;">
-            <strong>Odporúčaný produkt ?</strong>
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Plocha</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Custom10, new { htmlAttributes = new { @class = "form-control", placeholder = "Plocha (m2)" } })
+                        @Html.ValidationMessageFor(model => model.Custom10, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-4 mt-1">
-            <div class="form-row">
-                <div class="col-md-3">
-                    @Html.CheckBoxFor(model => model.Recommended, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Recommended, "", new { @class = "text-danger" })
+
+
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Farebné varianty?</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="checkbox" name="colorvariable" id="colorvariable" value="" style="margin-top: 10px;" onclick="colorVariable();">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="colorVariableProduct" class="row clrSection" style="display: none;">
+
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Dostupné farebné varianty</strong>
+                <a id="btnAddcolor"><img style="cursor:pointer;margin-left: 10px" src="~/Content/images/plus.svg" width="25" /></a><a id="btnDelcolor"><img src="~/Content/images/negative.svg" width="25" style="cursor:pointer;margin-left: 5px" /></a>
+            </div>
+
+            <div id="colorSection1" class="colorSection row m-0 activeInputColor">
+                <div class="mt-1 text-right" style="width: 15px;">
+                </div>
+                <div class="colorInput col-4">
+                    <div class="form-group">
+                        <div style="width: 150px;">
+                            @Html.Editor("color", new { htmlAttributes = new { @class = "form-control", placeholder = "Farebná varianta" } })
+                            <input type="hidden" value="1" id="total_chq">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Kód produktu</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control", placeholder = "Kód produktu" } })
+                        @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="stock" style="display: flex;">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Stav skladu</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Stock, new { htmlAttributes = new { @class = "form-control", placeholder = "Sklad (ks)" } })
+                        @Html.ValidationMessageFor(model => model.Stock, "", new { @class = "text-danger" })
+                        <small>0 - momentálne vypredané, -1 - produkt na objednávku</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2" style="margin-left:-50px;">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.Custom2, (IEnumerable<SelectListItem>)ViewData["mernaj"], new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Custom2, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Hraničná hodnota</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Custom1, new { htmlAttributes = new { @class = "form-control", placeholder = "Hraničná hodnota skladu" } })
+                        @Html.ValidationMessageFor(model => model.Custom1, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Hmotnosť</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Weight, new { htmlAttributes = new { @class = "form-control", placeholder = "Hmotnosť" } })
+                        @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-2" style="margin-left:-50px;">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.Weightunit, (IEnumerable<SelectListItem>)ViewData["hmotnostj"], new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Weightunit, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Cena s DPH</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
+                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                        <small>Ak bude hodnota 0, pri produkte bude informácia: Cena na vyžiadanie</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Cena od?</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.CheckBoxFor(model => model.Custom6, new { style = "margin-top: 10px;" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Akciová cena s DPH</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Discountprice, new { htmlAttributes = new { @class = "form-control", placeholder = "Akciová cena" } })
+                        @Html.ValidationMessageFor(model => model.Discountprice, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 200px;">
+                <strong>Odporúčaný produkt ?</strong>
+            </div>
+            <div class="col-4 mt-1">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.CheckBoxFor(model => model.Recommended, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Recommended, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Variabilný produkt?</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="checkbox" name="variableproduct" id="variableproduct" value="" style="margin-top: 10px;" onclick="checkVariable();">
+                    </div>
+                </div>
+            </div>
+        </div>
+        -->
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 200px;">
+                <strong>Variabilný produkt?</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <!--<input type="checkbox" name="variableproduct" id="variableproduct" value="" style="margin-top: 10px;" onclick="checkVariable();">-->
+                        <input type="checkbox" name="showVariants" id="showVariants" value="" style="margin-top: 10px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--
+        <div class="row">
+            <div class="col-2" id="underVariableProduct" style="display: none;">
+                <div class="mt-1 text-right" style="width: 180px;">
+                    <strong>Zobraziť veľkosti podprseniek?</strong>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="checkbox" name="variableunderwear" id="variableunderwear" value="" style="margin-top: 10px;" onclick="checkVariable();">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2" id="shoeVariableProduct" style="display: none;">
+                <div class="mt-1 text-right" style="width: 180px;">
+                    <strong>Zobraziť veľkosti tenisiek?</strong>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="checkbox" name="variableshoes" id="variableshoes" value="" style="margin-top: 10px;" onclick="checkVariable();">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        -->
+        <hr />
+        <div id="univerzalVariableProduct" class="row pl-5" style="display: none;">
+
+            @Html.HiddenFor(model => model.Variants)
+
+            <div class="mt-1 pb-3 row col-12">
+                <strong>Varianty</strong>
+                <a id="btnAddVar"><img style="cursor:pointer;margin-left: 10px" src="~/Content/images/plus.svg" width="25" /></a><a id="btnDelVar"><img src="~/Content/images/negative.svg" width="25" style="cursor:pointer;margin-left: 5px" /></a>
+            </div>
+
+            <div num="1" class="clonedVarSection row m-0 activeInputSize" style="width:90%;">
+                <div class="">
+                    <div class="form-group">
+                        <div style="width: 150px; margin-left: 20px;">
+                            @Html.DropDownList("varAttrs1", (IEnumerable<SelectListItem>)ViewData["vlastnosti"], new { @class = "form-control varAttrs" })
+                            @Html.ValidationMessageFor(model => model.Weightunit, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="form-group">
+                        <div style="width: 150px; margin-left: 20px;">
+                            <select class="form-control varAttrsValues " id="varAttrsValues1" name="varAttrsValues1">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="form-group">
+                        <div style="width: 150px; margin-left: 20px;">
+                            @Html.Editor("varNumber1", new { htmlAttributes = new { @class = "form-control varNumber", placeholder = "Katalógové číslo" } })
+                            @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
+                            <input type="hidden" value="1" id="total_chq">
+                        </div>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="form-group">
+                        <div style="width: 150px; margin-left: 20px;">
+                            @Html.Editor("varStock1", new { htmlAttributes = new { @class = "form-control varStock", placeholder = "Na sklade" } })
+                            @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
+                            <input type="hidden" value="1" id="total_chq">
+                        </div>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="form-group">
+                        <div style="width: 150px; margin-left: 20px;">
+                            @Html.Editor("varPrice1", new { htmlAttributes = new { @class = "form-control varPrice", placeholder = "Cena s DPH" } })
+                            @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
+                            <input type="hidden" value="1" id="total_chq">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--
+        <div id="regularVariableProduct" class="row cloneSection pl-5" style="display: none;">
+
+            <div class="mt-1 pb-3 row col-12">
+                <strong>Dostupné veľkosti / varianty</strong>
+                <a id="btnAdd"><img style="cursor:pointer;margin-left: 10px" src="~/Content/images/plus.svg" width="25" /></a><a id="btnDel"><img src="~/Content/images/negative.svg" width="25" style="cursor:pointer;margin-left: 5px" /></a>
+            </div>
+
+            <div id="clonedSection1" class="clonedSection row m-0 activeInputSize" style="width: 800px;">
+                <div class="clonedInput">
+                    <div class="form-group">
+                        <div style="width: 150px;">
+                            @Html.DropDownList("size1", (IEnumerable<SelectListItem>)ViewData["velkost"], new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Weightunit, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="clonedInputTwo">
+                    <div class="form-group">
+                        <div style="width: 150px; margin-left: 20px;">
+                            @Html.Editor("stock", new { htmlAttributes = new { @class = "form-control", placeholder = "Ks na sklade" } })
+                            @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
+                            <input type="hidden" value="1" id="total_chq">
+                        </div>
+                    </div>
                 </div>
             </div>
 
         </div>
-    </div>
 
-    <hr />
-    <div class="row">
-        <div class="col">
-            <div class="form-group">
-                <strong>@Html.LabelFor(model => model.Description, "Popis produktu", htmlAttributes: new { @class = "control-label col-md-2" })</strong>
+        <div id="shoesVariableProduct" class="row shoeSection pl-5" style="display: none;">
 
-                <div class="col-md-11">
-                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = 6 })
+            <div class="mt-1 pb-3 row col-12">
+                <strong>Dostupné veľkosti / varianty</strong>
+                <a id="btnAdd3"><img style="cursor:pointer;margin-left: 10px" src="~/Content/images/plus.svg" width="25" /></a><a id="btnDel3"><img src="~/Content/images/negative.svg" width="25" style="cursor:pointer;margin-left: 5px" /></a>
+            </div>
+
+            <div id="shoesSection1" class="shoesSection row m-0 activeInputShoes" style="width: 800px;">
+                <div class="shoesInput">
+                    <div class="form-group">
+                        <div style="width: 150px;">
+                            @Html.DropDownList("size1", (IEnumerable<SelectListItem>)ViewData["shoes"], new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Weightunit, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="shoesInputTwo">
+                    <div class="form-group">
+                        <div style="width: 150px; margin-left: 20px;">
+                            @Html.Editor("stock", new { htmlAttributes = new { @class = "form-control", placeholder = "Ks na sklade" } })
+                            @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
+                            <input type="hidden" value="1" id="total_chq">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="underwearVariableProduct" class="row undersection pl-5" style="display: none;">
+
+            <div class="mt-1 pb-3 row col-12">
+                <strong>Dostupné veľkosti / varianty</strong>
+                <a id="btnAdd2"><img style="cursor:pointer;margin-left: 10px" src="~/Content/images/plus.svg" width="25" /></a><a id="btnDel2"><img src="~/Content/images/negative.svg" width="25" style="cursor:pointer;margin-left: 5px" /></a>
+            </div>
+            <div id="underwearSection1" class="underwearSection row m-0 activeInput" style="width: 800px;">
+                <div class="underwearInput">
+                    <div class="form-group">
+                        <div style="width: 150px;">
+                            @Html.DropDownList("size1", (IEnumerable<SelectListItem>)ViewData["kosiky"], new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Weightunit, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="underwearInputTree">
+                    <div class="form-group">
+                        <div style="width: 150px;margin-left: 20px;">
+                            @Html.DropDownList("size2", (IEnumerable<SelectListItem>)ViewData["obvod"], new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Weightunit, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="underwearInputTwo">
+                    <div class="form-group">
+                        <div style="width: 150px; margin-left: 20px;">
+                            @Html.Editor("stock", new { htmlAttributes = new { @class = "form-control", placeholder = "Ks na sklade" } })
+                            @Html.ValidationMessageFor(model => model.Custom3, "", new { @class = "text-danger" })
+                            <input type="hidden" value="1" id="total_chq">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        -->
+
+        <hr />
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <strong>@Html.LabelFor(model => model.Description, "Popis produktu", htmlAttributes: new { @class = "control-label col-md-2" })</strong>
+
+                    <div class="col-md-11">
+                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = 6 })
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <hr />
-    <div class="row">
-        <div class="mt-1 text-right" style="width: 205px;">
-            <strong>Obrázky do fotogalérie</strong>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <div class="col btnvyber">
-                    <a id="bttn_vis" style="cursor:pointer">Vyber fotografie</a>
-                    @Html.TextBoxFor(model => model.ImageGallery, "", new { @type = "file", @class = "form-control", @multiple = "multiple", @accept = "jpg|png|jpeg|gif", @style = "max-width: 67%;height:60px;display:none;", @id = "btttn", @onchange = "press()" })
-                    <label id="fileLabell">Nie je vybratá žiadna fotografia.</label>
-                    @Html.ValidationMessageFor(model => model.ImageGallery, "", new { @class = "text-danger" })
+        <hr />
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 205px;">
+                <strong>Obrázky do fotogalérie</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col btnvyber">
+                        <a id="bttn_vis" style="cursor:pointer">Vyber fotografie</a>
+                        @Html.TextBoxFor(model => model.ImageGallery, "", new { @type = "file", @class = "form-control", @multiple = "multiple", @accept = "jpg|png|jpeg|gif", @style = "max-width: 67%;height:60px;display:none;", @id = "btttn", @onchange = "press()" })
+                        <label id="fileLabell">Nie je vybratá žiadna fotografia.</label>
+                        @Html.ValidationMessageFor(model => model.ImageGallery, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    @Html.EditorFor(model => model.Custom4, new { htmlAttributes = new { @class = "form-control", placeholder = "velkossti", id = "finalsizes", style = "display:none;" } })
+        @Html.EditorFor(model => model.Custom4, new { htmlAttributes = new { @class = "form-control", placeholder = "velkossti", id = "finalsizes", style = "display:none;" } })
 
-    @*check if is product variable 1 = variable*@
-    @Html.EditorFor(model => model.Custom5, new { htmlAttributes = new { @class = "form-control", id = "variableprod", style = "display:none;", @Value = "0" } })
-    @Html.EditorFor(model => model.Custom7, new { htmlAttributes = new { @class = "form-control", placeholder = "", id = "finalcolors", style = "display:none;" } })
+        @*check if is product variable 1 = variable*@
+        @Html.EditorFor(model => model.Custom5, new { htmlAttributes = new { @class = "form-control", id = "variableprod", style = "display:none;", @Value = "0" } })
+        @Html.EditorFor(model => model.Custom7, new { htmlAttributes = new { @class = "form-control", placeholder = "", id = "finalcolors", style = "display:none;" } })
 
-    <div class="form-group">
-        <div style="text-align:right">
-            <input type="submit" value="Pridať produkt" id="btnSubmit" class="btn btn-success" />
+        <div class="form-group">
+            <div style="text-align:right">
+                <input type="submit" value="Pridať produkt" id="btnSubmit" class="btn btn-success" />
+            </div>
         </div>
     </div>
-</div>
 }
+
+<script>
+    $(document).ready(function () {
+
+        //inicializacia hodnot pre vlastnosti
+
+        //initAttrValues(1);
+        //$(".varAttrs").change(function () {
+        //    initAttrValues($(this).attr("num"));
+        //});
+
+        function initAttrValues(num) {
+            $("select[name=varAttrsValues" + num + "] option").remove();
+
+            $values = JSON.parse($("#varAttrs" + num + " option:selected").val());
+
+            for ($i = 0; $i < $values.length; $i++) {
+                $("#varAttrsValues" + num).append('<option value="' + $values[$i].name + '">' + $values[$i].name + '</option>')        
+            }
+        }
+
+        $("#showVariants").click(function () {
+            if ($("#showVariants").is(":checked")) {
+                $("#univerzalVariableProduct").css("display", "flex");
+            } else {
+                $("#univerzalVariableProduct").css("display", "none");
+            }
+        });
+
+        //Pridanie alebo vymazanie poslednej varianty
+        $('#btnAddVar').click(function () {
+            var num = $('.clonedVarSection').length;
+            var newNum = new Number(num + 1);
+
+            var newSection = $('.clonedVarSection[num=' + num + ']').clone().attr('num', newNum);
+
+            newSection.find("select.varAttrs").attr("name", "varAttrs" + newNum).attr("id", "varAttrs" + newNum);
+            newSection.find("select.varAttrsValues").attr("name", "varAttrsValues" + newNum).attr("id", "varAttrsValues" + newNum);
+            newSection.find("input.varNumber").attr("name", "varNumber" + newNum).attr("id", "varNumber" + newNum);
+            newSection.find("input.varStock").attr("name", "varStock" + newNum).attr("id", "varStock" + newNum);
+            newSection.find("input.varPrice").attr("name", "varPrice" + newNum).attr("id", "varPrice" + newNum);
+
+            $('#univerzalVariableProduct').append(newSection);
+
+            $('#btnDelVar').attr('style', 'display:inline-block');
+
+            if (newNum == 10)
+                $('#btnAddVar').attr('disabled', 'disabled');
+        });
+
+        $('#btnDelVar').click(function () {
+            var num = $('.clonedVarSection').length; // how many "duplicatable" input fields we currently have
+            $('.clonedVarSection[num=' + num + ']').remove();     // remove the last element
+
+            // enable the "add" button
+            $('#btnAddVar').attr('disabled', '');
+
+            // if only one element remains, disable the "remove" button
+            if (num - 1 == 1)
+                $('#btnDelVar').attr('style', 'display:none');
+        });
+
+        $('#btnDelVar').attr('style', 'display:none');
+
+    });
+</script>
 
 <script type="text/javascript">
     // Initialize your tinyMCE Editor with your preferred options
@@ -532,7 +674,9 @@
 
 <script src="/Scripts/umd/popper.min.js"></script>
 <script src="/Scripts/bootstrap.min.js"></script>
-<script src="http://malsup.github.com/jquery.form.js"></script>
+<!--<script src="http://malsup.github.com/jquery.form.js"></script>-->
+
+
 
 <script>
     $("#btn_vis").click(function () {
@@ -600,7 +744,8 @@
 
     }
 
-    /*STANDARD SIZES*/
+
+    /*Standar Sizes*/
     $(document).ready(function () {
         $('#btnAdd').click(function () {
             var num = $('.clonedSection').length;
@@ -705,6 +850,28 @@
     /*SIZES- Create JSON and send to database*/
     $(document).ready(function () {
         $('#btnSubmit').click(function () {
+
+            //ulozenie variant do JSONU ako string
+            if ($("#showVariants").is(":checked")) {
+                $num = $(".clonedVarSection").length;
+                $variants = [];
+
+                for ($i = 1; $i <= $num; $i++) {
+
+                    $varAttrs = $(".clonedVarSection[num=" + $i + "]").find(".varAttrs").val();
+                    $varAttrsValues = $(".clonedVarSection[num=" + $i + "]").find(".varAttrsValues").val();
+                    $varNumber = $(".clonedVarSection[num=" + $i + "]").find(".varNumber").val();
+                    $varStock = $(".clonedVarSection[num=" + $i + "]").find(".varStock").val();
+                    $varPrice = $(".clonedVarSection[num=" + $i + "]").find(".varPrice").val();
+
+                    $variants.push({ "attr": $varAttrs, "attrValues": $varAttrsValues, "number": $varNumber, "stock": $varStock, "price": $varPrice });
+                }
+
+                $("#Variants").val(JSON.stringify($variants));
+            }
+
+            $("#Variants").val($variants);
+
             if (document.getElementById('variableunderwear').checked) {
                 var sizes = [];
                 $(".activeInput").each(function () {
@@ -756,79 +923,77 @@
 
         });
     });
-        /*ADD/REMOVE COLOR FIELDS*/
-        function colorVariable()
-        {
-            if (document.getElementById('colorvariable').checked) 
-            {
-                document.getElementById('variableprod').value = '1';
-                document.getElementById('colorVariableProduct').style.display = 'flex';
-               
-            } else {
-                document.getElementById('variableprod').value = '0';
-                document.getElementById('colorVariableProduct').style.display = 'none';
+    /*ADD/REMOVE COLOR FIELDS*/
+    function colorVariable() {
+        if (document.getElementById('colorvariable').checked) {
+            document.getElementById('variableprod').value = '1';
+            document.getElementById('colorVariableProduct').style.display = 'flex';
 
-            }           
-            
+        } else {
+            document.getElementById('variableprod').value = '0';
+            document.getElementById('colorVariableProduct').style.display = 'none';
+
         }
 
-       /*COLOR VARIANTS*/
-        $(document).ready(function() {
-            $('#btnAddcolor').click(function() {
-                var num     = $('.colorSection').length;
-                var newNum  = new Number(num + 1);
-        
-                var newSection = $('#colorSection' + num).clone().attr('id', 'colorSection' + newNum);
-        
-                newSection.children(':first').children(':first').attr('id', 'name' + newNum).attr('name', 'name' + newNum);
-                newSection.children(':nth-child(2)').children(':first').attr('id', 'nameTwo' + newNum).attr('name', 'nameTwo' + newNum);
-                $('#colorSection' + num +' :input').attr('value', '');
+    }
 
-                $('.clrSection').last().append(newSection);
-        
-                $('#btnDelcolor').attr('style', 'display:inline-block');
-        
-                if (newNum == 10)
-                    $('#btnAddcolor').attr('disabled','disabled');
-            });
-    
-            $('#btnDelcolor').click(function() {
-                var num = $('.colorSection').length; // how many "duplicatable" input fields we currently have
-                $('#colorSection' + num).remove();     // remove the last element
-        
-                // enable the "add" button
-                $('#btnAddcolor').attr('disabled','');
-        
-                // if only one element remains, disable the "remove" button
-                if (num-1 == 1)
-                    $('#btnDelcolor').attr('style','display:none');
-            });
-    
-            $('#btnDelcolor').attr('style','display:none');
+    /*COLOR VARIANTS*/
+    $(document).ready(function () {
+        $('#btnAddcolor').click(function () {
+            var num = $('.colorSection').length;
+            var newNum = new Number(num + 1);
+
+            var newSection = $('#colorSection' + num).clone().attr('id', 'colorSection' + newNum);
+
+            newSection.children(':first').children(':first').attr('id', 'name' + newNum).attr('name', 'name' + newNum);
+            newSection.children(':nth-child(2)').children(':first').attr('id', 'nameTwo' + newNum).attr('name', 'nameTwo' + newNum);
+            $('#colorSection' + num + ' :input').attr('value', '');
+
+            $('.clrSection').last().append(newSection);
+
+            $('#btnDelcolor').attr('style', 'display:inline-block');
+
+            if (newNum == 10)
+                $('#btnAddcolor').attr('disabled', 'disabled');
         });
 
-        /*COLORS - Create JSON and send to database*/
-        $(document).ready(function () {
-            $('#btnSubmit').click(function () {
-                if (document.getElementById('colorvariable').checked) {
-                    var colors = [];
-                    $(".colorInput").each(function() {
-                        var color = $(this).find('[name=color]').val();
+        $('#btnDelcolor').click(function () {
+            var num = $('.colorSection').length; // how many "duplicatable" input fields we currently have
+            $('#colorSection' + num).remove();     // remove the last element
 
-                        item = {}
-                        item["color"] = color;
+            // enable the "add" button
+            $('#btnAddcolor').attr('disabled', '');
 
-                        colors.push(item);
-                    });
+            // if only one element remains, disable the "remove" button
+            if (num - 1 == 1)
+                $('#btnDelcolor').attr('style', 'display:none');
+        });
 
-                    colors = JSON.stringify(colors);
-                    document.getElementById("finalcolors").value = colors;
-                }else {
-                    document.getElementById("finalcolors").value = "";
-                } 
-            }); 
-                
-            });        
+        $('#btnDelcolor').attr('style', 'display:none');
+    });
+
+    /*COLORS - Create JSON and send to database*/
+    $(document).ready(function () {
+        $('#btnSubmit').click(function () {
+            if (document.getElementById('colorvariable').checked) {
+                var colors = [];
+                $(".colorInput").each(function () {
+                    var color = $(this).find('[name=color]').val();
+
+                    item = {}
+                    item["color"] = color;
+
+                    colors.push(item);
+                });
+
+                colors = JSON.stringify(colors);
+                document.getElementById("finalcolors").value = colors;
+            } else {
+                document.getElementById("finalcolors").value = "";
+            }
+        });
+
+    });
 
 
 

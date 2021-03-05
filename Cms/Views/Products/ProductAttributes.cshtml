@@ -1,0 +1,232 @@
+﻿@using Newtonsoft.Json
+
+@model Cms.Models.MultipleIndexModel
+@{
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+    ViewBag.Title = "Vlastnosti produktov";
+}
+<style>
+    .sidenav > a:nth-child(3) {
+        border-left: 5px solid #00abe8;
+        color: #f1f1f1;
+        background-color: #464646;
+    }
+
+    .dropdown-container2 {
+        display: block;
+    }
+</style>
+
+<h2>Vlastnosti produktov</h2>
+
+<hr />
+
+@using (Html.BeginForm("AddAttribute", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4>Pridať vlastnosť produktov</h4>
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <br />
+
+        <div class="form-group">
+            <div class="col-md-8" style="padding:0">
+                @Html.EditorFor(model => model.Attributes.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov vlastnosti", id = "name" } })
+                @Html.ValidationMessageFor(model => model.Attributes.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group values-group">
+            <div class="col-md-8" style="padding:0">
+                @Html.HiddenFor(model => model.Attributes.Value, new { htmlAttributes = new { @class = "form-control", id = "values" } })
+                @Html.ValidationMessageFor(model => model.Attributes.Value, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <input type="button" value="Pridať hodnotu" class="btn btn-warning addValue" /><input type="button" value="Zmazať poslednú hodnotu" style="display:none;margin-left: 10px;" class="btn btn-danger removeValue" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <input type="submit" value="Pridať vlastnosť" class="btn btn-success submitbtn" />
+            </div>
+        </div>
+    </div>
+
+}
+<hr />
+<table class="table" style="">
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Názov</th>
+            <th>Hodnoty</th>
+            <th style="text-align:center">Vymazať</th>
+        </tr>
+    </thead>
+    @if (ViewBag.Details == null)
+    {
+
+        foreach (var item in Model.AttributesModel)
+        {
+
+            Model.Variants vm = new Model.Variants();
+            Model.Variants
+            VariantModel values = JsonConvert.DeserializeObject<VariantModel>(item.value);
+            var valuesStr = "";
+
+            //List<dynamic> valuesList = new List<dynamic>();
+            //valuesList = (List<dynamic>)values;
+
+            for (var i = 0; i < values.Count; i++)
+            {
+                valuesStr += values[i].ToString().Split(',')[0].Split(':')[1].Split('"')[1] + ", ";
+            }
+            valuesStr = valuesStr.Remove(valuesStr.Length - 2);
+
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.id)</td>
+                <td><strong id="name-@item.id">@Html.DisplayFor(modelItem => item.name)</strong></td>
+                <td id="value-@item.id">@valuesStr</td>
+                <td align="center"> @Html.ActionLink("Editovať", "EditAttribute", "Products", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteAttribute", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať túto značku?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete značku." })</td>
+            </tr>
+        }
+    }
+
+
+</table>
+
+<script>
+    $(document).ready(function () {
+
+        //Pridanie hodnoty
+        $(".addValue").click(function () {
+            $counter = $(".attributeValue").length + 1;
+            $html =
+                '<div class="form-group">' +
+                '<div class="col-md-8" style="padding:0">' +
+                '<input class="form-control text-box single-line attributeValue" name="attributeValue' + $counter + '" placeholder="Hodnota ' + $counter + '" type="text" value="">' +
+                '</div>' +
+                '</div>';
+
+            $(".values-group > div").append($html);
+
+            $(".removeValue").css("display","inline");
+        });
+
+        $(".removeValue").click(function () {
+            $(".values-group > div > div").last().remove();
+
+            if ($(".values-group > div > div").length == 0) {
+                $(".removeValue").css("display", "none");
+            }
+        });
+
+        $("#Myform input[type=submit]").click(function (e) {
+            e.preventDefault();
+
+            if (validateForm()) {
+
+                $json = [];
+
+                $(".attributeValue").each(function () {
+                    $json.push({ "name": $(this).val() });
+                });
+
+                $("#Attributes_Value").val(JSON.stringify($json));
+
+                $("#Myform").submit();
+            }
+        });
+
+        function validateForm() {
+            $valid = true;
+
+            if ($("#name").val() == "") {
+                $("#name").addClass("error");
+
+                $valid = false;
+            } else {
+                $("#name").removeClass("error");
+            }
+
+            if ($(".attributeValue").length == 0) {
+                $valid = false;
+            } else {
+                $(".attributeValue").each(function () {
+                    if ($(this).val() == "") {
+                        $(this).addClass("error");
+
+                        $valid = false;
+                    } else {
+                        $(this).removeClass("error");
+                    }
+                });
+            }
+
+            return $valid;
+        }
+    });
+
+</script>
+
+<script>
+
+    function createSlug() {
+        var name = document.getElementById("name").value;
+        var newSlug = string_to_slug(name);
+        document.getElementById("slug").value = newSlug;
+    }
+    function createValueSlug(counter) {
+        console.log(counter);
+        var name = $("input[name=attributeValue" + counter + "]").val();
+        var newSlug = string_to_slug(name);
+        $("input[name=attributeValueSlug" + counter + "]").val(newSlug);
+    }
+    function string_to_slug(text) {
+        text = text.toString().toLowerCase().trim();
+
+        const sets = [
+            { to: 'a', from: '[ÀÁÂÃÄÅÆĀĂĄẠẢẤẦẨẪẬẮẰẲẴẶ]' },
+            { to: 'c', from: '[ÇĆĈČ]' },
+            { to: 'd', from: '[ÐĎĐÞ]' },
+            { to: 'e', from: '[ÈÉÊËĒĔĖĘĚẸẺẼẾỀỂỄỆ]' },
+            { to: 'g', from: '[ĜĞĢǴ]' },
+            { to: 'h', from: '[ĤḦ]' },
+            { to: 'i', from: '[ÌÍÎÏĨĪĮİỈỊ]' },
+            { to: 'j', from: '[Ĵ]' },
+            { to: 'ij', from: '[Ĳ]' },
+            { to: 'k', from: '[Ķ]' },
+            { to: 'l', from: '[ĹĻĽŁ]' },
+            { to: 'm', from: '[Ḿ]' },
+            { to: 'n', from: '[ÑŃŅŇ]' },
+            { to: 'o', from: '[ÒÓÔÕÖØŌŎŐỌỎỐỒỔỖỘỚỜỞỠỢǪǬƠ]' },
+            { to: 'oe', from: '[Œ]' },
+            { to: 'p', from: '[ṕ]' },
+            { to: 'r', from: '[ŔŖŘ]' },
+            { to: 's', from: '[ßŚŜŞŠ]' },
+            { to: 't', from: '[ŢŤ]' },
+            { to: 'u', from: '[ÙÚÛÜŨŪŬŮŰŲỤỦỨỪỬỮỰƯ]' },
+            { to: 'w', from: '[ẂŴẀẄ]' },
+            { to: 'x', from: '[ẍ]' },
+            { to: 'y', from: '[ÝŶŸỲỴỶỸ]' },
+            { to: 'z', from: '[ŹŻŽ]' },
+            { to: '-', from: '[·/_,:;\']' }
+        ];
+
+        sets.forEach(set => {
+            text = text.replace(new RegExp(set.from, 'gi'), set.to)
+        });
+
+        return text
+            .replace(/\s+/g, '-')    // Replace spaces with -
+            .replace(/[^\w-]+/g, '') // Remove all non-word chars
+            .replace(/--+/g, '-')    // Replace multiple - with single -
+            .replace(/^-+/, '')      // Trim - from start of text
+            .replace(/-+$/, '')      // Trim - from end of text
+
+    }
+</script>

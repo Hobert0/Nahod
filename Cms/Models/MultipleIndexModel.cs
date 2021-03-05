@@ -17,6 +17,8 @@ namespace Cms.Models
         public CategoriesModel CategoriesEditModel { get; set; }
         public BrandsModel Brands { get; set; }
         public BrandsModel BrandsEditModel { get; set; }
+        public AttributesModel Attributes { get; set; }
+        public VariantModel Variants { get; set; }
         public CouponsModel Coupons { get; set; }
         public CouponsModel CouponsEditModel { get; set; }
         public AdminModel AdminLoginModel { get; set; }
@@ -30,6 +32,7 @@ namespace Cms.Models
         public IEnumerable<Cms.Models.settings> SettingsModel { get; set; }
         public IEnumerable<Cms.Models.categories> CategoriesModel { get; set; }
         public IEnumerable<Cms.Models.brands> BrandsModel { get; set; }
+        public IEnumerable<Cms.Models.attributes> AttributesModel { get; set; }
         public IEnumerable<Cms.Models.blog> BlogModel { get; set; }
 
         public IEnumerable<Cms.Models.coupons> CouponsModel { get; set; }

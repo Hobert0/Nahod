@@ -55,6 +55,7 @@ namespace Cms.Controllers
                     Ordernumber = a.ordernumber,
                     Date = a.date,
                     Shipping = a.shipping,
+                    Payment = a.payment,
                     Finalprice = a.finalprice,
                     Status = a.status,
                     Name = a.name,

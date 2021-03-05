@@ -39,6 +39,7 @@ namespace Cms.Models
         public string Discountprice { get; set; }
         public HttpPostedFileBase[] TitleImage { get; set; }
         public HttpPostedFileBase[] ImageGallery { get; set; }
+        public string Variants { get; set; }
 
 
         /*Merna jednotka*/

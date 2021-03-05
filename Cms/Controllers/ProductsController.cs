@@ -122,6 +122,48 @@ namespace Cms.Controllers
             return RedirectToAction("Productbrands", "Products");
         }
 
+        [Route("produkty/vlastnosti")]
+        public ActionResult ProductAttributes()
+        {
+            if (Session["username"] != null && Session["role"].ToString() == "0")
+            {
+                MultipleIndexModel model = new MultipleIndexModel();
+                model.AttributesModel = db.attributes.OrderByDescending(a => a.id).ToList();
+                return View(model);
+            }
+            else { return RedirectToAction("Admin", "Admin"); }
+        }
+
+        [Route("produkty/editovat-vlastnost/{id}")] //editacia attributes
+        public ActionResult EditAttribute(int? id)
+        {
+            if (Session["username"] != null && Session["role"].ToString() == "0")
+            {
+                var attr = db.attributes.Where(item => item.id == id).SingleOrDefault();
+                AttributesModel model = new AttributesModel();
+                
+                model.Id = attr.id;
+                model.Name = attr.name;
+                model.Value = attr.value;
+                
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Admin", "Admin");
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> EditAttributeSave(AttributesModel model)
+        {
+            var o = db.attributes.Single(i => i.id == model.Id);
+            o.name = model.Name;
+            o.value = model.Value;
+            db.SaveChanges();
+            return RedirectToAction("ProductAttributes", "Products");
+        }
+
         [Route("produkty/zlavove-kupony")]
         public ActionResult Coupons()
         {
@@ -141,6 +183,8 @@ namespace Cms.Controllers
             if (Session["username"] != null && Session["role"].ToString() == "0")
             {
                 ProductModel pm = new ProductModel();
+
+                ViewData["vlastnosti"] = SelectionAttributes();
                 ViewData["hmotnostj"] = pm.SelectionHmotnost();
                 ViewData["mernaj"] = pm.SelectionMernaJ();
                 ViewData["kategoria"] = SelectionKategoria();
@@ -155,7 +199,17 @@ namespace Cms.Controllers
             }
             else { return RedirectToAction("Admin", "Admin"); }
         }
-
+        
+        /*Attributes - products*/
+        public List<SelectListItem> SelectionAttributes()
+        {
+            List<SelectListItem> attributes = new List<SelectListItem>();
+            foreach (var attr in db.attributes)
+            {
+                attributes.Add(new SelectListItem { Text = attr.name, Value = attr.value });
+            }
+            return attributes;
+        }
         /*Brands - products*/
         public List<SelectListItem> SelectionBrand()
         {
@@ -358,6 +412,9 @@ namespace Cms.Controllers
 
             db.products.Add(o);
             db.SaveChanges();
+
+            //Varianty
+            //model.Variants
 
             if (model.TitleImage != null)
             {
@@ -857,6 +914,20 @@ namespace Cms.Controllers
             return RedirectToAction("ProductBrands");
         }
 
+        public ActionResult DeleteAttribute(int? id, bool confirm)
+        {
+            var data = db.attributes.Find(id);
+            if (true)
+            {
+                ViewBag.Status = true;
+                db.attributes.Remove(data);
+                db.SaveChanges();
+            }
+            else { ViewBag.Status = false; }
+
+
+            return RedirectToAction("ProductAttributes");
+        }
         public ActionResult DeleteCoupon(int? id, bool confirm)
         {
             var data = db.coupons.Find(id);
@@ -1013,6 +1084,20 @@ namespace Cms.Controllers
             }
 
             return RedirectToAction("ProductBrands");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddAttribute(MultipleIndexModel model)
+        {
+            attributes o = new attributes();
+
+            o.name = model.Attributes.Name;
+            o.value = model.Attributes.Value;
+
+            db.attributes.Add(o);
+            db.SaveChanges();
+
+            return RedirectToAction("ProductAttributes");
         }
 
         [HttpPost]

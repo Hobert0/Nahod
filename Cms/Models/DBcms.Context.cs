@@ -41,5 +41,7 @@ namespace Cms.Models
         public virtual DbSet<users> users { get; set; }
         public virtual DbSet<wishlist> wishlist { get; set; }
         public virtual DbSet<usersmeta> usersmeta { get; set; }
+        public virtual DbSet<attributes> attributes { get; set; }
+        public virtual DbSet<variants> variants { get; set; }
     }
 }

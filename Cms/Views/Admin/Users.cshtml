@@ -169,7 +169,7 @@
             document.getElementById("alert").style = "display: none;";
         }
 
-        if ($("#UsersModel_Username").val() == "" || !checkUsername($("#UsersModel_Username").val())) {
+        if ($("#UsersModel_Username").val() == "" || !checkUsername($("#UsersModel_Username").val()) || !isEmail($("#UsersModel_Username").val())) {
             $("#UsersModel_Username").addClass("error");
 
             valid = false;
@@ -178,6 +178,11 @@
         }
 
         return valid;
+    }
+
+    function isEmail(email) {
+      var regex = /^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      return regex.test(email);
     }
 
     function checkUsername(email) {
@@ -198,7 +203,7 @@
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                //some errror, some show err msg to user and log the error  
+                //some errror, some show err msg to user and log the error
             }
         });
         return bool;

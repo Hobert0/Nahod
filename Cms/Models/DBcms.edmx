@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="hobcModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="attributes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="value" Type="text" Nullable="false" />
+        </EntityType>
         <EntityType Name="blog">
           <Key>
             <PropertyRef Name="id" />
@@ -263,6 +271,18 @@
           <Property Name="sum" Type="double" Nullable="false" />
           <Property Name="created" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
+        <EntityType Name="variants">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="prod_id" Type="int" Nullable="false" />
+          <Property Name="price" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="stock" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="number" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="attribute_id" Type="int" Nullable="false" />
+          <Property Name="value" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
         <EntityType Name="wishlist">
           <Key>
             <PropertyRef Name="id" />
@@ -272,6 +292,7 @@
           <Property Name="data" Type="text" Nullable="false" />
         </EntityType>
         <EntityContainer Name="hobcModelStoreContainer">
+          <EntitySet Name="attributes" EntityType="Self.attributes" Schema="hobertocnahod" store:Type="Tables" />
           <EntitySet Name="blog" EntityType="Self.blog" Schema="hobertocnahod" store:Type="Tables" />
           <EntitySet Name="brands" EntityType="Self.brands" Schema="hobertocnahod" store:Type="Tables" />
           <EntitySet Name="categories" EntityType="Self.categories" Schema="hobertocnahod" store:Type="Tables" />
@@ -287,6 +308,7 @@
           <EntitySet Name="slideshow" EntityType="Self.slideshow" Schema="hobertocnahod" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="hobertocnahod" store:Type="Tables" />
           <EntitySet Name="usersmeta" EntityType="Self.usersmeta" Schema="hobertocnahod" store:Type="Tables" />
+          <EntitySet Name="variants" EntityType="Self.variants" Schema="hobertocnahod" store:Type="Tables" />
           <EntitySet Name="wishlist" EntityType="Self.wishlist" Schema="hobertocnahod" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -310,6 +332,8 @@
           <EntitySet Name="users" EntityType="hobcModel.users" />
           <EntitySet Name="wishlist" EntityType="hobcModel.wishlist" />
           <EntitySet Name="usersmeta" EntityType="hobcModel.usersmeta" />
+          <EntitySet Name="attributes" EntityType="hobcModel.attributes" />
+          <EntitySet Name="variants" EntityType="hobcModel.variants" />
         </EntityContainer>
         <EntityType Name="blog">
           <Key>
@@ -576,6 +600,26 @@
           <Property Name="category" Type="SByte" Nullable="false" />
           <Property Name="sum" Type="Double" Nullable="false" />
           <Property Name="created" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="attributes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="value" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="variants">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prod_id" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="stock" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="number" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="attribute_id" Type="Int32" Nullable="false" />
+          <Property Name="value" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -861,6 +905,28 @@
                 <ScalarProperty Name="surname" ColumnName="surname" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="attributes">
+            <EntityTypeMapping TypeName="hobcModel.attributes">
+              <MappingFragment StoreEntitySet="attributes">
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="variants">
+            <EntityTypeMapping TypeName="hobcModel.variants">
+              <MappingFragment StoreEntitySet="variants">
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="attribute_id" ColumnName="attribute_id" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

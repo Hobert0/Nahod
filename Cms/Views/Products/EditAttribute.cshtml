@@ -1,0 +1,181 @@
+﻿@model Cms.Models.AttributesModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+    ViewBag.Title = "Editovať vlastnosť";
+
+}
+<style>
+    .sidenav > a:nth-child(3) {
+        border-left: 5px solid #00abe8;
+        color: #f1f1f1;
+        background-color: #464646;
+    }
+
+    .dropdown-container2 {
+        display: block;
+    }
+</style>
+<h2>Editovať vlastnosť</h2>
+
+@using (Html.BeginForm("EditAttributeSave", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control", id = "e-id-" + Model.Id, style = "display:none;" } })
+    <div class="form-horizontal">
+
+        <div class="row">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Názov</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <div class="row valuesRow">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Hodnoty</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group" style="display:none;">
+                    <div class="col-md-12">
+                        @Html.HiddenFor(model => model.Value, new { @class = "form-control", placeholder = "Popis kategórie", id = "e-des-" + Model.Id, value = Model.Value })
+                        @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div style="text-align:right">
+                <input type="submit" value="Uložiť zmeny" id="btnSubmit" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+
+        //Pri nacitani stranky zobrazime jednotlive attributy
+        $values = JSON.parse($("input[name=Value]").val());
+        $html = "";
+
+        console.log($values);
+
+        for ($i = 0; $i < $values.length; $i++) {
+
+            $html +=
+                '<div class="form-group">' +
+                '<div class="col-md-12">' +
+                'Hodnota: <input class="form-control text-box single-line attributeValue" name="attributeValue' + ($i + 1) + '" placeholder="Hodnota ' + ($i + 1) + '" type="text" value="' + $values[$i].name + '">' +
+                '</div>';
+
+        }
+
+        $(".valuesRow > .col-4").append($html);
+
+        $("#Myform input[type=submit]").click(function (e) {
+            e.preventDefault();
+
+            if (validateForm()) {
+
+                $json = [];
+
+                $(".attributeValue").each(function () {
+                    $json.push({ "name": $(this).val() });
+                });
+
+                $("input[name = Value]").val(JSON.stringify($json));
+
+                $("#Myform").submit();
+            }
+        });
+
+        function validateForm() {
+            $valid = true;
+
+            if ($("#name").val() == "") {
+                $("#name").addClass("error");
+
+                $valid = false;
+            } else {
+                $("#name").removeClass("error");
+            }
+
+            $(".attributeValue").each(function () {
+                if ($(this).val() == "") {
+                    $(this).addClass("error");
+
+                    $valid = false;
+                } else {
+                    $(this).removeClass("error");
+                }
+            });
+            
+            return $valid;
+        }
+
+    });
+
+</script>
+<script>
+
+    function createValueSlug(counter) {
+        console.log(counter);
+        var name = $("input[name=attributeValue" + counter + "]").val();
+        var newSlug = string_to_slug(name);
+        $("input[name=attributeValueSlug" + counter + "]").val(newSlug);
+    }
+    function string_to_slug(text) {
+        text = text.toString().toLowerCase().trim();
+
+        const sets = [
+            { to: 'a', from: '[ÀÁÂÃÄÅÆĀĂĄẠẢẤẦẨẪẬẮẰẲẴẶ]' },
+            { to: 'c', from: '[ÇĆĈČ]' },
+            { to: 'd', from: '[ÐĎĐÞ]' },
+            { to: 'e', from: '[ÈÉÊËĒĔĖĘĚẸẺẼẾỀỂỄỆ]' },
+            { to: 'g', from: '[ĜĞĢǴ]' },
+            { to: 'h', from: '[ĤḦ]' },
+            { to: 'i', from: '[ÌÍÎÏĨĪĮİỈỊ]' },
+            { to: 'j', from: '[Ĵ]' },
+            { to: 'ij', from: '[Ĳ]' },
+            { to: 'k', from: '[Ķ]' },
+            { to: 'l', from: '[ĹĻĽŁ]' },
+            { to: 'm', from: '[Ḿ]' },
+            { to: 'n', from: '[ÑŃŅŇ]' },
+            { to: 'o', from: '[ÒÓÔÕÖØŌŎŐỌỎỐỒỔỖỘỚỜỞỠỢǪǬƠ]' },
+            { to: 'oe', from: '[Œ]' },
+            { to: 'p', from: '[ṕ]' },
+            { to: 'r', from: '[ŔŖŘ]' },
+            { to: 's', from: '[ßŚŜŞŠ]' },
+            { to: 't', from: '[ŢŤ]' },
+            { to: 'u', from: '[ÙÚÛÜŨŪŬŮŰŲỤỦỨỪỬỮỰƯ]' },
+            { to: 'w', from: '[ẂŴẀẄ]' },
+            { to: 'x', from: '[ẍ]' },
+            { to: 'y', from: '[ÝŶŸỲỴỶỸ]' },
+            { to: 'z', from: '[ŹŻŽ]' },
+            { to: '-', from: '[·/_,:;\']' }
+        ];
+
+        sets.forEach(set => {
+            text = text.replace(new RegExp(set.from, 'gi'), set.to)
+        });
+
+        return text
+            .replace(/\s+/g, '-')    // Replace spaces with -
+            .replace(/[^\w-]+/g, '') // Remove all non-word chars
+            .replace(/--+/g, '-')    // Replace multiple - with single -
+            .replace(/^-+/, '')      // Trim - from start of text
+            .replace(/-+$/, '')      // Trim - from end of text
+
+    }
+</script>
+
+

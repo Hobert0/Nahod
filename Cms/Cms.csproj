@@ -301,6 +301,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AdminModel.cs" />
+    <Compile Include="Models\attributes.cs">
+      <DependentUpon>DBcms.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\blog.cs">
       <DependentUpon>DBcms.tt</DependentUpon>
     </Compile>
@@ -313,6 +316,8 @@
       <DependentUpon>DBcms.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoriesModel.cs" />
+    <Compile Include="Models\AttributesModel.cs" />
+    <Compile Include="Models\VariantModel.cs" />
     <Compile Include="Models\coupons.cs">
       <DependentUpon>DBcms.tt</DependentUpon>
     </Compile>
@@ -378,6 +383,9 @@
     </Compile>
     <Compile Include="Models\UsersmetaModel.cs" />
     <Compile Include="Models\UsersModel.cs" />
+    <Compile Include="Models\variants.cs">
+      <DependentUpon>DBcms.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\wishlist.cs">
       <DependentUpon>DBcms.tt</DependentUpon>
     </Compile>
@@ -767,6 +775,8 @@
     <Content Include="Views\Shared\_Filter.cshtml" />
     <Content Include="Views\Helper\Error.cshtml" />
     <Content Include="Views\Admin\UserCreate.cshtml" />
+    <Content Include="Views\Products\ProductAttributes.cshtml" />
+    <Content Include="Views\Products\EditAttribute.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
