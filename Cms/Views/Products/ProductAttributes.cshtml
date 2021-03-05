@@ -1,4 +1,6 @@
 ﻿@using Newtonsoft.Json
+@using Cms.Models
+@using Newtonsoft.Json.Linq
 
 @model Cms.Models.MultipleIndexModel
 @{
@@ -73,19 +75,20 @@
         foreach (var item in Model.AttributesModel)
         {
 
-            Model.Variants vm = new Model.Variants();
-            Model.Variants
-            VariantModel values = JsonConvert.DeserializeObject<VariantModel>(item.value);
+            JObject x = JObject.Parse(item.value);
+            
+            VariantModel values = JsonConvert.DeserializeObject<VariantModel>(x.ToString());
             var valuesStr = "";
 
-            //List<dynamic> valuesList = new List<dynamic>();
-            //valuesList = (List<dynamic>)values;
+            //List<VariantModel> valuesList = new List<VariantModel>();
+            //valuesList = (List<VariantModel>)values;
 
-            for (var i = 0; i < values.Count; i++)
-            {
-                valuesStr += values[i].ToString().Split(',')[0].Split(':')[1].Split('"')[1] + ", ";
-            }
-            valuesStr = valuesStr.Remove(valuesStr.Length - 2);
+            //for (var i = 0; i < values; i++)
+            //{
+
+            //    valuesStr += values[i].ToString().Split(',')[0].Split(':')[1].Split('"')[1] + ", ";
+            //}
+            //valuesStr = valuesStr.Remove(valuesStr.Length - 2);
 
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.id)</td>
@@ -114,7 +117,7 @@
 
             $(".values-group > div").append($html);
 
-            $(".removeValue").css("display","inline");
+            $(".removeValue").css("display", "inline");
         });
 
         $(".removeValue").click(function () {
