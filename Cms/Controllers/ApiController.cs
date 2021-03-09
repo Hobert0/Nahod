@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
-
+using System.Data.Entity.SqlServer;
 
 namespace Cms.Controllers
 {
@@ -40,7 +40,31 @@ namespace Cms.Controllers
                 }
 
                 result = new { data = SortByBrand(topcatId, id, catslug).ProductModel };
-            }            
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public JsonResult FetchProductsByCategoryBrand(string catId, string brandId)
+        {
+            object result = null;
+            if (catId != "" && brandId == "")
+            {
+                result = new { data = db.products.Join(db.categories, a => a.category, b => b.id.ToString(), (a, b) => new { id = a.id, number = a.number, image = a.image, title = a.title, price = a.price, discountprice = a.discountprice, categoryId = a.category, category = b.name, date = a.date, recommended = a.recommended }).Where(i => i.categoryId == catId).ToList() };                
+            }
+            else if (catId == "" && brandId != "")
+            {
+                result = new { data = db.products.Join(db.categories, a => a.category, b => b.id.ToString(), (a, b) => new { id = a.id, number = a.number, image = a.image, title = a.title, price = a.price, discountprice = a.discountprice, categoryId = b.id, category = b.name, date = a.date, recommended = a.recommended, brandId = a.custom3 }).Where(i => i.brandId == brandId).ToList() };
+
+            }
+            else if (catId != "" && brandId != "")
+            {
+                result = new { data = db.products.Join(db.categories, a => a.category, b => b.id.ToString(), (a, b) => new { id = a.id, number = a.number, image = a.image, title = a.title, price = a.price, discountprice = a.discountprice, categoryId = a.category, category = b.name, date = a.date, recommended = a.recommended, brandId = a.custom3 }).Where(i => i.brandId == brandId && i.categoryId == catId).ToList() };
+            }
+            else {
+                result = new { data = db.products.ToList() };
+            }
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -69,7 +93,7 @@ namespace Cms.Controllers
                 var topcatName = db.categories.Where(i => i.slug == subslug).First().name;
                 var topcat2Name = db.categories.Where(i => i.slug == subslug2).First().name;
 
-                 id = db.categories.Where(i => i.slug == subslug3 && i.maincat == maincatName && i.topcat == topcatName && i.topcat2 == topcat2Name).First().id;
+                id = db.categories.Where(i => i.slug == subslug3 && i.maincat == maincatName && i.topcat == topcatName && i.topcat2 == topcat2Name).First().id;
             }
 
             return id;
@@ -162,6 +186,6 @@ namespace Cms.Controllers
 
             return model;
         }
-       
+
     }
 }

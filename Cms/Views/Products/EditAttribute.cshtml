@@ -22,42 +22,48 @@
 {
     @Html.AntiForgeryToken()
     @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control", id = "e-id-" + Model.Id, style = "display:none;" } })
-    <div class="form-horizontal">
+<div class="form-horizontal">
 
-        <div class="row">
-            <div class="mt-1 text-right" style="width: 180px;">
-                <strong>Názov</strong>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov" } })
-                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
+    <div class="row">
+        <div class="mt-1 text-right" style="width: 180px;">
+            <strong>Názov</strong>
         </div>
-       
-        <div class="row valuesRow">
-            <div class="mt-1 text-right" style="width: 180px;">
-                <strong>Hodnoty</strong>
-            </div>
-            <div class="col-4">
-                <div class="form-group" style="display:none;">
-                    <div class="col-md-12">
-                        @Html.HiddenFor(model => model.Value, new { @class = "form-control", placeholder = "Popis kategórie", id = "e-des-" + Model.Id, value = Model.Value })
-                        @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
-                    </div>
+        <div class="col-4">
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div style="text-align:right">
-                <input type="submit" value="Uložiť zmeny" id="btnSubmit" class="btn btn-success" />
             </div>
         </div>
     </div>
+
+    <div class="row valuesRow">
+        <div class="mt-1 text-right" style="width: 180px;">
+            <strong>Hodnoty</strong>
+        </div>
+        <div class="col-4">
+            <div class="form-group" style="display:none;">
+                <div class="col-md-12">
+                    @Html.HiddenFor(model => model.Value, new { @class = "form-control", placeholder = "Popis kategórie", id = "e-des-" + Model.Id, value = Model.Value })
+                    @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div>
+            <input type="button" value="Pridať hodnotu" class="btn btn-warning addValue" /><input type="button" value="Zmazať poslednú hodnotu" style="display:none;margin-left: 10px;" class="btn btn-danger removeValue" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div style="text-align:right">
+            <input type="submit" value="Uložiť zmeny" id="btnSubmit" class="btn btn-success" />
+        </div>
+    </div>
+</div>
 }
 
 <script>
@@ -67,19 +73,40 @@
         $values = JSON.parse($("input[name=Value]").val());
         $html = "";
 
-        console.log($values);
-
         for ($i = 0; $i < $values.length; $i++) {
 
             $html +=
                 '<div class="form-group">' +
                 '<div class="col-md-12">' +
-                'Hodnota: <input class="form-control text-box single-line attributeValue" name="attributeValue' + ($i + 1) + '" placeholder="Hodnota ' + ($i + 1) + '" type="text" value="' + $values[$i].name + '">' +
-                '</div>';
+                '<input class="form-control text-box single-line attributeValue" name="attributeValue' + ($i + 1) + '" placeholder="Hodnota ' + ($i + 1) + '" type="text" value="' + $values[$i].name + '">' +
+                '</div></div>';
 
         }
 
         $(".valuesRow > .col-4").append($html);
+
+        //Pridanie hodnoty
+        $(".addValue").click(function () {
+            $counter = $(".attributeValue").length + 1;
+            $html =
+                '<div class="form-group">' +
+                '<div class="col-md-12">' +
+                '<input class="form-control text-box single-line attributeValue" name="attributeValue' + $counter + '" placeholder="Hodnota ' + $counter + '" type="text" value="">' +
+                '</div>' +
+                '</div>';
+
+            $(".valuesRow > div").eq(1).append($html);
+
+            $(".removeValue").css("display", "inline");
+        });
+
+        $(".removeValue").click(function () {
+            $(".valuesRow > div").eq(1).find("div.form-group").last().remove();
+
+            if ($(".valuesRow > div").eq(1).find("div.form-group").length == 0) {
+                $(".removeValue").css("display", "none");
+            }
+        });
 
         $("#Myform input[type=submit]").click(function (e) {
             e.preventDefault();

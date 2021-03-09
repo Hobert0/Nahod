@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using Cms.Models;
+using Newtonsoft.Json;
 
 namespace Cms.Controllers
 {
@@ -185,6 +186,7 @@ namespace Cms.Controllers
                 ProductModel pm = new ProductModel();
 
                 ViewData["vlastnosti"] = SelectionAttributes();
+                ViewData["vlastnostiId"] = SelectionAttributesId();
                 ViewData["hmotnostj"] = pm.SelectionHmotnost();
                 ViewData["mernaj"] = pm.SelectionMernaJ();
                 ViewData["kategoria"] = SelectionKategoria();
@@ -209,6 +211,16 @@ namespace Cms.Controllers
                 attributes.Add(new SelectListItem { Text = attr.name, Value = attr.value });
             }
             return attributes;
+        }
+        /*Attributes ID - products*/
+        public List<int> SelectionAttributesId()
+        {
+            List<int> attributesId = new List<int>();
+            foreach (var attr in db.attributes)
+            {
+                attributesId.Add(attr.id);
+            }
+            return attributesId;
         }
         /*Brands - products*/
         public List<SelectListItem> SelectionBrand()
@@ -330,7 +342,12 @@ namespace Cms.Controllers
 
                 }
 
+                var variants = db.variants.Where(item => item.prod_id == id).ToList();
+                model.Variants = JsonConvert.SerializeObject(variants);
+
                 ProductModel pm = new ProductModel();
+                ViewData["vlastnosti"] = SelectionAttributes();
+                ViewData["vlastnostiId"] = SelectionAttributesId();
                 ViewData["hmotnostj"] = pm.SelectionHmotnost();
                 ViewData["mernaj"] = pm.SelectionMernaJ();
                 ViewData["kategoria"] = SelectionKategoria();
@@ -411,10 +428,27 @@ namespace Cms.Controllers
             o.gallery = ulozObrazok + "gallery/" ?? "";
 
             db.products.Add(o);
+
             db.SaveChanges();
 
             //Varianty
-            //model.Variants
+            dynamic vars = JsonConvert.DeserializeObject(model.Variants);
+
+            foreach (var varP in vars)
+            {
+                variants v = new variants();
+
+                v.prod_id = o.id;
+                v.number = varP.number;
+                v.price = varP.price;
+                v.stock = varP.stock;
+                v.attribute_id = varP.attrId;
+                v.value = varP.attrValues;
+
+                db.variants.Add(v);
+            }
+
+            db.SaveChanges();
 
             if (model.TitleImage != null)
             {
@@ -455,7 +489,6 @@ namespace Cms.Controllers
             return RedirectToAction("Products", "Admin");
         }
 
-
         public ActionResult DeleteProduct(int? id, bool confirm)
         {
             var data = db.products.Find(id);
@@ -470,7 +503,6 @@ namespace Cms.Controllers
 
             return RedirectToAction("Products", "Admin");
         }
-
 
         public ActionResult DuplicateProduct(int? id)
         {

@@ -74,21 +74,14 @@
 
         foreach (var item in Model.AttributesModel)
         {
-
-            JObject x = JObject.Parse(item.value);
-            
-            VariantModel values = JsonConvert.DeserializeObject<VariantModel>(x.ToString());
+            dynamic values = JsonConvert.DeserializeObject(item.value);
+           
             var valuesStr = "";
-
-            //List<VariantModel> valuesList = new List<VariantModel>();
-            //valuesList = (List<VariantModel>)values;
-
-            //for (var i = 0; i < values; i++)
-            //{
-
-            //    valuesStr += values[i].ToString().Split(',')[0].Split(':')[1].Split('"')[1] + ", ";
-            //}
-            //valuesStr = valuesStr.Remove(valuesStr.Length - 2);
+            foreach(var s in values)
+            {
+                valuesStr += s.name + ", ";
+            }
+            valuesStr = valuesStr.Remove(valuesStr.Length - 2);
 
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.id)</td>

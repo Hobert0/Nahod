@@ -50,6 +50,34 @@
 <h2>Produkty v eshope</h2>
 <hr />
 <button class="btn btn-success" type="button" value="Create" style="margin: 5px 0 10px;padding: 7px 22px;font-size: 16px;" onclick="location.href='@Url.Action("AddProduct", "Products")'">+ Pridať produkt</button>
+<hr />
+
+<div class="row">
+    <div class="col-4">
+        <div class="mt-1" style="width: 180px;">
+            <strong>Filtrovať podľa kategórie</strong>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12" style="padding-left:0px;">
+                @Html.DropDownList("filterByCategory", (IEnumerable<SelectListItem>)ViewData["kategoria"], new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-4" style="padding-left:0px;">
+        <div class="mt-1" style="width: 180px;">
+            <strong>Filtrovať podľa značky</strong>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12" style="padding-left:0px;">
+                @Html.DropDownList("filterByBrand", (IEnumerable<SelectListItem>)ViewData["znacka"], new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr />
 <table id="myTable" class="table" style="font-size: 14px;">
     <thead>
         <tr>
@@ -76,34 +104,51 @@
                 }
 
                 onstockrange = item.custom1;
-                <tr id="product_row-@counter">
+        <tr id="product_row-@counter">
 
-                    <td>@Html.DisplayFor(modelItem => item.number)</td>
-                    <td><img src="~/Uploads/@Html.DisplayFor(modelItem => item.image)" style="width: 50px;" /></td>
-                    <td><strong>@Html.DisplayFor(modelItem => item.title)</strong></td>
-                    <td style="background-color: lightyellow; text-align: center;"><strong>@Html.DisplayFor(modelItem => item.price)&nbsp;€</strong></td>
-                    <td style="background-color: lightcyan; text-align: center;"><strong>@Html.DisplayFor(modelItem => item.discountprice)&nbsp;€</strong></td>
-                    <td>
-                        @foreach (var cat in Model.CategoriesModel.Where(o => o.id == Int32.Parse(item.category)))
+            <td>@Html.DisplayFor(modelItem => item.number)</td>
+            <td><img src="~/Uploads/@Html.DisplayFor(modelItem => item.image)" style="width: 50px;" /></td>
+            <td><strong>@Html.DisplayFor(modelItem => item.title)</strong></td>
+            <td style="background-color: lightyellow; text-align: center;"><strong>@Html.DisplayFor(modelItem => item.price)&nbsp;€</strong></td>
+            <td style="background-color: lightcyan; text-align: center;">
+                <strong>
+                    @{
+                        //Html.DisplayFor(modelItem => item.discountprice)
+                        var discountText = "";
+                        if (item.discountprice != null)
+                        {
+                            discountText = item.discountprice + " €";
+                        }
+                    }
+                    @discountText
+                </strong>
+            </td>
+            <td>
+                @{
+                    if (item.category != null)
+                    {
+                        foreach (var cat in Model.CategoriesModel.Where(o => o.id == Int32.Parse(item.category)))
                         {
                             @Html.Raw(cat.name)
                         }
-                    </td>
-                    <td>@Html.DisplayFor(modelItem => item.date)</td>
-                    <td style="text-align:center;">@Html.DisplayFor(modelItem => item.recommended)</td>
-                    <td align="center">
-                        @Html.ActionLink("Editovať", "EditProduct", "Products", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" }) <a href="@Url.Action("DuplicateProduct", "Products", new { id = item.id })" class="btn btn-success" style="padding: 7px 10px;" title="Duplikovať produkt"><img src="~/Content/images/duplicate.png" width="15" style="margin-top: -3px;"></a> @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteProduct", "Products", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tento produkt?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete produkt." })
-                        <div class="popover__wrapper" id="info-@counter" style="display:none;">
-                            <a href="#">
-                                <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
-                            </a>
-                            <div class="push popover__content">
-                                <p class="popover__message">Skladové zásoby pod hraničnou hodnotou!</p>
-                            </div>
-                        </div>
-                    </td>
+                    }
+                }
+            </td>
+            <td>@Html.DisplayFor(modelItem => item.date)</td>
+            <td style="text-align:center;">@Html.DisplayFor(modelItem => item.recommended)</td>
+            <td align="center">
+                @Html.ActionLink("Editovať", "EditProduct", "Products", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" }) <a href="@Url.Action("DuplicateProduct", "Products", new { id = item.id })" class="btn btn-success" style="padding: 7px 10px;" title="Duplikovať produkt"><img src="~/Content/images/duplicate.png" width="15" style="margin-top: -3px;"></a> @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteProduct", "Products", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tento produkt?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete produkt." })
+                <div class="popover__wrapper" id="info-@counter" style="display:none;">
+                    <a href="#">
+                        <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
+                    </a>
+                    <div class="push popover__content">
+                        <p class="popover__message">Skladové zásoby pod hraničnou hodnotou!</p>
+                    </div>
+                </div>
+            </td>
 
-                </tr>
+        </tr>
                 <script>
                 Onstock('@Html.Raw(sizes)', @(counter), @(onstockrange));
                 </script>
@@ -114,4 +159,118 @@
         }
     </tbody>
 </table>
+
+<script>
+
+
+    $(document).ready(function () {
+
+        //init
+        $("#filterByCategory").val("");
+        $("#filterByBrand").val("");
+
+        $("#filterByCategory").change(function () {
+            filterAjaxCatBrand();
+        });
+
+        $("#filterByBrand").change(function () {
+            filterAjaxCatBrand();
+        });
+
+        function filterAjaxCatBrand() {
+            let APIurl = "/Api/FetchProductsByCategoryBrand";
+
+            $catId = $("#filterByCategory").val() == "" ? null : $("#filterByCategory").val();
+            $brandId = $("#filterByBrand").val() == "" ? null : $("#filterByBrand").val();
+
+            $.ajax({
+                url: APIurl,
+                type: 'GET',
+                async: false,
+                data: { catId: $catId, brandId: $brandId },
+                dataType: 'json',
+                success: function (data) {
+                    //add rows to dataTable
+
+                    data = data.data;
+
+                    $dataSet = [];
+
+                    for ($i = 0; $i < data.length; $i++) {
+                        $thisSet = [];
+                        $thisSet.push(data[$i].number);
+                        $thisSet.push('<img src="/Uploads/' + data[$i].image + ' style="width: 50px; " />');
+                        $thisSet.push('<strong>' + data[$i].title + '</strong>');
+                        //td => style="background-color: lightyellow; text-align: center;
+                        $thisSet.push('<strong>' + data[$i].price + ' €</strong>');
+                        //td => style="background-color: lightcyan; text-align: center;"
+                        $thisSet.push('<strong>' + (data[$i].discountprice ? (data[$i].discountprice + " €") : "") + '</strong>');
+                        //
+                        $thisSet.push(data[$i].category);
+                        $thisSet.push(data[$i].date);
+                        //td => style="text-align:center;"
+                        $thisSet.push('<input class="check-box" disabled="disabled" ' + (data[$i].recommended == true ? 'checked="checked"' : '') + ' type="checkbox">');
+                        //td => align="center"
+                        $thisSet.push('<a class="btn btn-warning" href="/produkty/editovat-produkt/' + data[$i].id + '" style = "color:#ffffff !important;" >Editovať</a><a href="/Products/DuplicateProduct/' + data[$i].id + '" class="btn btn-success" style="padding: 7px 10px;" title="Duplikovať produkt"><img src="/Content/images/duplicate.png" width="15" style="margin-top: -3px;"></a><a class="btn btn-danger" data-placement="top" data-toggle="tooltip" href="/Products/DeleteProduct/' + data[$i].id + '?confirm=True" onclick=\'return confirm("Naozaj chcete vymazať tento produkt?")\' title="Kliknutím nenávratne vymažete produkt.">×</a>' +
+                            '<div class="popover__wrapper" id="info-0" style="display:none;">' +
+                            '<a href="#">' +
+                            '<strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;"></strong>' +
+                            '</a>' +
+                            '<div class="push popover__content">' +
+                            '<p class="popover__message">Skladové zásoby pod hraničnou hodnotou!</p>' +
+                            '</div>' +
+                            '</div>' +
+                            '</td>'
+                        );
+
+                        $dataSet.push($thisSet);
+                    }
+
+                    $('#myTable').DataTable().destroy();
+                    $('#myTable').empty();
+
+                    $('#myTable').DataTable({
+                        data: $dataSet,
+                        columns: [
+                            { title: "Kód produktu" },
+                            { title: "Náhľad" },
+                            { title: "Názov" },
+                            { title: "Cena" },
+                            { title: "Cena po zľave" },
+                            { title: "Kategória" },
+                            { title: "Dátum" },
+                            { title: "Odporúčané" },
+                            { title: "Editovať / Vymazať" }
+
+                        ],
+                        language: {
+                            "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Slovak.json"
+                        },
+                        "initComplete": function (settings, json) {
+                            //upravime css
+                            $('#myTable thead th').eq(2).attr("style", "width: 350px;");
+                            $('#myTable thead th').eq(8).attr("style", "text-align: center;");
+
+                            $('#myTable tbody tr').each(function () {
+     
+                                $tds = $(this).find("td");
+                                $tds.eq(3).attr("style", "background-color: lightyellow; text-align: center;");
+                                $tds.eq(4).attr("style", "background-color: lightcyan; text-align: center;");
+                                $tds.eq(7).attr("style", "text-align: center;");
+                                $tds.eq(8).attr("align", "center");
+                            });
+                        }
+                    });
+                },
+                error: function () {
+                    alert('Error! Please try again.');
+                }
+            }).done(function () {
+                //$loading.remove();
+            });
+
+
+        }
+    });
+</script>
 

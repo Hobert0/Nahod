@@ -342,6 +342,14 @@
         <div id="univerzalVariableProduct" class="row pl-5" style="display: none;">
 
             @Html.HiddenFor(model => model.Variants)
+            @{
+                string variantsIdStr = "";
+                foreach (int attrId in (List<int>)ViewData["vlastnostiId"])
+                {
+                    variantsIdStr += attrId.ToString() + ",";
+                }
+                @Html.Hidden("attributesId", variantsIdStr);
+            }
 
             <div class="mt-1 pb-3 row col-12">
                 <strong>Varianty</strong>
@@ -536,13 +544,13 @@
     $(document).ready(function () {
 
         //inicializacia hodnot pre vlastnosti
-
-        //initAttrValues(1);
-        //$(".varAttrs").change(function () {
-        //    initAttrValues($(this).attr("num"));
-        //});
+        initAttrValues(1);
+        $(document).on("change",".varAttrs",function () {
+            initAttrValues($(this).parents(".clonedVarSection").attr("num"));
+        });
 
         function initAttrValues(num) {
+
             $("select[name=varAttrsValues" + num + "] option").remove();
 
             $values = JSON.parse($("#varAttrs" + num + " option:selected").val());
@@ -551,6 +559,14 @@
                 $("#varAttrsValues" + num).append('<option value="' + $values[$i].name + '">' + $values[$i].name + '</option>')        
             }
         }
+
+        //doplnenie IDeciek pre vlastnosti
+        $varCounter = 0;
+        $varIdsStr = $("#attributesId").val().split(",");
+        $("select.varAttrs option").each(function () {
+            $(this).attr("attr_id", $varIdsStr[$varCounter]);
+            $varCounter++;
+        });
 
         $("#showVariants").click(function () {
             if ($("#showVariants").is(":checked")) {
@@ -565,9 +581,10 @@
             var num = $('.clonedVarSection').length;
             var newNum = new Number(num + 1);
 
+            var prevSection = $('.clonedVarSection[num=' + num + ']');
             var newSection = $('.clonedVarSection[num=' + num + ']').clone().attr('num', newNum);
 
-            newSection.find("select.varAttrs").attr("name", "varAttrs" + newNum).attr("id", "varAttrs" + newNum);
+            newSection.find("select.varAttrs").attr("name", "varAttrs" + newNum).attr("id", "varAttrs" + newNum).val(prevSection.find("select.varAttrs").val());
             newSection.find("select.varAttrsValues").attr("name", "varAttrsValues" + newNum).attr("id", "varAttrsValues" + newNum);
             newSection.find("input.varNumber").attr("name", "varNumber" + newNum).attr("id", "varNumber" + newNum);
             newSection.find("input.varStock").attr("name", "varStock" + newNum).attr("id", "varStock" + newNum);
@@ -858,19 +875,17 @@
 
                 for ($i = 1; $i <= $num; $i++) {
 
-                    $varAttrs = $(".clonedVarSection[num=" + $i + "]").find(".varAttrs").val();
+                    $varAttrs = $(".clonedVarSection[num=" + $i + "]").find(".varAttrs option:selected").attr("attr_id");
                     $varAttrsValues = $(".clonedVarSection[num=" + $i + "]").find(".varAttrsValues").val();
                     $varNumber = $(".clonedVarSection[num=" + $i + "]").find(".varNumber").val();
                     $varStock = $(".clonedVarSection[num=" + $i + "]").find(".varStock").val();
                     $varPrice = $(".clonedVarSection[num=" + $i + "]").find(".varPrice").val();
 
-                    $variants.push({ "attr": $varAttrs, "attrValues": $varAttrsValues, "number": $varNumber, "stock": $varStock, "price": $varPrice });
+                    $variants.push({ "attrId": $varAttrs, "attrValues": $varAttrsValues, "number": $varNumber, "stock": $varStock, "price": $varPrice });
                 }
 
                 $("#Variants").val(JSON.stringify($variants));
             }
-
-            $("#Variants").val($variants);
 
             if (document.getElementById('variableunderwear').checked) {
                 var sizes = [];

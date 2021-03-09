@@ -127,12 +127,47 @@ namespace Cms.Controllers
                 model.CategoriesModel = db.categories.ToList();
                 model.ProductModel = db.products.OrderByDescending(a => a.id).ToList();
 
+                ViewData["kategoria"] = SelectionKategoria();
+                ViewData["znacka"] = SelectionBrand();
+
                 return View(model);
             }
             else { return RedirectToAction("Admin"); }
         }
         #endregion
         /*PRODUCT ACTIONS - END*/
+
+        public List<SelectListItem> SelectionBrand()
+        {
+            List<SelectListItem> brand = new List<SelectListItem>();
+            brand.Add(new SelectListItem { Text = "", Value = "" });
+            foreach (var cat in db.brands)
+            {
+                brand.Add(new SelectListItem { Text = cat.name, Value = cat.id.ToString() });
+            }
+            return brand;
+        }
+
+        /*Category - products - get categories*/
+        public List<SelectListItem> SelectionKategoria()
+        {
+            List<SelectListItem> znacka = new List<SelectListItem>();
+            znacka.Add(new SelectListItem { Text = "", Value = "" });
+            foreach (var cat in db.categories)
+            {
+
+                if (cat.topcat2 == "" || cat.topcat2 == "Žiadna")
+                {
+                    znacka.Add(new SelectListItem { Text = cat.name + " → " + cat.topcat, Value = cat.id.ToString() });
+                }
+                else
+                {
+                    znacka.Add(new SelectListItem { Text = cat.name + " → " + cat.topcat2 + " → " + cat.topcat, Value = cat.id.ToString() });
+                }
+
+            }
+            return znacka;
+        }
 
         /*WISHLIST ACTIONS*/
         #region Oblubene_actions

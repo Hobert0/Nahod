@@ -9,7 +9,7 @@ $(document).ready(function () {
 });
 
 function fetchProducts(page, bybrand, search) {
-    let params = window.location.pathname.split('/');;
+    let params = window.location.pathname.split('/');
     let catslug = params[2];
     let subslug = params[3];
     let subslug2 = params[4];
