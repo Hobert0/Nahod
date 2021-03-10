@@ -583,8 +583,8 @@
 
             $values = JSON.parse($("#varAttrs" + num + " option:selected").val());
 
-            for ($i = 0; $i < $values.length; $i++) {
-                $("#varAttrsValues" + num).append('<option value="' + $values[$i].name + '">' + $values[$i].name + '</option>')
+            for ($j = 0; $j < $values.length; $j++) {
+                $("#varAttrsValues" + num).append('<option value="' + $values[$j].name + '">' + $values[$j].name + '</option>')
             }
         }
 
@@ -644,8 +644,8 @@
         if ($("#Variants").val() != "[]") {
 
             $variants = JSON.parse($("#Variants").val());
-            console.log($variants);
-            
+            //console.log($variants);
+
             for ($i = 1; $i <= $variants.length; $i++) {
 
                 //ak neexistuju inputy pre variantu, vytvorime ich
@@ -653,13 +653,16 @@
                     $('#btnAddVar').click();
                 }
 
-                //TO DO
+                //console.log($(this).attribute_id);
 
-                $(".clonedVarSection[num=" + $i + "]").find("select.varAttrs option[attr_id=" + $(this).attribute_id + "]").prop('selected', true);
-                $(".clonedVarSection[num=" + $i + "]").find("select.varAttrsValues").val($(this).value);
-                $(".clonedVarSection[num=" + $i + "]").find("input.varNumber").val($(this).number);
-                $(".clonedVarSection[num=" + $i + "]").find("input.varStock").val($(this).price);
-                $(".clonedVarSection[num=" + $i + "]").find("input.varPrice").val($(this).stock);
+                $(".clonedVarSection[num=" + $i + "]").find("select.varAttrs option[attr_id=" + $variants[$i - 1].attribute_id + "]").prop('selected', true);
+
+                initAttrValues($i);
+
+                $(".clonedVarSection[num=" + $i + "]").find("select.varAttrsValues").val($variants[$i - 1].value);
+                $(".clonedVarSection[num=" + $i + "]").find("input.varNumber").val($variants[$i - 1].number);
+                $(".clonedVarSection[num=" + $i + "]").find("input.varStock").val($variants[$i - 1].price);
+                $(".clonedVarSection[num=" + $i + "]").find("input.varPrice").val($variants[$i - 1].stock);
             }
 
             $("#showVariants").click();
@@ -1059,8 +1062,32 @@
 
     /*SIZES- Create JSON and send to database*/
     $(document).ready(function() {
-        $('#btnSubmit').click(function () {
-                        if (document.getElementById('variableproduct').checked) {
+        $('#btnSubmit').click(function (e) {
+
+            //e.preventDefault();
+
+            //ulozenie variant do JSONU ako string
+            if ($("#showVariants").is(":checked")) {
+                $num = $(".clonedVarSection").length;
+                $variants = [];
+
+                for ($i = 1; $i <= $num; $i++) {
+
+                    $varAttrs = $(".clonedVarSection[num=" + $i + "]").find(".varAttrs option:selected").attr("attr_id");
+                    $varAttrsValues = $(".clonedVarSection[num=" + $i + "]").find(".varAttrsValues").val();
+                    $varNumber = $(".clonedVarSection[num=" + $i + "]").find(".varNumber").val();
+                    $varStock = $(".clonedVarSection[num=" + $i + "]").find(".varStock").val();
+                    $varPrice = $(".clonedVarSection[num=" + $i + "]").find(".varPrice").val();
+
+                    $variants.push({ "attrId": $varAttrs, "attrValues": $varAttrsValues, "number": $varNumber, "stock": $varStock, "price": $varPrice });
+                }
+
+                $("#Variants").val(JSON.stringify($variants));
+            } else {
+                $("#Variants").val("[]");
+            }
+
+            if (document.getElementById('variableproduct').checked) {
 
             if (document.getElementById('variableunderwear').checked) {
                 var sizes = [];

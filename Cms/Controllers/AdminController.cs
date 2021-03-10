@@ -126,6 +126,7 @@ namespace Cms.Controllers
                 MultipleIndexModel model = new MultipleIndexModel();
                 model.CategoriesModel = db.categories.ToList();
                 model.ProductModel = db.products.OrderByDescending(a => a.id).ToList();
+                model.VariantModel = db.variants.OrderByDescending(a => a.id).ToList();
 
                 ViewData["kategoria"] = SelectionKategoria();
                 ViewData["znacka"] = SelectionBrand();

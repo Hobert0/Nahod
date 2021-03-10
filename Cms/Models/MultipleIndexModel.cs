@@ -9,6 +9,7 @@ namespace Cms.Models
     public class MultipleIndexModel
     {
         public IEnumerable<Cms.Models.products> ProductModel { get; set; }
+        public IEnumerable<Cms.Models.variants> VariantModel { get; set; }
         public IEnumerable<Cms.Models.pages> PagesModel { get; set; }
         public IEnumerable<Cms.Models.slideshow> SlideshowModel { get; set; }
         public UsersModel UsersModel { get; set; }
@@ -18,7 +19,6 @@ namespace Cms.Models
         public BrandsModel Brands { get; set; }
         public BrandsModel BrandsEditModel { get; set; }
         public AttributesModel Attributes { get; set; }
-        public VariantModel Variants { get; set; }
         public CouponsModel Coupons { get; set; }
         public CouponsModel CouponsEditModel { get; set; }
         public AdminModel AdminLoginModel { get; set; }

@@ -442,8 +442,8 @@ namespace Cms.Controllers
                 v.number = varP.number;
                 v.price = varP.price;
                 v.stock = varP.stock;
-                v.attribute_id = varP.attrId;
-                v.value = varP.attrValues;
+                v.attribute_id = varP.attribute_id;
+                v.value = varP.value;
 
                 db.variants.Add(v);
             }
@@ -482,7 +482,11 @@ namespace Cms.Controllers
                 {
                     System.IO.File.Copy(sourcePath, destinationPath);
                 }
-                await UploadFiles(model.ImageGallery, o.gallery);
+
+                if (model.ImageGallery != null)
+                {
+                    await UploadFiles(model.ImageGallery, o.gallery);
+                }
             }
             TempData["IsValid"] = true;
             ViewBag.IsValid = true;
@@ -496,6 +500,13 @@ namespace Cms.Controllers
             {
                 ViewBag.Status = true;
                 db.products.Remove(data);
+
+                var variants = db.variants.Where(i => i.prod_id == id);
+                foreach (var var in variants)
+                {
+                    db.variants.Remove(var);
+                }
+
                 db.SaveChanges();
             }
             else { ViewBag.Status = false; }
@@ -532,6 +543,10 @@ namespace Cms.Controllers
             model.Weight = data.weight;
             model.Weightunit = data.weightunit;
             model.TitleImage = null;
+
+            //Varianty
+            var variants = JsonConvert.SerializeObject(db.variants.Where(i => i.prod_id == id));
+            model.Variants = variants;
 
             _ = SaveProduct(model);
 
@@ -581,6 +596,31 @@ namespace Cms.Controllers
             o.custom8 = model.Custom8; //typ
             o.custom9 = model.Custom9; //vykon
             o.custom10 = model.Custom10; //plocha
+
+            //Varianty
+            //Najprv vymazeme povodne a ulozime nove
+            var oldVariants = db.variants.Where(i => i.prod_id == model.Id);
+            foreach (var oldVar in oldVariants) 
+            {
+                db.variants.Remove(oldVar);
+            }
+
+            dynamic vars = JsonConvert.DeserializeObject(model.Variants);
+
+            foreach (var varP in vars)
+            {
+                variants v = new variants();
+
+                v.prod_id = o.id;
+                v.number = varP.number;
+                v.price = varP.price;
+                v.stock = varP.stock;
+                v.attribute_id = varP.attrId;
+                v.value = varP.attrValues;
+
+                db.variants.Add(v);
+            }
+
             db.SaveChanges();
 
             return RedirectToAction("EditProduct", new { model.Id });

@@ -3,9 +3,11 @@
     Layout = "~/Views/Shared/_LayoutCms.cshtml";
     ViewBag.Title = "Produkty";
     var modelItems = Model.ProductModel;
+    var variants = Model.VariantModel;
     var sizes = "";
     var onstockrange = "";
     var counter = 0;
+    var varCounter = 0;
 }
 <script>
     /*GET HOW MANY ON STOCK from database*/
@@ -45,6 +47,14 @@
     .dropdown-container2 {
         display: block;
     }
+
+    .noBT {
+        border-top: 0px solid white !important;
+    }
+
+    .hide {
+        display: none;
+    }
 </style>
 
 <h2>Produkty v eshope</h2>
@@ -78,9 +88,11 @@
 </div>
 
 <hr />
-<table id="myTable" class="table" style="font-size: 14px;">
+<table id="productsTable" class="table" style="font-size: 14px;">
     <thead>
         <tr>
+            <th class="hide">ID</th>
+            <th>Varianty</th>
             <th>Kód produktu</th>
             <th>Náhľad</th>
             <th style="width: 350px;">Názov</th>
@@ -104,8 +116,19 @@
                 }
 
                 onstockrange = item.custom1;
-        <tr id="product_row-@counter">
+        <tr id="product_row-@counter" class="productRow">
 
+            <td class="hide">@item.id</td>
+            <td class="toggleVariants" hiddenVars="1">
+                @{
+                    string expand = "";
+                    if (variants.Where(o => o.prod_id == item.id).ToList().Count > 0)
+                    {
+                        expand = "+";
+                    }
+                }
+                @expand
+            </td>
             <td>@Html.DisplayFor(modelItem => item.number)</td>
             <td><img src="~/Uploads/@Html.DisplayFor(modelItem => item.image)" style="width: 50px;" /></td>
             <td><strong>@Html.DisplayFor(modelItem => item.title)</strong></td>
@@ -149,10 +172,43 @@
             </td>
 
         </tr>
+
+                foreach (var variant in variants.Where(o => o.prod_id == item.id))
+                {
+                    <tr id="product_row-@counter-@varCounter" class="variantRow">
+                        <td class="hide">@item.id</td>
+                        <td></td>
+                        <td>@variant.number</td>
+                        <td></td>
+                        <td><strong>@variant.value</strong></td>
+                        <td>
+                            <strong>
+                                @{
+                                    string variantPrice = "";
+                                    if (variant.price != "")
+                                    {
+                                        variantPrice = variant.price + " €";
+                                    }
+
+                                }
+                                @variantPrice
+                            </strong>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                    varCounter++;
+                }
+
                 <script>
                 Onstock('@Html.Raw(sizes)', @(counter), @(onstockrange));
                 </script>
                 counter++;
+                varCounter = 0;
             }
 
 
@@ -164,6 +220,23 @@
 
 
     $(document).ready(function () {
+
+        $(document).ready(function () {
+            $('#productsTable').DataTable({
+                "order": [0, 'desc'],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Slovak.json"
+                },
+                "initComplete": function (settings, json) {
+                    //upravime css
+                    $('#productsTable tbody tr').each(function () {
+                        if ($(this).hasClass("variantRow")) {
+                            $(this).find("td").addClass("noBT");
+                        }
+                    });
+                }
+            });
+        });
 
         //init
         $("#filterByCategory").val("");
@@ -226,10 +299,10 @@
                         $dataSet.push($thisSet);
                     }
 
-                    $('#myTable').DataTable().destroy();
-                    $('#myTable').empty();
+                    $('#productsTable').DataTable().destroy();
+                    $('#productsTable').empty();
 
-                    $('#myTable').DataTable({
+                    $('#productsTable').DataTable({
                         data: $dataSet,
                         columns: [
                             { title: "Kód produktu" },
@@ -248,11 +321,11 @@
                         },
                         "initComplete": function (settings, json) {
                             //upravime css
-                            $('#myTable thead th').eq(2).attr("style", "width: 350px;");
-                            $('#myTable thead th').eq(8).attr("style", "text-align: center;");
+                            $('#productsTable thead th').eq(2).attr("style", "width: 350px;");
+                            $('#productsTable thead th').eq(8).attr("style", "text-align: center;");
 
-                            $('#myTable tbody tr').each(function () {
-     
+                            $('#productsTable tbody tr').each(function () {
+
                                 $tds = $(this).find("td");
                                 $tds.eq(3).attr("style", "background-color: lightyellow; text-align: center;");
                                 $tds.eq(4).attr("style", "background-color: lightcyan; text-align: center;");
@@ -269,8 +342,22 @@
                 //$loading.remove();
             });
 
-
         }
+
+        $(document).on("click", ".toggleVariants", function () {
+            if ($(this).attr("hiddenVars") == "1") {
+                $parent = $(this).parent();
+                $next = $parent.next();
+                while ($next.hasClass("variantRow ")) {
+                    $next.removeClass("hide");
+
+                    $next = $next.next();
+                    $parent.attr("hiddenVars", "0");
+                }
+            } else {
+
+            }
+        })
     });
 </script>
 

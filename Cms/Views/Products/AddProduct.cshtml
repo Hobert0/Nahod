@@ -881,7 +881,7 @@
                     $varStock = $(".clonedVarSection[num=" + $i + "]").find(".varStock").val();
                     $varPrice = $(".clonedVarSection[num=" + $i + "]").find(".varPrice").val();
 
-                    $variants.push({ "attrId": $varAttrs, "attrValues": $varAttrsValues, "number": $varNumber, "stock": $varStock, "price": $varPrice });
+                    $variants.push({ "attribute_id": $varAttrs, "value": $varAttrsValues, "number": $varNumber, "stock": $varStock, "price": $varPrice });
                 }
 
                 $("#Variants").val(JSON.stringify($variants));

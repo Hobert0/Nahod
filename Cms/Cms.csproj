@@ -317,7 +317,6 @@
     </Compile>
     <Compile Include="Models\CategoriesModel.cs" />
     <Compile Include="Models\AttributesModel.cs" />
-    <Compile Include="Models\VariantModel.cs" />
     <Compile Include="Models\coupons.cs">
       <DependentUpon>DBcms.tt</DependentUpon>
     </Compile>
