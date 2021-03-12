@@ -23,5 +23,6 @@ namespace Cms.Models
         public string price { get; set; }
         public string size { get; set; }
         public string color { get; set; }
+        public bool deleted { get; set; }
     }
 }

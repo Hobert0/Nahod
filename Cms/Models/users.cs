@@ -19,5 +19,6 @@ namespace Cms.Models
         public string password { get; set; }
         public string email { get; set; }
         public int role { get; set; }
+        public bool deleted { get; set; }
     }
 }

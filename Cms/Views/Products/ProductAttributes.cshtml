@@ -26,37 +26,38 @@
 @using (Html.BeginForm("AddAttribute", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
 {
     @Html.AntiForgeryToken()
-    <div class="form-horizontal">
-        <h4>Pridať vlastnosť produktov</h4>
+<div class="form-horizontal">
+    <h4>Pridať vlastnosť produktov</h4>
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <br />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <br />
 
-        <div class="form-group">
-            <div class="col-md-8" style="padding:0">
-                @Html.EditorFor(model => model.Attributes.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov vlastnosti", id = "name" } })
-                @Html.ValidationMessageFor(model => model.Attributes.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group values-group">
-            <div class="col-md-8" style="padding:0">
-                @Html.HiddenFor(model => model.Attributes.Value, new { htmlAttributes = new { @class = "form-control", id = "values" } })
-                @Html.ValidationMessageFor(model => model.Attributes.Value, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div>
-                <input type="button" value="Pridať hodnotu" class="btn btn-warning addValue" /><input type="button" value="Zmazať poslednú hodnotu" style="display:none;margin-left: 10px;" class="btn btn-danger removeValue" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div>
-                <input type="submit" value="Pridať vlastnosť" class="btn btn-success submitbtn" />
-            </div>
+    <div class="form-group">
+        <div class="col-md-8" style="padding:0">
+            @Html.EditorFor(model => model.Attributes.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov vlastnosti", id = "name" } })
+            @Html.ValidationMessageFor(model => model.Attributes.Name, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        <div>
+            <input type="button" value="Pridať hodnotu" class="btn btn-warning addValue" style="font-size: 13px;" /><input type="button" value="Zmazať poslednú hodnotu" style="display:none;margin-left: 10px;font-size:13px;" class="btn btn-danger removeValue" />
+        </div>
+    </div>
+
+    <div class="form-group values-group">
+        <div class="col-md-8" style="padding:0">
+            @Html.HiddenFor(model => model.Attributes.Value, new { htmlAttributes = new { @class = "form-control", id = "values" } })
+            @Html.ValidationMessageFor(model => model.Attributes.Value, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div>
+            <input type="submit" value="Pridať vlastnosť" class="btn btn-success submitbtn" />
+        </div>
+    </div>
+</div>
 
 }
 <hr />

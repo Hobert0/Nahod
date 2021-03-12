@@ -17,5 +17,6 @@ namespace Cms.Models
         public int id { get; set; }
         public string name { get; set; }
         public string value { get; set; }
+        public bool deleted { get; set; }
     }
 }

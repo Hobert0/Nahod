@@ -49,7 +49,7 @@ namespace Cms.Controllers
         {
             if (Session["username"] != null && Session["role"].ToString() == "0")
             {
-                var orders = db.orders.Select(a => new OrdersModel
+                var orders = db.orders.Where(i => i.deleted == false).Select(a => new OrdersModel
                 {
                     Id = a.id,
                     Ordernumber = a.ordernumber,
@@ -125,8 +125,8 @@ namespace Cms.Controllers
             {
                 MultipleIndexModel model = new MultipleIndexModel();
                 model.CategoriesModel = db.categories.ToList();
-                model.ProductModel = db.products.OrderByDescending(a => a.id).ToList();
-                model.VariantModel = db.variants.OrderByDescending(a => a.id).ToList();
+                model.ProductModel = db.products.Where(x => x.deleted == false).OrderByDescending(a => a.id).ToList();
+                model.VariantAttributesModel = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a,b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value }).OrderByDescending(a => a.ProdId).ThenBy(a => a.AttrName).ToList();
 
                 ViewData["kategoria"] = SelectionKategoria();
                 ViewData["znacka"] = SelectionBrand();
@@ -451,8 +451,8 @@ namespace Cms.Controllers
 
                 UsersModel zamMod = new UsersModel();
                 var model = new MultipleIndexModel();
-                model.AllUsersPaged = db.users.ToList().OrderBy(x => Guid.NewGuid()).ToPagedList(pageNumber, pageSize);
-                model.AllUsersMetaModel = db.usersmeta.ToList();
+                model.AllUsersPaged = db.users.Where(i => i.deleted == false).ToList().OrderBy(x => Guid.NewGuid()).ToPagedList(pageNumber, pageSize);
+                model.AllUsersMetaModel = db.usersmeta.Where(i => i.deleted == false).ToList();
 
                 model.AllWishlistModel = db.wishlist.ToList();
 
@@ -473,6 +473,23 @@ namespace Cms.Controllers
             {
                 
                 var model = new MultipleIndexModel();
+
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Admin");
+            }
+        }
+
+        [Route("pouzivatelia-uprav/{id}")]
+        public ActionResult UserEdit(int id)
+        {
+            if (Session["username"] != null && Session["role"].ToString() == "0")
+            {
+                var user = db.users.Where(item => item.id == id).Join(db.usersmeta, a => a.id, b => b.userid, (a, b) => new UsersmetaModel { Id = b.id, Userid = b.userid, Name = b.name, Surname = b.surname, Address = b.address, City = b.city, Zip = b.zip, Phone = b.phone, Email = b.email, Companyname = b.companyname, Ico = b.ico, Dic = b.dic, Icdph = b.icdph, News = b.news, Gdpr = b.gdpr }).SingleOrDefault();
+                MultipleIndexModel model = new MultipleIndexModel();
+                model.UsersmetaModel = user;
 
                 return View(model);
             }
@@ -560,6 +577,28 @@ namespace Cms.Controllers
             db.SaveChanges();
             //TempData["IsValid"] = true;
             //ViewBag.IsValid = true;
+
+            return RedirectToAction("Users", "Admin");
+        }
+
+        [HttpPost, Route("upravpouziv")]
+        public async Task<ActionResult> EditUser(MultipleIndexModel model)
+        {
+            var u = db.usersmeta.Where(i => i.userid == model.UsersmetaModel.Userid).SingleOrDefault();
+
+            u.name = model.UsersmetaModel.Name;
+            u.surname = model.UsersmetaModel.Surname;
+            u.address = model.UsersmetaModel.Address;
+            u.city = model.UsersmetaModel.City;
+            u.zip = model.UsersmetaModel.Zip;
+            u.phone = model.UsersmetaModel.Phone;
+            u.email = model.UsersmetaModel.Name;
+            u.companyname = model.UsersmetaModel.Companyname;
+            u.ico = model.UsersmetaModel.Ico;
+            u.dic = model.UsersmetaModel.Dic;
+            u.icdph = model.UsersmetaModel.Icdph;
+
+            db.SaveChanges();
 
             return RedirectToAction("Users", "Admin");
         }

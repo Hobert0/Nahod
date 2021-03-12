@@ -23,7 +23,7 @@ namespace Cms.Controllers
             if (Session["username"] != null && Session["role"].ToString() == "0")
             {
                 MultipleIndexModel model = new MultipleIndexModel();
-                model.CategoriesModel = db.categories.OrderByDescending(a => a.id).ToList();
+                model.CategoriesModel = db.categories.Where(i => i.deleted == false).OrderByDescending(a => a.id).ToList();
                 ViewData["Maincat"] = SelectionKategorieMain();
                 ViewData["Topcat"] = SelectionKategorieNew();
                 ViewData["Topcat2"] = SelectionKategoria();
@@ -35,11 +35,11 @@ namespace Cms.Controllers
         [Route("produkty/editovat-kategoriu/{id}")]
         public ActionResult EditCat(int? id) //editacia kategorie
         {
-            if(Session["username"] != null && Session["role"].ToString() == "0")
+            if (Session["username"] != null && Session["role"].ToString() == "0")
             {
                 var allCategories = db.categories.Where(item => item.id == id).ToList();
                 CategoriesModel model = new CategoriesModel();
-                foreach(var category in allCategories)
+                foreach (var category in allCategories)
                 {
                     model.Id = category.id;
                     model.Name = category.name;
@@ -83,7 +83,7 @@ namespace Cms.Controllers
             if (Session["username"] != null && Session["role"].ToString() == "0")
             {
                 MultipleIndexModel model = new MultipleIndexModel();
-                model.BrandsModel = db.brands.OrderByDescending(a => a.id).ToList();
+                model.BrandsModel = db.brands.Where(i => i.deleted == false).OrderByDescending(a => a.id).ToList();
                 return View(model);
             }
             else { return RedirectToAction("Admin", "Admin"); }
@@ -92,11 +92,11 @@ namespace Cms.Controllers
         [Route("produkty/editovat-znacku/{id}")] //editacia brands
         public ActionResult EditBrand(int? id)
         {
-            if(Session["username"] != null && Session["role"].ToString() == "0")
+            if (Session["username"] != null && Session["role"].ToString() == "0")
             {
                 var allBrands = db.brands.Where(item => item.id == id);
                 BrandsModel model = new BrandsModel();
-                foreach(var brand in allBrands)
+                foreach (var brand in allBrands)
                 {
                     model.Id = brand.id;
                     model.Name = brand.name;
@@ -129,7 +129,7 @@ namespace Cms.Controllers
             if (Session["username"] != null && Session["role"].ToString() == "0")
             {
                 MultipleIndexModel model = new MultipleIndexModel();
-                model.AttributesModel = db.attributes.OrderByDescending(a => a.id).ToList();
+                model.AttributesModel = db.attributes.Where(i => i.deleted == false).OrderByDescending(a => a.id).ToList();
                 return View(model);
             }
             else { return RedirectToAction("Admin", "Admin"); }
@@ -142,11 +142,11 @@ namespace Cms.Controllers
             {
                 var attr = db.attributes.Where(item => item.id == id).SingleOrDefault();
                 AttributesModel model = new AttributesModel();
-                
+
                 model.Id = attr.id;
                 model.Name = attr.name;
                 model.Value = attr.value;
-                
+
                 return View(model);
             }
             else
@@ -171,7 +171,7 @@ namespace Cms.Controllers
             if (Session["username"] != null && Session["role"].ToString() == "0")
             {
                 MultipleIndexModel model = new MultipleIndexModel();
-                model.CouponsModel = db.coupons.OrderByDescending(a => a.id).ToList();
+                model.CouponsModel = db.coupons.Where(i => i.deleted == false).OrderByDescending(a => a.id).ToList();
                 return View(model);
             }
             else { return RedirectToAction("Admin", "Admin"); }
@@ -201,7 +201,7 @@ namespace Cms.Controllers
             }
             else { return RedirectToAction("Admin", "Admin"); }
         }
-        
+
         /*Attributes - products*/
         public List<SelectListItem> SelectionAttributes()
         {
@@ -255,12 +255,12 @@ namespace Cms.Controllers
 
                 if (cat.topcat2 == "" || cat.topcat2 == "Žiadna")
                 {
-                    znacka.Add(new SelectListItem {Text = cat.name + " → " + cat.topcat, Value = cat.id.ToString()});
+                    znacka.Add(new SelectListItem { Text = cat.name + " → " + cat.topcat, Value = cat.id.ToString() });
                 }
                 else
                 {
                     znacka.Add(new SelectListItem { Text = cat.name + " → " + cat.topcat2 + " → " + cat.topcat, Value = cat.id.ToString() });
-               }
+                }
 
             }
             return znacka;
@@ -373,7 +373,8 @@ namespace Cms.Controllers
             products o = new products();
             var nazovSuboru = string.Empty;
 
-            if (model.TitleImage != null) { 
+            if (model.TitleImage != null)
+            {
                 HttpPostedFileBase[] subor = model.TitleImage;
                 if (model.TitleImage[0] != null)
                 {
@@ -390,8 +391,8 @@ namespace Cms.Controllers
             {
                 nazovSuboru = "avatar_product.jpg";
             }
-            if (model.Price != null){model.Price = model.Price.Replace(",", ".");}
-            if (model.Discountprice != null){model.Discountprice = model.Discountprice.Replace(",", ".");}
+            if (model.Price != null) { model.Price = model.Price.Replace(",", "."); }
+            if (model.Discountprice != null) { model.Discountprice = model.Discountprice.Replace(",", "."); }
 
             o.title = model.Title;
             o.image = ulozObrazok + nazovSuboru;
@@ -407,10 +408,11 @@ namespace Cms.Controllers
             o.custom2 = model.Custom2;
             o.custom1 = model.Custom1;
             o.custom3 = model.Custom3;
-            if (model.Custom5 == "1") { 
+            if (model.Custom5 == "1")
+            {
                 o.custom4 = model.Custom4.ToString();
             }
-            if(model.Custom6 == true) //cena od hodnota
+            if (model.Custom6 == true) //cena od hodnota
             {
                 o.custom6 = "True";
             }
@@ -495,6 +497,22 @@ namespace Cms.Controllers
 
         public ActionResult DeleteProduct(int? id, bool confirm)
         {
+
+            var product = db.products.Where(i => i.id == id).SingleOrDefault();
+
+            product.deleted = true;
+
+            var variants = db.variants.Where(i => i.prod_id == id);
+            foreach (var variant in variants)
+            {
+                variant.deleted = true;
+            }
+
+            ViewBag.Status = true;
+
+            db.SaveChanges();
+
+            /*
             var data = db.products.Find(id);
             if (true)
             {
@@ -510,7 +528,7 @@ namespace Cms.Controllers
                 db.SaveChanges();
             }
             else { ViewBag.Status = false; }
-
+            */
 
             return RedirectToAction("Products", "Admin");
         }
@@ -581,7 +599,8 @@ namespace Cms.Controllers
                 o.custom4 = model.Custom4;
                 o.stock = "";
             }
-            else {
+            else
+            {
                 o.custom4 = "";
             }
             if (model.Custom6 == true) //cena od hodnota
@@ -600,7 +619,7 @@ namespace Cms.Controllers
             //Varianty
             //Najprv vymazeme povodne a ulozime nove
             var oldVariants = db.variants.Where(i => i.prod_id == model.Id);
-            foreach (var oldVar in oldVariants) 
+            foreach (var oldVar in oldVariants)
             {
                 db.variants.Remove(oldVar);
             }
@@ -728,13 +747,13 @@ namespace Cms.Controllers
                         WebImage img = new WebImage(fileByte);
                         if (img.Width > 1000)
                         {
-                            img.Resize(1000+1, 1000+1, true).Crop(1, 1);
+                            img.Resize(1000 + 1, 1000 + 1, true).Crop(1, 1);
                         }
                         img.Save(ServerSavePath);
 
                         var isTheSameImage = model.Image.Substring(0, model.Image.LastIndexOf("/") + 1) + InputFileName;
                         if (model.Image != isTheSameImage)
-                        {                            
+                        {
                             var data = db.categories.Single(i => i.id == model.Id);
                             data.image = isTheSameImage;
                             db.SaveChanges();
@@ -758,13 +777,15 @@ namespace Cms.Controllers
                 foreach (string imgPath in Directory.GetFiles(d))
                 {
                     var img = new FileInfo(imgPath);
-                    if(img.Extension == ".jpg" || img.Extension == ".jpeg" || img.Extension == ".png") { 
+                    if (img.Extension == ".jpg" || img.Extension == ".jpeg" || img.Extension == ".png")
+                    {
                         WebImage imag = new WebImage(imgPath);
                         imag.Crop(1, 1);
                         imag.Save(imgPath);
                     }
                 }
-                foreach (string k in Directory.GetDirectories(d)) { 
+                foreach (string k in Directory.GetDirectories(d))
+                {
 
                     foreach (string imgPath in Directory.GetFiles(k))
                     {
@@ -791,7 +812,7 @@ namespace Cms.Controllers
                             }
                         }
                     }
-            }
+                }
             }
         }
 
@@ -959,6 +980,15 @@ namespace Cms.Controllers
         public ActionResult DeleteCategory(int? id, bool confirm)
         {
             var data = db.categories.Find(id);
+
+            data.deleted = true;
+
+            ViewBag.Status = true;
+            db.SaveChanges();
+
+
+            /*
+            var data = db.categories.Find(id);
             if (true)
             {
                 ViewBag.Status = true;
@@ -966,13 +996,22 @@ namespace Cms.Controllers
                 db.SaveChanges();
             }
             else { ViewBag.Status = false; }
-
+            */
 
             return RedirectToAction("ProductCats");
         }
 
         public ActionResult DeleteBrand(int? id, bool confirm)
         {
+            var data = db.brands.Find(id);
+            data.deleted = true;
+
+            ViewBag.Status = true;
+
+            db.SaveChanges();
+
+
+            /*
             var data = db.brands.Find(id);
             if (true)
             {
@@ -981,13 +1020,21 @@ namespace Cms.Controllers
                 db.SaveChanges();
             }
             else { ViewBag.Status = false; }
-
+            */
 
             return RedirectToAction("ProductBrands");
         }
 
         public ActionResult DeleteAttribute(int? id, bool confirm)
         {
+            var data = db.attributes.Find(id);
+
+            data.deleted = true;
+
+            ViewBag.Status = true;
+            db.SaveChanges();
+
+            /*
             var data = db.attributes.Find(id);
             if (true)
             {
@@ -996,12 +1043,20 @@ namespace Cms.Controllers
                 db.SaveChanges();
             }
             else { ViewBag.Status = false; }
-
+            */
 
             return RedirectToAction("ProductAttributes");
         }
         public ActionResult DeleteCoupon(int? id, bool confirm)
         {
+            var data = db.coupons.Find(id);
+            data.deleted = true;
+
+            ViewBag.Status = true;
+
+            db.SaveChanges();
+
+            /*
             var data = db.coupons.Find(id);
             if (true)
             {
@@ -1010,7 +1065,7 @@ namespace Cms.Controllers
                 db.SaveChanges();
             }
             else { ViewBag.Status = false; }
-
+            */
 
             return RedirectToAction("Coupons");
         }
@@ -1021,12 +1076,12 @@ namespace Cms.Controllers
             categories o = new categories();
             var nazovSuboru = string.Empty;
 
-            if(model.Categories.TitleImage != null)
+            if (model.Categories.TitleImage != null)
             {
                 HttpPostedFileBase[] subor = model.Categories.TitleImage;
-                if(model.Categories.TitleImage[0] != null)
+                if (model.Categories.TitleImage[0] != null)
                 {
-                    foreach(HttpPostedFileBase file in subor)
+                    foreach (HttpPostedFileBase file in subor)
                     {
                         nazovSuboru = Path.GetFileName(file.FileName);
                     }
@@ -1067,7 +1122,7 @@ namespace Cms.Controllers
                     {
                         System.IO.File.Copy(sourcePath, destinationPath);
                     }
-                    
+
 
                 }
             }
@@ -1082,7 +1137,7 @@ namespace Cms.Controllers
                 {
                     System.IO.File.Copy(sourcePath, destinationPath);
                 }
-                
+
             }
 
             return RedirectToAction("ProductCats");
@@ -1192,38 +1247,38 @@ namespace Cms.Controllers
         {
             var t = sizes;
         }
-        public ActionResult askForPrice(MultipleIndexModel model,int? id)
+        public ActionResult askForPrice(MultipleIndexModel model, int? id)
         {
             var settings = db.settings.SingleOrDefault().email;
-                     
-                MailMessage mailMessage = new MailMessage();
-            
-                mailMessage.From = new MailAddress(model.EmailSendModel.Email);
-                mailMessage.Subject = model.EmailSendModel.Subject;
-                mailMessage.Body = model.EmailSendModel.Message;
-                mailMessage.IsBodyHtml = true;
 
-                mailMessage.To.Add(new MailAddress(settings));
+            MailMessage mailMessage = new MailMessage();
 
-                SmtpClient smtp = new SmtpClient();
+            mailMessage.From = new MailAddress(model.EmailSendModel.Email);
+            mailMessage.Subject = model.EmailSendModel.Subject;
+            mailMessage.Body = model.EmailSendModel.Message;
+            mailMessage.IsBodyHtml = true;
 
-                smtp.Host = ConfigurationManager.AppSettings["Host"];
+            mailMessage.To.Add(new MailAddress(settings));
 
-                smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
+            SmtpClient smtp = new SmtpClient();
 
-                System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
+            smtp.Host = ConfigurationManager.AppSettings["Host"];
 
-                NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"]; //reading from web.config  
+            smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
 
-                NetworkCred.Password = ConfigurationManager.AppSettings["Password"]; //reading from web.config  
+            System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
 
-                smtp.UseDefaultCredentials = true;
+            NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"]; //reading from web.config  
 
-                smtp.Credentials = NetworkCred;
+            NetworkCred.Password = ConfigurationManager.AppSettings["Password"]; //reading from web.config  
 
-                smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
+            smtp.UseDefaultCredentials = true;
 
-                smtp.Send(mailMessage);
+            smtp.Credentials = NetworkCred;
+
+            smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
+
+            smtp.Send(mailMessage);
 
             ViewBag.emailStatus = "true";
 

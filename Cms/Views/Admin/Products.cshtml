@@ -3,11 +3,11 @@
     Layout = "~/Views/Shared/_LayoutCms.cshtml";
     ViewBag.Title = "Produkty";
     var modelItems = Model.ProductModel;
-    var variants = Model.VariantModel;
+    var variantsAttributes = Model.VariantAttributesModel;
+    //var attributes = Model.AttributesModel;
     var sizes = "";
     var onstockrange = "";
     var counter = 0;
-    var varCounter = 0;
 }
 <script>
     /*GET HOW MANY ON STOCK from database*/
@@ -59,7 +59,9 @@
 
 <h2>Produkty v eshope</h2>
 <hr />
-<button class="btn btn-success" type="button" value="Create" style="margin: 5px 0 10px;padding: 7px 22px;font-size: 16px;" onclick="location.href='@Url.Action("AddProduct", "Products")'">+ Pridať produkt</button>
+<button class="btn btn-success" type="button" value="Create" style="margin: 5px 0 10px;padding: 7px 22px;" onclick="location.href='@Url.Action("AddProduct", "Products")'">+ Pridať produkt</button>
+<hr />
+<button class="btn btn-warning" type="button" value="MultiPriceEdit" style="margin: 5px 0 10px;padding: 7px 22px;">Hromadne zmeniť cenu</button>
 <hr />
 
 <div class="row">
@@ -88,20 +90,20 @@
 </div>
 
 <hr />
-<table id="productsTable" class="table" style="font-size: 14px;">
+<table id="productsTable" class="table">
     <thead>
         <tr>
             <th class="hide">ID</th>
-            <th>Varianty</th>
             <th>Kód produktu</th>
             <th>Náhľad</th>
-            <th style="width: 350px;">Názov</th>
+            <th>Názov</th>
             <th>Cena</th>
             <th>Cena po zľave</th>
             <th>Kategória</th>
+            <th>Varianty</th>
             <th>Dátum</th>
             <th>Odporúčané</th>
-            <th style="text-align: center">Editovať | Vymazať</th>
+            <th style="text-align: center">Akcie</th>
         </tr>
     </thead>
     <tbody>
@@ -116,99 +118,83 @@
                 }
 
                 onstockrange = item.custom1;
-        <tr id="product_row-@counter" class="productRow">
+                <tr id="product_row-@counter" class="productRow">
 
-            <td class="hide">@item.id</td>
-            <td class="toggleVariants" hiddenVars="1">
-                @{
-                    string expand = "";
-                    if (variants.Where(o => o.prod_id == item.id).ToList().Count > 0)
-                    {
-                        expand = "+";
-                    }
-                }
-                @expand
-            </td>
-            <td>@Html.DisplayFor(modelItem => item.number)</td>
-            <td><img src="~/Uploads/@Html.DisplayFor(modelItem => item.image)" style="width: 50px;" /></td>
-            <td><strong>@Html.DisplayFor(modelItem => item.title)</strong></td>
-            <td style="background-color: lightyellow; text-align: center;"><strong>@Html.DisplayFor(modelItem => item.price)&nbsp;€</strong></td>
-            <td style="background-color: lightcyan; text-align: center;">
-                <strong>
-                    @{
-                        //Html.DisplayFor(modelItem => item.discountprice)
-                        var discountText = "";
-                        if (item.discountprice != null)
-                        {
-                            discountText = item.discountprice + " €";
+                    <td class="hide">@item.id</td>
+                    <td>@Html.DisplayFor(modelItem => item.number)</td>
+                    <td><img src="~/Uploads/@Html.DisplayFor(modelItem => item.image)" style="width: 50px;" /></td>
+                    <td><strong>@Html.DisplayFor(modelItem => item.title)</strong></td>
+                    <td style="background-color: lightyellow; text-align: center;"><strong>@Html.DisplayFor(modelItem => item.price)&nbsp;€</strong></td>
+                    <td style="background-color: lightcyan; text-align: center;">
+                        <strong>
+                            @{
+                                //Html.DisplayFor(modelItem => item.discountprice)
+                                var discountText = "";
+                                if (item.discountprice != null)
+                                {
+                                    discountText = item.discountprice + " €";
+                                }
+                            }
+                            @discountText
+                        </strong>
+                    </td>
+                    <td>
+                        @{
+                            if (item.category != null)
+                            {
+                                foreach (var cat in Model.CategoriesModel.Where(o => o.id == Int32.Parse(item.category)))
+                                {
+                                    @Html.Raw(cat.name)
+                                }
+                            }
                         }
-                    }
-                    @discountText
-                </strong>
-            </td>
-            <td>
-                @{
-                    if (item.category != null)
-                    {
-                        foreach (var cat in Model.CategoriesModel.Where(o => o.id == Int32.Parse(item.category)))
-                        {
-                            @Html.Raw(cat.name)
-                        }
-                    }
-                }
-            </td>
-            <td>@Html.DisplayFor(modelItem => item.date)</td>
-            <td style="text-align:center;">@Html.DisplayFor(modelItem => item.recommended)</td>
-            <td align="center">
-                @Html.ActionLink("Editovať", "EditProduct", "Products", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" }) <a href="@Url.Action("DuplicateProduct", "Products", new { id = item.id })" class="btn btn-success" style="padding: 7px 10px;" title="Duplikovať produkt"><img src="~/Content/images/duplicate.png" width="15" style="margin-top: -3px;"></a> @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteProduct", "Products", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tento produkt?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete produkt." })
-                <div class="popover__wrapper" id="info-@counter" style="display:none;">
-                    <a href="#">
-                        <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
-                    </a>
-                    <div class="push popover__content">
-                        <p class="popover__message">Skladové zásoby pod hraničnou hodnotou!</p>
-                    </div>
-                </div>
-            </td>
+                    </td>
+                    <td>
 
-        </tr>
-
-                foreach (var variant in variants.Where(o => o.prod_id == item.id))
-                {
-                    <tr id="product_row-@counter-@varCounter" class="variantRow">
-                        <td class="hide">@item.id</td>
-                        <td></td>
-                        <td>@variant.number</td>
-                        <td></td>
-                        <td><strong>@variant.value</strong></td>
-                        <td>
-                            <strong>
-                                @{
-                                    string variantPrice = "";
-                                    if (variant.price != "")
+                        @{
+                            //variant.number obsahuje nazov vlastnosti
+                            string variantsStr = "";
+                            if (variantsAttributes.Where(o => o.ProdId == item.id).ToList().Count > 0)
+                            {
+                                string varType = "";
+                                foreach (var variant in variantsAttributes.Where(o => o.ProdId == item.id))
+                                {
+                                    if (varType != variant.AttrName)
                                     {
-                                        variantPrice = variant.price + " €";
+                                        variantsStr += variant.AttrName + ": ";
                                     }
 
+                                    variantsStr += variant.AttrValue + ", ";
+                                    varType = variant.AttrName;
                                 }
-                                @variantPrice
-                            </strong>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                                variantsStr = variantsStr.Remove(variantsStr.Length - 2);
+                            }
+                        }
+                        @variantsStr
 
-                    varCounter++;
-                }
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.date)</td>
+                    <td style="text-align:center;">@Html.DisplayFor(modelItem => item.recommended)</td>
+                    <td align="center">
+                        @Html.ActionLink("Editovať", "EditProduct", "Products", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important; font-size:13px;margin-right: 2px;" }) <a href="@Url.Action("DuplicateProduct", "Products", new { id = item.id })" class="btn btn-success" style="padding: 5px 10px;margin-right: 2px;" title="Duplikovať produkt"><img src="~/Content/images/duplicate.png" width="15" style="margin-top: -3px;"></a> @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteProduct", "Products", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tento produkt?')", @class = "btn btn-danger", style = "padding: 5px 10px;", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete produkt." })
+                        <div class="popover__wrapper" id="info-@counter" style="display:none;">
+                            <a href="#">
+                                <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
+                            </a>
+                            <div class="push popover__content">
+                                <p class="popover__message">Skladové zásoby pod hraničnou hodnotou!</p>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+
+
 
                 <script>
                 Onstock('@Html.Raw(sizes)', @(counter), @(onstockrange));
                 </script>
                 counter++;
-                varCounter = 0;
             }
 
 
@@ -265,26 +251,64 @@
                 success: function (data) {
                     //add rows to dataTable
 
+                    $variants = data.variants;
+                    $categories = data.categories;
                     data = data.data;
 
                     $dataSet = [];
 
                     for ($i = 0; $i < data.length; $i++) {
+
+                        $variantsStr = "";
+                        $varType = "";
+                        $lastUsedProdId = 0;
+                        $category = "";
+
+                        //kategorie
+                        if ($categories != undefined) {
+                            $.each($categories, function (i, v) {
+                                if (v.id == data[$i].category) {
+                                    $category = v.name;
+
+                                    return false;
+                                }
+                            });
+                        } else {
+                            $category = data[$i].category;
+                        }
+
+
+                        //varianty
+                        $.each($variants, function (i, v) {
+                            if (v.ProdId == data[$i].id) {
+                                if ($varType != v.AttrName) {
+                                    $variantsStr += v.AttrName + ": ";
+                                }
+
+                                $variantsStr += v.AttrValue + ", ";
+                                $varType = v.AttrName;
+                                $lastUsedProdId = data[$i].id;
+                            }
+
+                            //aby sa nemuseli prehladavat vsetky varianty
+                            if ($lastUsedProdId != 0 && v.ProdId != $lastUsedProdId) {
+                                $variantsStr = $variantsStr.slice(0, -2);
+                                return false;
+                            }
+                        });
+
                         $thisSet = [];
+                        $thisSet.push(data[$i].id);
                         $thisSet.push(data[$i].number);
                         $thisSet.push('<img src="/Uploads/' + data[$i].image + ' style="width: 50px; " />');
                         $thisSet.push('<strong>' + data[$i].title + '</strong>');
-                        //td => style="background-color: lightyellow; text-align: center;
                         $thisSet.push('<strong>' + data[$i].price + ' €</strong>');
-                        //td => style="background-color: lightcyan; text-align: center;"
                         $thisSet.push('<strong>' + (data[$i].discountprice ? (data[$i].discountprice + " €") : "") + '</strong>');
-                        //
-                        $thisSet.push(data[$i].category);
+                        $thisSet.push($category);
+                        $thisSet.push($variantsStr);
                         $thisSet.push(data[$i].date);
-                        //td => style="text-align:center;"
                         $thisSet.push('<input class="check-box" disabled="disabled" ' + (data[$i].recommended == true ? 'checked="checked"' : '') + ' type="checkbox">');
-                        //td => align="center"
-                        $thisSet.push('<a class="btn btn-warning" href="/produkty/editovat-produkt/' + data[$i].id + '" style = "color:#ffffff !important;" >Editovať</a><a href="/Products/DuplicateProduct/' + data[$i].id + '" class="btn btn-success" style="padding: 7px 10px;" title="Duplikovať produkt"><img src="/Content/images/duplicate.png" width="15" style="margin-top: -3px;"></a><a class="btn btn-danger" data-placement="top" data-toggle="tooltip" href="/Products/DeleteProduct/' + data[$i].id + '?confirm=True" onclick=\'return confirm("Naozaj chcete vymazať tento produkt?")\' title="Kliknutím nenávratne vymažete produkt.">×</a>' +
+                        $thisSet.push('<a class="btn btn-warning" href="/produkty/editovat-produkt/' + data[$i].id + '" style = "color:#ffffff !important; font-size:13px;margin-right: 2px;" >Editovať</a><a href="/Products/DuplicateProduct/' + data[$i].id + '" class="btn btn-success" style="padding: 5px 10px;margin-right: 2px;" title="Duplikovať produkt"><img src="/Content/images/duplicate.png" width="15" style="margin-top: -3px;"></a><a class="btn btn-danger" style="padding: 5px 10px;" data-placement="top" data-toggle="tooltip" href="/Products/DeleteProduct/' + data[$i].id + '?confirm=True" onclick=\'return confirm("Naozaj chcete vymazať tento produkt?")\' title="Kliknutím nenávratne vymažete produkt.">×</a>' +
                             '<div class="popover__wrapper" id="info-0" style="display:none;">' +
                             '<a href="#">' +
                             '<strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;"></strong>' +
@@ -303,17 +327,20 @@
                     $('#productsTable').empty();
 
                     $('#productsTable').DataTable({
+                        "order": [0, 'desc'],
                         data: $dataSet,
                         columns: [
+                            { title: "Id" },
                             { title: "Kód produktu" },
                             { title: "Náhľad" },
                             { title: "Názov" },
                             { title: "Cena" },
                             { title: "Cena po zľave" },
                             { title: "Kategória" },
+                            { title: "Varianty" },
                             { title: "Dátum" },
                             { title: "Odporúčané" },
-                            { title: "Editovať / Vymazať" }
+                            { title: "Akcie" }
 
                         ],
                         language: {
@@ -321,16 +348,18 @@
                         },
                         "initComplete": function (settings, json) {
                             //upravime css
-                            $('#productsTable thead th').eq(2).attr("style", "width: 350px;");
-                            $('#productsTable thead th').eq(8).attr("style", "text-align: center;");
+                            $('#productsTable thead th').eq(0).attr("style", "display:none;");
+                            //$('#productsTable thead th').eq(3).attr("style", "width: 350px;");
+                            $('#productsTable thead th').eq(10).attr("style", "text-align: center;");
 
                             $('#productsTable tbody tr').each(function () {
 
                                 $tds = $(this).find("td");
-                                $tds.eq(3).attr("style", "background-color: lightyellow; text-align: center;");
-                                $tds.eq(4).attr("style", "background-color: lightcyan; text-align: center;");
-                                $tds.eq(7).attr("style", "text-align: center;");
-                                $tds.eq(8).attr("align", "center");
+                                $tds.eq(0).attr("style", "display:none;");
+                                $tds.eq(4).attr("style", "background-color: lightyellow; text-align: center;");
+                                $tds.eq(5).attr("style", "background-color: lightcyan; text-align: center;");
+                                $tds.eq(9).attr("style", "text-align: center;");
+                                $tds.eq(10).attr("align", "center");
                             });
                         }
                     });
@@ -343,21 +372,6 @@
             });
 
         }
-
-        $(document).on("click", ".toggleVariants", function () {
-            if ($(this).attr("hiddenVars") == "1") {
-                $parent = $(this).parent();
-                $next = $parent.next();
-                while ($next.hasClass("variantRow ")) {
-                    $next.removeClass("hide");
-
-                    $next = $next.next();
-                    $parent.attr("hiddenVars", "0");
-                }
-            } else {
-
-            }
-        })
     });
 </script>
 

@@ -43,5 +43,6 @@ namespace Cms.Models
         public string comment { get; set; }
         public string usedcoupon { get; set; }
         public Nullable<int> userid { get; set; }
+        public bool deleted { get; set; }
     }
 }

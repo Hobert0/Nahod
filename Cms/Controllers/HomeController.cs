@@ -623,6 +623,21 @@ namespace Cms.Controllers
         {
             var data = db.users.Find(userId);
             var metadata = db.usersmeta.Where(i => i.userid == userId).FirstOrDefault();
+
+            data.deleted = true;
+            if (metadata != null)
+            {
+                metadata.deleted = true;
+            }
+
+            ViewBag.Status = true;
+            db.SaveChanges();
+
+            return RedirectToAction("Users", "Admin");
+
+            /*
+            var data = db.users.Find(userId);
+            var metadata = db.usersmeta.Where(i => i.userid == userId).FirstOrDefault();
             if (true)
             {
                 ViewBag.Status = true;
@@ -636,6 +651,7 @@ namespace Cms.Controllers
             else { ViewBag.Status = false; }
 
             return RedirectToAction("LogOut", "Admin");
+            */
         }
     }
 }

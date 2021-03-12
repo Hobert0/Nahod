@@ -13,6 +13,7 @@ namespace Cms.Models
         public IEnumerable<Cms.Models.pages> PagesModel { get; set; }
         public IEnumerable<Cms.Models.slideshow> SlideshowModel { get; set; }
         public UsersModel UsersModel { get; set; }
+        public IEnumerable<VariantAttributesModel> VariantAttributesModel { get; set; }
         public OrdersModel OrdersModel { get; set; }
         public CategoriesModel Categories { get; set; }
         public CategoriesModel CategoriesEditModel { get; set; }

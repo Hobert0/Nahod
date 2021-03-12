@@ -6,23 +6,23 @@
     <edmx:Diagrams>
       <Diagram DiagramId="052fe3be25144df2be4c5b663b722cdf" Name="Diagram1">
         <EntityTypeShape EntityType="hobcModel.blog" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="hobcModel.brands" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="hobcModel.categories" Width="1.5" PointX="2.75" PointY="3.75" />
-        <EntityTypeShape EntityType="hobcModel.coupons" Width="1.5" PointX="4.75" PointY="0.75" />
         <EntityTypeShape EntityType="hobcModel.deliver_city" Width="1.5" PointX="4.75" PointY="3.75" />
         <EntityTypeShape EntityType="hobcModel.e_settings" Width="1.5" PointX="6.75" PointY="0.75" />
         <EntityTypeShape EntityType="hobcModel.newsletter" Width="1.5" PointX="0.75" PointY="7.75" />
-        <EntityTypeShape EntityType="hobcModel.ordermeta" Width="1.5" PointX="2.75" PointY="7.75" />
-        <EntityTypeShape EntityType="hobcModel.orders" Width="1.5" PointX="8.75" PointY="0.75" />
         <EntityTypeShape EntityType="hobcModel.pages" Width="1.5" PointX="4.75" PointY="8.75" />
         <EntityTypeShape EntityType="hobcModel.settings" Width="1.5" PointX="8.75" PointY="8.75" />
         <EntityTypeShape EntityType="hobcModel.slideshow" Width="1.5" PointX="10.75" PointY="0.75" />
-        <EntityTypeShape EntityType="hobcModel.users" Width="1.5" PointX="10.75" PointY="3.75" />
         <EntityTypeShape EntityType="hobcModel.wishlist" Width="1.5" PointX="0.75" PointY="11.75" />
-        <EntityTypeShape EntityType="hobcModel.usersmeta" Width="1.5" PointX="3.375" PointY="11.75" />
-        <EntityTypeShape EntityType="hobcModel.attributes" Width="1.5" PointX="11.375" PointY="6.75" />
-        <EntityTypeShape EntityType="hobcModel.variants" Width="1.5" PointX="11.375" PointY="9.75" />
         <EntityTypeShape EntityType="hobcModel.products" Width="1.5" PointX="5.375" PointY="11.75" />
+        <EntityTypeShape EntityType="hobcModel.variants" Width="1.5" PointX="11.375" PointY="9.75" />
+        <EntityTypeShape EntityType="hobcModel.attributes" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="hobcModel.brands" Width="1.5" PointX="9.75" PointY="3.75" />
+        <EntityTypeShape EntityType="hobcModel.categories" Width="1.5" PointX="11.75" PointY="3.75" />
+        <EntityTypeShape EntityType="hobcModel.coupons" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="hobcModel.ordermeta" Width="1.5" PointX="13.75" PointY="0.75" />
+        <EntityTypeShape EntityType="hobcModel.orders" Width="1.5" PointX="13.75" PointY="4.75" />
+        <EntityTypeShape EntityType="hobcModel.users" Width="1.5" PointX="11.75" PointY="13.75" />
+        <EntityTypeShape EntityType="hobcModel.usersmeta" Width="1.5" PointX="13.75" PointY="12.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

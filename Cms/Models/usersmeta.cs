@@ -33,5 +33,6 @@ namespace Cms.Models
         public sbyte category { get; set; }
         public double sum { get; set; }
         public string created { get; set; }
+        public bool deleted { get; set; }
     }
 }

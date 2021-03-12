@@ -19,5 +19,6 @@ namespace Cms.Models
         public string amount { get; set; }
         public Nullable<int> limit { get; set; }
         public bool active { get; set; }
+        public bool deleted { get; set; }
     }
 }

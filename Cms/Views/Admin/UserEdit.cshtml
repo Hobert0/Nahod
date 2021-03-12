@@ -1,0 +1,237 @@
+﻿@model Cms.Models.MultipleIndexModel
+@{
+    Layout = "~/Views/Shared/_LayoutCms.cshtml";
+    ViewBag.Title = "Úprava používateľa";
+}
+
+@using (Html.BeginForm("EditUser", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.EditorFor(model => model.UsersmetaModel.Userid, new { htmlAttributes = new { @class = "form-control", placeholder = "Id", style="display:none;" } })
+
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <div class="col-md-14">
+                        @Html.EditorFor(model => model.UsersmetaModel.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Meno*" } })
+                        @Html.ValidationMessageFor(model => model.UsersmetaModel.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <div class="col-md-14">
+                        @Html.EditorFor(model => model.UsersmetaModel.Surname, new { htmlAttributes = new { @class = "form-control", placeholder = "Priezvisko*" } })
+                        @Html.ValidationMessageFor(model => model.UsersmetaModel.Surname, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <div class="col-md-14">
+                        @Html.EditorFor(model => model.UsersmetaModel.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Ulica, číslo domu*" } })
+                        @Html.ValidationMessageFor(model => model.UsersmetaModel.Address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <div class="col-md-14">
+                        @Html.EditorFor(model => model.UsersmetaModel.City, new { htmlAttributes = new { @class = "form-control", placeholder = "Mesto*" } })
+                        @Html.ValidationMessageFor(model => model.UsersmetaModel.City, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <div class="col-md-14">
+                        @Html.EditorFor(model => model.UsersmetaModel.Zip, new { htmlAttributes = new { @class = "form-control", placeholder = "PSČ*" } })
+                        @Html.ValidationMessageFor(model => model.UsersmetaModel.Zip, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <div class="col-md-14">
+                        @Html.EditorFor(model => model.UsersmetaModel.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Telefón*" } })
+                        @Html.ValidationMessageFor(model => model.UsersmetaModel.Phone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <div class="col-md-14">
+                        @Html.EditorFor(model => model.UsersmetaModel.Companyname, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov firmy" } })
+                        @Html.ValidationMessageFor(model => model.UsersmetaModel.Companyname, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <div class="col-md-14">
+                        @Html.EditorFor(model => model.UsersmetaModel.Ico, new { htmlAttributes = new { @class = "form-control", placeholder = "IČO" } })
+                        @Html.ValidationMessageFor(model => model.UsersmetaModel.Ico, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <div class="col-md-14">
+                        @Html.EditorFor(model => model.UsersmetaModel.Dic, new { htmlAttributes = new { @class = "form-control", placeholder = "DIČ" } })
+                        @Html.ValidationMessageFor(model => model.UsersmetaModel.Dic, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <div class="col-md-14">
+                        @Html.EditorFor(model => model.UsersmetaModel.Icdph, new { htmlAttributes = new { @class = "form-control", placeholder = "IČ DPH" } })
+                        @Html.ValidationMessageFor(model => model.UsersmetaModel.Icdph, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div>
+            <input type="submit" value="Uložiť" class="btn btn-success" />
+        </div>
+    </div>
+  
+
+}
+
+<script src="http://malsup.github.com/jquery.form.js"></script>
+
+<script type="text/javascript">
+
+    $("#Myform input[type=submit]").click(function (e) {
+
+        e.preventDefault();
+
+        if (validateForm()) {
+            $("#Myform").submit();
+        }
+    });
+
+    function validateForm() {
+        /*
+        var heslo = document.getElementById("heslo").value;
+        var overheslo = document.getElementById("overheslo").value;
+        var valid = true;
+
+        if (heslo != overheslo) {
+            document.getElementById("alert").style = "display: block;";
+            valid = false;
+        } else {
+            document.getElementById("alert").style = "display: none;";
+        }
+
+        if ($("#UsersModel_Username").val() == "" || !checkUsername($("#UsersModel_Username").val()) || !isEmail($("#UsersModel_Username").val())) {
+            $("#UsersModel_Username").addClass("error");
+
+            valid = false;
+        } else {
+            $("#UsersModel_Username").removeClass("error");
+        }
+        */
+
+        var valid = true;
+
+        if ($("#UsersmetaModel_Name").val() == "") {
+            $("#UsersmetaModel_Name").addClass("error");
+
+            valid = false;
+        } else {
+            $("#UsersmetaModel_Name").removeClass("error");
+        }
+
+        if ($("#UsersmetaModel_Surname").val() == "") {
+            $("#UsersmetaModel_Surname").addClass("error");
+
+            valid = false;
+        } else {
+            $("#UsersmetaModel_Surname").removeClass("error");
+        }
+
+        if ($("#UsersmetaModel_Address").val() == "") {
+            $("#UsersmetaModel_Address").addClass("error");
+
+            valid = false;
+        } else {
+            $("#UsersmetaModel_Address").removeClass("error");
+        }
+
+        if ($("#UsersmetaModel_City").val() == "") {
+            $("#UsersmetaModel_City").addClass("error");
+
+            valid = false;
+        } else {
+            $("#UsersmetaModel_City").removeClass("error");
+        }
+
+        if ($("#UsersmetaModel_Zip").val() == "") {
+            $("#UsersmetaModel_Zip").addClass("error");
+
+            valid = false;
+        } else {
+            $("#UsersmetaModel_Zip").removeClass("error");
+        }
+
+        if ($("#UsersmetaModel_Phone").val() == "") {
+            $("#UsersmetaModel_Phone").addClass("error");
+
+            valid = false;
+        } else {
+            $("#UsersmetaModel_Phone").removeClass("error");
+        }
+
+        return valid;
+    }
+
+    function isEmail(email) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return regex.test(email);
+    }
+
+    function checkUsername(email) {
+        var bool = false;
+        $.ajax({
+            type: "POST",
+            url: 'Admin/EmailExist',
+            async: false,
+            data: { email: email },
+            success: function (response) {
+                //call is successfully completed and we got result in data
+                if (response.success) {
+                    // success code here
+                    bool = true;
+                } else {
+                    // error code here
+                    bool = false;
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                //some errror, some show err msg to user and log the error
+            }
+        });
+        return bool;
+    }
+
+
+</script>
+

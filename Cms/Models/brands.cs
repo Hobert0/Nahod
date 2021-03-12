@@ -20,5 +20,6 @@ namespace Cms.Models
         public string description { get; set; }
         public string image { get; set; }
         public Nullable<int> priority { get; set; }
+        public bool deleted { get; set; }
     }
 }
