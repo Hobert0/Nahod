@@ -327,8 +327,8 @@ namespace Cms.Controllers
                     model.Weightunit = product.weightunit;
                     model.Category = product.category;
                     model.Weight = product.weight;
-                    model.Discountprice = product.discountprice;
-                    model.Price = product.price;
+                    model.Discountprice = product.discountprice.ToString();
+                    model.Price = product.price.ToString();
                     model.Number = product.number;
                     model.Stock = product.stock;
                     model.Custom1 = product.custom1;
@@ -392,21 +392,23 @@ namespace Cms.Controllers
             {
                 nazovSuboru = "avatar_product.jpg";
             }
-            if (model.Price != null) { model.Price = model.Price; }
-            if (model.Discountprice != null) { model.Discountprice = model.Discountprice; }
+            if (model.Price != null && model.Price != "") { model.Price = model.Price; }
+            if (model.Discountprice != null && model.Discountprice != "") { model.Discountprice = model.Discountprice; }
 
             o.title = model.Title;
             o.image = ulozObrazok + nazovSuboru;
             o.number = model.Number;
             o.stock = model.Stock;
-            o.price = model.Price;
+            o.price = Decimal.Parse(model.Price, CultureInfo.InvariantCulture);
             o.category = model.Category;
             o.weight = model.Weight;
             o.weightunit = model.Weightunit;
             o.recommended = model.Recommended;
             o.description = model.Description;
-            o.discountprice = model.Discountprice;
-            o.custom2 = model.Custom2;
+            if (model.Discountprice != null)
+            {
+                o.discountprice = Decimal.Parse(model.Discountprice, CultureInfo.InvariantCulture);
+            }
             o.custom1 = model.Custom1;
             o.custom3 = model.Custom3;
             if (model.Custom5 == "1")
@@ -447,22 +449,23 @@ namespace Cms.Controllers
                     v.number = varP.number;
 
                     //ak nie je vyplnena cena pre variantu, skopirujeme cenu z produktu
-                    if (varP.price == "" || varP.price == null)
+                    if (varP.price != "" && varP.price != null)
                     {
-                        v.price = model.Price;
+                        v.price = Decimal.Parse(varP.price.ToString(), CultureInfo.InvariantCulture);
                     }
                     else
                     {
-                        v.price = varP.price;
+                        v.price = Decimal.Parse(model.Price, CultureInfo.InvariantCulture);
                     }
 
                     //ak nie je vyplnena discount cena pre variantu, skopirujeme discount cenu z produktu
-                    if (varP.discountprice != null)
+                    if (varP.discountprice != "" && varP.Discountprice != null)
                     {
-                        v.discountprice = varP.discountprice;
-                    } else if (model.Discountprice != null)
+                        v.discountprice = Decimal.Parse(varP.discountprice.ToString(), CultureInfo.InvariantCulture);
+                    } 
+                    else if (model.Discountprice != "" && model.Discountprice != null)
                     {
-                        v.discountprice = model.Discountprice;
+                        v.discountprice = Decimal.Parse(model.Discountprice, CultureInfo.InvariantCulture);
                     }
 
 
@@ -574,11 +577,11 @@ namespace Cms.Controllers
             model.Custom9 = data.custom9;
             model.Date = data.date;
             model.Description = data.description;
-            model.Discountprice = data.discountprice;
+            model.Discountprice = data.discountprice.ToString().Replace(",", ".");
             model.Gallery = data.gallery;
             model.Image = data.image;
             model.Number = data.number;
-            model.Price = data.price;
+            model.Price = data.price.ToString().Replace(",",".");
             model.Recommended = data.recommended;
             model.Stock = data.stock;
             model.Title = data.title;
@@ -608,13 +611,16 @@ namespace Cms.Controllers
             o.title = model.Title ?? "";
             o.number = model.Number;
             o.stock = model.Stock;
-            o.price = model.Price;
+            o.price = Decimal.Parse(model.Price, CultureInfo.InvariantCulture);
             o.category = model.Category;
             o.weight = model.Weight;
             o.weightunit = model.Weightunit;
             o.recommended = model.Recommended;
             o.description = model.Description;
-            o.discountprice = model.Discountprice;
+            if (model.Discountprice != null)
+            {
+                o.discountprice = Decimal.Parse(model.Discountprice, CultureInfo.InvariantCulture);
+            }
             o.custom1 = model.Custom1;
             o.custom2 = model.Custom2;
             o.custom3 = model.Custom3;
@@ -659,7 +665,7 @@ namespace Cms.Controllers
 
                 if (varP.price == "" || varP.price == null)
                 {
-                    v.price = model.Price;
+                    v.price = Decimal.Parse(model.Price);
                 }
                 else {
                     v.price = varP.price;
@@ -670,7 +676,7 @@ namespace Cms.Controllers
                     v.discountprice = varP.discountprice;
                 } else if (model.Discountprice != null) {
 
-                    v.discountprice = model.Discountprice;
+                    v.discountprice = Decimal.Parse(model.Discountprice);
                 }
                
 

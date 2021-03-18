@@ -258,7 +258,7 @@
                         @{
                             var hodnota = Model.Price;
                         }
-                        @if (hodnota == 0)
+                        @if (hodnota == "0")
                         {
                             <small>Momentálne pri produkte je informácia: Cena na vyžiadanie</small>
                         }
@@ -1068,23 +1068,6 @@
         $('#btnDel3').attr('style', 'display:none');
     });
 
-    function validatePrice() {
-        $res = true;
-
-        if ($("#Price").val() == "") {
-            $("#Price").addClass("error");
-
-            $([document.documentElement, document.body]).animate({
-                scrollTop: $("#Price").offset().top
-            }, 500);
-            $res = false;
-        } else {
-            $("#Price").removeClass("error");
-        }
-
-        return $res;
-    }
-
     /*SIZES- Create JSON and send to database*/
     $(document).ready(function() {
         $('#btnSubmit').click(function (e) {
@@ -1102,7 +1085,7 @@
                     $varAttrsValues = $(".clonedVarSection[num=" + $i + "]").find(".varAttrsValues").val();
                     $varNumber = $(".clonedVarSection[num=" + $i + "]").find(".varNumber").val();
                     $varStock = $(".clonedVarSection[num=" + $i + "]").find(".varStock").val();
-                    $varPrice = $(".clonedVarSection[num=" + $i + "]").find(".varPrice").val();
+                    $varPrice = $(".clonedVarSection[num=" + $i + "]").find(".varPrice").val().replace(",", ".");
                     $varDiscountPrice = $(".clonedVarSection[num=" + $i + "]").find(".varDiscountPrice").val().replace(",", ".");
 
                     $variants.push({ "attrId": $varAttrs, "attrValues": $varAttrsValues, "number": $varNumber, "stock": $varStock, "price": $varPrice, "discountprice": $varDiscountPrice });
@@ -1169,13 +1152,11 @@
             }
             */
 
-            if (validatePrice()) {
+            $("#Price").val($("#Price").val().replace(",", "."));
+            $("#Discountprice").val($("#Discountprice").val().replace(",", "."));
 
-                $("#Price").val($("#Price").val().replace(",", "."));
-                $("#Discountprice").val($("#Discountprice").val().replace(",", "."));
-
-                $(this).parents("form").submit();
-            }
+            $(this).parents("form").submit();
+       
 
         });
     });

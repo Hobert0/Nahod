@@ -238,6 +238,7 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
+                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
                         <small>Ak bude hodnota 0, pri produkte bude informácia: Cena na vyžiadanie</small>
                     </div>
                 </div>
@@ -864,25 +865,6 @@
         $('#btnDel3').attr('style', 'display:none');
     });
 
-    function validatePrice() {
-        $res = true;
-
-        if ($("#Price").val() == "") {
-            $("#Price").addClass("error");
-
-            $([document.documentElement, document.body]).animate({
-                scrollTop: $("#Price").offset().top
-            }, 500);
-            $res = false;
-        } else {
-            $("#Price").removeClass("error");
-        }
-
-        console.log($res);
-
-        return $res;
-    }
-
     /*SIZES- Create JSON and send to database*/
     $(document).ready(function () {
         $('#btnSubmit').click(function (e) {
@@ -901,8 +883,9 @@
                     $varNumber = $(".clonedVarSection[num=" + $i + "]").find(".varNumber").val();
                     $varStock = $(".clonedVarSection[num=" + $i + "]").find(".varStock").val();
                     $varPrice = $(".clonedVarSection[num=" + $i + "]").find(".varPrice").val().replace(",", ".");
+                    $varDiscountPrice = $(".clonedVarSection[num=" + $i + "]").find(".varDiscountPrice").val().replace(",", ".");
 
-                    $variants.push({ "attribute_id": $varAttrs, "value": $varAttrsValues, "number": $varNumber, "stock": $varStock, "price": $varPrice });
+                    $variants.push({ "attribute_id": $varAttrs, "value": $varAttrsValues, "number": $varNumber, "stock": $varStock, "price": $varPrice, "discountprice": $varDiscountPrice });
                 }
 
                 $("#Variants").val(JSON.stringify($variants));
@@ -959,12 +942,12 @@
             }
             */
 
-            if (validatePrice()) {
-                //$("#Price").val($("#Price").val().replace(".", ","));
-                //$("#Discountprice").val($("#Discountprice").val().replace(".", ","));
+            
+            $("#Price").val($("#Price").val().replace(",", "."));
+            $("#Discountprice").val($("#Discountprice").val().replace(",", "."));
 
-                $(this).parents("form").submit();
-            }
+            $(this).parents("form").submit();
+            
 
         });
     });

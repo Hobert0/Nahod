@@ -187,14 +187,14 @@
           <Property Name="number" Type="varchar" MaxLength="100" />
           <Property Name="recommended" Type="bool" Nullable="false" />
           <Property Name="stock" Type="varchar" MaxLength="10" />
-          <Property Name="price" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="date" Type="varchar" MaxLength="100" />
           <Property Name="gallery" Type="text" />
           <Property Name="category" Type="varchar" MaxLength="200" />
           <Property Name="weight" Type="varchar" MaxLength="10" />
           <Property Name="weightunit" Type="varchar" MaxLength="5" />
           <Property Name="description" Type="text" />
-          <Property Name="discountprice" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="discountprice" Type="decimal" Precision="10" Scale="2" />
           <Property Name="custom1" Type="text" />
           <Property Name="custom2" Type="text" />
           <Property Name="custom3" Type="text" />
@@ -286,8 +286,8 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="prod_id" Type="int" Nullable="false" />
-          <Property Name="price" Type="decimal" Precision="10" Scale="0" />
-          <Property Name="discountprice" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="price" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="discountprice" Type="decimal" Precision="10" Scale="2" />
           <Property Name="stock" Type="varchar" MaxLength="10" />
           <Property Name="number" Type="varchar" MaxLength="100" />
           <Property Name="attribute_id" Type="int" Nullable="false" />
