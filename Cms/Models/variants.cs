@@ -16,7 +16,8 @@ namespace Cms.Models
     {
         public int id { get; set; }
         public int prod_id { get; set; }
-        public string price { get; set; }
+        public Nullable<decimal> price { get; set; }
+        public Nullable<decimal> discountprice { get; set; }
         public string stock { get; set; }
         public string number { get; set; }
         public int attribute_id { get; set; }

@@ -20,14 +20,14 @@ namespace Cms.Models
         public string number { get; set; }
         public bool recommended { get; set; }
         public string stock { get; set; }
-        public string price { get; set; }
+        public decimal price { get; set; }
         public string date { get; set; }
         public string gallery { get; set; }
         public string category { get; set; }
         public string weight { get; set; }
         public string weightunit { get; set; }
         public string description { get; set; }
-        public string discountprice { get; set; }
+        public Nullable<decimal> discountprice { get; set; }
         public string custom1 { get; set; }
         public string custom2 { get; set; }
         public string custom3 { get; set; }

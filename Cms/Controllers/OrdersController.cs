@@ -167,14 +167,14 @@ namespace Cms.Controllers
 
                     foreach (var price in group.GroupBy(i => i.price))
                     {
-                        productprice = price.Key;
+                        productprice = price.Key.ToString();
                     }
 
                     foreach (var discountprice in group.GroupBy(i => i.discountprice))
                     {
-                        if (discountprice.Key != null && discountprice.Key != "")
+                        if (discountprice.Key != null)
                         {
-                            productprice = discountprice.Key;
+                            productprice = discountprice.Key.ToString();
                         }
                     }
                     om.price = (Decimal.Parse(om.pieces) * decimal.Parse(productprice, CultureInfo.InvariantCulture)).ToString();

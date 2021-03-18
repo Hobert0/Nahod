@@ -46,36 +46,75 @@ namespace Cms.Controllers
         }
 
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public JsonResult FetchProductsByCategoryBrand(string catId, string brandId)
+        public JsonResult FetchProductsAdminFilter(string catId, string brandId, decimal priceFrom, decimal priceTo, bool isDiscount)
         {
+
             object result = null;
             if (catId != "" && brandId == "")
             {
-                result = new { data = db.products.Join(db.categories, a => a.category, b => b.id.ToString(), (a, b) => new { id = a.id, number = a.number, image = a.image, title = a.title, price = a.price, discountprice = a.discountprice, categoryId = a.category, category = b.name, date = a.date, recommended = a.recommended, deleted = a.deleted }).Where(i => i.categoryId == catId && i.deleted == false).ToList(),
-                                variants = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a, b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value }).OrderByDescending(o => o.ProdId).ThenBy(o => o.AttrName).ToList()
+                result = new
+                {
+                    data = db.products.Join(db.categories, a => a.category, b => b.id.ToString(), (a, b) => new { id = a.id, number = a.number, image = a.image, title = a.title, price = a.price, discountprice = a.discountprice, categoryId = a.category, category = b.name, date = a.date, recommended = a.recommended, deleted = a.deleted }).Where(i => i.categoryId == catId && i.deleted == false).ToList(),
+                    variants = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a, b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value }).OrderByDescending(o => o.ProdId).ThenBy(o => o.AttrName).ToList()
                 };
             }
             else if (catId == "" && brandId != "")
             {
-                result = new { data = db.products.Where(i => i.custom3 == brandId && i.deleted == false).ToList(),
-                                variants = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a, b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value }).OrderByDescending(o => o.ProdId).ThenBy(o => o.AttrName).ToList(),
-                                categories = db.categories.ToList()
+                result = new
+                {
+                    data = db.products.Where(i => i.custom3 == brandId && i.deleted == false).ToList(),
+                    variants = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a, b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value }).OrderByDescending(o => o.ProdId).ThenBy(o => o.AttrName).ToList(),
+                    categories = db.categories.ToList()
                 };
             }
             else if (catId != "" && brandId != "")
             {
-                result = new { data = db.products.Join(db.categories, a => a.category, b => b.id.ToString(), (a, b) => new { id = a.id, number = a.number, image = a.image, title = a.title, price = a.price, discountprice = a.discountprice, categoryId = a.category, category = b.name, date = a.date, recommended = a.recommended, brandId = a.custom3, deleted = a.deleted }).Where(i => i.brandId == brandId && i.categoryId == catId && i.deleted == false).ToList(),
-                                variants = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a, b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value }).OrderByDescending(o => o.ProdId).ThenBy(o => o.AttrName).ToList()
+                result = new
+                {
+                    data = db.products.Join(db.categories, a => a.category, b => b.id.ToString(), (a, b) => new { id = a.id, number = a.number, image = a.image, title = a.title, price = a.price, discountprice = a.discountprice, categoryId = a.category, category = b.name, date = a.date, recommended = a.recommended, brandId = a.custom3, deleted = a.deleted }).Where(i => i.brandId == brandId && i.categoryId == catId && i.deleted == false).ToList(),
+                    variants = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a, b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value }).OrderByDescending(o => o.ProdId).ThenBy(o => o.AttrName).ToList()
                 };
             }
-            else {
-                result = new { data = db.products.Where(x => x.deleted == false).ToList(),
-                                variants = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a, b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value }).OrderByDescending(o => o.ProdId).ThenBy(o => o.AttrName).ToList(),
-                                categories = db.categories.ToList()
+            else
+            {
+                result = new
+                {
+                    data = db.products.Where(x => x.deleted == false).ToList(),
+                    variants = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a, b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value }).OrderByDescending(o => o.ProdId).ThenBy(o => o.AttrName).ToList(),
+                    categories = db.categories.ToList()
                 };
             }
 
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public JsonResult EditProductValues(string value, int id, string name)
+        {
+            var product = db.products.Where(a => a.id == id).SingleOrDefault();
+
+            switch (name)
+            {
+                case "number":
+                    product.number = value;
+                    break;
+                case "title":
+                    product.title = value;
+                    break;
+                case "price":
+                    product.price = Decimal.Parse(value);
+                    break;
+                case "discountprice":
+                    product.discountprice = Decimal.Parse(value);
+                    break;
+                case "recommended":
+                    product.recommended = bool.Parse(value);
+                    break;
+            }
+
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
 
         private int CategoryId(string catslug, string subslug, string subslug2, string subslug3)
@@ -165,7 +204,7 @@ namespace Cms.Controllers
             }
             else if (catslug == "zlavy")
             {
-                model.ProductModel = db.products.ToList().Where(c => c.discountprice != null && c.discountprice != "").OrderByDescending(x => x.id);
+                model.ProductModel = db.products.ToList().Where(c => c.discountprice != null).OrderByDescending(x => x.id);
             }
             else
             {

@@ -187,14 +187,14 @@
           <Property Name="number" Type="varchar" MaxLength="100" />
           <Property Name="recommended" Type="bool" Nullable="false" />
           <Property Name="stock" Type="varchar" MaxLength="10" />
-          <Property Name="price" Type="varchar" MaxLength="30" />
+          <Property Name="price" Type="decimal" Precision="10" Scale="0" Nullable="false" />
           <Property Name="date" Type="varchar" MaxLength="100" />
           <Property Name="gallery" Type="text" />
           <Property Name="category" Type="varchar" MaxLength="200" />
           <Property Name="weight" Type="varchar" MaxLength="10" />
           <Property Name="weightunit" Type="varchar" MaxLength="5" />
           <Property Name="description" Type="text" />
-          <Property Name="discountprice" Type="varchar" MaxLength="10" />
+          <Property Name="discountprice" Type="decimal" Precision="10" Scale="0" />
           <Property Name="custom1" Type="text" />
           <Property Name="custom2" Type="text" />
           <Property Name="custom3" Type="text" />
@@ -286,9 +286,10 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="prod_id" Type="int" Nullable="false" />
-          <Property Name="price" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="stock" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="number" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="discountprice" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="stock" Type="varchar" MaxLength="10" />
+          <Property Name="number" Type="varchar" MaxLength="100" />
           <Property Name="attribute_id" Type="int" Nullable="false" />
           <Property Name="value" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="deleted" Type="bool" Nullable="false" />
@@ -334,8 +335,6 @@
           <EntitySet Name="settings" EntityType="hobcModel.settings" />
           <EntitySet Name="slideshow" EntityType="hobcModel.slideshow" />
           <EntitySet Name="wishlist" EntityType="hobcModel.wishlist" />
-          <EntitySet Name="products" EntityType="hobcModel.products" />
-          <EntitySet Name="variants" EntityType="hobcModel.variants" />
           <EntitySet Name="attributes" EntityType="hobcModel.attributes" />
           <EntitySet Name="brands" EntityType="hobcModel.brands" />
           <EntitySet Name="categories" EntityType="hobcModel.categories" />
@@ -344,6 +343,8 @@
           <EntitySet Name="orders" EntityType="hobcModel.orders" />
           <EntitySet Name="users" EntityType="hobcModel.users" />
           <EntitySet Name="usersmeta" EntityType="hobcModel.usersmeta" />
+          <EntitySet Name="products" EntityType="hobcModel.products" />
+          <EntitySet Name="variants" EntityType="hobcModel.variants" />
         </EntityContainer>
         <EntityType Name="blog">
           <Key>
@@ -464,49 +465,6 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="userid" Type="Int32" Nullable="false" />
           <Property Name="data" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="products">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="title" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="image" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="number" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="recommended" Type="Boolean" Nullable="false" />
-          <Property Name="stock" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="price" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="date" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="gallery" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="category" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="weight" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="weightunit" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="description" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="discountprice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="custom1" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="custom2" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="custom3" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="custom4" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="custom5" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="custom6" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="custom7" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="custom8" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="custom9" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="custom10" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="deleted" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="variants">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="prod_id" Type="Int32" Nullable="false" />
-          <Property Name="price" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="stock" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="number" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="attribute_id" Type="Int32" Nullable="false" />
-          <Property Name="value" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="deleted" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="attributes">
           <Key>
@@ -641,6 +599,50 @@
           <Property Name="created" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="products">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="image" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="number" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="recommended" Type="Boolean" Nullable="false" />
+          <Property Name="stock" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="Decimal" Nullable="false" />
+          <Property Name="date" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="gallery" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="category" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="weight" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="weightunit" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="discountprice" Type="Decimal" />
+          <Property Name="custom1" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom2" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom3" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom4" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom5" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom6" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom7" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom8" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom9" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="custom10" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="variants">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prod_id" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Decimal" />
+          <Property Name="discountprice" Type="Decimal" />
+          <Property Name="stock" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="number" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="attribute_id" Type="Int32" Nullable="false" />
+          <Property Name="value" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -771,51 +773,6 @@
               <MappingFragment StoreEntitySet="wishlist">
                 <ScalarProperty Name="data" ColumnName="data" />
                 <ScalarProperty Name="userid" ColumnName="userid" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="products">
-            <EntityTypeMapping TypeName="hobcModel.products">
-              <MappingFragment StoreEntitySet="products">
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="custom10" ColumnName="custom10" />
-                <ScalarProperty Name="custom9" ColumnName="custom9" />
-                <ScalarProperty Name="custom8" ColumnName="custom8" />
-                <ScalarProperty Name="custom7" ColumnName="custom7" />
-                <ScalarProperty Name="custom6" ColumnName="custom6" />
-                <ScalarProperty Name="custom5" ColumnName="custom5" />
-                <ScalarProperty Name="custom4" ColumnName="custom4" />
-                <ScalarProperty Name="custom3" ColumnName="custom3" />
-                <ScalarProperty Name="custom2" ColumnName="custom2" />
-                <ScalarProperty Name="custom1" ColumnName="custom1" />
-                <ScalarProperty Name="discountprice" ColumnName="discountprice" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="weightunit" ColumnName="weightunit" />
-                <ScalarProperty Name="weight" ColumnName="weight" />
-                <ScalarProperty Name="category" ColumnName="category" />
-                <ScalarProperty Name="gallery" ColumnName="gallery" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="stock" ColumnName="stock" />
-                <ScalarProperty Name="recommended" ColumnName="recommended" />
-                <ScalarProperty Name="number" ColumnName="number" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="variants">
-            <EntityTypeMapping TypeName="hobcModel.variants">
-              <MappingFragment StoreEntitySet="variants">
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="value" ColumnName="value" />
-                <ScalarProperty Name="attribute_id" ColumnName="attribute_id" />
-                <ScalarProperty Name="number" ColumnName="number" />
-                <ScalarProperty Name="stock" ColumnName="stock" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -957,6 +914,52 @@
                 <ScalarProperty Name="surname" ColumnName="surname" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="hobcModel.products">
+              <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="custom10" ColumnName="custom10" />
+                <ScalarProperty Name="custom9" ColumnName="custom9" />
+                <ScalarProperty Name="custom8" ColumnName="custom8" />
+                <ScalarProperty Name="custom7" ColumnName="custom7" />
+                <ScalarProperty Name="custom6" ColumnName="custom6" />
+                <ScalarProperty Name="custom5" ColumnName="custom5" />
+                <ScalarProperty Name="custom4" ColumnName="custom4" />
+                <ScalarProperty Name="custom3" ColumnName="custom3" />
+                <ScalarProperty Name="custom2" ColumnName="custom2" />
+                <ScalarProperty Name="custom1" ColumnName="custom1" />
+                <ScalarProperty Name="discountprice" ColumnName="discountprice" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="weightunit" ColumnName="weightunit" />
+                <ScalarProperty Name="weight" ColumnName="weight" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="gallery" ColumnName="gallery" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="recommended" ColumnName="recommended" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="variants">
+            <EntityTypeMapping TypeName="hobcModel.variants">
+              <MappingFragment StoreEntitySet="variants">
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="attribute_id" ColumnName="attribute_id" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="discountprice" ColumnName="discountprice" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

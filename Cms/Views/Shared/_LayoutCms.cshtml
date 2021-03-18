@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="shortcut icon" type="image/png" href="~/Content/images/icon.png" />
     <script src="~/Scripts/jquery-3.2.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     @*    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>*@
     @*<script src="~/Scripts/jquery-3.2.1.js"></script>*@
@@ -27,7 +28,7 @@
     <script src="/Scripts/jquery.validate-vsdoc.js"></script>
     <script src="/Scripts/jquery.validate.unobtrusive.js"></script>
     <script src="/Scripts/tinymce/tinymce.min.js" type="text/javascript"></script>
-    
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
 </head>
@@ -43,6 +44,17 @@
                             <img src="~/Content/images/hobertocms_icon.png" style="width: 30px;margin-left: 25%;" alt="Hoberto.com Content Management System" class="hideonpc" />
                         </div>
                     </li>
+
+                    <li class="tab">
+                        <!--<input type="text" id="adminFulltextSearch" placeholder="Hľadať" style="width:100%;padding:10px;"></li>-->
+                        @using (Html.BeginForm("SearchProduct", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform", @class = "form-inline search" }))
+                        {
+                            @Html.Editor("term", new { htmlAttributes = new { @class = "form-control", type = "search", id = "search", placeholder = "hľadať produkt" } })
+
+                           
+                        }
+                    </li>
+
                     <li class="tab"><a href="@Url.Action("Cms", "Admin")"><i class="fas fa-tachometer-alt"></i><span class="nav-label">Nástenka</span></a></li>
 
 
@@ -75,7 +87,7 @@
                 </ul>
             </div>
         </nav>
-        
+
         <div id="page-wrapper" class="white-bg">
             <a class="navbar-minimalize minimalize-styl-2 btn btn-primary hideonpc" href="#"><i class="fa fa-bars"></i> </a>
             <div id="content" class="container-fluid body-content pt-4">
@@ -131,14 +143,14 @@
             });
         });
 
-        $(function(){
-          var pageUrl = location.href;
-          $('.tab a').each(function(){
-              if (this.href === pageUrl) {
-                  $(this).parent('li').toggleClass('active');
-                  $(this).closest('ul').closest('li').toggleClass('active');
-              }
-          });
+        $(function () {
+            var pageUrl = location.href;
+            $('.tab a').each(function () {
+                if (this.href === pageUrl) {
+                    $(this).parent('li').toggleClass('active');
+                    $(this).closest('ul').closest('li').toggleClass('active');
+                }
+            });
         })
 
 
@@ -151,7 +163,32 @@
     <!-- Custom and plugin javascript -->
     <script src="~/Scripts/navAdmin.js"></script>
 
-    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#search').autocomplete({
+                minLength: 2,
+                source: '/hladat',
+                select: function (event, ui) {
+                    $("#project").val(ui.item.label);
+                    $("#project-id").val(ui.item.value);
+                    $("#project-description").html(ui.item.desc);
+                    $("#project-icon").attr("src", "images/" + ui.item.icon);
+
+                    return false;
+                }
+            })
+            .autocomplete("instance")._renderItem = function (ul, item) {
+                let cena = item.price + "€";
+                if (item.price == "0") {
+                    cena = "Cena na vyžiadanie";
+                }
+                return $("<li>")
+                    .append("<div><a href='/detail-produktu/" + item.id + "'><div style='width: 20%;display: inline-block;vertical-align: top;'><img src='/Uploads/" + item.image + "' width='50'></div><div style='width: 75%;display: inline-block;margin-left:10px;text-align:left;font-size: 14px;'><strong>" + item.title + "</strong><br><span style='font-size: 12px;'>" + cena + "</span></div></a></div>")
+                    .appendTo(ul);
+            };
+        });
+    </script>
+
 
 </body>
 </html>

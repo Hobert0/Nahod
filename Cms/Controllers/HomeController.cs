@@ -139,14 +139,14 @@ namespace Cms.Controllers
             ViewData["typ"] = pm.SelectionTyp();
             ViewData["znacka"] = pc.SelectionBrand();
 
-            List<decimal> prices = new List<decimal>();
+            List<decimal?> prices = new List<decimal?>();
             List<decimal> kw = new List<decimal>();
             List<decimal> room = new List<decimal>();
 
             foreach (var item in model.ProductModel)
             {
-                prices.Add(decimal.Parse(item.price.Replace(".", ",")));
-                prices.Add(decimal.Parse(item.discountprice.Replace(".", ",")));
+                prices.Add(item.price);
+                prices.Add(item.discountprice);
                 if(item.custom9 != null) kw.Add(decimal.Parse(item.custom9.Replace(".", ",")));
                 if(item.custom10 != null) room.Add(decimal.Parse(item.custom10.Replace(".", ",")));
             }
@@ -182,14 +182,14 @@ namespace Cms.Controllers
             ViewData["Category"] = kategoria;
             ViewData["CatId"] = categoryID;
 
-            List<decimal> prices = new List<decimal>();
+            List<decimal?> prices = new List<decimal?>();
             List<decimal> kw = new List<decimal>();
             List<decimal> room = new List<decimal>();
 
             foreach (var item in model.ProductModel)
             {
-                prices.Add(decimal.Parse(item.price.Replace(".", ",")));
-                prices.Add(decimal.Parse(item.discountprice.Replace(".", ",")));
+                prices.Add(item.price);
+                prices.Add(item.discountprice);
                 if (item.custom9 != null) kw.Add(decimal.Parse(item.custom9.Replace(".", ",")));
                 if (item.custom10 != null) room.Add(decimal.Parse(item.custom10.Replace(".", ",")));
             }
@@ -229,14 +229,14 @@ namespace Cms.Controllers
             model.PagesModel = db.pages.Where(i => i.slug == slug).ToList();
             model.CategoriesModel = db.categories.ToList();
 
-            List<decimal> prices = new List<decimal>();
+            List<decimal?> prices = new List<decimal?>();
             List<decimal> kw = new List<decimal>();
             List<decimal> room = new List<decimal>();
 
             foreach (var item in model.ProductModel)
             {
-                prices.Add(decimal.Parse(item.price.Replace(".", ",")));
-                prices.Add(decimal.Parse(item.discountprice.Replace(".", ",")));
+                prices.Add(item.price);
+                prices.Add(item.discountprice);
                 if (item.custom9 != null) kw.Add(decimal.Parse(item.custom9.Replace(".", ",")));
                 if (item.custom10 != null) room.Add(decimal.Parse(item.custom10.Replace(".", ",")));
             }

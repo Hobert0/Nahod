@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -391,8 +392,8 @@ namespace Cms.Controllers
             {
                 nazovSuboru = "avatar_product.jpg";
             }
-            if (model.Price != null) { model.Price = model.Price.Replace(",", "."); }
-            if (model.Discountprice != null) { model.Discountprice = model.Discountprice.Replace(",", "."); }
+            if (model.Price != null) { model.Price = model.Price; }
+            if (model.Discountprice != null) { model.Discountprice = model.Discountprice; }
 
             o.title = model.Title;
             o.image = ulozObrazok + nazovSuboru;
@@ -434,20 +435,43 @@ namespace Cms.Controllers
             db.SaveChanges();
 
             //Varianty
-            dynamic vars = JsonConvert.DeserializeObject(model.Variants);
-
-            foreach (var varP in vars)
+            if (model.Variants != null)
             {
-                variants v = new variants();
+                dynamic vars = JsonConvert.DeserializeObject(model.Variants);
 
-                v.prod_id = o.id;
-                v.number = varP.number;
-                v.price = varP.price;
-                v.stock = varP.stock;
-                v.attribute_id = varP.attribute_id;
-                v.value = varP.value;
+                foreach (var varP in vars)
+                {
+                    variants v = new variants();
 
-                db.variants.Add(v);
+                    v.prod_id = o.id;
+                    v.number = varP.number;
+
+                    //ak nie je vyplnena cena pre variantu, skopirujeme cenu z produktu
+                    if (varP.price == "" || varP.price == null)
+                    {
+                        v.price = model.Price;
+                    }
+                    else
+                    {
+                        v.price = varP.price;
+                    }
+
+                    //ak nie je vyplnena discount cena pre variantu, skopirujeme discount cenu z produktu
+                    if (varP.discountprice != null)
+                    {
+                        v.discountprice = varP.discountprice;
+                    } else if (model.Discountprice != null)
+                    {
+                        v.discountprice = model.Discountprice;
+                    }
+
+
+                    v.stock = varP.stock;
+                    v.attribute_id = varP.attribute_id;
+                    v.value = varP.value;
+
+                    db.variants.Add(v);
+                }
             }
 
             db.SaveChanges();
@@ -578,8 +602,8 @@ namespace Cms.Controllers
 
             var o = db.products.Single(i => i.id == model.Id);
 
-            if (model.Price != null) { model.Price = model.Price.Replace(",", "."); }
-            if (model.Discountprice != null) { model.Discountprice = model.Discountprice.Replace(",", "."); }
+            if (model.Price != null) { model.Price = model.Price; }
+            if (model.Discountprice != null) { model.Discountprice = model.Discountprice; }
 
             o.title = model.Title ?? "";
             o.number = model.Number;
@@ -632,7 +656,24 @@ namespace Cms.Controllers
 
                 v.prod_id = o.id;
                 v.number = varP.number;
-                v.price = varP.price;
+
+                if (varP.price == "" || varP.price == null)
+                {
+                    v.price = model.Price;
+                }
+                else {
+                    v.price = varP.price;
+                }
+
+                if (varP.discountprice != "" && varP.discountprice != null)
+                {
+                    v.discountprice = varP.discountprice;
+                } else if (model.Discountprice != null) {
+
+                    v.discountprice = model.Discountprice;
+                }
+               
+
                 v.stock = varP.stock;
                 v.attribute_id = varP.attrId;
                 v.value = varP.attrValues;
@@ -676,6 +717,62 @@ namespace Cms.Controllers
             return RedirectToAction("Coupons");
         }
 
+        [HttpPost]
+        public ActionResult MultipleEditPrice(string multiplePricePerc, bool? isDiscount, string catId, string brandId)
+        {
+            
+            List<products> products = null;
+            if (catId != "" && brandId == "")
+            {
+                products = db.products.Where(x => x.deleted == false && x.category == catId).ToList();  
+            }
+            else if (catId == "" && brandId != "")
+            {
+                products = db.products.Where(x => x.deleted == false && x.custom3 == brandId).ToList();
+            }
+            else if (catId != "" && brandId != "")
+            {
+                products = db.products.Where(x => x.deleted == false && x.category == catId && x.custom3 == brandId).ToList();
+            }
+            else
+            {
+                products = db.products.Where(x => x.deleted == false).ToList();             
+            }
+
+            foreach (var product in products)
+            {
+                decimal changedPrice = (Convert.ToDecimal(product.price) + Convert.ToDecimal(product.price) * Convert.ToDecimal(multiplePricePerc) / 100);
+
+                if (isDiscount == null || isDiscount == false)
+                {
+                    product.price = changedPrice;
+                }
+                else
+                {
+                    product.discountprice = changedPrice;
+                }
+
+                var variants = db.variants.Where(x => x.deleted == false && x.prod_id == product.id).ToList();
+
+                foreach (var variant in variants)
+                {
+                    decimal changedVarPrice = (Convert.ToDecimal(variant.price) + Convert.ToDecimal(variant.price) * Convert.ToDecimal(multiplePricePerc) / 100);
+
+                    if (isDiscount == null || isDiscount == false)
+                    {
+                        variant.price = changedVarPrice;
+                    }
+                    else
+                    {
+                        variant.discountprice = changedVarPrice;
+                    }
+                }
+            }
+
+            db.SaveChanges();
+
+            return RedirectToAction("Products", "Admin");
+        }
 
         [HttpPost]
         public async Task<ActionResult> UploadFiles(HttpPostedFileBase[] files, string foto)

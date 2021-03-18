@@ -55,13 +55,65 @@
     .hide {
         display: none;
     }
+
+    .error {
+        border: 1px solid red;
+    }
 </style>
 
 <h2>Produkty v eshope</h2>
 <hr />
 <button class="btn btn-success" type="button" value="Create" style="margin: 5px 0 10px;padding: 7px 22px;" onclick="location.href='@Url.Action("AddProduct", "Products")'">+ Pridať produkt</button>
 <hr />
-<button class="btn btn-warning" type="button" value="MultiPriceEdit" style="margin: 5px 0 10px;padding: 7px 22px;">Hromadne zmeniť cenu</button>
+<button class="btn btn-warning" type="button" value="MultiPriceEdit" data-toggle="modal" data-target="#multiPriceEdit" style="margin: 5px 0 10px;padding: 7px 22px;">Hromadne upraviť cenu</button>
+<div class="modal" id="multiPriceEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLongTitle">Hromadná úprava ceny</h2>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                @using (Html.BeginForm("MultipleEditPrice", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "multipleEditPriceForm" }))
+                {
+                    <div class="row">
+                        <div class="col-6 text-right" style="width: 200px;">
+                            <strong>Percentuálna zmena (%)</strong>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <div class="col-md-12 text-left">
+                                    <input type="text" placeholder="-10,5,..." name="multiplePricePerc" id="multiplePricePerc">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 text-right" style="width: 200px;">
+                            <strong>Akciová cena?</strong>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <div class="col-md-12 text-left">
+                                    <input type="checkbox" name="isDiscount" id="isDiscount" value="true">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div style="text-align:right">
+                            <input type="hidden" name="catId" value="">
+                            <input type="hidden" name="brandId" value="">
+
+                            <input type="submit" value="Upraviť" id="btnSubmit" class="btn btn-success" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
 <hr />
 
 <div class="row">
@@ -69,8 +121,8 @@
         <div class="mt-1" style="width: 180px;">
             <strong>Filtrovať podľa kategórie</strong>
         </div>
-        <div class="form-group">
-            <div class="col-md-12" style="padding-left:0px;">
+        <div class="row form-group">
+            <div class="col-md-12">
                 @Html.DropDownList("filterByCategory", (IEnumerable<SelectListItem>)ViewData["kategoria"], new { @class = "form-control" })
             </div>
         </div>
@@ -81,9 +133,39 @@
         <div class="mt-1" style="width: 180px;">
             <strong>Filtrovať podľa značky</strong>
         </div>
-        <div class="form-group">
-            <div class="col-md-12" style="padding-left:0px;">
+        <div class="row form-group">
+            <div class="col-md-12">
                 @Html.DropDownList("filterByBrand", (IEnumerable<SelectListItem>)ViewData["znacka"], new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    <div class="col-4" style="padding-left:0px;">
+        <div class="mt-1" style="width: 180px;">
+            <strong>Filtrovať podľa ceny</strong>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                @Html.Editor("filterByPriceFrom", new { htmlAttributes = new { @class = "form-control", placeholder = "Od" } })
+            </div>
+            <div class="col-md-6">
+                @Html.Editor("filterByPriceTo", new { htmlAttributes = new { @class = "form-control", placeholder = "Do" } })
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="mt-1" style="width: 180px;">
+            <strong>Zľavnené</strong>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                @Html.CheckBox("filterByDiscount")
+            </div>
+            <div class="form-group col-md-6">
+                <div style="text-align:right">
+                    <input type="button" value="Filtrovať" id="filterButton" class="btn btn-success" />            
+                </div>
             </div>
         </div>
     </div>
@@ -103,7 +185,7 @@
             <th>Varianty</th>
             <th>Dátum</th>
             <th>Odporúčané</th>
-            <th style="text-align: center">Akcie</th>
+            <th style="text-align: center; width:150px;">Akcie</th>
         </tr>
     </thead>
     <tbody>
@@ -121,22 +203,22 @@
                 <tr id="product_row-@counter" class="productRow">
 
                     <td class="hide">@item.id</td>
-                    <td>@Html.DisplayFor(modelItem => item.number)</td>
+                    <td class="editable" name="number">@Html.DisplayFor(modelItem => item.number)</td>
                     <td><img src="~/Uploads/@Html.DisplayFor(modelItem => item.image)" style="width: 50px;" /></td>
-                    <td><strong>@Html.DisplayFor(modelItem => item.title)</strong></td>
-                    <td style="background-color: lightyellow; text-align: center;"><strong>@Html.DisplayFor(modelItem => item.price)&nbsp;€</strong></td>
-                    <td style="background-color: lightcyan; text-align: center;">
-                        <strong>
-                            @{
-                                //Html.DisplayFor(modelItem => item.discountprice)
-                                var discountText = "";
-                                if (item.discountprice != null)
-                                {
-                                    discountText = item.discountprice + " €";
-                                }
+                    <td class="editable" name="title">@Html.DisplayFor(modelItem => item.title)</td>
+                    <td class="editable" name="price" style="background-color: lightyellow; text-align: center;">@Html.DisplayFor(modelItem => item.price)&nbsp;€</td>
+                    <td class="editable" name="discountprice" style="background-color: lightcyan; text-align: center;">
+
+                        @{
+                            //Html.DisplayFor(modelItem => item.discountprice)
+                            var discountText = "";
+                            if (item.discountprice != null)
+                            {
+                                discountText = item.discountprice + " €";
                             }
-                            @discountText
-                        </strong>
+                        }
+                        @discountText
+
                     </td>
                     <td>
                         @{
@@ -174,7 +256,7 @@
 
                     </td>
                     <td>@Html.DisplayFor(modelItem => item.date)</td>
-                    <td style="text-align:center;">@Html.DisplayFor(modelItem => item.recommended)</td>
+                    <td class="editable" name="recommended" style="text-align:center;">@Html.DisplayFor(modelItem => item.recommended)</td>
                     <td align="center">
                         @Html.ActionLink("Editovať", "EditProduct", "Products", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important; font-size:13px;margin-right: 2px;" }) <a href="@Url.Action("DuplicateProduct", "Products", new { id = item.id })" class="btn btn-success" style="padding: 5px 10px;margin-right: 2px;" title="Duplikovať produkt"><img src="~/Content/images/duplicate.png" width="15" style="margin-top: -3px;"></a> @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteProduct", "Products", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tento produkt?')", @class = "btn btn-danger", style = "padding: 5px 10px;", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete produkt." })
                         <div class="popover__wrapper" id="info-@counter" style="display:none;">
@@ -207,49 +289,50 @@
 
     $(document).ready(function () {
 
-        $(document).ready(function () {
-            $('#productsTable').DataTable({
-                "order": [0, 'desc'],
-                "language": {
-                    "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Slovak.json"
-                },
-                "initComplete": function (settings, json) {
-                    //upravime css
-                    $('#productsTable tbody tr').each(function () {
-                        if ($(this).hasClass("variantRow")) {
-                            $(this).find("td").addClass("noBT");
-                        }
-                    });
-                }
-            });
+
+        $('#productsTable').DataTable({
+            "order": [0, 'desc'],
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Slovak.json"
+            },
+            "initComplete": function (settings, json) {
+                //upravime css
+                $('#productsTable tbody tr').each(function () {
+                    if ($(this).hasClass("variantRow")) {
+                        $(this).find("td").addClass("noBT");
+                    }
+                });
+            }
         });
+
 
         //init
         $("#filterByCategory").val("");
         $("#filterByBrand").val("");
 
-        $("#filterByCategory").change(function () {
-            filterAjaxCatBrand();
+        $("#filterButton").click(function () {
+            filterAjax();
         });
 
-        $("#filterByBrand").change(function () {
-            filterAjaxCatBrand();
-        });
-
-        function filterAjaxCatBrand() {
-            let APIurl = "/Api/FetchProductsByCategoryBrand";
+        function filterAjax() {
+            let APIurl = "/Api/FetchProductsAdminFilter";
 
             $catId = $("#filterByCategory").val() == "" ? null : $("#filterByCategory").val();
             $brandId = $("#filterByBrand").val() == "" ? null : $("#filterByBrand").val();
+            $priceFrom = $("#filterByPriceFrom").val() == "" ? 0 : $("#filterByPriceFrom").val();
+            $priceTo = $("#filterByPriceTo").val() == "" ? 99999 : $("#filterByPriceTo").val();
+            $isDiscount = $("#filterByDiscount").is(":checked");
 
             $.ajax({
                 url: APIurl,
                 type: 'GET',
                 async: false,
-                data: { catId: $catId, brandId: $brandId },
+                data: { catId: $catId, brandId: $brandId, priceFrom: $priceFrom, priceTo: $priceTo, isDiscount: $isDiscount },
                 dataType: 'json',
                 success: function (data) {
                     //add rows to dataTable
+
+                    console.log(data);
 
                     $variants = data.variants;
                     $categories = data.categories;
@@ -301,9 +384,9 @@
                         $thisSet.push(data[$i].id);
                         $thisSet.push(data[$i].number);
                         $thisSet.push('<img src="/Uploads/' + data[$i].image + ' style="width: 50px; " />');
-                        $thisSet.push('<strong>' + data[$i].title + '</strong>');
-                        $thisSet.push('<strong>' + data[$i].price + ' €</strong>');
-                        $thisSet.push('<strong>' + (data[$i].discountprice ? (data[$i].discountprice + " €") : "") + '</strong>');
+                        $thisSet.push(data[$i].title);
+                        $thisSet.push(data[$i].price + ' €');
+                        $thisSet.push(data[$i].discountprice ? (data[$i].discountprice + " €") : "");
                         $thisSet.push($category);
                         $thisSet.push($variantsStr);
                         $thisSet.push(data[$i].date);
@@ -350,7 +433,7 @@
                             //upravime css
                             $('#productsTable thead th').eq(0).attr("style", "display:none;");
                             //$('#productsTable thead th').eq(3).attr("style", "width: 350px;");
-                            $('#productsTable thead th').eq(10).attr("style", "text-align: center;");
+                            $('#productsTable thead th').eq(10).attr("style", "text-align: center;width:150px;");
 
                             $('#productsTable tbody tr').each(function () {
 
@@ -360,6 +443,12 @@
                                 $tds.eq(5).attr("style", "background-color: lightcyan; text-align: center;");
                                 $tds.eq(9).attr("style", "text-align: center;");
                                 $tds.eq(10).attr("align", "center");
+
+                                $tds.eq(1).addClass("editable").attr("name","number");
+                                $tds.eq(3).addClass("editable").attr("name","title");
+                                $tds.eq(4).addClass("editable").attr("name","price");
+                                $tds.eq(5).addClass("editable").attr("name", "discountprice");
+                                $tds.eq(9).addClass("editable").attr("name", "recommended");
                             });
                         }
                     });
@@ -372,6 +461,99 @@
             });
 
         }
+
+        function validateMultipleEditData() {
+            $res = true;
+
+            if ($("#multiplePricePerc").val() == "") {
+                $("#multiplePricePerc").addClass("error");
+
+                $res = false;
+            } else {
+                $("#multiplePricePerc").removeClass("error");
+            }
+
+            return $res;
+        }
+
+        $("#multipleEditPriceForm input[type=submit]").click(function (e) {
+            e.preventDefault();
+
+            if (validateMultipleEditData()) {
+                $("#multipleEditPriceForm input[name=catId]").val($("#filterByCategory").val());
+                $("#multipleEditPriceForm input[name=brandId]").val($("#filterByBrand").val());
+
+                $("#multipleEditPriceForm").submit();
+            }
+        });
+
+        $(document).on("dblclick", ".editable", function () {
+            $name = $(this).attr("name");
+
+            if ($name == "recommended") {
+                $isChecked = $(this).find("input[type=checkbox]").is(":checked");
+                $defValue = $isChecked;
+
+                $html = '<input class="editValue" type="checkbox" name="editValue" ' + ($isChecked?"checked":"") + '><br><a class="btn btn-warning editValueSave" href="#" style="margin-top:5px;">Zmeniť</a><a class="btn editValueCancel" style="margin-left:5px;margin-top:5px;">Zrušiť</a>';
+            } else {
+                $value = $(this).text().trim();
+                $defValue = $(this).text().trim();
+                if ($name == "price" || $name == "discountprice") {
+                    $value = $value.replace('€', '').trim();
+                }
+
+                $html = '<input class="editValue" type="text" name="editValue" value="' + $value + '"><a class="btn btn-warning editValueSave" href="#" style="margin-top:5px;">Zmeniť</a><a class="btn editValueCancel" style="margin-left:5px;margin-top:5px;">Zrušiť</a>';
+            }
+
+            $(this).attr("defValue", $defValue);
+
+            $(this).html($html);
+        });
+
+        $(document).on("click", ".editValueSave", function () {
+            $value = $(this).parents(".editable").find(".editValue").val();
+            $id = $(this).parents("tr").find("td").eq(0).text();
+            $name = $(this).parents(".editable").attr("name");
+
+            if ($name == "recommended") {
+                $value = $(this).parents(".editable").find(".editValue").is(":checked").toString();
+                console.log($value);
+            }
+
+            $thisObj = $(this);
+
+            let APIurl = "/Api/EditProductValues";
+            $.ajax({
+                url: APIurl,
+                type: 'GET',
+                async: false,
+                data: { value: $value, id: $id, name: $name },
+                dataType: 'json',
+                success: function (data) {
+                    if ($name == "price" || $name == "discountprice") {
+                        $thisObj.parents(".editable").text($value + " €");
+                    }
+                    else if ($name == "recommended") {
+                        $thisObj.parents(".editable").html('<input ' + ($value == "true" ? 'checked="checked"' : '') + 'class="check-box" disabled="disabled" type="checkbox">');
+                    }
+                    else {
+                        $thisObj.parents(".editable").text($value);
+                    }
+                }
+            });
+   
+        });
+
+        $(document).on("click", ".editValueCancel", function () {
+            $value = $(this).parents(".editable").attr("defValue");
+            $name = $(this).parents(".editable").attr("name");
+
+            if ($name != "recommended") {
+                $(this).parents(".editable").text($value);
+            } else {
+                $(this).parents(".editable").html('<input ' + ($value=="true"?'checked="checked"':'') + 'class="check-box" disabled="disabled" type="checkbox">');
+            }
+        });
     });
 </script>
 

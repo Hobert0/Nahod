@@ -380,7 +380,7 @@ namespace Cms.Controllers
                                 {
                                     productsInDb.stock = stockExcel;
                                 }
-                                var priceExcel = workSheet.Cells[rowIterator, 7].Value == null ? string.Empty : workSheet.Cells[rowIterator, 7].Value.ToString();
+                                var priceExcel = Decimal.Parse(workSheet.Cells[rowIterator, 7].Value == null ? string.Empty : workSheet.Cells[rowIterator, 7].Value.ToString());
                                 if (productsInDb.price != priceExcel)
                                 {
                                     productsInDb.price = priceExcel;
@@ -415,7 +415,7 @@ namespace Cms.Controllers
                                 {
                                     productsInDb.description = descriptionExcel;
                                 }
-                                var discountPriceExcel = workSheet.Cells[rowIterator, 14].Value == null ? string.Empty : workSheet.Cells[rowIterator, 14].Value.ToString();
+                                var discountPriceExcel = Decimal.Parse(workSheet.Cells[rowIterator, 14].Value == null ? string.Empty : workSheet.Cells[rowIterator, 14].Value.ToString());
                                 if (productsInDb.discountprice != discountPriceExcel)
                                 {
                                     productsInDb.discountprice = discountPriceExcel;
@@ -488,14 +488,14 @@ namespace Cms.Controllers
 
                                 product.recommended = recom;
                                 product.stock = workSheet.Cells[rowIterator, 6].Value == null ? string.Empty : workSheet.Cells[rowIterator, 6].Value.ToString();
-                                product.price = workSheet.Cells[rowIterator, 7].Value == null ? string.Empty : workSheet.Cells[rowIterator, 7].Value.ToString() ?? "";
+                                product.price = Decimal.Parse(workSheet.Cells[rowIterator, 7].Value == null ? string.Empty : workSheet.Cells[rowIterator, 7].Value.ToString() ?? "");
                                 product.date = workSheet.Cells[rowIterator, 8].Value == null ? string.Empty : workSheet.Cells[rowIterator, 8].Value.ToString() ?? "";
                                 product.gallery = workSheet.Cells[rowIterator, 9].Value == null ? string.Empty : workSheet.Cells[rowIterator, 9].Value.ToString() ?? "";
                                 product.category = workSheet.Cells[rowIterator, 10].Value == null ? string.Empty : workSheet.Cells[rowIterator, 10].Value.ToString() ?? "";
                                 product.weight = workSheet.Cells[rowIterator, 11].Value == null ? string.Empty : workSheet.Cells[rowIterator, 11].Value.ToString() ?? "";
                                 product.weightunit = workSheet.Cells[rowIterator, 12].Value == null ? string.Empty : workSheet.Cells[rowIterator, 12].Value.ToString() ?? "";
                                 product.description = workSheet.Cells[rowIterator, 13].Value == null ? string.Empty : workSheet.Cells[rowIterator, 13].Value.ToString() ?? "";
-                                product.discountprice = workSheet.Cells[rowIterator, 14].Value == null ? string.Empty : workSheet.Cells[rowIterator, 14].Value.ToString() ?? "";
+                                product.discountprice = Decimal.Parse(workSheet.Cells[rowIterator, 14].Value == null ? string.Empty : workSheet.Cells[rowIterator, 14].Value.ToString() ?? "");
                                 product.custom1 = workSheet.Cells[rowIterator, 15].Value == null ? string.Empty : workSheet.Cells[rowIterator, 15].Value.ToString() ?? "";
                                 product.custom2 = workSheet.Cells[rowIterator, 16].Value == null ? string.Empty : workSheet.Cells[rowIterator, 16].Value.ToString() ?? "";
                                 product.custom3 = workSheet.Cells[rowIterator, 17].Value == null ? string.Empty : workSheet.Cells[rowIterator, 17].Value.ToString() ?? "";

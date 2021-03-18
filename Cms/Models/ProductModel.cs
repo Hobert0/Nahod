@@ -15,8 +15,8 @@ namespace Cms.Models
         public string Image { get; set; }
         public string Number { get; set; }
         public string Stock { get; set; }
-        [Required(ErrorMessage = "Cena je vyžadovaná!")]
-        public string Price { get; set; }
+        
+        public decimal Price { get; set; }
         public string Date { get; set; }
         public string Gallery { get; set; }
         public string Category { get; set; }
@@ -36,7 +36,7 @@ namespace Cms.Models
         public bool Recommended { get; set; }
         [AllowHtml]
         public string Description { get; set; }
-        public string Discountprice { get; set; }
+        public decimal? Discountprice { get; set; }
         public HttpPostedFileBase[] TitleImage { get; set; }
         public HttpPostedFileBase[] ImageGallery { get; set; }
         public string Variants { get; set; }

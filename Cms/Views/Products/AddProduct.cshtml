@@ -238,7 +238,6 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
-                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
                         <small>Ak bude hodnota 0, pri produkte bude informácia: Cena na vyžiadanie</small>
                     </div>
                 </div>
@@ -361,7 +360,6 @@
                     <div class="form-group">
                         <div style="width: 150px; margin-left: 20px;">
                             @Html.DropDownList("varAttrs1", (IEnumerable<SelectListItem>)ViewData["vlastnosti"], new { @class = "form-control varAttrs" })
-                            @Html.ValidationMessageFor(model => model.Weightunit, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
@@ -377,8 +375,6 @@
                     <div class="form-group">
                         <div style="width: 150px; margin-left: 20px;">
                             @Html.Editor("varNumber1", new { htmlAttributes = new { @class = "form-control varNumber", placeholder = "Katalógové číslo" } })
-                            @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
-                            <input type="hidden" value="1" id="total_chq">
                         </div>
                     </div>
                 </div>
@@ -386,8 +382,6 @@
                     <div class="form-group">
                         <div style="width: 150px; margin-left: 20px;">
                             @Html.Editor("varStock1", new { htmlAttributes = new { @class = "form-control varStock", placeholder = "Na sklade" } })
-                            @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
-                            <input type="hidden" value="1" id="total_chq">
                         </div>
                     </div>
                 </div>
@@ -395,8 +389,13 @@
                     <div class="form-group">
                         <div style="width: 150px; margin-left: 20px;">
                             @Html.Editor("varPrice1", new { htmlAttributes = new { @class = "form-control varPrice", placeholder = "Cena s DPH" } })
-                            @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
-                            <input type="hidden" value="1" id="total_chq">
+                        </div>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="form-group">
+                        <div style="width: 150px; margin-left: 20px;">
+                            @Html.Editor("varDiscountPrice1", new { htmlAttributes = new { @class = "form-control varDiscountPrice", placeholder = "Akciová cena s DPH" } })
                         </div>
                     </div>
                 </div>
@@ -589,6 +588,7 @@
             newSection.find("input.varNumber").attr("name", "varNumber" + newNum).attr("id", "varNumber" + newNum);
             newSection.find("input.varStock").attr("name", "varStock" + newNum).attr("id", "varStock" + newNum);
             newSection.find("input.varPrice").attr("name", "varPrice" + newNum).attr("id", "varPrice" + newNum);
+            newSection.find("input.varDiscountPrice").attr("name", "varDiscountPrice" + newNum).attr("id", "varDiscountPrice" + newNum);
 
             $('#univerzalVariableProduct').append(newSection);
 
@@ -864,9 +864,30 @@
         $('#btnDel3').attr('style', 'display:none');
     });
 
+    function validatePrice() {
+        $res = true;
+
+        if ($("#Price").val() == "") {
+            $("#Price").addClass("error");
+
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $("#Price").offset().top
+            }, 500);
+            $res = false;
+        } else {
+            $("#Price").removeClass("error");
+        }
+
+        console.log($res);
+
+        return $res;
+    }
+
     /*SIZES- Create JSON and send to database*/
     $(document).ready(function () {
-        $('#btnSubmit').click(function () {
+        $('#btnSubmit').click(function (e) {
+
+            e.preventDefault();
 
             //ulozenie variant do JSONU ako string
             if ($("#showVariants").is(":checked")) {
@@ -879,7 +900,7 @@
                     $varAttrsValues = $(".clonedVarSection[num=" + $i + "]").find(".varAttrsValues").val();
                     $varNumber = $(".clonedVarSection[num=" + $i + "]").find(".varNumber").val();
                     $varStock = $(".clonedVarSection[num=" + $i + "]").find(".varStock").val();
-                    $varPrice = $(".clonedVarSection[num=" + $i + "]").find(".varPrice").val();
+                    $varPrice = $(".clonedVarSection[num=" + $i + "]").find(".varPrice").val().replace(",", ".");
 
                     $variants.push({ "attribute_id": $varAttrs, "value": $varAttrsValues, "number": $varNumber, "stock": $varStock, "price": $varPrice });
                 }
@@ -887,6 +908,7 @@
                 $("#Variants").val(JSON.stringify($variants));
             }
 
+            /*
             if (document.getElementById('variableunderwear').checked) {
                 var sizes = [];
                 $(".activeInput").each(function () {
@@ -934,6 +956,14 @@
 
                 sizes = JSON.stringify(sizes);
                 document.getElementById("finalsizes").value = sizes;
+            }
+            */
+
+            if (validatePrice()) {
+                //$("#Price").val($("#Price").val().replace(".", ","));
+                //$("#Discountprice").val($("#Discountprice").val().replace(".", ","));
+
+                $(this).parents("form").submit();
             }
 
         });
