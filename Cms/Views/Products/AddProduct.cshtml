@@ -882,8 +882,8 @@
                     $varAttrsValues = $(".clonedVarSection[num=" + $i + "]").find(".varAttrsValues").val();
                     $varNumber = $(".clonedVarSection[num=" + $i + "]").find(".varNumber").val();
                     $varStock = $(".clonedVarSection[num=" + $i + "]").find(".varStock").val();
-                    $varPrice = $(".clonedVarSection[num=" + $i + "]").find(".varPrice").val().replace(",", ".");
-                    $varDiscountPrice = $(".clonedVarSection[num=" + $i + "]").find(".varDiscountPrice").val().replace(",", ".");
+                    $varPrice = parseFloat($(".clonedVarSection[num=" + $i + "]").find(".varPrice").val().replace(",", "."));
+                    $varDiscountPrice = parseFloat($(".clonedVarSection[num=" + $i + "]").find(".varDiscountPrice").val().replace(",", "."));
 
                     $variants.push({ "attribute_id": $varAttrs, "value": $varAttrsValues, "number": $varNumber, "stock": $varStock, "price": $varPrice, "discountprice": $varDiscountPrice });
                 }
@@ -943,12 +943,10 @@
             */
 
             
-            $("#Price").val($("#Price").val().replace(",", "."));
-            $("#Discountprice").val($("#Discountprice").val().replace(",", "."));
+            $("#Price").val(parseFloat($("#Price").val().replace(",", ".")));
+            $("#Discountprice").val(parseFloat($("#Discountprice").val().replace(",", ".")));
 
             $(this).parents("form").submit();
-            
-
         });
     });
     /*ADD/REMOVE COLOR FIELDS*/

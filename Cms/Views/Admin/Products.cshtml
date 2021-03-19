@@ -95,7 +95,7 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <div class="col-md-12 text-left">
-                                    <input type="checkbox" name="isDiscount" id="isDiscount" value="true">
+                                    <input type="checkbox" name="isDiscountMultiple" id="isDiscountMultiple" value="true">
                                 </div>
                             </div>
                         </div>
@@ -104,6 +104,9 @@
                         <div style="text-align:right">
                             <input type="hidden" name="catId" value="">
                             <input type="hidden" name="brandId" value="">
+                            <input type="hidden" name="priceFrom" value="">
+                            <input type="hidden" name="priceTo" value="">
+                            <input type="hidden" name="isDiscount" value="">
 
                             <input type="submit" value="Upraviť" id="btnSubmit" class="btn btn-success" />
                         </div>
@@ -319,8 +322,8 @@
 
             $catId = $("#filterByCategory").val() == "" ? null : $("#filterByCategory").val();
             $brandId = $("#filterByBrand").val() == "" ? null : $("#filterByBrand").val();
-            $priceFrom = $("#filterByPriceFrom").val() == "" ? 0 : $("#filterByPriceFrom").val();
-            $priceTo = $("#filterByPriceTo").val() == "" ? 99999 : $("#filterByPriceTo").val();
+            $priceFrom = $("#filterByPriceFrom").val() == "" ? 0 : $("#filterByPriceFrom").val().replace(",",".");
+            $priceTo = $("#filterByPriceTo").val() == "" ? 99999 : $("#filterByPriceTo").val().replace(",", ".");
             $isDiscount = $("#filterByDiscount").is(":checked");
 
             $.ajax({
@@ -482,32 +485,38 @@
             if (validateMultipleEditData()) {
                 $("#multipleEditPriceForm input[name=catId]").val($("#filterByCategory").val());
                 $("#multipleEditPriceForm input[name=brandId]").val($("#filterByBrand").val());
+                $("#multipleEditPriceForm input[name=priceFrom]").val($("#filterByPriceFrom").val() == "" ? 0 : $("#filterByPriceFrom").val().replace(",", "."));
+                $("#multipleEditPriceForm input[name=priceTo]").val($("#filterByPriceTo").val() == "" ? 99999 : $("#filterByPriceTo").val().replace(",", "."));
+                $("#multipleEditPriceForm input[name=isDiscount]").val($("#filterByDiscount").is(":checked"));
 
                 $("#multipleEditPriceForm").submit();
             }
         });
 
         $(document).on("dblclick", ".editable", function () {
-            $name = $(this).attr("name");
+            //len ak uz nemame otvorenu editaciu
+            if ($(".editValue").length == 0) {
+                $name = $(this).attr("name");
 
-            if ($name == "recommended") {
-                $isChecked = $(this).find("input[type=checkbox]").is(":checked");
-                $defValue = $isChecked;
+                if ($name == "recommended") {
+                    $isChecked = $(this).find("input[type=checkbox]").is(":checked");
+                    $defValue = $isChecked;
 
-                $html = '<input class="editValue" type="checkbox" name="editValue" ' + ($isChecked?"checked":"") + '><br><a class="btn btn-warning editValueSave" href="#" style="margin-top:5px;">Zmeniť</a><a class="btn editValueCancel" style="margin-left:5px;margin-top:5px;">Zrušiť</a>';
-            } else {
-                $value = $(this).text().trim();
-                $defValue = $(this).text().trim();
-                if ($name == "price" || $name == "discountprice") {
-                    $value = $value.replace('€', '').trim();
+                    $html = '<input class="editValue" type="checkbox" name="editValue" ' + ($isChecked ? "checked" : "") + '><br><a class="btn btn-warning editValueSave" href="#" style="margin-top:5px;">Zmeniť</a><a class="btn editValueCancel" style="margin-left:5px;margin-top:5px;">Zrušiť</a>';
+                } else {
+                    $value = $(this).text().trim();
+                    $defValue = $(this).text().trim();
+                    if ($name == "price" || $name == "discountprice") {
+                        $value = $value.replace('€', '').trim();
+                    }
+
+                    $html = '<input class="editValue" type="text" name="editValue" value="' + $value + '"><a class="btn btn-warning editValueSave" href="#" style="margin-top:5px;">Zmeniť</a><a class="btn editValueCancel" style="margin-left:5px;margin-top:5px;">Zrušiť</a>';
                 }
 
-                $html = '<input class="editValue" type="text" name="editValue" value="' + $value + '"><a class="btn btn-warning editValueSave" href="#" style="margin-top:5px;">Zmeniť</a><a class="btn editValueCancel" style="margin-left:5px;margin-top:5px;">Zrušiť</a>';
+                $(this).attr("defValue", $defValue);
+
+                $(this).html($html);
             }
-
-            $(this).attr("defValue", $defValue);
-
-            $(this).html($html);
         });
 
         $(document).on("click", ".editValueSave", function () {
@@ -517,7 +526,10 @@
 
             if ($name == "recommended") {
                 $value = $(this).parents(".editable").find(".editValue").is(":checked").toString();
-                console.log($value);
+            }
+
+            if ($name == "price" || $name == "discountprice") {
+                $value = $value.replace(",", ".");  
             }
 
             $thisObj = $(this);
@@ -531,7 +543,17 @@
                 dataType: 'json',
                 success: function (data) {
                     if ($name == "price" || $name == "discountprice") {
-                        $thisObj.parents(".editable").text($value + " €");
+                        if ($name == "price") {
+                            $thisObj.parents(".editable").text($value + " €");
+                        }
+
+                        if ($name == "discountprice") {
+                            if ($value != "") {
+                                $thisObj.parents(".editable").text($value + " €");
+                            } else {
+                                $thisObj.parents(".editable").text("");
+                            }
+                        }
                     }
                     else if ($name == "recommended") {
                         $thisObj.parents(".editable").html('<input ' + ($value == "true" ? 'checked="checked"' : '') + 'class="check-box" disabled="disabled" type="checkbox">');

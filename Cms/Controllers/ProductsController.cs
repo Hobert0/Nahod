@@ -405,9 +405,12 @@ namespace Cms.Controllers
             o.weightunit = model.Weightunit;
             o.recommended = model.Recommended;
             o.description = model.Description;
-            if (model.Discountprice != null)
+            if (model.Discountprice != "NaN" && model.Discountprice != "")
             {
                 o.discountprice = Decimal.Parse(model.Discountprice, CultureInfo.InvariantCulture);
+            }
+            else {
+                o.discountprice = null;
             }
             o.custom1 = model.Custom1;
             o.custom3 = model.Custom3;
@@ -449,9 +452,9 @@ namespace Cms.Controllers
                     v.number = varP.number;
 
                     //ak nie je vyplnena cena pre variantu, skopirujeme cenu z produktu
-                    if (varP.price != "" && varP.price != null)
+                    if (varP.price != null)
                     {
-                        v.price = Decimal.Parse(varP.price.ToString(), CultureInfo.InvariantCulture);
+                        v.price = varP.price;
                     }
                     else
                     {
@@ -459,15 +462,17 @@ namespace Cms.Controllers
                     }
 
                     //ak nie je vyplnena discount cena pre variantu, skopirujeme discount cenu z produktu
-                    if (varP.discountprice != "" && varP.Discountprice != null)
+                    if (varP.discountprice != null)
                     {
-                        v.discountprice = Decimal.Parse(varP.discountprice.ToString(), CultureInfo.InvariantCulture);
-                    } 
-                    else if (model.Discountprice != "" && model.Discountprice != null)
+                        v.discountprice = varP.discountprice;
+                    }
+                    else if (model.Discountprice != "NaN" && model.Discountprice != "")
                     {
                         v.discountprice = Decimal.Parse(model.Discountprice, CultureInfo.InvariantCulture);
                     }
-
+                    else {
+                        v.discountprice = null;
+                    }
 
                     v.stock = varP.stock;
                     v.attribute_id = varP.attribute_id;
@@ -617,9 +622,12 @@ namespace Cms.Controllers
             o.weightunit = model.Weightunit;
             o.recommended = model.Recommended;
             o.description = model.Description;
-            if (model.Discountprice != null)
+            if (model.Discountprice != "NaN")
             {
                 o.discountprice = Decimal.Parse(model.Discountprice, CultureInfo.InvariantCulture);
+            }
+            else {
+                o.discountprice = null;
             }
             o.custom1 = model.Custom1;
             o.custom2 = model.Custom2;
@@ -663,22 +671,25 @@ namespace Cms.Controllers
                 v.prod_id = o.id;
                 v.number = varP.number;
 
-                if (varP.price == "" || varP.price == null)
+                if (varP.price != null)
                 {
-                    v.price = Decimal.Parse(model.Price);
-                }
-                else {
                     v.price = varP.price;
                 }
+                else {
+                    v.price = Decimal.Parse(model.Price, CultureInfo.InvariantCulture);
+                }
 
-                if (varP.discountprice != "" && varP.discountprice != null)
+                if (varP.discountprice != null)
                 {
                     v.discountprice = varP.discountprice;
-                } else if (model.Discountprice != null) {
+                } else if (model.Discountprice != "NaN") {
 
-                    v.discountprice = Decimal.Parse(model.Discountprice);
+                    v.discountprice = Decimal.Parse(model.Discountprice, CultureInfo.InvariantCulture);
                 }
-               
+                else {
+                    v.discountprice = null;
+                }
+
 
                 v.stock = varP.stock;
                 v.attribute_id = varP.attrId;
@@ -724,32 +735,35 @@ namespace Cms.Controllers
         }
 
         [HttpPost]
-        public ActionResult MultipleEditPrice(string multiplePricePerc, bool? isDiscount, string catId, string brandId)
+        public ActionResult MultipleEditPrice(string multiplePricePerc, bool? isDiscountMultiple, string catId, string brandId, string priceFrom, string priceTo, bool? isDiscount)
         {
             
             List<products> products = null;
+            decimal priceFromDec = Decimal.Parse(priceFrom, CultureInfo.InvariantCulture);
+            decimal priceToDec = Decimal.Parse(priceTo, CultureInfo.InvariantCulture);
+
             if (catId != "" && brandId == "")
             {
-                products = db.products.Where(x => x.deleted == false && x.category == catId).ToList();  
+                products = (isDiscount != null && isDiscount == true) ? db.products.Where(x => x.deleted == false && x.category == catId && x.price >= priceFromDec && x.price <= priceToDec && x.discountprice != null).ToList() : db.products.Where(x => x.deleted == false && x.category == catId && x.price >= priceFromDec && x.price <= priceToDec).ToList();  
             }
             else if (catId == "" && brandId != "")
             {
-                products = db.products.Where(x => x.deleted == false && x.custom3 == brandId).ToList();
+                products = (isDiscount != null && isDiscount == true) ? db.products.Where(x => x.deleted == false && x.custom3 == brandId && x.price >= priceFromDec && x.price <= priceToDec && x.discountprice != null).ToList() : db.products.Where(x => x.deleted == false && x.custom3 == brandId && x.price >= priceFromDec && x.price <= priceToDec).ToList();
             }
             else if (catId != "" && brandId != "")
             {
-                products = db.products.Where(x => x.deleted == false && x.category == catId && x.custom3 == brandId).ToList();
+                products = (isDiscount != null && isDiscount == true) ? db.products.Where(x => x.deleted == false && x.category == catId && x.custom3 == brandId && x.price >= priceFromDec && x.price <= priceToDec && x.discountprice != null).ToList() : db.products.Where(x => x.deleted == false && x.category == catId && x.custom3 == brandId && x.price >= priceFromDec && x.price <= priceToDec).ToList();
             }
             else
             {
-                products = db.products.Where(x => x.deleted == false).ToList();             
+                products = (isDiscount != null && isDiscount == true) ? db.products.Where(x => x.deleted == false && x.price >= priceFromDec && x.price <= priceToDec && x.discountprice != null).ToList() : db.products.Where(x => x.deleted == false && x.price >= priceFromDec && x.price <= priceToDec).ToList();             
             }
 
             foreach (var product in products)
             {
                 decimal changedPrice = (Convert.ToDecimal(product.price) + Convert.ToDecimal(product.price) * Convert.ToDecimal(multiplePricePerc) / 100);
 
-                if (isDiscount == null || isDiscount == false)
+                if (isDiscountMultiple == null || isDiscountMultiple == false)
                 {
                     product.price = changedPrice;
                 }
@@ -764,7 +778,7 @@ namespace Cms.Controllers
                 {
                     decimal changedVarPrice = (Convert.ToDecimal(variant.price) + Convert.ToDecimal(variant.price) * Convert.ToDecimal(multiplePricePerc) / 100);
 
-                    if (isDiscount == null || isDiscount == false)
+                    if (isDiscountMultiple == null || isDiscountMultiple == false)
                     {
                         variant.price = changedVarPrice;
                     }
