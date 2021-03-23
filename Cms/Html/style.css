@@ -1,0 +1,428 @@
+﻿.header-top {
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+    .header-top .logo {
+        width: 100%;
+    }
+
+    .header-top .search input {
+        width: 100%;
+        border: 1px solid black;
+        border-radius: 20px;
+        padding: 15px 20px;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+        .header-top .search input:focus {
+            outline-width: 0px;
+        }
+
+    .header-top .info span {
+        font-size: 12px;
+    }
+
+.header-bottom {
+padding: 10px 0px;
+}
+
+.header-bottom a {
+    text-decoration: none;
+    font-size: 14px;
+    color: black;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.benefits {
+    padding: 20px 0px;
+}
+
+    .benefits i {
+        font-size: 24px;
+    }
+
+    .benefits p {
+        margin: 0px;
+    }
+
+        .benefits p.header {
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: -3px;
+        }
+
+        .benefits p.text {
+            font-size: 14px;
+        }
+
+.categories {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+    .categories > a {
+        margin-bottom: 0.5rem;
+    }
+
+
+    .categories img {
+        width: 100%;
+    }
+
+    .categories p.header {
+        font-size: 26px;
+        font-weight: bold;
+        text-transform: uppercase;
+        position: absolute;
+        bottom: 20px;
+        left: calc(20px + 0.5rem);
+        color: white;
+        margin: 0;
+    }
+
+.more-categories {
+    text-align: center;
+}
+
+.rounded-button {
+    font-size: 14px;
+    display: inline-block;
+    background-color: #272727;
+    font-weight: bold;
+    padding: 15px 40px;
+    color: white !important;
+    text-transform: uppercase;
+    border-radius: 25px;
+}
+
+    .rounded-button:hover {
+        text-decoration: none;
+    }
+
+.products {
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+    .products h2 {
+        font-size: 26px;
+        color: black;
+        font-weight: bold;
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+    }
+
+    .products .product {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        text-align: center;
+        border-radius: 10px;
+        border: 1px solid rgba(0,0,0,0.1);
+        margin-right: 10px;
+    }
+
+        .products .product:last-child {
+            margin-right: 0px;
+        }
+
+        .products .product:hover {
+            -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+            box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+        }
+
+        .products .product img {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .products .product .labels {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+            .products .product .labels span {
+                padding: 1.5px 10px;
+                border-radius: 5px;
+                text-transform: uppercase;
+                font-weight: bold;
+                color: white;
+                font-size: 11px;
+            }
+
+            .products .product .labels .discount {
+                background-color: #ea2627;
+            }
+
+            .products .product .labels .new {
+                background-color: #77cc36;
+            }
+
+        .products .product .header {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .products .product .text {
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .products .product .prices {
+            margin-bottom: 5px;
+        }
+
+            .products .product .prices .base {
+                font-size: 20px;
+                font-weight: bold;
+            }
+
+            .products .product .prices .discount {
+                text-decoration: line-through;
+                margin-right: 3px;
+            }
+
+        .products .product .add-to-cart {
+            border: 1px solid black;
+            display: inline-block;
+            padding: 1px 15px;
+            border-radius: 15px;
+            font-size: 11px;
+            color: black;
+            position: relative;
+        }
+
+            .products .product .add-to-cart:hover {
+                text-decoration: none;
+            }
+
+            .products .product .add-to-cart i {
+                font-size: 22px;
+                top: -8px;
+                position: absolute;
+                left: -15px;
+                background-color: white;
+            }
+
+
+.newsletter {
+    background-color: rgba(0,0,0,0.05);
+    padding: 30px 0px;
+}
+
+    .newsletter .header {
+        font-weight: bold;
+        font-size: 26px;
+        margin-bottom: 10px;
+    }
+
+    .newsletter .text {
+        font-size: 13px;
+    }
+
+    .newsletter .email-wrapper {
+        padding-top: 10px;
+    }
+
+        .newsletter .email-wrapper input[name=newsletter-email] {
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            border: 1px solid rgba(0,0,0,0.1);
+            height: 40px;
+            width: 50%;
+            padding: 0px 15px;
+        }
+
+            .newsletter .email-wrapper input[name=newsletter-email]:focus {
+                outline: none;
+            }
+
+
+        .newsletter .email-wrapper .rect-button {
+            background-color: orange;
+            color: white;
+            display: inline-block;
+            height: 40px;
+            line-height: 40px;
+            padding: 0px 10px;
+            text-decoration: none;
+        }
+
+    .newsletter .checkbox-wrapper {
+        margin-top: 5px;
+    }
+
+        .newsletter .checkbox-wrapper input {
+            margin-left: 3px;
+            margin-right: 10px;
+        }
+
+        .newsletter .checkbox-wrapper a {
+            color: black;
+            text-decoration: underline;
+        }
+
+.banner-wrapper {
+    background-color: purple;
+}
+
+.banner {
+    padding: 10px 0px;
+}
+
+    .banner .header {
+
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .banner .text {
+
+        font-weight: bold;
+        color: orange;
+        text-transform: uppercase;
+    }
+
+
+.top-banner {
+    text-align: right;
+}
+
+    .top-banner .header {
+        font-size: 40px;
+    }
+
+    .top-banner .text {
+        margin-top: -20px;
+        font-size: 80px;
+        margin-bottom: 40px;
+    }
+
+.middle-banner .header {
+    margin-top: -25px;
+    font-size: 60px;
+}
+
+.middle-banner .text {
+    margin-top: -70px;
+    margin-left: -10px;
+    font-size: 160px;
+}
+
+.middle-banner .subtext {
+    font-size: 26px;
+    margin-bottom: 40px;
+}
+
+.bottom-banner {
+    margin-bottom: 30px;
+}
+
+    .bottom-banner img {
+        width: 100%;
+    }
+
+.articles {
+    margin-bottom: 30px;
+}
+
+    .articles h2 {
+        font-size: 26px;
+        color: black;
+        font-weight: bold;
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+    }
+
+    .articles .article:hover {
+        text-decoration: none;
+    }
+
+    .articles .article img {
+        width: 100%;
+    }
+
+    .articles .article .header {
+        font-weight: bold;
+        text-align: center;
+        margin-top: 10px;
+        font-size: 14px;
+        color: black;
+    }
+
+    .articles .article .date {
+        font-size: 12px;
+        text-align: center;
+        color: rgba(0,0,0,0.5);
+    }
+
+        .articles .article .date i {
+            margin-right: 5px;
+        }
+
+.footer-wrapper {
+    background-color: #242223;
+}
+
+.footer-top {
+    padding: 30px 0px;
+}
+
+    .footer-top img {
+        width: 100%;
+    }
+
+    .footer-top h3 {
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .footer-top ul {
+        padding-left: 0px;
+        list-style-type: none;
+    }
+
+    .footer-top p {
+        color: white;
+        font-size: 14px;
+        margin-bottom: 0px;
+    }
+
+    .footer-top ul li a {
+        color: white;
+        font-size: 14px;
+    }
+
+        .footer-top ul li a:hover {
+            text-decoration: none;
+        }
+
+.footer-del {
+    background-color: #242223;
+}
+
+.footer-del > div {
+    height: 1px;
+    border-top: 1px solid rgba(255,255,255,0.5);
+}
+
+.footer-bottom {
+    padding: 10px 0px;
+}
+
+    .footer-bottom .payment-gateways img {
+        height: 20px;
+    }
+
+    .footer-bottom .copyright {
+        text-align: right;
+        color: white;
+        font-size: 12px;
+    }

@@ -467,6 +467,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Html\index.html" />
+    <Content Include="Html\script.js" />
+    <Content Include="Html\style.css" />
     <Content Include="Models\DBcms.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DBcms.edmx</DependentUpon>
