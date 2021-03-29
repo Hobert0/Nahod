@@ -44,12 +44,32 @@
                     @Html.EditorFor(model => model.Url, new { htmlAttributes = new { @class = "form-control", placeholder = "Zadajte odkaz v tvare http://www...", Value = "" } })
                     @Html.ValidationMessageFor(model => model.Url, "", new { @class = "text-danger" })
                 </div>
+                <br />
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Header, new { htmlAttributes = new { @class = "form-control", placeholder = "Nadpis", Value = "" } })
+                    @Html.ValidationMessageFor(model => model.Header, "", new { @class = "text-danger" })
+                </div>
+                <br />
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control", placeholder = "Text", Value = "" } })
+                    @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+                </div>
+                <br />
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Subtext, new { htmlAttributes = new { @class = "form-control", placeholder = "Subtext", Value = "" } })
+                    @Html.ValidationMessageFor(model => model.Subtext, "", new { @class = "text-danger" })
+                </div>
+                <br />
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Button, new { htmlAttributes = new { @class = "form-control", placeholder = "Tlačidlo", Value = "" } })
+                    @Html.ValidationMessageFor(model => model.Button, "", new { @class = "text-danger" })
+                </div>
 
 
                 <br />
                 <div class="form-group">
                     <div>
-                        <input type="submit" value="Nahrať nový obrázok" class="btn btn-success" onclick="validateForm();"/>
+                        <input type="submit" value="Uložiť" class="btn btn-success" onclick="validateForm();" />
                     </div>
                 </div>
             </div>
@@ -79,25 +99,34 @@
                         }
                         @foreach (var item in db.slideshow.Where(i => i.page == Model.Page && i.image == Model.Page + "/" + img.Name))
                         {
-                            if (count > 1)
-                            {
+                            //zakomentovane kvoli sliderom, ktore mozu mat len 1 obrazok (hp bottom left a right) aby sa dal ten prvy editovat
+                            //if (count > 1)
+                            //{
                                 @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteSlide", new { id = item.id, url = String.Format("~/Uploads/slideshow/" + Html.DisplayTextFor(model => model.Page) + "/" + "{0}", img.Name), page = Html.DisplayTextFor(model => model.Page) }, new { onclick = "return confirm('Naozaj chcete vymazať fotografiu zo slideshow?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete slide.", style = "position: absolute; margin-top: -44px;" })
-                            }
+                            //}
 
                         }
                     </div>
                     <div class="col-md-4">
-                        <b>@Html.LabelFor(model => model.Url, "Url", htmlAttributes: new { @class = "control-label px-0" })</b>
 
                         @foreach (var item in db.slideshow.Where(i => i.page == Model.Page))
                         {
                             if (Html.DisplayTextFor(model => model.Page).ToString() + "/" + img.Name == item.image)
                             {
+                                <b>@Html.LabelFor(model => model.Url, "Url", htmlAttributes: new { @class = "control-label px-0" })</b>
                                 @Html.EditorFor(modelItem => item.url, new { htmlAttributes = new { @class = "form-control ", placeholder = "Slide je bez odkazu", disabled = "disabled" } })
+                                <b>@Html.LabelFor(model => model.Header, "Nadpis", htmlAttributes: new { @class = "control-label px-0" })</b>
+                                @Html.EditorFor(modelItem => item.header, new { htmlAttributes = new { @class = "form-control ", placeholder = "Slide je bez hlavičky", disabled = "disabled" } })
+                                <b>@Html.LabelFor(model => model.Text, "Text", htmlAttributes: new { @class = "control-label px-0" })</b>
+                                @Html.EditorFor(modelItem => item.text, new { htmlAttributes = new { @class = "form-control ", placeholder = "Slide je bez textu", disabled = "disabled" } })
+                                <b>@Html.LabelFor(model => model.Subtext, "Subtext", htmlAttributes: new { @class = "control-label px-0" })</b>
+                                @Html.EditorFor(modelItem => item.subtext, new { htmlAttributes = new { @class = "form-control ", placeholder = "Slide je bez subtextu", disabled = "disabled" } })
+                                <b>@Html.LabelFor(model => model.Button, "Tlačidlo", htmlAttributes: new { @class = "control-label px-0" })</b>
+                                @Html.EditorFor(modelItem => item.button, new { htmlAttributes = new { @class = "form-control ", placeholder = "Slide je bez tlačidla", disabled = "disabled" } })
                             }
                         }
                         <br />
-                        <p>Editovať URL je možné po vymazaní a opätovnom nahratí slid-u.</p>
+                        <p>Editovať URL a ostatné údaje je možné po vymazaní a opätovnom nahratí slid-u.</p>
 
                     </div>
                 </div>

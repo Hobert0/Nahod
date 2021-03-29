@@ -191,6 +191,7 @@
           <Property Name="date" Type="varchar" MaxLength="100" />
           <Property Name="gallery" Type="text" />
           <Property Name="category" Type="varchar" MaxLength="200" />
+          <Property Name="type" Type="varchar" MaxLength="200" />
           <Property Name="weight" Type="varchar" MaxLength="10" />
           <Property Name="weightunit" Type="varchar" MaxLength="5" />
           <Property Name="description" Type="text" />
@@ -242,7 +243,22 @@
           <Property Name="image" Type="text" Nullable="false" />
           <Property Name="url" Type="text" Nullable="false" />
           <Property Name="title" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="header" Type="text" />
+          <Property Name="text" Type="text" />
+          <Property Name="subtext" Type="text" />
+          <Property Name="button" Type="text" />
           <Property Name="active" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="types">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="slug" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="description" Type="text" />
+          <Property Name="image" Type="text" />
+          <Property Name="deleted" Type="bool" Nullable="false" />
         </EntityType>
         <EntityType Name="users">
           <Key>
@@ -317,6 +333,7 @@
           <EntitySet Name="products" EntityType="Self.products" Schema="hobertocnahod" store:Type="Tables" />
           <EntitySet Name="settings" EntityType="Self.settings" Schema="hobertocnahod" store:Type="Tables" />
           <EntitySet Name="slideshow" EntityType="Self.slideshow" Schema="hobertocnahod" store:Type="Tables" />
+          <EntitySet Name="types" EntityType="Self.types" Schema="hobertocnahod" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="hobertocnahod" store:Type="Tables" />
           <EntitySet Name="usersmeta" EntityType="Self.usersmeta" Schema="hobertocnahod" store:Type="Tables" />
           <EntitySet Name="variants" EntityType="Self.variants" Schema="hobertocnahod" store:Type="Tables" />
@@ -333,7 +350,6 @@
           <EntitySet Name="newsletter" EntityType="hobcModel.newsletter" />
           <EntitySet Name="pages" EntityType="hobcModel.pages" />
           <EntitySet Name="settings" EntityType="hobcModel.settings" />
-          <EntitySet Name="slideshow" EntityType="hobcModel.slideshow" />
           <EntitySet Name="wishlist" EntityType="hobcModel.wishlist" />
           <EntitySet Name="attributes" EntityType="hobcModel.attributes" />
           <EntitySet Name="brands" EntityType="hobcModel.brands" />
@@ -345,6 +361,8 @@
           <EntitySet Name="usersmeta" EntityType="hobcModel.usersmeta" />
           <EntitySet Name="products" EntityType="hobcModel.products" />
           <EntitySet Name="variants" EntityType="hobcModel.variants" />
+          <EntitySet Name="types" EntityType="hobcModel.types" />
+          <EntitySet Name="slideshow" EntityType="hobcModel.slideshow" />
         </EntityContainer>
         <EntityType Name="blog">
           <Key>
@@ -446,17 +464,6 @@
           <Property Name="custom8" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="custom9" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="custom10" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="slideshow">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="page" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="image" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="url" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="title" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="active" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="wishlist">
           <Key>
@@ -628,6 +635,7 @@
           <Property Name="custom9" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="custom10" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="variants">
           <Key>
@@ -642,6 +650,32 @@
           <Property Name="attribute_id" Type="Int32" Nullable="false" />
           <Property Name="value" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="types">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="slug" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="image" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="slideshow">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="page" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="image" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="url" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="header" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="text" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="subtext" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="button" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="active" Type="Int32" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -752,18 +786,6 @@
                 <ScalarProperty Name="indexed" ColumnName="indexed" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="slideshow">
-            <EntityTypeMapping TypeName="hobcModel.slideshow">
-              <MappingFragment StoreEntitySet="slideshow">
-                <ScalarProperty Name="active" ColumnName="active" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="url" ColumnName="url" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="page" ColumnName="page" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -921,6 +943,7 @@
           <EntitySetMapping Name="products">
             <EntityTypeMapping TypeName="hobcModel.products">
               <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="deleted" ColumnName="deleted" />
                 <ScalarProperty Name="custom10" ColumnName="custom10" />
                 <ScalarProperty Name="custom9" ColumnName="custom9" />
@@ -960,6 +983,34 @@
                 <ScalarProperty Name="discountprice" ColumnName="discountprice" />
                 <ScalarProperty Name="price" ColumnName="price" />
                 <ScalarProperty Name="prod_id" ColumnName="prod_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="types">
+            <EntityTypeMapping TypeName="hobcModel.types">
+              <MappingFragment StoreEntitySet="types">
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="slug" ColumnName="slug" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="slideshow">
+            <EntityTypeMapping TypeName="hobcModel.slideshow">
+              <MappingFragment StoreEntitySet="slideshow">
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="button" ColumnName="button" />
+                <ScalarProperty Name="subtext" ColumnName="subtext" />
+                <ScalarProperty Name="text" ColumnName="text" />
+                <ScalarProperty Name="header" ColumnName="header" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="page" ColumnName="page" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

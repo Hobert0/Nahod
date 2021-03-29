@@ -78,6 +78,54 @@ namespace Cms.Controllers
             return RedirectToAction("ProductCats", "Products");
         }
 
+        [Route("produkty/zaradenia")]
+        public ActionResult ProductTypes()
+        {
+            if (Session["username"] != null && Session["role"].ToString() == "0")
+            {
+                MultipleIndexModel model = new MultipleIndexModel();
+                model.TypesModel = db.types.Where(i => i.deleted == false).OrderByDescending(a => a.id).ToList();
+                return View(model);
+            }
+            else { return RedirectToAction("Admin", "Admin"); }
+        }
+
+        [Route("produkty/editovat-zaradenie/{id}")]
+        public ActionResult EditType(int? id) //editacia zaradenia
+        {
+            if (Session["username"] != null && Session["role"].ToString() == "0")
+            {
+                var allTypes = db.types.Where(item => item.id == id).ToList();
+                TypesModel model = new TypesModel();
+                foreach (var type in allTypes)
+                {
+                    model.Id = type.id;
+                    model.Name = type.name;
+                    model.Slug = type.slug;
+                    model.Description = type.description;
+                    model.Image = type.image;
+                }
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Admin", "Admin");
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> EditTypeSave(TypesModel model)
+        {
+            var o = db.types.Single(i => i.id == model.Id);
+
+            o.name = model.Name;
+            o.slug = model.Slug;
+            o.description = model.Description;
+            db.SaveChanges();
+
+            return RedirectToAction("ProductTypes", "Products");
+        }
+
         [Route("produkty/znacky")]
         public ActionResult ProductBrands()
         {
@@ -191,6 +239,7 @@ namespace Cms.Controllers
                 ViewData["hmotnostj"] = pm.SelectionHmotnost();
                 ViewData["mernaj"] = pm.SelectionMernaJ();
                 ViewData["kategoria"] = SelectionKategoria();
+                ViewData["zaradenie"] = SelectionZaradenie();
                 ViewData["znacka"] = SelectionBrand();
                 ViewData["typ"] = pm.SelectionTyp();
                 ViewData["velkost"] = pm.SelectionSize();
@@ -267,6 +316,16 @@ namespace Cms.Controllers
             return znacka;
         }
 
+        public List<SelectListItem> SelectionZaradenie()
+        {
+            List<SelectListItem> znacka = new List<SelectListItem>();
+            znacka.Add(new SelectListItem { Text = "", Value = "" });
+            foreach (var type in db.types)
+            {
+                znacka.Add(new SelectListItem { Text = type.name, Value = type.id.ToString() });
+            }
+            return znacka;
+        }
 
         /*Category - Add category*/
         public List<SelectListItem> SelectionKategorieNew()
@@ -326,6 +385,7 @@ namespace Cms.Controllers
                     model.Recommended = product.recommended;
                     model.Weightunit = product.weightunit;
                     model.Category = product.category;
+                    model.Type = product.type;
                     model.Weight = product.weight;
                     model.Discountprice = product.discountprice.ToString();
                     model.Price = product.price.ToString();
@@ -352,6 +412,7 @@ namespace Cms.Controllers
                 ViewData["hmotnostj"] = pm.SelectionHmotnost();
                 ViewData["mernaj"] = pm.SelectionMernaJ();
                 ViewData["kategoria"] = SelectionKategoria();
+                ViewData["zaradenie"] = SelectionZaradenie();
                 ViewData["znacka"] = SelectionBrand();
                 ViewData["typ"] = pm.SelectionTyp();
                 ViewData["velkost"] = pm.SelectionSize();
@@ -401,11 +462,12 @@ namespace Cms.Controllers
             o.stock = model.Stock;
             o.price = Decimal.Parse(model.Price, CultureInfo.InvariantCulture);
             o.category = model.Category;
+            o.type = model.Type;
             o.weight = model.Weight;
             o.weightunit = model.Weightunit;
             o.recommended = model.Recommended;
             o.description = model.Description;
-            if (model.Discountprice != "NaN" && model.Discountprice != "")
+            if (model.Discountprice != "NaN" && model.Discountprice != "" && model.Discountprice != null)
             {
                 o.discountprice = Decimal.Parse(model.Discountprice, CultureInfo.InvariantCulture);
             }
@@ -466,7 +528,7 @@ namespace Cms.Controllers
                     {
                         v.discountprice = varP.discountprice;
                     }
-                    else if (model.Discountprice != "NaN" && model.Discountprice != "")
+                    else if (model.Discountprice != "NaN" && model.Discountprice != "" && model.Discountprice != null)
                     {
                         v.discountprice = Decimal.Parse(model.Discountprice, CultureInfo.InvariantCulture);
                     }
@@ -570,6 +632,7 @@ namespace Cms.Controllers
             var data = db.products.Single(i => i.id == id);
             ProductModel model = new ProductModel();
             model.Category = data.category;
+            model.Type = data.type;
             model.Custom1 = data.custom1;
             model.Custom10 = data.custom10;
             model.Custom2 = data.custom2;
@@ -618,11 +681,12 @@ namespace Cms.Controllers
             o.stock = model.Stock;
             o.price = Decimal.Parse(model.Price, CultureInfo.InvariantCulture);
             o.category = model.Category;
+            o.type = model.Type;
             o.weight = model.Weight;
             o.weightunit = model.Weightunit;
             o.recommended = model.Recommended;
             o.description = model.Description;
-            if (model.Discountprice != "NaN")
+            if (model.Discountprice != "NaN" && model.Discountprice != null)
             {
                 o.discountprice = Decimal.Parse(model.Discountprice, CultureInfo.InvariantCulture);
             }
@@ -682,7 +746,7 @@ namespace Cms.Controllers
                 if (varP.discountprice != null)
                 {
                     v.discountprice = varP.discountprice;
-                } else if (model.Discountprice != "NaN") {
+                } else if (model.Discountprice != "NaN" && model.Discountprice != null) {
 
                     v.discountprice = Decimal.Parse(model.Discountprice, CultureInfo.InvariantCulture);
                 }
@@ -761,7 +825,7 @@ namespace Cms.Controllers
 
             foreach (var product in products)
             {
-                decimal changedPrice = (Convert.ToDecimal(product.price) + Convert.ToDecimal(product.price) * Convert.ToDecimal(multiplePricePerc) / 100);
+                decimal changedPrice = product.price + product.price * Decimal.Parse(multiplePricePerc, CultureInfo.InvariantCulture) / 100;
 
                 if (isDiscountMultiple == null || isDiscountMultiple == false)
                 {
@@ -776,7 +840,7 @@ namespace Cms.Controllers
 
                 foreach (var variant in variants)
                 {
-                    decimal changedVarPrice = (Convert.ToDecimal(variant.price) + Convert.ToDecimal(variant.price) * Convert.ToDecimal(multiplePricePerc) / 100);
+                    decimal changedVarPrice = (decimal)variant.price + (decimal)variant.price * Decimal.Parse(multiplePricePerc, CultureInfo.InvariantCulture) / 100;
 
                     if (isDiscountMultiple == null || isDiscountMultiple == false)
                     {
@@ -884,6 +948,60 @@ namespace Cms.Controllers
             }
             else { }
             return RedirectToAction("ProductCats");
+        }
+
+        [HttpPost]
+        public ActionResult UploadImageTypes(TypesModel model)
+        {
+            //Zmena titulnej fotky
+            if (model.TitleImage != null)
+            {
+                HttpPostedFileBase[] subor = model.TitleImage;
+                var miestoUlozenia = "~/Uploads/" + model.Image;
+                miestoUlozenia = miestoUlozenia.Substring(0, miestoUlozenia.LastIndexOf("/") + 1);
+                string fullPath = Request.MapPath(miestoUlozenia);
+
+                if (System.IO.File.Exists(fullPath))
+                {
+                    System.IO.File.Delete(fullPath);
+                }
+
+                foreach (HttpPostedFileBase file in subor)
+                {
+                    //Checking file is available to save.  
+                    if (file != null)
+                    {
+                        var InputFileName = Path.GetFileName(file.FileName);
+                        var ServerSavePath = Path.Combine(Server.MapPath(miestoUlozenia + InputFileName));
+                        //Save file to server folder  
+                        byte[] fileByte;
+                        using (var reader = new BinaryReader(file.InputStream))
+                        {
+                            fileByte = reader.ReadBytes(file.ContentLength);
+                        }
+                        WebImage img = new WebImage(fileByte);
+                        if (img.Width > 1000)
+                        {
+                            img.Resize(1000 + 1, 1000 + 1, true).Crop(1, 1);
+                        }
+                        img.Save(ServerSavePath);
+
+                        var isTheSameImage = model.Image.Substring(0, model.Image.LastIndexOf("/") + 1) + InputFileName;
+                        if (model.Image != isTheSameImage)
+                        {
+                            var data = db.types.Single(i => i.id == model.Id);
+                            data.image = isTheSameImage;
+                            db.SaveChanges();
+                        }
+                        //assigning file uploaded status to ViewBag for showing message to user.  
+                        ViewBag.UploadStatus = subor.Count().ToString() + " files uploaded successfully.";
+                    }
+
+                }
+
+            }
+            else { }
+            return RedirectToAction("ProductTypes");
         }
 
         /**HROMADNE CROPNUTIE PRETOZE RESIZE ZANECHAVAL NA FOTKACH 1px BORDER*/
@@ -1118,6 +1236,30 @@ namespace Cms.Controllers
             return RedirectToAction("ProductCats");
         }
 
+        public ActionResult DeleteType(int? id, bool confirm)
+        {
+            var data = db.types.Find(id);
+
+            data.deleted = true;
+
+            ViewBag.Status = true;
+            db.SaveChanges();
+
+
+            /*
+            var data = db.categories.Find(id);
+            if (true)
+            {
+                ViewBag.Status = true;
+                db.categories.Remove(data);
+                db.SaveChanges();
+            }
+            else { ViewBag.Status = false; }
+            */
+
+            return RedirectToAction("ProductTypes");
+        }
+
         public ActionResult DeleteBrand(int? id, bool confirm)
         {
             var data = db.brands.Find(id);
@@ -1258,6 +1400,76 @@ namespace Cms.Controllers
             }
 
             return RedirectToAction("ProductCats");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddType(MultipleIndexModel model)
+        {
+            types o = new types();
+            var nazovSuboru = string.Empty;
+
+            if (model.Types.TitleImage != null)
+            {
+                HttpPostedFileBase[] subor = model.Types.TitleImage;
+                if (model.Types.TitleImage[0] != null)
+                {
+                    foreach (HttpPostedFileBase file in subor)
+                    {
+                        nazovSuboru = Path.GetFileName(file.FileName);
+                    }
+                }
+            }
+
+            var ulozObrazok = DateTime.Now.Date.ToString("dd.MM.yyyy") + "/" + DateTime.Now.ToString("HHmmss") + "/";
+
+            if (nazovSuboru == "")
+            {
+                nazovSuboru = "avatar_product.jpg";
+            }
+
+            o.name = model.Types.Name;
+            o.slug = model.Types.Slug;
+            o.description = model.Types.Description;
+            o.image = ulozObrazok + nazovSuboru;
+
+            db.types.Add(o);
+            db.SaveChanges();
+
+            if (model.Types.TitleImage != null)
+            {
+                if (model.Types.TitleImage[0] != null)
+                {
+                    await UploadFiles(model.Types.TitleImage, ulozObrazok);
+                }
+                else
+                {
+                    var sourcePath = HttpContext.Server.MapPath("~/Uploads/avatar_product.jpg");
+                    var destinationPath = HttpContext.Server.MapPath("~/Uploads/" + o.image);
+                    var miestoUlozenia = "~/Uploads/" + ulozObrazok;
+                    var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia));
+                    if (System.IO.File.Exists(sourcePath))
+                    {
+                        System.IO.File.Copy(sourcePath, destinationPath);
+                    }
+
+
+                }
+            }
+            else
+            {
+                /*AK duplikujeme produkt vytvori nove foldre*/
+                var sourcePath = HttpContext.Server.MapPath("~/Uploads/avatar_product.jpg");
+                var destinationPath = HttpContext.Server.MapPath("~/Uploads/" + o.image);
+                var miestoUlozenia = "~/Uploads/" + ulozObrazok;
+                var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia));
+                if (System.IO.File.Exists(sourcePath))
+                {
+                    System.IO.File.Copy(sourcePath, destinationPath);
+                }
+
+            }
+
+            return RedirectToAction("ProductTypes");
         }
 
         [HttpPost]

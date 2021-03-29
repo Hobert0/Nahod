@@ -17,6 +17,8 @@ namespace Cms.Models
         public OrdersModel OrdersModel { get; set; }
         public CategoriesModel Categories { get; set; }
         public CategoriesModel CategoriesEditModel { get; set; }
+        public TypesModel Types { get; set; }
+        public TypesModel TypesEditModel { get; set; }
         public BrandsModel Brands { get; set; }
         public BrandsModel BrandsEditModel { get; set; }
         public AttributesModel Attributes { get; set; }
@@ -32,6 +34,7 @@ namespace Cms.Models
         public IEnumerable<Cms.Models.e_settings> EsettingsModel { get; set; }
         public IEnumerable<Cms.Models.settings> SettingsModel { get; set; }
         public IEnumerable<Cms.Models.categories> CategoriesModel { get; set; }
+        public IEnumerable<Cms.Models.types> TypesModel { get; set; }
         public IEnumerable<Cms.Models.brands> BrandsModel { get; set; }
         public IEnumerable<Cms.Models.attributes> AttributesModel { get; set; }
         public IEnumerable<Cms.Models.blog> BlogModel { get; set; }

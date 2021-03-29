@@ -31,7 +31,6 @@ namespace Cms.Models
         public virtual DbSet<newsletter> newsletter { get; set; }
         public virtual DbSet<pages> pages { get; set; }
         public virtual DbSet<settings> settings { get; set; }
-        public virtual DbSet<slideshow> slideshow { get; set; }
         public virtual DbSet<wishlist> wishlist { get; set; }
         public virtual DbSet<attributes> attributes { get; set; }
         public virtual DbSet<brands> brands { get; set; }
@@ -43,5 +42,7 @@ namespace Cms.Models
         public virtual DbSet<usersmeta> usersmeta { get; set; }
         public virtual DbSet<products> products { get; set; }
         public virtual DbSet<variants> variants { get; set; }
+        public virtual DbSet<types> types { get; set; }
+        public virtual DbSet<slideshow> slideshow { get; set; }
     }
 }

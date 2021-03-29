@@ -1,4 +1,9 @@
-﻿.header-top {
+﻿
+html, body {
+    font-family: Poppins;
+}
+
+.header-top {
     padding-top: 20px;
     padding-bottom: 10px;
 }
@@ -20,28 +25,83 @@
             outline-width: 0px;
         }
 
+    .header-top .info .icon {
+        width: 15px;
+        margin-right: 10px;
+    }
+
     .header-top .info span {
         font-size: 12px;
     }
 
+    /*
+    .header-top .cart .icon {
+        width: 40px;
+    }
+
+    .header-top .cart span {
+        font-size: 16px;
+        margin-left: 10px;
+        font-weight: bold;  
+    }
+        */
+
+    .header-top .cart a {
+        text-decoration: none;
+    }
+
+    .header-top .cart i {
+        margin-right: 6px;
+        color: #000;
+        font-size: 33px;
+    }
+
+    .header-top .cart .cart-qty {
+        left: 5px;
+        font-size: 12px;
+        font-weight: 500;
+        position: absolute;
+        bottom: -3px;
+        display: -ms-flexbox;
+        display: flex;
+        width: 18px;
+        height: 18px;
+        color: #fff;
+        border-radius: 50%;
+        background-color: #000;
+        -ms-flex-align: center;
+        align-items: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        white-space: nowrap;
+    }
+
+    .header-top .cart .cart-total {
+        font-size: 16px;
+        font-weight: bold;
+        position: relative;
+        top: -3px;
+        color: #000;
+    }
+
 .header-bottom {
-padding: 10px 0px;
+    padding: 10px 0px;
 }
 
-.header-bottom a {
-    text-decoration: none;
-    font-size: 14px;
-    color: black;
-    font-weight: bold;
-    margin-right: 10px;
-}
+    .header-bottom a {
+        text-decoration: none;
+        font-size: 14px;
+        color: black;
+        font-weight: bold;
+        margin-right: 10px;
+    }
 
 .benefits {
     padding: 20px 0px;
 }
 
-    .benefits i {
-        font-size: 24px;
+    .benefits .icon {
+        height: 30px;
     }
 
     .benefits p {
@@ -58,21 +118,21 @@ padding: 10px 0px;
             font-size: 14px;
         }
 
-.categories {
+.types {
     position: relative;
     margin-bottom: 20px;
 }
 
-    .categories > a {
+    .types > a {
         margin-bottom: 0.5rem;
     }
 
 
-    .categories img {
+    .types img {
         width: 100%;
     }
 
-    .categories p.header {
+    .types p.header {
         font-size: 26px;
         font-weight: bold;
         text-transform: uppercase;
@@ -83,7 +143,7 @@ padding: 10px 0px;
         margin: 0;
     }
 
-.more-categories {
+.more-types {
     text-align: center;
 }
 
@@ -104,8 +164,12 @@ padding: 10px 0px;
 
 .products {
     margin-top: 40px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
+
+    .products .products-row .slick-track {
+        padding: 10px 0px;
+    }
 
     .products h2 {
         font-size: 26px;
@@ -201,9 +265,9 @@ padding: 10px 0px;
                 text-decoration: none;
             }
 
-            .products .product .add-to-cart i {
-                font-size: 22px;
-                top: -8px;
+            .products .product .add-to-cart .icon {
+                width: 25px;
+                top: -2px;
                 position: absolute;
                 left: -15px;
                 background-color: white;
@@ -229,7 +293,7 @@ padding: 10px 0px;
         padding-top: 10px;
     }
 
-        .newsletter .email-wrapper input[name=newsletter-email] {
+        .newsletter .email-wrapper input {
             border-top-left-radius: 5px;
             border-bottom-left-radius: 5px;
             border: 1px solid rgba(0,0,0,0.1);
@@ -238,7 +302,7 @@ padding: 10px 0px;
             padding: 0px 15px;
         }
 
-            .newsletter .email-wrapper input[name=newsletter-email]:focus {
+            .newsletter .email-wrapper input:focus {
                 outline: none;
             }
 
@@ -251,6 +315,7 @@ padding: 10px 0px;
             line-height: 40px;
             padding: 0px 10px;
             text-decoration: none;
+            margin-left: -5px;
         }
 
     .newsletter .checkbox-wrapper {
@@ -267,68 +332,68 @@ padding: 10px 0px;
             text-decoration: underline;
         }
 
-.banner-wrapper {
-    background-color: purple;
-}
 
 .banner {
-    padding: 10px 0px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 500px !important;
+    margin: 0px !important;
+    position: relative;
 }
 
     .banner .header {
-
+        margin-top: 120px;
+        font-size: 40px;
         font-weight: bold;
-        text-transform: uppercase;
     }
 
     .banner .text {
-
+        margin-top: -20px;
+        font-size: 80px;
         font-weight: bold;
         color: orange;
-        text-transform: uppercase;
+        margin-bottom: 20px;
     }
 
+    .banner .subtext {
+        font-size: 20px;
+        margin-bottom: 40px;
+        color: black;
+    }
+
+.banner-wrapper .slick-next {
+    right: 40px;
+}
+
+.banner-wrapper .slick-prev {
+    z-index: 1;
+    left: 0px;
+}
+
+.top-banner-wrapper {
+    margin-bottom: 0px;
+}
 
 .top-banner {
     text-align: right;
 }
 
-    .top-banner .header {
-        font-size: 40px;
-    }
-
-    .top-banner .text {
-        margin-top: -20px;
-        font-size: 80px;
-        margin-bottom: 40px;
-    }
-
-.middle-banner .header {
-    margin-top: -25px;
-    font-size: 60px;
-}
-
-.middle-banner .text {
-    margin-top: -70px;
-    margin-left: -10px;
-    font-size: 160px;
-}
-
-.middle-banner .subtext {
-    font-size: 26px;
-    margin-bottom: 40px;
-}
-
 .bottom-banner {
-    margin-bottom: 30px;
+    position: relative;
 }
 
-    .bottom-banner img {
-        width: 100%;
+    .bottom-banner .header {
+        position: absolute;
+        font-size: 60px;
+        color: white;
+        bottom: 10px;
+        left: 20px;
     }
 
 .articles {
     margin-bottom: 30px;
+    margin-top: 40px;
 }
 
     .articles h2 {
@@ -371,11 +436,18 @@ padding: 10px 0px;
 }
 
 .footer-top {
-    padding: 30px 0px;
+    padding: 30px 0px 10px 0px;
 }
 
     .footer-top img {
         width: 100%;
+    }
+
+    .footer-top .icon {
+        height: 25px;
+        width: auto;
+        margin-right: 5px;
+        display: inline-block;
     }
 
     .footer-top h3 {
@@ -408,10 +480,10 @@ padding: 10px 0px;
     background-color: #242223;
 }
 
-.footer-del > div {
-    height: 1px;
-    border-top: 1px solid rgba(255,255,255,0.5);
-}
+    .footer-del > div {
+        height: 1px;
+        border-top: 1px solid rgba(255,255,255,0.5);
+    }
 
 .footer-bottom {
     padding: 10px 0px;

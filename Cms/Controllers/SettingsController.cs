@@ -184,7 +184,11 @@ namespace Cms.Controllers
                     Title = a.title,
                     Page = a.page,
                     Image = a.image,
-                    Url = a.url
+                    Url = a.url,
+                    Header = a.header,
+                    Text = a.text,
+                    Subtext = a.subtext,
+                    Button = a.button
                 }).ToList();
 
                 foreach (var slide in model)
@@ -193,6 +197,10 @@ namespace Cms.Controllers
                     slideModel.Title = slide.Title;
                     slideModel.Page = slide.Page;
                     slideModel.Url = slide.Url;
+                    slideModel.Header = slide.Header;
+                    slideModel.Text = slide.Text;
+                    slideModel.Subtext = slide.Subtext;
+                    slideModel.Button = slide.Button;
                     slideModel.Image = slide.Image;
                 }
                 return View(slideModel);
@@ -247,6 +255,10 @@ namespace Cms.Controllers
             o.title = model.Title;
             o.image = saveImage + fileName;
             o.url = model.Url ?? "";
+            o.header = model.Header;
+            o.text = model.Text;
+            o.subtext = model.Subtext;
+            o.button = model.Button;
             o.page= model.Page;
             o.active = 1;
 

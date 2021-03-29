@@ -317,6 +317,10 @@
     </Compile>
     <Compile Include="Models\CategoriesModel.cs" />
     <Compile Include="Models\AttributesModel.cs" />
+    <Compile Include="Models\TypesModel.cs" />
+    <Compile Include="Models\types.cs">
+      <DependentUpon>DBcms.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\VariantAttributesModel.cs" />
     <Compile Include="Models\coupons.cs">
       <DependentUpon>DBcms.tt</DependentUpon>
@@ -469,7 +473,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Html\index.html" />
     <Content Include="Html\script.js" />
-    <Content Include="Html\style.css" />
+    <Content Include="Html\hp.css" />
     <Content Include="Models\DBcms.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DBcms.edmx</DependentUpon>
@@ -781,6 +785,8 @@
     <Content Include="Views\Products\ProductAttributes.cshtml" />
     <Content Include="Views\Products\EditAttribute.cshtml" />
     <Content Include="Views\Admin\UserEdit.cshtml" />
+    <Content Include="Views\Products\ProductTypes.cshtml" />
+    <Content Include="Views\Products\EditType.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -19,6 +19,10 @@ namespace Cms.Models
         public string image { get; set; }
         public string url { get; set; }
         public string title { get; set; }
+        public string header { get; set; }
+        public string text { get; set; }
+        public string subtext { get; set; }
+        public string button { get; set; }
         public int active { get; set; }
     }
 }

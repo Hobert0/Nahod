@@ -20,6 +20,7 @@ namespace Cms.Models
         public string Date { get; set; }
         public string Gallery { get; set; }
         public string Category { get; set; }
+        public string Type { get; set; }
         public string Weight { get; set; }
         public string Weightunit { get; set; }
         public string Custom1 { get; set; }

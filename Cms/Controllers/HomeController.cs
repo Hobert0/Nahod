@@ -22,14 +22,15 @@ namespace Cms.Controllers
         public ActionResult Index()
         {
             var model = new MultipleIndexModel();
-            model.ProductModel = db.products.ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
             model.BlogModel = db.blog.ToList();
-            model.BrandsModel = db.brands.ToList();
-            model.CategoriesModel = db.categories.ToList();
-            model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
+            model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
+            model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
+            model.TypesModel = db.types.Where(o => o.deleted == false).ToList();
+            model.SlideshowModel = db.slideshow.ToList();
             ViewData["Homepage"] = "true";
             return View(model);
         }

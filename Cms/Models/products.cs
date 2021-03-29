@@ -39,5 +39,6 @@ namespace Cms.Models
         public string custom9 { get; set; }
         public string custom10 { get; set; }
         public bool deleted { get; set; }
+        public string type { get; set; }
     }
 }
