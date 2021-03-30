@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,6 +41,17 @@ namespace Cms.Controllers
         {
             var cartVal = JsonConvert.DeserializeObject<List<dynamic>>(cartValues);
             Session["cartitems"] = cartVal;
+
+            decimal thisSum = 0;
+            foreach (var item in cartVal) {
+
+                decimal thisPrice = Convert.ToDecimal(item.price);
+                decimal thisQuantity = Convert.ToDecimal(item.quantity);
+
+                thisSum += thisQuantity * thisPrice;
+            }
+            Session["cartsum"] = thisSum;
+
             return Json(cartValues, JsonRequestBehavior.AllowGet);
         }
 

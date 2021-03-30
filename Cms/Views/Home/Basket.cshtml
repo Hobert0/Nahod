@@ -35,7 +35,7 @@
                     cart = (List<dynamic>)Session["cartitems"];
                     List<products> allTheData = new List<products>();
 
-                    var productprice = "";
+                    decimal productprice = 0;
                     decimal quantity = 0;
                     List<decimal> finalprice = new List<decimal>();
                     if (cart != null)
@@ -82,18 +82,18 @@
                                     }
                                     @{
                                         productprice = group.price;
-                                        if (group.discountprice != null && group.discountprice != "")
+                                        if (group.discountprice != null)
                                         {
-                                            productprice = group.discountprice;
+                                            productprice = (decimal)group.discountprice;
                                         }
                                     }
-                                    <td><strong style="font-size: 16px;">@decimal.Parse(productprice, CultureInfo.InvariantCulture).ToString("N2") €</strong></td>
+                                    <td><strong style="font-size: 16px;">@productprice €</strong></td>
                                     @foreach (var qty in cart.Where(o => o.product.Value == group.id && o.id == qantty.id))
                                     {
                                         <td><div class="removeCart" id="@Html.Raw(qty.id)" style="cursor:pointer;">&times;</div> </td>
                                     }
                                 </tr>
-                                            finalprice.Add(quantity * decimal.Parse(productprice, CultureInfo.InvariantCulture));
+                                            finalprice.Add(quantity * productprice);
                                         }
                                     }
                                 }

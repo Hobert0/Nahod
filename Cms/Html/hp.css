@@ -181,6 +181,7 @@ html, body {
     }
 
     .products .product {
+        color: black;
         padding-top: 20px;
         padding-bottom: 20px;
         text-align: center;
@@ -189,6 +190,9 @@ html, body {
         margin-right: 10px;
     }
 
+    .products .product:hover {
+        text-decoration: none;
+    }
         .products .product:last-child {
             margin-right: 0px;
         }
@@ -334,6 +338,7 @@ html, body {
 
 
 .banner {
+    display: block;
     background-size: cover;
     background-repeat: no-repeat;
     width: 100%;
@@ -342,7 +347,11 @@ html, body {
     position: relative;
 }
 
+.banner:hover {
+    text-decoration: none;
+}
     .banner .header {
+        color: white;
         margin-top: 120px;
         font-size: 40px;
         font-weight: bold;

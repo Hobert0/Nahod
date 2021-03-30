@@ -9,7 +9,9 @@
         var slideshows = Model.SlideshowModel.Where(o => o.page == "hp-top");
         foreach (var slideshow in slideshows)
         {
-            <div class="top-banner banner" style="background-image: url(Uploads/slideshow/@slideshow.image);">
+            var url = slideshow.url != "" ? slideshow.url : "#";
+
+            <a href="@url" class="top-banner banner" style="background-image: url(Uploads/slideshow/@slideshow.image);">
                 <div class="container">
 
                     @{
@@ -32,11 +34,11 @@
                             <div class="subtext d-none">@slideshow.subtext</div>
                         }
 
-                        <a href="#" class="rounded-button">@slideshow.button</a>
+                        <span class="rounded-button">@slideshow.button</span>
                     }
 
                 </div>
-            </div>
+            </a>
         }
     }
 </div>
@@ -130,7 +132,8 @@
 
                     foreach (var prod in prods)
                     {
-                        <div class="col-md product">
+
+                        <a href="/detail-produktu/@prod.id/@prod.title" class="col-md product">
                             <img src="uploads/@prod.image">
                             <div class="labels">
                                 @{
@@ -158,11 +161,11 @@
                                 }
                                 <span class="base">@prod.price €</span>
                             </div>
-                            <a href="#" class="add-to-cart">
+                            <span class="add-to-cart">
                                 <img class="icon" src="~/Content/images/cart.svg">
                                 <span>Pridať do košíka</span>
-                            </a>
-                        </div>
+                            </span>
+                        </a>
                     }
                 }
             </div>
@@ -180,7 +183,8 @@
                     prods = Model.ProductModel.Where(o => o.deleted == false).OrderByDescending(o => o.id).Take(10);
                     foreach (var prod in prods)
                     {
-                        <div class="col-md product">
+
+                        <a href="/detail-produktu/@prod.id/@prod.title" class="col-md product">
                             <img src="uploads/@prod.image">
                             <div class="labels">
                                 @{
@@ -208,11 +212,11 @@
                                 }
                                 <span class="base">@prod.price €</span>
                             </div>
-                            <a href="#" class="add-to-cart">
+                            <span class="add-to-cart">
                                 <img class="icon" src="~/Content/images/cart.svg">
                                 <span>Pridať do košíka</span>
-                            </a>
-                        </div>
+                            </span>
+                        </a>
                     }
                 }
             </div>
@@ -240,7 +244,7 @@
                     @Html.EditorFor(model => model.UsersModel.Email, new { htmlAttributes = new { @id = "subscriberEmail", placeholder = "E-mail" } })
                     @Html.ValidationMessageFor(model => model.UsersModel.Email, "", new { @class = "text-danger" })
                     <a href="#" class="rect-button">Prihlásiť sa k odberu</a>
-                    <button data-sitekey="6LdrzN8ZAAAAAL7YKcc89Q6_BfUrXGjeRrjxKdBP" class="g-recaptcha d-none" data-callback="onSubmit" data-action="submit">Prihlásiť sa k odberu</button>
+                    <button data-sitekey="6LcR9pQaAAAAAIXX1pzZbO8Esnn4EAX1sqOilguE" class="g-recaptcha d-none" data-callback="onSubmit" data-action="submit">Prihlásiť sa k odberu</button>
                 }
             </div>
             <div class="checkbox-wrapper">
@@ -255,7 +259,10 @@
         slideshows = Model.SlideshowModel.Where(o => o.page == "hp-middle");
         foreach (var slideshow in slideshows)
         {
-            <div class="middle-banner banner" style="background-image: url(Uploads/slideshow/@slideshow.image);">
+
+            var url = slideshow.url != "" ? slideshow.url : "#";
+
+            <a href="@url" class="middle-banner banner" style="background-image: url(Uploads/slideshow/@slideshow.image);">
                 <div class="container">
 
                     @{
@@ -278,11 +285,11 @@
                             <div class="subtext d-none">@slideshow.subtext</div>
                         }
 
-                        <a href="#" class="rounded-button">@slideshow.button</a>
+                        <span href="#" class="rounded-button">@slideshow.button</span>
                     }
 
                 </div>
-            </div>
+            </a>
         }
     }
 </div>
@@ -299,7 +306,7 @@
                     prods = Model.ProductModel.Where(o => o.recommended == true && o.deleted == false).OrderByDescending(o => o.id).Take(10);
                     foreach (var prod in prods)
                     {
-                        <div class="col-md product">
+                        <a href="/detail-produktu/@prod.id/@prod.title" class="col-md product">
                             <img src="uploads/@prod.image">
                             <div class="labels">
                                 @{
@@ -327,11 +334,11 @@
                                 }
                                 <span class="base">@prod.price €</span>
                             </div>
-                            <a href="#" class="add-to-cart">
+                            <span href="#" class="add-to-cart">
                                 <img class="icon" src="~/Content/images/cart.svg">
                                 <span>Pridať do košíka</span>
-                            </a>
-                        </div>
+                            </span>
+                        </a>
                     }
                 }
             </div>
@@ -344,7 +351,10 @@
                     slideshows = Model.SlideshowModel.Where(o => o.page == "hp-bottom-left");
                     foreach (var slideshow in slideshows)
                     {
-                        <div class="bottom-banner banner" style="background-image: url(Uploads/slideshow/@slideshow.image);">
+
+                        var url = slideshow.url != "" ? slideshow.url : "#";
+
+                        <a href="@url" class="bottom-banner banner" style="background-image: url(Uploads/slideshow/@slideshow.image);">
                             <div class="container">
 
                                 @{
@@ -355,7 +365,7 @@
                                 }
 
                             </div>
-                        </div>
+                        </a>
                     }
                 }
             </div>
@@ -366,7 +376,10 @@
                     slideshows = Model.SlideshowModel.Where(o => o.page == "hp-bottom-right");
                     foreach (var slideshow in slideshows)
                     {
-                        <div class="bottom-banner banner" style="background-image: url(Uploads/slideshow/@slideshow.image);">
+
+                        var url = slideshow.url != "" ? slideshow.url : "#";
+
+                        <a href="@url" class="bottom-banner banner" style="background-image: url(Uploads/slideshow/@slideshow.image);">
                             <div class="container">
 
                                 @{
@@ -377,7 +390,7 @@
                                 }
 
                             </div>
-                        </div>
+                        </a>
                     }
                 }
             </div>
@@ -434,13 +447,15 @@
         });
 
         function isEmail(email) {
-          var regex = /^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-          return regex.test(email);
+            var regex = /^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            return regex.test(email);
         }
     });
 </script>
 
 @*
+
+    <!--<a href="/detail-produktu/@prod.id/@prod.title" class="col-md product">-->
 
     @{
         var count = 0;

@@ -27,6 +27,7 @@ $("#addproductbtn").click(function () {
     var size = "";
     var size2 = "";
     var color = "";
+    var price = $("#actual-price").text().replace(",",".");
     var uniqueid = Math.floor(Math.random() * 10000) + 1;
     if (isvariableproduct === "True") {
         size = document.getElementsByClassName('select-box')[0].value;
@@ -92,6 +93,8 @@ $("#addproductbtn").click(function () {
             addtocart = [];
         }
 
+        //console.log(addtocart);
+
         for (var i = 0; i < addtocart.length; i++) {
             if (id === addtocart[i].product && size === addtocart[i].size && color === addtocart[i].color) {
                 var index = addtocart.findIndex(i => i.product === id && i.size === size);
@@ -105,10 +108,10 @@ $("#addproductbtn").click(function () {
         cart.id = uniqueid;
         cart.product = id;
         cart.quantity = quantity;
+        cart.price = price;
         cart.size = size;
         cart.size2 = size2;
         cart.color = color;
-
 
         addtocart.push(cart);
 
@@ -124,6 +127,7 @@ $("#addproductbtn").click(function () {
         });
 
         $.post("/cartsession", $.param({ cartValues: JSON.stringify(result) }, true));
+
         toastr["success"]("Produkt bol úspešne vložený do košíka. <a href='/kosik'><u>Zobraziť košík</u></a>");
         toastr.options = {
             "closeButton": true,
@@ -142,7 +146,7 @@ $("#addproductbtn").click(function () {
             "hideMethod": "fadeOut",
             "onclick": function () { document.location.href = '/kosik'; }
         }
-        document.getElementById("cartcount").innerHTML = result.length;
+        document.getElementById("cart-qty").innerHTML = result.length;
     }
 
 

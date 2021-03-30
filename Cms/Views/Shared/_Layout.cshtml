@@ -1,13 +1,14 @@
 ﻿@model Cms.Models.MultipleIndexModel
 
 
-@*
+
     @{
         var count = 0;
         var pocitadlo = 0;
         List<dynamic> cartcount = new List<dynamic>();
         cartcount = (List<dynamic>)Session["cartitems"];
         var cartitems = "0";
+        var cartsum = Session["cartsum"];
         if ((cartcount != null))
         {
             cartitems = cartcount.Count.ToString();
@@ -33,7 +34,7 @@
             wishitems = wishcount.Count.ToString();
         }
     }
-*@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -124,6 +125,8 @@
             ga('send', 'pageview');
         </script>
         <!-- End Google Analytics -->
+
+        <!--
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#search').autocomplete({
@@ -149,6 +152,7 @@
                     };
             });
         </script>
+            -->
     }
 </head>
 <body>
@@ -164,6 +168,25 @@
             <div class="col-md-2">
                 <img class="logo" src="/Html/logo.png">
             </div>
+
+            @*
+            @using (Html.BeginForm("SearchProduct", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform", @class = "form-inline search" }))
+            {
+                @Html.Editor("term", new { htmlAttributes = new { @class = "form-control", type = "search", id = "search", placeholder = "hľadať produkt" } })
+
+                <button class="btn btn-color" type="submit"><img src="~/Content/images/search_dark.svg" style="width: 15px;" alt="search" /></button>
+                <div class="icon-container">
+                    <a href="@Url.Action("Basket", "Home")" style="margin-left: 15px;font-size: 20px;">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p class="cartcount" id="cartcount">@cartitems</p>
+                    </a>
+                    <a href="#" id="modalLogin" style="margin-left: 20px;font-size: 20px;">
+                        <i class="fas fa-user"></i>
+                    </a>
+                </div>
+            }
+            *@
+
             <div class="col-md-3 search">
                 <input type="text" placeholder="Vyhľadať produkt">
             </div>
@@ -184,15 +207,11 @@
                 </div>
             </div>
             <div class="col-md-2 cart d-flex align-items-center">
-                <!--
-                <img class="icon" src="~/Content/images/fishing.svg">
-                <span class="cart-sum">34.99 €</span>
-                    -->
 
-                <a href="#">
+                <a href="@Url.Action("Basket", "Home")">
                     <i class="icon-fishing-net"></i>
-                    <span class="cart-qty">3</span>
-                    <span class="cart-total">34.99 €</span>
+                    <span id="cart-qty" class="cart-qty">@cartitems</span>
+                    <span class="cart-total">@cartsum €</span>
                 </a>
             </div>
         </div>
@@ -673,6 +692,7 @@
     *@
 
     @*LOGIN MODAL*@
+    <!--
     <script>
         function onSubmit(token) {
             document.getElementById("Subscribeform").submit();
@@ -759,6 +779,7 @@
                 e.stopPropagation()
             })
     </script>
+    -->
 
 </body>
 </html>

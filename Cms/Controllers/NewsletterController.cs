@@ -290,7 +290,7 @@ namespace Cms.Controllers
         {
             //Validate Google recaptcha
             var response = Request["g-recaptcha-response"];
-            string secretKey = "6LdrzN8ZAAAAAHqG9plvJS6_rVhodvfv1KDNB0Sr";
+            string secretKey = "6LcR9pQaAAAAAIuVm5s9aAOnNjmuDj6DoDrwJcVk";
             var client = new WebClient();
             var result = client.DownloadString(string.Format(
                 "https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secretKey, response));
