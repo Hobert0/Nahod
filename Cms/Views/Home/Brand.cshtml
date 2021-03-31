@@ -20,7 +20,7 @@
     }
 
     <div class="col-md-9">
-        @foreach (var cat in Model.BrandsModel.Where(i => i.id == catID))
+        @foreach (var cat in Model.TypesModel.Where(i => i.id == catID))
         {
             ViewBag.Title = cat.name + " -";
             ViewBag.Description = cat.description;

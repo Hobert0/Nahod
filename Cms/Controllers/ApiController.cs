@@ -233,7 +233,7 @@ namespace Cms.Controllers
 
         private MultipleIndexModel FetchByBrand(string brand)
         {
-            var categoryID = db.brands.Where(i => i.slug == brand).First().id;
+            var categoryID = db.types.Where(i => i.slug == brand).First().id;
 
             var model = new MultipleIndexModel();
             model.ProductModel = db.products.ToList().Where(c => c.custom3 == categoryID.ToString()).OrderByDescending(x => x.id);

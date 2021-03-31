@@ -188,9 +188,10 @@ namespace Cms.Controllers
             model.PagesModel = db.pages.ToList();
             model.CategoriesModel = db.categories.ToList();
             model.BrandsModel = db.brands.ToList();
+            model.TypesModel = db.types.ToList();
             model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
-            var kategoria = db.brands.Where(i => i.slug == brand).Select(o => o.name);
-            var categoryID = db.brands.Where(i => i.slug == brand).First().id;
+            var kategoria = db.types.Where(i => i.slug == brand).Select(o => o.name);
+            var categoryID = db.types.Where(i => i.slug == brand).First().id;
 
             ViewData["Category"] = kategoria;
             ViewData["CatId"] = categoryID;
@@ -326,9 +327,9 @@ namespace Cms.Controllers
                 XElement doc2 = new XElement("PRODUCTNAME", product.title);
                 XElement doc3 = new XElement("PRODUCT", product.title);
                 XElement doc4 = new XElement("DESCRIPTION", product.description);
-                XElement doc5 = new XElement("URL", "https://shop.bimklima.sk" + Url.Action("ProductDetail", "Home", new { id = product.id }));
-                XElement doc6 = new XElement("IMGURL", "https://shop.bimklima.sk/Uploads/" + product.image);
-                XElement doc7 = new XElement("IMGURL_ALTERNATIVE", "https://shop.bimklima.sk/Uploads/" + product.image);
+                XElement doc5 = new XElement("URL", "https://shop.nahod.sk" + Url.Action("ProductDetail", "Home", new { id = product.id }));
+                XElement doc6 = new XElement("IMGURL", "https://shop.nahod.sk/Uploads/" + product.image);
+                XElement doc7 = new XElement("IMGURL_ALTERNATIVE", "https://shop.nahod.sk/Uploads/" + product.image);
                 XElement doc8 = new XElement("VIDEO_URL", "");
                 XElement doc9 = new XElement("PRICE_VAT", product.price);
                 XElement doc10 = null;

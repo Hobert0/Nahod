@@ -104,26 +104,26 @@
 <!--                                <div class="col-sm-8 col-8 p-0" style="line-height: 35px; font-size: 13px;">-->
 								<div class="col-12 p-0" style="line-height: 35px; font-size: 13px;">
 
-                                    @if (item.discountprice != "" && item.discountprice != null)
+                                    @if (item.discountprice != null)
                                     {
-                                        <span>@decimal.Parse(item.discountprice, CultureInfo.InvariantCulture).ToString("#.00")€</span>
-                                        <del>@decimal.Parse(item.price, CultureInfo.InvariantCulture).ToString("#.00")€</del>
+                                        <span>@item.discountprice €</span>
+                                        <del>@item.price €</del>
                                     }
                                     else
                                     {
                                         if (item.custom6 != null && (item.custom6).ToString() == "True")
                                         {
-                                            <span>od @decimal.Parse(item.price, CultureInfo.InvariantCulture).ToString("#.00")€</span>
+                                            <span>od @item.price €</span>
                                         }
                                         else
                                         {
-                                            if (item.price == "0")
+                                            if (item.price == 0)
                                             {
                                                 <small>Cena na vyžiadanie</small>
                                             }
                                             else
                                             {
-                                                <span>@decimal.Parse(item.price, CultureInfo.InvariantCulture).ToString("#.00")€</span>
+                                                <span>@item.price €</span>
                                             }
 
                                         }

@@ -93,12 +93,11 @@ $("#addproductbtn").click(function () {
             addtocart = [];
         }
 
-        //console.log(addtocart);
-
         for (var i = 0; i < addtocart.length; i++) {
             if (id === addtocart[i].product && size === addtocart[i].size && color === addtocart[i].color) {
                 var index = addtocart.findIndex(i => i.product === id && i.size === size);
                 if (index > -1) {
+
                     addtocart.splice(index, 1);
                 }
             }
@@ -114,6 +113,11 @@ $("#addproductbtn").click(function () {
         cart.color = color;
 
         addtocart.push(cart);
+
+        $sum = 0;
+        for (var i = 0; i < addtocart.length; i++) {
+            $sum += addtocart[i].quantity * addtocart[i].price;
+        }
 
         sessionStorage.setItem('addtocart', JSON.stringify(addtocart));
         localStorage.setItem('addtocart', JSON.stringify(addtocart));
@@ -146,7 +150,11 @@ $("#addproductbtn").click(function () {
             "hideMethod": "fadeOut",
             "onclick": function () { document.location.href = '/kosik'; }
         }
+
+        console.log($sum + " €");
+
         document.getElementById("cart-qty").innerHTML = result.length;
+        document.getElementById("cart-total").innerHTML = $sum + " €";
     }
 
 

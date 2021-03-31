@@ -95,7 +95,7 @@
             var types = Model.TypesModel;
             foreach (var type in types)
             {
-                <a href="typ/@type.slug" class="col-md-3 pr-1 pl-1">
+                <a href="znacka/@type.slug" class="col-md-3 pr-1 pl-1">
                     <img src="uploads/@type.image">
                     <p class="header">@type.name</p>
                 </a>
@@ -233,18 +233,18 @@
         <div class="col-md-4">
             <div class="d-flex align-items-center email-wrapper">
                 <!--
-                <input type="email" name="newsletter-email" placeholder="E-mail">
-                <a href="#" class="rect-button">Prihlásiť sa k odberu</a>
-                -->
+    <input type="email" name="newsletter-email" placeholder="E-mail">
+    <a href="#" class="rect-button">Prihlásiť sa k odberu</a>
+    -->
 
                 @using (Html.BeginForm("Subscribe", "Newsletter", FormMethod.Post, new { enctype = "multipart/form-data", id = "Subscribeform" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.EditorFor(model => model.UsersModel.Email, new { htmlAttributes = new { @id = "subscriberEmail", placeholder = "E-mail" } })
-                    @Html.ValidationMessageFor(model => model.UsersModel.Email, "", new { @class = "text-danger" })
                     <a href="#" class="rect-button">Prihlásiť sa k odberu</a>
                     <button data-sitekey="6LcR9pQaAAAAAIXX1pzZbO8Esnn4EAX1sqOilguE" class="g-recaptcha d-none" data-callback="onSubmit" data-action="submit">Prihlásiť sa k odberu</button>
+                    @Html.ValidationMessageFor(model => model.UsersModel.Email, "", new { @class = "text-danger" })
                 }
             </div>
             <div class="checkbox-wrapper">
@@ -411,7 +411,7 @@
                     foreach (var article in articles)
                     {
 
-                        <a href="@article.id" class="col-md-3 article">
+                        <a href="clanok/@article.slug" class="col-md-3 article">
                             <img src="uploads/@article.image">
                             <div class="header">@article.title</div>
                             <div class="date"><i class="bi bi-alarm"></i><span>@DateTime.Parse(@article.date).ToString("dd.MM.yyyy")</span></div>
@@ -442,7 +442,19 @@
 
             if (isEmail($("#subscriberEmail").val()) && $("#newsletter-checkbox").is(":checked")) {
 
+                $("#Subscribeform input").removeClass("error");
+                $(".newsletter label[for=newsletter-checkbox]").removeClass("error");
+
                 $("#Subscribeform").submit();
+
+            } else if (!isEmail($("#subscriberEmail").val())) {
+
+                $("#Subscribeform input").addClass("error");
+
+            } else if (!$("#newsletter-checkbox").is(":checked")) {
+
+                $("#Subscribeform input").removeClass("error");
+                $(".newsletter label[for=newsletter-checkbox]").addClass("error");
             }
         });
 
@@ -699,7 +711,7 @@
                                         <strong>najnovšie trendy v oblasi klimatizácie a vzduchotechniky</strong> určite navštívte sekciu s aktualitami.
                                     </p>
 
-                                    <a href="https://bimklima.sk/blog" class="product_detail">
+                                    <a href="https://nahod.sk/blog" class="product_detail">
                                         <p class="btn btn-color-white">RADY A AKTUALITY</p>
                                     </a>
                                     <a href="/s/faq" class="product_detail">

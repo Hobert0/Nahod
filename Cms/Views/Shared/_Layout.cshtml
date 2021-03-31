@@ -2,38 +2,38 @@
 
 
 
-    @{
-        var count = 0;
-        var pocitadlo = 0;
-        List<dynamic> cartcount = new List<dynamic>();
-        cartcount = (List<dynamic>)Session["cartitems"];
-        var cartitems = "0";
-        var cartsum = Session["cartsum"];
-        if ((cartcount != null))
-        {
-            cartitems = cartcount.Count.ToString();
-        }
-        var username = "";
-
-        if (Session["username"] != null)
-        {
-            username = Session["username"].ToString();
-        }
-
-        var role = "";
-        if (Session["role"] != null)
-        {
-            role = Session["role"].ToString();
-        }
-
-        List<dynamic> wishcount = new List<dynamic>();
-        wishcount = (List<dynamic>)Session["wishitems"];
-        var wishitems = "0";
-        if ((wishcount != null))
-        {
-            wishitems = wishcount.Count.ToString();
-        }
+@{
+    var count = 0;
+    var pocitadlo = 0;
+    List<dynamic> cartcount = new List<dynamic>();
+    cartcount = (List<dynamic>)Session["cartitems"];
+    var cartitems = "0";
+    decimal cartsum = Session["cartsum"] == null ? (decimal)0.0 : Convert.ToDecimal(Session["cartsum"]);
+    if ((cartcount != null))
+    {
+        cartitems = cartcount.Count.ToString();
     }
+    var username = "";
+
+    if (Session["username"] != null)
+    {
+        username = Session["username"].ToString();
+    }
+
+    var role = "";
+    if (Session["role"] != null)
+    {
+        role = Session["role"].ToString();
+    }
+
+    List<dynamic> wishcount = new List<dynamic>();
+    wishcount = (List<dynamic>)Session["wishitems"];
+    var wishitems = "0";
+    if ((wishcount != null))
+    {
+        wishitems = wishcount.Count.ToString();
+    }
+}
 
 <!DOCTYPE html>
 <html>
@@ -166,25 +166,27 @@
     <div class="container">
         <div class="row d-flex align-items-center header-top">
             <div class="col-md-2">
-                <img class="logo" src="/Html/logo.png">
+                <a href="/">
+                    <img class="logo" src="/Html/logo.png">
+                </a>
             </div>
 
             @*
-            @using (Html.BeginForm("SearchProduct", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform", @class = "form-inline search" }))
-            {
-                @Html.Editor("term", new { htmlAttributes = new { @class = "form-control", type = "search", id = "search", placeholder = "hľadať produkt" } })
+                @using (Html.BeginForm("SearchProduct", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform", @class = "form-inline search" }))
+                {
+                    @Html.Editor("term", new { htmlAttributes = new { @class = "form-control", type = "search", id = "search", placeholder = "hľadať produkt" } })
 
-                <button class="btn btn-color" type="submit"><img src="~/Content/images/search_dark.svg" style="width: 15px;" alt="search" /></button>
-                <div class="icon-container">
-                    <a href="@Url.Action("Basket", "Home")" style="margin-left: 15px;font-size: 20px;">
-                        <i class="fas fa-shopping-cart"></i>
-                        <p class="cartcount" id="cartcount">@cartitems</p>
-                    </a>
-                    <a href="#" id="modalLogin" style="margin-left: 20px;font-size: 20px;">
-                        <i class="fas fa-user"></i>
-                    </a>
-                </div>
-            }
+                    <button class="btn btn-color" type="submit"><img src="~/Content/images/search_dark.svg" style="width: 15px;" alt="search" /></button>
+                    <div class="icon-container">
+                        <a href="@Url.Action("Basket", "Home")" style="margin-left: 15px;font-size: 20px;">
+                            <i class="fas fa-shopping-cart"></i>
+                            <p class="cartcount" id="cartcount">@cartitems</p>
+                        </a>
+                        <a href="#" id="modalLogin" style="margin-left: 20px;font-size: 20px;">
+                            <i class="fas fa-user"></i>
+                        </a>
+                    </div>
+                }
             *@
 
             <div class="col-md-3 search">
@@ -211,7 +213,7 @@
                 <a href="@Url.Action("Basket", "Home")">
                     <i class="icon-fishing-net"></i>
                     <span id="cart-qty" class="cart-qty">@cartitems</span>
-                    <span class="cart-total">@cartsum €</span>
+                    <span id="cart-total" class="cart-total">@cartsum.ToString("n2") €</span>
                 </a>
             </div>
         </div>
@@ -633,7 +635,7 @@
 
                     </div>
                     <div class="col-6 col-md-3">
-                        <h3><strong style="text-transform:none;">bimklima s.r.o.</strong></h3>
+                        <h3><strong style="text-transform:none;">nahod s.r.o.</strong></h3>
 
                         <p>
                             Kukučínova 4445/30,<br />
@@ -646,7 +648,7 @@
                         </p>
                         <br />
                         <p>
-                            E-mail: bimklima@bimklima.sk<br />
+                            E-mail: nahod@nahod.sk<br />
                             Tel.č.: +421 902 219 943
                         </p>
                         <br />
@@ -667,7 +669,7 @@
                     <div class="col-6 col-md-3">
                         <h3>instagram</h3>
                         <div id="instafeed"></div>
-                        <a href="https://www.instagram.com/bimklima.sk" target="_blank" style="font-size: 12px; text-decoration: underline;">viac</a>
+                        <a href="https://www.instagram.com/nahod.sk" target="_blank" style="font-size: 12px; text-decoration: underline;">viac</a>
                     </div>
 
                 </div>

@@ -177,7 +177,7 @@ namespace Cms.Controllers
                             productprice = discountprice.Key.ToString();
                         }
                     }
-                    om.price = (Decimal.Parse(om.pieces) * decimal.Parse(productprice, CultureInfo.InvariantCulture)).ToString();
+                    om.price = (Decimal.Parse(om.pieces) * decimal.Parse(productprice.Replace(",","."), CultureInfo.InvariantCulture)).ToString();
                     db.ordermeta.Add(om);
                     db.SaveChanges();
 
@@ -198,6 +198,7 @@ namespace Cms.Controllers
 
             //remove session
             Session["cartitems"] = new List<dynamic>();
+            Session["cartsum"] = 0;
 
             return RedirectToAction("ThankYou", new { orderNumber = o.ordernumber });
         }
@@ -416,7 +417,7 @@ namespace Cms.Controllers
                 var sett1 = db.e_settings.ToList();
                 var sett2 = db.settings.ToList();
                 /*ZMENIT*/
-                var eshopname = "BimKlima";
+                var eshopname = "Nahod";
 
                 //foreach(var s in sett1)
                 //{
@@ -426,7 +427,7 @@ namespace Cms.Controllers
                 //Zvlast nastaveny email FROM (pouziva iny server)
                 //mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["UserName"], eshopname);
 
-                mailMessage.From = new MailAddress("shop@bimklima.sk", eshopname);
+                mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
                 mailMessage.Subject = subject;
 
                 mailMessage.Body = body;
@@ -836,12 +837,12 @@ namespace Cms.Controllers
             using (MailMessage mailMessage = new MailMessage())
             {
                 /*ZMENIT*/
-                var eshopname = "BimKlima";
+                var eshopname = "Nahod";
 
                 //Zvlast nastaveny email FROM (pouziva iny server)
                 //mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["UserName"], eshopname);
 
-                mailMessage.From = new MailAddress("shop@bimklima.sk", eshopname);
+                mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
                 mailMessage.Subject = "predmet";
                 mailMessage.Body = "";
                 mailMessage.IsBodyHtml = true;
