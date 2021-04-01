@@ -5790,7 +5790,7 @@ var modern = (function () {
       var id = self._id;
       var prefix = self.classPrefix;
       var hueHtml;
-      var stops = '#008fd3,#ff0080,#ff00ff,#8000ff,#0000ff,#0080ff,#00ffff,#00ff80,#00ff00,#80ff00,#ffff00,#ff8000,#008fd3';
+      var stops = '#ff8b00,#ff0080,#ff00ff,#8000ff,#0000ff,#0080ff,#00ffff,#00ff80,#00ff00,#80ff00,#ffff00,#ff8000,#ff8b00';
       function getOldIeFallbackHtml() {
         var i, l, html = '', gradientPrefix, stopsList;
         gradientPrefix = 'filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=';

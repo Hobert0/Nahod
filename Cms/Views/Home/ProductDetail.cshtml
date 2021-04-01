@@ -126,7 +126,7 @@
                                     }
                                     else if (decimal.Parse(prod.stock) == 0)
                                     {
-                                        onStock = "<span style='color:#008fd3;'>Momentálne vypredané</span>";
+                                        onStock = "<span style='color:#ff8b00;'>Momentálne vypredané</span>";
                                     }
                                     else if (decimal.Parse(prod.stock) < 0)
                                     {
@@ -160,7 +160,7 @@
                                 @if (prod.discountprice != null)
                                 {
                                     cena = (decimal)prod.discountprice;
-                            <p style="text-align: right;font-size:25px; margin: 20px 0 0;color: #008fd3;">Akciová cena <strong style="font-size:30px;"><span id="actual-price">@cena.ToString("N2")</span> €</strong> </p>
+                            <p style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;">Akciová cena <strong style="font-size:30px;"><span id="actual-price">@cena.ToString("N2")</span> €</strong> </p>
                         }
                                 @{
                                     if (prod.discountprice != null)
@@ -175,17 +175,17 @@
                                         cena = prod.price;
                                         if ((prod.custom6).ToString() == "True")
                                         {
-                                            <div style="text-align: right;font-size:30px;color: #008fd3;"><strong>od @cena.ToString("N2") €</strong></div>
+                                            <div style="text-align: right;font-size:30px;color: #ff8b00;"><strong>od @cena.ToString("N2") €</strong></div>
                                         }
                                         else
                                         {
                                             if (prod.price == 0)
                                             {
-                                                <div style="text-align: right;font-size:25px;color: #008fd3;"><strong>Cena na vyžiadanie</strong></div>
+                                                <div style="text-align: right;font-size:25px;color: #ff8b00;"><strong>Cena na vyžiadanie</strong></div>
                                             }
                                             else
                                             {
-                                                <div style="text-align: right;font-size:30px;color: #008fd3;"><strong><span id="actual-price">@cena.ToString("N2")</span> €</strong></div>
+                                                <div style="text-align: right;font-size:30px;color: #ff8b00;"><strong><span id="actual-price">@cena.ToString("N2")</span> €</strong></div>
                                             }
 
                                         }
@@ -268,7 +268,7 @@
                     </div>
                 }
             }
-                                                <!--
+                                                
         <div class="py-4 suggested-products">
             <h2>Odporúčané produkty</h2>
             <hr />
@@ -305,7 +305,6 @@
                                     }
                                     else //ak je cena v pohode
                                     {
-                                        <a onclick="addToCart(@item.id,@variableproduct, @isvariablecolors)" style="cursor: pointer;" class="col-sm-3 col-4 cartproduct"><div style="text-align: center;"><img src="~/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>
                                     }
                                 </div>
                                 <p class="title">@Html.DisplayFor(modelItem => item.title)</p>
@@ -351,7 +350,7 @@
             </div>
 
         </div>
-    -->
+    
     </section>
 
     <!-- The Modal -->

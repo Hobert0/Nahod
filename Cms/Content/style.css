@@ -30,12 +30,12 @@ a {
 
 a:hover {
 	text-decoration: none;
-	color: #008fd3;
+	color: #fe8a00;
 }
 
 li a:hover {
 	text-decoration: none;
-	color: #008fd3;
+	color: #fe8a00;
 }
 
 .table td, .table th {
@@ -71,8 +71,8 @@ h3 {
 }
 
 .btn-danger {
-	background-color: #008fd3;
-	border-color: #008fd3;
+	background-color: #fe8a00;
+	border-color: #fe8a00;
 }
 
 #product {
@@ -110,7 +110,7 @@ h3 {
 	/*padding-top: 10px;*/
 	background: #303030;
 	height: 100px;
-	border-bottom: 5px solid #008fd3;
+	border-bottom: 5px solid #fe8a00;
 }
 
 .topmenu-col .container {
@@ -126,7 +126,7 @@ h3 {
 	justify-content: center;
 	align-items: center;
 	font-size: 20px;
-	background-color: #008fd3;
+	background-color: #fe8a00;
 	padding: 3px 40px 7px;
 	border-bottom-left-radius: 18px;
 	border-bottom-right-radius: 18px;
@@ -215,7 +215,7 @@ h3 {
 
 
 footer {
-	background: #008fd3;
+	background: #fe8a00;
 	border-top: 1px solid #353535;
 }
 
@@ -230,7 +230,7 @@ footer {
 }
 
 .btn-color-blue {
-	background: #008fd3;
+	background: #fe8a00;
 	color: #fff;
 }
 
@@ -247,7 +247,7 @@ footer {
 
 .btn-color-white:hover {
 	background: #fff;
-	color: #008fd3;
+	color: #fe8a00;
 	border: 1px solid #fff;
 }
 
@@ -315,7 +315,7 @@ footer {
 .openbtn {
 	font-size: 20px;
 	cursor: pointer;
-	background-color: #008fd3;
+	background-color: #fe8a00;
 	color: white;
 	padding: 10px 15px;
 	border: none;
@@ -353,7 +353,7 @@ footer {
 	width: 110px;
 	font-size: 21px;
 	padding: 3px 0;
-	border-right: 7px solid #008fd3;
+	border-right: 7px solid #fe8a00;
 	position: absolute;
 	z-index: 9;
 }
@@ -548,7 +548,7 @@ footer {
 }
 
 .sub_catsmenu:hover {
-	color: #008fd3;
+	color: #fe8a00;
 	text-decoration: none;
 }
 
@@ -557,7 +557,7 @@ footer {
 }
 
 .sub_cats h3:hover {
-	color: #008fd3;
+	color: #fe8a00;
 }
 
 .sub_cats h3:nth-child(1) {
@@ -594,7 +594,7 @@ footer {
 }
 
 .activemenu {
-	color: #008fd3;
+	color: #fe8a00;
 }
 
 /*Category menu - END*/
@@ -608,7 +608,7 @@ footer {
 
 .addtocart:hover {
 	color: #ffffff;
-	background: #008fd3;
+	background: #fe8a00;
 }
 
 .addtocart img {
@@ -646,7 +646,7 @@ footer {
 }
 
 .cartproduct {
-	background: #008fd3;
+	background: #fe8a00;
 	padding: 10px 0;
 	display: block;
 	margin-top: -44px;
@@ -708,7 +708,7 @@ footer {
 }
 
 .basket .old {
-	background-color: #008fd3;
+	background-color: #fe8a00;
 	padding: 8px 20px 5px;
 	color: #ffffff;
 	font-size: 14px;
@@ -931,7 +931,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .cartcount {
-	background: #008fd3;
+	background: #fe8a00;
 	border-radius: 100%;
 	height: 20px;
 	width: 20px;
@@ -1053,7 +1053,7 @@ input[type="radio"][disabled] {
 }
 
 .column h3:hover {
-	color: #008fd3;
+	color: #fe8a00;
 }
 
 .column a:hover {
@@ -1214,7 +1214,7 @@ input[type="radio"][disabled] {
 	display: inline-block;
 	height: 3px;
 	width: 220px;
-	background-color: #008fd3;
+	background-color: #fe8a00;
 	position: absolute;
 	margin-left: auto;
 	margin-right: auto;

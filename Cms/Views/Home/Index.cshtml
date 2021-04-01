@@ -4,6 +4,10 @@
 @using Cms.Controllers
 @model Cms.Models.MultipleIndexModel
 
+@{
+    HelperController helper = new HelperController();
+}
+
 <div class="top-banner-wrapper banner-wrapper">
     @{
         var slideshows = Model.SlideshowModel.Where(o => o.page == "hp-top");
@@ -132,9 +136,9 @@
 
                     foreach (var prod in prods)
                     {
-
+                        var slug = helper.ToUrlSlug(prod.title);
                         <div class="col-md product">
-                            <a href="/detail-produktu/@prod.id/@prod.title">
+                            <a href="/detail-produktu/@prod.id/@slug">
                                 <img src="uploads/@prod.image">
                                 <div class="prod-labels">
                                     @{
@@ -197,9 +201,9 @@
                     prods = Model.ProductModel.Where(o => o.deleted == false).OrderByDescending(o => o.id).Take(10);
                     foreach (var prod in prods)
                     {
-
+                       var slug = helper.ToUrlSlug(prod.title);
                         <div class="col-md product">
-                            <a href="/detail-produktu/@prod.id/@prod.title">
+                            <a href="/detail-produktu/@prod.id/@slug">
                                 <img src="uploads/@prod.image">
                                 <div class="prod-labels">
                                     @{
@@ -251,7 +255,7 @@
         </div>
     </div>
 </div>
-<div class="container-fluid">
+<div class="container-fluid" id="newsletter">
     <div class="row hp-newsletter">
         <div class="col-md-4 offset-md-2">
             <div class="hp-header">Získajte okamžitú zľavu 10%</div>
@@ -261,16 +265,16 @@
         <div class="col-md-4">
             <div class="d-flex align-items-center hp-email-wrapper">
                 <!--
-                <input type="email" name="newsletter-email" placeholder="E-mail">
-                <a href="#" class="rect-button">Prihlásiť sa k odberu</a>
-                -->
+            <input type="email" name="newsletter-email" placeholder="E-mail">
+            <a href="#" class="rect-button">Prihlásiť sa k odberu</a>
+            -->
 
                 @using (Html.BeginForm("Subscribe", "Newsletter", FormMethod.Post, new { enctype = "multipart/form-data", id = "Subscribeform" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.EditorFor(model => model.UsersModel.Email, new { htmlAttributes = new { @id = "subscriberEmail", placeholder = "E-mail" } })
-                    <a href="#" class="rect-button">Prihlásiť sa k odberu</a>
+                    <a class="rect-button">Prihlásiť sa k odberu</a>
                     <button data-sitekey="6LcR9pQaAAAAAIXX1pzZbO8Esnn4EAX1sqOilguE" class="g-recaptcha d-none" data-callback="onSubmit" data-action="submit">Prihlásiť sa k odberu</button>
                     @Html.ValidationMessageFor(model => model.UsersModel.Email, "", new { @class = "text-danger" })
                 }
@@ -278,6 +282,9 @@
             <div class="hp-checkbox-wrapper">
                 <input type="checkbox" id="hp-newsletter-checkbox"><label for="hp-newsletter-checkbox">Súhlasím so <a href="#">spracúvaním osobných údajov.</a></label>
             </div>
+        </div>
+        <div class="container">
+            @Html.Raw(TempData["msg"])
         </div>
     </div>
 
@@ -334,8 +341,9 @@
                     prods = Model.ProductModel.Where(o => o.recommended == true && o.deleted == false).OrderByDescending(o => o.id).Take(10);
                     foreach (var prod in prods)
                     {
+                        var slug = helper.ToUrlSlug(prod.title);
                         <div class="col-md product">
-                            <a href="/detail-produktu/@prod.id/@prod.title">
+                            <a href="/detail-produktu/@prod.id/@slug">
                                 <img src="uploads/@prod.image">
                                 <div class="prod-labels">
                                     @{
@@ -448,19 +456,15 @@
             <div class="row">
 
                 @{
-
                     var articles = Model.BlogModel.OrderByDescending(o => o.id).Take(4);
                     foreach (var article in articles)
                     {
-
                         <a href="clanok/@article.slug" class="col-md-3 article">
                             <img src="uploads/@article.image">
                             <div class="header">@article.title</div>
                             <div class="date"><i class="bi bi-alarm"></i><span>@DateTime.Parse(@article.date).ToString("dd.MM.yyyy")</span></div>
                         </a>
-
                     }
-
                 }
             </div>
         </div>

@@ -5,192 +5,194 @@
     var visibility = "";
 }
 <style>
-     #front-picture, #services{
+    #front-picture, #services {
         display: none !important;
     }
 </style>
-<h2 class="pt-5">Zoznam vašich posledných objednávok</h2>
-<hr />
-<table class="table mb-5" style="font-size: 14px;">
-    <thead class="thead-light">
-    <tr>
-        <th>Č. ob.</th>
-        <th style="width: 25vw;">Meno a priezvisko, adresa</th>
-        <th>Dátum</th>
-        <th>Doprava</th>
-        <th>Cena spolu</th>
-        <th>PDF faktúra</th>
+<div class="container">
 
-    </tr>
-    </thead>
-    @if (ViewBag.Details == null && Model.OrderDataModel != null && Model.OrderDataModel.Count() != 0)
-    {
-        foreach (var item in Model.OrderDataModel)
-        {
-            var trans = "";
-            if (item.shipping == "transfer1")
-            {
-                trans = "Kuriérska spoločnosť";
-            }
-            else if (item.shipping == "transfer2")
-            {
-                trans = "Slovenská pošta";
-            }
-            else if (item.shipping == "transfer3")
-            {
-                trans = "Osobný odber";
-            }
-            
-            if (item.status == 1)
-            {
-                visibility = "visibility: hidden !important;";
-            }
-            else
-            {
-                visibility = "visibility: visible !important;";
-            }
-
+    <h2 class="pt-5">Zoznam vašich posledných objednávok</h2>
+    <hr />
+    <table class="table mb-5" style="font-size: 14px;">
+        <thead class="thead-light">
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.ordernumber)</td>
-                <td><strong>@Html.DisplayFor(modelItem => item.name) @Html.DisplayFor(modelItem => item.surname)</strong>&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.address), @Html.DisplayFor(modelItem => item.city) @Html.DisplayFor(modelItem => item.zip)</td>
-                <td>@Html.DisplayFor(modelItem => item.date)</td>
-                <td>@trans</td>
-                <td style="background-color: #e4ffe3; text-align: center;"><strong>@Html.DisplayFor(modelItem => item.finalprice) €</strong></td>
-                <td><a href="@Url.Action("PdfOrder", "Orders", new {orderNumber = item.ordernumber})"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF faktúra" /></a></td>
+                <th>Č. ob.</th>
+                <th style="width: 25vw;">Meno a priezvisko, adresa</th>
+                <th>Dátum</th>
+                <th>Doprava</th>
+                <th>Cena spolu</th>
+                <th>PDF faktúra</th>
+
             </tr>
+        </thead>
+        @if (ViewBag.Details == null && Model.OrderDataModel != null && Model.OrderDataModel.Count() != 0)
+        {
+            foreach (var item in Model.OrderDataModel)
+            {
+                var trans = "";
+                if (item.shipping == "transfer1")
+                {
+                    trans = "Kuriérska spoločnosť";
+                }
+                else if (item.shipping == "transfer2")
+                {
+                    trans = "Slovenská pošta";
+                }
+                else if (item.shipping == "transfer3")
+                {
+                    trans = "Osobný odber";
+                }
+
+                if (item.status == 1)
+                {
+                    visibility = "visibility: hidden !important;";
+                }
+                else
+                {
+                    visibility = "visibility: visible !important;";
+                }
+
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.ordernumber)</td>
+                    <td><strong>@Html.DisplayFor(modelItem => item.name) @Html.DisplayFor(modelItem => item.surname)</strong>&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.address), @Html.DisplayFor(modelItem => item.city) @Html.DisplayFor(modelItem => item.zip)</td>
+                    <td>@Html.DisplayFor(modelItem => item.date)</td>
+                    <td>@trans</td>
+                    <td style="background-color: #e4ffe3; text-align: center;"><strong>@Html.DisplayFor(modelItem => item.finalprice) €</strong></td>
+                    <td><a href="@Url.Action("PdfOrder", "Orders", new {orderNumber = item.ordernumber})"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF faktúra" /></a></td>
+                </tr>
+            }
+
+
+        }
+        else
+        {
+            <p class="badge-warning pl-3">Nevytvorili ste zatiaľ žiadnu objednávku.</p>
         }
 
 
-    }
-    else
-    {
-        <p class="badge-warning pl-3">Nevytvorili ste zatiaľ žiadnu objednávku.</p>
-    }
+    </table>
+    <hr />
+    <div class="col-12 col-sm-12 pt-3 pt-sm-0">
+        @using (Html.BeginForm("SaveCustomerDetails", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform", name = "Myform" }))
+        {
+            <h3>Uložené fakturačné údaje</h3>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <div class="col-md-14">
+                            @Html.EditorFor(model => model.OrdersModel.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Meno*" } })
+                            @Html.ValidationMessageFor(model => model.OrdersModel.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <div class="col-md-14">
+                            @Html.EditorFor(model => model.OrdersModel.Surname, new { htmlAttributes = new { @class = "form-control", placeholder = "Priezvisko*" } })
+                            @Html.ValidationMessageFor(model => model.OrdersModel.Surname, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <div class="col-md-14">
+                            @Html.EditorFor(model => model.OrdersModel.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Ulica, číslo domu*" } })
+                            @Html.ValidationMessageFor(model => model.OrdersModel.Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <div class="col-md-14">
+                            @Html.EditorFor(model => model.OrdersModel.City, new { htmlAttributes = new { @class = "form-control", placeholder = "Mesto*" } })
+                            @Html.ValidationMessageFor(model => model.OrdersModel.City, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <div class="col-md-14">
+                            @Html.EditorFor(model => model.OrdersModel.Zip, new { htmlAttributes = new { @class = "form-control", placeholder = "PSČ*" } })
+                            @Html.ValidationMessageFor(model => model.OrdersModel.Zip, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <div class="col-md-14">
+                            @Html.EditorFor(model => model.OrdersModel.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Telefón*" } })
+                            @Html.ValidationMessageFor(model => model.OrdersModel.Phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <div class="col-md-14">
+                            @Html.EditorFor(model => model.OrdersModel.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Váš e-mail*" } })
+                            @Html.ValidationMessageFor(model => model.OrdersModel.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <div class="col-md-14">
+                            @Html.EditorFor(model => model.OrdersModel.Companyname, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov firmy" } })
+                            @Html.ValidationMessageFor(model => model.OrdersModel.Companyname, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <div class="col-md-14">
+                            @Html.EditorFor(model => model.OrdersModel.Ico, new { htmlAttributes = new { @class = "form-control", placeholder = "IČO" } })
+                            @Html.ValidationMessageFor(model => model.OrdersModel.Ico, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <div class="col-md-14">
+                            @Html.EditorFor(model => model.OrdersModel.Dic, new { htmlAttributes = new { @class = "form-control", placeholder = "DIČ" } })
+                            @Html.ValidationMessageFor(model => model.OrdersModel.Dic, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <div class="col-md-14">
+                            @Html.EditorFor(model => model.OrdersModel.Icdph, new { htmlAttributes = new { @class = "form-control", placeholder = "IČ DPH" } })
+                            @Html.ValidationMessageFor(model => model.OrdersModel.Icdph, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <div style="text-align:right">
+                            <input type="submit" class="btn btn-danger my-4" value="Uložiť zmenené osobné údaje">
 
+                        </div>
+                        <div style="text-align:right">
+                            @if (Session["userid"] != null)
+                            {
+                                var usID = Int32.Parse(Session["userid"].ToString());
+                                @Html.ActionLink("Zmazať účet a všetky osobné údaje", "DeleteAccount", "Home", new { userId = usID, confirm = true }, new { onclick = "return confirm('Naozaj chcete zmazať svoj účet?')", @class = "small", style = "padding:.375rem .75rem !important;" + visibility + "", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne zmažete Váš účet." })
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 
-</table>
-<hr />
-<div class="col-12 col-sm-12 pt-3 pt-sm-0">
-@using (Html.BeginForm("SaveCustomerDetails", "Home", FormMethod.Post, new {enctype = "multipart/form-data", id = "Myform", name = "Myform"}))
-{
-    <h3>Uložené fakturačné údaje</h3>
-    <div class="row">
-        <div class="col">
-            <div class="form-group">
-                <div class="col-md-14">
-                    @Html.EditorFor(model => model.OrdersModel.Name, new {htmlAttributes = new {@class = "form-control", placeholder = "Meno*"}})
-                    @Html.ValidationMessageFor(model => model.OrdersModel.Name, "", new {@class = "text-danger"})
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="form-group">
-                <div class="col-md-14">
-                    @Html.EditorFor(model => model.OrdersModel.Surname, new {htmlAttributes = new {@class = "form-control", placeholder = "Priezvisko*"}})
-                    @Html.ValidationMessageFor(model => model.OrdersModel.Surname, "", new {@class = "text-danger"})
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="form-group">
-                <div class="col-md-14">
-                    @Html.EditorFor(model => model.OrdersModel.Address, new {htmlAttributes = new {@class = "form-control", placeholder = "Ulica, číslo domu*"}})
-                    @Html.ValidationMessageFor(model => model.OrdersModel.Address, "", new {@class = "text-danger"})
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="form-group">
-                <div class="col-md-14">
-                    @Html.EditorFor(model => model.OrdersModel.City, new {htmlAttributes = new {@class = "form-control", placeholder = "Mesto*"}})
-                    @Html.ValidationMessageFor(model => model.OrdersModel.City, "", new {@class = "text-danger"})
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="form-group">
-                <div class="col-md-14">
-                    @Html.EditorFor(model => model.OrdersModel.Zip, new {htmlAttributes = new {@class = "form-control", placeholder = "PSČ*"}})
-                    @Html.ValidationMessageFor(model => model.OrdersModel.Zip, "", new {@class = "text-danger"})
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="form-group">
-                <div class="col-md-14">
-                    @Html.EditorFor(model => model.OrdersModel.Phone, new {htmlAttributes = new {@class = "form-control", placeholder = "Telefón*"}})
-                    @Html.ValidationMessageFor(model => model.OrdersModel.Phone, "", new {@class = "text-danger"})
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="form-group">
-                <div class="col-md-14">
-                    @Html.EditorFor(model => model.OrdersModel.Email, new {htmlAttributes = new {@class = "form-control", placeholder = "Váš e-mail*"}})
-                    @Html.ValidationMessageFor(model => model.OrdersModel.Email, "", new {@class = "text-danger"})
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="form-group">
-                <div class="col-md-14">
-                    @Html.EditorFor(model => model.OrdersModel.Companyname, new {htmlAttributes = new {@class = "form-control", placeholder = "Názov firmy"}})
-                    @Html.ValidationMessageFor(model => model.OrdersModel.Companyname, "", new {@class = "text-danger"})
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="form-group">
-                <div class="col-md-14">
-                    @Html.EditorFor(model => model.OrdersModel.Ico, new {htmlAttributes = new {@class = "form-control", placeholder = "IČO"}})
-                    @Html.ValidationMessageFor(model => model.OrdersModel.Ico, "", new {@class = "text-danger"})
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="form-group">
-                <div class="col-md-14">
-                    @Html.EditorFor(model => model.OrdersModel.Dic, new {htmlAttributes = new {@class = "form-control", placeholder = "DIČ"}})
-                    @Html.ValidationMessageFor(model => model.OrdersModel.Dic, "", new {@class = "text-danger"})
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="form-group">
-                <div class="col-md-14">
-                    @Html.EditorFor(model => model.OrdersModel.Icdph, new {htmlAttributes = new {@class = "form-control", placeholder = "IČ DPH"}})
-                    @Html.ValidationMessageFor(model => model.OrdersModel.Icdph, "", new {@class = "text-danger"})
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="form-group">
-                <div style="text-align:right">
-                    <input type="submit" class="btn btn-danger my-4" value="Uložiť zmenené osobné údaje">
-
-                </div>
-                <div style="text-align:right">
-                    @if (Session["userid"] != null)
-                    {
-                        var usID = Int32.Parse(Session["userid"].ToString());
-                        @Html.ActionLink("Zmazať účet a všetky osobné údaje", "DeleteAccount", "Home", new { userId = usID, confirm = true }, new { onclick = "return confirm('Naozaj chcete zmazať svoj účet?')", @class = "small", style = "padding:.375rem .75rem !important;" + visibility + "", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne zmažete Váš účet." })
-                    }
-                </div>
-                </div>
-            </div>
-    </div>
-}
 </div>
-
-            
 
