@@ -34,6 +34,8 @@ namespace Cms.Models
         public string Custom8 { get; set; }
         public string Custom9 { get; set; }
         public string Custom10 { get; set; }
+        public bool Heureka { get; set; }
+        public bool HeurekaDarcek { get; set; }
         public bool Recommended { get; set; }
         [AllowHtml]
         public string Description { get; set; }

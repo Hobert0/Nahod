@@ -308,7 +308,33 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="mt-1 text-right" style="width: 200px;">
+            <strong>Heureka ?</strong>
+        </div>
+        <div class="col-4 mt-1">
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.CheckBoxFor(model => model.Heureka, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Heureka, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
+        </div>
+    </div><div class="row">
+    <div class="mt-1 text-right" style="width: 200px;">
+        <strong>Heureka darček ?</strong>
+    </div>
+    <div class="col-4 mt-1">
+        <div class="form-group">
+            <div class="col-md-3">
+                @Html.CheckBoxFor(model => model.HeurekaDarcek, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.HeurekaDarcek, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </div>
+</div>
     <div class="row">
         <div class="mt-1 text-right" style="width: 200px;">
             <strong>Odporúčaný produkt ?</strong>
@@ -1114,28 +1140,30 @@
 
             for ($i = 1; $i <= $num; $i++) {
 
-                $varPrice = $(".clonedVarSection[num=" + $i + "]").find(".varPrice").val().replace(",", ".");
-                $varDiscountprice = $(".clonedVarSection[num=" + $i + "]").find(".varDiscountPrice").val().replace(",", ".");
+                $varPrice = $(".clonedVarSection[num=" + $i + "]").find(".varPrice").val();
+                $varDiscountprice = $(".clonedVarSection[num=" + $i + "]").find(".varDiscountPrice").val();
 
-                if ($varPrice != "" && !$.isNumeric($varPrice)) {
+                if ($varPrice != "" && !$.isNumeric($varPrice.replace(",", "."))) {
                     $(".clonedVarSection[num=" + $i + "]").find(".varPrice").addClass("error");
 
                     $valid = false;
                 } else {
                     $(".clonedVarSection[num=" + $i + "]").find(".varPrice").removeClass("error");
 
-                    $(".clonedVarSection[num=" + $i + "]").find(".varPrice").val(parseFloat($(".clonedVarSection[num=" + $i + "]").find(".varPrice").val()));
+                    if ($varPrice != "") {
+                        $(".clonedVarSection[num=" + $i + "]").find(".varPrice").val(parseFloat($varPrice.replace(",", ".")));
+                    }
                 }
 
-                if ($varDiscountprice != "" && !$.isNumeric($varDiscountprice)) {
+                if ($varDiscountprice != "" && !$.isNumeric($varDiscountprice.replace(",", "."))) {
                     $(".clonedVarSection[num=" + $i + "]").find(".varDiscountPrice").addClass("error");
 
                     $valid = false;
                 } else {
                     $(".clonedVarSection[num=" + $i + "]").find(".varDiscountPrice").removeClass("error");
 
-                    if ($(".clonedVarSection[num=" + $i + "]").find(".varDiscountPrice").val() != "") {
-                        $(".clonedVarSection[num=" + $i + "]").find(".varDiscountPrice").val(parseFloat($(".clonedVarSection[num=" + $i + "]").find(".varDiscountPrice").val()));
+                    if ($varDiscountprice != "") {
+                        $(".clonedVarSection[num=" + $i + "]").find(".varDiscountPrice").val(parseFloat($varDiscountprice.replace(",", ".")));
                     }
                 }
             }

@@ -88,7 +88,7 @@
         <link href="~/Content/fonts/icomoon/icons.css" rel="stylesheet">
 
         <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
-        <!--<link rel="stylesheet" href="~/Content/style.css" />-->
+        <link rel="stylesheet" href="~/Content/style.css" />
         <link rel="stylesheet" href="~/Content/style-responsive.css" />
         <link rel="stylesheet" href="~/Content/megamenu.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -203,8 +203,24 @@
                         <span>info@nahod.sk</span>
                     </div>
                     <div class="col-md-4 d-flex align-items-center">
-                        <img class="icon" src="~/Content/images/phone-call.svg">
-                        <span>Prihlásiť sa / Registrovať</span>
+                        @{
+                            if (username != "")
+                            {
+                                <img class="icon" src="~/Content/images/phone-call.svg"><span>
+                                    Vitajte @username!<br>
+                                    @if (role == "0")
+                                    {
+                                        <a href="/cms"><u>Administrácia</u></a><br>
+                                    }
+                                    <a href="@Url.Action("Account", "Home")"><u>Môj účet</u></a><br><a class="logout" href="@Url.Action("LogOut", "Admin")"><u>Odhlásiť sa</u></a>
+                                </span>
+                            }
+                            else
+                            {
+                                <img class="icon" src="~/Content/images/phone-call.svg">
+                                <span><a href="#" class="login-modal">Prihlásiť sa</a> / <a href="#" class="register-modal">Registrovať</a></span>
+                            }
+                        }
                     </div>
                 </div>
             </div>
@@ -289,12 +305,12 @@
     </div>
 
 
-    @*
-        @{
-            Html.RenderPartial("_LoginHeader");
-            Html.RenderPartial("_RegisterHeader");
-        }
 
+    @{
+        Html.RenderPartial("_LoginHeader");
+        Html.RenderPartial("_RegisterHeader");
+    }
+    @*
             @(username != "" ? Html.Raw("<div class='topmenu-col auth'>") : Html.Raw("<div class='topmenu-col guest'>"))
             <div class="container">
                 <div class="row top-header">
@@ -782,6 +798,26 @@
             })
     </script>
     -->
+
+    <script>
+        $(document).ready(function () {
+            $(".login-modal").click(function () {
+                $("#myModal").css("display", "flex");
+            });
+
+            $(".register-modal").click(function () {
+                $("#myModalReg").css("display", "flex");
+            });
+
+            $("#myModal .close").click(function () {
+                $("#myModal").css("display", "none");
+            });
+
+            $("#myModalReg .closereg").click(function () {
+                $("#myModalReg").css("display", "none");
+            });
+        });
+    </script>
 
 </body>
 </html>

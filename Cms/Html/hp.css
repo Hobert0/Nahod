@@ -209,12 +209,12 @@ html, body {
             margin-bottom: 10px;
         }
 
-        .products .product .labels {
+        .products .product .prod-labels {
             text-align: center;
             margin-bottom: 10px;
         }
 
-            .products .product .labels span {
+            .products .product .prod-labels span {
                 padding: 1.5px 10px;
                 border-radius: 5px;
                 text-transform: uppercase;
@@ -223,40 +223,40 @@ html, body {
                 font-size: 11px;
             }
 
-            .products .product .labels .discount {
+            .products .product .prod-labels .prod-discount {
                 background-color: #ea2627;
             }
 
-            .products .product .labels .new {
+            .products .product .prod-labels .prod-new {
                 background-color: #77cc36;
             }
 
-        .products .product .header {
+        .products .product .prod-header {
             font-size: 12px;
             font-weight: bold;
             margin-bottom: 5px;
         }
 
-        .products .product .text {
+        .products .product .prod-text {
             font-size: 11px;
             margin-bottom: 5px;
         }
 
-        .products .product .prices {
+        .products .product .prod-prices {
             margin-bottom: 5px;
         }
 
-            .products .product .prices .base {
+            .products .product .prod-prices .prod-base {
                 font-size: 20px;
                 font-weight: bold;
             }
 
-            .products .product .prices .discount {
+            .products .product .prod-prices .prod-discount {
                 text-decoration: line-through;
                 margin-right: 3px;
             }
 
-        .products .product .add-to-cart {
+        .products .product .prod-add-to-cart {
             border: 1px solid black;
             display: inline-block;
             padding: 1px 15px;
@@ -266,11 +266,11 @@ html, body {
             position: relative;
         }
 
-            .products .product .add-to-cart:hover {
+            .products .product .prod-add-to-cart:hover {
                 text-decoration: none;
             }
 
-            .products .product .add-to-cart .icon {
+            .products .product .prod-add-to-cart .prod-icon {
                 width: 25px;
                 top: -2px;
                 position: absolute;
@@ -279,26 +279,26 @@ html, body {
             }
 
 
-.newsletter {
+.hp-newsletter {
     background-color: rgba(0,0,0,0.05);
     padding: 30px 0px;
 }
 
-    .newsletter .header {
+    .hp-newsletter .hp-header {
         font-weight: bold;
         font-size: 26px;
         margin-bottom: 10px;
     }
 
-    .newsletter .text {
+    .hp-newsletter .hp-text {
         font-size: 13px;
     }
 
-    .newsletter .email-wrapper {
+    .hp-newsletter .hp-email-wrapper {
         padding-top: 10px;
     }
 
-        .newsletter .email-wrapper input {
+        .hp-newsletter .hp-email-wrapper input {
             border-top-left-radius: 5px;
             border-bottom-left-radius: 5px;
             border: 1px solid rgba(0,0,0,0.1);
@@ -307,12 +307,12 @@ html, body {
             padding: 0px 15px;
         }
 
-            .newsletter .email-wrapper input:focus {
+            .hp-newsletter .hp-email-wrapper input:focus {
                 outline: none;
             }
 
 
-        .newsletter .email-wrapper .rect-button {
+        .hp-newsletter .hp-email-wrapper .rect-button {
             background-color: orange;
             color: white;
             display: inline-block;
@@ -323,16 +323,16 @@ html, body {
             margin-left: -5px;
         }
 
-    .newsletter .checkbox-wrapper {
+    .hp-newsletter .hp-checkbox-wrapper {
         margin-top: 5px;
     }
 
-        .newsletter .checkbox-wrapper input {
+        .hp-newsletter .hp-checkbox-wrapper input {
             margin-left: 3px;
             margin-right: 10px;
         }
 
-        .newsletter .checkbox-wrapper a {
+        .hp-newsletter .hp-checkbox-wrapper a {
             color: black;
             text-decoration: underline;
         }
@@ -516,6 +516,6 @@ html, body {
     color: red !important;
 }
 
-.error a {
-    color: red !important;
-}
+    .error a {
+        color: red !important;
+    }

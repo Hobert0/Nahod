@@ -382,6 +382,8 @@ namespace Cms.Controllers
                     model.Image = product.image;
                     model.Description = product.description;
                     model.Gallery = product.gallery;
+                    model.Heureka = product.heureka;
+                    model.HeurekaDarcek = product.heurekadarcek;
                     model.Recommended = product.recommended;
                     model.Weightunit = product.weightunit;
                     model.Category = product.category;
@@ -465,6 +467,8 @@ namespace Cms.Controllers
             o.type = model.Type;
             o.weight = model.Weight;
             o.weightunit = model.Weightunit;
+            o.heureka = model.Heureka;
+            o.heurekadarcek = model.HeurekaDarcek;
             o.recommended = model.Recommended;
             o.description = model.Description;
             if (model.Discountprice != "NaN" && model.Discountprice != "" && model.Discountprice != null)
@@ -513,8 +517,10 @@ namespace Cms.Controllers
                     v.prod_id = o.id;
                     v.number = varP.number;
 
+                    var xxx = varP.price.Value;
+
                     //ak nie je vyplnena cena pre variantu, skopirujeme cenu z produktu
-                    if (varP.price != null)
+                    if (xxx != null && xxx != "")
                     {
                         v.price = varP.price;
                     }
@@ -524,7 +530,7 @@ namespace Cms.Controllers
                     }
 
                     //ak nie je vyplnena discount cena pre variantu, skopirujeme discount cenu z produktu
-                    if (varP.discountprice != null)
+                    if (varP.discountprice != null && varP.discountprice != "")
                     {
                         v.discountprice = varP.discountprice;
                     }
@@ -684,6 +690,8 @@ namespace Cms.Controllers
             o.type = model.Type;
             o.weight = model.Weight;
             o.weightunit = model.Weightunit;
+            o.heureka = model.Heureka;
+            o.heurekadarcek = model.HeurekaDarcek;
             o.recommended = model.Recommended;
             o.description = model.Description;
             if (model.Discountprice != "NaN" && model.Discountprice != null)
@@ -735,7 +743,7 @@ namespace Cms.Controllers
                 v.prod_id = o.id;
                 v.number = varP.number;
 
-                if (varP.price != null)
+                if (varP.price != null && varP.price != "")
                 {
                     v.price = varP.price;
                 }
@@ -743,7 +751,7 @@ namespace Cms.Controllers
                     v.price = Decimal.Parse(model.Price, CultureInfo.InvariantCulture);
                 }
 
-                if (varP.discountprice != null)
+                if (varP.discountprice != null && varP.discountprice != "")
                 {
                     v.discountprice = varP.discountprice;
                 } else if (model.Discountprice != "NaN" && model.Discountprice != null) {

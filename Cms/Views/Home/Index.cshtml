@@ -135,34 +135,34 @@
 
                         <a href="/detail-produktu/@prod.id/@prod.title" class="col-md product">
                             <img src="uploads/@prod.image">
-                            <div class="labels">
+                            <div class="prod-labels">
                                 @{
                                     if (prod.discountprice != null)
                                     {
-                                        <span class="discount">akcia</span>
+                                        <span class="prod-discount">akcia</span>
                                     }
                                 }
 
                                 @{
                                     if (DateTime.Compare(DateTime.Parse(prod.date), DateTime.Parse(lastNewProd.date)) >= 0)
                                     {
-                                        <span class="new">novinka</span>
+                                        <span class="prod-new">novinka</span>
                                     }
                                 }
                             </div>
-                            <div class="header">@prod.title</div>
-                            <div class="text">@prod.description</div>
-                            <div class="prices">
+                            <div class="prod-header">@prod.title</div>
+                            <div class="prod-text">@prod.description</div>
+                            <div class="prod-prices">
                                 @{
                                     if (prod.discountprice != null)
                                     {
-                                        <span class="discount">@prod.discountprice €</span>
+                                        <span class="prod-discount">@prod.discountprice €</span>
                                     }
                                 }
-                                <span class="base">@prod.price €</span>
+                                <span class="prod-base">@prod.price €</span>
                             </div>
-                            <span class="add-to-cart">
-                                <img class="icon" src="~/Content/images/cart.svg">
+                            <span class="prod-add-to-cart">
+                                <img class="prod-icon" src="~/Content/images/cart.svg">
                                 <span>Pridať do košíka</span>
                             </span>
                         </a>
@@ -186,34 +186,34 @@
 
                         <a href="/detail-produktu/@prod.id/@prod.title" class="col-md product">
                             <img src="uploads/@prod.image">
-                            <div class="labels">
+                            <div class="prod-labels">
                                 @{
                                     if (prod.discountprice != null)
                                     {
-                                        <span class="discount">akcia</span>
+                                        <span class="prod-discount">akcia</span>
                                     }
                                 }
 
                                 @{
                                     if (DateTime.Compare(DateTime.Parse(prod.date), DateTime.Parse(lastNewProd.date)) >= 0)
                                     {
-                                        <span class="new">novinka</span>
+                                        <span class="prod-new">novinka</span>
                                     }
                                 }
                             </div>
-                            <div class="header">@prod.title</div>
-                            <div class="text">@prod.description</div>
-                            <div class="prices">
+                            <div class="prod-header">@prod.title</div>
+                            <div class="prod-text">@prod.description</div>
+                            <div class="prod-prices">
                                 @{
                                     if (prod.discountprice != null)
                                     {
-                                        <span class="discount">@prod.discountprice €</span>
+                                        <span class="prod-discount">@prod.discountprice €</span>
                                     }
                                 }
-                                <span class="base">@prod.price €</span>
+                                <span class="prod-base">@prod.price €</span>
                             </div>
-                            <span class="add-to-cart">
-                                <img class="icon" src="~/Content/images/cart.svg">
+                            <span class="prod-add-to-cart">
+                                <img class="prod-icon" src="~/Content/images/cart.svg">
                                 <span>Pridať do košíka</span>
                             </span>
                         </a>
@@ -224,18 +224,18 @@
     </div>
 </div>
 <div class="container-fluid">
-    <div class="row newsletter">
+    <div class="row hp-newsletter">
         <div class="col-md-4 offset-md-2">
-            <div class="header">Získajte okamžitú zľavu 10%</div>
-            <div class="text">Chcete byť pravidelne informovaní o novinkách a zvýhodnených akciách?</div>
-            <div class="text font-weight-bold">Prihláste sa k odberu noviniek</div>
+            <div class="hp-header">Získajte okamžitú zľavu 10%</div>
+            <div class="hp-text">Chcete byť pravidelne informovaní o novinkách a zvýhodnených akciách?</div>
+            <div class="hp-text font-weight-bold">Prihláste sa k odberu noviniek</div>
         </div>
         <div class="col-md-4">
-            <div class="d-flex align-items-center email-wrapper">
+            <div class="d-flex align-items-center hp-email-wrapper">
                 <!--
-    <input type="email" name="newsletter-email" placeholder="E-mail">
-    <a href="#" class="rect-button">Prihlásiť sa k odberu</a>
-    -->
+                <input type="email" name="newsletter-email" placeholder="E-mail">
+                <a href="#" class="rect-button">Prihlásiť sa k odberu</a>
+                -->
 
                 @using (Html.BeginForm("Subscribe", "Newsletter", FormMethod.Post, new { enctype = "multipart/form-data", id = "Subscribeform" }))
                 {
@@ -247,8 +247,8 @@
                     @Html.ValidationMessageFor(model => model.UsersModel.Email, "", new { @class = "text-danger" })
                 }
             </div>
-            <div class="checkbox-wrapper">
-                <input type="checkbox" id="newsletter-checkbox"><label for="newsletter-checkbox">Súhlasím so <a href="#">spracúvaním osobných údajov.</a></label>
+            <div class="hp-checkbox-wrapper">
+                <input type="checkbox" id="hp-newsletter-checkbox"><label for="hp-newsletter-checkbox">Súhlasím so <a href="#">spracúvaním osobných údajov.</a></label>
             </div>
         </div>
     </div>
@@ -308,34 +308,34 @@
                     {
                         <a href="/detail-produktu/@prod.id/@prod.title" class="col-md product">
                             <img src="uploads/@prod.image">
-                            <div class="labels">
+                            <div class="prod-labels">
                                 @{
                                     if (prod.discountprice != null)
                                     {
-                                        <span class="discount">akcia</span>
+                                        <span class="prod-discount">akcia</span>
                                     }
                                 }
 
                                 @{
                                     if (DateTime.Compare(DateTime.Parse(prod.date), DateTime.Parse(lastNewProd.date)) >= 0)
                                     {
-                                        <span class="new">novinka</span>
+                                        <span class="prod-new">novinka</span>
                                     }
                                 }
                             </div>
-                            <div class="header">@prod.title</div>
-                            <div class="text">@prod.description</div>
-                            <div class="prices">
+                            <div class="prod-header">@prod.title</div>
+                            <div class="prod-text">@prod.description</div>
+                            <div class="prod-prices">
                                 @{
                                     if (prod.discountprice != null)
                                     {
-                                        <span class="discount">@prod.discountprice €</span>
+                                        <span class="prod-discount">@prod.discountprice €</span>
                                     }
                                 }
-                                <span class="base">@prod.price €</span>
+                                <span class="prod-base">@prod.price €</span>
                             </div>
-                            <span href="#" class="add-to-cart">
-                                <img class="icon" src="~/Content/images/cart.svg">
+                            <span class="prod-add-to-cart">
+                                <img class="prod-icon" src="~/Content/images/cart.svg">
                                 <span>Pridať do košíka</span>
                             </span>
                         </a>
@@ -440,10 +440,10 @@
         $("#Subscribeform a.rect-button").click(function (e) {
             e.preventDefault();
 
-            if (isEmail($("#subscriberEmail").val()) && $("#newsletter-checkbox").is(":checked")) {
+            if (isEmail($("#subscriberEmail").val()) && $("#hp-newsletter-checkbox").is(":checked")) {
 
                 $("#Subscribeform input").removeClass("error");
-                $(".newsletter label[for=newsletter-checkbox]").removeClass("error");
+                $(".hp-newsletter label[for=hp-newsletter-checkbox]").removeClass("error");
 
                 $("#Subscribeform").submit();
 
@@ -451,10 +451,10 @@
 
                 $("#Subscribeform input").addClass("error");
 
-            } else if (!$("#newsletter-checkbox").is(":checked")) {
+            } else if (!$("#hp-newsletter-checkbox").is(":checked")) {
 
                 $("#Subscribeform input").removeClass("error");
-                $(".newsletter label[for=newsletter-checkbox]").addClass("error");
+                $(".hp-newsletter label[for=hp-newsletter-checkbox]").addClass("error");
             }
         });
 

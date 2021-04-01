@@ -221,6 +221,14 @@
                                     else //ak je cena normalna
                                     {
                                         <div class="product-cart row">
+
+
+                                            @{
+                                                var variants = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).ToList();
+                                             }
+
+
+
                                             <div class="col-lg-4 col-sm-6 col-12 product-variation">
                                                 @if (prod.custom6 != null && prod.custom6 != "" && prod.custom6 != "False")
                                                 {

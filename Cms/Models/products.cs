@@ -24,6 +24,7 @@ namespace Cms.Models
         public string date { get; set; }
         public string gallery { get; set; }
         public string category { get; set; }
+        public string type { get; set; }
         public string weight { get; set; }
         public string weightunit { get; set; }
         public string description { get; set; }
@@ -38,7 +39,8 @@ namespace Cms.Models
         public string custom8 { get; set; }
         public string custom9 { get; set; }
         public string custom10 { get; set; }
+        public bool heureka { get; set; }
+        public bool heurekadarcek { get; set; }
         public bool deleted { get; set; }
-        public string type { get; set; }
     }
 }

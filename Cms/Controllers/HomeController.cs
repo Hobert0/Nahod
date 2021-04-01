@@ -543,6 +543,8 @@ namespace Cms.Controllers
             model.PagesModel = db.pages.ToList();
             model.BrandsModel = db.brands.ToList();
             model.CategoriesModel = db.categories.ToList();
+            model.VariantModel = db.variants.ToList();
+            model.AttributesModel = db.attributes.ToList();
             model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
 
             if (id == null)
