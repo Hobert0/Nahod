@@ -151,8 +151,6 @@ $("#addproductbtn").click(function () {
             "onclick": function () { document.location.href = '/kosik'; }
         }
 
-        console.log($sum + " €");
-
         document.getElementById("cart-qty").innerHTML = result.length;
         document.getElementById("cart-total").innerHTML = $sum + " €";
     }

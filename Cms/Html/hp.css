@@ -190,8 +190,9 @@ html, body {
         margin-right: 10px;
     }
 
-        .products .product:hover {
+        .products .product > *:hover {
             text-decoration: none;
+            color: black;
         }
 
         .products .product:last-child {
@@ -264,11 +265,8 @@ html, body {
             font-size: 11px;
             color: black;
             position: relative;
+            cursor: pointer;
         }
-
-            .products .product .prod-add-to-cart:hover {
-                text-decoration: none;
-            }
 
             .products .product .prod-add-to-cart .prod-icon {
                 width: 25px;

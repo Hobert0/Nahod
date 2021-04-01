@@ -517,10 +517,8 @@ namespace Cms.Controllers
                     v.prod_id = o.id;
                     v.number = varP.number;
 
-                    var xxx = varP.price.Value;
-
                     //ak nie je vyplnena cena pre variantu, skopirujeme cenu z produktu
-                    if (xxx != null && xxx != "")
+                    if (varP.price != null && varP.price.ToString() != "")
                     {
                         v.price = varP.price;
                     }
@@ -530,7 +528,7 @@ namespace Cms.Controllers
                     }
 
                     //ak nie je vyplnena discount cena pre variantu, skopirujeme discount cenu z produktu
-                    if (varP.discountprice != null && varP.discountprice != "")
+                    if (varP.discountprice != null && varP.discountprice.ToString() != "")
                     {
                         v.discountprice = varP.discountprice;
                     }
@@ -633,7 +631,7 @@ namespace Cms.Controllers
             return RedirectToAction("Products", "Admin");
         }
 
-        public ActionResult DuplicateProduct(int? id)
+        public async Task<ActionResult> DuplicateProduct(int? id)
         {
             var data = db.products.Single(i => i.id == id);
             ProductModel model = new ProductModel();
@@ -667,7 +665,7 @@ namespace Cms.Controllers
             var variants = JsonConvert.SerializeObject(db.variants.Where(i => i.prod_id == id));
             model.Variants = variants;
 
-            _ = SaveProduct(model);
+            _ = await SaveProduct(model);
 
             return RedirectToAction("Products", "Admin");
         }

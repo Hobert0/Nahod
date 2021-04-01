@@ -133,39 +133,53 @@
                     foreach (var prod in prods)
                     {
 
-                        <a href="/detail-produktu/@prod.id/@prod.title" class="col-md product">
-                            <img src="uploads/@prod.image">
-                            <div class="prod-labels">
-                                @{
-                                    if (prod.discountprice != null)
-                                    {
-                                        <span class="prod-discount">akcia</span>
+                        <div class="col-md product">
+                            <a href="/detail-produktu/@prod.id/@prod.title">
+                                <img src="uploads/@prod.image">
+                                <div class="prod-labels">
+                                    @{
+                                        if (prod.discountprice != null)
+                                        {
+                                            <span class="prod-discount">akcia</span>
+                                        }
                                     }
-                                }
 
-                                @{
-                                    if (DateTime.Compare(DateTime.Parse(prod.date), DateTime.Parse(lastNewProd.date)) >= 0)
-                                    {
-                                        <span class="prod-new">novinka</span>
+                                    @{
+                                        if (DateTime.Compare(DateTime.Parse(prod.date), DateTime.Parse(lastNewProd.date)) >= 0)
+                                        {
+                                            <span class="prod-new">novinka</span>
+                                        }
                                     }
-                                }
-                            </div>
-                            <div class="prod-header">@prod.title</div>
-                            <div class="prod-text">@prod.description</div>
-                            <div class="prod-prices">
-                                @{
-                                    if (prod.discountprice != null)
-                                    {
-                                        <span class="prod-discount">@prod.discountprice €</span>
+                                </div>
+                                <div class="prod-header">@prod.title</div>
+                                <div class="prod-text">@prod.description</div>
+                                <div class="prod-prices">
+                                    @{
+                                        if (prod.discountprice != null)
+                                        {
+                                            <span class="prod-discount">@prod.price €</span><span class="prod-base">@prod.discountprice €</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="prod-base">@prod.price €</span>
+                                        }
                                     }
+                                </div>
+                            </a>
+
+                            @{
+                                var actualPrice = prod.price.ToString().Replace(",", ".");
+                                if (prod.discountprice != null)
+                                {
+                                    actualPrice = prod.discountprice.ToString().Replace(",", ".");
                                 }
-                                <span class="prod-base">@prod.price €</span>
-                            </div>
-                            <span class="prod-add-to-cart">
+                            }
+
+                            <span onclick='addToCart(@prod.id,false, @actualPrice)' class="prod-add-to-cart">
                                 <img class="prod-icon" src="~/Content/images/cart.svg">
                                 <span>Pridať do košíka</span>
                             </span>
-                        </a>
+                        </div>
                     }
                 }
             </div>
@@ -184,39 +198,53 @@
                     foreach (var prod in prods)
                     {
 
-                        <a href="/detail-produktu/@prod.id/@prod.title" class="col-md product">
-                            <img src="uploads/@prod.image">
-                            <div class="prod-labels">
-                                @{
-                                    if (prod.discountprice != null)
-                                    {
-                                        <span class="prod-discount">akcia</span>
+                        <div class="col-md product">
+                            <a href="/detail-produktu/@prod.id/@prod.title">
+                                <img src="uploads/@prod.image">
+                                <div class="prod-labels">
+                                    @{
+                                        if (prod.discountprice != null)
+                                        {
+                                            <span class="prod-discount">akcia</span>
+                                        }
                                     }
-                                }
 
-                                @{
-                                    if (DateTime.Compare(DateTime.Parse(prod.date), DateTime.Parse(lastNewProd.date)) >= 0)
-                                    {
-                                        <span class="prod-new">novinka</span>
+                                    @{
+                                        if (DateTime.Compare(DateTime.Parse(prod.date), DateTime.Parse(lastNewProd.date)) >= 0)
+                                        {
+                                            <span class="prod-new">novinka</span>
+                                        }
                                     }
-                                }
-                            </div>
-                            <div class="prod-header">@prod.title</div>
-                            <div class="prod-text">@prod.description</div>
-                            <div class="prod-prices">
-                                @{
-                                    if (prod.discountprice != null)
-                                    {
-                                        <span class="prod-discount">@prod.discountprice €</span>
+                                </div>
+                                <div class="prod-header">@prod.title</div>
+                                <div class="prod-text">@prod.description</div>
+                                <div class="prod-prices">
+                                    @{
+                                        if (prod.discountprice != null)
+                                        {
+                                            <span class="prod-discount">@prod.price €</span><span class="prod-base">@prod.discountprice €</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="prod-base">@prod.price €</span>
+                                        }
                                     }
+                                </div>
+                            </a>
+
+                            @{
+                                var actualPrice = prod.price.ToString().Replace(",", ".");
+                                if (prod.discountprice != null)
+                                {
+                                    actualPrice = prod.discountprice.ToString().Replace(",", ".");
                                 }
-                                <span class="prod-base">@prod.price €</span>
-                            </div>
-                            <span class="prod-add-to-cart">
+                            }
+
+                            <span onclick='addToCart(@prod.id,false, @actualPrice)' class="prod-add-to-cart">
                                 <img class="prod-icon" src="~/Content/images/cart.svg">
                                 <span>Pridať do košíka</span>
                             </span>
-                        </a>
+                        </div>
                     }
                 }
             </div>
@@ -306,39 +334,53 @@
                     prods = Model.ProductModel.Where(o => o.recommended == true && o.deleted == false).OrderByDescending(o => o.id).Take(10);
                     foreach (var prod in prods)
                     {
-                        <a href="/detail-produktu/@prod.id/@prod.title" class="col-md product">
-                            <img src="uploads/@prod.image">
-                            <div class="prod-labels">
-                                @{
-                                    if (prod.discountprice != null)
-                                    {
-                                        <span class="prod-discount">akcia</span>
+                        <div class="col-md product">
+                            <a href="/detail-produktu/@prod.id/@prod.title">
+                                <img src="uploads/@prod.image">
+                                <div class="prod-labels">
+                                    @{
+                                        if (prod.discountprice != null)
+                                        {
+                                            <span class="prod-discount">akcia</span>
+                                        }
                                     }
-                                }
 
-                                @{
-                                    if (DateTime.Compare(DateTime.Parse(prod.date), DateTime.Parse(lastNewProd.date)) >= 0)
-                                    {
-                                        <span class="prod-new">novinka</span>
+                                    @{
+                                        if (DateTime.Compare(DateTime.Parse(prod.date), DateTime.Parse(lastNewProd.date)) >= 0)
+                                        {
+                                            <span class="prod-new">novinka</span>
+                                        }
                                     }
-                                }
-                            </div>
-                            <div class="prod-header">@prod.title</div>
-                            <div class="prod-text">@prod.description</div>
-                            <div class="prod-prices">
-                                @{
-                                    if (prod.discountprice != null)
-                                    {
-                                        <span class="prod-discount">@prod.discountprice €</span>
+                                </div>
+                                <div class="prod-header">@prod.title</div>
+                                <div class="prod-text">@prod.description</div>
+                                <div class="prod-prices">
+                                    @{
+                                        if (prod.discountprice != null)
+                                        {
+                                            <span class="prod-discount">@prod.price €</span><span class="prod-base">@prod.discountprice €</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="prod-base">@prod.price €</span>
+                                        }
                                     }
+                                </div>
+                            </a>
+
+                            @{
+                                var actualPrice = prod.price.ToString().Replace(",", ".");
+                                if (prod.discountprice != null)
+                                {
+                                    actualPrice = prod.discountprice.ToString().Replace(",", ".");
                                 }
-                                <span class="prod-base">@prod.price €</span>
-                            </div>
-                            <span class="prod-add-to-cart">
+                            }
+
+                            <span onclick='addToCart(@prod.id,false, @actualPrice)' class="prod-add-to-cart">
                                 <img class="prod-icon" src="~/Content/images/cart.svg">
                                 <span>Pridať do košíka</span>
                             </span>
-                        </a>
+                        </div>
                     }
                 }
             </div>
@@ -426,6 +468,8 @@
 </div>
 
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script src="~/Scripts/add_to_session.js"></script>
+
 
 <script>
     $(document).ready(function () {
