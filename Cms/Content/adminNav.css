@@ -2549,6 +2549,17 @@ div.dt-button-info {
     border-bottom-right-radius: 0;
 }
 
+#ui-id-1 {
+    background: #fff;
+    z-index: 9999;
+    width: 400px !important;
+    list-style: none;
+    padding-left: 15px;
+}
+
+#ui-id-1 a{
+    color: #333 !important;
+}
 .ui-widget-content {
     border: 1px solid #ddd;
 }

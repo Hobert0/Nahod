@@ -23,7 +23,7 @@
 
 <hr />
 
-@using (Html.BeginForm("AddCategory", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+@using (Html.BeginForm("AddCategory", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "MyformCats" }))
 {
     @Html.AntiForgeryToken()
 <div class="form-horizontal">
@@ -67,8 +67,8 @@
         </div>
     </div>
 
-    <div class="row" style="margin:0">
-        <div class="col-md-2" style="padding:0">
+    <div class="row" class="p-0">
+        <div class="col-md-2">
             <div class="form-group">
                 @Html.LabelFor(model => model.Categories.Maincat, "Hlavná kategória")
                 <div class="col-md-13">
@@ -77,10 +77,10 @@
                 </div>
             </div>
         </div>
-    </div>
+  
 
-    <div class="row" style="margin:0">
-        <div class="col-md-2" style="padding:0">
+    
+        <div class="col-md-2" >
             <div class="form-group">
                 @Html.LabelFor(model => model.Categories.Topcat, "Nadradená kategória")
                 <div class="col-md-13">
@@ -89,10 +89,9 @@
                 </div>
             </div>
         </div>
-    </div>
+  
 
-    <div class="row" style="margin:0">
-        <div class="col-md-2" style="padding:0">
+        <div class="col-md-2">
             <div class="form-group">
                 @Html.LabelFor(model => model.Categories.Topcat2, "Nadradená kategória 2")
                 <div class="col-md-13">
@@ -144,7 +143,7 @@
 </tr>
 <tr id="cat-@item.id" style="display: none;">
     <!-- edit kategoria foto-->
-    @using (Html.BeginForm("UploadImageCategories", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+    @using (Html.BeginForm("UploadImageCategories", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "MyformCats" }))
     {
         <td>
             <div class="form-group">

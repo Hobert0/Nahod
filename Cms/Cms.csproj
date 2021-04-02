@@ -508,6 +508,7 @@
       <DependentUpon>DBcms.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\Intimstyle.pubxml" />
+    <None Include="Properties\PublishProfiles\Nahod.pubxml" />
     <None Include="Properties\PublishProfiles\Wfy.pubxml" />
     <Content Include="Scripts\canvasjs.min.js" />
     <Content Include="Scripts\fetchProducts.js" />

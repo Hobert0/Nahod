@@ -23,7 +23,7 @@
 
 <hr />
 
-@using (Html.BeginForm("AddAttribute", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+@using (Html.BeginForm("AddAttribute", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "MyformAttribute" }))
 {
     @Html.AntiForgeryToken()
 <div class="form-horizontal">
@@ -41,7 +41,7 @@
 
     <div class="form-group">
         <div>
-            <input type="button" value="Pridať hodnotu" class="btn btn-warning addValue" style="font-size: 13px;" /><input type="button" value="Zmazať poslednú hodnotu" style="display:none;margin-left: 10px;font-size:13px;" class="btn btn-danger removeValue" />
+            <input type="button" value="+ Pridať hodnotu" class="btn btn-warning addValue" style="font-size: 13px;" /><input type="button" value="Zmazať poslednú hodnotu" style="display:none;margin-left: 10px;font-size:13px;" class="btn btn-danger removeValue" />
         </div>
     </div>
 
@@ -122,7 +122,7 @@
             }
         });
 
-        $("#Myform input[type=submit]").click(function (e) {
+        $("#MyformAttribute input[type=submit]").click(function (e) {
             e.preventDefault();
 
             if (validateForm()) {
@@ -135,7 +135,7 @@
 
                 $("#Attributes_Value").val(JSON.stringify($json));
 
-                $("#Myform").submit();
+                $("#MyformAttribute").submit();
             }
         });
 

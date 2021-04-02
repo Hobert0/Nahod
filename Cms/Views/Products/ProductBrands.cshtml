@@ -19,7 +19,7 @@
 
 <hr />
 
-@using (Html.BeginForm("AddBrand", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+@using (Html.BeginForm("AddBrand", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "MyformBrand" }))
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
@@ -93,7 +93,7 @@
     <td align="center"> @Html.ActionLink("Editovať", "EditBrand", "Products", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteBrand", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať túto značku?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete značku." })</td>
 </tr>
             <tr id="cat-@item.id" style="display: none;">
-                @using (Html.BeginForm("UpdateBrand", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+                @using (Html.BeginForm("UpdateBrand", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "MyformBrand" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.EditorFor(model => model.BrandsEditModel.Id, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov značky", id = "e-id-" + item.id, style = "display: none;" } })

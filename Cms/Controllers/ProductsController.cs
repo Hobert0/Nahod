@@ -653,7 +653,7 @@ namespace Cms.Controllers
             model.Gallery = data.gallery;
             model.Image = data.image;
             model.Number = data.number;
-            model.Price = data.price.ToString().Replace(",",".");
+            model.Price = data.price.ToString().Replace(",", ".");
             model.Recommended = data.recommended;
             model.Stock = data.stock;
             model.Title = data.title;
@@ -807,14 +807,14 @@ namespace Cms.Controllers
         [HttpPost]
         public ActionResult MultipleEditPrice(string multiplePricePerc, bool? isDiscountMultiple, string catId, string brandId, string priceFrom, string priceTo, bool? isDiscount)
         {
-            
+
             List<products> products = null;
             decimal priceFromDec = Decimal.Parse(priceFrom, CultureInfo.InvariantCulture);
             decimal priceToDec = Decimal.Parse(priceTo, CultureInfo.InvariantCulture);
 
             if (catId != "" && brandId == "")
             {
-                products = (isDiscount != null && isDiscount == true) ? db.products.Where(x => x.deleted == false && x.category == catId && x.price >= priceFromDec && x.price <= priceToDec && x.discountprice != null).ToList() : db.products.Where(x => x.deleted == false && x.category == catId && x.price >= priceFromDec && x.price <= priceToDec).ToList();  
+                products = (isDiscount != null && isDiscount == true) ? db.products.Where(x => x.deleted == false && x.category == catId && x.price >= priceFromDec && x.price <= priceToDec && x.discountprice != null).ToList() : db.products.Where(x => x.deleted == false && x.category == catId && x.price >= priceFromDec && x.price <= priceToDec).ToList();
             }
             else if (catId == "" && brandId != "")
             {
@@ -826,7 +826,7 @@ namespace Cms.Controllers
             }
             else
             {
-                products = (isDiscount != null && isDiscount == true) ? db.products.Where(x => x.deleted == false && x.price >= priceFromDec && x.price <= priceToDec && x.discountprice != null).ToList() : db.products.Where(x => x.deleted == false && x.price >= priceFromDec && x.price <= priceToDec).ToList();             
+                products = (isDiscount != null && isDiscount == true) ? db.products.Where(x => x.deleted == false && x.price >= priceFromDec && x.price <= priceToDec && x.discountprice != null).ToList() : db.products.Where(x => x.deleted == false && x.price >= priceFromDec && x.price <= priceToDec).ToList();
             }
 
             foreach (var product in products)
@@ -1548,8 +1548,8 @@ namespace Cms.Controllers
             return RedirectToAction("ProductBrands");
         }
 
-        [HttpPost]
-        public async Task<ActionResult> AddAttribute(MultipleIndexModel model)
+        [HttpPost, Route("produkty/vlastnosti/pridatvlastnost")]
+        public ActionResult AddAttribute(MultipleIndexModel model)
         {
             attributes o = new attributes();
 

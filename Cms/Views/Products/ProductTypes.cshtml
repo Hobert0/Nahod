@@ -22,7 +22,7 @@
 
 <hr />
 
-@using (Html.BeginForm("AddType", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+@using (Html.BeginForm("AddType", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "MyformTypes" }))
 {
     @Html.AntiForgeryToken()
 <div class="form-horizontal">
@@ -99,7 +99,7 @@
             </tr>
             <tr id="cat-@item.id" style="display: none;">
                 <!-- edit kategoria foto-->
-                @using (Html.BeginForm("UploadImageTypes", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+                @using (Html.BeginForm("UploadImageTypes", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "MyformTypes" }))
                 {
                     <td>
                         <div class="form-group">
