@@ -1,4 +1,8 @@
-﻿function addToCart(id, variableproduct, price) {
+﻿function only2Decimals($num) {
+    return (Math.floor($num * 100) / 100).toFixed(2);
+}
+
+function addToCart(id, variableproduct, price) {
     // this is how you set it
     var quantity = "1";
     var size = "";
@@ -76,6 +80,8 @@
         for (var i = 0; i < addtocart.length; i++) {
             $sum += addtocart[i].quantity * addtocart[i].price;
         }
+
+        $sum = only2Decimals($sum);
 
         sessionStorage.setItem('addtocart', JSON.stringify(addtocart));
         localStorage.setItem('addtocart', JSON.stringify(addtocart));

@@ -18,17 +18,24 @@
 
 });
 
+function only2Decimals($num) {
+    return (Math.floor($num * 100) / 100).toFixed(2);
+}
+
 $("#addproductbtn").click(function () {
 
-    var isvariableproduct = $(this).attr('isvariableproduct');
-    var isvariablecolor = $(this).attr('isvariablecolor');
+    //var isvariableproduct = $(this).attr('isvariableproduct');
+    //var isvariablecolor = $(this).attr('isvariablecolor');
+    var isvariableproduct = "False";
+    var isvariablecolor = "False";
     // this is how you set it
     var quantity = document.getElementById("quantity").value;
     var size = "";
     var size2 = "";
     var color = "";
-    var price = $("#actual-price").text().replace(",",".");
+    var price = $(".discount-price-text").hasClass("d-none") ? $(".w-discount-price .actual-price").text().replace(",", ".") : $(".discount-price-text .actual-price").text().replace(",",".");
     var uniqueid = Math.floor(Math.random() * 10000) + 1;
+
     if (isvariableproduct === "True") {
         size = document.getElementsByClassName('select-box')[0].value;
         size2 = document.getElementsByClassName('select-box2')[0].value;
@@ -36,6 +43,7 @@ $("#addproductbtn").click(function () {
     if (isvariablecolor === "True") {
         color = document.getElementsByClassName('color-box')[0].value;
     }
+    
 
     if (isvariableproduct === "True" && size === "") {
         toastr["warning"]("Zvoľte veľkosť produktu.");
@@ -118,6 +126,8 @@ $("#addproductbtn").click(function () {
         for (var i = 0; i < addtocart.length; i++) {
             $sum += addtocart[i].quantity * addtocart[i].price;
         }
+
+        $sum = only2Decimals($sum);
 
         sessionStorage.setItem('addtocart', JSON.stringify(addtocart));
         localStorage.setItem('addtocart', JSON.stringify(addtocart));

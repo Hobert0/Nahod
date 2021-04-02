@@ -4,11 +4,14 @@
 @{
     var category = "";
     var id = "";
+    /*
     List<SelectListItem> emptylist = new List<SelectListItem>();
     bool isvariableproduct = false;
     bool isvariablecolor = false;
     var variableproduct = "false";
     var isvariablecolors = "false";
+    */
+    bool isVariable = false;
 }
 <style>
     #front-picture, #services {
@@ -160,32 +163,41 @@
                                 @if (prod.discountprice != null)
                                 {
                                     cena = (decimal)prod.discountprice;
-                            <p style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;">Akciová cena <strong style="font-size:30px;"><span id="actual-price">@cena.ToString("N2")</span> €</strong> </p>
+                            <p class="discount-price-text" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;">Akciová cena <strong style="font-size:30px;"><span class="actual-price">@cena.ToString("N2")</span> €</strong> </p>
+                        }
+                        else
+                        {
+                            <p class="discount-price-text d-none" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;">Akciová cena <strong style="font-size:30px;"><span class="actual-price">0</span> €</strong> </p>
                         }
                                 @{
                                     if (prod.discountprice != null)
                                     {
                                         povodnacena = prod.price;
-                                        <div style="text-align: right;font-size:25px;">
+                                        <div class="discount-price-del" style="text-align: right;font-size:25px;">
                                             <strong><del>@povodnacena.ToString("N2") €</del></strong>
                                         </div>
                                     }
                                     else
                                     {
+
+                                        <div class="d-none discount-price-del" style="text-align: right;font-size:25px;">
+                                            <strong><del>@povodnacena.ToString("N2") €</del></strong>
+                                        </div>
+
                                         cena = prod.price;
                                         if ((prod.custom6).ToString() == "True")
                                         {
-                                            <div style="text-align: right;font-size:30px;color: #ff8b00;"><strong>od @cena.ToString("N2") €</strong></div>
+                                            <div class="w-discount-price" style="text-align: right;font-size:30px;color: #ff8b00;"><strong>od @cena.ToString("N2") €</strong></div>
                                         }
                                         else
                                         {
                                             if (prod.price == 0)
                                             {
-                                                <div style="text-align: right;font-size:25px;color: #ff8b00;"><strong>Cena na vyžiadanie</strong></div>
+                                                <div class="w-discount-price" style="text-align: right;font-size:25px;color: #ff8b00;"><strong>Cena na vyžiadanie</strong></div>
                                             }
                                             else
                                             {
-                                                <div style="text-align: right;font-size:30px;color: #ff8b00;"><strong><span id="actual-price">@cena.ToString("N2")</span> €</strong></div>
+                                                <div class="w-discount-price" style="text-align: right;font-size:30px;color: #ff8b00;"><strong><span class="actual-price">@cena.ToString("N2")</span> €</strong></div>
                                             }
 
                                         }
@@ -201,7 +213,7 @@
                                     }
                                     else
                                     {
-                                        <p style="font-size: 14px; text-align: right;">cena bez DPH @(cenabezdph) €</p>
+                                        <p style="font-size: 14px; text-align: right;">cena bez DPH <span id="actual-price-w-tax">@(cenabezdph)</span> €</p>
                                     }
 
 
@@ -221,39 +233,87 @@
                                     else //ak je cena normalna
                                     {
                                         <div class="product-cart row">
-
-
-                                            @{
-                                                var variants = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).ToList();
-                                            }
-
-
-
                                             <div class="col-lg-4 col-sm-6 col-12 product-variation">
-                                                @if (prod.custom6 != null && prod.custom6 != "" && prod.custom6 != "False")
-                                                {
-                                                    isvariablecolor = true;
-                                                    <p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;margin-top:-80px;">FARBA</p>
-                                                    @Html.DropDownList("color", emptylist, "", new { @class = "form-control color-box" })
+
+                                                @{
+                                                    //var variants = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).ToList();
+                                                    var vars = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).OrderBy(o => o.attribute_id).ToList();
+
+                                                    if (vars.Count() > 0)
+                                                    {
+                                                        List<SelectListItem> options = new List<SelectListItem>();
+
+                                                        var lastAttrName = "";
+                                                        foreach (var variant in vars)
+                                                        {
+
+                                                            isVariable = true;
+
+                                                            var attrId = variant.attribute_id;
+                                                            var attrName = Model.AttributesModel.Where(o => o.id == attrId).SingleOrDefault().name;
+
+                                                            if (lastAttrName != attrName)
+                                                            {
+
+                                                                if (lastAttrName != "")
+                                                                {
+                                                                    @Html.DropDownList(lastAttrName, options, null, new { @class = "form-control color-box" })
+                                                                    options = new List<SelectListItem>();
+                                                                }
+
+                                                                <p>@attrName</p>
+                                                            }
+
+                                                            options.Add(new SelectListItem { Text = variant.value, Value = (variant.price.ToString() + "|" + variant.discountprice.ToString()) });
+
+                                                            lastAttrName = attrName;
+                                                        }
+
+                                                        @Html.DropDownList(lastAttrName, options, null, new { @class = "form-control color-box" })
+                                                    }
                                                 }
-                                                @if (prod.custom4 != null && prod.custom4 != "")
-                                                {
-                                                    isvariableproduct = true;
-                                                    <p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;">VEĽKOSŤ</p>
-                                                    @Html.DropDownList("size", emptylist, "", new { @class = "form-control select-box", onchange = "showSize()" })
-                                                    @Html.DropDownList("size2", emptylist, "", new { @class = "form-control select-box2", style = "display:none;margin-top:10px;" })
-                                                }
+
                                                 <p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;">MNOŽSTVO</p>
                                                 <div class="cart-item-amount">
                                                     <button type="button" class="inc button">−</button>
                                                     <input type="number" name="amount[1050506]" value="1" min="1" max="30000" class="" id="quantity">
                                                     <button type="button" class="dec button">+</button>
                                                 </div>
-                                            </div>
-                                            <div class="add-to-cart col-lg-8">
-                                                <button id="addproductbtn" isvariableproduct="@isvariableproduct.ToString()" isvariablecolor="@isvariablecolor.ToString()" class="btn btn-color addtocart"><img src="/Content/images/cart_white.svg" style="width: 20px;" alt="search">PRIDAŤ DO KOŠÍKA</button>
+
 
                                             </div>
+                                            <div class="add-to-cart col-lg-8">
+                                                <button id="addproductbtn" isvariableproduct="@isVariable.ToString()" class="btn btn-color addtocart"><img src="/Content/images/cart_white.svg" style="width: 20px;" alt="search">PRIDAŤ DO KOŠÍKA</button>
+
+                                            </div>
+
+                                            @*
+                                                <div class="col-lg-4 col-sm-6 col-12 product-variation">
+                                                    @if (prod.custom6 != null && prod.custom6 != "" && prod.custom6 != "False")
+                                                    {
+                                                        isvariablecolor = true;
+                                                        <p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;margin-top:-80px;">FARBA</p>
+                                                        @Html.DropDownList("color", emptylist, "", new { @class = "form-control color-box" })
+                                                    }
+                                                    @if (prod.custom4 != null && prod.custom4 != "")
+                                                    {
+                                                        isvariableproduct = true;
+                                                        <p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;">VEĽKOSŤ</p>
+                                                        @Html.DropDownList("size", emptylist, "", new { @class = "form-control select-box", onchange = "showSize()" })
+                                                        @Html.DropDownList("size2", emptylist, "", new { @class = "form-control select-box2", style = "display:none;margin-top:10px;" })
+                                                    }
+                                                    <p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;">MNOŽSTVO</p>
+                                                    <div class="cart-item-amount">
+                                                        <button type="button" class="inc button">−</button>
+                                                        <input type="number" name="amount[1050506]" value="1" min="1" max="30000" class="" id="quantity">
+                                                        <button type="button" class="dec button">+</button>
+                                                    </div>
+                                                </div>
+                                                <div class="add-to-cart col-lg-8">
+                                                    <button id="addproductbtn" isvariableproduct="@isvariableproduct.ToString()" isvariablecolor="@isvariablecolor.ToString()" class="btn btn-color addtocart"><img src="/Content/images/cart_white.svg" style="width: 20px;" alt="search">PRIDAŤ DO KOŠÍKA</button>
+
+                                                </div>
+                                            *@
                                         </div>
 
                                     }
@@ -268,7 +328,7 @@
                     </div>
                 }
             }
-                                                
+
         <div class="py-4 suggested-products">
             <h2>Odporúčané produkty</h2>
             <hr />
@@ -280,6 +340,7 @@
                     {
                         var price = item.price;
                         var discountprice = price;
+                        /*
                         variableproduct = "false";
                         if (item.custom4 != null && item.custom4 != "")
                         {
@@ -289,6 +350,7 @@
                         {
                             isvariablecolors = "true";
                         }
+                        */
                         <div class="col-6 col-sm-3 bluebg">
                             <a href="@Url.Action("ProductDetail", "Home", new{ id= item.id})" class="product_detail">
                                 <div style="overflow:hidden;">
@@ -350,7 +412,7 @@
             </div>
 
         </div>
-    
+
     </section>
 
     <!-- The Modal -->
@@ -431,82 +493,141 @@
 
     @foreach (var prod in (IEnumerable<Cms.Models.products>)ViewBag.Detaily)
     {
+
         <script>
-			/*GET SIZES from database*/
+            $(document).ready(function () {
 
-			if ('@prod.custom4' != "") {
+                function only2Decimals($num) {
+                    return (Math.floor($num * 100) / 100).toFixed(2);
+                }
 
-				var j = '@Html.Raw(prod.custom4)';
-				var json = $.parseJSON(j);
-				var countofsize = json.length;
-				var inputs = "";
-				var selectbox = document.getElementsByClassName('select-box')[0];
-				var selectbox2 = document.getElementsByClassName('select-box2')[0];
+                function initVariants() {
+                    $maxPrice = 0;
+                    $maxNormalPrice = 0;
+                    $maxDiscountPrice = 0;
+                    $(".product-variation select").each(function () {
+                        $thisPrices = $(this).val().split("|");
 
-				json = Array.from(new Set(json.map(x => x.size1))).map(size1 => { return {size1: json.find(s => s.size1 === size1).size1}});
+                        $thisPrice = $thisPrices[0];
+                        $thisDiscount = $thisPrices[1];
 
-				$(json).each(function(i, val) {
-					if (val.size2 == null && isNaN(val.size1)) {
-						var option = document.createElement("option");
-						option.value = val.size1;
-						option.text = val.size1;
-						selectbox.appendChild(option);
-					} else if (val.size2 == null && !isNaN(val.size1)) {
-						var option = document.createElement("option");
-						option.value = val.size1;
-						option.text = val.size1;
-						selectbox.appendChild(option);
-					} else {
-						var option = document.createElement("option");
-						option.value = val.size1;
-						option.text = val.size1;
-						selectbox.appendChild(option);
-					}
-				});
+                        $finalPrice = parseFloat($thisDiscount == "" ? $thisPrice.replace(",", ".") : $thisDiscount.replace(",", "."));
 
+                        if ($finalPrice > $maxPrice) {
+                            $maxPrice = $finalPrice;
+                            $maxNormalPrice = parseFloat($thisPrice.replace(",", "."));
+                            $maxDiscountPrice = parseFloat($thisDiscount == "" ? 0 : $thisDiscount.replace(",", "."));
+                        }
+                    });
 
-			}
-			function showSize() {
-				var j = '@Html.Raw(prod.custom4)';
-				var json = $.parseJSON(j);
-				var selectbox = document.getElementsByClassName('select-box')[0].value;
-				var selectbox2 = document.getElementsByClassName('select-box2')[0];
-				selectbox2.options.length = 0;
+                    if ($maxDiscountPrice == 0) {
 
-				$(json).each(function(i, val) {
-					if (val.size1 == selectbox && val.size2 != null ) {
-						var option = document.createElement("option");
-						option.value = val.size2;
-						option.text = val.size2;
-						selectbox2.appendChild(option);
-						selectbox2.style.display = "block";
-					} else{
-					}
-				});
-			}
+                        $(".actual-price").text(only2Decimals($maxPrice));
+                        $("#actual-price-w-tax").text(only2Decimals($maxPrice * 100 / 120));
 
-			/*GET COLORS from database*/
+                        $(".discount-price-text, .discount-price-del").addClass("d-none");
+                        $(".w-discount-price").removeClass("d-none");
+                    } else {
+                        $(".actual-price").text(only2Decimals($maxDiscountPrice));
+                        $("#actual-price-w-tax").text(only2Decimals($maxDiscountPrice * 100 / 120));
 
-			if ('@prod.custom7' != "") {
+                        $(".discount-price-del del").text(only2Decimals($maxNormalPrice) + " €");
 
-				var j = '@Html.Raw(prod.custom7)';
-				var json = $.parseJSON(j);
-				var countofsize = json.length;
-				var inputs = "";
-				var selectbox = document.getElementsByClassName('color-box')[0];
+                        $(".discount-price-text, .discount-price-del").removeClass("d-none");
+                        $(".w-discount-price").addClass("d-none");
+                    }
 
-				json = Array.from(new Set(json.map(x => x.color))).map(color=> { return {color: json.find(s => s.color === color).color}});
+                }
 
-				$(json).each(function(i, val) {
-					var option = document.createElement("option");
-					option.value = val.color;
-					option.text = val.color;
-					selectbox.appendChild(option);
-				});
+                if ($(".product-variation select").length) {
+                    initVariants();
 
-
-			}
+                    $(".product-variation select").change(function () {
+                        initVariants();
+                    });
+                }
+            });
         </script>
+
+        <!--
+        <script>
+            /*GET SIZES from database*/
+            /*
+            if ('@prod.custom4' != "") {
+
+                var j = '@Html.Raw(prod.custom4)';
+                var json = $.parseJSON(j);
+                var countofsize = json.length;
+                var inputs = "";
+                var selectbox = document.getElementsByClassName('select-box')[0];
+                var selectbox2 = document.getElementsByClassName('select-box2')[0];
+
+                json = Array.from(new Set(json.map(x => x.size1))).map(size1 => { return {size1: json.find(s => s.size1 === size1).size1}});
+
+                $(json).each(function(i, val) {
+                    if (val.size2 == null && isNaN(val.size1)) {
+                        var option = document.createElement("option");
+                        option.value = val.size1;
+                        option.text = val.size1;
+                        selectbox.appendChild(option);
+                    } else if (val.size2 == null && !isNaN(val.size1)) {
+                        var option = document.createElement("option");
+                        option.value = val.size1;
+                        option.text = val.size1;
+                        selectbox.appendChild(option);
+                    } else {
+                        var option = document.createElement("option");
+                        option.value = val.size1;
+                        option.text = val.size1;
+                        selectbox.appendChild(option);
+                    }
+                });
+
+
+            }
+            function showSize() {
+                var j = '@Html.Raw(prod.custom4)';
+                var json = $.parseJSON(j);
+                var selectbox = document.getElementsByClassName('select-box')[0].value;
+                var selectbox2 = document.getElementsByClassName('select-box2')[0];
+                selectbox2.options.length = 0;
+
+                $(json).each(function(i, val) {
+                    if (val.size1 == selectbox && val.size2 != null ) {
+                        var option = document.createElement("option");
+                        option.value = val.size2;
+                        option.text = val.size2;
+                        selectbox2.appendChild(option);
+                        selectbox2.style.display = "block";
+                    } else{
+                    }
+                });
+            }
+
+
+            if ('@prod.custom7' != "") {
+
+                var j = '@Html.Raw(prod.custom7)';
+                var json = $.parseJSON(j);
+                var countofsize = json.length;
+                var inputs = "";
+                var selectbox = document.getElementsByClassName('color-box')[0];
+
+                json = Array.from(new Set(json.map(x => x.color))).map(color=> { return {color: json.find(s => s.color === color).color}});
+
+                $(json).each(function(i, val) {
+                    var option = document.createElement("option");
+                    option.value = val.color;
+                    option.text = val.color;
+                    selectbox.appendChild(option);
+                });
+
+
+            }
+        </script>
+        -->
+
+
     }
     <script src="~/Scripts/add_product_to_cart.js"></script>
 
