@@ -405,7 +405,7 @@ namespace Cms.Controllers
 
                 }
 
-                var variants = db.variants.Where(item => item.prod_id == id).ToList();
+                var variants = db.variants.Where(item => item.prod_id == id).OrderBy(o => o.num).ToList();
                 model.Variants = JsonConvert.SerializeObject(variants);
 
                 ProductModel pm = new ProductModel();
@@ -514,6 +514,7 @@ namespace Cms.Controllers
                 {
                     variants v = new variants();
 
+                    v.num = (int)varP.num;
                     v.prod_id = o.id;
                     v.number = varP.number;
 
@@ -738,6 +739,7 @@ namespace Cms.Controllers
             {
                 variants v = new variants();
 
+                v.num = (int)varP.num;
                 v.prod_id = o.id;
                 v.number = varP.number;
 

@@ -260,6 +260,11 @@ html, body {
                 margin-right: 3px;
             }
 
+            .products .product .prod-prices .prod-price-from {
+                font-size: 20px;
+                font-weight: bold;
+            }
+
         .products .product .prod-add-to-cart {
             border: 1px solid black;
             display: inline-block;

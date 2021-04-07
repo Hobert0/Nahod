@@ -124,18 +124,164 @@
             <div class="row products-row">
 
                 @{
-                    var prods = Model.ProductModel.Where(o => o.discountprice != null && o.deleted == false).OrderByDescending(o => o.id).Take(10);
+                    var prods = Model.ProductModel.OrderByDescending(o => o.id).ToList();
+                    int prodCounter = 0;
+                    int discProdCounter = 0;
 
-                    int order = Model.ProductModel.Where(o => o.deleted == false).Count() - 1;
+                    foreach (var prod in prods)
+                    {
+
+                        if (discProdCounter >= 10)
+                        {
+                            break;
+                        }
+
+                        bool isDiscounted = false;
+                        var variants = Model.VariantModel.Where(o => o.prod_id == prod.id).OrderBy(o => o.num).ToList();
+
+                        if (variants.Count() > 0)
+                        {
+                            foreach (var variant in variants)
+                            {
+                                if (variant.discountprice != null)
+                                {
+                                    isDiscounted = true;
+
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (prod.discountprice != null)
+                            {
+                                isDiscounted = true;
+                            }
+                        }
+
+                        if (isDiscounted && discProdCounter < 10)
+                        {
+                            var slug = helper.ToUrlSlug(prod.title);
+                            <div class="col-md product">
+                                <a href="/detail-produktu/@prod.id/@slug">
+                                    <img src="uploads/@prod.image">
+                                    <div class="prod-labels">
+                                        @{
+                                            if (prod.discountprice != null)
+                                            {
+                                                <span class="prod-discount">akcia</span>
+                                            }
+                                        }
+
+                                        @{
+                                            if (prodCounter < 10)
+                                            {
+                                                <span class="prod-new">novinka</span>
+                                            }
+                                        }
+                                    </div>
+                                    <div class="prod-header">@prod.title</div>
+                                    <div class="prod-text">@prod.description</div>
+                                    <div class="prod-prices">
+                                        @{
+                                            decimal variantPriceFrom = 99999;
+                                            string isVariant = "false";
+                                            int firstAttrId = 0;
+                                            foreach (var variant in variants)
+                                            {
+
+                                                if (firstAttrId == 0)
+                                                {
+                                                    firstAttrId = variant.attribute_id;
+                                                }
+
+                                                if (firstAttrId == variant.attribute_id)
+                                                {
+                                                    if (variant.discountprice != null)
+                                                    {
+                                                        if (variant.discountprice < variantPriceFrom)
+                                                        {
+                                                            variantPriceFrom = (decimal)variant.discountprice;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        if (variant.price < variantPriceFrom)
+                                                        {
+                                                            variantPriceFrom = (decimal)variant.price;
+                                                        }
+                                                    }
+                                                }
+
+                                                isVariant = "true";
+                                            }
+
+                                            if (variantPriceFrom != 99999)
+                                            {
+                                                <span class="prod-price-from">od @variantPriceFrom €</span>
+                                            }
+                                            else
+                                            {
+                                                if (prod.discountprice != null)
+                                                {
+                                                    <span class="prod-discount">@prod.price €</span><span class="prod-base">@prod.discountprice €</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="prod-base">@prod.price €</span>
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                </a>
+
+                                @{
+                                    var actualPrice = prod.price.ToString().Replace(",", ".");
+                                    if (prod.discountprice != null)
+                                    {
+                                        actualPrice = prod.discountprice.ToString().Replace(",", ".");
+                                    }
+                                }
+
+                                <span onclick='addToCart(@prod.id, @isVariant, @actualPrice)' class="prod-add-to-cart">
+                                    <img class="prod-icon" src="~/Content/images/cart.svg">
+                                    <span>Pridať do košíka</span>
+                                </span>
+                            </div>
+
+                            discProdCounter++;
+                        }
+
+                        prodCounter++;
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row products">
+        <div class="col-md-12 no-gutters">
+            <div class="row">
+                <h2 class="col-md-12">
+                    Novinky
+                </h2>
+            </div>
+            <div class="row products-row">
+                @{
+                    var prods2 = Model.ProductModel.OrderByDescending(o => o.id).Take(10);
+
+                    int order = Model.ProductModel.Count() - 1;
                     if (order >= 9)
                     {
                         order = 9;
                     }
 
-                    var lastNewProd = Model.ProductModel.Where(o => o.deleted == false).OrderByDescending(o => o.id).ElementAt(order);
+                    var lastNewProd = Model.ProductModel.OrderByDescending(o => o.id).ElementAt(order);
 
-                    foreach (var prod in prods)
+                    foreach (var prod in prods2)
                     {
+
+                        var variants = Model.VariantModel.Where(o => o.prod_id == prod.id).OrderBy(o => o.num).ToList();
+
                         var slug = helper.ToUrlSlug(prod.title);
                         <div class="col-md product">
                             <a href="/detail-produktu/@prod.id/@slug">
@@ -159,13 +305,52 @@
                                 <div class="prod-text">@prod.description</div>
                                 <div class="prod-prices">
                                     @{
-                                        if (prod.discountprice != null)
+                                        decimal variantPriceFrom = 99999;
+                                        string isVariant = "false";
+                                        int firstAttrId = 0;
+                                        foreach (var variant in variants)
                                         {
-                                            <span class="prod-discount">@prod.price €</span><span class="prod-base">@prod.discountprice €</span>
+
+                                            if (firstAttrId == 0)
+                                            {
+                                                firstAttrId = variant.attribute_id;
+                                            }
+
+                                            if (firstAttrId == variant.attribute_id)
+                                            {
+                                                if (variant.discountprice != null)
+                                                {
+                                                    if (variant.discountprice < variantPriceFrom)
+                                                    {
+                                                        variantPriceFrom = (decimal)variant.discountprice;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (variant.price < variantPriceFrom)
+                                                    {
+                                                        variantPriceFrom = (decimal)variant.price;
+                                                    }
+                                                }
+                                            }
+
+                                            isVariant = "true";
+                                        }
+
+                                        if (variantPriceFrom != 99999)
+                                        {
+                                            <span class="prod-price-from">od @variantPriceFrom €</span>
                                         }
                                         else
                                         {
-                                            <span class="prod-base">@prod.price €</span>
+                                            if (prod.discountprice != null)
+                                            {
+                                                <span class="prod-discount">@prod.price €</span><span class="prod-base">@prod.discountprice €</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="prod-base">@prod.price €</span>
+                                            }
                                         }
                                     }
                                 </div>
@@ -179,72 +364,7 @@
                                 }
                             }
 
-                            <span onclick='addToCart(@prod.id,false, @actualPrice)' class="prod-add-to-cart">
-                                <img class="prod-icon" src="~/Content/images/cart.svg">
-                                <span>Pridať do košíka</span>
-                            </span>
-                        </div>
-                    }
-                }
-            </div>
-        </div>
-    </div>
-    <div class="row products">
-        <div class="col-md-12 no-gutters">
-            <div class="row">
-                <h2 class="col-md-12">
-                    Novinky
-                </h2>
-            </div>
-            <div class="row products-row">
-                @{
-                    prods = Model.ProductModel.Where(o => o.deleted == false).OrderByDescending(o => o.id).Take(10);
-                    foreach (var prod in prods)
-                    {
-                       var slug = helper.ToUrlSlug(prod.title);
-                        <div class="col-md product">
-                            <a href="/detail-produktu/@prod.id/@slug">
-                                <img src="uploads/@prod.image">
-                                <div class="prod-labels">
-                                    @{
-                                        if (prod.discountprice != null)
-                                        {
-                                            <span class="prod-discount">akcia</span>
-                                        }
-                                    }
-
-                                    @{
-                                        if (DateTime.Compare(DateTime.Parse(prod.date), DateTime.Parse(lastNewProd.date)) >= 0)
-                                        {
-                                            <span class="prod-new">novinka</span>
-                                        }
-                                    }
-                                </div>
-                                <div class="prod-header">@prod.title</div>
-                                <div class="prod-text">@prod.description</div>
-                                <div class="prod-prices">
-                                    @{
-                                        if (prod.discountprice != null)
-                                        {
-                                            <span class="prod-discount">@prod.price €</span><span class="prod-base">@prod.discountprice €</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="prod-base">@prod.price €</span>
-                                        }
-                                    }
-                                </div>
-                            </a>
-
-                            @{
-                                var actualPrice = prod.price.ToString().Replace(",", ".");
-                                if (prod.discountprice != null)
-                                {
-                                    actualPrice = prod.discountprice.ToString().Replace(",", ".");
-                                }
-                            }
-
-                            <span onclick='addToCart(@prod.id,false, @actualPrice)' class="prod-add-to-cart">
+                            <span onclick='addToCart(@prod.id, @isVariant, @actualPrice)' class="prod-add-to-cart">
                                 <img class="prod-icon" src="~/Content/images/cart.svg">
                                 <span>Pridať do košíka</span>
                             </span>
@@ -255,7 +375,7 @@
         </div>
     </div>
 </div>
-<div class="container-fluid" id="newsletter">
+<div class="container-fluid" id="hp-newsletter">
     <div class="row hp-newsletter">
         <div class="col-md-4 offset-md-2">
             <div class="hp-header">Získajte okamžitú zľavu 10%</div>
@@ -265,9 +385,9 @@
         <div class="col-md-4">
             <div class="d-flex align-items-center hp-email-wrapper">
                 <!--
-            <input type="email" name="newsletter-email" placeholder="E-mail">
-            <a href="#" class="rect-button">Prihlásiť sa k odberu</a>
-            -->
+                <input type="email" name="newsletter-email" placeholder="E-mail">
+                <a href="#" class="rect-button">Prihlásiť sa k odberu</a>
+                -->
 
                 @using (Html.BeginForm("Subscribe", "Newsletter", FormMethod.Post, new { enctype = "multipart/form-data", id = "Subscribeform" }))
                 {
@@ -338,9 +458,11 @@
             </div>
             <div class="row products-row">
                 @{
-                    prods = Model.ProductModel.Where(o => o.recommended == true && o.deleted == false).OrderByDescending(o => o.id).Take(10);
-                    foreach (var prod in prods)
+                    prods2 = Model.ProductModel.Where(o => o.recommended == true).OrderByDescending(o => o.id).Take(10);
+                    foreach (var prod in prods2)
                     {
+                        var variants = Model.VariantModel.Where(o => o.prod_id == prod.id).OrderBy(o => o.num).ToList();
+
                         var slug = helper.ToUrlSlug(prod.title);
                         <div class="col-md product">
                             <a href="/detail-produktu/@prod.id/@slug">
@@ -364,13 +486,52 @@
                                 <div class="prod-text">@prod.description</div>
                                 <div class="prod-prices">
                                     @{
-                                        if (prod.discountprice != null)
+                                        decimal variantPriceFrom = 99999;
+                                        string isVariant = "false";
+                                        int firstAttrId = 0;
+                                        foreach (var variant in variants)
                                         {
-                                            <span class="prod-discount">@prod.price €</span><span class="prod-base">@prod.discountprice €</span>
+
+                                            if (firstAttrId == 0)
+                                            {
+                                                firstAttrId = variant.attribute_id;
+                                            }
+
+                                            if (firstAttrId == variant.attribute_id)
+                                            {
+                                                if (variant.discountprice != null)
+                                                {
+                                                    if (variant.discountprice < variantPriceFrom)
+                                                    {
+                                                        variantPriceFrom = (decimal)variant.discountprice;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (variant.price < variantPriceFrom)
+                                                    {
+                                                        variantPriceFrom = (decimal)variant.price;
+                                                    }
+                                                }
+                                            }
+
+                                            isVariant = "true";
+                                        }
+
+                                        if (variantPriceFrom != 99999)
+                                        {
+                                            <span class="prod-price-from">od @variantPriceFrom €</span>
                                         }
                                         else
                                         {
-                                            <span class="prod-base">@prod.price €</span>
+                                            if (prod.discountprice != null)
+                                            {
+                                                <span class="prod-discount">@prod.price €</span><span class="prod-base">@prod.discountprice €</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="prod-base">@prod.price €</span>
+                                            }
                                         }
                                     }
                                 </div>
@@ -384,7 +545,7 @@
                                 }
                             }
 
-                            <span onclick='addToCart(@prod.id,false, @actualPrice)' class="prod-add-to-cart">
+                            <span onclick='addToCart(@prod.id, @isVariant, @actualPrice)' class="prod-add-to-cart">
                                 <img class="prod-icon" src="~/Content/images/cart.svg">
                                 <span>Pridať do košíka</span>
                             </span>

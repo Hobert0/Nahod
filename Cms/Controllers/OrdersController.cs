@@ -110,6 +110,32 @@ namespace Cms.Controllers
             var quantity = 0;
             List<int> finalprice = new List<int>();
 
+            foreach (var item in cart)
+            {
+                //udaje nech sa vyberaju z db
+
+                int productid = Convert.ToInt32(item.product);
+                
+                var thisProd = db.products.Where(i => i.id == productid).Single();
+
+                var qunatity = item.quantity;
+
+                om.product = item.title;  
+                om.ordernumber = o.ordernumber;
+                om.productid = item.product;
+
+                //om.productimage = o.ordernumber;
+
+                om.price = (Decimal.Parse(om.pieces) * decimal.Parse(productprice.Replace(",", "."), CultureInfo.InvariantCulture)).ToString();
+                db.ordermeta.Add(om);
+                db.SaveChanges();
+
+                var stockminus = Int32.Parse(om.pieces);
+
+                OverrideOnstock(cartprodID, firstSize, secondSize, stockminus, "");
+            }
+
+            /*
             foreach (var product in cart.Select(i => i.product.Value))
             {
                 int converted = (int)product;
@@ -186,6 +212,7 @@ namespace Cms.Controllers
                     OverrideOnstock(cartprodID, firstSize, secondSize, stockminus, "");
                 }
             }
+            */
 
             TempData["IsValid"] = true;
             ViewBag.IsValid = true;

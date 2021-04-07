@@ -11,7 +11,7 @@
 }
 
 <style>
-    #front-picture, #services{
+    #front-picture, #services {
         display: none !important;
     }
 </style>
@@ -39,8 +39,43 @@
                         decimal productprice = 0;
                         decimal quantity = 0;
                         List<decimal> finalprice = new List<decimal>();
-                        if (cart != null)
+                        if (cart != null && cart.Count() > 0)
                         {
+                            foreach (var item in cart)
+                            {
+
+                                var thisProd = Model.ProductModel.Where(i => i.id == item.product.Value).Single();
+
+                                <tr>
+                                    <td style="width: 70px"><img src="~/Uploads/@Html.DisplayFor(modelItem => thisProd.image)" style="width: 50px" /></td>
+                                    <td><strong>@Html.Raw(thisProd.title)</strong></td>
+
+                                    <td style="text-align: center;">
+                                        @if (item.variant != "")
+                                        {
+                                            @Html.Raw(item.variant) @Html.Raw(" ") @Html.Raw(item.variant2)
+                                        }
+                                    </td>
+
+                                    <td style="text-align: center;">
+                                        <div class="cart-item-amount">
+                                            <button type="button" onclick="decreaseCount(@Html.Raw(item.id));" class="">−</button>
+                                            <input type="number" data-inventory_id="@Html.Raw(item.id)" name="amount[1050506]" value="@Html.Raw(item.quantity)" min="1" max="30000" class="" id="quantity-@Html.Raw(item.id)">
+                                            <button type="button" onclick="increaseCount(@Html.Raw(item.id));" class="">+</button>
+                                        </div>
+                                    </td>
+
+                                    @{
+                                        productprice = Convert.ToDecimal(item.price);
+                                        quantity = Convert.ToDecimal(item.quantity);
+                                    }
+                                    <td><strong style="font-size: 16px;">@productprice €</strong></td>
+                                    <td><div class="removeCart" id="@Html.Raw(item.id)" style="cursor:pointer;">&times;</div> </td>
+                                </tr>
+                                finalprice.Add(quantity * productprice);
+                            }
+
+                            /*
                             foreach (var product in cart.Select(i => i.product.Value))
                             {
                                 foreach (var items in Model.ProductModel.Where(i => i.id == product).Distinct())
@@ -98,6 +133,7 @@
                                     }
                                 }
                             }
+                            */
 
 
                         }

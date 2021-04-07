@@ -24,6 +24,7 @@ namespace Cms.Controllers
         {
             var model = new MultipleIndexModel();
             model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
+            model.VariantModel = db.variants.Where(o => o.deleted == false).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();

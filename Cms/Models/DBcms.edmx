@@ -310,6 +310,7 @@
           <Property Name="number" Type="varchar" MaxLength="100" />
           <Property Name="attribute_id" Type="int" Nullable="false" />
           <Property Name="value" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="num" Type="int" Nullable="false" />
           <Property Name="deleted" Type="bool" Nullable="false" />
         </EntityType>
         <EntityType Name="wishlist">
@@ -361,10 +362,10 @@
           <EntitySet Name="orders" EntityType="hobcModel.orders" />
           <EntitySet Name="users" EntityType="hobcModel.users" />
           <EntitySet Name="usersmeta" EntityType="hobcModel.usersmeta" />
-          <EntitySet Name="variants" EntityType="hobcModel.variants" />
           <EntitySet Name="types" EntityType="hobcModel.types" />
           <EntitySet Name="slideshow" EntityType="hobcModel.slideshow" />
           <EntitySet Name="products" EntityType="hobcModel.products" />
+          <EntitySet Name="variants" EntityType="hobcModel.variants" />
         </EntityContainer>
         <EntityType Name="blog">
           <Key>
@@ -608,20 +609,6 @@
           <Property Name="created" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="variants">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="prod_id" Type="Int32" Nullable="false" />
-          <Property Name="price" Type="Decimal" />
-          <Property Name="discountprice" Type="Decimal" />
-          <Property Name="stock" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="number" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="attribute_id" Type="Int32" Nullable="false" />
-          <Property Name="value" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="deleted" Type="Boolean" Nullable="false" />
-        </EntityType>
         <EntityType Name="types">
           <Key>
             <PropertyRef Name="id" />
@@ -679,6 +666,21 @@
           <Property Name="custom10" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="heureka" Type="Boolean" Nullable="false" />
           <Property Name="heurekadarcek" Type="Boolean" Nullable="false" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="variants">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prod_id" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Decimal" />
+          <Property Name="discountprice" Type="Decimal" />
+          <Property Name="stock" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="number" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="attribute_id" Type="Int32" Nullable="false" />
+          <Property Name="value" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="num" Type="Int32" Nullable="false" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
         </EntityType>
         </Schema>
@@ -944,21 +946,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="variants">
-            <EntityTypeMapping TypeName="hobcModel.variants">
-              <MappingFragment StoreEntitySet="variants">
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="value" ColumnName="value" />
-                <ScalarProperty Name="attribute_id" ColumnName="attribute_id" />
-                <ScalarProperty Name="number" ColumnName="number" />
-                <ScalarProperty Name="stock" ColumnName="stock" />
-                <ScalarProperty Name="discountprice" ColumnName="discountprice" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="types">
             <EntityTypeMapping TypeName="hobcModel.types">
               <MappingFragment StoreEntitySet="types">
@@ -1017,6 +1004,22 @@
                 <ScalarProperty Name="number" ColumnName="number" />
                 <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="variants">
+            <EntityTypeMapping TypeName="hobcModel.variants">
+              <MappingFragment StoreEntitySet="variants">
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="num" ColumnName="num" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="attribute_id" ColumnName="attribute_id" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="discountprice" ColumnName="discountprice" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

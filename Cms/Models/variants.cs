@@ -22,6 +22,7 @@ namespace Cms.Models
         public string number { get; set; }
         public int attribute_id { get; set; }
         public string value { get; set; }
+        public int num { get; set; }
         public bool deleted { get; set; }
     }
 }

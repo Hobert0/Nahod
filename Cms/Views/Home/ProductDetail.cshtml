@@ -237,7 +237,7 @@
 
                                                 @{
                                                     //var variants = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).ToList();
-                                                    var vars = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).OrderBy(o => o.attribute_id).ToList();
+                                                    var vars = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).OrderBy(o => o.num).ToList();
 
                                                     if (vars.Count() > 0)
                                                     {
@@ -502,47 +502,35 @@
                 }
 
                 function initVariants() {
-                    $maxPrice = 0;
-                    $maxNormalPrice = 0;
-                    $maxDiscountPrice = 0;
-                    $(".product-variation select").each(function () {
-                        $thisPrices = $(this).val().split("|");
 
-                        $thisPrice = $thisPrices[0];
-                        $thisDiscount = $thisPrices[1];
+                    $thisPrices = $(".product-variation select").eq(0).val().split("|");
 
-                        $finalPrice = parseFloat($thisDiscount == "" ? $thisPrice.replace(",", ".") : $thisDiscount.replace(",", "."));
+                    $thisPrice = parseFloat($thisPrices[0].replace(",", "."));
+                    $thisDiscount = $thisPrices[1].replace(",", ".");
+                    $thisDiscount = parseFloat($thisDiscount == "" ? 0 : $thisDiscount);
 
-                        if ($finalPrice > $maxPrice) {
-                            $maxPrice = $finalPrice;
-                            $maxNormalPrice = parseFloat($thisPrice.replace(",", "."));
-                            $maxDiscountPrice = parseFloat($thisDiscount == "" ? 0 : $thisDiscount.replace(",", "."));
-                        }
-                    });
+                    if ($thisDiscount == 0) {
 
-                    if ($maxDiscountPrice == 0) {
-
-                        $(".actual-price").text(only2Decimals($maxPrice));
-                        $("#actual-price-w-tax").text(only2Decimals($maxPrice * 100 / 120));
+                        $(".actual-price").text(only2Decimals($thisPrice));
+                        $("#actual-price-w-tax").text(only2Decimals($thisPrice * 100 / 120));
 
                         $(".discount-price-text, .discount-price-del").addClass("d-none");
                         $(".w-discount-price").removeClass("d-none");
                     } else {
-                        $(".actual-price").text(only2Decimals($maxDiscountPrice));
-                        $("#actual-price-w-tax").text(only2Decimals($maxDiscountPrice * 100 / 120));
+                        $(".actual-price").text(only2Decimals($thisDiscount));
+                        $("#actual-price-w-tax").text(only2Decimals($thisDiscount * 100 / 120));
 
-                        $(".discount-price-del del").text(only2Decimals($maxNormalPrice) + " €");
+                        $(".discount-price-del del").text(only2Decimals($thisPrice) + " €");
 
                         $(".discount-price-text, .discount-price-del").removeClass("d-none");
                         $(".w-discount-price").addClass("d-none");
                     }
-
                 }
 
                 if ($(".product-variation select").length) {
                     initVariants();
 
-                    $(".product-variation select").change(function () {
+                    $(".product-variation select").eq(0).change(function () {
                         initVariants();
                     });
                 }

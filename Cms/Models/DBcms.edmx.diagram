@@ -20,10 +20,10 @@
         <EntityTypeShape EntityType="hobcModel.orders" Width="1.5" PointX="13.75" PointY="4.75" />
         <EntityTypeShape EntityType="hobcModel.users" Width="1.5" PointX="11.75" PointY="13.75" />
         <EntityTypeShape EntityType="hobcModel.usersmeta" Width="1.5" PointX="13.75" PointY="12.75" />
-        <EntityTypeShape EntityType="hobcModel.variants" Width="1.5" PointX="5.375" PointY="11.75" />
         <EntityTypeShape EntityType="hobcModel.types" Width="1.5" PointX="0.75" PointY="14.75" />
         <EntityTypeShape EntityType="hobcModel.slideshow" Width="1.5" PointX="7.375" PointY="14.75" />
         <EntityTypeShape EntityType="hobcModel.products" Width="1.5" PointX="3.375" PointY="15.75" />
+        <EntityTypeShape EntityType="hobcModel.variants" Width="1.5" PointX="3.375" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

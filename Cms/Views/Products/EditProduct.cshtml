@@ -411,6 +411,7 @@
         </div>
 
         <div num="1" class="clonedVarSection row m-0 activeInputSize" style="width:90%;">
+            @Html.Hidden("varNum1", 1, new { @class = "varNum" })
             <div class="">
                 <div class="form-group">
                     <div style="width: 150px; margin-left: 20px;">
@@ -621,10 +622,10 @@
     $(document).ready(function () {
 
         $(document).on("change", ".varAttrs", function () {
-            initAttrValues($(this).parents(".clonedVarSection").attr("num"));
+            initAttrValues($(this).parents(".clonedVarSection").attr("num"), $(this).find("option:selected").attr("attr_id"));
         });
 
-        function initAttrValues(num) {
+        function initAttrValues(num, attrId) {
 
             $("select[name=varAttrsValues" + num + "] option").remove();
 
@@ -632,6 +633,16 @@
 
             for ($j = 0; $j < $values.length; $j++) {
                 $("#varAttrsValues" + num).append('<option value="' + $values[$j].name + '">' + $values[$j].name + '</option>')
+            }
+
+            //ak to nie je rovnake ako prvy typ varianty tak nie je mozne upravit cenu
+            $firstAttrId = $(".varAttrs option").eq(0).attr("attr_id");
+            if (attrId != null && attrId != $firstAttrId) {
+                $(".clonedVarSection[num=" + num + "] .varPrice").val("").prop("disabled", true);
+                $(".clonedVarSection[num=" + num + "] .varDiscountPrice").val("").prop("disabled", true);
+            } else if (attrId != null && attrId == $firstAttrId) {
+                $(".clonedVarSection[num=" + num + "] .varPrice").prop("disabled", false);
+                $(".clonedVarSection[num=" + num + "] .varDiscountPrice").prop("disabled", false);
             }
         }
 
@@ -705,13 +716,19 @@
 
                 $(".clonedVarSection[num=" + $i + "]").find("select.varAttrs option[attr_id=" + $variants[$i - 1].attribute_id + "]").prop('selected', true);
 
-                initAttrValues($i);
+                initAttrValues($i, $variants[$i - 1].attribute_id);
 
+                $(".clonedVarSection[num=" + $i + "]").find("input.varNum").val($variants[$i - 1].num);
                 $(".clonedVarSection[num=" + $i + "]").find("select.varAttrsValues").val($variants[$i - 1].value);
                 $(".clonedVarSection[num=" + $i + "]").find("input.varNumber").val($variants[$i - 1].number);
                 $(".clonedVarSection[num=" + $i + "]").find("input.varStock").val($variants[$i - 1].stock);
-                $(".clonedVarSection[num=" + $i + "]").find("input.varPrice").val($variants[$i - 1].price);
-                $(".clonedVarSection[num=" + $i + "]").find("input.varDiscountPrice").val($variants[$i - 1].discountprice);
+
+                //vyplnime hodnoty cien len ak su varianty takeho typu ako uplne prva varianta
+                $firstAttrId = $(".varAttrs option").eq(0).attr("attr_id");
+                if ($variants[$i - 1].attribute_id == $firstAttrId) {
+                    $(".clonedVarSection[num=" + $i + "]").find("input.varPrice").val($variants[$i - 1].price);
+                    $(".clonedVarSection[num=" + $i + "]").find("input.varDiscountPrice").val($variants[$i - 1].discountprice);
+                }
             }
 
             $("#showVariants").click();
@@ -830,285 +847,6 @@
         }
     };
 
-    /*GET SIZES from database*/
-    if ('@sizes' != "") {
-        document.getElementById('variableproduct').checked = true;
-        checkVariable();
-
-        var j = '@Html.Raw(sizes)';
-        var json = $.parseJSON(j);
-        var countofsize = json.length;
-        var inputs = "";
-        $(json).each(function (i, val) {
-        if (val.size2 != null) {
-            inputs = "bra";
-        } else if (!isNaN(val.size1)) {
-            inputs = "shoes";
-        }
-        });
-        clonesection(countofsize, inputs);
-
-        var counter = 1;
-        $(json).each(function (i, val) {
-            console.log(val.size1 + " " + val.size2 + " " + val.stock);
-            if (val.size2 == null && isNaN(val.size1)) {
-                document.getElementById('clonedSection' + counter.toString()).getElementsByClassName('select-box')[0]
-                    .value = val.size1;
-                document.getElementById('clonedSection' + counter.toString()).getElementsByClassName('text-box')[0]
-                    .value = val.stock;
-                counter++;
-            } else if (val.size2 == null && !isNaN(val.size1)) {
-                document.getElementById('variableshoes').checked = true;
-                checkVariable();
-                document.getElementById('shoesSection' + counter.toString()).getElementsByClassName('select-box')[0]
-                    .value = val.size1;
-                document.getElementById('shoesSection' + counter.toString()).getElementsByClassName('text-box')[0]
-                    .value = val.stock;
-                counter++;
-            }else {
-                document.getElementById('variableunderwear').checked = true;
-                checkVariable();
-                document.getElementById('underwearSection' + counter.toString()).getElementsByClassName('select-box')[0]
-                    .value = val.size1;
-                document.getElementById('underwearSection' + counter.toString()).getElementsByClassName('select-box2')[0]
-                    .value = val.size2;
-                document.getElementById('underwearSection' + counter.toString()).getElementsByClassName('text-box')[0]
-                    .value = val.stock;
-                counter++;
-            }
-        });
-
-
-    }
-
-    /**Clone section by sizes*/
-    function clonesection(countofsize, inputs) {
-        if (inputs == "") {
-            for (i = 0; i < countofsize - 1; i++) {
-                var num = $('.clonedSection').length;
-                var newNum = new Number(num + 1);
-
-                var newSection = $('#clonedSection' + num).clone().attr('id', 'clonedSection' + newNum);
-
-                newSection.children(':first').children(':first').attr('id', 'name' + newNum)
-                    .attr('name', 'name' + newNum);
-                newSection.children(':nth-child(2)').children(':first').attr('id', 'nameTwo' + newNum)
-                    .attr('name', 'nameTwo' + newNum);
-
-                $('.cloneSection').last().append(newSection);
-
-                $('#btnDel').attr('style', 'display:inline-block');
-
-                if (newNum == 10)
-                    $('#btnAdd').attr('disabled', 'disabled');
-            }
-        } else if (inputs == "bra"){
-            for (i = 0; i < countofsize - 1; i++) {
-                var num = $('.underwearSection').length;
-                var newNum = new Number(num + 1);
-
-                var newSection = $('#underwearSection' + num).clone().attr('id', 'underwearSection' + newNum);
-
-                newSection.children(':first').children(':first').attr('id', 'name' + newNum)
-                    .attr('name', 'name' + newNum);
-                newSection.children(':nth-child(2)').children(':first').attr('id', 'nameTwo' + newNum)
-                    .attr('name', 'nameTwo' + newNum);
-
-                $('.undersection').last().append(newSection);
-
-                $('#btnDel').attr('style', 'display:inline-block');
-
-                if (newNum == 10)
-                    $('#btnAdd').attr('disabled', 'disabled');
-            }
-        }
-                        else if (inputs == "colors") {
-            for (i = 0; i < countofsize - 1; i++) {
-                var num = $('.colorSection').length;
-                var newNum = new Number(num + 1);
-
-                var newSection = $('#colorSection' + num).clone().attr('id', 'colorSection' + newNum);
-
-                newSection.children(':first').children(':first').attr('id', 'name' + newNum)
-                    .attr('name', 'name' + newNum);
-                newSection.children(':nth-child(2)').children(':first').attr('id', 'nameTwo' + newNum)
-                    .attr('name', 'nameTwo' + newNum);
-
-                $('.clrSection').last().append(newSection);
-
-                $('#btnDelcolor').attr('style', 'display:inline-block');
-
-                if (newNum == 10)
-                    $('#btnAddcolor').attr('disabled', 'disabled');
-                }
-
-        }
-            else {
-                for (i = 0; i < countofsize - 1; i++) {
-                    var num = $('.shoesSection').length;
-                    var newNum = new Number(num + 1);
-
-                    var newSection = $('#shoesSection' + num).clone().attr('id', 'shoesSection' + newNum);
-
-                    newSection.children(':first').children(':first').attr('id', 'name' + newNum)
-                        .attr('name', 'name' + newNum);
-                    newSection.children(':nth-child(2)').children(':first').attr('id', 'nameTwo' + newNum)
-                        .attr('name', 'nameTwo' + newNum);
-
-                    $('.shoeSection').last().append(newSection);
-
-                    $('#btnDel3').attr('style', 'display:inline-block');
-
-                    if (newNum == 10)
-                        $('#btnAdd3').attr('disabled', 'disabled');
-                }
-        }
-    }
-
-
-    /*ADD/REMOVE SIZE FIELDS*/
-    function checkVariable()
-    {
-        if (document.getElementById('variableproduct').checked)
-        {
-            document.getElementById('variableprod').value = '1';
-            document.getElementById('regularVariableProduct').style.display = 'flex';
-            document.getElementById('underVariableProduct').style.display = 'flex';
-            document.getElementById('shoeVariableProduct').style.display = 'flex';
-            document.getElementById('stock').style.display = 'none';
-
-            if (document.getElementById('variableunderwear').checked) {
-                document.getElementById('underwearVariableProduct').style.display = 'flex';
-                document.getElementById('regularVariableProduct').style.display = 'none';
-                document.getElementById('shoesVariableProduct').style.display = 'none';
-
-            } else if (document.getElementById('variableshoes').checked) {
-                document.getElementById('shoesVariableProduct').style.display = 'flex';
-                document.getElementById('underwearVariableProduct').style.display = 'none';
-                document.getElementById('regularVariableProduct').style.display = 'none';
-
-            }else {
-                document.getElementById('underwearVariableProduct').style.display = 'none';
-                document.getElementById('shoesVariableProduct').style.display = 'none';
-                document.getElementById('regularVariableProduct').style.display = 'flex';
-
-            }
-        } else {
-            document.getElementById('variableprod').value = '0';
-            document.getElementById('regularVariableProduct').style.display = 'none';
-            document.getElementById('underVariableProduct').style.display = 'none';
-            document.getElementById('shoeVariableProduct').style.display = 'none';
-            document.getElementById('stock').style.display = 'flex';
-        }
-
-
-
-    }
-
-    /*STANDARD SIZES*/
-    $(document).ready(function() {
-        $('#btnAdd').click(function() {
-            var num = $('.clonedSection').length;
-            var newNum = new Number(num + 1);
-
-            var newSection = $('#clonedSection' + num).clone().attr('id', 'clonedSection' + newNum);
-
-            newSection.children(':first').children(':first').attr('id', 'name' + newNum).attr('name', 'name' + newNum);
-            newSection.children(':nth-child(2)').children(':first').attr('id', 'nameTwo' + newNum)
-                .attr('name', 'nameTwo' + newNum);
-
-            $('.cloneSection').last().append(newSection);
-
-            $('#btnDel').attr('style', 'display:inline-block');
-
-            if (newNum == 10)
-                $('#btnAdd').attr('disabled', 'disabled');
-        });
-
-        $('#btnDel').click(function() {
-            var num = $('.clonedSection').length; // how many "duplicatable" input fields we currently have
-            $('#clonedSection' + num).remove(); // remove the last element
-
-            // enable the "add" button
-            $('#btnAdd').attr('disabled', '');
-
-            // if only one element remains, disable the "remove" button
-            if (num - 1 == 1)
-                $('#btnDel').attr('style', 'display:none');
-        });
-
-        $('#btnDel').attr('style', 'display:none');
-    });
-
-    /*Under Wear*/
-    $(document).ready(function() {
-        $('#btnAdd2').click(function() {
-            var num = $('.underwearSection').length;
-            var newNum = new Number(num + 1);
-
-            var newSection = $('#underwearSection' + num).clone().attr('id', 'underwearSection' + newNum);
-
-            newSection.children(':first').children(':first').attr('id', 'name' + newNum).attr('name', 'name' + newNum);
-            newSection.children(':nth-child(2)').children(':first').attr('id', 'nameTwo' + newNum)
-                .attr('name', 'nameTwo' + newNum);
-
-            $('.undersection').last().append(newSection);
-
-            $('#btnDel2').attr('style', 'display:inline-block');
-
-            if (newNum == 10)
-                $('#btnAdd2').attr('disabled', 'disabled');
-        });
-
-        $('#btnDel2').click(function() {
-            var num = $('.underwearSection').length; // how many "duplicatable" input fields we currently have
-            $('#underwearSection' + num).remove(); // remove the last element
-
-            // enable the "add" button
-            $('#btnAdd2').attr('disabled', '');
-
-            // if only one element remains, disable the "remove" button
-            if (num - 1 == 1)
-                $('#btnDel2').attr('style', 'display:none');
-        });
-
-        $('#btnDel2').attr('style', 'display:none');
-    });
-
-    /*Shoes*/
-    $(document).ready(function () {
-        $('#btnAdd3').click(function () {
-            var num = $('.shoesSection').length;
-            var newNum = new Number(num + 1);
-
-            var newSection = $('#shoesSection' + num).clone().attr('id', 'shoesSection' + newNum);
-
-            newSection.children(':first').children(':first').attr('id', 'name' + newNum).attr('name', 'name' + newNum);
-            newSection.children(':nth-child(2)').children(':first').attr('id', 'nameTwo' + newNum).attr('name', 'nameTwo' + newNum);
-
-            $('.shoeSection').last().append(newSection);
-
-            $('#btnDel3').attr('style', 'display:inline-block');
-
-            if (newNum == 10)
-                $('#btnAdd3').attr('disabled', 'disabled');
-        });
-
-        $('#btnDel3').click(function () {
-            var num = $('.shoesSection').length; // how many "duplicatable" input fields we currently have
-            $('#shoesSection' + num).remove();     // remove the last element
-
-            // enable the "add" button
-            $('#btnAdd3').attr('disabled', '');
-
-            // if only one element remains, disable the "remove" button
-            if (num - 1 == 1)
-                $('#btnDel3').attr('style', 'display:none');
-        });
-
-        $('#btnDel3').attr('style', 'display:none');
-    });
-
     function validatePrices() {
         $valid = true;
 
@@ -1188,6 +926,7 @@
 
                     for ($i = 1; $i <= $num; $i++) {
 
+                        $varNum = parseInt($(".clonedVarSection[num=" + $i + "]").find(".varNum").val());
                         $varAttrs = $(".clonedVarSection[num=" + $i + "]").find(".varAttrs option:selected").attr("attr_id");
                         $varAttrsValues = $(".clonedVarSection[num=" + $i + "]").find(".varAttrsValues").val();
                         $varNumber = $(".clonedVarSection[num=" + $i + "]").find(".varNumber").val();
@@ -1195,7 +934,7 @@
                         $varPrice = $(".clonedVarSection[num=" + $i + "]").find(".varPrice").val();
                         $varDiscountPrice = $(".clonedVarSection[num=" + $i + "]").find(".varDiscountPrice").val();
 
-                        $variants.push({ "attrId": $varAttrs, "attrValues": $varAttrsValues, "number": $varNumber, "stock": $varStock, "price": $varPrice, "discountprice": $varDiscountPrice });
+                        $variants.push({ "num": $varNum, "attrId": $varAttrs, "attrValues": $varAttrsValues, "number": $varNumber, "stock": $varStock, "price": $varPrice, "discountprice": $varDiscountPrice });
                     }
 
                     $("#Variants").val(JSON.stringify($variants));
@@ -1203,170 +942,10 @@
                     $("#Variants").val("[]");
                 }
 
-                /*
-                if (document.getElementById('variableproduct').checked) {
-    
-                    if (document.getElementById('variableunderwear').checked) {
-                        var sizes = [];
-                        $(".activeInput").each(function () {
-                            var size1 = $(this).find('[name=size1]').val();
-                            var size2 = $(this).find('[name=size2]').val();
-                            var stock = $(this).find('[name=stock]').val();
-    
-                            item = {}
-                            item["size1"] = size1;
-                            item["size2"] = size2;
-                            item["stock"] = stock;
-    
-                            sizes.push(item);
-                        });
-    
-                        sizes = JSON.stringify(sizes);
-                        document.getElementById("finalsizes").value = sizes;
-                    } else if (document.getElementById('variableshoes').checked) {
-                        var sizes = [];
-                        $(".activeInputShoes").each(function () {
-                            var size1 = $(this).find('[name=size1]').val();
-                            var stock = $(this).find('[name=stock]').val();
-    
-                            item = {}
-                            item["size1"] = size1;
-                            item["stock"] = stock;
-    
-                            sizes.push(item);
-                        });
-    
-                        sizes = JSON.stringify(sizes);
-                        document.getElementById("finalsizes").value = sizes;
-                    } else {
-                        var sizes = [];
-                        $(".activeInputSize").each(function () {
-                            var size1 = $(this).find('[name=size1]').val();
-                            var stock = $(this).find('[name=stock]').val();
-    
-                            item = {}
-                            item["size1"] = size1;
-                            item["stock"] = stock;
-    
-                            sizes.push(item);
-                        });
-    
-                        sizes = JSON.stringify(sizes);
-                        document.getElementById("finalsizes").value = sizes;
-                    }
-    
-                    
-                }
-                */
-
                 $(this).parents("form").submit();
             }
         });
     });
-
-         /*ADD REMOVE COLOR FIELDS*/
-        function colorVariable()
-        {
-            if (document.getElementById('colorvariable').checked)
-            {
-                document.getElementById('variableprod').value = '1';
-                document.getElementById('colorVariableProduct').style.display = 'flex';
-
-            } else {
-                document.getElementById('variableprod').value = '0';
-                document.getElementById('colorVariableProduct').style.display = 'none';
-
-            }
-
-        }
-
-       /*COLOR VARIANTS*/
-        $(document).ready(function() {
-            $('#btnAddcolor').click(function() {
-                var num     = $('.colorSection').length;
-                var newNum  = new Number(num + 1);
-
-                var newSection = $('#colorSection' + num).clone().attr('id', 'colorSection' + newNum);
-
-                newSection.children(':first').children(':first').attr('id', 'name' + newNum).attr('name', 'name' + newNum);
-                newSection.children(':nth-child(2)').children(':first').attr('id', 'nameTwo' + newNum).attr('name', 'nameTwo' + newNum);
-
-                $('.clrSection').last().append(newSection);
-
-                $('#btnDelcolor').attr('style', 'display:inline-block');
-
-                if (newNum == 10)
-                    $('#btnAddcolor').attr('disabled','disabled');
-            });
-
-            $('#btnDelcolor').click(function() {
-                var num = $('.colorSection').length; // how many "duplicatable" input fields we currently have
-                $('#colorSection' + num).remove();     // remove the last element
-
-                // enable the "add" button
-                $('#btnAddcolor').attr('disabled','');
-
-                // if only one element remains, disable the "remove" button
-                if (num-1 == 1)
-                    $('#btnDelcolor').attr('style','display:none');
-            });
-
-            $('#btnDelcolor').attr('style','display:none');
-        });
-
-
-        /*COLORS - Create JSON and send to database*/
-        $(document).ready(function () {
-            $('#btnSubmit').click(function () {
-                if (document.getElementById('colorvariable').checked) {
-                    var colors = [];
-                    $(".colorInput").each(function () {
-                        var color = $(this).find('[name=color]').val();
-
-                        item = {}
-                        item["color"] = color;
-
-                        colors.push(item);
-                    });
-
-                    colors = JSON.stringify(colors);
-
-                    document.getElementById("finalcolors").value = colors;
-                } else {
-                    document.getElementById("finalcolors").value = "";
-                }
-                });
-
-            });
-
-    /*GET COLORS from database*/
-    if ('@colors' != "") {
-        document.getElementById('colorvariable').checked = true;
-        colorVariable();
-
-        var j = '@Html.Raw(colors)';
-        var json = $.parseJSON(j);
-        var countofsize = json.length;
-        var inputs = "";
-        $(json).each(function (i, val) {
-        if (val.color != null) {
-            inputs = "colors";
-        }
-        });
-        clonesection(countofsize, inputs);
-
-        var counter = 1;
-        $(json).each(function (i, val) {
-            console.log(val.color);
-                document.getElementById('colorvariable').checked = true;
-                colorVariable();
-                document.getElementById('colorSection' + counter.toString()).getElementsByClassName('text-box')[0]
-                    .value = val.color;
-                counter++;
-        });
-
-
-    }
 
 </script>
 

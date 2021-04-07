@@ -35,8 +35,9 @@ function decreaseCount(productid) {
     for (var i = 0; i < addtocart.length; i++) {
         if (productid === addtocart[i].id) {
             cart.product = addtocart[i].product;
-            cart.size = addtocart[i].size;
-            cart.size2 = addtocart[i].size2;
+            cart.variant = addtocart[i].variant;
+            cart.variant2 = addtocart[i].variant2;
+            cart.price = addtocart[i].price;
         }
     }
 
@@ -93,8 +94,9 @@ function increaseCount(productid) {
     for (var i = 0; i < addtocart.length; i++) {
         if (productid === addtocart[i].id) {
             cart.product = addtocart[i].product;
-            cart.size = addtocart[i].size;
-            cart.size2 = addtocart[i].size2;
+            cart.variant = addtocart[i].variant;
+            cart.variant2 = addtocart[i].variant2;
+            cart.price = addtocart[i].price;
         }
     }
 

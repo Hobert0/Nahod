@@ -5,14 +5,11 @@
 function addToCart(id, variableproduct, price) {
     // this is how you set it
     var quantity = "1";
-    var size = "";
-    var size2 = "";
-    var color = "";
+    var variant = "";
+    var variant2 = "";
     var uniqueid = Math.floor(Math.random() * 10000) + 1;
 
-    var isvariablecolor = false
-
-    if (variableproduct === true || isvariablecolor === true) {
+    if (variableproduct === true) {
         toastr["warning"]("Pre objednávku je potrebné v detaile produktu zvoliť variant.");
         toastr.options = {
             "closeButton": true,
@@ -51,26 +48,21 @@ function addToCart(id, variableproduct, price) {
         }
 
         for (var i = 0; i < addtocart.length; i++) {
-            if (id === addtocart[i].product && size === addtocart[i].size) {
+            if (id === addtocart[i].product && variant === addtocart[i].variant) {
                 quantity = (parseInt(addtocart[i].quantity) + 1).toString(); //add two
-                var index = addtocart.findIndex(i => i.product === id && i.size === size);
+                var index = addtocart.findIndex(i => i.product === id && i.variant === variant);
                 if (index > -1) {
                     addtocart.splice(index, 1);
                 }
             }
         }
 
-        if (isvariablecolor) {
-            color = document.getElementsByClassName('color-box')[0].value;
-        }
-
         var cart = new Object();
         cart.id = uniqueid;
-        cart.size = size;
-        cart.size2 = size2;
+        cart.variant = variant;
+        cart.variant2 = variant2;
         cart.quantity = quantity;
         cart.product = id;
-        cart.color = color;
         cart.price = price;
 
 
