@@ -95,6 +95,16 @@ namespace Cms.Controllers
             if (Session["userid"] != null)
             {
                 usID = Int32.Parse(Session["userid"].ToString());
+
+                //Zlavova politika
+                //5% ... nad 1e
+                //10% ... nad 500e
+                //15% ... nad 1000e
+
+                //o.finalprice
+
+                var sum = db.orders.Where(o => o.userid == usID).Sum(o => o.finalprice);
+
             }
 
             o.userid = usID;
@@ -105,34 +115,31 @@ namespace Cms.Controllers
             List<dynamic> cart = new List<dynamic>();
             cart = (List<dynamic>)Session["cartitems"];
 
-            List<products> allTheData = new List<products>();
-            var productprice = "";
-            var quantity = 0;
-            List<int> finalprice = new List<int>();
-
             foreach (var item in cart)
             {
-                //udaje nech sa vyberaju z db
-
                 int productid = Convert.ToInt32(item.product);
-                
+                string variantName = item.variant;
+
                 var thisProd = db.products.Where(i => i.id == productid).Single();
+                var thisVar = db.products.Join(db.variants, a => a.id, b => b.prod_id, (a, b) => new { id = a.id, variantId = b.id, price = b.price, discountprice = b.discountprice, value = b.value, title = a.title }).Where(i => i.id == productid && i.value == variantName).SingleOrDefault();   
 
-                var qunatity = item.quantity;
-
-                om.product = item.title;  
                 om.ordernumber = o.ordernumber;
+                om.product = thisVar == null ? thisProd.title : thisVar.title;
                 om.productid = item.product;
+                om.pieces = item.quantity;
+                om.productimage = thisProd.image;
+                om.price = (decimal)item.quantity * ((thisVar == null) ? (thisProd.discountprice == null ? thisProd.price : (decimal)thisProd.discountprice) : (thisVar.discountprice == null ? (decimal)thisVar.price : (decimal)thisVar.discountprice));
+                om.variant = item.variant;
+                om.variant2 = item.variant2;
 
-                //om.productimage = o.ordernumber;
-
-                om.price = (Decimal.Parse(om.pieces) * decimal.Parse(productprice.Replace(",", "."), CultureInfo.InvariantCulture)).ToString();
                 db.ordermeta.Add(om);
                 db.SaveChanges();
 
+                var cartprodID = Int32.Parse(item.product.ToString());
                 var stockminus = Int32.Parse(om.pieces);
+                var variantId = thisVar == null ? 0 : thisVar.variantId;
 
-                OverrideOnstock(cartprodID, firstSize, secondSize, stockminus, "");
+                //OverrideOnstock(cartprodID, variantId, stockminus, "");
             }
 
             /*
@@ -361,8 +368,7 @@ namespace Cms.Controllers
 
                 var shipPrice = db.Database.SqlQuery<string>(shipSql).FirstOrDefault();
 
-                if (decimal.Parse(o.finalprice, CultureInfo.InvariantCulture) >
-                    decimal.Parse(freeshipping, CultureInfo.InvariantCulture))
+                if (o.finalprice > decimal.Parse(freeshipping, CultureInfo.InvariantCulture))
                 {
                     shipPrice = "0";
                 }
@@ -383,7 +389,7 @@ namespace Cms.Controllers
                 body = body.Replace("{Zip-shipp}", o.zip_shipp);
                 body = body.Replace("{City-shipp}", o.city_shipp);
                 body = body.Replace("{Tel}", o.phone);
-                body = body.Replace("{Finalprice}", o.finalprice);
+                body = body.Replace("{Finalprice}", o.finalprice.ToString());
                 body = body.Replace("{PaymentPrice}", payPrice.ToString());
                 body = body.Replace("{ShippingPrice}", shipPrice.ToString());
                 body = body.Replace("{Products}", ProductsInEmial(orderNumber));
@@ -406,7 +412,7 @@ namespace Cms.Controllers
                     stringBuilder.Append("<tr>");
                     stringBuilder.AppendLine("<td width='9' align='left' valign='middle' style='margin-top:0;margin-bottom:0;color:#000000;line-height:1.36;width:9px;border-bottom:1px solid #c8c8c8'> </td>");
                     stringBuilder.AppendLine("<td align='left' valign='middle' style='margin-top:0;margin-bottom:0;color:#000000;line-height:1.36;border-bottom:1px solid #c8c8c8'>" + item.product + "</td>");
-                    stringBuilder.AppendLine("<td align='left' valign='middle' style='margin-top:0;margin-bottom:0;color:#000000;line-height:1.36;border-bottom:1px solid #c8c8c8'>" + item.color + "</td>");
+                    stringBuilder.AppendLine("<td align='left' valign='middle' style='margin-top:0;margin-bottom:0;color:#000000;line-height:1.36;border-bottom:1px solid #c8c8c8'>" + (item.variant != "" ? (item.variant2 != "" ? item.variant + " " + item.variant2 : item.variant) : "") + "</td>");
                     stringBuilder.AppendLine("<td align='left' valign='middle' style='margin-top:0;margin-bottom:0;color:#000000;line-height:1.36;border-bottom:1px solid #c8c8c8'>" + item.pieces + "</td>");
                     stringBuilder.AppendLine("<td align='left' valign='middle' style='margin-top:0;margin-bottom:0;color:#000000;line-height:1.36;border-bottom:1px solid #c8c8c8'>" + item.price + " €</td>");
                     stringBuilder.AppendLine("<td width='9' align='left' valign='middle' style='margin-top:0;margin-bottom:0;color:#000000;line-height:1.36;width:9px;border-bottom:1px solid #c8c8c8'> </td>");
@@ -643,7 +649,7 @@ namespace Cms.Controllers
                 body = body.Replace("{Zip-shipp}", o.zip_shipp);
                 body = body.Replace("{City-shipp}", o.city_shipp);
                 body = body.Replace("{Tel}", o.phone);
-                body = body.Replace("{Finalprice}", o.finalprice);
+                body = body.Replace("{Finalprice}", o.finalprice.ToString());
                 body = body.Replace("{FinalpriceNoDPH}", cenabezdph.ToString("N2"));
                 body = body.Replace("{DPH}", dph);
                 body = body.Replace("{PaymentPrice}", payPrice.ToString());
@@ -708,11 +714,12 @@ namespace Cms.Controllers
             return RedirectToAction("Admin", "Admin");
         }
 
-        public void OverrideOnstock(int prodId, string size, string size2, int stockminus, string storno)
+        /*
+        public void OverrideOnstock(int prodId, int variantId, int stockminus, string storno)
         {
-            if (size != "" || size2 != "")
+            if (variantId != 0)
             {
-                string jString = db.products.Where(m => m.id == prodId).Select(m => m.custom4).FirstOrDefault(); //"[{ \"size1\":\"XS\",\"stock\":\"1\"},{ \"size1\":\"M\",\"stock\":\"2\"}]";
+                string jString = db.products.Where(m => m.id == prodId).Select(m => m.custom4).FirstOrDefault();
                 var counter = 1;
                 string json = "[";
 
@@ -834,6 +841,8 @@ namespace Cms.Controllers
 
             }
         }
+        */
+
         [Route("storno/{id}")]
         public ActionResult StornoOrder(string id)
         {
@@ -841,7 +850,7 @@ namespace Cms.Controllers
             var obj = db2.ordermeta.Where(i => i.ordernumber == id);
             var numAlpha = new Regex("(?<Alpha>[a-zA-Z]*)(?<Numeric>[0-9]*)");
 
-
+            /*
             foreach (var prod in obj)
             {
                 var match = numAlpha.Match(prod.size);
@@ -850,6 +859,7 @@ namespace Cms.Controllers
 
                 OverrideOnstock(Int32.Parse(prod.productid), size1, size2, Int32.Parse(prod.pieces), "storno");
             }
+            */
 
             //Set status for order
             var o = db.orders.Single(i => i.ordernumber == id);

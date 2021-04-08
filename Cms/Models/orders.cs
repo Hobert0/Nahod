@@ -31,7 +31,7 @@ namespace Cms.Models
         public string payment { get; set; }
         public string shipping { get; set; }
         public int status { get; set; }
-        public string finalprice { get; set; }
+        public decimal finalprice { get; set; }
         public string billnumber { get; set; }
         public string name_shipp { get; set; }
         public string surname_shipp { get; set; }

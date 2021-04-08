@@ -20,9 +20,9 @@ namespace Cms.Models
         public string productid { get; set; }
         public string pieces { get; set; }
         public string productimage { get; set; }
-        public string price { get; set; }
-        public string size { get; set; }
-        public string color { get; set; }
+        public decimal price { get; set; }
+        public string variant { get; set; }
+        public string variant2 { get; set; }
         public bool deleted { get; set; }
     }
 }
