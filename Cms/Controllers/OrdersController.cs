@@ -78,7 +78,7 @@ namespace Cms.Controllers
             o.payment = model.OrdersModel.Payment;
             o.shipping = model.OrdersModel.Shipping;
             o.status = model.OrdersModel.Status;
-            o.finalprice = model.OrdersModel.Finalprice;
+            o.finalprice = Decimal.Parse(model.OrdersModel.Finalprice, CultureInfo.InvariantCulture);
             o.name_shipp = model.OrdersModel.NameShipp ?? "";
             o.surname_shipp = model.OrdersModel.SurnameShipp ?? "";
             o.address_shipp = model.OrdersModel.AddressShipp ?? "";
@@ -95,16 +95,25 @@ namespace Cms.Controllers
             if (Session["userid"] != null)
             {
                 usID = Int32.Parse(Session["userid"].ToString());
+                var um = db.usersmeta.Where(i => i.userid == usID).SingleOrDefault();
 
-                //Zlavova politika
-                //5% ... nad 1e
-                //10% ... nad 500e
-                //15% ... nad 1000e
+                decimal sum = 0;
+                var prevSumEntity = db.orders.Where(x => x.userid == usID);
+                if (prevSumEntity.Count() > 0) {
+                    sum = prevSumEntity.Sum(x => x.finalprice);
+                }
+                sum += o.finalprice;
 
-                //o.finalprice
+                if (sum >= 1000)
+                {
+                    um.rating = 3;
+                }
+                else if (sum >= 500)
+                {
+                    um.rating = 2;
+                }
 
-                var sum = db.orders.Where(o => o.userid == usID).Sum(o => o.finalprice);
-
+                um.sum = sum;
             }
 
             o.userid = usID;
@@ -121,7 +130,7 @@ namespace Cms.Controllers
                 string variantName = item.variant;
 
                 var thisProd = db.products.Where(i => i.id == productid).Single();
-                var thisVar = db.products.Join(db.variants, a => a.id, b => b.prod_id, (a, b) => new { id = a.id, variantId = b.id, price = b.price, discountprice = b.discountprice, value = b.value, title = a.title }).Where(i => i.id == productid && i.value == variantName).SingleOrDefault();   
+                var thisVar = db.products.Join(db.variants, a => a.id, b => b.prod_id, (a, b) => new { id = a.id, variantId = b.id, price = b.price, discountprice = b.discountprice, value = b.value, title = a.title }).Where(i => i.id == productid && i.value == variantName).SingleOrDefault();
 
                 om.ordernumber = o.ordernumber;
                 om.product = thisVar == null ? thisProd.title : thisVar.title;

@@ -56,7 +56,7 @@ namespace Cms.Controllers
                     Date = a.date,
                     Shipping = a.shipping,
                     Payment = a.payment,
-                    Finalprice = a.finalprice,
+                    Finalprice = a.finalprice.ToString(),
                     Status = a.status,
                     Name = a.name,
                     Surname = a.surname,

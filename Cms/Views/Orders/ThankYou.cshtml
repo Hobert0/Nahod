@@ -66,7 +66,7 @@
                     {
                         <span>Použitý zľavový kupón <strong>@ord.usedcoupon</strong></span><br />
                     }
-                    <strong style="font-size: 2em;">@{decimal final = decimal.Parse(ord.finalprice, CultureInfo.InvariantCulture);} @final.ToString("N")€</strong>
+                    <strong style="font-size: 2em;">@{decimal final = ord.finalprice;} @final.ToString("N")€</strong>
                     @{
                         var cenabezdph = Convert.ToDecimal(final * 100 / 120).ToString("N");
                     }

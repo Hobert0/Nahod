@@ -1,4 +1,5 @@
 ﻿function shippPay() {
+
     var ship = document.querySelector('input[name="transfer"]:checked').value;
     if (isNaN(eval(ship))) { ship = 0; } else { ship = eval(ship); }
     if (document.querySelectorAll('input[name="payment"]:checked').length === 0) {
@@ -12,6 +13,7 @@
         document.getElementById("final3").value = (Number(finalprice) + eval(ship)).toFixed(2);
 
     } else {
+
         var pay = document.querySelector('input[name="payment"]:checked').value;
         if (isNaN(eval(pay))) { pay = 0; } else { pay = eval(pay); }
         document.getElementById("pricedph").innerHTML =
@@ -57,15 +59,19 @@ function checkTransfer() {
     document.getElementById("ship").value = ship;
     ship == '@ViewBag.Ship';
     if (ship == "transfer3") {
-        document.getElementById("pay4").style.display = "none";
+        if (document.getElementById("pay4") != null)
+            document.getElementById("pay4").style.display = "none";
     } else {
-        document.getElementById("pay4").style.display = "block";
+        if (document.getElementById("pay4") != null)
+            document.getElementById("pay4").style.display = "block";
     }
 
-    if (ship == "transfer1" || ship == "transfer2" ) {
-        document.getElementById("pay1").style.display = "none";
+    if (ship == "transfer1" || ship == "transfer2") {
+        if (document.getElementById("pay1") != null)
+            document.getElementById("pay1").style.display = "none";
     } else {
-        document.getElementById("pay1").style.display = "block";
+        if (document.getElementById("pay1") != null)
+            document.getElementById("pay1").style.display = "block";
     }
 
 }
@@ -74,15 +80,19 @@ function checkPayment() {
     document.getElementById("platba").value = pay;
     pay == '@ViewBag.Pay';
     if (pay == "pay4") {
-        document.getElementById("transfer3").style.display = "none";
+        if (document.getElementById("transfer3") != null)
+            document.getElementById("transfer3").style.display = "none";
     } else {
-        document.getElementById("transfer3").style.display = "block";
+        if (document.getElementById("transfer3") != null)
+            document.getElementById("transfer3").style.display = "block";
     }
 
     if (pay == "pay1") {
-        document.getElementById("transfer1").style.display = "none";
+        if (document.getElementById("transfer1") != null)
+            document.getElementById("transfer1").style.display = "none";
     } else {
-        document.getElementById("transfer1").style.display = "block";
+        if (document.getElementById("transfer1") != null)
+            document.getElementById("transfer1").style.display = "block";
     }
 }
 

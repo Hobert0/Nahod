@@ -103,7 +103,7 @@ function parseDate(input) {
             DateTime ordDate = DateTime.ParseExact(price.date, "d.M.yyyy HH:mm:ss", null);
             if (ordDate.Month == DateTime.Now.Month)
             {
-                monthprice += decimal.Parse(price.finalprice, CultureInfo.InvariantCulture);
+                monthprice += price.finalprice;
             }
             var month = DateTime.Now.Month-1;
             if (month < 1)
@@ -113,7 +113,7 @@ function parseDate(input) {
 
             if (ordDate.Month == month)
             {
-                monthprice_last += decimal.Parse(price.finalprice, CultureInfo.InvariantCulture);
+                monthprice_last += price.finalprice;
 
             }
         }

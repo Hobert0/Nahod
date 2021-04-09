@@ -19,6 +19,7 @@
 });
 
 function only2Decimals($num) {
+
     return (Math.floor($num * 100) / 100).toFixed(2);
 }
 
@@ -80,7 +81,7 @@ $("#addproductbtn").click(function () {
         $sum += addtocart[i].quantity * addtocart[i].price;
     }
 
-    $sum = only2Decimals($sum);
+    //$sum = only2Decimals($sum);
 
     sessionStorage.setItem('addtocart', JSON.stringify(addtocart));
     localStorage.setItem('addtocart', JSON.stringify(addtocart));
