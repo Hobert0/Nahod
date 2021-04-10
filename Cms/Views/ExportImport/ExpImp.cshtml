@@ -1,4 +1,4 @@
-﻿
+﻿@model Cms.Models.ImportModel
 @{
     Layout = "~/Views/Shared/_LayoutCms.cshtml";
     ViewBag.Title = "Export/Import";
@@ -80,8 +80,8 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <!--<input type="file" name="UploadedFileProducts" class="custom-file-input" id="customFile"/>-->
-
-                            @Html.TextBox("UploadedFileProducts", "", new { @type = "file", @class = "form-control-file", @accept = "xls|xlsx", @id = "customFile" })
+                            @Html.CheckBoxFor(m => m.Presta, new { @class = "form-control", id = "presta" }) Importujem produkty zo systému PrestaShop
+                            @Html.TextBoxFor(m => m.File, "UploadedFileProducts", new { @type = "file", @class = "form-control-file", @accept = "xls|xlsx|csv", @id = "customFile" })
 
                         </div>
                     </div>

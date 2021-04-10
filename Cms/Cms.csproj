@@ -317,6 +317,7 @@
     </Compile>
     <Compile Include="Models\CategoriesModel.cs" />
     <Compile Include="Models\AttributesModel.cs" />
+    <Compile Include="Models\ImportModel.cs" />
     <Compile Include="Models\TypesModel.cs" />
     <Compile Include="Models\types.cs">
       <DependentUpon>DBcms.tt</DependentUpon>

@@ -223,7 +223,7 @@ namespace Cms.Controllers
             Dt.Columns.Add("DIC", typeof(string));
             Dt.Columns.Add("ICDPH", typeof(string));
             Dt.Columns.Add("News", typeof(string));
-                                 
+
             foreach (var data in users)
             {
                 DataRow row = Dt.NewRow();
@@ -314,12 +314,12 @@ namespace Cms.Controllers
         //automatic looking if record is in db according to the title, if record exist and is the same, record will be ignored from excel
         //if record has minimum one change will be updated in DB
         [HttpPost, Route("import-submit")]
-        public ActionResult ImportProducts(FormCollection formCollection)
+        public ActionResult ImportProducts(ImportModel model)
         {
-            if(Request != null)
+            if (!model.Presta)
             {
 
-                HttpPostedFileBase file = Request.Files["UploadedFileProducts"];
+                HttpPostedFileBase file = model.File;
 
                 if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
                 {
@@ -340,7 +340,7 @@ namespace Cms.Controllers
                             var product = new products();
                             var productsInDb = new products();
                             var idOfProduct = workSheet.Cells[rowIterator, 1].Value;
-                            if(idOfProduct != null)
+                            if (idOfProduct != null)
                             {
                                 var idOfProd = Int32.Parse(workSheet.Cells[rowIterator, 1].Value.ToString());
                                 productsInDb = db.products.SingleOrDefault(v => v.id == idOfProd);
@@ -511,14 +511,72 @@ namespace Cms.Controllers
                                 db.SaveChanges();
                             }
 
-                                                 
+
                         }
 
-                        
+
                     }
                 }
             }
-            
+            else
+            {
+                HttpPostedFileBase file = model.File;
+
+                if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+                {
+                    string fileName = file.FileName;
+                    string fileContentType = file.ContentType;
+                    byte[] fileBytes = new byte[file.ContentLength];
+                    var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+                    var productList = new List<ProductModel>();
+                    using (var package = new StreamReader(file.InputStream))
+                    {
+
+                        while (!package.EndOfStream)
+                        {
+                            var line = package.ReadLine();
+                            var values = line.Split(';');
+
+                            var product = new products();
+                            var productsInDb = new products();
+
+                            product.title = values[2];
+                            product.image = values[1];
+                            product.number = values[3];
+
+                            product.recommended = false;
+                            product.stock = values[7];
+                            product.price = Decimal.Parse(values[5] == null ? string.Empty : values[5] ?? "");
+                            product.date = DateTime.Now.ToString();
+                            //product.gallery = workSheet.Cells[rowIterator, 9].Value == null ? string.Empty : workSheet.Cells[rowIterator, 9].Value.ToString() ?? "";
+                            //product.category = workSheet.Cells[rowIterator, 10].Value == null ? string.Empty : workSheet.Cells[rowIterator, 10].Value.ToString() ?? "";
+                            //product.weight = workSheet.Cells[rowIterator, 11].Value == null ? string.Empty : workSheet.Cells[rowIterator, 11].Value.ToString() ?? "";
+                            //product.weightunit = workSheet.Cells[rowIterator, 12].Value == null ? string.Empty : workSheet.Cells[rowIterator, 12].Value.ToString() ?? "";
+                            //product.description = workSheet.Cells[rowIterator, 13].Value == null ? string.Empty : workSheet.Cells[rowIterator, 13].Value.ToString() ?? "";
+                            //product.discountprice = Decimal.Parse(workSheet.Cells[rowIterator, 14].Value == null ? string.Empty : workSheet.Cells[rowIterator, 14].Value.ToString() ?? "");
+                            //product.custom1 = workSheet.Cells[rowIterator, 15].Value == null ? string.Empty : workSheet.Cells[rowIterator, 15].Value.ToString() ?? "";
+                            //product.custom2 = workSheet.Cells[rowIterator, 16].Value == null ? string.Empty : workSheet.Cells[rowIterator, 16].Value.ToString() ?? "";
+                            //product.custom3 = workSheet.Cells[rowIterator, 17].Value == null ? string.Empty : workSheet.Cells[rowIterator, 17].Value.ToString() ?? "";
+                            //product.custom4 = workSheet.Cells[rowIterator, 18].Value == null ? string.Empty : workSheet.Cells[rowIterator, 18].Value.ToString() ?? "";
+                            //product.custom5 = workSheet.Cells[rowIterator, 19].Value == null ? string.Empty : workSheet.Cells[rowIterator, 19].Value.ToString() ?? "";
+                            //product.custom6 = workSheet.Cells[rowIterator, 20].Value == null ? string.Empty : workSheet.Cells[rowIterator, 20].Value.ToString() ?? "";
+                            //product.custom7 = workSheet.Cells[rowIterator, 21].Value == null ? string.Empty : workSheet.Cells[rowIterator, 21].Value.ToString() ?? "";
+                            //product.custom8 = workSheet.Cells[rowIterator, 22].Value == null ? string.Empty : workSheet.Cells[rowIterator, 22].Value.ToString() ?? "";
+                            //product.custom9 = workSheet.Cells[rowIterator, 23].Value == null ? string.Empty : workSheet.Cells[rowIterator, 23].Value.ToString() ?? "";
+                            //product.custom10 = workSheet.Cells[rowIterator, 24].Value == null ? string.Empty : workSheet.Cells[rowIterator, 24].Value.ToString() ?? "";
+
+                            db.products.Add(product);
+                            db.SaveChanges();
+
+
+
+                        }
+
+
+                    }
+                }
+            }
+
             return RedirectToAction("ExpImp", new { SuccesProducts = "1" });
         }
 
@@ -526,7 +584,7 @@ namespace Cms.Controllers
         [HttpPost, Route("import-submit-users")]
         public ActionResult ImportUsers(FormCollection formCollection)
         {
-            if(Request != null)
+            if (Request != null)
             {
                 HttpPostedFileBase file = Request.Files["UploadedFileUsers"];
 
@@ -544,7 +602,7 @@ namespace Cms.Controllers
                         var noOfCol = workSheet.Dimension.End.Column;
                         var noOfRow = workSheet.Dimension.End.Row;
 
-                        for(int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
+                        for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
                         {
                             var user = new usersmeta();
                             user.name = workSheet.Cells[rowIterator, 2].Value == null ? string.Empty : workSheet.Cells[rowIterator, 2].Value.ToString();
@@ -561,7 +619,7 @@ namespace Cms.Controllers
 
                             var recom = false;
                             var sheet = workSheet.Cells[rowIterator, 13].Value.ToString();
-                            if(sheet == "true" || sheet == "True")
+                            if (sheet == "true" || sheet == "True")
                             {
                                 recom = true;
                             }

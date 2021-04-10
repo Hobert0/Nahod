@@ -12,6 +12,7 @@
     }
     var nameofcat = ViewContext.RouteData.Values["catslug"];
 
+    var catName = "";
     var catID = 0;
     if (ViewData["CatId"] != null && ViewData["CatId"] != "")
     {
@@ -36,6 +37,7 @@
                 {
                     ViewBag.Title = cat.name + " -";
                     ViewBag.Description = cat.description;
+                    catName = cat.name;
 
                     if (cat.maincat == "Žiadna")
                     {
@@ -66,24 +68,19 @@
                 ViewBag.Title = "Produkty v zľave -";
             }
 
-
-
-            @foreach (var cat in Model.CategoriesModel.Where(i => i.id == catID))
-            {
-                if (cat.name != "E-shop")
+        <div class="container">
+            <div class="row justify-content-md">
+                @foreach (var cat in Model.CategoriesModel.Where(i => i.maincat == catName))
                 {
-                    <div class="row">
-                        <div class="col-4">
-                            <img src="/Uploads/@cat.image" alt="@cat.name" class="w-100" />
-                        </div>
-                        <div class="col-8">
-                            <p class="text-justify p-4">@Html.Raw(cat.description)</p>
-                        </div>
+                    <div class="col-md-auto subcatthumb p-2 m-1">
+                        <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(nameofcat), subslug = @Html.Raw(cat.slug)})">
+                            <div style="background-image: url(/Uploads/@cat.image); background-size: contain;"></div>
+                            <p>@cat.name</p>
+                        </a>
                     </div>
                 }
-
-            }
-
+            </div>
+        </div>
             <hr />
 
             @{
