@@ -107,10 +107,14 @@ namespace Cms.Controllers
                 if (sum >= 1000)
                 {
                     um.rating = 3;
+
+                    //email
                 }
                 else if (sum >= 500)
                 {
                     um.rating = 2;
+
+                    //email
                 }
 
                 um.sum = sum;
@@ -137,7 +141,69 @@ namespace Cms.Controllers
                 om.productid = item.product;
                 om.pieces = item.quantity;
                 om.productimage = thisProd.image;
-                om.price = (decimal)item.quantity * ((thisVar == null) ? (thisProd.discountprice == null ? thisProd.price : (decimal)thisProd.discountprice) : (thisVar.discountprice == null ? (decimal)thisVar.price : (decimal)thisVar.discountprice));
+
+
+                //Zlavova politika
+                decimal thisPrice = (decimal)0.0;
+                if (thisVar == null)
+                {
+                    if (thisProd.discountprice == null)
+                    {
+                        thisPrice = thisProd.price;
+
+                        if (Session["username"] != null)
+                        {
+                            int rating = db.usersmeta.Where(o => o.userid == Int32.Parse(Session["userid"].ToString())).SingleOrDefault().rating;
+
+                            switch (rating)
+                            {
+                                case 1:
+                                    thisPrice *= (decimal)0.95;
+                                    break;
+                                case 2:
+                                    thisPrice *= (decimal)0.9;
+                                    break;
+                                case 3:
+                                    thisPrice *= (decimal)0.85;
+                                    break;
+                            }
+                        }
+                    }
+                    else {
+                        thisPrice = (decimal)thisProd.discountprice;
+                    }
+                }
+                else
+                {
+                    if (thisVar.discountprice == null)
+                    {
+                        thisPrice = (decimal)thisVar.price;
+
+                        if (Session["username"] != null)
+                        {
+                            int rating = db.usersmeta.Where(o => o.userid == Int32.Parse(Session["userid"].ToString())).SingleOrDefault().rating;
+
+                            switch (rating)
+                            {
+                                case 1:
+                                    thisPrice *= (decimal)0.95;
+                                    break;
+                                case 2:
+                                    thisPrice *= (decimal)0.9;
+                                    break;
+                                case 3:
+                                    thisPrice *= (decimal)0.85;
+                                    break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        thisPrice = (decimal)thisVar.discountprice;
+                    }
+                }
+
+                om.price = thisPrice;
                 om.variant = item.variant;
                 om.variant2 = item.variant2;
 

@@ -97,8 +97,6 @@
                                 </a>
                             }
                         }
-                        else
-                        { }
 
                         <br>
                         <br>
@@ -206,11 +204,42 @@
                                             else
                                             {
 
-                                                
-                                                //TO DO RATING
-                                                
+                                                //Zlavova politika
+                                                if (Session["username"] != null)
+                                                {
+                                                    int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
+                                                    povodnacena = prod.price;
 
-                                                <div class="w-discount-price" style="text-align: right;font-size:30px;color: #ff8b00;"><strong><span class="actual-price">@cena.ToString("N2")</span> €</strong></div>
+                                                    switch (rating)
+                                                    {
+                                                        case 1:
+                                                            cena *= (decimal)0.95;
+                                                            break;
+                                                        case 2:
+                                                            cena *= (decimal)0.9;
+                                                            break;
+                                                        case 3:
+                                                            cena *= (decimal)0.85;
+                                                            break;
+                                                    }
+
+                                                    <input type="hidden" name="userRating" value="@rating">
+
+                                                    var vars = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).ToList();
+
+                                                    if (vars.Count() == 0)
+                                                    {
+                                                        <p class="discount-price-text" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;"><span class="discount-label">Cena po registrácii</span> <strong style="font-size:30px;"><span class="actual-price">@cena.ToString("N2")</span> €</strong> </p>
+
+                                                        <div class="discount-price-del" style="text-align: right;font-size:25px;">
+                                                            <strong><del>@povodnacena.ToString("N2") €</del></strong>
+                                                        </div>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <div class="w-discount-price" style="text-align: right;font-size:30px;color: #ff8b00;"><strong><span class="actual-price">@cena.ToString("N2")</span> €</strong></div>
+                                                }
                                             }
 
                                         }
@@ -238,102 +267,102 @@
                                     {
                                         if (prod.custom6 != null && (prod.custom6).ToString() == "True") //ak je zadane ze cena je od
                                         {
-                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalForAsk">
-                                                    Vyžiadať cenu
-                                                </button>
-                                            }
-
-                                            <button type="button" class="btn btn-color addtocart" data-toggle="modal" data-target="#myModalForAsk">
-                                                <img src="/Content/images/Infobox_info_icon_white.svg" style="width: 20px;" alt="search">Vyžiadať cenu
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalForAsk">
+                                                Vyžiadať cenu
                                             </button>
                                         }
-                                        else //ak je cena normalna
-                                        {
-                                            <div class="product-cart row">
-                                                <div class="col-lg-4 col-sm-6 col-12 product-variation">
 
-                                                    @{
-                                                        //var variants = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).ToList();
-                                                        var vars = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).OrderBy(o => o.num).ToList();
+                                        <button type="button" class="btn btn-color addtocart" data-toggle="modal" data-target="#myModalForAsk">
+                                            <img src="/Content/images/Infobox_info_icon_white.svg" style="width: 20px;" alt="search">Vyžiadať cenu
+                                        </button>
+                                    }
+                                    else //ak je cena normalna
+                                    {
+                                        <div class="product-cart row">
+                                            <div class="col-lg-4 col-sm-6 col-12 product-variation">
 
-                                                        if (vars.Count() > 0)
+                                                @{
+                                                    //var variants = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).ToList();
+                                                    var vars = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).OrderBy(o => o.num).ToList();
+
+                                                    if (vars.Count() > 0)
+                                                    {
+                                                        List<SelectListItem> options = new List<SelectListItem>();
+
+                                                        var lastAttrName = "";
+                                                        foreach (var variant in vars)
                                                         {
-                                                            List<SelectListItem> options = new List<SelectListItem>();
 
-                                                            var lastAttrName = "";
-                                                            foreach (var variant in vars)
+                                                            isVariable = true;
+
+                                                            var attrId = variant.attribute_id;
+                                                            var attrName = Model.AttributesModel.Where(o => o.id == attrId).SingleOrDefault().name;
+
+                                                            if (lastAttrName != attrName)
                                                             {
 
-                                                                isVariable = true;
-
-                                                                var attrId = variant.attribute_id;
-                                                                var attrName = Model.AttributesModel.Where(o => o.id == attrId).SingleOrDefault().name;
-
-                                                                if (lastAttrName != attrName)
+                                                                if (lastAttrName != "")
                                                                 {
-
-                                                                    if (lastAttrName != "")
-                                                                    {
-                                                                        @Html.DropDownList(lastAttrName, options, null, new { @class = "form-control color-box" })
-                                                                        options = new List<SelectListItem>();
-                                                                    }
-
-                                                                    <p>@attrName</p>
+                                                                    @Html.DropDownList(lastAttrName, options, null, new { @class = "form-control color-box" })
+                                                                    options = new List<SelectListItem>();
                                                                 }
 
-                                                                options.Add(new SelectListItem { Text = variant.value, Value = (variant.price.ToString() + "|" + variant.discountprice.ToString()) });
-
-                                                                lastAttrName = attrName;
+                                                                <p>@attrName</p>
                                                             }
 
-                                                            @Html.DropDownList(lastAttrName, options, null, new { @class = "form-control color-box" })
-                                                        }
-                                                    }
+                                                            options.Add(new SelectListItem { Text = variant.value, Value = (variant.price.ToString() + "|" + variant.discountprice.ToString()) });
 
+                                                            lastAttrName = attrName;
+                                                        }
+
+                                                        @Html.DropDownList(lastAttrName, options, null, new { @class = "form-control color-box" })
+                                                    }
+                                                }
+
+                                                <p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;">MNOŽSTVO</p>
+                                                <div class="cart-item-amount">
+                                                    <button type="button" class="inc button">−</button>
+                                                    <input type="number" name="amount[1050506]" value="1" min="1" max="30000" class="" id="quantity">
+                                                    <button type="button" class="dec button">+</button>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="add-to-cart col-lg-8">
+                                                <button id="addproductbtn" isvariableproduct="@isVariable.ToString()" class="btn btn-color addtocart"><img src="/Content/images/cart_white.svg" style="width: 20px;" alt="search">PRIDAŤ DO KOŠÍKA</button>
+
+                                            </div>
+
+                                            @*
+                                                <div class="col-lg-4 col-sm-6 col-12 product-variation">
+                                                    @if (prod.custom6 != null && prod.custom6 != "" && prod.custom6 != "False")
+                                                    {
+                                                        isvariablecolor = true;
+                                                        <p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;margin-top:-80px;">FARBA</p>
+                                                        @Html.DropDownList("color", emptylist, "", new { @class = "form-control color-box" })
+                                                    }
+                                                    @if (prod.custom4 != null && prod.custom4 != "")
+                                                    {
+                                                        isvariableproduct = true;
+                                                        <p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;">VEĽKOSŤ</p>
+                                                        @Html.DropDownList("size", emptylist, "", new { @class = "form-control select-box", onchange = "showSize()" })
+                                                        @Html.DropDownList("size2", emptylist, "", new { @class = "form-control select-box2", style = "display:none;margin-top:10px;" })
+                                                    }
                                                     <p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;">MNOŽSTVO</p>
                                                     <div class="cart-item-amount">
                                                         <button type="button" class="inc button">−</button>
                                                         <input type="number" name="amount[1050506]" value="1" min="1" max="30000" class="" id="quantity">
                                                         <button type="button" class="dec button">+</button>
                                                     </div>
-
-
                                                 </div>
                                                 <div class="add-to-cart col-lg-8">
-                                                    <button id="addproductbtn" isvariableproduct="@isVariable.ToString()" class="btn btn-color addtocart"><img src="/Content/images/cart_white.svg" style="width: 20px;" alt="search">PRIDAŤ DO KOŠÍKA</button>
+                                                    <button id="addproductbtn" isvariableproduct="@isvariableproduct.ToString()" isvariablecolor="@isvariablecolor.ToString()" class="btn btn-color addtocart"><img src="/Content/images/cart_white.svg" style="width: 20px;" alt="search">PRIDAŤ DO KOŠÍKA</button>
 
                                                 </div>
+                                            *@
+                                        </div>
 
-                                                @*
-                                                    <div class="col-lg-4 col-sm-6 col-12 product-variation">
-                                                        @if (prod.custom6 != null && prod.custom6 != "" && prod.custom6 != "False")
-                                                        {
-                                                            isvariablecolor = true;
-                                                            <p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;margin-top:-80px;">FARBA</p>
-                                                            @Html.DropDownList("color", emptylist, "", new { @class = "form-control color-box" })
-                                                        }
-                                                        @if (prod.custom4 != null && prod.custom4 != "")
-                                                        {
-                                                            isvariableproduct = true;
-                                                            <p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;">VEĽKOSŤ</p>
-                                                            @Html.DropDownList("size", emptylist, "", new { @class = "form-control select-box", onchange = "showSize()" })
-                                                            @Html.DropDownList("size2", emptylist, "", new { @class = "form-control select-box2", style = "display:none;margin-top:10px;" })
-                                                        }
-                                                        <p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;">MNOŽSTVO</p>
-                                                        <div class="cart-item-amount">
-                                                            <button type="button" class="inc button">−</button>
-                                                            <input type="number" name="amount[1050506]" value="1" min="1" max="30000" class="" id="quantity">
-                                                            <button type="button" class="dec button">+</button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="add-to-cart col-lg-8">
-                                                        <button id="addproductbtn" isvariableproduct="@isvariableproduct.ToString()" isvariablecolor="@isvariablecolor.ToString()" class="btn btn-color addtocart"><img src="/Content/images/cart_white.svg" style="width: 20px;" alt="search">PRIDAŤ DO KOŠÍKA</button>
-
-                                                    </div>
-                                                *@
-                                            </div>
-
-                                        }
+                                    }
 
                                     <div class="clearfix"></div>
 
@@ -668,8 +697,6 @@
             }
         </script>
         -->
-
-
     }
     <script src="~/Scripts/add_product_to_cart.js"></script>
 

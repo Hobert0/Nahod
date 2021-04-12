@@ -23,6 +23,17 @@ namespace Cms.Controllers
         public ActionResult Index()
         {
             var model = new MultipleIndexModel();
+
+            if (Session["userid"] != null)
+            {
+                var userToSend = Int32.Parse(Session["userid"].ToString());
+                model.AllUsersMetaModel = db.usersmeta.Where(i => i.userid == userToSend).ToList();
+            }
+            else
+            {
+                model.AllUsersMetaModel = null;
+            }
+
             model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
             model.VariantModel = db.variants.Where(o => o.deleted == false).ToList();
             model.EsettingsModel = db.e_settings.ToList();
@@ -33,6 +44,7 @@ namespace Cms.Controllers
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.TypesModel = db.types.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.ToList();
+
             ViewData["Homepage"] = "true";
             return View(model);
         }
