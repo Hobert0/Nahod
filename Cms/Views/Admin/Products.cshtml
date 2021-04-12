@@ -89,6 +89,7 @@
                     <div class="row">
                         <div class="col-6 text-right" style="width: 200px;">
                             <strong>Akciová cena?</strong>
+                            <small>Nová cena bude vložená ako Akciová.</small>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
@@ -97,16 +98,17 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                     <div class="form-group">
-                        <div style="text-align:right">
+                        <div style="text-align:center">
                             <input type="hidden" name="catId" value="">
                             <input type="hidden" name="brandId" value="">
                             <input type="hidden" name="priceFrom" value="">
                             <input type="hidden" name="priceTo" value="">
                             <input type="hidden" name="isDiscount" value="">
 
-                            <input type="submit" value="Upraviť" id="btnSubmit" class="btn btn-success" />
+                            <input type="submit" value="Upraviť cenu vyfiltrovaných produktov" id="btnSubmit" class="btn btn-success" />
                         </div>
                     </div>
                 }
@@ -383,7 +385,7 @@
                         $thisSet = [];
                         $thisSet.push(data[$i].id);
                         $thisSet.push(data[$i].number);
-                        $thisSet.push('<img src="/Uploads/' + data[$i].image + ' style="width: 50px; " />');
+                        $thisSet.push('<img src="/Uploads/' + data[$i].image + '" style="width: 50px; " />');
                         $thisSet.push(data[$i].title);
                         $thisSet.push(data[$i].price + ' €');
                         $thisSet.push(data[$i].discountprice ? (data[$i].discountprice + " €") : "");

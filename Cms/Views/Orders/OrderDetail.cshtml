@@ -78,7 +78,7 @@
     var shipPrice = db.Database.SqlQuery<string>(shipSql).FirstOrDefault();
     var freeshipping = db.e_settings.Select(i => i.transfer5).FirstOrDefault();
 
-    if (decimal.Parse(ord.finalprice, CultureInfo.InvariantCulture) >
+    if (ord.finalprice >
         decimal.Parse(freeshipping, CultureInfo.InvariantCulture))
     {
         shipPrice = "0";
@@ -111,7 +111,7 @@
 {
                     <span>Použitý zľavový kupón <strong>@ord.usedcoupon</strong></span><br />
 }
-                <strong style="font-size: 2em;">@{decimal final = decimal.Parse(ord.finalprice, CultureInfo.InvariantCulture);} @final.ToString("N")€</strong>
+                <strong style="font-size: 2em;">@{decimal final = ord.finalprice;} @final.ToString("N")€</strong>
                 @{
     var cenabezdph = Convert.ToDecimal(final * 100 / 120).ToString("N");
                 }
@@ -139,7 +139,7 @@
             <th>Náhľad</th>
             <th style="width: 350px;">Názov</th>
             <th>Počet kusov</th>
-            <th>Veľkosť</th>
+            <th>Variant</th>
             <th>Cena</th>
         </tr>
     </thead>
@@ -153,7 +153,7 @@
                 <td><img src="~/Uploads/@Html.DisplayFor(modelItem => product.productimage)" style="width: 50px;" /></td>
                 <td><a href="@Url.Action("ProductDetail", "Home", new { id = product.productid })" target="_blank"><strong>@Html.DisplayFor(modelItem => product.product)</strong></a></td>
                 <td>@Html.DisplayFor(modelItem => product.pieces) ks</td>
-                <td>@Html.DisplayFor(modelItem => product.size)</td>
+                <td>@Html.DisplayFor(modelItem => product.variant) @Html.DisplayFor(modelItem => product.variant2)</td>
                 <td style="background-color: lightyellow; text-align: center;"><strong>@Html.DisplayFor(modelItem => product.price)&nbsp;€</strong></td>
             </tr>
     }

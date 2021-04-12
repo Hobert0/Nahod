@@ -229,10 +229,10 @@
 
                                                     if (vars.Count() == 0)
                                                     {
-                                                        <p class="discount-price-text" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;"><span class="discount-label">Cena po registrácii</span> <strong style="font-size:30px;"><span class="actual-price">@cena.ToString("N2")</span> €</strong> </p>
+                                                        <p class="discount-price-text" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;"><small class="discount-label">Vaša cena so zľavou</small> <strong style="font-size:30px;"><span class="actual-price">@cena.ToString("N2")</span> €</strong> </p>
 
-                                                        <div class="discount-price-del" style="text-align: right;font-size:25px;">
-                                                            <strong><del>@povodnacena.ToString("N2") €</del></strong>
+                                                        <div class="discount-price-del" style="text-align: right;font-size:18px;">
+                                                            <small>Cena bez registrácie </small><strong><del>@povodnacena.ToString("N2") €</del></strong>
                                                         </div>
                                                     }
                                                 }
@@ -255,12 +255,12 @@
                                     }
                                     else
                                     {
-                                        <p style="font-size: 14px; text-align: right;">cena bez DPH <span id="actual-price-w-tax">@(cenabezdph)</span> €</p>
+                                    <p style="font-size: 14px; text-align: right;"><span id="actual-price-w-tax">@(cenabezdph)</span> € bez DPH</p>
                                     }
 
                                     if (Session["username"] == null)
                                     {
-                                        <p style="font-size: 12px; text-align: right;"><a href="#" class="register-modal">Zaregistrujte sa</a> a získajte zľavu ďalších 5%</p>
+                                        <p style="font-size: 12px; text-align: right;"><a href="#" class="register-modal"><u>Zaregistrujte sa</u></a> a získajte zľavu ďalších 5%</p>
                                     }
 
                                     if (prod.price == 0) //ak je zadana suma nula

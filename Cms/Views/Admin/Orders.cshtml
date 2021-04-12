@@ -48,33 +48,38 @@
 
             if (item.Payment == "pay1")
             {
-                payment = "Pay1";
+                payment = "V hotovosti pri osobnom odbere";
             }
             else if (item.Payment == "pay2")
             {
-                payment = "Pay2";
+                payment = "Kartou";
             }
             else if (item.Payment == "pay3")
             {
-                payment = "Pay3";
+                payment = "Bankovým prevodom";
             }
+            else if (item.Payment == "pay4")
+            {
+                payment = "Dobierkou";
+            }
+
             var visibility = "";
             var stornostyle = "";
             if (item.Status == 1)
             {
                 visibility = "visibility: hidden !important;";
-                status = "Čakajúca";
+                status = "Vybavená";
             }
             else if (item.Status == 2)
             {
                 visibility = "visibility: hidden !important;";
                 stornostyle = "opacity: .2 !important;";
-                status = "Vybavená";
+                status = "Stornovaná";
             }
             else
             {
                 visibility = "visibility: visible !important;";
-                status = "Storno";
+                status = "Prijatá";
             }
 
 <tr>
