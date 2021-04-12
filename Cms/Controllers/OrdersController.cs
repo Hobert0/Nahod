@@ -153,7 +153,8 @@ namespace Cms.Controllers
 
                         if (Session["username"] != null)
                         {
-                            int rating = db.usersmeta.Where(o => o.userid == Int32.Parse(Session["userid"].ToString())).SingleOrDefault().rating;
+                            var userId = Int32.Parse(Session["userid"].ToString());
+                            int rating = db.usersmeta.Where(x => x.userid == userId).SingleOrDefault().rating;
 
                             switch (rating)
                             {
@@ -181,7 +182,8 @@ namespace Cms.Controllers
 
                         if (Session["username"] != null)
                         {
-                            int rating = db.usersmeta.Where(o => o.userid == Int32.Parse(Session["userid"].ToString())).SingleOrDefault().rating;
+                            var userId = Int32.Parse(Session["userid"].ToString());
+                            int rating = db.usersmeta.Where(x => x.userid == userId).SingleOrDefault().rating;
 
                             switch (rating)
                             {

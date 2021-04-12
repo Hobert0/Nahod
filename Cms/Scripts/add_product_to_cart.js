@@ -29,7 +29,13 @@ $("#addproductbtn").click(function () {
     var quantity = document.getElementById("quantity").value;
     var variant = "";
     var variant2 = "";
-    var price = $(".discount-price-text").hasClass("d-none") ? $(".w-discount-price .actual-price").text().replace(",", ".") : $(".discount-price-text .actual-price").text().replace(",",".");
+    var price;
+    if ($(".discount-price-text:not(.d-none)").length) {
+        price = $(".discount-price-text:not(.d-none) .actual-price").text().replace(",", ".");
+    } else {
+        price = $(".w-discount-price:not(.d-none) .actual-price").text().replace(",", ".");
+    } 
+    //var price = $(".discount-price-text:not(.d-none)").hasClass("d-none") ? $(".w-discount-price .actual-price").text().replace(",", ".") : $(".discount-price-text .actual-price").text().replace(",",".");
     var uniqueid = Math.floor(Math.random() * 10000) + 1;
 
     if (isvariableproduct === "True") {
@@ -65,6 +71,8 @@ $("#addproductbtn").click(function () {
             }
         }
     }
+
+    console.log(price);
 
     var cart = new Object();
     cart.id = uniqueid;
