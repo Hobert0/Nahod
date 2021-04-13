@@ -215,9 +215,10 @@ namespace Cms.Controllers
             }
             else
             {
-                var rola = db.users.Where(i => i.username == obj.Username).Select(o => o.role).FirstOrDefault();
+                var rola = db.users.Where(i => i.username == obj.Username).FirstOrDefault();
                 Session["username"] = obj.Username;
-                Session["role"] = rola;
+                Session["role"] = rola.role;
+                Session["userid"] = rola.id;
                 return RedirectToAction("Cms");
             }
 

@@ -84,7 +84,7 @@
 
 function parseDate(input) {
   var format = format || 'mm-dd-yyyy'; // default format
-  var parts = input.match(/(\d+)/g), 
+  var parts = input.match(/(\d+)/g),
       i = 0, fmt = {};
   // extract date-part indexes from the format
   format.replace(/(yyyy|dd|mm)/g, function(part) { fmt[part] = i++; });
@@ -92,67 +92,8 @@ function parseDate(input) {
   return new Date(parts[fmt['yyyy']], parts[fmt['mm']]-1, parts[fmt['dd']]);
 }
 </script>
-<div id="chartContainer" style="margin-top: 50px; height: 370px; width: 100%;"></div>
-
-<div style="margin-top: 30px;background: #f9f9f9">
-    <div class="row" style="text-align: center">
-        <div class="col p-4  border-right">
-            <span class="small"><strong>Predaj</strong></span><br />
-        @foreach (var price in modelItems.OrderDataModel)
-        {
-            DateTime ordDate = DateTime.ParseExact(price.date, "d.M.yyyy HH:mm:ss", null);
-            if (ordDate.Month == DateTime.Now.Month)
-            {
-                monthprice += price.finalprice;
-            }
-            var month = DateTime.Now.Month-1;
-            if (month < 1)
-            {
-                month = 12;
-            }
-
-            if (ordDate.Month == month)
-            {
-                monthprice_last += price.finalprice;
-
-            }
-        }
-            <span class="smallonmob" style="font-size: 35px; color: #00abba;line-height: 35px;">€ @monthprice</span><br />
-            <span class="small">Minulý mesiac: € @monthprice_last</span>
-        </div>
-        <div class="col p-4 border-right">
-            <span class="small"><strong>Počet objednávok</strong></span><br />
-            @foreach (var numb in modelItems.OrderDataModel)
-            {
-                DateTime ordDate = DateTime.ParseExact(numb.date, "d.M.yyyy HH:mm:ss", null);
-                if (ordDate.Month == DateTime.Now.Month)
-                {
-                    count++;
-                }
-                var month = DateTime.Now.Month-1;
-                if (month < 1)
-                {
-                    month = 12;
-                }
-
-                if (ordDate.Month == month)
-                {
-                    count_lastmonth++;
-                }
-
-            }
-            <span class="smallonmob" style="font-size: 35px; color:#00abba;line-height: 35px;">@count</span><br />
-            <span class="small" style="margin-top: -5px;">Minulý mesiac: @count_lastmonth</span>
-        </div>
-        <div class="col p-4">
-            <span class="small"><strong>Počet návštevníkov</strong></span><br />
-            <span class="smallonmob" style="font-size: 35px; color:#00abba;line-height: 35px;">1500</span><br />
-            <span class="small">Minulý mesiac: 1250</span>
-        </div>
-    </div>
-</div>
-
-<h3 class="pt-5 pb-2">Najnovšie objednávky</h3>
+<h2>Najnovšie objednávky</h2>
+<hr />
 <table class="table" style="font-size: 14px;">
     <thead class="thead-light">
         <tr>
@@ -167,7 +108,7 @@ function parseDate(input) {
     </thead>
     @if (ViewBag.Details == null)
     {
-        foreach (var item in modelItems.OrderDataModel.OrderByDescending(i => i.id).Take(4))
+        foreach (var item in modelItems.OrderDataModel.OrderByDescending(i => i.id).Take(8))
         {
             var trans = "";
             if (item.shipping == "transfer1")
@@ -198,14 +139,76 @@ function parseDate(input) {
                 <td>@Html.DisplayFor(modelItem => item.date)</td>
                 <td>@trans</td>
                 <td style="background-color: #e4ffe3; text-align: center;"><strong>@Html.DisplayFor(modelItem => item.finalprice) €</strong></td>
-                <td><a href="@Url.Action("PdfOrder", "Orders", new { orderNumber = item.ordernumber })"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF faktúra" /></a></td>
+                @*<td><a href="@Url.Action("PdfOrder", "Orders", new { orderNumber = item.ordernumber })"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF faktúra" /></a></td>*@
                 <td align="center">@Html.ActionLink("Detail", "OrderDetail", "Orders", new { orderNumber = item.ordernumber }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#10003;"), "FinishedOrder", "Orders", new { orderNumber = item.ordernumber, confirm = true }, new { onclick = "return confirm('Naozaj chcete potvdiť objednávku ako odoslanú?')", @class = "btn btn-success finished", style = "padding:.375rem .75rem !important;" + visibility + "", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne potvrdíte objednávku." })</td>
             </tr>
         }
 
 
     }
-
-
 </table>
+
+<button class="btn btn-success" type="button" value="Create" style="margin: 5px 0 10px;padding: 7px 22px;" onclick="location.href='@Url.Action("Orders", "Admin")'"><i class="fa fa-bar-chart-o"></i> Všetky objednávky</button>
+
+<div id="chartContainer" style="margin-top: 50px; height: 370px; width: 100%;"></div>
+
+<div style="margin-top: 30px;background: #f9f9f9">
+    <div class="row" style="text-align: center">
+        <div class="col p-4  border-right">
+            <span class="small"><strong>Predaj</strong></span><br />
+            @foreach (var price in modelItems.OrderDataModel)
+            {
+                DateTime ordDate = DateTime.ParseExact(price.date, "d.M.yyyy HH:mm:ss", null);
+                if (ordDate.Month == DateTime.Now.Month)
+                {
+                    monthprice += price.finalprice;
+                }
+                var month = DateTime.Now.Month - 1;
+                if (month < 1)
+                {
+                    month = 12;
+                }
+
+                if (ordDate.Month == month)
+                {
+                    monthprice_last += price.finalprice;
+
+                }
+            }
+            <span class="smallonmob" style="font-size: 35px; color: #00abba;line-height: 35px;">€ @monthprice</span><br />
+            <span class="small">Minulý mesiac: € @monthprice_last</span>
+        </div>
+        <div class="col p-4 border-right">
+            <span class="small"><strong>Počet objednávok</strong></span><br />
+            @foreach (var numb in modelItems.OrderDataModel)
+            {
+                DateTime ordDate = DateTime.ParseExact(numb.date, "d.M.yyyy HH:mm:ss", null);
+                if (ordDate.Month == DateTime.Now.Month)
+                {
+                    count++;
+                }
+                var month = DateTime.Now.Month - 1;
+                if (month < 1)
+                {
+                    month = 12;
+                }
+
+                if (ordDate.Month == month)
+                {
+                    count_lastmonth++;
+                }
+
+            }
+            <span class="smallonmob" style="font-size: 35px; color:#00abba;line-height: 35px;">@count</span><br />
+            <span class="small" style="margin-top: -5px;">Minulý mesiac: @count_lastmonth</span>
+        </div>
+        <div class="col p-4">
+            <span class="small"><strong>Počet návštevníkov</strong></span><br />
+            <span class="smallonmob" style="font-size: 35px; color:#00abba;line-height: 35px;">1500</span><br />
+            <span class="small">Minulý mesiac: 1250</span>
+        </div>
+    </div>
+</div>
+
+
 <script src="~/Scripts/canvasjs.min.js"></script>

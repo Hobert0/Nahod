@@ -191,6 +191,7 @@ html, body {
         -webkit-transition: .1s linear;
         -moz-transition: .1s linear;
         transition: .1s linear;
+        min-height: 470px;    
     }
 
         .products .product > *:hover {
@@ -244,6 +245,8 @@ html, body {
         .products .product .prod-text {
             font-size: 11px;
             margin-bottom: 5px;
+            font-weight: 300 !important;
+            color: #929292;
         }
 
         .products .product .prod-prices {

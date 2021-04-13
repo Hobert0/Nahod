@@ -61,7 +61,15 @@
                         }
                     </div>
                     <div class="prod-header">@prod.title</div>
-                    <div class="prod-text">@prod.description</div>
+                    @{
+                        var shortdescription = "";
+                        if (prod.description != null)
+                        {
+                            shortdescription = prod.description.Substring(0, 150) + "...";
+                        }
+                    }
+                    <div class="prod-text">@Html.Raw(shortdescription)</div>
+
                     <div class="prod-prices">
                         @{
                             decimal variantPriceFrom = 99999;

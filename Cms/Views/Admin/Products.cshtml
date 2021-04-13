@@ -185,7 +185,7 @@
             <th>Cena po zľave</th>
             <th>Kategória</th>
             <th>Varianty</th>
-            <th>Dátum</th>
+            <th>Heureka</th>
             <th>Odporúčané</th>
             <th style="text-align: center; width:150px;">Akcie</th>
         </tr>
@@ -202,76 +202,76 @@
                 }
 
                 onstockrange = item.custom1;
-                <tr id="product_row-@counter" class="productRow">
+        <tr id="product_row-@counter" class="productRow">
 
-                    <td class="hide">@item.id</td>
-                    <td class="editable" name="number">@Html.DisplayFor(modelItem => item.number)</td>
-                    <td><img src="~/Uploads/@Html.DisplayFor(modelItem => item.image)" style="width: 50px;" /></td>
-                    <td class="editable" name="title">@Html.DisplayFor(modelItem => item.title)</td>
-                    <td class="editable" name="price" style="background-color: lightyellow; text-align: center;">@Html.DisplayFor(modelItem => item.price)&nbsp;€</td>
-                    <td class="editable" name="discountprice" style="background-color: lightcyan; text-align: center;">
+            <td class="hide">@item.id</td>
+            <td class="editable" name="number">@Html.DisplayFor(modelItem => item.number)</td>
+            <td><img src="~/Uploads/@Html.DisplayFor(modelItem => item.image)" style="width: 50px;" /></td>
+            <td class="editable" name="title">@Html.DisplayFor(modelItem => item.title)</td>
+            <td class="editable" name="price" style="background-color: lightyellow; text-align: center;">@Html.DisplayFor(modelItem => item.price)&nbsp;€</td>
+            <td class="editable" name="discountprice" style="background-color: lightcyan; text-align: center;">
 
-                        @{
-                            //Html.DisplayFor(modelItem => item.discountprice)
-                            var discountText = "";
-                            if (item.discountprice != null)
-                            {
-                                discountText = item.discountprice + " €";
-                            }
+                @{
+                    //Html.DisplayFor(modelItem => item.discountprice)
+                    var discountText = "";
+                    if (item.discountprice != null)
+                    {
+                        discountText = item.discountprice + " €";
+                    }
+                }
+                @discountText
+
+            </td>
+            <td>
+                @{
+                    if (item.category != null)
+                    {
+                        foreach (var cat in Model.CategoriesModel.Where(o => o.id == Int32.Parse(item.category)))
+                        {
+                            @Html.Raw(cat.name)
                         }
-                        @discountText
+                    }
+                }
+            </td>
+            <td>
 
-                    </td>
-                    <td>
-                        @{
-                            if (item.category != null)
+                @{
+                    //variant.number obsahuje nazov vlastnosti
+                    string variantsStr = "";
+                    if (variantsAttributes.Where(o => o.ProdId == item.id).ToList().Count > 0)
+                    {
+                        string varType = "";
+                        foreach (var variant in variantsAttributes.Where(o => o.ProdId == item.id))
+                        {
+                            if (varType != variant.AttrName)
                             {
-                                foreach (var cat in Model.CategoriesModel.Where(o => o.id == Int32.Parse(item.category)))
-                                {
-                                    @Html.Raw(cat.name)
-                                }
+                                variantsStr += variant.AttrName + ": ";
                             }
+
+                            variantsStr += variant.AttrValue + ", ";
+                            varType = variant.AttrName;
                         }
-                    </td>
-                    <td>
+                        variantsStr = variantsStr.Remove(variantsStr.Length - 2);
+                    }
+                }
+                @variantsStr
 
-                        @{
-                            //variant.number obsahuje nazov vlastnosti
-                            string variantsStr = "";
-                            if (variantsAttributes.Where(o => o.ProdId == item.id).ToList().Count > 0)
-                            {
-                                string varType = "";
-                                foreach (var variant in variantsAttributes.Where(o => o.ProdId == item.id))
-                                {
-                                    if (varType != variant.AttrName)
-                                    {
-                                        variantsStr += variant.AttrName + ": ";
-                                    }
+            </td>
+            <td class="editable" name="Heureka" style="text-align:center;">@Html.DisplayFor(modelItem => item.recommended)</td>
+            <td class="editable" name="recommended" style="text-align:center;">@Html.DisplayFor(modelItem => item.recommended)</td>
+            <td align="center">
+                @Html.ActionLink("Editovať", "EditProduct", "Products", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important; font-size:13px;margin-right: 2px;" }) <a href="@Url.Action("DuplicateProduct", "Products", new { id = item.id })" class="btn btn-success" style="padding: 5px 10px;margin-right: 2px;" title="Duplikovať produkt"><img src="~/Content/images/duplicate.png" width="15" style="margin-top: -3px;"></a> @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteProduct", "Products", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tento produkt?')", @class = "btn btn-danger", style = "padding: 5px 10px;", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete produkt." })
+                <div class="popover__wrapper" id="info-@counter" style="display:none;">
+                    <a href="#">
+                        <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
+                    </a>
+                    <div class="push popover__content">
+                        <p class="popover__message">Skladové zásoby pod hraničnou hodnotou!</p>
+                    </div>
+                </div>
+            </td>
 
-                                    variantsStr += variant.AttrValue + ", ";
-                                    varType = variant.AttrName;
-                                }
-                                variantsStr = variantsStr.Remove(variantsStr.Length - 2);
-                            }
-                        }
-                        @variantsStr
-
-                    </td>
-                    <td>@Html.DisplayFor(modelItem => item.date)</td>
-                    <td class="editable" name="recommended" style="text-align:center;">@Html.DisplayFor(modelItem => item.recommended)</td>
-                    <td align="center">
-                        @Html.ActionLink("Editovať", "EditProduct", "Products", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important; font-size:13px;margin-right: 2px;" }) <a href="@Url.Action("DuplicateProduct", "Products", new { id = item.id })" class="btn btn-success" style="padding: 5px 10px;margin-right: 2px;" title="Duplikovať produkt"><img src="~/Content/images/duplicate.png" width="15" style="margin-top: -3px;"></a> @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteProduct", "Products", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tento produkt?')", @class = "btn btn-danger", style = "padding: 5px 10px;", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete produkt." })
-                        <div class="popover__wrapper" id="info-@counter" style="display:none;">
-                            <a href="#">
-                                <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
-                            </a>
-                            <div class="push popover__content">
-                                <p class="popover__message">Skladové zásoby pod hraničnou hodnotou!</p>
-                            </div>
-                        </div>
-                    </td>
-
-                </tr>
+        </tr>
 
 
 

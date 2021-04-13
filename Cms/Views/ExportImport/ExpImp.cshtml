@@ -80,7 +80,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <!--<input type="file" name="UploadedFileProducts" class="custom-file-input" id="customFile"/>-->
-                            @Html.CheckBoxFor(m => m.Presta, new { @class = "form-control", id = "presta" }) Importujem produkty zo systému PrestaShop
+                            @Html.CheckBoxFor(m => m.Presta, new { @class = "mb-3", id = "presta" }) Importujem produkty zo systému PrestaShop (.csv)
                             @Html.TextBoxFor(m => m.File, "UploadedFileProducts", new { @type = "file", @class = "form-control-file", @accept = "xls|xlsx|csv", @id = "customFile" })
 
                         </div>
