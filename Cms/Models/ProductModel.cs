@@ -29,13 +29,14 @@ namespace Cms.Models
         [AllowHtml]
         public string Custom4 { get; set; }
         public string Custom5 { get; set; }
-        public bool Custom6{ get; set; }
+        public bool Custom6 { get; set; }
         public string Custom7 { get; set; }
         public string Custom8 { get; set; }
         public string Custom9 { get; set; }
         public string Custom10 { get; set; }
         public bool Heureka { get; set; }
         public bool HeurekaDarcek { get; set; }
+        public string HeurekaDarcekText { get; set; }
         public bool Recommended { get; set; }
         [AllowHtml]
         public string Description { get; set; }
@@ -50,11 +51,11 @@ namespace Cms.Models
         {
             List<SelectListItem> mj = new List<SelectListItem>();
 
-                mj.Add(new SelectListItem { Text = "ks", Value = "ks" });
-                mj.Add(new SelectListItem { Text = "m", Value = "m" });
-                mj.Add(new SelectListItem { Text = "pár", Value = "pár" });
-                mj.Add(new SelectListItem { Text = "sada", Value = "sada" });
-                mj.Add(new SelectListItem { Text = "-", Value = "-" });
+            mj.Add(new SelectListItem { Text = "ks", Value = "ks" });
+            mj.Add(new SelectListItem { Text = "m", Value = "m" });
+            mj.Add(new SelectListItem { Text = "pár", Value = "pár" });
+            mj.Add(new SelectListItem { Text = "sada", Value = "sada" });
+            mj.Add(new SelectListItem { Text = "-", Value = "-" });
 
             return mj;
         }

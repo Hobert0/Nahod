@@ -116,6 +116,9 @@ namespace Cms.Controllers
                 case "recommended":
                     product.recommended = bool.Parse(value);
                     break;
+                case "heureka":
+                    product.heureka = bool.Parse(value);
+                    break;
             }
 
             db.SaveChanges();

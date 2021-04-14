@@ -9837,3 +9837,12 @@ body.md-skin {
         margin: 0;
     }
 }
+
+#productsTable_filter, #myTable_filter {
+    float: left !important;
+    font-size: 16px;
+}
+
+#productsTable_length, #myTable_length {
+    float: right !important;
+}

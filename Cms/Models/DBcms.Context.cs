@@ -39,10 +39,10 @@ namespace Cms.Models
         public virtual DbSet<users> users { get; set; }
         public virtual DbSet<types> types { get; set; }
         public virtual DbSet<slideshow> slideshow { get; set; }
-        public virtual DbSet<products> products { get; set; }
         public virtual DbSet<variants> variants { get; set; }
         public virtual DbSet<ordermeta> ordermeta { get; set; }
         public virtual DbSet<orders> orders { get; set; }
         public virtual DbSet<usersmeta> usersmeta { get; set; }
+        public virtual DbSet<products> products { get; set; }
     }
 }

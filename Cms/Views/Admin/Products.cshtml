@@ -107,8 +107,9 @@
                             <input type="hidden" name="priceFrom" value="">
                             <input type="hidden" name="priceTo" value="">
                             <input type="hidden" name="isDiscount" value="">
+                            <input type="hidden" name="notCheckedProds" value="">
 
-                            <input type="submit" value="Upraviť cenu vyfiltrovaných produktov" id="btnSubmit" class="btn btn-success" />
+                            <input type="submit" value="Upraviť cenu označených produktov" id="btnSubmit" class="btn btn-success" />
                         </div>
                     </div>
                 }
@@ -178,6 +179,7 @@
     <thead>
         <tr>
             <th class="hide">ID</th>
+            <th></th>
             <th>Kód produktu</th>
             <th>Náhľad</th>
             <th>Názov</th>
@@ -205,6 +207,7 @@
         <tr id="product_row-@counter" class="productRow">
 
             <td class="hide">@item.id</td>
+            <td style="text-align:center;"><input type="checkbox" name="multipleEditCheckbox" checked></td>
             <td class="editable" name="number">@Html.DisplayFor(modelItem => item.number)</td>
             <td><img src="~/Uploads/@Html.DisplayFor(modelItem => item.image)" style="width: 50px;" /></td>
             <td class="editable" name="title">@Html.DisplayFor(modelItem => item.title)</td>
@@ -257,7 +260,7 @@
                 @variantsStr
 
             </td>
-            <td class="editable" name="Heureka" style="text-align:center;">@Html.DisplayFor(modelItem => item.recommended)</td>
+            <td class="editable" name="heureka" style="text-align:center;">@Html.DisplayFor(modelItem => item.heureka)</td>
             <td class="editable" name="recommended" style="text-align:center;">@Html.DisplayFor(modelItem => item.recommended)</td>
             <td align="center">
                 @Html.ActionLink("Editovať", "EditProduct", "Products", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important; font-size:13px;margin-right: 2px;" }) <a href="@Url.Action("DuplicateProduct", "Products", new { id = item.id })" class="btn btn-success" style="padding: 5px 10px;margin-right: 2px;" title="Duplikovať produkt"><img src="~/Content/images/duplicate.png" width="15" style="margin-top: -3px;"></a> @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteProduct", "Products", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tento produkt?')", @class = "btn btn-danger", style = "padding: 5px 10px;", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete produkt." })
@@ -298,6 +301,7 @@
                 "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Slovak.json"
             },
             "initComplete": function (settings, json) {
+
                 //upravime css
                 $('#productsTable tbody tr').each(function () {
                     if ($(this).hasClass("variantRow")) {
@@ -333,8 +337,6 @@
                 dataType: 'json',
                 success: function (data) {
                     //add rows to dataTable
-
-                    console.log(data);
 
                     $variants = data.variants;
                     $categories = data.categories;
@@ -384,6 +386,7 @@
 
                         $thisSet = [];
                         $thisSet.push(data[$i].id);
+                        $thisSet.push('<input type="checkbox" name="multipleEditCheckbox" checked>');
                         $thisSet.push(data[$i].number);
                         $thisSet.push('<img src="/Uploads/' + data[$i].image + '" style="width: 50px; " />');
                         $thisSet.push(data[$i].title);
@@ -392,6 +395,7 @@
                         $thisSet.push($category);
                         $thisSet.push($variantsStr);
                         $thisSet.push(data[$i].date);
+                        $thisSet.push('<input class="check-box" disabled="disabled" ' + (data[$i].heureka == true ? 'checked="checked"' : '') + ' type="checkbox">');
                         $thisSet.push('<input class="check-box" disabled="disabled" ' + (data[$i].recommended == true ? 'checked="checked"' : '') + ' type="checkbox">');
                         $thisSet.push('<a class="btn btn-warning" href="/produkty/editovat-produkt/' + data[$i].id + '" style = "color:#ffffff !important; font-size:13px;margin-right: 2px;" >Editovať</a><a href="/Products/DuplicateProduct/' + data[$i].id + '" class="btn btn-success" style="padding: 5px 10px;margin-right: 2px;" title="Duplikovať produkt"><img src="/Content/images/duplicate.png" width="15" style="margin-top: -3px;"></a><a class="btn btn-danger" style="padding: 5px 10px;" data-placement="top" data-toggle="tooltip" href="/Products/DeleteProduct/' + data[$i].id + '?confirm=True" onclick=\'return confirm("Naozaj chcete vymazať tento produkt?")\' title="Kliknutím nenávratne vymažete produkt.">×</a>' +
                             '<div class="popover__wrapper" id="info-0" style="display:none;">' +
@@ -416,6 +420,7 @@
                         data: $dataSet,
                         columns: [
                             { title: "Id" },
+                            { title: "" },
                             { title: "Kód produktu" },
                             { title: "Náhľad" },
                             { title: "Názov" },
@@ -424,6 +429,7 @@
                             { title: "Kategória" },
                             { title: "Varianty" },
                             { title: "Dátum" },
+                            { title: "Heureka" },
                             { title: "Odporúčané" },
                             { title: "Akcie" }
 
@@ -435,22 +441,24 @@
                             //upravime css
                             $('#productsTable thead th').eq(0).attr("style", "display:none;");
                             //$('#productsTable thead th').eq(3).attr("style", "width: 350px;");
-                            $('#productsTable thead th').eq(10).attr("style", "text-align: center;width:150px;");
+                            $('#productsTable thead th').eq(11).attr("style", "text-align: center;width:150px;");
 
                             $('#productsTable tbody tr').each(function () {
 
                                 $tds = $(this).find("td");
                                 $tds.eq(0).attr("style", "display:none;");
-                                $tds.eq(4).attr("style", "background-color: lightyellow; text-align: center;");
-                                $tds.eq(5).attr("style", "background-color: lightcyan; text-align: center;");
-                                $tds.eq(9).attr("style", "text-align: center;");
-                                $tds.eq(10).attr("align", "center");
+                                $tds.eq(5).attr("style", "background-color: lightyellow; text-align: center;");
+                                $tds.eq(6).attr("style", "background-color: lightcyan; text-align: center;");
+                                $tds.eq(10).attr("style", "text-align: center;");
+                                $tds.eq(11).attr("style", "text-align: center;");
+                                $tds.eq(12).attr("style", "text-align: center;");
 
-                                $tds.eq(1).addClass("editable").attr("name","number");
-                                $tds.eq(3).addClass("editable").attr("name","title");
-                                $tds.eq(4).addClass("editable").attr("name","price");
-                                $tds.eq(5).addClass("editable").attr("name", "discountprice");
-                                $tds.eq(9).addClass("editable").attr("name", "recommended");
+                                $tds.eq(2).addClass("editable").attr("name","number");
+                                $tds.eq(4).addClass("editable").attr("name","title");
+                                $tds.eq(5).addClass("editable").attr("name","price");
+                                $tds.eq(6).addClass("editable").attr("name", "discountprice");
+                                $tds.eq(10).addClass("editable").attr("name", "heureka");
+                                $tds.eq(11).addClass("editable").attr("name", "recommended");
                             });
                         }
                     });
@@ -478,15 +486,36 @@
             return $res;
         }
 
+        $("button[value=MultiPriceEdit]").click(function () {
+            $uncheckedProdsCounter = 0;
+            $("#productsTable tbody tr input[name=multipleEditCheckbox]:not(:checked)").each(function () {
+                $uncheckedProdsCounter++;
+            });
+
+            $allFilteredProdsCounter = $('#productsTable').DataTable().page.info().recordsTotal;
+
+            $checkedProds = $allFilteredProdsCounter - $uncheckedProdsCounter;
+
+            $("#multipleEditPriceForm input[type=submit]").val("Upraviť cenu " + $checkedProds + " označených produktov");
+        });
+
         $("#multipleEditPriceForm input[type=submit]").click(function (e) {
             e.preventDefault();
 
             if (validateMultipleEditData()) {
+
+                //zistime pocet odceknutych produktov
+                $notCheckedArr = [];
+                $("#productsTable tbody tr input[name=multipleEditCheckbox]:not(:checked)").each(function () {
+                    $notCheckedArr.push($(this).parents("tr").find("td").eq(0).text());
+                });
+
                 $("#multipleEditPriceForm input[name=catId]").val($("#filterByCategory").val());
                 $("#multipleEditPriceForm input[name=brandId]").val($("#filterByBrand").val());
                 $("#multipleEditPriceForm input[name=priceFrom]").val($("#filterByPriceFrom").val() == "" ? 0 : $("#filterByPriceFrom").val().replace(",", "."));
                 $("#multipleEditPriceForm input[name=priceTo]").val($("#filterByPriceTo").val() == "" ? 99999 : $("#filterByPriceTo").val().replace(",", "."));
                 $("#multipleEditPriceForm input[name=isDiscount]").val($("#filterByDiscount").is(":checked"));
+                $("#multipleEditPriceForm input[name=notCheckedProds]").val(JSON.stringify($notCheckedArr));
 
                 $("#multipleEditPriceForm").submit();
             }
@@ -497,7 +526,7 @@
             if ($(".editValue").length == 0) {
                 $name = $(this).attr("name");
 
-                if ($name == "recommended") {
+                if ($name == "recommended" || $name == "heureka") {
                     $isChecked = $(this).find("input[type=checkbox]").is(":checked");
                     $defValue = $isChecked;
 
@@ -523,7 +552,7 @@
             $id = $(this).parents("tr").find("td").eq(0).text();
             $name = $(this).parents(".editable").attr("name");
 
-            if ($name == "recommended") {
+            if ($name == "recommended" || $name == "heureka") {
                 $value = $(this).parents(".editable").find(".editValue").is(":checked").toString();
             }
 
@@ -532,6 +561,9 @@
             }
 
             $thisObj = $(this);
+
+            console.log($name);
+            console.log($value);
 
             let APIurl = "/Api/EditProductValues";
             $.ajax({
@@ -554,7 +586,7 @@
                             }
                         }
                     }
-                    else if ($name == "recommended") {
+                    else if ($name == "recommended" || $name == "heureka") {
                         $thisObj.parents(".editable").html('<input ' + ($value == "true" ? 'checked="checked"' : '') + 'class="check-box" disabled="disabled" type="checkbox">');
                     }
                     else {
@@ -569,7 +601,7 @@
             $value = $(this).parents(".editable").attr("defValue");
             $name = $(this).parents(".editable").attr("name");
 
-            if ($name != "recommended") {
+            if ($name != "recommended" && $name != "heureka") {
                 $(this).parents(".editable").text($value);
             } else {
                 $(this).parents(".editable").html('<input ' + ($value=="true"?'checked="checked"':'') + 'class="check-box" disabled="disabled" type="checkbox">');

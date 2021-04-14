@@ -100,55 +100,71 @@
             else if (item.role == 0) { userRole = "Admin"; }
             else if (item.role == 2) { userRole = "Newsletter subscriber"; }
 
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.id)</td>
-                <td>@Html.Raw(userRole)</td>
+<tr>
+    <td>@Html.DisplayFor(modelItem => item.id)</td>
+    <td>@Html.Raw(userRole)</td>
 
-                <td><strong>@Html.DisplayFor(modelItem => item.username)</strong></td>
-                @foreach (var meta in Model.AllUsersMetaModel.Where(u => u.userid == item.id))
-                {
-                    <td>@Html.DisplayFor(modelItem => meta.name, new { @value = " fghfg" })</td>
-                    <td>@Html.DisplayFor(modelItem => meta.surname, new { htmlAttributes = new { @Value = " " } })</td>
-                    <td>@Html.DisplayFor(modelItem => meta.email, new { htmlAttributes = new { @Value = " " } })</td>
-                    <td>@Html.DisplayFor(modelItem => meta.phone, new { htmlAttributes = new { @Value = " " } })</td>
-                    <td>@Html.DisplayFor(modelItem => meta.address, new { htmlAttributes = new { @Value = " " } })</td>
-                    <td>@Html.DisplayFor(modelItem => meta.city, new { htmlAttributes = new { @Value = " " } })</td>
-                    <td>@Html.DisplayFor(modelItem => meta.zip, new { htmlAttributes = new { @Value = " " } })</td>
+    <td><strong>@Html.DisplayFor(modelItem => item.username)</strong></td>
+    @foreach (var meta in Model.AllUsersMetaModel.Where(u => u.userid == item.id))
+    {
+        <td>@Html.DisplayFor(modelItem => meta.name, new { @value = " fghfg" })</td>
+        <td>@Html.DisplayFor(modelItem => meta.surname, new { htmlAttributes = new { @Value = " " } })</td>
+        <td>@Html.DisplayFor(modelItem => meta.email, new { htmlAttributes = new { @Value = " " } })</td>
+        <td>@Html.DisplayFor(modelItem => meta.phone, new { htmlAttributes = new { @Value = " " } })</td>
+        <td>@Html.DisplayFor(modelItem => meta.address, new { htmlAttributes = new { @Value = " " } })</td>
+        <td>@Html.DisplayFor(modelItem => meta.city, new { htmlAttributes = new { @Value = " " } })</td>
+        <td>@Html.DisplayFor(modelItem => meta.zip, new { htmlAttributes = new { @Value = " " } })</td>
 
-                    if (item.role == 1)
-                    {
-                        if (meta.category == 1) { category = "Bronzový"; }
-                        else if (meta.category == 2) { category = "Strieborný"; }
-                        else if (meta.category == 3) { category = "Zlatý"; }
+        if (item.role == 1)
+        {
+            if (meta.category == 1) { category = "Bronzový"; }
+            else if (meta.category == 2) { category = "Strieborný"; }
+            else if (meta.category == 3) { category = "Zlatý"; }
 
-                        <td>@Html.DisplayFor(modelItem => meta.news, new { htmlAttributes = new { @Value = " " } })</td>
-                        <td>@Html.DisplayFor(modelItem => meta.gdpr, new { htmlAttributes = new { @Value = " " } })</td>
-                        <td>@Html.DisplayFor(modelItem => meta.created, new { htmlAttributes = new { @Value = " " } })</td>
-                        <td>@Html.DisplayFor(modelItem => meta.to_remove, new { htmlAttributes = new { @Value = " " } })</td>
-                        <td>@category</td>
-                        <td>@Html.DisplayFor(modelItem => meta.sum, new { htmlAttributes = new { @Value = " " } })</td>
-                    }
-                    else
-                    {
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    }
-                }
+            <td>@Html.DisplayFor(modelItem => meta.news, new { htmlAttributes = new { @Value = " " } })</td>
+            <td>@Html.DisplayFor(modelItem => meta.gdpr, new { htmlAttributes = new { @Value = " " } })</td>
+            <td>@Html.DisplayFor(modelItem => meta.created, new { htmlAttributes = new { @Value = " " } })</td>
+            <td>@Html.DisplayFor(modelItem => meta.to_remove, new { htmlAttributes = new { @Value = " " } })</td>
+            <td>@category</td>
+            <td>@Html.DisplayFor(modelItem => meta.sum, new { htmlAttributes = new { @Value = " " } })</td>
+        }
+        else
+        {
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        }
+    }
+    @if (Model.AllUsersMetaModel.Where(u => u.userid == item.id).Count() == 0)
+    {
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    }
 
 
-            <td align="center"> @Html.ActionLink("Editovať", "UserEdit", "Admin", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important; font-size:13px;margin-right: 2px;" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteAccount", "Home", new { userId = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tohoto zamestnanca?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete zamestnanca." })</td>
-                @{ var user = Model.AllWishlistModel.Where(i => i.userid == item.id).SingleOrDefault();
-                    if (user != null)
-                    {
-                        <td align="center"><a href="@Url.Action("Oblubene", "Admin", new { id = item.id })">@HttpUtility.HtmlDecode("&#10084;")</a></td>
-                    }
-                }
+    <td align="center"> @Html.ActionLink("Editovať", "UserEdit", "Admin", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important; font-size:13px;margin-right: 2px;" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteAccount", "Home", new { userId = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tohoto zamestnanca?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete zamestnanca." })</td>
+    @{ var user = Model.AllWishlistModel.Where(i => i.userid == item.id).SingleOrDefault();
+        if (user != null)
+        {
+            <td align="center"><a href="@Url.Action("Oblubene", "Admin", new { id = item.id })">@HttpUtility.HtmlDecode("&#10084;")</a></td>
+        }
+    }
 
-            </tr>
+</tr>
         }
     }
 

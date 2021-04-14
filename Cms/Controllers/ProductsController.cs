@@ -384,6 +384,7 @@ namespace Cms.Controllers
                     model.Gallery = product.gallery;
                     model.Heureka = product.heureka;
                     model.HeurekaDarcek = product.heurekadarcek;
+                    model.HeurekaDarcekText = product.heurekadarcektext;
                     model.Recommended = product.recommended;
                     model.Weightunit = product.weightunit;
                     model.Category = product.category;
@@ -469,6 +470,7 @@ namespace Cms.Controllers
             o.weightunit = model.Weightunit;
             o.heureka = model.Heureka;
             o.heurekadarcek = model.HeurekaDarcek;
+            o.heurekadarcektext = model.HeurekaDarcekText;
             o.recommended = model.Recommended;
             o.description = model.Description;
             if (model.Discountprice != "NaN" && model.Discountprice != "" && model.Discountprice != null)
@@ -691,6 +693,7 @@ namespace Cms.Controllers
             o.weightunit = model.Weightunit;
             o.heureka = model.Heureka;
             o.heurekadarcek = model.HeurekaDarcek;
+            o.heurekadarcektext = model.HeurekaDarcekText;
             o.recommended = model.Recommended;
             o.description = model.Description;
             if (model.Discountprice != "NaN" && model.Discountprice != null)
@@ -807,7 +810,7 @@ namespace Cms.Controllers
         }
 
         [HttpPost]
-        public ActionResult MultipleEditPrice(string multiplePricePerc, bool? isDiscountMultiple, string catId, string brandId, string priceFrom, string priceTo, bool? isDiscount)
+        public ActionResult MultipleEditPrice(string multiplePricePerc, bool? isDiscountMultiple, string catId, string brandId, string priceFrom, string priceTo, bool? isDiscount, string notCheckedProds)
         {
 
             List<products> products = null;
@@ -831,32 +834,38 @@ namespace Cms.Controllers
                 products = (isDiscount != null && isDiscount == true) ? db.products.Where(x => x.deleted == false && x.price >= priceFromDec && x.price <= priceToDec && x.discountprice != null).ToList() : db.products.Where(x => x.deleted == false && x.price >= priceFromDec && x.price <= priceToDec).ToList();
             }
 
+            var notCheckedProdsArr = JsonConvert.DeserializeObject<int[]>(notCheckedProds);
+
             foreach (var product in products)
             {
-                decimal changedPrice = product.price + product.price * Decimal.Parse(multiplePricePerc, CultureInfo.InvariantCulture) / 100;
+                //odchecknute produkty nezmenime
+                if (notCheckedProdsArr.Contains(product.id) == false) {
 
-                if (isDiscountMultiple == null || isDiscountMultiple == false)
-                {
-                    product.price = changedPrice;
-                }
-                else
-                {
-                    product.discountprice = changedPrice;
-                }
-
-                var variants = db.variants.Where(x => x.deleted == false && x.prod_id == product.id).ToList();
-
-                foreach (var variant in variants)
-                {
-                    decimal changedVarPrice = (decimal)variant.price + (decimal)variant.price * Decimal.Parse(multiplePricePerc, CultureInfo.InvariantCulture) / 100;
+                    decimal changedPrice = product.price + product.price * Decimal.Parse(multiplePricePerc, CultureInfo.InvariantCulture) / 100;
 
                     if (isDiscountMultiple == null || isDiscountMultiple == false)
                     {
-                        variant.price = changedVarPrice;
+                        product.price = changedPrice;
                     }
                     else
                     {
-                        variant.discountprice = changedVarPrice;
+                        product.discountprice = changedPrice;
+                    }
+
+                    var variants = db.variants.Where(x => x.deleted == false && x.prod_id == product.id).ToList();
+
+                    foreach (var variant in variants)
+                    {
+                        decimal changedVarPrice = (decimal)variant.price + (decimal)variant.price * Decimal.Parse(multiplePricePerc, CultureInfo.InvariantCulture) / 100;
+
+                        if (isDiscountMultiple == null || isDiscountMultiple == false)
+                        {
+                            variant.price = changedVarPrice;
+                        }
+                        else
+                        {
+                            variant.discountprice = changedVarPrice;
+                        }
                     }
                 }
             }

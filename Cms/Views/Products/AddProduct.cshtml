@@ -259,6 +259,7 @@
             </div>
         </div>
     </div>
+    <!--
     <div class="row">
         <div class="mt-1 text-right" style="width: 180px;">
             <strong>Cena od?</strong>
@@ -271,6 +272,7 @@
             </div>
         </div>
     </div>
+    -->
     <div class="row">
         <div class="mt-1 text-right" style="width: 180px;">
             <strong>Akciová cena s DPH</strong>
@@ -306,6 +308,19 @@
                 <div class="col-md-3">
                     @Html.CheckBoxFor(model => model.HeurekaDarcek, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.HeurekaDarcek, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row d-none">
+        <div class="mt-1 text-right" style="width: 180px;">
+            <strong>Heureka darček - text</strong>
+        </div>
+        <div class="col-4 mt-1">
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.HeurekaDarcekText, new { htmlAttributes = new { @class = "form-control", placeholder = "Heureka darček - text" } })
+                    @Html.ValidationMessageFor(model => model.HeurekaDarcekText, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -397,7 +412,7 @@
         </div>
 
         <div num="1" class="clonedVarSection row m-0 activeInputSize" style="width:90%;">
-            @Html.Hidden("varNum1", 1, new { @class = "varNum" } )
+            @Html.Hidden("varNum1", 1, new { @class = "varNum" })
             <div class="">
                 <div class="form-group">
                     <div style="width: 150px; margin-left: 20px;">
@@ -874,6 +889,16 @@
                 $(this).parents("form").submit();
             }
         });
+
+        /*
+        $("#HeurekaDarcek").click(function () {
+            if ($("#HeurekaDarcek").is(":checked")) {
+
+            } else {
+
+            }
+        });
+        */
     });
 
 
