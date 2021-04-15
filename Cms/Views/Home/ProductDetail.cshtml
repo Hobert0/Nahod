@@ -589,9 +589,10 @@
             $(document).ready(function () {
 
                 function calc(theform) {
-                    var num = theform.original.value, rounded = theform.rounded
-                    var with2Decimals = num.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0]
-                    rounded.value = with2Decimals
+                    //var num = theform.original.value, rounded = theform.rounded
+                    //var with2Decimals = num.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0]
+                    //rounded.value = with2Decimals
+                    return theform;
                 }
 
                 function getRatingPrice($price) {
@@ -645,6 +646,7 @@
                             $(".w-discount-price").removeClass("d-none");
                         }
                     } else {
+
                         $(".actual-price").text(calc($thisDiscount));
                         $("#actual-price-w-tax").text(calc($thisDiscount * 100 / 120));
 

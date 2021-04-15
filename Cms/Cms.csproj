@@ -404,6 +404,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\filter.css" />
+    <Content Include="Content\hp.css" />
     <Content Include="Content\images\back.svg" />
     <Content Include="Content\images\banne_blur.jpg" />
     <Content Include="Content\images\carrier.png" />

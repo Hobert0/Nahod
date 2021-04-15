@@ -1,7 +1,9 @@
 ﻿function calc(theform) {
-    var num = theform.original.value, rounded = theform.rounded
-    var with2Decimals = num.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0]
-    rounded.value = with2Decimals
+    //var num = theform.original.value, rounded = theform.rounded
+    //var with2Decimals = num.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0]
+    //rounded.value = with2Decimals
+
+    return theform;
 }
 
 function addToCart(id, variableproduct, price) {

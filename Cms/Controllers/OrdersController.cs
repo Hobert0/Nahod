@@ -95,29 +95,6 @@ namespace Cms.Controllers
             if (Session["userid"] != null)
             {
                 usID = Int32.Parse(Session["userid"].ToString());
-                var um = db.usersmeta.Where(i => i.userid == usID).SingleOrDefault();
-
-                decimal sum = 0;
-                var prevSumEntity = db.orders.Where(x => x.userid == usID);
-                if (prevSumEntity.Count() > 0) {
-                    sum = prevSumEntity.Sum(x => x.finalprice);
-                }
-                sum += o.finalprice;
-
-                if (sum >= 1000)
-                {
-                    um.rating = 3;
-
-                    //email
-                }
-                else if (sum >= 500)
-                {
-                    um.rating = 2;
-
-                    //email
-                }
-
-                um.sum = sum;
             }
 
             o.userid = usID;
@@ -333,6 +310,36 @@ namespace Cms.Controllers
         public ActionResult FinishedOrder(string orderNumber)
         {
             var o = db.orders.Single(i => i.ordernumber == orderNumber);
+            var userId = o.userid;
+
+            if (userId != 0)
+            {
+                var um = db.usersmeta.Where(i => i.userid == userId).SingleOrDefault();
+
+                decimal sum = 0;
+                var prevSumEntity = db.orders.Where(x => x.userid == userId);
+                if (prevSumEntity.Count() > 0)
+                {
+                    sum = prevSumEntity.Sum(x => x.finalprice);
+                }
+                sum += o.finalprice;
+
+                if (sum >= 1000)
+                {
+                    um.rating = 3;
+
+                    //email
+                }
+                else if (sum >= 500)
+                {
+                    um.rating = 2;
+
+                    //email
+                }
+
+                um.sum = sum;
+            }
+
             o.status = 1;
             db.SaveChanges();
 

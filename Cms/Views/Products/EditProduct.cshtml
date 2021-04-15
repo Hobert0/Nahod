@@ -328,7 +328,7 @@
             <div class="col-2" style="margin-left:-50px;">
                 <div class="form-group">
                     <div class="col-md-12">
-                        <select class="form-control valid" name="discountPriceType">
+                        <select class="form-control valid" id="discountPriceType" name="discountPriceType">
                             <option value="eur">€</option>
                             <option value="percent">%</option>
                         </select>
@@ -458,14 +458,14 @@
                 @Html.Hidden("varNum1", 1, new { @class = "varNum" })
                 <div class="">
                     <div class="form-group">
-                        <div style="width: 150px; margin-left: 20px;">
+                        <div style="width: 150px; margin-left: 10px;">
                             @Html.DropDownList("varAttrs1", (IEnumerable<SelectListItem>)ViewData["vlastnosti"], new { @class = "form-control varAttrs" })
                         </div>
                     </div>
                 </div>
                 <div class="">
                     <div class="form-group">
-                        <div style="width: 150px; margin-left: 20px;">
+                        <div style="width: 150px; margin-left: 10px;">
                             <select class="form-control varAttrsValues " id="varAttrsValues1" name="varAttrsValues1">
                             </select>
                         </div>
@@ -473,33 +473,39 @@
                 </div>
                 <div class="">
                     <div class="form-group">
-                        <div style="width: 150px; margin-left: 20px;">
+                        <div style="width: 150px; margin-left: 10px;">
                             @Html.Editor("varNumber1", new { htmlAttributes = new { @class = "form-control varNumber", placeholder = "Katalógové číslo" } })
-                            <input type="hidden" value="1" id="total_chq">
                         </div>
                     </div>
                 </div>
                 <div class="">
                     <div class="form-group">
-                        <div style="width: 150px; margin-left: 20px;">
+                        <div style="width: 150px; margin-left: 10px;">
                             @Html.Editor("varStock1", new { htmlAttributes = new { @class = "form-control varStock", placeholder = "Na sklade" } })
-                            <input type="hidden" value="1" id="total_chq">
                         </div>
                     </div>
                 </div>
                 <div class="">
                     <div class="form-group">
-                        <div style="width: 150px; margin-left: 20px;">
+                        <div style="width: 150px; margin-left: 10px;">
                             @Html.Editor("varPrice1", new { htmlAttributes = new { @class = "form-control varPrice", placeholder = "Cena s DPH" } })
-                            <input type="hidden" value="1" id="total_chq">
                         </div>
                     </div>
                 </div>
                 <div class="">
                     <div class="form-group">
-                        <div style="width: 150px; margin-left: 20px;">
+                        <div style="width: 150px; margin-left: 10px;">
                             @Html.Editor("varDiscountPrice1", new { htmlAttributes = new { @class = "form-control varDiscountPrice", placeholder = "Akciová cena s DPH" } })
-                            <input type="hidden" value="1" id="total_chq">
+                        </div>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="form-group">
+                        <div style="width: 75px;">
+                            <select class="form-control valid varDiscountPriceType" name="varDiscountPriceType">
+                                <option value="eur">€</option>
+                                <option value="percent">%</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -684,9 +690,11 @@
             if (attrId != null && attrId != $firstAttrId) {
                 $(".clonedVarSection[num=" + num + "] .varPrice").val("").prop("disabled", true);
                 $(".clonedVarSection[num=" + num + "] .varDiscountPrice").val("").prop("disabled", true);
+                $(".clonedVarSection[num=" + num + "] .varDiscountPriceType").val("eur").prop("disabled", true);
             } else if (attrId != null && attrId == $firstAttrId) {
                 $(".clonedVarSection[num=" + num + "] .varPrice").prop("disabled", false);
                 $(".clonedVarSection[num=" + num + "] .varDiscountPrice").prop("disabled", false);
+                $(".clonedVarSection[num=" + num + "] .varDiscountPriceType").prop("disabled", false);
             }
         }
 
@@ -725,8 +733,8 @@
 
             $('#btnDelVar').attr('style', 'display:inline-block');
 
-            if (newNum == 10)
-                $('#btnAddVar').attr('disabled', 'disabled');
+            //if (newNum == 10)
+            //    $('#btnAddVar').attr('disabled', 'disabled');
         });
 
         $('#btnDelVar').click(function () {
@@ -734,7 +742,7 @@
             $('.clonedVarSection[num=' + num + ']').remove();     // remove the last element
 
             // enable the "add" button
-            $('#btnAddVar').attr('disabled', '');
+            //$('#btnAddVar').attr('disabled', '');
 
             // if only one element remains, disable the "remove" button
             if (num - 1 == 1)
@@ -963,6 +971,12 @@
             e.preventDefault();
 
             if (validatePrices()) {
+
+                if ($("#discountPriceType").val() == "percent") {
+                    $discountPriceFinal = $("#Price").val() - ($("#Price").val() * $("#Discountprice").val() / 100);
+                    $("#Discountprice").val($discountPriceFinal);
+                }
+
                 //ulozenie variant do JSONU ako string
                 if ($("#showVariants").is(":checked")) {
                     $num = $(".clonedVarSection").length;
@@ -977,6 +991,16 @@
                         $varStock = $(".clonedVarSection[num=" + $i + "]").find(".varStock").val();
                         $varPrice = $(".clonedVarSection[num=" + $i + "]").find(".varPrice").val();
                         $varDiscountPrice = $(".clonedVarSection[num=" + $i + "]").find(".varDiscountPrice").val();
+
+                        if ($(".clonedVarSection[num=" + $i + "]").find(".varDiscountPriceType").val() == "percent") {
+                            if ($varPrice != "") {
+                                $discountPriceFinal = $varPrice - ($varPrice * $varDiscountPrice / 100);
+                                //$(".clonedVarSection[num=" + $i + "]").find(".varDiscountPrice").val($discountPriceFinal);
+                                $varDiscountPrice = $discountPriceFinal.toString();
+                            } else {
+                                $varDiscountPrice = "";
+                            }
+                        }
 
                         $variants.push({ "num": $varNum, "attrId": $varAttrs, "attrValues": $varAttrsValues, "number": $varNumber, "stock": $varStock, "price": $varPrice, "discountprice": $varDiscountPrice });
                     }

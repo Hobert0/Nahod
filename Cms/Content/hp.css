@@ -10,7 +10,7 @@ html, body {
 
     .header-top .logo {
         width: 100%;
-		margin: 0px;
+        margin: 0px;
     }
 
     .header-top .search input {
@@ -192,7 +192,7 @@ html, body {
         -webkit-transition: .1s linear;
         -moz-transition: .1s linear;
         transition: .1s linear;
-        min-height: 470px;    
+        min-height: 470px;
     }
 
         .products .product > *:hover {
