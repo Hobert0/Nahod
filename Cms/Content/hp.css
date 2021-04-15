@@ -10,7 +10,7 @@ html, body {
 
     .header-top .logo {
         width: 100%;
-        margin: 0px;
+		margin: 0px;
     }
 
     .header-top .search input {
@@ -195,12 +195,10 @@ html, body {
         min-height: 470px;    
     }
 
- 
-
-.products .product > *:hover {
-    text-decoration: none;
-    color: black;
-}
+        .products .product > *:hover {
+            text-decoration: none;
+            color: black;
+        }
 
         .products .product:last-child {
             margin-right: 0px;
@@ -212,7 +210,7 @@ html, body {
             box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
         }
 
-        .products .product .thumb, .products .product img {
+        .products .product img {
             width: 100%;
             margin-bottom: 10px;
         }

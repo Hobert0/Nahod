@@ -21,7 +21,7 @@
                 <th>Dátum</th>
                 <th>Doprava</th>
                 <th>Cena spolu</th>
-                <th>PDF faktúra</th>
+                <!--<th>PDF faktúra</th>-->
 
             </tr>
         </thead>
@@ -58,7 +58,7 @@
                     <td>@Html.DisplayFor(modelItem => item.date)</td>
                     <td>@trans</td>
                     <td style="background-color: #e4ffe3; text-align: center;"><strong>@Html.DisplayFor(modelItem => item.finalprice) €</strong></td>
-                    <td><a href="@Url.Action("PdfOrder", "Orders", new {orderNumber = item.ordernumber})"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF faktúra" /></a></td>
+                    <!--<td><a href="@Url.Action("PdfOrder", "Orders", new {orderNumber = item.ordernumber})"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF faktúra" /></a></td>-->
                 </tr>
             }
 

@@ -21,7 +21,7 @@
             <th>Stav</th>
             <th>Poznámka</th>
             <th style="text-align: center; width: 25vw;">Detail | Vybaviť</th>
-            <th>PDF faktúra</th>
+            <!--<th>PDF faktúra</th>-->
             <th>Typ zákazníka</th>
             <th>Kategória zákazníka</th>
         </tr>
@@ -127,10 +127,12 @@
     </td>
     -->
     <td style="@stornostyle" align="center">@Html.ActionLink("Detail", "OrderDetail", "Orders", new { orderNumber = item.Ordernumber }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#10003;"), "FinishedOrder", "Orders", new { orderNumber = item.Ordernumber, confirm = true }, new { onclick = "return confirm('Naozaj chcete potvdiť objednávku ako odoslanú?')", @class = "btn btn-success finished", style = "padding:.375rem .75rem !important;" + visibility + "", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne potvrdíte objednávku." })</td>
+    <!--
     <td>
         <a style="@stornostyle" href="@Url.Action("PdfOrder", "Orders", new { orderNumber = item.Ordernumber })"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF faktúra" title="PDF faktúra" /></a> @{if (item.Status == 2)
             {<a href="@Url.Action("PdfStorno", "Orders", new { orderNumber = item.Ordernumber })"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF dobropis" title="PDF dobropis" /></a>}}
     </td>
+    -->
     <td style="@stornostyle"></td>
     <td style="@stornostyle"></td>
 

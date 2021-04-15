@@ -300,6 +300,7 @@
         </div>
         -->
         <div class="row">
+            <!--
             <div class="mt-1 text-right" style="width: 180px;">
                 <strong>Akciová cena s DPH</strong>
             </div>
@@ -308,6 +309,29 @@
                     <div class="col-md-12">
                         @Html.EditorFor(model => model.Discountprice, new { htmlAttributes = new { @class = "form-control", placeholder = "Akciová cena" } })
                         @Html.ValidationMessageFor(model => model.Discountprice, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            -->
+
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Akciová cena s DPH</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Discountprice, new { htmlAttributes = new { @class = "form-control", placeholder = "Akciová cena" } })
+                        @Html.ValidationMessageFor(model => model.Discountprice, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-2" style="margin-left:-50px;">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <select class="form-control valid" name="discountPriceType">
+                            <option value="eur">€</option>
+                            <option value="percent">%</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -338,8 +362,14 @@
                 </div>
             </div>
         </div>
-        <div class="row d-none">
-            <div class="mt-1 text-right" style="width: 180px;">
+
+        @{
+
+            var classHelper = Model.HeurekaDarcekText == "" || Model.HeurekaDarcekText == null ? "d-none" : "";
+        }
+
+        <div class="row @classHelper">
+            <div class="mt-1 text-right" style="width: 200px;">
                 <strong>Heureka darček - text</strong>
             </div>
             <div class="col-4">
@@ -957,6 +987,14 @@
                 }
 
                 $(this).parents("form").submit();
+            }
+        });
+
+        $("#HeurekaDarcek").click(function () {
+            if ($("#HeurekaDarcek").is(":checked")) {
+                $("#HeurekaDarcekText").parents(".row").removeClass("d-none");
+            } else {
+                $("#HeurekaDarcekText").parents(".row").addClass("d-none");
             }
         });
     });

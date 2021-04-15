@@ -549,9 +549,9 @@ namespace Cms.Controllers
                 }
                 else if (toWho == "finished")
                 {
-                    PdfSave(ordnumber);
-                    Attachment attachment = new Attachment(Server.MapPath("~/Content/invoices/fa_" + ordnumber + ".pdf"));
-                    mailMessage.Attachments.Add(attachment);	//add the attachment
+                    //PdfSave(ordnumber);
+                    //Attachment attachment = new Attachment(Server.MapPath("~/Content/invoices/fa_" + ordnumber + ".pdf"));
+                    //mailMessage.Attachments.Add(attachment);	//add the attachment
                 }
 
                 mailMessage.IsBodyHtml = true;

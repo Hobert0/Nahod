@@ -588,8 +588,10 @@
         <script>
             $(document).ready(function () {
 
-                function only2Decimals($num) {
-                    return (Math.floor($num * 100) / 100).toFixed(2);
+                function calc(theform) {
+                    var num = theform.original.value, rounded = theform.rounded
+                    var with2Decimals = num.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0]
+                    rounded.value = with2Decimals
                 }
 
                 function getRatingPrice($price) {
@@ -626,27 +628,27 @@
                     if ($thisDiscount == 0) {
 
                         if ($("input[name=userRating]").length) {
-                            $(".actual-price").text(only2Decimals($thisPrice));
-                            $("#actual-price-w-tax").text(only2Decimals($thisPrice * 100 / 120));
+                            $(".actual-price").text(calc($thisPrice));
+                            $("#actual-price-w-tax").text(calc($thisPrice * 100 / 120));
 
-                            $(".discount-price-del del").text(only2Decimals($thisPriceDefault) + " €");
+                            $(".discount-price-del del").text(calc($thisPriceDefault) + " €");
 
                             $(".discount-label").text("Cena po registrácii");
 
                             $(".discount-price-text, .discount-price-del").removeClass("d-none");
                             $(".w-discount-price").addClass("d-none");
                         } else {
-                            $(".actual-price").text(only2Decimals($thisPrice));
-                            $("#actual-price-w-tax").text(only2Decimals($thisPrice * 100 / 120));
+                            $(".actual-price").text(calc($thisPrice));
+                            $("#actual-price-w-tax").text(calc($thisPrice * 100 / 120));
 
                             $(".discount-price-text, .discount-price-del").addClass("d-none");
                             $(".w-discount-price").removeClass("d-none");
                         }
                     } else {
-                        $(".actual-price").text(only2Decimals($thisDiscount));
-                        $("#actual-price-w-tax").text(only2Decimals($thisDiscount * 100 / 120));
+                        $(".actual-price").text(calc($thisDiscount));
+                        $("#actual-price-w-tax").text(calc($thisDiscount * 100 / 120));
 
-                        $(".discount-price-del del").text(only2Decimals($thisPrice) + " €");
+                        $(".discount-price-del del").text(calc($thisPrice) + " €");
 
                         $(".discount-label").text("Akciová cena");
 

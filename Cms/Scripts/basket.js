@@ -119,9 +119,11 @@ function showAddress(userId) {
         shipping.style.display = "none";
         address.style.display = "block";
 
+        /*
         if (userId == null) {
             modal.style.display = "block";
         }
+        */
         
     } else {
         toastr["warning"]("Zvoľte spôsob dopravy a platby.");

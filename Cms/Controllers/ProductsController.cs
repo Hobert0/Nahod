@@ -470,7 +470,15 @@ namespace Cms.Controllers
             o.weightunit = model.Weightunit;
             o.heureka = model.Heureka;
             o.heurekadarcek = model.HeurekaDarcek;
-            o.heurekadarcektext = model.HeurekaDarcekText;
+
+            if (model.HeurekaDarcek == true)
+            {
+                o.heurekadarcektext = model.HeurekaDarcekText;
+            }
+            else {
+                o.heurekadarcektext = null;
+            }
+
             o.recommended = model.Recommended;
             o.description = model.Description;
             if (model.Discountprice != "NaN" && model.Discountprice != "" && model.Discountprice != null)
@@ -693,7 +701,16 @@ namespace Cms.Controllers
             o.weightunit = model.Weightunit;
             o.heureka = model.Heureka;
             o.heurekadarcek = model.HeurekaDarcek;
-            o.heurekadarcektext = model.HeurekaDarcekText;
+
+            if (model.HeurekaDarcek == true)
+            {
+                o.heurekadarcektext = model.HeurekaDarcekText;
+            }
+            else
+            {
+                o.heurekadarcektext = null;
+            }
+
             o.recommended = model.Recommended;
             o.description = model.Description;
             if (model.Discountprice != "NaN" && model.Discountprice != null)
