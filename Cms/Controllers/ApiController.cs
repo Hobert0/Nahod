@@ -22,10 +22,10 @@ namespace Cms.Controllers
         public JsonResult FetchProducts(string catslug, string subslug, string subslug2, string subslug3, bool brand, bool searchparam)
         {
             object result = null;
-
+            var variants = db.variants.OrderBy(o => o.num).ToList();
             if (brand)
             {
-                result = new { data = FetchByBrand(catslug).ProductModel };
+                result = new { data = FetchByBrand(catslug).ProductModel, variants };
             }
             else if (searchparam)
             {
@@ -40,7 +40,7 @@ namespace Cms.Controllers
                     topcatId = TopCatID(id);
                 }
 
-                result = new { data = SortByBrand(topcatId, id, catslug).ProductModel };
+                result = new { data = SortByBrand(topcatId, id, catslug).ProductModel, variants };
             }
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -107,9 +107,12 @@ namespace Cms.Controllers
                     product.price = Decimal.Parse(value, CultureInfo.InvariantCulture);
                     break;
                 case "discountprice":
-                    if (value != "") {
+                    if (value != "")
+                    {
                         product.discountprice = Decimal.Parse(value, CultureInfo.InvariantCulture);
-                    } else {
+                    }
+                    else
+                    {
                         product.discountprice = null;
                     }
                     break;
@@ -242,6 +245,18 @@ namespace Cms.Controllers
             model.ProductModel = db.products.ToList().Where(c => c.custom3 == categoryID.ToString()).OrderByDescending(x => x.id);
 
             return model;
+        }
+
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public JsonResult FetchUser(string username, string userid)
+        {
+            object result = null;
+            var id = int.Parse(userid);
+            var user = db.usersmeta.Where(u => u.userid == id).FirstOrDefault();
+
+            result = new { data = user };
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
     }

@@ -214,6 +214,9 @@
                                     }
                                     <a href="@Url.Action("Account", "Home")"><u>Môj účet</u></a><br><a class="logout" href="@Url.Action("LogOut", "Admin")"><u>Odhlásiť sa</u></a>
                                 </span>
+                                <input type="hidden" name="userName" id="userName" value="@Session["username"]">
+                                <input type="hidden" name="userId" id="userId" value="@Session["userid"]">
+
                             }
                             else
                             {

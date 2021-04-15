@@ -30,7 +30,8 @@ function fetchProducts(page, bybrand, search) {
         dataType: 'json',
         success: function (data) {
             allproductsdata = data.data;
-            renderProducts(page, undefined, allproductsdata);
+            variants = data.variants;
+            renderProducts(page, undefined, allproductsdata, variants);
         },
         error: function () {
             alert('Error! Please try again.');
@@ -39,6 +40,26 @@ function fetchProducts(page, bybrand, search) {
         //$loading.remove();
     });
 
+}
+
+function fetchUser(username, id) {    
+    let APIurl = "/Api/FetchUser";
+
+    $.ajax({
+        url: APIurl,
+        type: 'GET',
+        async: false,
+        data: { username: username, userid: id },
+        dataType: 'json',
+        success: function (data) {
+            userdata = data.data;
+        },
+        error: function () {
+        }
+    }).done(function () {
+        //$loading.remove();
+    });
+    return userdata;
 }
 
 function string_to_slug(str) {
@@ -59,7 +80,7 @@ function string_to_slug(str) {
     return str;
 }
 
-function renderProducts(page = 1, pagesize = 12, alldata = allproductsdata, pagechanged = false) {
+function renderProducts(page = 1, pagesize = 12, alldata = allproductsdata, variants, pagechanged = false) {
 
     if (page > 1) {
         window.history.pushState({}, '', '?page=' + page);
@@ -89,6 +110,15 @@ function renderProducts(page = 1, pagesize = 12, alldata = allproductsdata, page
         var slug = string_to_slug(item.title);
         var variableproduct = "false";
         var isvariablecolor = "false";
+        var isDiscounted = false;
+        let username = document.getElementById('userName');
+        let userid = document.getElementById('userId');
+        let exist = null;
+
+        if (username != null && userid != null) {
+            exist = fetchUser(username.value, userid.value);
+        }
+
 
         if (item.custom4 != null && item.custom4 != "") {
             variableproduct = "true";
@@ -97,24 +127,138 @@ function renderProducts(page = 1, pagesize = 12, alldata = allproductsdata, page
             isvariablecolor = "true";
         }
 
-        let $row = '<div class="col-6 col-md-6 col-lg-4 productcontent">';
-        $row += '<div style="overflow:hidden;">';
+        if (variants.length > 0) {
+            $.each(variants, function (i, item) {
+                if (item.discountprice != null) {
+                    isDiscounted = true;
+                }
+            });
+        }
+        else {
+            if (item.discountprice != null) {
+                isDiscounted = true;
+            }
+        }
 
+        let $row = '<div class="col-md product">';
+        $row += '<a href="/detail-produktu/' + item.id + '/' + slug + '">';
+        $row += '<img src="/uploads/' + item.image + '">';
+        $row += '<div class="prod-labels">';
+        if (isDiscounted == true) {
+            $row += '<span class="prod-discount">akcia</span>';
+        }
 
-        $row += '<a href="/detail-produktu/' + item.id + '/' + slug + '" class="product_detail"><div class="thumb" style="background-image: url(' + escape("/Uploads/" + item.image) + '); height: 320px; background-size: contain;"></div></a>'
+        //zistim ci sa jedna o novinku, je starsia menej ako 10 dni
+        var postedDate = Date.parse(item.date);
+        var date10days = new Date();
+        date10days = date10days.setDate(date10days.getDate() - 10);
+
+        if (postedDate >= date10days) {
+            $row += '<span class="prod-discount">akcia</span>';
+        }
+        $row += '</div><div class="prod-header">' + item.title + '</div>';
+
+        var shortdescription = "";
+        if (item.description != null) {
+            shortdescription = item.description.substring(0, 150) + "...";
+        }
+
+        $row += '<div class="prod-text">' + shortdescription + '</div>';
+        $row += '<div class="prod-prices">';
+
+        let variantPriceFrom = 99999;
+        let isVariant = "false";
+        let firstAttrId = 0;
+
+        $.each(variants, function (i, variant) {
+            if (firstAttrId == 0) {
+                firstAttrId = variant.attribute_id;
+            }
+
+            if (firstAttrId == variant.attribute_id) {
+                if (variant.discountprice != null) {
+                    if (variant.discountprice < variantPriceFrom) {
+                        variantPriceFrom = variant.discountprice;
+                    }
+                }
+                else {
+                    let thisPrice = 0;
+
+                    //rating
+                    if (username != null && userid != null) {
+                        let rating = 0;
+
+                        if (exist != null) {
+                            rating = exist.rating;
+                        }
+
+                        let defaultPrice = item.price;
+                        let ratingPrice = 0;
+
+                        switch (rating) {
+                            case 1:
+                                ratingPrice = 0.95 * defaultPrice;
+                                break;
+                            case 2:
+                                ratingPrice = 0.9 * defaultPrice;
+                                break;
+                            case 3:
+                                ratingPrice = 0.85 * defaultPrice;
+                                break;
+                        }
+
+                        thisPrice = ratingPrice;
+                    }
+                    else {
+                        thisPrice = variant.price;
+                    }
+
+                    if (thisPrice < variantPriceFrom) {
+                        variantPriceFrom = variant.price;
+                    }
+                }
+            }
+
+            isVariant = "true";
+        });
+
+        let actualPrice = 0.0;
+        if (variantPriceFrom != 99999) {
+            $row += '<span class="prod-price-from">od ' + variantPriceFrom + '€</span>';
+        } else {
+            //rating
+            if (username != null) {
+                let defaultPrice = item.price;
+                let ratingPrice = 0;
+
+                switch (rating) {
+                    case 1:
+                        ratingPrice = 0.95 * defaultPrice;
+                        break;
+                    case 2:
+                        ratingPrice = 0.9 * defaultPrice;
+                        break;
+                    case 3:
+                        ratingPrice = 0.85 * defaultPrice;
+                        break;
+                }
+
+                $row += '<span class="prod-discount">' + defaultPrice + ' €</span> <span class="prod-base">' + ratingPrice + ' €</span>';
+                actualPrice = ratingPrice;
+            }
+            else {
+                $row += '<span class="prod-base">' + item.price + ' €</span>';
+                actualPrice = item.price;
+            }
+        }    
+
+        $row += '<</div></a>';
+        let actualPriceStr = actualPrice.replace(",", ".");
+        $row += '<a onclick="addToCart(' + item.id + ',' + isVariant + ',' + actualPriceStr + ')" class="prod-add-to-cart"><div style="text-align: center;"> <img class="prod-icon" src="~/Content/images/cart.svg" alt="cart"><span>Pridať do košíka</span></span></div>';
 
         if (item.price == "0") {
 
-            if (item.custom6 != null && item.custom6 == "True") //ak je zadane ze cena je od
-            {
-
-                $row += '<a href="/detail-produktu/' + item.id + '/' + slug + '" id = "" style="cursor: pointer;" class="col-sm-2 col-4 cartproduct"> <div style="text-align: center;"><img src="/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>';
-            }
-            $row += '<a href="/detail-produktu/' + item.id + '/' + slug + '" id = "" style="cursor: pointer;" class="col-sm-2 col-4 cartproduct"> <div style="text-align: center;"><img src="/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>';
-        }
-        else //ak je cena v pohode
-        {
-            $row += '<a onclick="addToCart(' + item.id + ',' + variableproduct + ',' + isvariablecolor + ')" style="cursor: pointer;" class="col-sm-2 col-4 cartproduct"><div style="text-align: center;"><img src="/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>';
+   
         }
         $row += '</div>';
         $row += '<a href="/detail-produktu/' + item.id + '/' + slug + '" id = "" class="product_detail"><p class="title category" style="line-height: 18px;">' + item.title + '</p></a>';
@@ -159,8 +303,8 @@ function renderPagination(totalPages, page) {
 
     for (i = 1; i <= totalPages; i++) {
         let active = "";
-        if (i == page) { active = "active";}
-        $pages += '<li class="page-item '+ active +'"><a class="page-link" onclick="renderProducts(' + i + ', undefined, undefined, true)">' + i + '</a></li>';
+        if (i == page) { active = "active"; }
+        $pages += '<li class="page-item ' + active + '"><a class="page-link" onclick="renderProducts(' + i + ', undefined, undefined, true)">' + i + '</a></li>';
     }
 
     if (totalPages > 1 && totalPages > page) {

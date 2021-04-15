@@ -24,12 +24,12 @@
         display: none !important;
     }
 </style>
-<div class="container">
+<div class="container-fluid w-75">
     <div class="row py-0 py-sm-4">
-        @{
+        @*@{
             Html.RenderPartial("_SidebarCategories");
-        }
-        <div class="col-lg-9 col-md-8">
+        }*@
+        <div class="col">
 
             @if (catID != 0)
             {
@@ -68,7 +68,7 @@
                 ViewBag.Title = "Produkty v zľave -";
             }
 
-        <div class="container">
+        <div class="container-fluid">
             <div class="row justify-content-md">
                 @foreach (var cat in Model.CategoriesModel.Where(i => i.maincat == catName))
                 {
