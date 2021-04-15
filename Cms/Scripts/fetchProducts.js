@@ -143,7 +143,7 @@ function renderProducts(page = 1, pagesize = 12, alldata = allproductsdata, vari
         let $row = '<div class="col-md-5ths product mb-2 mx-2">';
 
         $row += '<a href="/detail-produktu/' + item.id + '/' + slug + '">';
-        $row += '<div class="thumb" style="background-image: url(' + escape("/Uploads/" + item.image) + '); height: 230px;"></div>'
+        $row += '<div class="thumb" style="background-image: url(' + escape("/Uploads/" + item.image) + '); height: 11vw;"></div>'
 
         $row += '<div class="prod-labels">';
         if (isDiscounted == true) {
