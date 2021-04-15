@@ -10,15 +10,7 @@ $(".productfilter").change(function (e) {
 
     let dropdownValTyp = $('#Typ').val();
     let dropdownValVyrobca = $('#Vyrobca').val();
-    let kW = $('#ex1').val().split(',');
-    let m2 = $('#ex2').val().split(',');
     let price = $('#ex3').val().split(',');
-
-    let minKw = kW[0];
-    let maxKw = kW[1];
-
-    let minM2 = m2[0];
-    let maxM2 = m2[1];
 
     let minPrice = price[0];
     let maxPrice = price[1];
@@ -26,7 +18,7 @@ $(".productfilter").change(function (e) {
     if (dropdownValTyp != "") {
         var i = filteredData.length;
         while (i--) {
-            if (filteredData[i].custom8 != dropdownValTyp) {
+            if (filteredData[i].type != dropdownValTyp) {
                 filteredData.splice(i, 1);
             }
         }
@@ -41,27 +33,12 @@ $(".productfilter").change(function (e) {
         }
     }
 
-    var d = filteredData.length;
-    while (d--) {
-        if (!between(filteredData[d].custom9.replace(",", "."), minKw, maxKw)) {
-            filteredData.splice(d, 1);
-        }
-	}
-
-	var o = filteredData.length;
-	while (o--) {
-        if (filteredData[o].custom10 != null) {
-            if (!between(filteredData[o].custom10.replace(",", "."), minM2, maxM2)) {
-                filteredData.splice(o, 1);
-            }
-        }
-    }
 
     var p = filteredData.length;
     while (p--) {
-        let priceToCompare = filteredData[p].price.replace(",", ".");
+        let priceToCompare = filteredData[p].price;
         if (filteredData[p].discountprice != null && filteredData[p].discountprice != "") {
-            priceToCompare = filteredData[p].discountprice.replace(",", ".");
+            priceToCompare = filteredData[p].discountprice;
         }
 
         if (!between(priceToCompare , minPrice, maxPrice)) {

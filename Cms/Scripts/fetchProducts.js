@@ -80,7 +80,7 @@ function string_to_slug(str) {
     return str;
 }
 
-function renderProducts(page = 1, pagesize = 12, alldata = allproductsdata, variants, pagechanged = false) {
+function renderProducts(page = 1, pagesize = 12, alldata = allproductsdata, vars, pagechanged = false) {
 
     if (page > 1) {
         window.history.pushState({}, '', '?page=' + page);
@@ -106,7 +106,7 @@ function renderProducts(page = 1, pagesize = 12, alldata = allproductsdata, vari
     var $container = $('<div id="productsblock"/>').addClass('row products-row m-0');
 
     $.each(productsdata, function (i, item) {
-
+        var variants = vars.filter(element => element.prod_id == item.id);
         var slug = string_to_slug(item.title);
         var variableproduct = "false";
         var isvariablecolor = "false";
@@ -114,6 +114,7 @@ function renderProducts(page = 1, pagesize = 12, alldata = allproductsdata, vari
         let username = document.getElementById('userName');
         let userid = document.getElementById('userId');
         let exist = null;
+        let rating = 0;
 
         if (username != null && userid != null) {
             exist = fetchUser(username.value, userid.value);
@@ -188,7 +189,6 @@ function renderProducts(page = 1, pagesize = 12, alldata = allproductsdata, vari
 
                     //rating
                     if (username != null && userid != null) {
-                        let rating = 0;
 
                         if (exist != null) {
                             rating = exist.rating;
@@ -230,6 +230,11 @@ function renderProducts(page = 1, pagesize = 12, alldata = allproductsdata, vari
         } else {
             //rating
             if (username != null) {
+
+                if (exist != null) {
+                    rating = exist.rating;
+                }
+
                 let defaultPrice = item.price;
                 let ratingPrice = 0;
 

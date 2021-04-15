@@ -162,30 +162,20 @@ namespace Cms.Controllers
             ViewData["CatId"] = id;
             ProductModel pm = new ProductModel();
             ProductsController pc = new ProductsController();
-            ViewData["typ"] = pm.SelectionTyp();
+            ViewData["typ"] = pc.SelectionZaradenie();
             ViewData["znacka"] = pc.SelectionBrand();
 
             List<decimal?> prices = new List<decimal?>();
-            List<decimal> kw = new List<decimal>();
-            List<decimal> room = new List<decimal>();
 
             foreach (var item in model.ProductModel)
             {
                 prices.Add(item.price);
                 prices.Add(item.discountprice);
-                if(item.custom9 != null) kw.Add(decimal.Parse(item.custom9.Replace(".", ",")));
-                if(item.custom10 != null) room.Add(decimal.Parse(item.custom10.Replace(".", ",")));
             }
             prices.Sort();
-            kw.Sort();
-            room.Sort();
 
             ViewData["minPrice"] = prices.FirstOrDefault();
             ViewData["maxPrice"] = prices.LastOrDefault();
-            ViewData["minKw"] = kw.FirstOrDefault();
-            ViewData["maxKw"] = kw.LastOrDefault();
-            ViewData["minM2"] = room.FirstOrDefault();
-            ViewData["maxM2"] = room.LastOrDefault();
 
             return View(model);
         }

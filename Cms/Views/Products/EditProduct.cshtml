@@ -89,7 +89,7 @@
         </div>
         <div class="row">
             <div class="mt-1 text-right" style="width: 180px;">
-                <strong>Zaradenie</strong>
+                <strong>Druh rybolovu</strong>
             </div>
             <div class="col-4">
                 <div class="form-group">
@@ -113,20 +113,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="mt-1 text-right" style="width: 180px;">
-                <strong>Typ</strong>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        @Html.DropDownListFor(model => model.Custom8, (IEnumerable<SelectListItem>)ViewData["typ"], new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Custom8, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-
         </div>
         <!--
         <div class="row">
