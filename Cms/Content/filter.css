@@ -3,3 +3,8 @@
     box-shadow: none !important;
     -webkit-box-shadow: none !important;
 }
+.slider-handle {
+    background-image: linear-gradient(to bottom, #ff8b00, #c36b01);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ff8b00), to(#c36b01));
+    background-image: -webkit-linear-gradient(top, #ff8b00, #c36b01);
+}

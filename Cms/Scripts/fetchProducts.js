@@ -103,7 +103,7 @@ function renderProducts(page = 1, pagesize = 12, alldata = allproductsdata, vari
     var totalPages = (totalRecord / pagesize) + ((totalRecord % pagesize) > 0 ? 1 : 0);
     productsdata = alldata.slice((page - 1) * pagesize, pagesize * page);
 
-    var $container = $('<div id="productsblock"/>').addClass('row py-4');
+    var $container = $('<div id="productsblock"/>').addClass('row products-row m-0');
 
     $.each(productsdata, function (i, item) {
 
@@ -140,9 +140,11 @@ function renderProducts(page = 1, pagesize = 12, alldata = allproductsdata, vari
             }
         }
 
-        let $row = '<div class="col-md product">';
+        let $row = '<div class="col-md-5ths product mb-2 mx-2">';
+
         $row += '<a href="/detail-produktu/' + item.id + '/' + slug + '">';
-        $row += '<img src="/uploads/' + item.image + '">';
+        $row += '<div class="thumb" style="background-image: url(' + escape("/Uploads/" + item.image) + '); height: 230px;"></div>'
+
         $row += '<div class="prod-labels">';
         if (isDiscounted == true) {
             $row += '<span class="prod-discount">akcia</span>';
@@ -154,7 +156,7 @@ function renderProducts(page = 1, pagesize = 12, alldata = allproductsdata, vari
         date10days = date10days.setDate(date10days.getDate() - 10);
 
         if (postedDate >= date10days) {
-            $row += '<span class="prod-discount">akcia</span>';
+            $row += '<span class="prod-new">novinka</span>';
         }
         $row += '</div><div class="prod-header">' + item.title + '</div>';
 
@@ -163,7 +165,7 @@ function renderProducts(page = 1, pagesize = 12, alldata = allproductsdata, vari
             shortdescription = item.description.substring(0, 150) + "...";
         }
 
-        $row += '<div class="prod-text">' + shortdescription + '</div>';
+        $row += '<div class="prod-text">' + stripHtml(shortdescription) + '</div>';
         $row += '<div class="prod-prices">';
 
         let variantPriceFrom = 99999;
@@ -252,36 +254,11 @@ function renderProducts(page = 1, pagesize = 12, alldata = allproductsdata, vari
             }
         }    
 
-        $row += '<</div></a>';
-        let actualPriceStr = actualPrice.replace(",", ".");
-        $row += '<a onclick="addToCart(' + item.id + ',' + isVariant + ',' + actualPriceStr + ')" class="prod-add-to-cart"><div style="text-align: center;"> <img class="prod-icon" src="~/Content/images/cart.svg" alt="cart"><span>Pridať do košíka</span></span></div>';
+        $row += '</div></a>';
+        let actualPriceStr = actualPrice;
+        $row += '<a onclick="addToCart(' + item.id + ',' + isVariant + ',' + actualPriceStr + ')" class="prod-add-to-cart"><div style="text-align: center;"> <img class="prod-icon" src="/Content/images/cart.svg" alt="cart"><span>Pridať do košíka</span></span></div>';
 
-        if (item.price == "0") {
-
-   
-        }
-        $row += '</div>';
-        $row += '<a href="/detail-produktu/' + item.id + '/' + slug + '" id = "" class="product_detail"><p class="title category" style="line-height: 18px;">' + item.title + '</p></a>';
-        $row += '<div style="display: flex;"><div class="col price">';
-        if (item.discountprice != "" && item.discountprice != null) {
-            $row += '<span>' + parseFloat(item.discountprice).toFixed(2) + '€</span>';
-            $row += '<del>' + parseFloat(item.price).toFixed(2) + '€</del>';
-        }
-        else {
-            if (item.custom6 != null && item.custom6 == "True") {
-                $row += '<span>od ' + parseFloat(item.price).toFixed(2) + '€</span>';
-            }
-            else {
-                if (item.price == "0") {
-                    $row += '<span>Cena na vyžiadanie</span>';
-                }
-                else {
-                    $row += '<span>' + parseFloat(item.price).toFixed(2) + '€</span>';
-                }
-            }
-        }
-        $row += '</div></div>';
-        $row += '</div>';
+        
         $row = $($row)
 
         $container.append($row);
@@ -314,6 +291,12 @@ function renderPagination(totalPages, page) {
     $pages = $($pages);
 
     $('#pagination').html($pages);
+}
+
+function stripHtml(html) {
+    let tmp = document.createElement("DIV");
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || "";
 }
 
 

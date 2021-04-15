@@ -79,6 +79,42 @@ h3 {
     padding-top: 20px;
 }
 
+.col-xs-5ths,
+.col-sm-5ths,
+.col-md-5ths,
+.col-lg-5ths {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.col-xs-5ths {
+    width: 18.8%;
+    float: left;
+}
+
+@media (min-width: 768px) {
+    .col-sm-5ths {
+        width: 18.8%;
+        float: left;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-md-5ths {
+        width: 18.8%;
+        float: left;
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-lg-5ths {
+        width: 18.8%;
+        float: left;
+    }
+}
+
 .breadcrumb li + li:before {
     content: "\02022" !important;
 }
@@ -623,13 +659,8 @@ footer {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    -webkit-transition: .1s ease-in-out;
-    transition: .1s ease-in-out;
 }
 
-    .thumb:hover {
-        transform: scale(1.05);
-    }
 
 .title {
     padding: 15px 0 8px;
