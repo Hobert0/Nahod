@@ -1,4 +1,5 @@
 ﻿@using System.Globalization;
+@using Newtonsoft.Json;
 @model Cms.Models.ProductModel
 
 @{
@@ -19,6 +20,8 @@
         display: block;
     }
 </style>
+<link rel="stylesheet" href="~/Content/jquery-multiselect.css" />
+
 <h2>Editovať produkt</h2>
 
 @using (Html.BeginForm("UploadImages", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
@@ -81,8 +84,48 @@
             <div class="col-4">
                 <div class="form-group">
                     <div class="col-md-12">
-                        @Html.DropDownListFor(model => model.Category, (IEnumerable<SelectListItem>)ViewData["kategoria"], new { @class = "form-control" })
+
+                        @Html.EditorFor(model => model.Category, "", new { htmlAttributes = new { @class = "form-control d-none" } })
                         @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+
+                        <select id="categoriesMulti" name="categoriesMulti" multiple>
+
+                            @{
+                                var catsCounter = 0;
+                                foreach (var cat in (IEnumerable<SelectListItem>)ViewData["kategoria"])
+                                {
+                                    if (catsCounter != 0)
+                                    {
+
+                                        dynamic selCats = JsonConvert.DeserializeObject(Model.Category);
+
+                                        var isSelCat = false;
+                                        foreach (var selCat in selCats)
+                                        {
+                                            if (selCat == cat.Value)
+                                            {
+                                                isSelCat = true;
+                                                break;
+                                            }
+                                        }
+
+                                        if (isSelCat)
+                                        {
+                                            <option value="@cat.Value" selected>@cat.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@cat.Value"> @cat.Text </option>
+                                        }
+
+
+                                    }
+                                    catsCounter++;
+                                }
+                            }
+
+                        </select>
+
                     </div>
                 </div>
             </div>
@@ -654,8 +697,11 @@
     </section>
 }
 
+<script src="~/Scripts/jquery-multiselect.js"></script>
 <script>
     $(document).ready(function () {
+
+        $('#categoriesMulti').multiSelect();
 
         $(document).on("change", ".varAttrs", function () {
             initAttrValues($(this).parents(".clonedVarSection").attr("num"), $(this).find("option:selected").attr("attr_id"));
@@ -956,6 +1002,19 @@
 
             e.preventDefault();
 
+            //Kategorie
+            $categoryArr = [];
+            $("#categoriesMulti").next(".multi-select-container").find(".multi-select-menuitems label").each(function () {
+
+                if ($(this).find("input").is(":checked")) {
+                    $categoryArr.push(parseInt($(this).find("input").val()));
+                }
+
+            });
+
+            $("#Category").val(JSON.stringify($categoryArr));
+
+            //Varianty
             if (validatePrices()) {
 
                 if ($("#discountPriceType").val() == "percent") {

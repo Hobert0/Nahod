@@ -421,6 +421,7 @@
     <Content Include="Content\images\settings.svg" />
     <Content Include="Content\images\toshiba.png" />
     <Content Include="Content\images\users.svg" />
+    <Content Include="Content\jquery-multiselect.css" />
     <Content Include="Content\megamenu.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\product_slider.css" />
@@ -532,6 +533,7 @@
     <Content Include="Scripts\jquery-3.2.1.min.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
+    <Content Include="Scripts\jquery-multiselect.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.filedrop.js" />

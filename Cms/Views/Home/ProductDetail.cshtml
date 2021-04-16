@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using Newtonsoft.Json;
 @model Cms.Models.MultipleIndexModel
 
 @{
@@ -48,7 +49,10 @@
                         <li class="breadcrumb-item" style="text-decoration: underline"><a href="\">Domov</a></li>
                         @if (prod.category != null)
                         {
-                            foreach (var cat in Model.CategoriesModel.Where(i => i.id == Int32.Parse(prod.category)))
+
+                            dynamic cats = JsonConvert.DeserializeObject(prod.category);
+
+                            foreach (var cat in Model.CategoriesModel.Where(i => i.id == cats[0].Value))
                             {
                                 foreach (var topcat in Model.CategoriesModel.Where(o => o.name == cat.name))
                                 {
@@ -588,13 +592,6 @@
         <script>
             $(document).ready(function () {
 
-                function calc(theform) {
-                    //var num = theform.original.value, rounded = theform.rounded
-                    //var with2Decimals = num.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0]
-                    //rounded.value = with2Decimals
-                    return theform;
-                }
-
                 function getRatingPrice($price) {
 
                     if ($("input[name=userRating]").length) {
@@ -629,28 +626,28 @@
                     if ($thisDiscount == 0) {
 
                         if ($("input[name=userRating]").length) {
-                            $(".actual-price").text(calc($thisPrice));
-                            $("#actual-price-w-tax").text(calc($thisPrice * 100 / 120));
+                            $(".actual-price").text($thisPrice.toFixedNoRounding(2));
+                            $("#actual-price-w-tax").text(($thisPrice * 100 / 120).toFixedNoRounding(2));
 
-                            $(".discount-price-del del").text(calc($thisPriceDefault) + " €");
+                            $(".discount-price-del del").text($thisPriceDefault.toFixedNoRounding(2) + " €");
 
                             $(".discount-label").text("Cena po registrácii");
 
                             $(".discount-price-text, .discount-price-del").removeClass("d-none");
                             $(".w-discount-price").addClass("d-none");
                         } else {
-                            $(".actual-price").text(calc($thisPrice));
-                            $("#actual-price-w-tax").text(calc($thisPrice * 100 / 120));
+                            $(".actual-price").text($thisPrice.toFixedNoRounding(2));
+                            $("#actual-price-w-tax").text(($thisPrice * 100 / 120).toFixedNoRounding(2));
 
                             $(".discount-price-text, .discount-price-del").addClass("d-none");
                             $(".w-discount-price").removeClass("d-none");
                         }
                     } else {
 
-                        $(".actual-price").text(calc($thisDiscount));
-                        $("#actual-price-w-tax").text(calc($thisDiscount * 100 / 120));
+                        $(".actual-price").text($thisDiscount.toFixedNoRounding(2));
+                        $("#actual-price-w-tax").text(($thisDiscount * 100 / 120).toFixedNoRounding(2));
 
-                        $(".discount-price-del del").text(calc($thisPrice) + " €");
+                        $(".discount-price-del del").text($thisPrice.toFixedNoRounding(2) + " €");
 
                         $(".discount-label").text("Akciová cena");
 

@@ -302,7 +302,7 @@ namespace Cms.Controllers
             znacka.Add(new SelectListItem { Text = "", Value = "" });
             foreach (var cat in db.categories)
             {
-
+                /*
                 if (cat.topcat2 == "" || cat.topcat2 == "Žiadna")
                 {
                     znacka.Add(new SelectListItem { Text = cat.name + " → " + cat.topcat, Value = cat.id.ToString() });
@@ -311,7 +311,8 @@ namespace Cms.Controllers
                 {
                     znacka.Add(new SelectListItem { Text = cat.name + " → " + cat.topcat2 + " → " + cat.topcat, Value = cat.id.ToString() });
                 }
-
+                */
+                znacka.Add(new SelectListItem { Text = cat.name , Value = cat.id.ToString() });
             }
             return znacka;
         }

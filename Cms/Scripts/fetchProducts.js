@@ -216,7 +216,7 @@ function renderProducts(page = 1, pagesize = 12, alldata = allproductsdata, vars
                     }
 
                     if (thisPrice < variantPriceFrom) {
-                        variantPriceFrom = variant.price;
+                        variantPriceFrom = thisPrice;
                     }
                 }
             }

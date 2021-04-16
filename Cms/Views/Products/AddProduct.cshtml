@@ -16,6 +16,7 @@
         display: block;
     }
 </style>
+<link rel="stylesheet" href="~/Content/jquery-multiselect.css" />
 
 <h2>Pridať produkt</h2>
 
@@ -62,8 +63,31 @@
             <div class="col-4">
                 <div class="form-group">
                     <div class="col-md-12">
-                        @Html.DropDownListFor(model => model.Category, (IEnumerable<SelectListItem>)ViewData["kategoria"], new { @class = "form-control" })
+                        
+                        @Html.EditorFor(model => model.Category, "", new { htmlAttributes = new { @class = "form-control d-none" } })
                         @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+                       
+
+                        <select id="categoriesMulti" name="categoriesMulti" multiple>
+
+                            @{
+                                var catsCounter = 0;
+                                foreach (var cat in (IEnumerable<SelectListItem>)ViewData["kategoria"])
+                                {
+                                    if (catsCounter != 0)
+                                    {
+                                        <option value="@cat.Value">@cat.Text</option>
+                                    }
+
+
+                                    catsCounter++;
+                                }
+                            }
+
+
+
+                        </select>
+
                     </div>
                 </div>
             </div>
@@ -617,8 +641,12 @@
     </div>
 }
 
+
+<script src="~/Scripts/jquery-multiselect.js"></script>
 <script>
     $(document).ready(function () {
+
+        $('#categoriesMulti').multiSelect();
 
         //inicializacia hodnot pre vlastnosti
         initAttrValues(1, null);
@@ -882,10 +910,24 @@
 
     /*SIZES- Create JSON and send to database*/
     $(document).ready(function () {
+
         $('#btnSubmit').click(function (e) {
 
             e.preventDefault();
 
+            //Kategorie
+            $categoryArr = [];
+            $("#categoriesMulti").next(".multi-select-container").find(".multi-select-menuitems label").each(function () {
+              
+                if ($(this).find("input").is(":checked")) {
+                    $categoryArr.push(parseInt($(this).find("input").val()));
+                }
+
+            });
+
+            $("#Category").val(JSON.stringify($categoryArr));
+
+            //Varianty
             if (validatePrices()) {
 
                 if ($("#discountPriceType").val() == "percent") {

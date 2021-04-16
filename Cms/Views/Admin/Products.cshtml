@@ -1,4 +1,6 @@
-﻿@model Cms.Models.MultipleIndexModel
+﻿@using Newtonsoft.Json;
+
+@model Cms.Models.MultipleIndexModel
 @{
     Layout = "~/Views/Shared/_LayoutCms.cshtml";
     ViewBag.Title = "Produkty";
@@ -167,7 +169,7 @@
             </div>
             <div class="form-group col-md-5 mt-3">
                 <div style="text-align:right">
-                    <input type="button" value="Filtrovať" id="filterButton" class="btn btn-success" />            
+                    <input type="button" value="Filtrovať" id="filterButton" class="btn btn-success" />
                 </div>
             </div>
         </div>
@@ -204,77 +206,88 @@
                 }
 
                 onstockrange = item.custom1;
-        <tr id="product_row-@counter" class="productRow">
+                <tr id="product_row-@counter" class="productRow">
 
-            <td class="hide">@item.id</td>
-            <td style="text-align:center;"><input type="checkbox" name="multipleEditCheckbox" checked></td>
-            <td class="editable" name="number">@Html.DisplayFor(modelItem => item.number)</td>
-            <td><img src="~/Uploads/@Html.DisplayFor(modelItem => item.image)" style="width: 50px;" /></td>
-            <td class="editable" name="title">@Html.DisplayFor(modelItem => item.title)</td>
-            <td class="editable" name="price" style="background-color: lightyellow; text-align: center;">@Html.DisplayFor(modelItem => item.price)&nbsp;€</td>
-            <td class="editable" name="discountprice" style="background-color: lightcyan; text-align: center;">
+                    <td class="hide">@item.id</td>
+                    <td style="text-align:center;"><input type="checkbox" name="multipleEditCheckbox" checked></td>
+                    <td class="editable" name="number">@Html.DisplayFor(modelItem => item.number)</td>
+                    <td><img src="~/Uploads/@Html.DisplayFor(modelItem => item.image)" style="width: 50px;" /></td>
+                    <td class="editable" name="title">@Html.DisplayFor(modelItem => item.title)</td>
+                    <td class="editable" name="price" style="background-color: lightyellow; text-align: center;">@Html.DisplayFor(modelItem => item.price)&nbsp;€</td>
+                    <td class="editable" name="discountprice" style="background-color: lightcyan; text-align: center;">
 
-                @{
-                    //Html.DisplayFor(modelItem => item.discountprice)
-                    var discountText = "";
-                    if (item.discountprice != null)
-                    {
-                        discountText = item.discountprice + " €";
-                    }
-                }
-                @discountText
-
-            </td>
-            <td>
-                @{
-                    if (item.category != null)
-                    {
-                        foreach (var cat in Model.CategoriesModel.Where(o => o.id == Int32.Parse(item.category)))
-                        {
-                            @Html.Raw(cat.name)
-                        }
-                    }
-                }
-            </td>
-            <td>
-
-                @{
-                    //variant.number obsahuje nazov vlastnosti
-                    string variantsStr = "";
-                    if (variantsAttributes.Where(o => o.ProdId == item.id).ToList().Count > 0)
-                    {
-                        string varType = "";
-                        foreach (var variant in variantsAttributes.Where(o => o.ProdId == item.id))
-                        {
-                            if (varType != variant.AttrName)
+                        @{
+                            //Html.DisplayFor(modelItem => item.discountprice)
+                            var discountText = "";
+                            if (item.discountprice != null)
                             {
-                                variantsStr += variant.AttrName + ": ";
+                                discountText = item.discountprice + " €";
                             }
-
-                            variantsStr += variant.AttrValue + ", ";
-                            varType = variant.AttrName;
                         }
-                        variantsStr = variantsStr.Remove(variantsStr.Length - 2);
-                    }
-                }
-                @variantsStr
+                        @discountText
 
-            </td>
-            <td class="editable" name="heureka" style="text-align:center;">@Html.DisplayFor(modelItem => item.heureka)</td>
-            <td class="editable" name="recommended" style="text-align:center;">@Html.DisplayFor(modelItem => item.recommended)</td>
-            <td align="center">
-                @Html.ActionLink("Editovať", "EditProduct", "Products", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important; font-size:13px;margin-right: 2px;" }) <a href="@Url.Action("DuplicateProduct", "Products", new { id = item.id })" class="btn btn-success" style="padding: 5px 10px;margin-right: 2px;" title="Duplikovať produkt"><img src="~/Content/images/duplicate.png" width="15" style="margin-top: -3px;"></a> @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteProduct", "Products", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tento produkt?')", @class = "btn btn-danger", style = "padding: 5px 10px;", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete produkt." })
-                <div class="popover__wrapper" id="info-@counter" style="display:none;">
-                    <a href="#">
-                        <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
-                    </a>
-                    <div class="push popover__content">
-                        <p class="popover__message">Skladové zásoby pod hraničnou hodnotou!</p>
-                    </div>
-                </div>
-            </td>
+                    </td>
+                    <td>
+                        @{
+                            if (item.category != null)
+                            {
 
-        </tr>
+
+                                dynamic cats = JsonConvert.DeserializeObject(item.category);
+
+                                var catsStr = "";
+                                foreach (var cat in cats)
+                                {
+                                    foreach (var catDb in Model.CategoriesModel.Where(o => o.id == cat.Value))
+                                    {
+                                        catsStr += catDb.name + ", ";
+                                    }
+                                }
+                                @Html.Raw(catsStr.Remove(catsStr.Length - 2))
+
+
+                            }
+                        }
+                    </td>
+                    <td>
+
+                        @{
+                            //variant.number obsahuje nazov vlastnosti
+                            string variantsStr = "";
+                            if (variantsAttributes.Where(o => o.ProdId == item.id).ToList().Count > 0)
+                            {
+                                string varType = "";
+                                foreach (var variant in variantsAttributes.Where(o => o.ProdId == item.id))
+                                {
+                                    if (varType != variant.AttrName)
+                                    {
+                                        variantsStr += variant.AttrName + ": ";
+                                    }
+
+                                    variantsStr += variant.AttrValue + ", ";
+                                    varType = variant.AttrName;
+                                }
+                                variantsStr = variantsStr.Remove(variantsStr.Length - 2);
+                            }
+                        }
+                        @variantsStr
+
+                    </td>
+                    <td class="editable" name="heureka" style="text-align:center;">@Html.DisplayFor(modelItem => item.heureka)</td>
+                    <td class="editable" name="recommended" style="text-align:center;">@Html.DisplayFor(modelItem => item.recommended)</td>
+                    <td align="center">
+                        @Html.ActionLink("Editovať", "EditProduct", "Products", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important; font-size:13px;margin-right: 2px;" }) <a href="@Url.Action("DuplicateProduct", "Products", new { id = item.id })" class="btn btn-success" style="padding: 5px 10px;margin-right: 2px;" title="Duplikovať produkt"><img src="~/Content/images/duplicate.png" width="15" style="margin-top: -3px;"></a> @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteProduct", "Products", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tento produkt?')", @class = "btn btn-danger", style = "padding: 5px 10px;", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete produkt." })
+                        <div class="popover__wrapper" id="info-@counter" style="display:none;">
+                            <a href="#">
+                                <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
+                            </a>
+                            <div class="push popover__content">
+                                <p class="popover__message">Skladové zásoby pod hraničnou hodnotou!</p>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
 
 
 
@@ -325,7 +338,7 @@
 
             $catId = $("#filterByCategory").val() == "" ? null : $("#filterByCategory").val();
             $brandId = $("#filterByBrand").val() == "" ? null : $("#filterByBrand").val();
-            $priceFrom = $("#filterByPriceFrom").val() == "" ? 0 : $("#filterByPriceFrom").val().replace(",",".");
+            $priceFrom = $("#filterByPriceFrom").val() == "" ? 0 : $("#filterByPriceFrom").val().replace(",", ".");
             $priceTo = $("#filterByPriceTo").val() == "" ? 99999 : $("#filterByPriceTo").val().replace(",", ".");
             $isDiscount = $("#filterByDiscount").is(":checked");
 
@@ -453,9 +466,9 @@
                                 $tds.eq(11).attr("style", "text-align: center;");
                                 $tds.eq(12).attr("style", "text-align: center;");
 
-                                $tds.eq(2).addClass("editable").attr("name","number");
-                                $tds.eq(4).addClass("editable").attr("name","title");
-                                $tds.eq(5).addClass("editable").attr("name","price");
+                                $tds.eq(2).addClass("editable").attr("name", "number");
+                                $tds.eq(4).addClass("editable").attr("name", "title");
+                                $tds.eq(5).addClass("editable").attr("name", "price");
                                 $tds.eq(6).addClass("editable").attr("name", "discountprice");
                                 $tds.eq(10).addClass("editable").attr("name", "heureka");
                                 $tds.eq(11).addClass("editable").attr("name", "recommended");
@@ -557,7 +570,7 @@
             }
 
             if ($name == "price" || $name == "discountprice") {
-                $value = $value.replace(",", ".");  
+                $value = $value.replace(",", ".");
             }
 
             $thisObj = $(this);
@@ -594,7 +607,7 @@
                     }
                 }
             });
-   
+
         });
 
         $(document).on("click", ".editValueCancel", function () {
@@ -604,7 +617,7 @@
             if ($name != "recommended" && $name != "heureka") {
                 $(this).parents(".editable").text($value);
             } else {
-                $(this).parents(".editable").html('<input ' + ($value=="true"?'checked="checked"':'') + 'class="check-box" disabled="disabled" type="checkbox">');
+                $(this).parents(".editable").html('<input ' + ($value == "true" ? 'checked="checked"' : '') + 'class="check-box" disabled="disabled" type="checkbox">');
             }
         });
     });

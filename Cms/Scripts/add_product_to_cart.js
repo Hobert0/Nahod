@@ -18,13 +18,6 @@
 
 });
 
-function calc(theform) {
-    //var num = theform.original.value, rounded = theform.rounded
-    //var with2Decimals = num.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0]
-    //rounded.value = with2Decimals
-
-    return theform;
-}
 
 $("#addproductbtn").click(function () {
 
@@ -75,8 +68,6 @@ $("#addproductbtn").click(function () {
         }
     }
 
-    console.log(price);
-
     var cart = new Object();
     cart.id = uniqueid;
     cart.product = id;
@@ -92,7 +83,7 @@ $("#addproductbtn").click(function () {
         $sum += addtocart[i].quantity * addtocart[i].price;
     }
 
-    $sum = calc($sum);
+    $sum = $sum.toFixedNoRounding(2);
 
     sessionStorage.setItem('addtocart', JSON.stringify(addtocart));
     localStorage.setItem('addtocart', JSON.stringify(addtocart));
