@@ -221,6 +221,12 @@ namespace Cms.Controllers
             {
                 MultipleIndexModel model = new MultipleIndexModel();
                 model.CouponsModel = db.coupons.Where(i => i.deleted == false).OrderByDescending(a => a.id).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false).OrderByDescending(a => a.id).ToList();
+
+                ViewData["kategoria"] = SelectionKategoria();
+                ViewData["zaradenie"] = SelectionZaradenie();
+                ViewData["znacka"] = SelectionBrand();
+
                 return View(model);
             }
             else { return RedirectToAction("Admin", "Admin"); }
@@ -276,6 +282,7 @@ namespace Cms.Controllers
         public List<SelectListItem> SelectionBrand()
         {
             List<SelectListItem> brand = new List<SelectListItem>();
+            brand.Add(new SelectListItem { Text = "", Value = "" });
             foreach (var cat in db.brands)
             {
                 brand.Add(new SelectListItem { Text = cat.name, Value = cat.id.ToString() });
@@ -820,6 +827,9 @@ namespace Cms.Controllers
             o.coupon = model.CouponsEditModel.Coupon;
             o.amount = model.CouponsEditModel.Amount;
             o.limit = model.CouponsEditModel.Limit ?? 0;
+            o.category_id = model.CouponsEditModel.CategoryId;
+            o.type_id = model.CouponsEditModel.TypeId;
+            o.brand_id = model.CouponsEditModel.BrandId;
             o.active = model.CouponsEditModel.Active;
 
             db.SaveChanges();
@@ -1618,7 +1628,11 @@ namespace Cms.Controllers
             o.coupon = model.Coupons.Coupon;
             o.amount = model.Coupons.Amount;
             o.limit = model.Coupons.Limit ?? 0;
-            o.active = true;
+            o.category_id = model.Coupons.CategoryId;
+            o.type_id = model.Coupons.TypeId;
+            o.brand_id = model.Coupons.BrandId;
+            //o.product_id = model.Coupons.ProductId;
+            o.active = model.Coupons.Active;
 
             db.coupons.Add(o);
             db.SaveChanges();

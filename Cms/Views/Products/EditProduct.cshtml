@@ -97,15 +97,18 @@
                                     if (catsCounter != 0)
                                     {
 
-                                        dynamic selCats = JsonConvert.DeserializeObject(Model.Category);
-
                                         var isSelCat = false;
-                                        foreach (var selCat in selCats)
+
+                                        if (Model.Category != null)
                                         {
-                                            if (selCat == cat.Value)
+                                            dynamic selCats = JsonConvert.DeserializeObject(Model.Category);
+                                            foreach (var selCat in selCats)
                                             {
-                                                isSelCat = true;
-                                                break;
+                                                if (selCat == cat.Value)
+                                                {
+                                                    isSelCat = true;
+                                                    break;
+                                                }
                                             }
                                         }
 
@@ -137,8 +140,51 @@
             <div class="col-4">
                 <div class="form-group">
                     <div class="col-md-12">
-                        @Html.DropDownListFor(model => model.Type, (IEnumerable<SelectListItem>)ViewData["zaradenie"], new { @class = "form-control" })
+
+                        @Html.EditorFor(model => model.Type, "", new { htmlAttributes = new { @class = "form-control d-none" } })
                         @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+
+                        <select id="typesMulti" name="typesMulti" multiple>
+
+                            @{
+                                var typesCounter = 0;
+                                foreach (var type in (IEnumerable<SelectListItem>)ViewData["zaradenie"])
+                                {
+                                    if (typesCounter != 0)
+                                    {
+
+                                        var isSelType = false;
+
+                                        if (Model.Type != null)
+                                        {
+                                            dynamic selTypes = JsonConvert.DeserializeObject(Model.Type);
+                                            foreach (var selType in selTypes)
+                                            {
+                                                if (selType == type.Value)
+                                                {
+                                                    isSelType = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        if (isSelType)
+                                        {
+                                            <option value="@type.Value" selected>@type.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@type.Value"> @type.Text </option>
+                                        }
+
+
+                                    }
+                                    typesCounter++;
+                                }
+                            }
+
+                        </select>
+
                     </div>
                 </div>
             </div>
@@ -702,6 +748,7 @@
     $(document).ready(function () {
 
         $('#categoriesMulti').multiSelect();
+        $('#typesMulti').multiSelect();
 
         $(document).on("change", ".varAttrs", function () {
             initAttrValues($(this).parents(".clonedVarSection").attr("num"), $(this).find("option:selected").attr("attr_id"));
@@ -1012,7 +1059,19 @@
 
             });
 
-            $("#Category").val(JSON.stringify($categoryArr));
+            $("#Category").val($categoryArr.length > 0 ? JSON.stringify($categoryArr) : "");
+
+            //Zaradenia
+            $typeArr = [];
+            $("#typesMulti").next(".multi-select-container").find(".multi-select-menuitems label").each(function () {
+
+                if ($(this).find("input").is(":checked")) {
+                    $typeArr.push(parseInt($(this).find("input").val()));
+                }
+
+            });
+
+            $("#Type").val($typeArr.length > 0 ? JSON.stringify($typeArr) : "");
 
             //Varianty
             if (validatePrices()) {
