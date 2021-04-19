@@ -16,10 +16,6 @@
 <div class="container">
     <div class="row py-0 py-sm-4">
 
-        @{
-            Html.RenderPartial("_SidebarCategories");
-        }
-
         <div class="col-md-9">
             @foreach (var cat in Model.TypesModel.Where(i => i.id == catID))
             {

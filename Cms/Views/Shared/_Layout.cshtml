@@ -259,7 +259,7 @@
                     var cats = Model.CategoriesModel;
                     foreach (var cat in cats.Where(i => i.maincat == "Žiadna" && i.topcat == "Žiadna" && i.topcat2 == "Žiadna"))
                     {
-                        <a href="kat/@cat.slug">@cat.name</a>
+                        <a href="/kat/@cat.slug">@cat.name</a>
                     }
                 }
 

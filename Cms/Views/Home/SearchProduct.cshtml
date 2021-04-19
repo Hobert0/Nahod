@@ -10,9 +10,7 @@
 </style>
 <div class="container">
     <div class="row py-0 py-sm-4">
-        @{
-            Html.RenderPartial("_SidebarCategories");
-        }
+
         <div class="col-md-8">
             <h2>Výsledky vyhľadávania: <i>@search</i></h2>
             @if (!Model.ProductsPaged.Any())

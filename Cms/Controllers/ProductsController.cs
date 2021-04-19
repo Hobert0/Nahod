@@ -954,6 +954,13 @@ namespace Cms.Controllers
                     {
                         var InputFileName = Path.GetFileName(file.FileName);
                         var ServerSavePath = Path.Combine(Server.MapPath(miestoUlozenia + InputFileName));
+                        var ulozObrazok = DateTime.Now.Date.ToString("dd.MM.yyyy") + "/" + DateTime.Now.ToString("HHmmss") + "/";
+
+                        if (miestoUlozenia == "~/Uploads/")
+                        {
+                            var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia + ulozObrazok));
+                            ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
+                        }
                         //Save file to server folder  
                         byte[] fileByte;
                         using (var reader = new BinaryReader(file.InputStream))
@@ -965,14 +972,26 @@ namespace Cms.Controllers
                         {
                             img.Resize(1000 + 1, 1000 + 1, true).Crop(1, 1);
                         }
-                        img.Save(ServerSavePath);
+                        var isTheSameImage = "";
 
-                        var isTheSameImage = model.Image.Substring(0, model.Image.LastIndexOf("/") + 1) + InputFileName;
+                        if (model.Image != null) {
+                            isTheSameImage = model.Image.Substring(0, model.Image.LastIndexOf("/") + 1) + InputFileName;
+                        }
+
                         if (model.Image != isTheSameImage)
                         {
                             var data = db.categories.Single(i => i.id == model.Id);
-                            data.image = isTheSameImage;
+                            data.image = ulozObrazok + InputFileName;
                             db.SaveChanges();
+                            img.Save(ServerSavePath);
+                        }
+                        else
+                        {
+                            Random r = new Random();
+                            var data = db.categories.Single(i => i.id == model.Id);
+                            data.image = model.Image.Substring(0, model.Image.LastIndexOf("/") + 1) + r.Next() + "_"+ InputFileName;
+                            db.SaveChanges();
+                            img.Save(Path.Combine(Server.MapPath("~/Uploads/"+data.image)));
                         }
                         //assigning file uploaded status to ViewBag for showing message to user.  
                         ViewBag.UploadStatus = subor.Count().ToString() + " files uploaded successfully.";

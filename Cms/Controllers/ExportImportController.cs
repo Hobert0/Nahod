@@ -8,6 +8,8 @@ using OfficeOpenXml.Table;
 using System.Data;
 using Cms.Models;
 using System.IO;
+using Microsoft.VisualBasic.FileIO;
+using System.Text.RegularExpressions;
 
 namespace Cms.Controllers
 {
@@ -524,28 +526,186 @@ namespace Cms.Controllers
 
                 if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
                 {
-                    string fileName = file.FileName;
-                    string fileContentType = file.ContentType;
-                    byte[] fileBytes = new byte[file.ContentLength];
-                    var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
-                    var productList = new List<ProductModel>();
-                    using (var package = new StreamReader(file.InputStream))
+                    //string fileName = file.FileName;
+                    //string fileContentType = file.ContentType;
+                    // byte[] fileBytes = new byte[file.ContentLength];
+                    // var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+                    // var productList = new List<ProductModel>();
+                    using (TextFieldParser parser = new TextFieldParser(file.InputStream))
                     {
-                        while (!package.EndOfStream)
+                        parser.TextFieldType = FieldType.Delimited;
+                        parser.SetDelimiters("^");
+                        bool firstLine = true;
+
+                        while (!parser.EndOfData)
                         {
-                            var line = package.ReadLine();
-                            var values = line.Split(';');
+                            string[] fields = parser.ReadFields();
+
+                            // get the column headers
+                            if (firstLine)
+                            {
+                                firstLine = false;
+
+                                continue;
+                            }
 
                             var product = new products();
                             var productsInDb = new products();
+                            var productId = fields[0];
 
-                            product.title = values[2];
-                            product.image = values[1];
-                            product.number = values[3];
+                            product.title = fields[0];
+                            product.stock = fields[6];
+                            //kategoria
+                            var categories = fields[34].Replace("Root|Home|", "").Replace("||", "^");
+                            string[] allcategories = categories.Split('^');
+                            var categoriesInDb = db.categories;
+                            List<string> catsToDb = new List<string>();
+
+                            foreach (var cat in allcategories)
+                            {
+                                var createcat = false;
+
+                                //if splneny ak nema nadradenu kategoriu
+                                if (cat.ToString().IndexOf("|") == -1)
+                                {
+                                    var catName = cat.ToString();
+                                    var catExist = categoriesInDb.Where(x => x.name.ToLower() == catName.ToLower()).FirstOrDefault();
+                                    if (catExist != null)
+                                    {
+                                        catsToDb.Add(catExist.id.ToString());
+                                    }
+                                    else
+                                    {
+                                        createcat = true;
+                                    }
+                                }
+                                else
+                                {
+                                    string[] splitcats = cat.ToString().Split('|');
+                                    for (int o = 0; o < splitcats.Length; o++)
+                                    {
+                                        createcat = false;
+                                        var catName = splitcats[o].ToString();
+                                        var counter = 0;
+                                        var catExist = categoriesInDb.Where(x => x.name.ToLower() == catName.ToLower()).FirstOrDefault();
+
+                                        //ak uz kategoria existuje
+                                        if (catExist != null)
+                                        {
+                                            catsToDb.Add(catExist.id.ToString());
+
+                                            if (counter < (splitcats.Length - 1))
+                                            {
+                                                counter++;
+                                                catName = splitcats[1].ToString();
+                                                catExist = categoriesInDb.Where(x => x.name.ToLower() == catName.ToLower()).FirstOrDefault();
+                                                if (catExist != null)
+                                                {
+                                                    catsToDb.Add(catExist.id.ToString());
+
+                                                    if (counter < (splitcats.Length - 1))
+                                                    {
+                                                        counter++;
+                                                        catName = splitcats[2].ToString();
+                                                        catExist = categoriesInDb.Where(x => x.name.ToLower() == catName.ToLower()).FirstOrDefault();
+                                                        if (catExist != null)
+                                                        {
+                                                            catsToDb.Add(catExist.id.ToString());
+
+                                                            if (counter < (splitcats.Length - 1))
+                                                            {
+                                                                counter++;
+                                                                catName = splitcats[3].ToString();
+                                                                catExist = categoriesInDb.Where(x => x.name.ToLower() == catName.ToLower()).FirstOrDefault();
+                                                                if (catExist != null)
+                                                                {
+                                                                    catsToDb.Add(catExist.id.ToString());
+
+                                                                    if (counter < (splitcats.Length - 1))
+                                                                    {
+                                                                        counter++;
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    createcat = true;
+                                                                }
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            createcat = true;
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    createcat = true;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                createcat = true;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            createcat = true;
+                                        }
+
+                                        if (createcat)
+                                        {
+                                            categories c = new categories();
+                                            var numbertoUse = o;
+                                            if(counter > o)
+                                            {
+                                                numbertoUse = counter;
+                                            }
+
+                                            c.name = splitcats[numbertoUse].ToString();
+                                            c.slug = GenerateSlug(splitcats[numbertoUse]);
+
+                                            if (o == 0)
+                                            {
+                                                c.maincat = "Žiadna";
+                                                c.topcat = "Žiadna";
+                                                c.topcat2 = "Žiadna";
+                                            }
+                                            else if (o == 1)
+                                            {
+                                                c.maincat = splitcats[0];
+                                                c.topcat = "Žiadna";
+                                                c.topcat2 = "Žiadna";
+                                            }
+                                            else if (o == 2)
+                                            {
+                                                c.maincat = splitcats[0];
+                                                c.topcat = splitcats[1];
+                                                c.topcat2 = "Žiadna";
+                                            }
+                                            else if (o == 3)
+                                            {
+                                                c.maincat = splitcats[0];
+                                                c.topcat = splitcats[1];
+                                                c.topcat2 = splitcats[2];
+                                            }
+                                            db.categories.Add(c);
+                                            db.SaveChanges();
+                                            catsToDb.Add(categoriesInDb.OrderByDescending(i => i.id).FirstOrDefault().id.ToString());
+
+                                        }
+                                    }
+
+                                }
+                            }
+
+                            //product.image = values[1];
+                            //product.number = values[0];
 
                             product.recommended = false;
-                            product.stock = values[7];
-                            product.price = Decimal.Parse(values[5] == null ? string.Empty : values[5] ?? "");
+                            //product.stock = values[7];                            
+                            product.category = catsToDb.ToString();
+                            // product.price = Decimal.Parse(fields[8] == null ? string.Empty : fields[8] ?? "");
                             product.date = DateTime.Now.ToString();
                             //product.gallery = workSheet.Cells[rowIterator, 9].Value == null ? string.Empty : workSheet.Cells[rowIterator, 9].Value.ToString() ?? "";
                             //product.category = workSheet.Cells[rowIterator, 10].Value == null ? string.Empty : workSheet.Cells[rowIterator, 10].Value.ToString() ?? "";
@@ -564,10 +724,8 @@ namespace Cms.Controllers
                             //product.custom9 = workSheet.Cells[rowIterator, 23].Value == null ? string.Empty : workSheet.Cells[rowIterator, 23].Value.ToString() ?? "";
                             //product.custom10 = workSheet.Cells[rowIterator, 24].Value == null ? string.Empty : workSheet.Cells[rowIterator, 24].Value.ToString() ?? "";
 
-                            db.products.Add(product);
-                            db.SaveChanges();
-
-
+                            //db.products.Add(product);
+                            //db.SaveChanges();
 
                         }
 
@@ -577,6 +735,25 @@ namespace Cms.Controllers
             }
 
             return RedirectToAction("ExpImp", new { SuccesProducts = "1" });
+        }
+
+        public string GenerateSlug(string phrase)
+        {
+            string str = RemoveAccent(phrase).ToLower();
+            // invalid chars           
+            str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
+            // convert multiple spaces into one space   
+            str = Regex.Replace(str, @"\s+", " ").Trim();
+            // cut and trim 
+            //str = str.Substring(0, str.Length <= 45 ? str.Length : 45).Trim();
+            str = Regex.Replace(str, @"\s", "-"); // hyphens   
+            return str;
+        }
+
+        public string RemoveAccent(string txt)
+        {
+            byte[] bytes = System.Text.Encoding.GetEncoding("Cyrillic").GetBytes(txt);
+            return System.Text.Encoding.ASCII.GetString(bytes);
         }
 
         //function to import user meta to the database
