@@ -56,8 +56,9 @@ namespace Cms.Controllers
 
                 result = new
                 {
-                    data = isDiscount ? db.products.Join(db.categories, a => a.category, b => b.id.ToString(), (a, b) => new { id = a.id, number = a.number, image = a.image, title = a.title, price = a.price, discountprice = a.discountprice, categoryId = a.category, category = b.name, date = a.date, recommended = a.recommended, deleted = a.deleted }).Where(i => i.categoryId.Contains(catId) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo && i.discountprice != null).ToList() : db.products.Join(db.categories, a => a.category, b => b.id.ToString(), (a, b) => new { id = a.id, number = a.number, image = a.image, title = a.title, price = a.price, discountprice = a.discountprice, categoryId = a.category, category = b.name, date = a.date, recommended = a.recommended, deleted = a.deleted }).Where(i => i.categoryId.Contains(catId) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo).ToList(),
-                    variants = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a, b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value }).OrderByDescending(o => o.ProdId).ThenBy(o => o.AttrName).ToList()
+                    data = isDiscount ? db.products.Where(i => i.category.Contains(catId) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo && i.discountprice != null).ToList() : db.products.Where(i => i.category.Contains(catId) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo).ToList(),
+                    variants = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a, b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value }).OrderByDescending(o => o.ProdId).ThenBy(o => o.AttrName).ToList(),
+                    categories = db.categories.Where(x => x.deleted == false).ToList()
                 };
             }
             else if (catId == "" && brandId != "")
@@ -66,15 +67,16 @@ namespace Cms.Controllers
                 {
                     data = isDiscount ? db.products.Where(i => i.custom3 == brandId && i.deleted == false && i.price >= priceFrom && i.price <= priceTo && i.discountprice != null).ToList() : db.products.Where(i => i.custom3 == brandId && i.deleted == false && i.price >= priceFrom && i.price <= priceTo).ToList(),
                     variants = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a, b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value }).OrderByDescending(o => o.ProdId).ThenBy(o => o.AttrName).ToList(),
-                    categories = db.categories.ToList()
+                    categories = db.categories.Where(x => x.deleted == false).ToList()
                 };
             }
             else if (catId != "" && brandId != "")
             {
                 result = new
                 {
-                    data = isDiscount ? db.products.Join(db.categories, a => a.category, b => b.id.ToString(), (a, b) => new { id = a.id, number = a.number, image = a.image, title = a.title, price = a.price, discountprice = a.discountprice, categoryId = a.category, category = b.name, date = a.date, recommended = a.recommended, brandId = a.custom3, deleted = a.deleted }).Where(i => i.brandId == brandId && i.categoryId == catId && i.deleted == false && i.price >= priceFrom && i.price <= priceTo && i.discountprice != null).ToList() : db.products.Join(db.categories, a => a.category, b => b.id.ToString(), (a, b) => new { id = a.id, number = a.number, image = a.image, title = a.title, price = a.price, discountprice = a.discountprice, categoryId = a.category, category = b.name, date = a.date, recommended = a.recommended, brandId = a.custom3, deleted = a.deleted }).Where(i => i.brandId == brandId && i.categoryId == catId && i.deleted == false && i.price >= priceFrom && i.price <= priceTo).ToList(),
-                    variants = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a, b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value }).OrderByDescending(o => o.ProdId).ThenBy(o => o.AttrName).ToList()
+                    data = isDiscount ? db.products.Where(i => i.custom3 == brandId && i.category.Contains(catId) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo && i.discountprice != null).ToList() : db.products.Where(i => i.custom3 == brandId && i.category.Contains(catId) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo).ToList(),
+                    variants = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a, b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value }).OrderByDescending(o => o.ProdId).ThenBy(o => o.AttrName).ToList(),
+                    categories = db.categories.Where(x => x.deleted == false).ToList()
                 };
             }
             else
@@ -83,7 +85,7 @@ namespace Cms.Controllers
                 {
                     data = isDiscount ? db.products.Where(x => x.deleted == false && x.price >= priceFrom && x.price <= priceTo && x.discountprice != null).ToList() : db.products.Where(x => x.deleted == false && x.price >= priceFrom && x.price <= priceTo).ToList(),
                     variants = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a, b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value }).OrderByDescending(o => o.ProdId).ThenBy(o => o.AttrName).ToList(),
-                    categories = db.categories.ToList()
+                    categories = db.categories.Where(x => x.deleted == false).ToList()
                 };
             }
 

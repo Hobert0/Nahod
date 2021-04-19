@@ -243,8 +243,9 @@
                                         catsStr += catDb.name + ", ";
                                     }
                                 }
-                                @Html.Raw(catsStr.Remove(catsStr.Length - 2))
 
+
+                                @catsStr.Remove(catsStr.Length - 2)
 
                             }
                         }
@@ -369,17 +370,16 @@
                         $category = "";
 
                         //kategorie
-                        if ($categories != undefined) {
-                            $.each($categories, function (i, v) {
-                                if (v.id == data[$i].category) {
-                                    $category = v.name;
+                        $categoryArr = JSON.parse(data[$i].category);
 
-                                    return false;
-                                }
-                            });
-                        } else {
-                            $category = data[$i].category;
-                        }
+                        $.each($categories, function (i, v) {
+
+                            if (jQuery.inArray(v.id, $categoryArr) !== -1) {
+                                $category += v.name + ", ";
+                            }
+                        });
+                        if ($category != "")
+                            $category = $category.slice(0, -2);
 
 
                         //varianty

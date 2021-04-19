@@ -18,6 +18,10 @@ namespace Cms.Models
         public string coupon { get; set; }
         public string amount { get; set; }
         public Nullable<int> limit { get; set; }
+        public Nullable<int> category_id { get; set; }
+        public Nullable<int> type_id { get; set; }
+        public Nullable<int> brand_id { get; set; }
+        public Nullable<int> product_id { get; set; }
         public bool active { get; set; }
         public bool deleted { get; set; }
     }

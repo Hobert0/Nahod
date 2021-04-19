@@ -1,9 +1,12 @@
 ﻿
 .multi-select-container {
-    z-index: 1;
     display: inline-block;
     position: relative;
 }
+
+    .multi-select-container .multi-select-menu {
+        z-index: 1;
+    }
 
 .multi-select-menu {
     width: 200px !important;

@@ -63,6 +63,10 @@
           <Property Name="coupon" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="amount" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="limit" Type="int" />
+          <Property Name="category_id" Type="int" />
+          <Property Name="type_id" Type="int" />
+          <Property Name="brand_id" Type="int" />
+          <Property Name="product_id" Type="int" />
           <Property Name="active" Type="bool" Nullable="false" />
           <Property Name="deleted" Type="bool" Nullable="false" />
         </EntityType>
@@ -359,7 +363,6 @@
           <EntitySet Name="attributes" EntityType="hobcModel.attributes" />
           <EntitySet Name="brands" EntityType="hobcModel.brands" />
           <EntitySet Name="categories" EntityType="hobcModel.categories" />
-          <EntitySet Name="coupons" EntityType="hobcModel.coupons" />
           <EntitySet Name="users" EntityType="hobcModel.users" />
           <EntitySet Name="types" EntityType="hobcModel.types" />
           <EntitySet Name="slideshow" EntityType="hobcModel.slideshow" />
@@ -368,6 +371,7 @@
           <EntitySet Name="orders" EntityType="hobcModel.orders" />
           <EntitySet Name="usersmeta" EntityType="hobcModel.usersmeta" />
           <EntitySet Name="products" EntityType="hobcModel.products" />
+          <EntitySet Name="coupons" EntityType="hobcModel.coupons" />
         </EntityContainer>
         <EntityType Name="blog">
           <Key>
@@ -512,17 +516,6 @@
           <Property Name="topcat2" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="image" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="priority" Type="Int32" />
-          <Property Name="deleted" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="coupons">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="coupon" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="amount" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="limit" Type="Int32" />
-          <Property Name="active" Type="Boolean" Nullable="false" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="users">
@@ -687,6 +680,21 @@
           <Property Name="heurekadarcektext" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="coupons">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="coupon" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="amount" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="limit" Type="Int32" />
+          <Property Name="category_id" Type="Int32" />
+          <Property Name="type_id" Type="Int32" />
+          <Property Name="brand_id" Type="Int32" />
+          <Property Name="product_id" Type="Int32" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -844,18 +852,6 @@
                 <ScalarProperty Name="maincat" ColumnName="maincat" />
                 <ScalarProperty Name="slug" ColumnName="slug" />
                 <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="coupons">
-            <EntityTypeMapping TypeName="hobcModel.coupons">
-              <MappingFragment StoreEntitySet="coupons">
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="active" ColumnName="active" />
-                <ScalarProperty Name="limit" ColumnName="limit" />
-                <ScalarProperty Name="amount" ColumnName="amount" />
-                <ScalarProperty Name="coupon" ColumnName="coupon" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1026,6 +1022,22 @@
                 <ScalarProperty Name="number" ColumnName="number" />
                 <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="coupons">
+            <EntityTypeMapping TypeName="hobcModel.coupons">
+              <MappingFragment StoreEntitySet="coupons">
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="brand_id" ColumnName="brand_id" />
+                <ScalarProperty Name="type_id" ColumnName="type_id" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="limit" ColumnName="limit" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="coupon" ColumnName="coupon" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
