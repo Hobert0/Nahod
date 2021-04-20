@@ -71,19 +71,19 @@
             </div>
         </div>
 
-        <!--
         <div class="form-group">
             <div>Produkt</div>
             <div class="col-md-8" style="padding:0">
                 @using (Html.BeginForm("SearchProductInCoupon", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "Searchform", @class = "form-inline search" }))
                 {
-                    @Html.Editor("term", new { htmlAttributes = new { @class = "form-control", type = "searchInCoupon", id = "searchInCoupon", placeholder = "hľadať produkt", style = "width: 100%;border-radius: 20px; margin: 10px 5px;" } })
+                    @Html.Editor("term", new { htmlAttributes = new { @class = "form-control", id = "searchInCoupon", placeholder = "hľadať produkt", style = "width: 100%;border-radius: 20px; margin: 10px 5px;" } })
 
 
                 }
+
             </div>
+            @Html.HiddenFor(model => model.Coupons.ProductId)
         </div>
-            -->
 
         <div class="form-group">
             <div>
@@ -103,6 +103,7 @@
             <th>Kategória</th>
             <th>Druh rybolovu</th>
             <th>Výrobca</th>
+            <th>Produkt</th>
             <th>Kupón je aktívny?</th>
             <th style="text-align:center">Editovať / Vymazať</th>
         </tr>
@@ -115,14 +116,22 @@
                 <td><strong id="name-@item.id">@Html.DisplayFor(modelItem => item.coupon)</strong></td>
                 <td id="slug-@item.id">@Html.DisplayFor(modelItem => item.amount)</td>
                 <td id="des-@item.id">@Html.DisplayFor(modelItem => item.limit)</td>
-                <td id="category-@item.id">@Html.DisplayFor(modelItem => item.category_id)</td>
-                <td id="type-@item.id">@Html.DisplayFor(modelItem => item.type_id)</td>
-                <td id="brand-@item.id">@Html.DisplayFor(modelItem => item.brand_id)</td>
-                <td id="active-@item.id">@Html.DisplayFor(modelItem => item.active)</td>
+                <td id="category-@item.id">@Html.DropDownList("categorySelect", (IEnumerable<SelectListItem>)ViewData["kategoria"], "", new { @class = "form-control", value = item.category_id, disabled = "disabled" })</td>
+                <td id="type-@item.id">@Html.DropDownList("typeSelect", (IEnumerable<SelectListItem>)ViewData["zaradenie"], "", new { @class = "form-control", value = item.type_id, disabled = "disabled" })</td>
+                <td id="brand-@item.id">@Html.DropDownList("brandSelect", (IEnumerable<SelectListItem>)ViewData["znacka"], "", new { @class = "form-control", value = item.brand_id, disabled = "disabled" })</td>
+                <td>
+                @{
+                    var prod = Model.ProductModel.Where(o => o.id == item.product_id).SingleOrDefault();
+                    if (prod != null) {
+                        @prod.title;
+                    }
+                }
+                </td>
+                <td style="text-align: center;" id="active-@item.id">@Html.DisplayFor(modelItem => item.active)</td>
                 <td align="center"> <button onclick="editCat(@item.id)" class="btn btn-warning" style="color: #ffffff;">Editovať</button> @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteCoupon", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tento kupón?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete kupón." })</td>
             </tr>
             <tr id="cat-@item.id" style="display: none;">
-                @using (Html.BeginForm("UpdateCoupon", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+                @using (Html.BeginForm("UpdateCoupon", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform2", @class="editCouponForm" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.EditorFor(model => model.CouponsEditModel.Id, new { htmlAttributes = new { @class = "form-control", id = "e-id-" + item.id, style = "display: none;" } })
@@ -161,14 +170,15 @@
                         @Html.ValidationMessageFor(model => model.CouponsEditModel.BrandId, "", new { @class = "text-danger" })
 
                     </td>
+                    <td></td>
                     <td>
-                        @Html.CheckBoxFor(model => model.CouponsEditModel.Active, new { @class = "form-control activeCouponInput", style = "width: 20px;", id = "e-active-" + item.id, value = item.active })
+                        @Html.CheckBoxFor(model => model.CouponsEditModel.Active, new { @class = "form-control activeCouponInput", style = "width: 20px;margin: 0 auto;", id = "e-active-" + item.id, value = item.active })
                         @Html.ValidationMessageFor(model => model.CouponsEditModel.Active, "", new { @class = "text-danger" })
 
                     </td>
                     <td>
                         <div>
-                            <input type="submit" value="Aktualizovať kupón" class="btn btn-success" />
+                            <input type="submit" value="Aktualizovať kupón" class="btn btn-success updateCouponSubmit" />
                         </div>
                     </td>
 
@@ -192,9 +202,9 @@
         var name = document.getElementById("name-" + id + "").innerHTML;
         var slug = document.getElementById("slug-" + id + "").innerHTML;
         var des = document.getElementById("des-" + id + "").innerHTML;
-        var cat = document.getElementById("category-" + id + "").innerHTML;
-        var type = document.getElementById("type-" + id + "").innerHTML;
-        var brand = document.getElementById("brand-" + id + "").innerHTML;
+        var cat = $("#category-" + id + " select").val();
+        var type = $("#type-" + id + " select").val();
+        var brand = $("#brand-" + id + " select").val();
         var active = $("#active-" + id + " input").is(":checked");
         document.getElementById("e-name-" + id + "").value = name;
         document.getElementById("e-slug-" + id + "").value = slug;
@@ -211,6 +221,36 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
+        //init
+        $("select[name=categorySelect]").each(function () {
+            $val = $(this).attr("value");
+            $(this).val($val);
+        });
+
+        $("select[name=typeSelect]").each(function () {
+            $val = $(this).attr("value");
+            $(this).val($val);
+        });
+
+
+        $("select[name=brandSelect]").each(function () {
+            $val = $(this).attr("value");
+            $(this).val($val);
+        });
+           
+        $(".activeCouponInput").click(function () {
+            if ($(this).is(":checked")) {
+                $(this).attr("value", "True");
+            } else {
+                $(this).attr("value", "False");
+            }
+        });
+
+        $(document).on("click", ".chosenProd", function () {
+            $("#searchInCoupon").val($(this).attr("name"));
+            $("#Coupons_ProductId").val($(this).attr("value"));
+        });
+        
         $('#searchInCoupon').autocomplete({
             minLength: 2,
             source: '/hladat',
@@ -223,14 +263,15 @@
                 return false;
             }
         })
-            .autocomplete("instance")._renderItem = function (ul, item) {
-                let cena = item.price + "€";
-                if (item.price == "0") {
-                    cena = "Cena na vyžiadanie";
-                }
-                return $("<li>")
-                    .append("<div><a href='/produkty/editovat-produkt/" + item.id + "'><div style='width: 20%;display: inline-block;vertical-align: top;'><img src='/Uploads/" + item.image + "' width='50'></div><div style='width: 75%;display: inline-block;margin-left:10px;text-align:left;font-size: 14px;'><strong>" + item.title + "</strong><br><span style='font-size: 12px;'>" + cena + "</span></div></a></div>")
-                    .appendTo(ul);
-            };
+        .autocomplete("instance")._renderItem = function (ul, item) {
+            let cena = item.price + "€";
+            if (item.price == "0") {
+                cena = "Cena na vyžiadanie";
+            }
+            return $("<li>")
+                .append("<div><a name='" + item.title + "' value='" + item.id + "' class='chosenProd'><div style='width: 20%;display: inline-block;vertical-align: top;'><img src='/Uploads/" + item.image + "' width='50'></div><div style='width: 75%;display: inline-block;margin-left:10px;text-align:left;font-size: 14px;'><strong>" + item.title + "</strong><br><span style='font-size: 12px;'>" + cena + "</span></div></a></div>")
+                .appendTo(ul);
+        };
+            
     });
 </script>

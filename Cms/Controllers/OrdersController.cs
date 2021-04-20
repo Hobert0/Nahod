@@ -147,7 +147,8 @@ namespace Cms.Controllers
                             }
                         }
                     }
-                    else {
+                    else
+                    {
                         thisPrice = (decimal)thisProd.discountprice;
                     }
                 }

@@ -2,6 +2,7 @@
 @using Cms.Models
 @using System.Linq;
 @using Newtonsoft.Json.Linq
+@using Newtonsoft.Json;
 @model Cms.Models.MultipleIndexModel
 
 @{
@@ -36,9 +37,17 @@
                         cart = (List<dynamic>)Session["cartitems"];
                         List<products> allTheData = new List<products>();
 
+                        var couponKey = TempData["Coupons"].ToString();
+                        var coupon = Model.CouponsModel.Where(m => m.coupon == couponKey);
+                        var couCategoryId = coupon.Select(m => m.category_id);
+                        var couTypeId = coupon.Select(m => m.type_id);
+                        var couBrandId = coupon.Select(m => m.brand_id);
+                        var couProductId = coupon.Select(m => m.product_id);
+
                         decimal productprice = 0;
                         decimal quantity = 0;
                         List<decimal> finalprice = new List<decimal>();
+                        List<decimal> finalpriceDiscount = new List<decimal>();
                         if (cart != null && cart.Count() > 0)
                         {
                             foreach (var item in cart)
@@ -72,73 +81,163 @@
                                     <td><strong style="font-size: 16px;">@productprice €</strong></td>
                                     <td><div class="removeCart" id="@Html.Raw(item.id)" style="cursor:pointer;">&times;</div> </td>
                                 </tr>
-                                finalprice.Add(quantity * productprice);
-                            }
 
-                            /*
-                            foreach (var product in cart.Select(i => i.product.Value))
-                            {
-                                foreach (var items in Model.ProductModel.Where(i => i.id == product).Distinct())
-                                {
-                                    allTheData.Add(items);
-                                }
-                            }
 
-                            foreach (var group in allTheData.Distinct())
-                            {
-                                foreach (var qantty in cart.Where(o => o.product.Value == group.id))
-                                {
-                                    if (decimal.Parse(qantty.quantity.Value) > 0)
-                                    {
-                                        <tr>
-                                            <td style="width: 70px"><img src="~/Uploads/@Html.DisplayFor(modelItem => group.image)" style="width: 50px" /></td>
-                                            <td><strong>@Html.Raw(group.title)</strong></td>
-                                            @foreach (var color in cart.Where(o => o.product.Value == group.id && o.id == qantty.id))
-                                            {
-                                                <td style="text-align: center;">
-                                                    @Html.Raw(color.color)
-                                                </td>
-                                            }
-                                            @foreach (var size in cart.Where(o => o.product.Value == group.id && o.id == qantty.id))
-                                            {
-                                                <td style="text-align: center;">
-                                                    @Html.Raw(size.size) @Html.Raw(size.size2)
-                                                </td>
-                                            }
-                                            @foreach (var qty in cart.Where(o => o.product.Value == group.id && o.id == qantty.id))
-                                            {
-                                                quantity = decimal.Parse(qty.quantity.Value);
-                                                <td style="text-align: center;">
-                                                    <div class="cart-item-amount">
-                                                        <button type="button" onclick="decreaseCount(@Html.Raw(qty.id));" class="">−</button>
-                                                        <input type="number" data-inventory_id="@Html.Raw(qty.id)" name="amount[1050506]" value="@Html.Raw(qty.quantity.Value)" min="1" max="30000" class="" id="quantity-@Html.Raw(qty.id)">
-                                                        <button type="button" onclick="increaseCount(@Html.Raw(qty.id));" class="">+</button>
-                                                    </div>
-                                                </td>
-                                            }
-                                            @{
-                                                productprice = group.price;
-                                                if (group.discountprice != null)
+                                                //Kupony
+                                                if (@TempData["Coupons"] != null)
                                                 {
-                                                    productprice = (decimal)group.discountprice;
+
+                                                    int thisProdId = Convert.ToInt32(item.product.Value);
+
+                                                    bool couponVerified = true;
+
+                                                    //Ak je v kategorii
+                                                    if (couCategoryId != null)
+                                                    {
+                                                        couponVerified = false;
+                                                        dynamic cats = JsonConvert.DeserializeObject(item.category);
+
+
+                                                        foreach (var catId in cats)
+                                                        {
+                                                            if (couCategoryId == catId)
+                                                            {
+                                                                couponVerified = true;
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
+
+                                                    //Ak je v zaradeni
+                                                    if (couTypeId != null)
+                                                    {
+                                                        couponVerified = false;
+                                                        dynamic types = JsonConvert.DeserializeObject(item.type);
+
+
+                                                        foreach (var typeId in types)
+                                                        {
+                                                            if (couTypeId == typeId)
+                                                            {
+                                                                couponVerified = true;
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
+
+                                                    //Ak je v znacke
+                                                    if (couBrandId != null)
+                                                    {
+                                                        couponVerified = false;
+                                                        if (Int32.Parse(thisProd.custom3) == couBrandId.FirstOrDefault())
+                                                        {
+                                                            couponVerified = true;
+                                                        }
+                                                    }
+
+                                                    //Ak je to id produktu
+                                                    if (couProductId != null)
+                                                    {
+                                                        couponVerified = false;
+                                                        if (thisProd.id == couProductId.FirstOrDefault())
+                                                        {
+                                                            couponVerified = true;
+                                                        }
+                                                    }
+
+                                                    //TO DO Overenie ci to uz nie je zlavneny produkt!
+
+                                                    if (couponVerified)
+                                                    {
+
+                                                        //zlava
+                                                        //bezdph
+                                                        //cena  toto OK
+
+
+                                                        var tempamount = @TempData["Amount"];
+                                                        decimal coupondiscount = Convert.ToDecimal(tempamount) / 100;
+
+                                                        productprice *= (1 - coupondiscount);
+
+                                                        finalprice.Add(quantity * productprice);
+                                                        finalpriceDiscount.Add(quantity * coupondiscount);
+                                                    }
+                                                    else
+                                                    {
+                                                        finalprice.Add(quantity * productprice);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    finalprice.Add(quantity * productprice);
                                                 }
                                             }
-                                            <td><strong style="font-size: 16px;">@productprice €</strong></td>
-                                            @foreach (var qty in cart.Where(o => o.product.Value == group.id && o.id == qantty.id))
+
+                                            /*
+                                            foreach (var product in cart.Select(i => i.product.Value))
                                             {
-                                                <td><div class="removeCart" id="@Html.Raw(qty.id)" style="cursor:pointer;">&times;</div> </td>
+                                                foreach (var items in Model.ProductModel.Where(i => i.id == product).Distinct())
+                                                {
+                                                    allTheData.Add(items);
+                                                }
                                             }
-                                        </tr>
-                                        finalprice.Add(quantity * productprice);
-                                    }
-                                }
-                            }
-                            */
+
+                                            foreach (var group in allTheData.Distinct())
+                                            {
+                                                foreach (var qantty in cart.Where(o => o.product.Value == group.id))
+                                                {
+                                                    if (decimal.Parse(qantty.quantity.Value) > 0)
+                                                    {
+                                                        <tr>
+                                                            <td style="width: 70px"><img src="~/Uploads/@Html.DisplayFor(modelItem => group.image)" style="width: 50px" /></td>
+                                                            <td><strong>@Html.Raw(group.title)</strong></td>
+                                                            @foreach (var color in cart.Where(o => o.product.Value == group.id && o.id == qantty.id))
+                                                            {
+                                                                <td style="text-align: center;">
+                                                                    @Html.Raw(color.color)
+                                                                </td>
+                                                            }
+                                                            @foreach (var size in cart.Where(o => o.product.Value == group.id && o.id == qantty.id))
+                                                            {
+                                                                <td style="text-align: center;">
+                                                                    @Html.Raw(size.size) @Html.Raw(size.size2)
+                                                                </td>
+                                                            }
+                                                            @foreach (var qty in cart.Where(o => o.product.Value == group.id && o.id == qantty.id))
+                                                            {
+                                                                quantity = decimal.Parse(qty.quantity.Value);
+                                                                <td style="text-align: center;">
+                                                                    <div class="cart-item-amount">
+                                                                        <button type="button" onclick="decreaseCount(@Html.Raw(qty.id));" class="">−</button>
+                                                                        <input type="number" data-inventory_id="@Html.Raw(qty.id)" name="amount[1050506]" value="@Html.Raw(qty.quantity.Value)" min="1" max="30000" class="" id="quantity-@Html.Raw(qty.id)">
+                                                                        <button type="button" onclick="increaseCount(@Html.Raw(qty.id));" class="">+</button>
+                                                                    </div>
+                                                                </td>
+                                                            }
+                                                            @{
+                                                                productprice = group.price;
+                                                                if (group.discountprice != null)
+                                                                {
+                                                                    productprice = (decimal)group.discountprice;
+                                                                }
+                                                            }
+                                                            <td><strong style="font-size: 16px;">@productprice €</strong></td>
+                                                            @foreach (var qty in cart.Where(o => o.product.Value == group.id && o.id == qantty.id))
+                                                            {
+                                                                <td><div class="removeCart" id="@Html.Raw(qty.id)" style="cursor:pointer;">&times;</div> </td>
+                                                            }
+                                                        </tr>
+                                                        finalprice.Add(quantity * productprice);
+                                                    }
+                                                }
+                                            }
+                                            */
 
 
-                        }
-                        else
-                        {
+                                        }
+                                        else
+                                        {
                             <h3 class="pt-2">Váš nákupný košík je prázdny.</h3>
                         }
 
@@ -146,6 +245,7 @@
 
 
                 </table>
+
 
                 <div class="form-group pb-4 mt-4 button-container" style="border-top: 1px solid rgba(0, 0, 0, .1)">
                     <a href="#" onclick="refreshCart();" class="btn btn-light mt-2 refresh-cart" style="font-size: 14px;float:right">&#x21bb; Aktualizovať košík</a>
@@ -156,9 +256,12 @@
                     <input type="text" class="form-control mt-2" id="coupon" style="font-size: 14px;width:200px;" placeholder="Zľavový kupón" />
                     <a href="#" onclick="useCoupon();" class="btn mt-2 apply-voucher" style="font-size: 14px;background:#292728; color: #fff;">Uplatniť zľavový kupón</a>
 
+
+
                     <div class="price" style="text-align: right">
                         @{if (@TempData["Coupons"] != null)
                             {
+
                                 var tempamount = @TempData["Amount"];
                                 decimal coupondiscount = Convert.ToDecimal(tempamount) / 100;
                                 <p class="mt-2" style="font-size: 14px;"><strong>Zľavový kupón: </strong>@TempData["Coupons"]  -@TempData["Amount"] %</p>
@@ -640,7 +743,7 @@
                             }
                         }
                     </div>
-                    @Html.EditorFor(model => model.OrdersModel.Finalprice, new { htmlAttributes = new { @class = "form-control", placeholder = "Finalnacena", id = "final3", style = "display:none;"} })
+                    @Html.EditorFor(model => model.OrdersModel.Finalprice, new { htmlAttributes = new { @class = "form-control", placeholder = "Finalnacena", id = "final3", style = "display:none;" } })
                     @Html.EditorFor(model => model.OrdersModel.UsedCoupon, new { htmlAttributes = new { @class = "form-control", id = "usecoupon", style = "display:none;" } })
                 </div>
                 <div class="form-group next-step-container">
@@ -681,8 +784,9 @@
             }
             return false;
         } else {
-            var link = '@Url.Action("UseCoupon", "Orders", new { coupon = "1", page = "basket" })';
-            link = link.replace("1", coupon);
+            //var link = '@Url.Action("UseCoupon", "Orders", new { coupon = "1", page = "basket" })';
+            //link = link.replace("1", coupon);
+            var link = "/Orders/UseCoupon?coupon=" + coupon + "&page=basket";
             location.href = link;
         }
 

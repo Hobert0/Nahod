@@ -1631,8 +1631,8 @@ namespace Cms.Controllers
             o.category_id = model.Coupons.CategoryId;
             o.type_id = model.Coupons.TypeId;
             o.brand_id = model.Coupons.BrandId;
-            //o.product_id = model.Coupons.ProductId;
-            o.active = model.Coupons.Active;
+            o.product_id = model.Coupons.ProductId;
+            o.active = true;
 
             db.coupons.Add(o);
             db.SaveChanges();

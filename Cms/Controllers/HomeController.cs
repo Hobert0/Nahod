@@ -420,6 +420,7 @@ namespace Cms.Controllers
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
             model.BrandsModel = db.brands.ToList();
+            model.CouponsModel = db.coupons.ToList();
             model.CategoriesModel = db.categories.ToList();
             model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
 
