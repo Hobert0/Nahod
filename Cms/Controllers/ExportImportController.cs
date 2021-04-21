@@ -10,6 +10,11 @@ using Cms.Models;
 using System.IO;
 using Microsoft.VisualBasic.FileIO;
 using System.Text.RegularExpressions;
+using System.Net;
+using System.Drawing;
+using System.Drawing.Imaging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Cms.Controllers
 {
@@ -532,22 +537,39 @@ namespace Cms.Controllers
                         parser.TextFieldType = FieldType.Delimited;
                         parser.SetDelimiters("^");
                         bool firstLine = true;
+                        List<string> attrName = new List<string>();
 
                         while (!parser.EndOfData)
                         {
                             string[] fields = parser.ReadFields();
+                            bool isvariant = false;
 
                             // get the column headers
                             if (firstLine)
                             {
-                                firstLine = false;
+                                for (var f = 111; f < 156; f++)
+                                {
+                                    attrName.Add(fields[f].Replace("Attribute Group: ", ""));
+                                }
 
+                                firstLine = false;
                                 continue;
                             }
 
                             var product = new products();
                             var productsInDb = new products();
-                            var productId = fields[0];                            
+                            var productId = fields[0];
+
+                            //ak sa jedna o duplikat pokracuj
+                            if (fields[33] == "" && fields[43] == "")
+                            {
+                                continue;
+                            }
+                            else if (fields[43] != "" && fields[33] == "")
+                            {
+                                isvariant = true;
+                            }
+
 
                             //kategoria
                             var categories = fields[34].Replace("Root|Home|", "").Replace("||", "^");
@@ -599,54 +621,146 @@ namespace Cms.Controllers
                             //znacka
                             var manufacturer = fields[36];
                             var manufacturerInDb = db.brands;
-                            var brandExist = categoriesInDb.Where(x => x.name.ToLower() == manufacturer.ToLower()).FirstOrDefault();
+                            var brandExist = manufacturerInDb.Where(x => x.name.ToLower() == manufacturer.ToLower()).FirstOrDefault();
                             if (brandExist != null)
                             {
                                 product.custom3 = brandExist.id.ToString();
                             }
 
-                            //product.image = values[1];
-                            //product.number = values[0];
+                            //stahovanie fotiek
+                            string[] allphotos = fields[38].Split(';');
 
-                            product.title = fields[0];
+                            var ulozObrazok = DateTime.Now.Date.ToString("dd.MM.yyyy") + "/" + DateTime.Now.Ticks + "/";
+                            var miestoUlozenia = "~/Uploads/" + ulozObrazok;
+                            var titleImagename = "";
 
+                            var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia));
+                            //download photos
+                            for (var i = 0; i < allphotos.Length; i++)
+                            {
+                                if (i > 0)
+                                {
+                                    path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia + "gallery/"));
+                                }
+
+                                using (WebClient webClient = new WebClient())
+                                {
+                                    if (allphotos[i] != "")
+                                    {
+                                        byte[] data = webClient.DownloadData(allphotos[i]);
+
+                                        using (MemoryStream mem = new MemoryStream(data))
+                                        {
+                                            using (var yourImage = Image.FromStream(mem))
+                                            {
+                                                // If you want it as Png
+                                                // yourImage.Save("path_to_your_file.png", ImageFormat.Png);
+                                                var imagename = DateTime.Now.Ticks.ToString();
+                                                if (i < 1)
+                                                {
+                                                    titleImagename = imagename;
+                                                }
+                                                // If you want it as Jpeg
+                                                yourImage.Save(path.FullName + imagename + ".jpg", ImageFormat.Jpeg);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            product.title = fields[102];
                             product.stock = fields[6];
                             product.recommended = false;
-                            product.number =
-                            //product.stock = values[7];                            
+                            product.number = fields[13];
+                            product.image = miestoUlozenia.Replace("~/Uploads/", "") + titleImagename + ".jpg";
+                            product.gallery = miestoUlozenia.Replace("~/Uploads/", "") + "gallery/";
                             product.category = "[" + string.Join(",", catsToDb) + "]";
-                            product.type = "[" + string.Join(",", typesToDb) + "]";
-                            // product.price = Decimal.Parse(fields[8] == null ? string.Empty : fields[8] ?? "");
+
+                            if (typesToDb.Count > 0)
+                            {
+                                product.type =  "[" + string.Join(",", typesToDb) + "]";
+                            }
+
+                            product.price = Decimal.Parse(fields[8]);
                             product.date = DateTime.Now.ToString();
                             product.heureka = true;
+                            product.heurekadarcektext = fields[93];
+                            product.custom6 = "False";
+                            if (product.heurekadarcektext != "")
+                            {
+                                product.heurekadarcek = true;
+                            }
+                            else
+                            {
+                                product.heurekadarcek = false;
+                            }
+
                             product.deleted = false;
                             product.date = DateTime.Now.ToString();
-                         
-                            //product.gallery = workSheet.Cells[rowIterator, 9].Value == null ? string.Empty : workSheet.Cells[rowIterator, 9].Value.ToString() ?? "";
-                            //product.category = workSheet.Cells[rowIterator, 10].Value == null ? string.Empty : workSheet.Cells[rowIterator, 10].Value.ToString() ?? "";
-                            //product.weight = workSheet.Cells[rowIterator, 11].Value == null ? string.Empty : workSheet.Cells[rowIterator, 11].Value.ToString() ?? "";
-                            //product.weightunit = workSheet.Cells[rowIterator, 12].Value == null ? string.Empty : workSheet.Cells[rowIterator, 12].Value.ToString() ?? "";
-                            //product.description = workSheet.Cells[rowIterator, 13].Value == null ? string.Empty : workSheet.Cells[rowIterator, 13].Value.ToString() ?? "";
-                            //product.discountprice = Decimal.Parse(workSheet.Cells[rowIterator, 14].Value == null ? string.Empty : workSheet.Cells[rowIterator, 14].Value.ToString() ?? "");
-                            //product.custom1 = workSheet.Cells[rowIterator, 15].Value == null ? string.Empty : workSheet.Cells[rowIterator, 15].Value.ToString() ?? "";
-                            //product.custom2 = workSheet.Cells[rowIterator, 16].Value == null ? string.Empty : workSheet.Cells[rowIterator, 16].Value.ToString() ?? "";
-                            //product.custom3 = workSheet.Cells[rowIterator, 17].Value == null ? string.Empty : workSheet.Cells[rowIterator, 17].Value.ToString() ?? "";
-                            //product.custom4 = workSheet.Cells[rowIterator, 18].Value == null ? string.Empty : workSheet.Cells[rowIterator, 18].Value.ToString() ?? "";
-                            //product.custom5 = workSheet.Cells[rowIterator, 19].Value == null ? string.Empty : workSheet.Cells[rowIterator, 19].Value.ToString() ?? "";
-                            //product.custom6 = workSheet.Cells[rowIterator, 20].Value == null ? string.Empty : workSheet.Cells[rowIterator, 20].Value.ToString() ?? "";
-                            //product.custom7 = workSheet.Cells[rowIterator, 21].Value == null ? string.Empty : workSheet.Cells[rowIterator, 21].Value.ToString() ?? "";
-                            //product.custom8 = workSheet.Cells[rowIterator, 22].Value == null ? string.Empty : workSheet.Cells[rowIterator, 22].Value.ToString() ?? "";
-                            //product.custom9 = workSheet.Cells[rowIterator, 23].Value == null ? string.Empty : workSheet.Cells[rowIterator, 23].Value.ToString() ?? "";
-                            //product.custom10 = workSheet.Cells[rowIterator, 24].Value == null ? string.Empty : workSheet.Cells[rowIterator, 24].Value.ToString() ?? "";
+                            product.description = fields[96];
 
-                            //db.products.Add(product);
-                            //db.SaveChanges();
+                            if (!isvariant)
+                            {
+                                db.products.Add(product);                           
+                                db.SaveChanges();
+                            }
 
+                            //ci je variabilny
+                            if (fields[43] != "" && isvariant)
+                            {
+                                var title = fields[102];
+                                var addedproduct = db.products.Where(i => i.title == title).FirstOrDefault();
+                                variants v = new variants();
+                                v.prod_id = addedproduct.id;
+                                v.price = Decimal.Parse(fields[8]);
+                                v.stock = "";
+                                v.number = fields[43];
+
+                                //najdi o ktory atribut sa jedna
+                                var counter = 0;
+                                for (var f = 111; f < 156; f++)
+                                {
+                                    if (fields[f] != "")
+                                    {
+                                        var fieldname = attrName[counter];
+                                        var attr = db.attributes.Where(i => i.name == fieldname).FirstOrDefault();
+                                        v.attribute_id = attr.id;
+                                        v.value = fields[f];
+                                        db.variants.Add(v);
+                                        db.SaveChanges();
+
+                                        dynamic values = JsonConvert.DeserializeObject(attr.value);
+                                        bool save = false;
+                                        foreach (var s in values)
+                                        {
+                                            if (s.name != fields[f])
+                                            {
+                                                save = true;
+                                            }
+                                            else
+                                            {
+                                                save = false;
+                                                break;
+                                            }
+                                        }
+
+                                        if (save)
+                                        {
+                                            var itemToAdd = new JObject();
+                                            itemToAdd["name"] = fields[f];
+                                            values.Add(itemToAdd);
+                                            attr.value = JsonConvert.SerializeObject(values);
+                                            db.SaveChanges();
+                                        }
+                                    }
+                                    counter++;
+                                }
+                            }
                         }
                     }
                 }
             }
-  
+
 
             return RedirectToAction("ExpImp", new { SuccesProducts = "1" });
         }

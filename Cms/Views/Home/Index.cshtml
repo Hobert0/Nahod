@@ -191,13 +191,15 @@
                                         }
                                     }
                                 </div>
-                                <div class="prod-header">@prod.title</div>
+                                <div class="prod-header">@Html.Raw(prod.title)</div>
                                 @{
                                     var shortdescription = "";
-                                    if (prod.description != null)
-                                    {
-                                        shortdescription = prod.description.Substring(0, 150) + "...";
-                                    }
+                                    //if (prod.description != null && prod.description != "")
+                                    //{
+                                    //    if(prod.description.Length > 150) { 
+                                    //        shortdescription = prod.description.Substring(0, 150) + "...";
+                                    //    }
+                                    //}
                                 }
                                 <div class="prod-text">@Html.Raw(shortdescription)</div>
                                 <div class="prod-prices">
@@ -318,7 +320,7 @@
                             }
 
                             <span onclick='addToCart(@prod.id, @isVariant, @actualPriceStr)' class="prod-add-to-cart">
-                                <img class="prod-icon" src="~/Content/images/cart.svg">
+                                <img class="prod-icon" src="~/Content/images/cart.svg" />
                                 <span>Pridať do košíka</span>
                             </span>
                         </div>
