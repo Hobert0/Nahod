@@ -512,11 +512,7 @@ namespace Cms.Controllers
                                 db.products.Add(product);
                                 db.SaveChanges();
                             }
-
-
                         }
-
-
                     }
                 }
             }
@@ -551,20 +547,17 @@ namespace Cms.Controllers
 
                             var product = new products();
                             var productsInDb = new products();
-                            var productId = fields[0];
+                            var productId = fields[0];                            
 
-                            product.title = fields[0];
-                            product.stock = fields[6];
                             //kategoria
                             var categories = fields[34].Replace("Root|Home|", "").Replace("||", "^");
                             string[] allcategories = categories.Split('^');
                             var categoriesInDb = db.categories;
                             List<string> catsToDb = new List<string>();
+                            List<string> typesToDb = new List<string>();
 
                             foreach (var cat in allcategories)
                             {
-                                var createcat = false;
-
                                 //if splneny ak nema nadradenu kategoriu
                                 if (cat.ToString().IndexOf("|") == -1)
                                 {
@@ -576,137 +569,59 @@ namespace Cms.Controllers
                                     }
                                     else
                                     {
-                                        createcat = true;
+                                        var typeExist = db.types.Where(x => x.name.ToLower() == catName.ToLower()).FirstOrDefault();
+                                        if (typeExist != null)
+                                        {
+                                            typesToDb.Add(typeExist.id.ToString());
+                                        }
                                     }
                                 }
                                 else
                                 {
                                     string[] splitcats = cat.ToString().Split('|');
-                                    for (int o = 0; o < splitcats.Length; o++)
+                                    var catName = splitcats[1].ToString();
+                                    var catExist = categoriesInDb.Where(x => x.name.ToLower() == catName.ToLower()).FirstOrDefault();
+                                    if (catExist != null)
                                     {
-                                        createcat = false;
-                                        var catName = splitcats[o].ToString();
-                                        var counter = 0;
-                                        var catExist = categoriesInDb.Where(x => x.name.ToLower() == catName.ToLower()).FirstOrDefault();
-
-                                        //ak uz kategoria existuje
-                                        if (catExist != null)
+                                        catsToDb.Add(catExist.id.ToString());
+                                    }
+                                    else
+                                    {
+                                        var typeExist = db.types.Where(x => x.name.ToLower() == catName.ToLower()).FirstOrDefault();
+                                        if (typeExist != null)
                                         {
-                                            catsToDb.Add(catExist.id.ToString());
-
-                                            if (counter < (splitcats.Length - 1))
-                                            {
-                                                counter++;
-                                                catName = splitcats[1].ToString();
-                                                catExist = categoriesInDb.Where(x => x.name.ToLower() == catName.ToLower()).FirstOrDefault();
-                                                if (catExist != null)
-                                                {
-                                                    catsToDb.Add(catExist.id.ToString());
-
-                                                    if (counter < (splitcats.Length - 1))
-                                                    {
-                                                        counter++;
-                                                        catName = splitcats[2].ToString();
-                                                        catExist = categoriesInDb.Where(x => x.name.ToLower() == catName.ToLower()).FirstOrDefault();
-                                                        if (catExist != null)
-                                                        {
-                                                            catsToDb.Add(catExist.id.ToString());
-
-                                                            if (counter < (splitcats.Length - 1))
-                                                            {
-                                                                counter++;
-                                                                catName = splitcats[3].ToString();
-                                                                catExist = categoriesInDb.Where(x => x.name.ToLower() == catName.ToLower()).FirstOrDefault();
-                                                                if (catExist != null)
-                                                                {
-                                                                    catsToDb.Add(catExist.id.ToString());
-
-                                                                    if (counter < (splitcats.Length - 1))
-                                                                    {
-                                                                        counter++;
-                                                                    }
-                                                                }
-                                                                else
-                                                                {
-                                                                    createcat = true;
-                                                                }
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            createcat = true;
-                                                        }
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    createcat = true;
-                                                }
-                                            }
-                                            else
-                                            {
-                                                createcat = true;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            createcat = true;
-                                        }
-
-                                        if (createcat)
-                                        {
-                                            categories c = new categories();
-                                            var numbertoUse = o;
-                                            if(counter > o)
-                                            {
-                                                numbertoUse = counter;
-                                            }
-
-                                            c.name = splitcats[numbertoUse].ToString();
-                                            c.slug = GenerateSlug(splitcats[numbertoUse]);
-
-                                            if (o == 0)
-                                            {
-                                                c.maincat = "Žiadna";
-                                                c.topcat = "Žiadna";
-                                                c.topcat2 = "Žiadna";
-                                            }
-                                            else if (o == 1)
-                                            {
-                                                c.maincat = splitcats[0];
-                                                c.topcat = "Žiadna";
-                                                c.topcat2 = "Žiadna";
-                                            }
-                                            else if (o == 2)
-                                            {
-                                                c.maincat = splitcats[0];
-                                                c.topcat = splitcats[1];
-                                                c.topcat2 = "Žiadna";
-                                            }
-                                            else if (o == 3)
-                                            {
-                                                c.maincat = splitcats[0];
-                                                c.topcat = splitcats[1];
-                                                c.topcat2 = splitcats[2];
-                                            }
-                                            db.categories.Add(c);
-                                            db.SaveChanges();
-                                            catsToDb.Add(categoriesInDb.OrderByDescending(i => i.id).FirstOrDefault().id.ToString());
-
+                                            typesToDb.Add(typeExist.id.ToString());
                                         }
                                     }
-
                                 }
+                            }
+
+                            //znacka
+                            var manufacturer = fields[36];
+                            var manufacturerInDb = db.brands;
+                            var brandExist = categoriesInDb.Where(x => x.name.ToLower() == manufacturer.ToLower()).FirstOrDefault();
+                            if (brandExist != null)
+                            {
+                                product.custom3 = brandExist.id.ToString();
                             }
 
                             //product.image = values[1];
                             //product.number = values[0];
 
+                            product.title = fields[0];
+
+                            product.stock = fields[6];
                             product.recommended = false;
+                            product.number =
                             //product.stock = values[7];                            
-                            product.category = catsToDb.ToString();
+                            product.category = "[" + string.Join(",", catsToDb) + "]";
+                            product.type = "[" + string.Join(",", typesToDb) + "]";
                             // product.price = Decimal.Parse(fields[8] == null ? string.Empty : fields[8] ?? "");
                             product.date = DateTime.Now.ToString();
+                            product.heureka = true;
+                            product.deleted = false;
+                            product.date = DateTime.Now.ToString();
+                         
                             //product.gallery = workSheet.Cells[rowIterator, 9].Value == null ? string.Empty : workSheet.Cells[rowIterator, 9].Value.ToString() ?? "";
                             //product.category = workSheet.Cells[rowIterator, 10].Value == null ? string.Empty : workSheet.Cells[rowIterator, 10].Value.ToString() ?? "";
                             //product.weight = workSheet.Cells[rowIterator, 11].Value == null ? string.Empty : workSheet.Cells[rowIterator, 11].Value.ToString() ?? "";
@@ -728,11 +643,10 @@ namespace Cms.Controllers
                             //db.SaveChanges();
 
                         }
-
-
                     }
                 }
             }
+  
 
             return RedirectToAction("ExpImp", new { SuccesProducts = "1" });
         }

@@ -31,7 +31,7 @@
                                 @Html.Label("Výrobca:", htmlAttributes: new { @class = "control-label col-md-12 px-0" })
                             </strong>
                         </small>
-                        @Html.DropDownList("Výrobca", (IEnumerable<SelectListItem>)ViewData["znacka"], "", new { @class = "form-control productfilter", id = "Vyrobca" })
+                        @Html.DropDownList("Výrobca", (IEnumerable<SelectListItem>)ViewData["znacka"], new { @class = "form-control productfilter", id = "Vyrobca" })
                     </div>
                 </div>
             }
