@@ -61,8 +61,8 @@
 
 }
 <hr />
-<table class="table" style="">
-    <thead class="thead-dark">
+<table class="table" id="attributesTable" style="">
+    <thead>
         <tr>
             <th>ID</th>
             <th>Názov</th>
@@ -98,6 +98,13 @@
 
 <script>
     $(document).ready(function () {
+
+        $('#attributesTable').DataTable({
+            "order": [0, 'desc'],
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Slovak.json"
+            }
+        });
 
         //Pridanie hodnoty
         $(".addValue").click(function () {

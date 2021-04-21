@@ -106,7 +106,7 @@
                                                 rating = exist.FirstOrDefault().rating;
                                             }
 
-                                            decimal defaultPrice = prod.price;
+                                            decimal defaultPrice = (decimal)variant.price;
                                             decimal ratingPrice = 0;
 
                                             switch (rating)

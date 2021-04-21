@@ -417,6 +417,7 @@ namespace Cms.Controllers
             var model = new MultipleIndexModel();
             model.EsettingsModel = db.e_settings.ToList();
             model.ProductModel = db.products.ToList();
+            model.VariantModel = db.variants.ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
             model.BrandsModel = db.brands.ToList();
@@ -445,6 +446,16 @@ namespace Cms.Controllers
                         Icdph = user.icdph,
                     };
                 }
+            }
+
+            if (Session["userid"] != null)
+            {
+                var userToSend = Int32.Parse(Session["userid"].ToString());
+                model.AllUsersMetaModel = db.usersmeta.Where(i => i.userid == userToSend).ToList();
+            }
+            else
+            {
+                model.AllUsersMetaModel = null;
             }
 
 

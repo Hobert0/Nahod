@@ -194,7 +194,7 @@ function renderProducts(page = 1, pagesize = 12, alldata = allproductsdata, vars
                             rating = exist.rating;
                         }
 
-                        let defaultPrice = item.price;
+                        let defaultPrice = variant.price;
                         let ratingPrice = 0;
 
                         switch (rating) {

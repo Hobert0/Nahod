@@ -75,8 +75,8 @@
 
 }
 <hr />
-<table class="table" style="">
-    <thead class="thead-dark">
+<table class="table" id="typesTable" style="">
+    <thead>
         <tr>
             <th>ID</th>
             <th>Fotografia</th>
@@ -97,38 +97,7 @@
                 <td id="slug-@item.id">@Html.DisplayFor(modelItem => item.slug)</td>
                 <td align="center"> @Html.ActionLink("Editovať", "EditType", "Products", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteType", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať toto zaradenie?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete zaradenie." })</td>
             </tr>
-            <tr id="cat-@item.id" style="display: none;">
-                <!-- edit kategoria foto-->
-                @using (Html.BeginForm("UploadImageTypes", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "MyformTypes" }))
-                {
-                    <td>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="col-md-14">
-                                        <img src="~/Uploads/@Html.DisplayTextFor(model => model.Types.Image)" alt="@Html.DisplayTextFor(model => model.Types.Name)" style="width: 100%;" />
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="col-md-14 btnvyber">
-                                        @*<strong>@Html.LabelFor(model => model.Categories.TitleImage, "Zmeniť titulnú fotografiu", htmlAttributes: new { @class = "control-label col-md-12 vyberf" })</strong>*@
-                                        <a id="btn_vis-@counter" style="cursor:pointer;background-color: #ce1720;color: #fff;margin-top: 10px;padding: 10px 20px;text-decoration: none;border-radius: 5px;">Vyber fotografie</a>
-                                        @Html.TextBoxFor(model => model.Types.TitleImage, "", new { @type = "file", @class = "form-control", @accept = "png|jpg|jpeg|gif", @style = "max-width: 67%;height:60px;display:none;", @id = "bttn-" + counter, @onchange = "pressed()" })
-                                        <label id="fileLabel-@counter" style="padding-top: 10px;">Nie je vybratá žiadna fotografia.</label>
-                                        @Html.ValidationMessageFor(model => model.Types.TitleImage, "", new { @class = "text-danger" })
-                                    </div>
-                                    <br />
-                                    <div class="form-group">
-                                        <div>
-                                            <input type="submit" value="Nahrať novú titulnú fotografiu" class="btn btn-success" onclick="validateForm();" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                }
-            </tr>
+            
             counter++;
         }
     }
@@ -136,6 +105,15 @@
 
 </table>
 <script>
+    $(document).ready(function () {
+        $('#typesTable').DataTable({
+            "order": [0, 'desc'],
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Slovak.json"
+            }
+        });
+    });
+
     function createSlug() {
         var catName = document.getElementById("typename").value;
         var newSlug = string_to_slug(catName);

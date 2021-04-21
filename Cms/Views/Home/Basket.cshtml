@@ -37,13 +37,6 @@
                         cart = (List<dynamic>)Session["cartitems"];
                         List<products> allTheData = new List<products>();
 
-                        var couponKey = TempData["Coupons"].ToString();
-                        var coupon = Model.CouponsModel.Where(m => m.coupon == couponKey);
-                        var couCategoryId = coupon.Select(m => m.category_id);
-                        var couTypeId = coupon.Select(m => m.type_id);
-                        var couBrandId = coupon.Select(m => m.brand_id);
-                        var couProductId = coupon.Select(m => m.product_id);
-
                         decimal productprice = 0;
                         decimal quantity = 0;
                         List<decimal> finalprice = new List<decimal>();
@@ -83,161 +76,207 @@
                                 </tr>
 
 
-                                                //Kupony
-                                                if (@TempData["Coupons"] != null)
-                                                {
+                                //Kupony
+                                if (TempData["Coupons"] != null)
+                                {
 
-                                                    int thisProdId = Convert.ToInt32(item.product.Value);
+                                    var couponKey = TempData["Coupons"].ToString();
+                                    var coupon = Model.CouponsModel.Where(m => m.coupon == couponKey);
+                                    var couCategoryId = coupon.Select(m => m.category_id).FirstOrDefault();
+                                    var couTypeId = coupon.Select(m => m.type_id).FirstOrDefault();
+                                    var couBrandId = coupon.Select(m => m.brand_id).FirstOrDefault();
+                                    var couProductId = coupon.Select(m => m.product_id).FirstOrDefault();
 
-                                                    bool couponVerified = true;
+                                    int thisProdId = Convert.ToInt32(item.product.Value);
 
-                                                    //Ak je v kategorii
-                                                    if (couCategoryId != null)
-                                                    {
-                                                        couponVerified = false;
-                                                        dynamic cats = JsonConvert.DeserializeObject(item.category);
+                                    var tempamount = TempData["Amount"];
+                                    decimal coupondiscount = Convert.ToDecimal(tempamount) / 100;
 
+                                    bool couponVerified = true;
 
-                                                        foreach (var catId in cats)
-                                                        {
-                                                            if (couCategoryId == catId)
-                                                            {
-                                                                couponVerified = true;
-                                                                break;
-                                                            }
-                                                        }
-                                                    }
+                                    //Ak je v kategorii
+                                    if (couCategoryId != null)
+                                    {
+                                        couponVerified = false;
 
-                                                    //Ak je v zaradeni
-                                                    if (couTypeId != null)
-                                                    {
-                                                        couponVerified = false;
-                                                        dynamic types = JsonConvert.DeserializeObject(item.type);
-
-
-                                                        foreach (var typeId in types)
-                                                        {
-                                                            if (couTypeId == typeId)
-                                                            {
-                                                                couponVerified = true;
-                                                                break;
-                                                            }
-                                                        }
-                                                    }
-
-                                                    //Ak je v znacke
-                                                    if (couBrandId != null)
-                                                    {
-                                                        couponVerified = false;
-                                                        if (Int32.Parse(thisProd.custom3) == couBrandId.FirstOrDefault())
-                                                        {
-                                                            couponVerified = true;
-                                                        }
-                                                    }
-
-                                                    //Ak je to id produktu
-                                                    if (couProductId != null)
-                                                    {
-                                                        couponVerified = false;
-                                                        if (thisProd.id == couProductId.FirstOrDefault())
-                                                        {
-                                                            couponVerified = true;
-                                                        }
-                                                    }
-
-                                                    //TO DO Overenie ci to uz nie je zlavneny produkt!
-
-                                                    if (couponVerified)
-                                                    {
-
-                                                        //zlava
-                                                        //bezdph
-                                                        //cena  toto OK
-
-
-                                                        var tempamount = @TempData["Amount"];
-                                                        decimal coupondiscount = Convert.ToDecimal(tempamount) / 100;
-
-                                                        productprice *= (1 - coupondiscount);
-
-                                                        finalprice.Add(quantity * productprice);
-                                                        finalpriceDiscount.Add(quantity * coupondiscount);
-                                                    }
-                                                    else
-                                                    {
-                                                        finalprice.Add(quantity * productprice);
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    finalprice.Add(quantity * productprice);
-                                                }
-                                            }
-
-                                            /*
-                                            foreach (var product in cart.Select(i => i.product.Value))
+                                        if (thisProd.category != null)
+                                        {
+                                            dynamic cats = JsonConvert.DeserializeObject(thisProd.category);
+                                            foreach (var catId in cats)
                                             {
-                                                foreach (var items in Model.ProductModel.Where(i => i.id == product).Distinct())
+                                                if (couCategoryId == catId.Value)
                                                 {
-                                                    allTheData.Add(items);
+                                                    couponVerified = true;
+                                                    break;
                                                 }
                                             }
+                                        }
+                                    }
 
-                                            foreach (var group in allTheData.Distinct())
+                                    //Ak je v zaradeni
+                                    if (couTypeId != null)
+                                    {
+                                        couponVerified = false;
+
+                                        if (thisProd.type != null)
+                                        {
+                                            dynamic types = JsonConvert.DeserializeObject(thisProd.type);
+                                            foreach (var typeId in types)
                                             {
-                                                foreach (var qantty in cart.Where(o => o.product.Value == group.id))
+                                                if (couTypeId == typeId.Value)
                                                 {
-                                                    if (decimal.Parse(qantty.quantity.Value) > 0)
-                                                    {
-                                                        <tr>
-                                                            <td style="width: 70px"><img src="~/Uploads/@Html.DisplayFor(modelItem => group.image)" style="width: 50px" /></td>
-                                                            <td><strong>@Html.Raw(group.title)</strong></td>
-                                                            @foreach (var color in cart.Where(o => o.product.Value == group.id && o.id == qantty.id))
-                                                            {
-                                                                <td style="text-align: center;">
-                                                                    @Html.Raw(color.color)
-                                                                </td>
-                                                            }
-                                                            @foreach (var size in cart.Where(o => o.product.Value == group.id && o.id == qantty.id))
-                                                            {
-                                                                <td style="text-align: center;">
-                                                                    @Html.Raw(size.size) @Html.Raw(size.size2)
-                                                                </td>
-                                                            }
-                                                            @foreach (var qty in cart.Where(o => o.product.Value == group.id && o.id == qantty.id))
-                                                            {
-                                                                quantity = decimal.Parse(qty.quantity.Value);
-                                                                <td style="text-align: center;">
-                                                                    <div class="cart-item-amount">
-                                                                        <button type="button" onclick="decreaseCount(@Html.Raw(qty.id));" class="">−</button>
-                                                                        <input type="number" data-inventory_id="@Html.Raw(qty.id)" name="amount[1050506]" value="@Html.Raw(qty.quantity.Value)" min="1" max="30000" class="" id="quantity-@Html.Raw(qty.id)">
-                                                                        <button type="button" onclick="increaseCount(@Html.Raw(qty.id));" class="">+</button>
-                                                                    </div>
-                                                                </td>
-                                                            }
-                                                            @{
-                                                                productprice = group.price;
-                                                                if (group.discountprice != null)
-                                                                {
-                                                                    productprice = (decimal)group.discountprice;
-                                                                }
-                                                            }
-                                                            <td><strong style="font-size: 16px;">@productprice €</strong></td>
-                                                            @foreach (var qty in cart.Where(o => o.product.Value == group.id && o.id == qantty.id))
-                                                            {
-                                                                <td><div class="removeCart" id="@Html.Raw(qty.id)" style="cursor:pointer;">&times;</div> </td>
-                                                            }
-                                                        </tr>
-                                                        finalprice.Add(quantity * productprice);
-                                                    }
+                                                    couponVerified = true;
+                                                    break;
                                                 }
                                             }
-                                            */
+                                        }
+                                    }
 
+                                    //Ak je v znacke
+                                    if (couBrandId != null)
+                                    {
+                                        couponVerified = false;
+
+                                        if (thisProd.custom3 != null)
+                                        {
+                                            if (Int32.Parse(thisProd.custom3) == couBrandId)
+                                            {
+                                                couponVerified = true;
+                                            }
+                                        }
+                                    }
+
+                                    //Ak je to id produktu
+                                    if (couProductId != null)
+                                    {
+                                        couponVerified = false;
+
+                                        if (thisProd.id == couProductId)
+                                        {
+                                            couponVerified = true;
+                                        }
+                                    }
+
+                                    if (couponVerified)
+                                    {
+
+                                        decimal povodnacena = 0;
+
+                                        //Ak to nie je uz zlavneny produkt/varianta
+                                        if (item.variant != "")
+                                        {
+
+                                            var thisVar = Model.VariantModel.Where(i => i.prod_id == item.product.Value && i.value == item.variant.Value).Single();
+
+                                            if (thisVar.discountprice != null)
+                                            {
+                                                couponVerified = false;
+                                            }
+                                            else
+                                            {
+                                                povodnacena = (decimal)thisVar.price;
+                                            }
 
                                         }
                                         else
                                         {
+                                            if (thisProd.discountprice != null)
+                                            {
+                                                couponVerified = false;
+                                            }
+                                            else
+                                            {
+                                                povodnacena = thisProd.price;
+                                            }
+
+                                        }
+
+                                        if (couponVerified)
+                                        {
+                                            //Zistime, ci je uplatnena zlava po registracii, ak ano uplatnime tu vyssiu
+                                            if (Session["username"] != null)
+                                            {
+
+                                                decimal cenapokupone = povodnacena * (1 - coupondiscount);
+                                                if (productprice > cenapokupone)
+                                                {
+                                                    productprice = cenapokupone;
+
+                                                    decimal thisDiscount = povodnacena * coupondiscount;
+                                                    finalpriceDiscount.Add(quantity * thisDiscount);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                finalprice.Add(quantity * productprice);
+                            }
+
+                            /*
+                            foreach (var product in cart.Select(i => i.product.Value))
+                            {
+                            foreach (var items in Model.ProductModel.Where(i => i.id == product).Distinct())
+                            {
+                            allTheData.Add(items);
+                            }
+                            }
+
+                            foreach (var group in allTheData.Distinct())
+                            {
+                            foreach (var qantty in cart.Where(o => o.product.Value == group.id))
+                            {
+                            if (decimal.Parse(qantty.quantity.Value) > 0)
+                            {
+                            <tr>
+                                <td style="width: 70px"><img src="~/Uploads/@Html.DisplayFor(modelItem => group.image)" style="width: 50px" /></td>
+                                <td><strong>@Html.Raw(group.title)</strong></td>
+                                @foreach (var color in cart.Where(o => o.product.Value == group.id && o.id == qantty.id))
+                                {
+                                    <td style="text-align: center;">
+                                        @Html.Raw(color.color)
+                                    </td>
+                                }
+                                @foreach (var size in cart.Where(o => o.product.Value == group.id && o.id == qantty.id))
+                                {
+                                    <td style="text-align: center;">
+                                        @Html.Raw(size.size) @Html.Raw(size.size2)
+                                    </td>
+                                }
+                                @foreach (var qty in cart.Where(o => o.product.Value == group.id && o.id == qantty.id))
+                                {
+                                    quantity = decimal.Parse(qty.quantity.Value);
+                                    <td style="text-align: center;">
+                                        <div class="cart-item-amount">
+                                            <button type="button" onclick="decreaseCount(@Html.Raw(qty.id));" class="">−</button>
+                                            <input type="number" data-inventory_id="@Html.Raw(qty.id)" name="amount[1050506]" value="@Html.Raw(qty.quantity.Value)" min="1" max="30000" class="" id="quantity-@Html.Raw(qty.id)">
+                                            <button type="button" onclick="increaseCount(@Html.Raw(qty.id));" class="">+</button>
+                                        </div>
+                                    </td>
+                                }
+                                @{
+                                    productprice = group.price;
+                                    if (group.discountprice != null)
+                                    {
+                                        productprice = (decimal)group.discountprice;
+                                    }
+                                }
+                                <td><strong style="font-size: 16px;">@productprice €</strong></td>
+                                @foreach (var qty in cart.Where(o => o.product.Value == group.id && o.id == qantty.id))
+                                {
+                                    <td><div class="removeCart" id="@Html.Raw(qty.id)" style="cursor:pointer;">&times;</div> </td>
+                                }
+                            </tr>
+                            finalprice.Add(quantity * productprice);
+                            }
+                            }
+                            }
+                            */
+
+
+                        }
+                        else
+                        {
                             <h3 class="pt-2">Váš nákupný košík je prázdny.</h3>
                         }
 
@@ -265,12 +304,20 @@
                                 var tempamount = @TempData["Amount"];
                                 decimal coupondiscount = Convert.ToDecimal(tempamount) / 100;
                                 <p class="mt-2" style="font-size: 14px;"><strong>Zľavový kupón: </strong>@TempData["Coupons"]  -@TempData["Amount"] %</p>
-                                <span>Zľava: - @(Html.Raw((finalprice.Sum() * coupondiscount).ToString("#.##").Replace(",", ".")))€</span><br />
-                                <span>Celkom bez DPH €@(Html.Raw(((finalprice.Sum() * 100 / 120) * (1 - coupondiscount)).ToString("#.##").Replace(",", ".")))</span><br />
-                                <strong style="float: right; font-size: 20px">K úhrade €@(Html.Raw((finalprice.Sum() * (1 - coupondiscount)).ToString("#.00").Replace(",", ".")))</strong>
+                                <span>
+                                    @{
+                                        var discountText = "0.00";
+                                        if (finalpriceDiscount.Count() > 0) {
+                                            discountText = finalpriceDiscount.Sum().ToString("#.##").Replace(",", ".");
+                                        }
+                                    }
+                                    Zľava: - @discountText€
+                                </span><br />
+                                <span>Celkom bez DPH €@(Html.Raw((finalprice.Sum() * 100 / 120).ToString("#.##").Replace(",", ".")))</span><br />
+                                <strong style="float: right; font-size: 20px">K úhrade €@(Html.Raw(finalprice.Sum().ToString("#.00").Replace(",", ".")))</strong>
                                 <script>
-                        var pricedph = @(Html.Raw(((finalprice.Sum() * 100 / 120) * (1 - coupondiscount)).ToString("#.##").Replace(",", ".")));
-                        var finalprice = @(Html.Raw((finalprice.Sum() * (1 - coupondiscount)).ToString("#.00").Replace(",", ".")));
+                        var pricedph = @(Html.Raw((finalprice.Sum() * 100 / 120).ToString("#.##").Replace(",", ".")));
+                        var finalprice = @(Html.Raw(finalprice.Sum().ToString("#.00").Replace(",", ".")));
                                 </script>
                             }
                             else
@@ -481,7 +528,16 @@
                                     var tempamount = @TempData["Amount"];
                                     decimal coupondiscount = Convert.ToDecimal(tempamount) / 100;
                                     <p class="mt-2" style="font-size: 14px;"><strong>Zľavový kupón: </strong>@TempData["Coupons"]  -@TempData["Amount"] %</p>
-                                    <span>Zľava: - @(Html.Raw((finalprice.Sum() * coupondiscount).ToString("#.##").Replace(",", ".")))€</span><br />
+                                    <span>
+                                        @{
+                                            var discountText = "0.00";
+                                            if (finalpriceDiscount.Count() > 0)
+                                            {
+                                                discountText = finalpriceDiscount.Sum().ToString("#.##").Replace(",", ".");
+                                            }
+                                        }
+                                        Zľava: - @discountText€
+                                    </span><br />
                                     <span>Celkom bez DPH €</span><span id="pricedph" value="">
                                         <script type="text/javascript">document.write(pricedph)</script>
                                     </span><br />
@@ -724,7 +780,16 @@
                                 var tempamount = @TempData["Amount"];
                                 decimal coupondiscount = Convert.ToDecimal(tempamount) / 100;
                                 <p class="mt-2" style="font-size: 14px;"><strong>Zľavový kupón: </strong>@TempData["Coupons"]  -@TempData["Amount"] %</p>
-                                <span>Zľava: - @(Html.Raw((finalprice.Sum() * coupondiscount).ToString("#.##").Replace(",", ".")))€</span><br />
+                                <span>
+                                    @{
+                                        var discountText = "0.00";
+                                        if (finalpriceDiscount.Count() > 0)
+                                        {
+                                            discountText = finalpriceDiscount.Sum().ToString("#.##").Replace(",", ".");
+                                        }
+                                    }
+                                    Zľava: - @discountText€
+                                </span><br />
                                 <span>
                                     Celkom bez DPH €<span id="pricedph2" value=""></span>
                                 </span><br />
@@ -787,6 +852,7 @@
             //var link = '@Url.Action("UseCoupon", "Orders", new { coupon = "1", page = "basket" })';
             //link = link.replace("1", coupon);
             var link = "/Orders/UseCoupon?coupon=" + coupon + "&page=basket";
+            //console.log(link);
             location.href = link;
         }
 

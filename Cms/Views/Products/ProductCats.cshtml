@@ -26,93 +26,93 @@
 @using (Html.BeginForm("AddCategory", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "MyformCats" }))
 {
     @Html.AntiForgeryToken()
-<div class="form-horizontal">
-    <h4>Pridať kategóriu</h4>
-    <br />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="row" style="margin:0">
-        <div class="col-md-8 pb-4" style="padding:0">
-            Titulná fotografia
-        </div>
+    <div class="form-horizontal">
+        <h4>Pridať kategóriu</h4>
         <br />
-        <div class="col-md-8" style="padding: 0">
-            <div class="form-group">
-                <div class="col-md-12 btnvyber" style="padding:0">
-                    <a id="btn_vis" style="cursor:pointer">Vyber fotografie</a>
-                    @Html.TextBoxFor(model => model.Categories.TitleImage, "", new { @type = "file", @class = "form-control", @accept = "jpg|png|jpeg|gif", @style = "max-width: 67%;height:60px;display:none;", @id = "bttn", @onchange = "pressed()" })
-                    <label id="fileLabel">Nie je vybratá žiadna fotografia.</label>
-                    @Html.ValidationMessageFor(model => model.Categories.Image, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row" style="margin:0">
+            <div class="col-md-8 pb-4" style="padding:0">
+                Titulná fotografia
+            </div>
+            <br />
+            <div class="col-md-8" style="padding: 0">
+                <div class="form-group">
+                    <div class="col-md-12 btnvyber" style="padding:0">
+                        <a id="btn_vis" style="cursor:pointer">Vyber fotografie</a>
+                        @Html.TextBoxFor(model => model.Categories.TitleImage, "", new { @type = "file", @class = "form-control", @accept = "jpg|png|jpeg|gif", @style = "max-width: 67%;height:60px;display:none;", @id = "bttn", @onchange = "pressed()" })
+                        <label id="fileLabel">Nie je vybratá žiadna fotografia.</label>
+                        @Html.ValidationMessageFor(model => model.Categories.Image, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-8" style="padding:0">
-            @Html.EditorFor(model => model.Categories.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov kategórie", id = "categoryname" } })
-            @Html.ValidationMessageFor(model => model.Categories.Name, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-8" style="padding:0">
+                @Html.EditorFor(model => model.Categories.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov kategórie", id = "categoryname" } })
+                @Html.ValidationMessageFor(model => model.Categories.Name, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-8" style="padding:0">
-            @Html.EditorFor(model => model.Categories.Slug, new { htmlAttributes = new { @class = "form-control", placeholder = "Slug", id = "slug", onclick = "createSlug()" } })
-            @Html.ValidationMessageFor(model => model.Categories.Slug, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-8" style="padding:0">
+                @Html.EditorFor(model => model.Categories.Slug, new { htmlAttributes = new { @class = "form-control", placeholder = "Slug", id = "slug", onclick = "createSlug()" } })
+                @Html.ValidationMessageFor(model => model.Categories.Slug, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-8" style="padding:0">
-            @Html.TextAreaFor(model => model.Categories.Description, new { @class = "form-control", placeholder = "Popis kategórie", id = "overheslo" })
-            @Html.ValidationMessageFor(model => model.Categories.Description, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-8" style="padding:0">
+                @Html.TextAreaFor(model => model.Categories.Description, new { @class = "form-control", placeholder = "Popis kategórie", id = "overheslo" })
+                @Html.ValidationMessageFor(model => model.Categories.Description, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="row" class="p-0">
-        <div class="col-md-2">
-            <div class="form-group">
-                @Html.LabelFor(model => model.Categories.Maincat, "Hlavná kategória")
-                <div class="col-md-13">
-                    @Html.DropDownListFor(model => model.Categories.Maincat, (IEnumerable<SelectListItem>)ViewData["Maincat"], new { onchange = "maincatfunc(this.value)", @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Categories.Maincat, "", new { @class = "text-danger" })
+        <div class="row" class="p-0">
+            <div class="col-md-2">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Categories.Maincat, "Hlavná kategória")
+                    <div class="col-md-13">
+                        @Html.DropDownListFor(model => model.Categories.Maincat, (IEnumerable<SelectListItem>)ViewData["Maincat"], new { onchange = "maincatfunc(this.value)", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Categories.Maincat, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Categories.Topcat, "Nadradená kategória")
+                    <div class="col-md-13">
+                        @Html.DropDownListFor(model => model.Categories.Topcat, (Enumerable.Empty<SelectListItem>()), new { onchange = "catfunc(this.value)", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Categories.Topcat, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Categories.Topcat2, "Nadradená kategória 2")
+                    <div class="col-md-13">
+                        @Html.DropDownListFor(model => model.Categories.Topcat2, (Enumerable.Empty<SelectListItem>()), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Categories.Topcat2, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
         </div>
-  
 
-    
-        <div class="col-md-2" >
-            <div class="form-group">
-                @Html.LabelFor(model => model.Categories.Topcat, "Nadradená kategória")
-                <div class="col-md-13">
-                    @Html.DropDownListFor(model => model.Categories.Topcat, (Enumerable.Empty<SelectListItem>()), new { onchange = "catfunc(this.value)", @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Categories.Topcat, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-  
-
-        <div class="col-md-2">
-            <div class="form-group">
-                @Html.LabelFor(model => model.Categories.Topcat2, "Nadradená kategória 2")
-                <div class="col-md-13">
-                    @Html.DropDownListFor(model => model.Categories.Topcat2, (Enumerable.Empty<SelectListItem>()), new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Categories.Topcat2, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            <div>
+                <input type="submit" value="Pridať kategóriu" class="btn btn-success submitbtn" />
             </div>
         </div>
     </div>
-
-    <div class="form-group">
-        <div>
-            <input type="submit" value="Pridať kategóriu" class="btn btn-success submitbtn" />
-        </div>
-    </div>
-</div>
 
 }
 <hr />
-<table class="table" style="">
-    <thead class="thead-dark">
+<table class="table" id="catsTable" style="">
+    <thead>
         <tr>
             <th>ID</th>
             <th>Fotografia</th>
@@ -125,62 +125,41 @@
             <th style="text-align:center">Vymazať</th>
         </tr>
     </thead>
-    @if (ViewBag.Details == null)
-    {
-        var counter = 0;
-        foreach (var item in Model.CategoriesModel.OrderBy(i => i.maincat))
+    <tbody>
+        @if (ViewBag.Details == null)
         {
-<tr>
-    <td>@Html.DisplayFor(modelItem => item.id)</td>
-    <td id="foto-@item.id"><img src="~/Uploads/@Html.DisplayTextFor(modelItem => item.image)" style="height: 40px;" /></td>
-    <td><strong id="name-@item.id">@Html.DisplayFor(modelItem => item.name)</strong></td>
-    <td id="slug-@item.id">@Html.DisplayFor(modelItem => item.slug)</td>
-    <td id="main-@item.id">@Html.DisplayFor(modelItem => item.maincat)</td>
-    <td id="top-@item.id">@Html.DisplayFor(modelItem => item.topcat)</td>
-    <td id="top2-@item.id">@Html.DisplayFor(modelItem => item.topcat2)</td>
-    <td id="des-@item.id">@Html.DisplayFor(modelItem => item.description)</td>
-    <td align="center"> @Html.ActionLink("Editovať", "EditCat", "Products", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteCategory", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať túto kategóriu?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete kategóriu." })</td>
-</tr>
-<tr id="cat-@item.id" style="display: none;">
-    <!-- edit kategoria foto-->
-    @using (Html.BeginForm("UploadImageCategories", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "MyformCats" }))
-    {
-        <td>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="col-md-14">
-                            <img src="~/Uploads/@Html.DisplayTextFor(model => model.Categories.Image)" alt="@Html.DisplayTextFor(model => model.Categories.Name)" style="width: 100%;" />
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="col-md-14 btnvyber">
-                            @*<strong>@Html.LabelFor(model => model.Categories.TitleImage, "Zmeniť titulnú fotografiu", htmlAttributes: new { @class = "control-label col-md-12 vyberf" })</strong>*@
-                            <a id="btn_vis-@counter" style="cursor:pointer;background-color: #ce1720;color: #fff;margin-top: 10px;padding: 10px 20px;text-decoration: none;border-radius: 5px;">Vyber fotografie</a>
-                            @Html.TextBoxFor(model => model.Categories.TitleImage, "", new { @type = "file", @class = "form-control", @accept = "png|jpg|jpeg|gif", @style = "max-width: 67%;height:60px;display:none;", @id = "bttn-" + counter, @onchange = "pressed()" })
-                            <label id="fileLabel-@counter" style="padding-top: 10px;">Nie je vybratá žiadna fotografia.</label>
-                            @Html.ValidationMessageFor(model => model.Categories.TitleImage, "", new { @class = "text-danger" })
-                        </div>
-                        <br />
-                        <div class="form-group">
-                            <div>
-                                <input type="submit" value="Nahrať novú titulnú fotografiu" class="btn btn-success" onclick="validateForm();" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </td>
-    }
-</tr>
-            counter++;
+            var counter = 0;
+            foreach (var item in Model.CategoriesModel.OrderBy(i => i.maincat))
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.id)</td>
+                    <td id="foto-@item.id"><img src="~/Uploads/@Html.DisplayTextFor(modelItem => item.image)" style="height: 40px;" /></td>
+                    <td><strong id="name-@item.id">@Html.DisplayFor(modelItem => item.name)</strong></td>
+                    <td id="slug-@item.id">@Html.DisplayFor(modelItem => item.slug)</td>
+                    <td id="main-@item.id">@Html.DisplayFor(modelItem => item.maincat)</td>
+                    <td id="top-@item.id">@Html.DisplayFor(modelItem => item.topcat)</td>
+                    <td id="top2-@item.id">@Html.DisplayFor(modelItem => item.topcat2)</td>
+                    <td id="des-@item.id">@Html.DisplayFor(modelItem => item.description)</td>
+                    <td align="center"> @Html.ActionLink("Editovať", "EditCat", "Products", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteCategory", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať túto kategóriu?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete kategóriu." })</td>
+                </tr>
+                
+                counter++;
+            }
         }
-    }
 
-
+    </tbody>
 </table>
 
 <script>
+    $(document).ready(function () {
+        $('#catsTable').DataTable({
+            "order": [0, 'desc'],
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Slovak.json"
+            }
+        });
+    });
+
     function catfunc(value) {
         var url = '@Url.Action("FetchCategories", "Products")'; // Don't hard code your url's!
         var categories = $('#Categories_Topcat2'); // cache it

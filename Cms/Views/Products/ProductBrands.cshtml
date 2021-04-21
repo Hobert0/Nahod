@@ -69,8 +69,8 @@
 
 }
 <hr />
-<table class="table" style="">
-    <thead class="thead-dark">
+<table class="table" id="brandsTable" style="">
+    <thead>
         <tr>
             <th>ID</th>
             <th>Fotografia</th>
@@ -92,6 +92,7 @@
     <td id="des-@item.id">@Html.DisplayFor(modelItem => item.description)</td>
     <td align="center"> @Html.ActionLink("Editovať", "EditBrand", "Products", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteBrand", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať túto značku?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete značku." })</td>
 </tr>
+    <!--
             <tr id="cat-@item.id" style="display: none;">
                 @using (Html.BeginForm("UpdateBrand", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "MyformBrand" }))
                 {
@@ -126,6 +127,7 @@
 
                 }
             </tr>
+        -->
         }
     }
 
@@ -133,6 +135,16 @@
 </table>
 
 <script>
+
+    $(document).ready(function () {
+        $('#brandsTable').DataTable({
+            "order": [0, 'desc'],
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Slovak.json"
+            }
+        });
+    });
+
     function editCat(id) {
         if (document.getElementById("cat-" + id + "").style.display == "none") {
             document.getElementById("cat-" + id + "").style.display = "table-row";
