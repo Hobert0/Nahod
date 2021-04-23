@@ -15,6 +15,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Threading;
 
 namespace Cms.Controllers
 {
@@ -538,9 +539,11 @@ namespace Cms.Controllers
                         parser.SetDelimiters("^");
                         bool firstLine = true;
                         List<string> attrName = new List<string>();
+                        int variablecounter = 1;
 
                         while (!parser.EndOfData)
                         {
+
                             string[] fields = parser.ReadFields();
                             bool isvariant = false;
 
@@ -601,7 +604,8 @@ namespace Cms.Controllers
                                 else
                                 {
                                     string[] splitcats = cat.ToString().Split('|');
-                                    var catName = splitcats[1].ToString();
+                                    var lastcat = splitcats.Count() - 1;
+                                    var catName = splitcats[lastcat].ToString();
                                     var catExist = categoriesInDb.Where(x => x.name.ToLower() == catName.ToLower()).FirstOrDefault();
                                     if (catExist != null)
                                     {
@@ -647,6 +651,7 @@ namespace Cms.Controllers
                                 {
                                     if (allphotos[i] != "")
                                     {
+                                        Thread.Sleep(500);
                                         byte[] data = webClient.DownloadData(allphotos[i]);
 
                                         using (MemoryStream mem = new MemoryStream(data))
@@ -678,10 +683,23 @@ namespace Cms.Controllers
 
                             if (typesToDb.Count > 0)
                             {
-                                product.type =  "[" + string.Join(",", typesToDb) + "]";
+                                product.type = "[" + string.Join(",", typesToDb) + "]";
                             }
 
                             product.price = Decimal.Parse(fields[8]);
+
+                            if (fields[64] != "0,05" && fields[64] != "0,08" && fields[64] != "0,1")
+                            {
+                                if (fields[64] == "percentage")
+                                {
+                                    product.discountprice = Decimal.Parse(fields[8]) - (Decimal.Parse(fields[8]) * Decimal.Parse(fields[64]));
+                                }
+                                else if (fields[64] == "amount")
+                                {
+                                    product.discountprice = Decimal.Parse(fields[8]) - Decimal.Parse(fields[64]);
+                                }
+                            }
+
                             product.date = DateTime.Now.ToString();
                             product.heureka = true;
                             product.heurekadarcektext = fields[93];
@@ -701,8 +719,9 @@ namespace Cms.Controllers
 
                             if (!isvariant)
                             {
-                                db.products.Add(product);                           
+                                db.products.Add(product);
                                 db.SaveChanges();
+                                variablecounter = 1;
                             }
 
                             //ci je variabilny
@@ -712,9 +731,22 @@ namespace Cms.Controllers
                                 var addedproduct = db.products.Where(i => i.title == title).FirstOrDefault();
                                 variants v = new variants();
                                 v.prod_id = addedproduct.id;
-                                v.price = Decimal.Parse(fields[8]);
+                                v.price = Decimal.Parse(fields[8]) + Decimal.Parse(fields[49]);
+                                if (fields[64] != "0,05" && fields[64] != "0,08" && fields[64] != "0,1")
+                                {
+                                    if (fields[64] == "percentage")
+                                    {
+                                        v.discountprice = Decimal.Parse(fields[8]) - (Decimal.Parse(fields[8]) * Decimal.Parse(fields[64]));
+                                    }
+                                    else if (fields[64] == "amount")
+                                    {
+                                        v.discountprice = Decimal.Parse(fields[8]) - Decimal.Parse(fields[64]);
+                                    }
+                                }
                                 v.stock = "";
                                 v.number = fields[43];
+                                v.num = variablecounter;
+                                variablecounter++;
 
                                 //najdi o ktory atribut sa jedna
                                 var counter = 0;
@@ -725,9 +757,15 @@ namespace Cms.Controllers
                                         var fieldname = attrName[counter];
                                         var attr = db.attributes.Where(i => i.name == fieldname).FirstOrDefault();
                                         v.attribute_id = attr.id;
-                                        v.value = fields[f];
-                                        db.variants.Add(v);
-                                        db.SaveChanges();
+                                        var attrVal = fields[f];
+                                        var attrExist = db.variants.Where(i => i.prod_id == addedproduct.id && i.attribute_id == attr.id && i.value == attrVal).FirstOrDefault();
+                                        v.value = attrVal;
+
+                                        if (attrExist == null)
+                                        {
+                                            db.variants.Add(v);
+                                            db.SaveChanges();
+                                        }
 
                                         dynamic values = JsonConvert.DeserializeObject(attr.value);
                                         bool save = false;

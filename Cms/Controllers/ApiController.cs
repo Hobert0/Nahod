@@ -39,7 +39,7 @@ namespace Cms.Controllers
                 {
                     topcatId = TopCatID(id);
                 }
-
+                var prodData =
                 result = new { data = SortByBrand(topcatId, id, catslug).ProductModel, variants };
             }
 
@@ -200,17 +200,17 @@ namespace Cms.Controllers
                 }
 
                 var products = db.Database.SqlQuery<products>(Sql);
-                List<products> helperarray = new List<products>();
+                //List<products> helperarray = new List<products>();
 
-                foreach (var sort in sortId)
-                {
-                    foreach (var prod in products.Where(c => c.custom3 == sort))
-                    {
-                        helperarray.Add(prod);
-                    }
-                }
+                //foreach (var sort in sortId)
+                //{
+                //    foreach (var prod in products.Where(c => c.custom3 == sort))
+                //    {
+                //        helperarray.Add(prod);
+                //    }
+                //}
 
-                model.ProductModel = helperarray.ToList();
+                model.ProductModel = products.ToList();
             }
             else if (catslug == "novinky")
             {

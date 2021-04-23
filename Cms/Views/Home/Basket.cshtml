@@ -46,7 +46,7 @@
                             foreach (var item in cart)
                             {
 
-                                var thisProd = Model.ProductModel.Where(i => i.id == item.product.Value).Single();
+                                var thisProd = Model.ProductModel.Where(i => i.id == item.product.Value).SingleOrDefault();
 
                                 <tr>
                                     <td style="width: 70px"><img src="~/Uploads/@Html.DisplayFor(modelItem => thisProd.image)" style="width: 50px" /></td>

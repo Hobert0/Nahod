@@ -273,7 +273,7 @@
 
                                                 @{
                                                     //var variants = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).ToList();
-                                                    var vars = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).OrderBy(o => o.num).ToList();
+                                                    var vars = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).OrderBy(o => o.attribute_id).ThenBy(o => o.num).ToList();
 
                                                     if (vars.Count() > 0)
                                                     {
@@ -590,6 +590,7 @@
     {
 
         <script>
+
             $(document).ready(function () {
 
                 function getRatingPrice($price) {
@@ -744,6 +745,16 @@
         </script>
         -->
     }
+    <script src="~/Lightbox/ekko-lightbox.js"></script>
+
+    <script>
+        $(document).on('click',
+            '[data-toggle="lightbox"]',
+            function (event) {
+                event.preventDefault();
+                $(this).ekkoLightbox();
+            });
+    </script>
     <script src="~/Scripts/add_product_to_cart.js"></script>
 
 

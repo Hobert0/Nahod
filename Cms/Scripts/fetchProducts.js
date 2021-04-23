@@ -1,4 +1,5 @@
 ﻿var allproductsdata;
+var allvariants;
 
 $(document).ready(function () {
     var url = new URL(window.location.href);
@@ -30,8 +31,8 @@ function fetchProducts(page, bybrand, search) {
         dataType: 'json',
         success: function (data) {
             allproductsdata = data.data;
-            variants = data.variants;
-            renderProducts(page, undefined, allproductsdata, variants);
+            allvariants = data.variants;
+            renderProducts(page, undefined, allproductsdata, allvariants);
         },
         error: function () {
             alert('Error! Please try again.');
@@ -80,7 +81,7 @@ function string_to_slug(str) {
     return str;
 }
 
-function renderProducts(page = 1, pagesize = 12, alldata = allproductsdata, vars, pagechanged = false) {
+function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars = allvariants, pagechanged = false) {
 
     if (page > 1) {
         window.history.pushState({}, '', '?page=' + page);
@@ -144,7 +145,7 @@ function renderProducts(page = 1, pagesize = 12, alldata = allproductsdata, vars
         let $row = '<div class="col-md-5ths product mb-2 mx-2">';
 
         $row += '<a href="/detail-produktu/' + item.id + '/' + slug + '">';
-        $row += '<div class="thumb" style="background-image: url(' + escape("/Uploads/" + item.image) + '); height: 11vw;"></div>'
+        $row += '<div class="thumb" style="background-image: url(' + escape("/Uploads/" + item.image) + '); height: 11vw;background-size:contain;"></div>'
 
         $row += '<div class="prod-labels">';
         if (isDiscounted == true) {
@@ -280,17 +281,17 @@ function renderPagination(totalPages, page) {
     totalPages = Math.floor(totalPages);
 
     if (totalPages > 1 && page > 1) {
-        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (page - 1) + ', undefined, undefined, true)" aria-label="Previous"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (page - 1) + ', undefined, undefined, undefined, true)" aria-label="Previous"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>';
     }
 
     for (i = 1; i <= totalPages; i++) {
         let active = "";
         if (i == page) { active = "active"; }
-        $pages += '<li class="page-item ' + active + '"><a class="page-link" onclick="renderProducts(' + i + ', undefined, undefined, true)">' + i + '</a></li>';
+        $pages += '<li class="page-item ' + active + '"><a class="page-link" onclick="renderProducts(' + i + ', undefined, undefined, undefined, true)">' + i + '</a></li>';
     }
 
     if (totalPages > 1 && totalPages > page) {
-        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (page + 1) + ', undefined, undefined, true)" aria-label="Next"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (page + 1) + ', undefined, undefined, undefined, true)" aria-label="Next"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>';
     }
 
     $pages = $($pages);

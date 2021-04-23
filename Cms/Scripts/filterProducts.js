@@ -52,7 +52,7 @@ $(".productfilter").change(function (e) {
 		$('#resetfilter').hide();
     }
 
-    renderProducts(undefined, undefined, filteredData, false);
+    renderProducts(undefined, undefined, filteredData, undefined, false);
 });
 
 $("#sortbyprice").click(function (e) {
@@ -62,7 +62,7 @@ $("#sortbyprice").click(function (e) {
 
     $('#resetfilter').show();
 
-    renderProducts(page, undefined, filteredData, false);
+    renderProducts(page, undefined, filteredData, undefined, false);
 });
 
 
