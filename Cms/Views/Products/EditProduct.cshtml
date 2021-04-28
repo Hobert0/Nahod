@@ -765,7 +765,7 @@
             }
 
             //ak to nie je rovnake ako prvy typ varianty tak nie je mozne upravit cenu
-            $firstAttrId = $(".varAttrs option").eq(0).attr("attr_id");
+            $firstAttrId = $(".varAttrs option:selected").eq(0).attr("attr_id");
             if (attrId != null && attrId != $firstAttrId) {
                 $(".clonedVarSection[num=" + num + "] .varPrice").val("").prop("disabled", true);
                 $(".clonedVarSection[num=" + num + "] .varDiscountPrice").val("").prop("disabled", true);
@@ -855,7 +855,7 @@
                 $(".clonedVarSection[num=" + $i + "]").find("input.varStock").val($variants[$i - 1].stock);
 
                 //vyplnime hodnoty cien len ak su varianty takeho typu ako uplne prva varianta
-                $firstAttrId = $(".varAttrs option").eq(0).attr("attr_id");
+                $firstAttrId = $(".varAttrs option:selected").eq(0).attr("attr_id");
                 if ($variants[$i - 1].attribute_id == $firstAttrId) {
                     $(".clonedVarSection[num=" + $i + "]").find("input.varPrice").val($variants[$i - 1].price);
                     $(".clonedVarSection[num=" + $i + "]").find("input.varDiscountPrice").val($variants[$i - 1].discountprice);

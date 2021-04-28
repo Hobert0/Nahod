@@ -197,15 +197,11 @@ h3 {
 
 .navbar {
     font-size: 12px;
-    letter-spacing: 1px;
 }
 
     .navbar a {
         text-transform: uppercase;
-        font-weight: bold;
-        color: #fff !important;
-        font-size: 13px;
-        font-weight: 500;
+        font-weight: normal;
     }
 
     .navbar .dropdown-content a {
@@ -349,13 +345,12 @@ footer {
     }
 
 .openbtn {
-    font-size: 20px;
+    font-size: 16px;
     cursor: pointer;
-    background-color: #fe8a00;
-    color: white;
-    padding: 10px 15px;
+    background-color: transparent;
+    color: #231f20;
     border: none;
-    width: 100%;
+    float: right;
 }
 
 #main {
@@ -365,12 +360,6 @@ footer {
 #mySidebar ul {
     list-style: none;
     padding-left: 15px;
-}
-
-#search {
-    border-radius: 10px;
-    background: transparent;
-    border: 1px solid #989898;
 }
 
 .form-inline.search img {
@@ -1038,13 +1027,10 @@ input[type="radio"][disabled] {
 /*PRODUCTS - END*/
 /**SEARCH*/
 .ui-menu-item-wrapper {
-    padding: 10px 0 15px 20px !important;
+    padding: 5px 15px !important;
     border-bottom: 1px solid #f8f9fa;
 }
 
-#ui-id-1 {
-    width: 290px !important;
-}
 
 .form-inline .form-control {
     width: 250px;
@@ -1052,7 +1038,7 @@ input[type="radio"][disabled] {
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
     border: none !important;
-    background: #2684d4 !important;
+    background: #fe8a00 !important;
     margin: 0 !important;
 }
 

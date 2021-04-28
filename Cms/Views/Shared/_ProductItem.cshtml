@@ -1,4 +1,5 @@
 ﻿@using Cms.Controllers
+@using System.Text.RegularExpressions
 @model Cms.Models.MultipleIndexModel
 
 @{
@@ -10,7 +11,6 @@
 
     foreach (var prod in prods)
     {
-
         if (discProdCounter >= 10)
         {
             break;
@@ -42,9 +42,9 @@
         if (isDiscounted && discProdCounter < 10)
         {
             var slug = helper.ToUrlSlug(prod.title);
-            <div class="col-md product">
+            <div class="col-md product mx-1">
                 <a href="/detail-produktu/@prod.id/@slug">
-                    <img src="uploads/@prod.image">
+                    <div class="thumb" style="background-image: url(/Uploads/@prod.image); height: 11vw;background-size:contain;"></div>
                     <div class="prod-labels">
                         @{
                             if (isDiscounted == true)
@@ -60,15 +60,19 @@
                             }
                         }
                     </div>
-                    <div class="prod-header">@prod.title</div>
+                    <div class="prod-header">@Html.Raw(prod.title)</div>
                     @{
                         var shortdescription = "";
-                        if (prod.description != null)
+                        if (prod.description != null && prod.description != "")
                         {
-                            shortdescription = prod.description.Substring(0, 150) + "...";
+                            shortdescription = Regex.Replace(prod.description, "<.*?>", String.Empty);
+                            if (prod.description.Length > 100)
+                            {
+                                shortdescription = shortdescription.Substring(0, 100) + "...";
+                            }
                         }
                     }
-                    <div class="prod-text">@Html.Raw(shortdescription)</div>
+                    <div class="prod-text">@shortdescription</div>
 
                     <div class="prod-prices">
                         @{

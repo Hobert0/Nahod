@@ -243,11 +243,14 @@
                                         catsStr += catDb.name + ", ";
                                     }
                                 }
-
-                                @catsStr.Remove(catsStr.Length - 2)
-
+                                if (catsStr != "")
+                                {
+                                    catsStr.Remove(catsStr.Length - 2);
+                                }
+                                @Html.Raw(catsStr)
                             }
                         }
+
                     </td>
                     <td>
 

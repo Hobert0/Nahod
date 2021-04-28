@@ -1,0 +1,83 @@
+﻿@using System.Collections
+@using Cms.Controllers
+@model Cms.Models.MultipleIndexModel
+@{
+    HelperController helper = new HelperController();
+
+    var kategoria = ViewData["Category"].ToString();
+
+    if (ViewData["Sub"] != null)
+    {
+        var sub = ViewData["Sub"].ToString();
+    }
+    var nameofcat = ViewContext.RouteData.Values["catslug"];
+
+    var catName = "";
+
+    var catID = 0;
+    if (ViewData["CatId"] != null && ViewData["CatId"] != "")
+    {
+        catID = Int32.Parse(ViewData["CatId"].ToString());
+    }
+}
+<style>
+    #front-picture, #services {
+        display: none !important;
+    }
+</style>
+<div class="container-fluid w-75">
+    <div class="row py-0 py-sm-4">
+        <div class="col">
+            @if (catID != 0)
+            {
+                foreach (var cat in Model.TypesModel.Where(i => i.id == catID))
+                {
+                    ViewBag.Title = cat.name + " -";
+                    ViewBag.Description = cat.description;
+                    catName = cat.name;
+                    <h2>@Html.Raw(cat.name)</h2>
+                }
+            }
+
+            <div class="container-fluid">
+                <div class="row justify-content-md">
+                    @foreach (var cat in Model.CategoriesModel.Where(i => i.maincat == catName && i.topcat == "Žiadna"))
+                    {
+                        <div class="col-md-auto subcatthumb py-2 m-1">
+                            <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(nameofcat), subslug = @Html.Raw(cat.slug)})">
+                                <div style="background-image: url(/Uploads/@cat.image); background-size: contain;"></div>
+                                <p>@cat.name</p>
+                            </a>
+                        </div>
+                    }
+                    @*@foreach (var cat in Model.CategoriesModel.Where(i => i.maincat == mainCatName && i.topcat == catName))
+                    {
+                        <div class="col-md-auto subcatthumb py-2 m-1">
+                            <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(nameofcat), subslug = @Html.Raw(cat.slug)})">
+                                <div style="background-image: url(/Uploads/@cat.image); background-size: contain;"></div>
+                                <p>@cat.name</p>
+                            </a>
+                        </div>
+                    }*@
+                </div>
+            </div>
+            <hr />
+
+            @{
+                Html.RenderPartial("_Filter");
+            }
+            <div id="ajaxProducts" class="products m-0"></div>
+
+            <nav class="pagination-container" aria-label="Page navigation example">
+                <ul class="pagination" id="pagination">
+                </ul>
+            </nav>
+
+        </div>
+
+    </div>
+</div>
+<script src="~/Scripts/fetchProducts.js"></script>
+<script src="~/Scripts/filterProducts.js"></script>
+
+<script src="~/Scripts/add_to_session.js"></script>

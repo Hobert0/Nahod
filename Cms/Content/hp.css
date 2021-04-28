@@ -217,7 +217,7 @@ html, body {
 
         .products .product .prod-labels {
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 25px;
         }
 
             .products .product .prod-labels span {
@@ -241,6 +241,7 @@ html, body {
             font-size: 12px;
             font-weight: bold;
             margin-bottom: 5px;
+            height: 40px;
         }
 
         .products .product .prod-text {
@@ -274,19 +275,25 @@ html, body {
             display: inline-block;
             padding: 1px 15px;
             border-radius: 15px;
-            font-size: 11px;
+            font-size: 12px;
             color: black;
             position: relative;
             cursor: pointer;
+            transition: all ease-in .2s;
         }
 
-            .products .product .prod-add-to-cart .prod-icon {
-                width: 25px;
-                top: -2px;
-                position: absolute;
-                left: -15px;
-                background-color: white;
-            }
+.prod-add-to-cart:hover {
+    background: #ffa500;
+}
+
+.products .product .prod-add-to-cart .prod-icon {
+    width: 30px;
+    top: -2px;
+    position: absolute;
+    padding-right: 3px;
+    left: -20px;
+    background-color: white;
+}
 
 
 .hp-newsletter {

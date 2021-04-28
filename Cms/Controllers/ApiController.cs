@@ -19,13 +19,17 @@ namespace Cms.Controllers
 
         // GET: Api
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public JsonResult FetchProducts(string catslug, string subslug, string subslug2, string subslug3, bool brand, bool searchparam)
+        public JsonResult FetchProducts(string catslug, string subslug, string subslug2, string subslug3, bool brand, bool searchparam, bool type)
         {
             object result = null;
             var variants = db.variants.OrderBy(o => o.num).ToList();
             if (brand)
             {
                 result = new { data = FetchByBrand(catslug).ProductModel, variants };
+            }
+            else if (type)
+            {
+                result = new { data = FetchByType(catslug).ProductModel, variants };
             }
             else if (searchparam)
             {
@@ -241,10 +245,19 @@ namespace Cms.Controllers
 
         private MultipleIndexModel FetchByBrand(string brand)
         {
-            var categoryID = db.types.Where(i => i.slug == brand).First().id;
+            var categoryID = db.brands.Where(i => i.slug == brand).First().id;
 
             var model = new MultipleIndexModel();
             model.ProductModel = db.products.ToList().Where(c => c.custom3 == categoryID.ToString()).OrderByDescending(x => x.id);
+
+            return model;
+        }
+        private MultipleIndexModel FetchByType(string type)
+        {
+            var categoryID = db.types.Where(i => i.slug == type).First().id.ToString();
+
+            var model = new MultipleIndexModel();
+            model.ProductModel = db.products.Where(c => c.type.Contains(categoryID)).OrderByDescending(x => x.id).ToList();
 
             return model;
         }

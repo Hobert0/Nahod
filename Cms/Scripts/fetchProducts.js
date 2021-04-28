@@ -5,21 +5,24 @@ $(document).ready(function () {
     var url = new URL(window.location.href);
     page = url.searchParams.get("page") ?? 1;
     bybrand = url.pathname.includes("znacka") ?? false;
+    bytype = url.pathname.includes("typ") ?? false;
     search = url.pathname.includes("vyhladavanie") ?? false;
-    fetchProducts(page, bybrand, search);
+    fetchProducts(page, bybrand, search, bytype);
 });
 
-function fetchProducts(page, bybrand, search) {
+function fetchProducts(page, bybrand, search, bytype) {
     let params = window.location.pathname.split('/');
     let catslug = params[2];
     let subslug = params[3];
     let subslug2 = params[4];
     let subslug3 = params[5];
     let brand = false;
+    let type = false;
     let searchparam = false;
     let APIurl = "/Api/FetchProducts";
     if (bybrand) brand = true;
     if (search) searchparam = true;
+    if (bytype) type = true;
 
     var $loading = "<div class='loading' style='text-align:center;margin-top:100px;'><img style='width:100px;' src='/Uploads/loading.gif'></div>";
     $('#ajaxProducts').prepend($loading);
@@ -27,7 +30,7 @@ function fetchProducts(page, bybrand, search) {
         url: APIurl,
         type: 'GET',
         async: false,
-        data: { catslug: catslug, subslug: subslug, subslug2: subslug2, subslug3: subslug3, brand: brand, searchparam: searchparam },
+        data: { catslug: catslug, subslug: subslug, subslug2: subslug2, subslug3: subslug3, brand: brand, searchparam: searchparam, type: type },
         dataType: 'json',
         success: function (data) {
             allproductsdata = data.data;
@@ -142,7 +145,7 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
             }
         }
 
-        let $row = '<div class="col-md-5ths product mb-2 mx-2">';
+        let $row = '<div class="col-md-5ths product mb-2 mx-1">';
 
         $row += '<a href="/detail-produktu/' + item.id + '/' + slug + '">';
         $row += '<div class="thumb" style="background-image: url(' + escape("/Uploads/" + item.image) + '); height: 11vw;background-size:contain;"></div>'
@@ -183,6 +186,8 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
                 if (variant.discountprice != null) {
                     if (variant.discountprice < variantPriceFrom) {
                         variantPriceFrom = variant.discountprice;
+                        variantPriceFrom = variantPriceFrom.toFixedNoRounding(2);
+
                     }
                 }
                 else {
@@ -217,7 +222,7 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
                     }
 
                     if (thisPrice < variantPriceFrom) {
-                        variantPriceFrom = thisPrice;
+                        variantPriceFrom = thisPrice.toFixedNoRounding(2);
                     }
                 }
             }
@@ -251,17 +256,17 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
                         break;
                 }
 
-                $row += '<span class="prod-discount">' + defaultPrice + ' €</span> <span class="prod-base">' + ratingPrice + ' €</span>';
+                $row += '<span class="prod-discount">' + defaultPrice + ' €</span> <span class="prod-base">' + ratingPrice.toFixedNoRounding(2) + ' €</span>';
                 actualPrice = ratingPrice;
             }
             else {
-                $row += '<span class="prod-base">' + item.price + ' €</span>';
+                $row += '<span class="prod-base">' + item.price.toFixedNoRounding(2) + ' €</span>';
                 actualPrice = item.price;
             }
         }    
 
         $row += '</div></a>';
-        let actualPriceStr = actualPrice;
+        let actualPriceStr = actualPrice.toFixedNoRounding(2);
         $row += '<a onclick="addToCart(' + item.id + ',' + isVariant + ',' + actualPriceStr + ')" class="prod-add-to-cart"><div style="text-align: center;"> <img class="prod-icon" src="/Content/images/cart.svg" alt="cart"><span>Pridať do košíka</span></span></div>';
 
         

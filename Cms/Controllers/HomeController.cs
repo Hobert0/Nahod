@@ -56,7 +56,8 @@ namespace Cms.Controllers
             Session["cartitems"] = cartVal;
 
             decimal thisSum = 0;
-            foreach (var item in cartVal) {
+            foreach (var item in cartVal)
+            {
 
                 decimal thisPrice = Convert.ToDecimal(item.price);
                 decimal thisQuantity = Convert.ToDecimal(item.quantity);
@@ -183,9 +184,9 @@ namespace Cms.Controllers
         [Route("znacka/{brand}/{page?}/{id?}")]
         public ActionResult Brand(string brand)
         {
-           
+
             var model = new MultipleIndexModel();
-            model.ProductModel = db.products.ToList();
+            model.ProductModel = db.products.Where(i => i.custom3 == brand).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
@@ -193,36 +194,37 @@ namespace Cms.Controllers
             model.BrandsModel = db.brands.ToList();
             model.TypesModel = db.types.ToList();
             model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
-            var kategoria = db.types.Where(i => i.slug == brand).Select(o => o.name);
-            var categoryID = db.types.Where(i => i.slug == brand).First().id;
+            var kategoria = db.brands.Where(i => i.slug == brand).Select(o => o.name);
+            var categoryID = db.brands.Where(i => i.slug == brand).First().id;
 
             ViewData["Category"] = kategoria;
             ViewData["CatId"] = categoryID;
 
-            List<decimal?> prices = new List<decimal?>();
-            List<decimal> kw = new List<decimal>();
-            List<decimal> room = new List<decimal>();
+            return View(model);
+        }
 
-            foreach (var item in model.ProductModel)
-            {
-                prices.Add(item.price);
-                prices.Add(item.discountprice);
-                if (item.custom9 != null) kw.Add(decimal.Parse(item.custom9.Replace(".", ",")));
-                if (item.custom10 != null) room.Add(decimal.Parse(item.custom10.Replace(".", ",")));
-            }
-            prices.Sort();
-            kw.Sort();
-            room.Sort();
+        [Route("typ/{typ}/{page?}/{id?}")]
+        public ActionResult Type(string typ)
+        {
 
-            ViewData["minPrice"] = prices.FirstOrDefault();
-            ViewData["maxPrice"] = prices.LastOrDefault();
-            ViewData["minKw"] = kw.FirstOrDefault();
-            ViewData["maxKw"] = kw.LastOrDefault();
-            ViewData["minM2"] = room.FirstOrDefault();
-            ViewData["maxM2"] = room.LastOrDefault();
+            var model = new MultipleIndexModel();
+            model.ProductModel = db.products.Where(i => i.type.Contains(typ)).ToList();
+            model.EsettingsModel = db.e_settings.ToList();
+            model.SettingsModel = db.settings.ToList();
+            model.PagesModel = db.pages.ToList();
+            model.CategoriesModel = db.categories.ToList();
+            model.BrandsModel = db.brands.ToList();
+            model.TypesModel = db.types.ToList();
+            model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
+            var kategoria = db.types.Where(i => i.slug == typ).Select(o => o.name);
+            var categoryID = db.types.Where(i => i.slug == typ).First().id;
+
+            ViewData["Category"] = kategoria;
+            ViewData["CatId"] = categoryID;
 
             return View(model);
         }
+
 
         [Route("s/{slug}")]
         public ActionResult Page(string slug)

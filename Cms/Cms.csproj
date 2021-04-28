@@ -797,6 +797,7 @@
     <Content Include="Views\Products\ProductTypes.cshtml" />
     <Content Include="Views\Products\EditType.cshtml" />
     <Content Include="Views\Shared\_ProductItem.cshtml" />
+    <Content Include="Views\Home\Type.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

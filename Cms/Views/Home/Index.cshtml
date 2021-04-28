@@ -48,18 +48,18 @@
 </div>
 <div class="container-fluid w-75">
     <div class="row benefits">
-        <div class="col-md">
+        <div class="col-md col-6">
             <div class="row d-flex align-items-center">
                 <div class="col-md-2 pr-0">
                     <img class="icon" src="~/Content/images/price-tag.svg">
                 </div>
                 <div class="col-md-10 pl-2">
                     <p class="header">Zľava 5-10%</p>
-                    <p class="text">Ihneď po registrácii</p>
+                    <p class="text">Ihneď po <a href="#" class="register-modal"><u>registrácii</u></a></p>
                 </div>
             </div>
         </div>
-        <div class="col-md">
+        <div class="col-md col-6">
             <div class="row d-flex align-items-center">
                 <div class="col-md-2 pr-0">
                     <img class="icon" src="~/Content/images/fast.svg">
@@ -70,7 +70,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md">
+        <div class="col-md col-6">
             <div class="row d-flex align-items-center">
                 <div class="col-md-2 pr-0">
                     <img class="icon" src="~/Content/images/gift.svg">
@@ -81,7 +81,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md">
+        <div class="col-md col-6">
             <div class="row d-flex align-items-center">
                 <div class="col-md-2 pr-0">
                     <img class="icon" src="~/Content/images/fishing.svg">
@@ -94,24 +94,32 @@
         </div>
     </div>
     <div class="row types">
-
         @{
             var types = Model.TypesModel;
             foreach (var type in types)
             {
-                <a href="znacka/@type.slug" class="col-md-3 pr-1 pl-1">
-                    <img src="uploads/@type.image">
+                <a href="/typ/@type.slug" class="col-md-3 pr-1 pl-1 categoryblock col-6">
+                    <img src="/uploads/@type.image">
                     <p class="header">@type.name</p>
                 </a>
             }
+            foreach (var cat in Model.CategoriesModel)
+            {
+                <a href="/typ/@cat.slug" class="col-md-3 pr-1 pl-1 categoryblock col-6">
+                    <img src="/uploads/@cat.image">
+                    <p class="header">@cat.name</p>
+                </a>
+            }
         }
-
     </div>
     <div class="row more-types">
         <div class="col-md-12">
-            <a href="#" class="rounded-button">
+            <button id="showmore" class="rounded-button">
                 Zobraziť ďalšie kategórie
-            </a>
+            </button>
+            <button id="showless" class="rounded-button" style="display:none;">
+                Zobraziť menej
+            </button>
         </div>
     </div>
     <div class="row products">
@@ -173,9 +181,10 @@
                         }
 
                         var slug = helper.ToUrlSlug(prod.title);
-                        <div class="col-md product">
+                        <div class="col-md product mx-1">
                             <a href="/detail-produktu/@prod.id/@slug">
-                                <img src="uploads/@prod.image">
+                                <div class="thumb" style="background-image: url(/Uploads/@prod.image); height: 11vw;background-size:contain;">
+                                </div>
                                 <div class="prod-labels">
                                     @{
                                         if (isDiscounted == true)
@@ -194,14 +203,16 @@
                                 <div class="prod-header">@Html.Raw(prod.title)</div>
                                 @{
                                     var shortdescription = "";
-                                    //if (prod.description != null && prod.description != "")
-                                    //{
-                                    //    if(prod.description.Length > 150) { 
-                                    //        shortdescription = prod.description.Substring(0, 150) + "...";
-                                    //    }
-                                    //}
+                                    if (prod.description != null && prod.description != "")
+                                    {
+                                        shortdescription = Regex.Replace(prod.description, "<.*?>", String.Empty);
+                                        if (prod.description.Length > 100)
+                                        {
+                                            shortdescription = shortdescription.Substring(0, 100) + "...";
+                                        }
+                                    }
                                 }
-                                <div class="prod-text">@Html.Raw(shortdescription)</div>
+                                <div class="prod-text">@shortdescription</div>
                                 <div class="prod-prices">
                                     @{
                                         decimal variantPriceFrom = 99999;
@@ -440,9 +451,9 @@
                         }
 
                         var slug = helper.ToUrlSlug(prod.title);
-                        <div class="col-md product">
+                        <div class="col-md product mx-1">
                             <a href="/detail-produktu/@prod.id/@slug">
-                                <img src="uploads/@prod.image">
+                                <div class="thumb" style="background-image: url(/Uploads/@prod.image); height: 11vw;background-size:contain;"></div>
                                 <div class="prod-labels">
                                     @{
                                         if (isDiscounted == true)
@@ -458,15 +469,19 @@
                                         }
                                     }
                                 </div>
-                                <div class="prod-header">@prod.title</div>
+                                <div class="prod-header">@Html.Raw(prod.title)</div>
                                 @{
                                     var shortdescription = "";
-                                    if (prod.description != null)
+                                    if (prod.description != null && prod.description != "")
                                     {
-                                        shortdescription = prod.description.Substring(0, 150) + "...";
+                                        shortdescription = Regex.Replace(prod.description, "<.*?>", String.Empty);
+                                        if (prod.description.Length > 100)
+                                        {
+                                            shortdescription = shortdescription.Substring(0, 100) + "...";
+                                        }
                                     }
                                 }
-                                <div class="prod-text">@Html.Raw(shortdescription)</div>
+                                <div class="prod-text">@shortdescription</div>
                                 <div class="prod-prices">
                                     @{
                                         decimal variantPriceFrom = 99999;
@@ -596,7 +611,7 @@
         </div>
     </div>
     <div class="row bottom-banner-row">
-        <div class="col-md-6 pr-1">
+        <div class="col-md-6 pr-1 col-6">
             <div class="bottom-banner-wrapper banner-wrapper">
                 @{
                     slideshows = Model.SlideshowModel.Where(o => o.page == "hp-bottom-left");
@@ -611,7 +626,7 @@
                                 @{
                                     if (slideshow.header != null)
                                     {
-                                        <div class="header">@slideshow.header</div>
+                                        <div class="header overfooter">@slideshow.header</div>
                                     }
                                 }
 
@@ -621,7 +636,7 @@
                 }
             </div>
         </div>
-        <div class="col-md-6 pl-1">
+        <div class="col-md-6 pl-1 col-6">
             <div class="bottom-banner-wrapper banner-wrapper">
                 @{
                     slideshows = Model.SlideshowModel.Where(o => o.page == "hp-bottom-right");
@@ -636,7 +651,7 @@
                                 @{
                                     if (slideshow.header != null)
                                     {
-                                        <div class="header">@slideshow.header</div>
+                                        <div class="header overfooter">@slideshow.header</div>
                                     }
                                 }
 
@@ -660,7 +675,7 @@
                     var articles = Model.BlogModel.OrderByDescending(o => o.id).Take(4);
                     foreach (var article in articles)
                     {
-                        <a href="clanok/@article.slug" class="col-md-3 article">
+                        <a href="clanok/@article.slug" class="col-md-3 article col-6">
                             <img src="uploads/@article.image">
                             <div class="header">@article.title</div>
                             <div class="date"><i class="bi bi-alarm"></i><span>@DateTime.Parse(@article.date).ToString("dd.MM.yyyy")</span></div>
@@ -683,7 +698,31 @@
         $('.products-row').slick({
             infinite: true,
             slidesToShow: 5,
-            slidesToScroll: 5
+            slidesToScroll: 5,
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 4,
+                        slidesToScroll: 4,
+                        infinite: true,
+                        dots: true
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                }]
         });
 
         $("#Subscribeform a.rect-button").click(function (e) {
@@ -712,312 +751,34 @@
             return regex.test(email);
         }
     });
-</script>
 
-@*
+    //show 4 elements at beginning
+    var nblock = 7;
+    //how much elements should be added/removed
+    var add_remove = 8;
 
-    <!--<a href="/detail-produktu/@prod.id/@prod.title" class="col-md product">-->
+    $(".categoryblock:gt(" + nblock + ")").hide();
 
-    @{
-        var count = 0;
-        var pocitadlo = 0;
-        var variableproduct = "false";
-        var isvariablecolor = "false";
-        ViewBag.Description = "";
-        var homepage = ViewData["Homepage"].ToString();
-        HelperController helper = new HelperController();
-    }
+    $("#showmore").click(function (e) {
 
+        if ((nblock + 1) < $('.categoryblock').length)
+            nblock = nblock + add_remove;
 
+        $(".categoryblock").fadeIn();
+        $(".categoryblock:gt(" + nblock + ")").hide();
+        $("#showless").show();
+    });
 
-        @{ if (homepage == "true")
-            {
-                <style>
-                    .topmenu-col {
-                        position: absolute;
-                    }
-                </style>
-            }
+    $("#showless").click(function (e) {
+
+        if (nblock > add_remove) {
+            nblock = nblock - add_remove;
         }
-        <section class="product-section">
-                <div class="col-md-12 text-center">
-                    <h2><b>NOVINKY</b> NA E-SHOPE</h2>
-                    <div class="row">
-                        <!-- Item slider-->
-                        <div class="container-fluid">
+        if (nblock < add_remove) {
+            $("#showless").hide();
+        }
 
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <div class="customer-logos slider">
-                                        @if (ViewBag.Details == null)
-                                        {
-                                            int counter = 0;
-                                            foreach (var item in Model.ProductModel.OrderByDescending(x => x.id).Take(16))
-                                            {
-                                                var price = item.price.ToString();
-                                                var slug = helper.ToUrlSlug(item.title);
-                                                variableproduct = "false";
-                                                isvariablecolor = "false";
+        $(".categoryblock:gt(" + nblock + ")").fadeOut();
 
-
-                                                if (item.custom4 != null && item.custom4 != "")
-                                                {
-                                                    variableproduct = "true";
-                                                }
-                                                if (item.custom7 != null)
-                                                {
-                                                    isvariablecolor = "true";
-                                                }
-                                                <div class="col-6 col-md-6 col-lg-3 pb-5 slide">
-                                                    <a href="@Url.Action("ProductDetail", "Home", new { id = item.id, slug = slug })" class="product_detail">
-                                                        <div style="overflow:hidden;">
-
-                                                            <div class="thumb" style="background-image: url('/Uploads/@Html.DisplayFor(modelItem => item.image)');height: 320px;background-size: contain;"></div>
-                                                            @if (item.price == 0) //ak je zadana suma nula
-                                                            {
-                                                                if (item.custom6 != null && (item.custom6).ToString() == "True") //ak je zadane ze cena je od
-                                                                {
-                                                                    <a href="@Url.Action("ProductDetail", "Home", new { id = item.id, slug = slug })" id="" style="cursor: pointer;" class="col-4 cartproduct"><div style="text-align: center;"><img src="~/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>
-                                                                }
-
-                                                                <a href="@Url.Action("ProductDetail", "Home", new { id = item.id, slug = slug })" id="" style="cursor: pointer;" class="col-4 cartproduct"><div style="text-align: center;"><img src="~/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>
-
-                                                            }
-                                                            else //ak je cena v pohode
-                                                            {
-                                                                <a onclick="addToCart(@item.id,@variableproduct, @isvariablecolor)" style="cursor: pointer;" class="col-4 cartproduct"><div style="text-align: center;"><img src="~/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>
-                                                            }
-
-
-                                                        </div>
-                                                        <p class="title" style="line-height: 18px;">@Html.DisplayFor(modelItem => item.title)</p>
-
-                                                    </a>
-                                                    <div style="display: flex;">
-                                                        <div class="col price">
-
-                                                            @if (item.discountprice != null)
-                                                            {
-                                                                <span>@item.discountprice€</span>
-                                                                <del>@item.price€</del>
-                                                            }
-                                                            else
-                                                            {
-                                                                if (item.custom6 != null && (item.custom6).ToString() == "True")
-                                                                {
-                                                                    <span>od @item.price€</span>
-                                                                }
-                                                                else
-                                                                {
-                                                                    if (item.price == 0)
-                                                                    {
-                                                                        <span>Cena na vyžiadanie</span>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span>@item.price€</span>
-                                                                    }
-
-                                                                }
-
-                                                            }
-
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                                counter++;
-
-                                            }
-                                        }
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Item slider end-->
-
-                    </div>
-                </div>
-        </section>
-        <section class="product-section">
-            <div class="row">
-
-                <div class="col-md-12 text-center">
-                    <h2><b>ODPORÚČANÉ</b> PRODUKTY</h2>
-                    <!-- Item slider-->
-                    <div class="container-fluid">
-
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <div class="customer-logos slider">
-                                        @if (ViewBag.Details == null)
-                                        {
-                                            int counter = 0;
-                                            foreach (var item in Model.ProductModel.OrderBy(x => Guid.NewGuid()).Where(i => i.recommended).Take(16))
-                                            {
-                                                var price = item.price.ToString();
-                                                var slug = helper.ToUrlSlug(item.title);
-                                                variableproduct = "false";
-                                                isvariablecolor = "false";
-
-                                                if (item.custom4 != null && item.custom4 != "")
-                                                {
-                                                    variableproduct = "true";
-                                                }
-                                                if (item.custom7 != null)
-                                                {
-                                                    isvariablecolor = "true";
-                                                }
-                                                <div class="col-6 col-md-6 col-lg-3 pb-5 slide">
-                                                    <a href="@Url.Action("ProductDetail", "Home", new { id = item.id, slug = slug })" class="product_detail">
-                                                        <div style="overflow:hidden;">
-                                                            <div class="thumb" style="background-image: url('/Uploads/@Html.DisplayFor(modelItem => item.image)');height: 320px;background-size: contain;"></div>
-                                                            @if (item.price == 0) //ak je zadana suma nula
-                                                            {
-                                                                if (item.custom6 != null && (item.custom6).ToString() == "True") //ak je zadane ze cena je od
-                                                                {
-                                                                    <a href="@Url.Action("ProductDetail", "Home", new { id = item.id, slug = slug })" id="" style="cursor: pointer;" class="col-4 cartproduct"><div style="text-align: center;"><img src="~/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>
-                                                                }
-
-                                                                <a href="@Url.Action("ProductDetail", "Home", new { id = item.id, slug = slug })" id="" style="cursor: pointer;" class="col-4 cartproduct"><div style="text-align: center;"><img src="~/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>
-
-                                                            }
-                                                            else //ak je cena v pohode
-                                                            {
-                                                                <a onclick="addToCart(@item.id,@variableproduct, @isvariablecolor)" style="cursor: pointer;" class="col-4 cartproduct"><div style="text-align: center;"><img src="~/Content/images/cart_white.svg" style="width: 24px;margin-top: -4px;" alt="cart" /></div></a>
-                                                            }
-
-
-                                                        </div>
-                                                        <p class="title" style="line-height: 18px;">@Html.DisplayFor(modelItem => item.title)</p>
-
-                                                    </a>
-                                                    <div style="display: flex;">
-                                                        <div class="col price">
-
-                                                            @if (item.discountprice != null)
-                                                            {
-                                                                <span>@item.discountprice€</span>
-                                                                <del>@item.price€</del>
-                                                            }
-                                                            else
-                                                            {
-                                                                if (item.custom6 != null && (item.custom6).ToString() == "True")
-                                                                {
-                                                                    <span>od @item.price€</span>
-                                                                }
-                                                                else
-                                                                {
-                                                                    if (item.price == 0)
-                                                                    {
-                                                                        <span>Cena na vyžiadanie</span>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span>@item.price€</span>
-                                                                    }
-
-                                                                }
-
-                                                            }
-
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                                counter++;
-
-                                            }
-                                        }
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    <!-- Item slider end-->
-                </div>
-            </div>
-        </section>
-        </div>
-        <div class="container-fluid">
-            <section id="blog">
-                <div class="row py-0">
-
-                    <div class="col-md-12">
-                        <div class="row katbg">
-                            <div class="container firstcont"></div>
-                            <div class="container">
-                                <div class="col-12 pb-5 mt-5 text-center" id="klima-otazky">
-                                    <h2>
-                                        Ako vlastne funguje klimatizácia?
-                                    </h2>
-                                    <h2>
-                                        Aký typ vnútornej jednotky si mám vybrať ?
-                                    </h2>
-                                    <p class="pt-3 pb-4">
-                                        Odpoveď na tieto otázky a mnoho ďalších nájdete v našej <strong>sekci často kladené otázky</strong>. Ak vás zaujímajú
-                                        <strong>najnovšie trendy v oblasi klimatizácie a vzduchotechniky</strong> určite navštívte sekciu s aktualitami.
-                                    </p>
-
-                                    <a href="https://nahod.sk/blog" class="product_detail">
-                                        <p class="btn btn-color-white">RADY A AKTUALITY</p>
-                                    </a>
-                                    <a href="/s/faq" class="product_detail">
-                                        <p class="btn btn-color-white">ČASTO KLADENÉ OTÁZKY</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <script src="~/Scripts/add_to_session.js"></script>
-
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script>
-            <script type="text/javascript" src="~/Scripts/slick.min.js"></script>
-            <script src="~/Scripts/product_slider.js"></script>
-
-            <script>
-                function openNav() {
-                    document.getElementById("mySidebar").style.width = "250px";
-                    document.getElementById("main").style.marginLeft = "250px";
-                }
-
-                function closeNav() {
-                    document.getElementById("mySidebar").style.width = "0";
-                    document.getElementById("main").style.marginLeft = "0";
-                }
-                /*LOAD MORE FUNCTION*/
-                $(document).ready(function () {
-                    $(".categorycontent").slice(0, 6).show();
-                    $("#loadLess").hide();
-                    $("#loadMore").on("click", function (e) {
-                        e.preventDefault();
-                        $(".categorycontent:hidden").slice(0, 6).slideDown();
-                        if ($(".categorycontent:hidden").length == 0) {
-                            $("#loadMore").hide();
-                        }
-
-                        if ($(".categorycontent:hidden").length >= 0) {
-                            $("#loadLess").show();
-                        } else {
-                            $("#loadLess").hide();
-                        }
-
-                    });
-                    $("#loadLess").on("click", function (e) {
-                        e.preventDefault();
-                        var size = $(".categorycontent").length - $(".categorycontent:hidden").length;
-                        $(".categorycontent").slice(size - 6, size).slideUp();
-                        if (size < 13) {
-                            $("#loadLess").hide();
-                        }
-                        if ($(".categorycontent:hidden").length >= 0) {
-                            $("#loadMore").show();
-                        }
-                    });
-                });
-            </script>
-
-*@
+    });
+</script>

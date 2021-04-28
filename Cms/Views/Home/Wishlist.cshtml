@@ -16,7 +16,7 @@
         display: none !important;
     }
 </style>
-<div class="container">
+<div class="container-fluid w-75">
 
     @using (Html.BeginForm("NewOrder", "Orders", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform", name = "", onsubmit = "return validateWishlistForm()" }))
     {
