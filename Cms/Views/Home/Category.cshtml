@@ -38,7 +38,7 @@
                     ViewBag.Title = cat.name + " -";
                     ViewBag.Description = cat.description;
                     catName = cat.name;
-                    mainCatName  = cat.maincat;
+                    mainCatName = cat.maincat;
 
                     if (cat.maincat == "Žiadna")
                     {
@@ -69,28 +69,28 @@
                 ViewBag.Title = "Produkty v zľave -";
             }
 
-        <div class="container-fluid">
-            <div class="row justify-content-md">
-                @foreach (var cat in Model.CategoriesModel.Where(i => i.maincat == catName && i.topcat == "Žiadna"))
-                {
-                    <div class="col-md-auto subcatthumb py-2 m-1">
-                        <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(nameofcat), subslug = @Html.Raw(cat.slug)})">
-                            <div style="background-image: url(/Uploads/@cat.image); background-size: contain;"></div>
-                            <p>@cat.name</p>
-                        </a>
-                    </div>
-                }
-                @foreach (var cat in Model.CategoriesModel.Where(i => i.maincat == mainCatName && i.topcat == catName))
-                {
-                    <div class="col-md-auto subcatthumb py-2 m-1">
-                        <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(nameofcat), subslug = @Html.Raw(cat.slug)})">
-                            <div style="background-image: url(/Uploads/@cat.image); background-size: contain;"></div>
-                            <p>@cat.name</p>
-                        </a>
-                    </div>
-                }
+            <div class="container-fluid">
+                <div class="row justify-content-md">
+                    @foreach (var cat in Model.CategoriesModel.Where(i => i.maincat == catName && i.topcat == "Žiadna"))
+                    {
+                        <div class="col-md-auto subcatthumb py-2 m-1">
+                            <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(nameofcat), subslug = @Html.Raw(cat.slug)})">
+                                <div style="background-image: url(/Uploads/@cat.image); background-size: contain;"></div>
+                                <p>@cat.name</p>
+                            </a>
+                        </div>
+                    }
+                    @foreach (var cat in Model.CategoriesModel.Where(i => i.maincat == mainCatName && i.topcat == catName))
+                    {
+                        <div class="col-md-auto subcatthumb py-2 m-1">
+                            <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(nameofcat), subslug = @Html.Raw(cat.slug)})">
+                                <div style="background-image: url(/Uploads/@cat.image); background-size: contain;"></div>
+                                <p>@cat.name</p>
+                            </a>
+                        </div>
+                    }
+                </div>
             </div>
-        </div>
             <hr />
 
             @{

@@ -53,6 +53,9 @@
           <Property Name="topcat2" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="image" Type="text" />
           <Property Name="priority" Type="int" />
+          <Property Name="heureka" Type="bool" Nullable="false" />
+          <Property Name="heurekadarcek" Type="bool" Nullable="false" />
+          <Property Name="heurekadarcektext" Type="text" />
           <Property Name="deleted" Type="bool" Nullable="false" />
         </EntityType>
         <EntityType Name="coupons">
@@ -362,7 +365,6 @@
           <EntitySet Name="wishlist" EntityType="hobcModel.wishlist" />
           <EntitySet Name="attributes" EntityType="hobcModel.attributes" />
           <EntitySet Name="brands" EntityType="hobcModel.brands" />
-          <EntitySet Name="categories" EntityType="hobcModel.categories" />
           <EntitySet Name="users" EntityType="hobcModel.users" />
           <EntitySet Name="types" EntityType="hobcModel.types" />
           <EntitySet Name="slideshow" EntityType="hobcModel.slideshow" />
@@ -372,6 +374,7 @@
           <EntitySet Name="usersmeta" EntityType="hobcModel.usersmeta" />
           <EntitySet Name="products" EntityType="hobcModel.products" />
           <EntitySet Name="coupons" EntityType="hobcModel.coupons" />
+          <EntitySet Name="categories" EntityType="hobcModel.categories" />
         </EntityContainer>
         <EntityType Name="blog">
           <Key>
@@ -500,21 +503,6 @@
           <Property Name="slug" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="image" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="priority" Type="Int32" />
-          <Property Name="deleted" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="categories">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="slug" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="maincat" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="topcat" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="description" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="topcat2" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="image" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="priority" Type="Int32" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
         </EntityType>
@@ -695,6 +683,24 @@
           <Property Name="active" Type="Boolean" Nullable="false" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="slug" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="maincat" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="topcat" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="topcat2" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="image" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="priority" Type="Int32" />
+          <Property Name="heureka" Type="Boolean" Nullable="false" />
+          <Property Name="heurekadarcek" Type="Boolean" Nullable="false" />
+          <Property Name="heurekadarcektext" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -834,22 +840,6 @@
                 <ScalarProperty Name="priority" ColumnName="priority" />
                 <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="slug" ColumnName="slug" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="categories">
-            <EntityTypeMapping TypeName="hobcModel.categories">
-              <MappingFragment StoreEntitySet="categories">
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="priority" ColumnName="priority" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="topcat2" ColumnName="topcat2" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="topcat" ColumnName="topcat" />
-                <ScalarProperty Name="maincat" ColumnName="maincat" />
                 <ScalarProperty Name="slug" ColumnName="slug" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -1038,6 +1028,25 @@
                 <ScalarProperty Name="limit" ColumnName="limit" />
                 <ScalarProperty Name="amount" ColumnName="amount" />
                 <ScalarProperty Name="coupon" ColumnName="coupon" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="hobcModel.categories">
+              <MappingFragment StoreEntitySet="categories">
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="heurekadarcektext" ColumnName="heurekadarcektext" />
+                <ScalarProperty Name="heurekadarcek" ColumnName="heurekadarcek" />
+                <ScalarProperty Name="heureka" ColumnName="heureka" />
+                <ScalarProperty Name="priority" ColumnName="priority" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="topcat2" ColumnName="topcat2" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="topcat" ColumnName="topcat" />
+                <ScalarProperty Name="maincat" ColumnName="maincat" />
+                <ScalarProperty Name="slug" ColumnName="slug" />
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
