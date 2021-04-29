@@ -49,6 +49,9 @@ namespace Cms.Controllers
                     model.Topcat2 = category.topcat2;
                     model.Maincat = category.maincat;
                     model.Description = category.description;
+                    model.Heureka = category.heureka;
+                    model.HeurekaDarcek = category.heurekadarcek;
+                    model.HeurekaDarcekText = category.heurekadarcektext;
                     model.Image = category.image;
                     ViewData["maincat"] = SelectionKategorieMain();
                     ViewData["topcat"] = SelectionKategorieNew();
@@ -73,6 +76,17 @@ namespace Cms.Controllers
             o.topcat = model.Topcat ?? "Žiadna";
             o.topcat2 = model.Topcat2 ?? "Žiadna";
             o.description = model.Description ?? "";
+            o.heureka = model.Heureka;
+            o.heurekadarcek = model.HeurekaDarcek;
+
+            if (model.HeurekaDarcek == true)
+            {
+                o.heurekadarcektext = model.HeurekaDarcekText;
+            }
+            else
+            {
+                o.heurekadarcektext = null;
+            }
             db.SaveChanges();
 
             return RedirectToAction("ProductCats", "Products");
@@ -1424,6 +1438,17 @@ namespace Cms.Controllers
             o.maincat = model.Categories.Maincat ?? "Žiadna";
             o.topcat = model.Categories.Topcat ?? "Žiadna";
             o.topcat2 = model.Categories.Topcat2 ?? "Žiadna";
+            o.heureka = model.Categories.Heureka;
+            o.heurekadarcek = model.Categories.HeurekaDarcek;
+
+            if (model.Categories.HeurekaDarcek == true)
+            {
+                o.heurekadarcektext = model.Categories.HeurekaDarcekText;
+            }
+            else
+            {
+                o.heurekadarcektext = null;
+            }
             o.image = ulozObrazok + nazovSuboru;
 
             db.categories.Add(o);

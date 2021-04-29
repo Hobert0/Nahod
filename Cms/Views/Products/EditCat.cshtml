@@ -56,93 +56,137 @@
 {
     @Html.AntiForgeryToken()
     @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control", id = "e-id-" + Model.Id, style = "display:none;" } })
-    <div class="form-horizontal">
+<div class="form-horizontal">
 
-        <div class="row">
-            <div class="mt-1 text-right" style="width: 180px;">
-                <strong>Názov</strong>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov" } })
-                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
+    <div class="row">
+        <div class="mt-1 text-right" style="width: 180px;">
+            <strong>Názov</strong>
         </div>
-        <div class="row">
-            <div class="mt-1 text-right" style="width: 180px;">
-                <strong>Slug</strong>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        @Html.EditorFor(model => model.Slug, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov" } })
-                        @Html.ValidationMessageFor(model => model.Slug, "", new { @class = "text-danger" })
-                    </div>
+        <div class="col-4">
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="mt-1 text-right" style="width: 180px;">
-                <strong>@Html.LabelFor(model => model.Maincat, "Hlavná kategória")</strong>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        @Html.DropDownListFor(model => model.Maincat, (IEnumerable<SelectListItem>)ViewData["maincat"], Model.Maincat, new { onchange = "maincatfuncedit(this.value," + Model.Id + ")", @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Maincat, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="mt-1 text-right" style="width: 180px;">
-                <strong>@Html.LabelFor(model => model.Topcat, "Nadradená kategória")</strong>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        @Html.DropDownListFor(model => model.Topcat, (IEnumerable<SelectListItem>)ViewData["topcat"], Model.Topcat, new { onchange = "catfuncedit(this.value," + Model.Id + ")", @class = "form-control", id = "e-top-" + Model.Id })
-                        @Html.ValidationMessageFor(model => model.Topcat, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="mt-1 text-right" style="width: 180px;">
-                <strong>@Html.LabelFor(model => model.Topcat2, "Nadradená kategória 2")</strong>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        @Html.DropDownListFor(model => model.Topcat2, (IEnumerable<SelectListItem>)ViewData["topcat2"], Model.Topcat2, new { @class = "form-control", id = "e-top2-" + Model.Id })
-                        @Html.ValidationMessageFor(model => model.Topcat2, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="mt-1 text-right" style="width: 180px;">
-                <strong>@Html.LabelFor(model => model.Description, "Popis")</strong>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Popis kategórie", id = "e-des-" + Model.Id, value = Model.Description })
-                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div style="text-align:right">
-                <input type="submit" value="Uložiť zmeny" id="btnSubmit" class="btn btn-success" />
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="mt-1 text-right" style="width: 180px;">
+            <strong>Slug</strong>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.Slug, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov" } })
+                    @Html.ValidationMessageFor(model => model.Slug, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mt-1 text-right" style="width: 180px;">
+            <strong>@Html.LabelFor(model => model.Maincat, "Hlavná kategória")</strong>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.Maincat, (IEnumerable<SelectListItem>)ViewData["maincat"], Model.Maincat, new { onchange = "maincatfuncedit(this.value," + Model.Id + ")", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Maincat, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mt-1 text-right" style="width: 180px;">
+            <strong>@Html.LabelFor(model => model.Topcat, "Nadradená kategória")</strong>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.Topcat, (IEnumerable<SelectListItem>)ViewData["topcat"], Model.Topcat, new { onchange = "catfuncedit(this.value," + Model.Id + ")", @class = "form-control", id = "e-top-" + Model.Id })
+                    @Html.ValidationMessageFor(model => model.Topcat, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mt-1 text-right" style="width: 180px;">
+            <strong>@Html.LabelFor(model => model.Topcat2, "Nadradená kategória 2")</strong>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.Topcat2, (IEnumerable<SelectListItem>)ViewData["topcat2"], Model.Topcat2, new { @class = "form-control", id = "e-top2-" + Model.Id })
+                    @Html.ValidationMessageFor(model => model.Topcat2, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mt-1 text-right" style="width: 180px;">
+            <strong>@Html.LabelFor(model => model.Description, "Popis")</strong>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Popis kategórie", id = "e-des-" + Model.Id, value = Model.Description })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mt-1 text-right" style="width: 180px;">
+            <strong>@Html.LabelFor(model => model.Heureka, "Heureka ?")</strong>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.CheckBoxFor(model => model.Heureka, new { @checked = "checked" })
+                    @Html.ValidationMessageFor(model => model.Heureka, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mt-1 text-right" style="width: 180px;">
+            <strong>@Html.LabelFor(model => model.HeurekaDarcek, "Heureka darček ?")</strong>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.CheckBoxFor(model => model.HeurekaDarcek, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.HeurekaDarcek, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @{
+        var classHelper = Model.HeurekaDarcekText == "" || Model.HeurekaDarcekText == null ? "d-none" : "";
+    }
+
+    <div class="row @classHelper">
+        <div class="mt-1 text-right" style="width: 180px;">
+            <strong>@Html.LabelFor(model => model.HeurekaDarcekText, "Heureka darček - text")</strong>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.HeurekaDarcekText, new { htmlAttributes = new { @class = "form-control", placeholder = "Heureka darček - text" } })
+                    @Html.ValidationMessageFor(model => model.HeurekaDarcekText, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div style="text-align:right">
+            <input type="submit" value="Uložiť zmeny" id="btnSubmit" class="btn btn-success" />
+        </div>
+    </div>
+</div>
 }
 
 <script src="/Scripts/umd/popper.min.js"></script>
@@ -151,6 +195,17 @@
 <script src="http://malsup.github.com/jquery.form.js"></script>
 
 <script>
+
+    $(document).ready(function () {
+        $("#HeurekaDarcek").click(function () {
+            if ($("#HeurekaDarcek").is(":checked")) {
+                $("#HeurekaDarcekText").parents(".row").removeClass("d-none");
+            } else {
+                $("#HeurekaDarcekText").parents(".row").addClass("d-none");
+            }
+        });
+    });
+
     $("#btn_vis").click(function () {
         $("#bttn").trigger('click');
     });

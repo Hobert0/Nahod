@@ -203,12 +203,11 @@ namespace Cms.Controllers
             return View(model);
         }
 
-        [Route("typ/{typ}/{page?}/{id?}")]
-        public ActionResult Type(string typ)
+        [Route("typ/{typ}/{catslug?}/{page?}/{id?}")]
+        public ActionResult Type(string typ, string catslug)
         {
 
             var model = new MultipleIndexModel();
-            model.ProductModel = db.products.Where(i => i.type.Contains(typ)).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
@@ -216,11 +215,22 @@ namespace Cms.Controllers
             model.BrandsModel = db.brands.ToList();
             model.TypesModel = db.types.ToList();
             model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
-            var kategoria = db.types.Where(i => i.slug == typ).Select(o => o.name);
-            var categoryID = db.types.Where(i => i.slug == typ).First().id;
+            var type = db.types.Where(i => i.slug == typ).Select(o => o.name);
+            var typeId = db.types.Where(i => i.slug == typ).First().id;
 
-            ViewData["Category"] = kategoria;
-            ViewData["CatId"] = categoryID;
+
+            if (catslug == null || catslug == "")
+            {
+                model.ProductModel = db.products.Where(i => i.type.Contains(typeId.ToString())).ToList();
+            }
+            else
+            {
+                var catId = db.categories.Where(i => i.slug == catslug).First().id;
+                model.ProductModel = db.products.Where(i => i.type.Contains(typeId.ToString()) && i.category.Contains(catId.ToString())).ToList();
+            }
+
+            ViewData["Category"] = type;
+            ViewData["CatId"] = typeId;
 
             return View(model);
         }
@@ -312,10 +322,22 @@ namespace Cms.Controllers
             var url_part2 = "";
             var url_part3 = "";
 
-            model.ProductModel = db.products.ToList();
+            //model.ProductModel = db.products.Where(i => i.deleted == false && i.heureka == true).ToList();
+            //var prods = db.products.Where(i => i.deleted == false && i.heureka == true).ToList();
             model.BrandsModel = db.brands.ToList();
-            model.CategoriesModel = db.categories.ToList();
+            model.CategoriesModel = db.categories.Where(i => i.deleted == false).ToList();
+            var cats = db.categories.Where(i => i.deleted == false && i.heureka == true).ToList();
             model.EsettingsModel = db.e_settings.ToList();
+
+            List<products> finalProds = new List<products>();
+
+            foreach (var cat in cats)
+            {
+                var catId = cat.id.ToString();
+
+                var filteredProds = db.products.Where(i => i.deleted == false && i.heureka == true && i.category.Contains(catId)).ToList();
+                finalProds.AddRange(filteredProds);
+            }
 
             XDocument xdoc = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes")
@@ -324,8 +346,7 @@ namespace Cms.Controllers
             XElement xRoot = new XElement("SHOP");
             xdoc.Add(xRoot);
 
-            /*ZMENIT*/
-            foreach (var product in model.ProductModel)
+            foreach (var product in finalProds)
             {
                 XElement xRoot2 = new XElement("SHOPITEM");
                 XElement doc = new XElement("ITEM_ID", product.id);
@@ -341,23 +362,9 @@ namespace Cms.Controllers
                 foreach (var brand in model.BrandsModel.Where(i => i.id == Int32.Parse(product.custom3)))
                 {
                     doc10 = new XElement("MANUFACTURER", "<![CDATA[" + brand.name + "]]");
-                }
+                } 
 
-                foreach (var cat in model.CategoriesModel.Where(i => i.id == Int32.Parse(product.category)))
-                {
-                    foreach (var topcat in model.CategoriesModel.Where(o => o.name == cat.topcat))
-                    {
-                        url_part1 = topcat.name;
-
-                        foreach (var subcat in model.CategoriesModel.Where(o => o.name == cat.topcat2 && o.topcat == cat.topcat))
-                        {
-                            url_part2 = subcat.name;
-                            url_part3 = cat.name;
-                        }
-                    }
-                }
-
-                XElement doc11 = new XElement("CATEGORYTEXT", url_part1 + " | " + url_part2 + " | " + url_part3);
+                
                 XElement doc13 = new XElement("PRODUCTNO", product.number);
                 XElement doc14 = new XElement("DELIVERY_DATE", "4");
                 XElement doc12 = null;
@@ -402,7 +409,39 @@ namespace Cms.Controllers
                 xRoot2.Add(doc8);
                 xRoot2.Add(doc9);
                 xRoot2.Add(doc10);
-                xRoot2.Add(doc11);
+
+                dynamic cats2 = JsonConvert.DeserializeObject(product.category);
+                foreach (var thisCatId in cats2)
+                {
+
+                    url_part1 = "";
+                    url_part2 = "";
+                    url_part3 = "";
+
+                    int thisCatIdInt = Int32.Parse(thisCatId.Value.ToString());
+                    var cat = model.CategoriesModel.Where(o => o.id == thisCatIdInt).FirstOrDefault();
+
+                    if (cat.maincat != "Žiadna")
+                    {
+                        foreach (var topcat in model.CategoriesModel.Where(o => o.name == cat.maincat))
+                        {
+                            url_part1 = topcat.name;
+
+                            foreach (var subcat in model.CategoriesModel.Where(o => o.name == cat.topcat && o.topcat == cat.maincat))
+                            {
+                                url_part2 = subcat.name;
+                                url_part3 = cat.name;
+                            }
+                        }
+                    }
+                    else {
+                        url_part1 = cat.name;
+                    }
+
+                    XElement doc11 = new XElement("CATEGORYTEXT", url_part1 + " | " + url_part2 + " | " + url_part3);
+                    xRoot2.Add(doc11);
+                }
+             
                 xRoot2.Add(doc13);
                 xRoot2.Add(doc14);
                 xRoot2.Add(doc12);
