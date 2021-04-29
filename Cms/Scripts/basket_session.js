@@ -60,6 +60,8 @@ function decreaseCount(productid) {
         var result = Object.keys(jsonObj).map(function (key) {
             return jsonObj[key];
         });
+
+        $.ajaxSetup({ async: false });  
         $.post("/cartsession", $.param({ cartValues: JSON.stringify(result) }, true));
 
         window.location.reload();
@@ -115,6 +117,7 @@ function increaseCount(productid) {
     var result = Object.keys(jsonObj).map(function (key) {
         return jsonObj[key];
     });
+    $.ajaxSetup({ async: false });  
     $.post("/cartsession", $.param({ cartValues: JSON.stringify(result) }, true));
 
     window.location.reload();
@@ -155,6 +158,7 @@ function refreshCart() {
     var result = Object.keys(jsonObj).map(function (key) {
         return jsonObj[key];
     });
+    $.ajaxSetup({ async: false });
     $.post("/cartsession", $.param({ cartValues: JSON.stringify(result) }, true));
 
     window.location.reload();
@@ -204,6 +208,7 @@ function removeFromCart(event) {
     var result = Object.keys(jsonObj).map(function (key) {
         return jsonObj[key];
     });
+    $.ajaxSetup({ async: false });
     $.post("/cartsession", $.param({ cartValues: JSON.stringify(result) }, true));
 
     window.location.reload();
