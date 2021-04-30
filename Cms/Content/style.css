@@ -1446,8 +1446,7 @@ button:focus {
 }
 
 .cart-item-amount {
-    text-align: center;
-    height: 50px;
+height: 50px;
 }
 
     .cart-item-amount input[type=number] {
@@ -1467,8 +1466,8 @@ button:focus {
 }
 
     .product-cart .add-to-cart {
-        display: flex;
-        align-items: flex-end;
+        display: block;
+        margin: auto 0 0;
     }
 
         .product-cart .add-to-cart button {

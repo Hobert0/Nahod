@@ -166,11 +166,11 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
         $row += '</div><div class="prod-header">' + item.title + '</div>';
 
         var shortdescription = "";
-        if (item.description != null) {
-            shortdescription = item.description.substring(0, 150) + "...";
+        if (item.description != null) {            
+            shortdescription = stripHtml(item.description).substring(0, 60) + "...";
         }
 
-        $row += '<div class="prod-text">' + stripHtml(shortdescription) + '</div>';
+        $row += '<div class="prod-text">' + shortdescription + '</div>';
         $row += '<div class="prod-prices">';
 
         let variantPriceFrom = 99999;

@@ -66,13 +66,13 @@
                         if (prod.description != null && prod.description != "")
                         {
                             shortdescription = Regex.Replace(prod.description, "<.*?>", String.Empty);
-                            if (prod.description.Length > 100)
+                            if (shortdescription.Length > 60)
                             {
-                                shortdescription = shortdescription.Substring(0, 100) + "...";
+                                shortdescription = shortdescription.Substring(0, 60) + "...";
                             }
                         }
                     }
-                    <div class="prod-text">@shortdescription</div>
+                    <div class="prod-text">@Html.Raw(shortdescription)</div>
 
                     <div class="prod-prices">
                         @{
