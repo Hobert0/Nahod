@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -359,11 +360,13 @@ namespace Cms.Controllers
 
             foreach (var product in finalProds)
             {
+                var prodDesc = Regex.Replace(product.description, "<.*?>", String.Empty);
+
                 XElement xRoot2 = new XElement("SHOPITEM");
                 XElement doc = new XElement("ITEM_ID", product.id);
                 XElement doc2 = new XElement("PRODUCTNAME", product.title);
                 XElement doc3 = new XElement("PRODUCT", product.title);
-                XElement doc4 = new XElement("DESCRIPTION", product.description);
+                XElement doc4 = new XElement("DESCRIPTION", prodDesc);
                 XElement doc5 = new XElement("URL", "https://shop.nahod.sk" + Url.Action("ProductDetail", "Home", new { id = product.id }));
                 XElement doc6 = new XElement("IMGURL", "https://shop.nahod.sk/Uploads/" + product.image);
                 XElement doc7 = new XElement("IMGURL_ALTERNATIVE", "https://shop.nahod.sk/Uploads/" + product.image);

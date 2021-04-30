@@ -1,16 +1,19 @@
 ﻿@model Cms.Models.MultipleIndexModel
 @{
     var authorized = Request.QueryString["authorize"];
-if (authorized == "False")
+    if (authorized == "False")
     {
-<style>
-.modal{ display: block; }
-    .wrongpass {
-        display: block !important;
+        <style>
+            .modal {
+                display: block;
+            }
+
+            .wrongpass {
+                display: block !important;
+            }
+        </style>
     }
-    </style>
-}
-    
+
 }
 <!-- The Modal -->
 <div id="myModal" class="modal">
@@ -56,6 +59,9 @@ if (authorized == "False")
                             </div>
                         </div>
                     </div>
+
+                    @Html.HiddenFor(model => model.AdminLoginModel.ReturnUrl, new { Value = HttpContext.Current.Request.Url.AbsoluteUri })
+                
                 }
             </div>
             <div class="col-12 col-md-6">

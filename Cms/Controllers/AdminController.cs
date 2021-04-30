@@ -273,7 +273,9 @@ namespace Cms.Controllers
             Session["role"] = 1;
             Session["userid"] = db.users.Where(i => i.email == model.AdminLoginModel.Username).Select(i => i.id).FirstOrDefault();
 
-            return RedirectToAction("Index", "Home", new { register = true });
+            string returnUrl = model.UsersmetaModel.ReturnUrl;
+            return Redirect(returnUrl);
+            //return RedirectToAction("Index", "Home", new { register = true });
         }
 
         [HttpPost]
@@ -345,9 +347,9 @@ namespace Cms.Controllers
 
 
                 }
-
-
-                return RedirectToAction("Index", "Home");
+                
+                string returnUrl = obj.AdminLoginModel.ReturnUrl + "?userLogin=true";
+                return Redirect(returnUrl);
             }
 
 
