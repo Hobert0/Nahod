@@ -29,7 +29,9 @@ namespace Cms.Controllers
             }
             else if (type)
             {
-                result = new { data = FetchByType(catslug).ProductModel, variants };
+                //subslug - kategoria level 1
+                //subslug2 - kategoria level 2
+                result = new { data = FetchByType(catslug, subslug, subslug2).ProductModel, variants };
             }
             else if (searchparam)
             {
@@ -252,12 +254,23 @@ namespace Cms.Controllers
 
             return model;
         }
-        private MultipleIndexModel FetchByType(string type)
+        private MultipleIndexModel FetchByType(string type, string catSlug1, string catSlug2)
         {
-            var categoryID = db.types.Where(i => i.slug == type).First().id.ToString();
-
+            var typeID = db.types.Where(i => i.slug == type).First().id.ToString();
             var model = new MultipleIndexModel();
-            model.ProductModel = db.products.Where(c => c.type.Contains(categoryID)).OrderByDescending(x => x.id).ToList();
+
+            if (catSlug1 != null && catSlug2 == null) {
+                
+                var catId = db.categories.Where(i => i.slug == catSlug1).First().id.ToString();
+                model.ProductModel = db.products.Where(i => i.type.Contains(typeID) && i.category.Contains(catId)).OrderByDescending(x => x.id).ToList();
+            } else if (catSlug1 != null && catSlug2 != null) {
+                
+                var catId = db.categories.Where(i => i.slug == catSlug2).First().id.ToString();
+                model.ProductModel = db.products.Where(i => i.type.Contains(typeID) && i.category.Contains(catId)).OrderByDescending(x => x.id).ToList();
+            }
+            else {
+                model.ProductModel = db.products.Where(c => c.type.Contains(typeID)).OrderByDescending(x => x.id).ToList();
+            }
 
             return model;
         }

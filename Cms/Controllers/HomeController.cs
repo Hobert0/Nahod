@@ -203,8 +203,8 @@ namespace Cms.Controllers
             return View(model);
         }
 
-        [Route("typ/{typ}/{catslug?}/{page?}/{id?}")]
-        public ActionResult Type(string typ, string catslug)
+        [Route("typ/{typ}/{catslug?}/{subslug?}/{page?}/{id?}")]
+        public ActionResult Type(string typ, string catslug, string subslug)
         {
 
             var model = new MultipleIndexModel();
@@ -218,19 +218,30 @@ namespace Cms.Controllers
             var type = db.types.Where(i => i.slug == typ).Select(o => o.name);
             var typeId = db.types.Where(i => i.slug == typ).First().id;
 
-
-            if (catslug == null || catslug == "")
-            {
-                model.ProductModel = db.products.Where(i => i.type.Contains(typeId.ToString())).ToList();
-            }
-            else
+            //2.level .. vsetky kategorie produktov ktore su v danom type a maju kategoriu
+            if (catslug != null && subslug == null)
             {
                 var catId = db.categories.Where(i => i.slug == catslug).First().id;
                 model.ProductModel = db.products.Where(i => i.type.Contains(typeId.ToString()) && i.category.Contains(catId.ToString())).ToList();
             }
 
+            //3.level .. vsetky kategorie produktov ktore su v danom type a maju subkategoriu
+            else if (catslug != null && subslug != null) {
+                var catId = db.categories.Where(i => i.slug == subslug).First().id;
+                model.ProductModel = db.products.Where(i => i.type.Contains(typeId.ToString()) && i.category.Contains(catId.ToString())).ToList();
+            }
+            //1.level .. vsetky unikatne kategorie danych produktov v zaradeni
+            else
+            {
+                model.ProductModel = db.products.Where(i => i.type.Contains(typeId.ToString())).ToList();
+            }
+
             ViewData["Category"] = type;
             ViewData["CatId"] = typeId;
+
+
+            ViewData["catslug"] = catslug;
+            ViewData["subslug"] = subslug;
 
             return View(model);
         }

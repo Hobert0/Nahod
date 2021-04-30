@@ -21,6 +21,9 @@
     {
         catID = Int32.Parse(ViewData["CatId"].ToString());
     }
+
+    var categorySlug = (string)ViewData["catslug"];
+    var categorySubSlug = (string)ViewData["subslug"];
 }
 <style>
     #front-picture, #services {
@@ -38,7 +41,25 @@
                     ViewBag.Description = cat.description;
                     catName = cat.name;
                     catSlug = cat.slug;
-                    <h2>@Html.Raw(cat.name)</h2>
+
+
+                    if (categorySlug == null)
+                    {
+                        <h2>@Html.Raw(cat.name)</h2>
+                    }
+                    else if (categorySlug != null && categorySubSlug == null)
+                    {
+                        var firstCat = Model.CategoriesModel.Where(i => i.slug == categorySlug).FirstOrDefault();
+
+                        <h2>@Html.Raw(cat.name) / @Html.Raw(firstCat.name)</h2>
+                    }
+                    else if (categorySlug != null && categorySubSlug != null)
+                    {
+                        var firstCat = Model.CategoriesModel.Where(i => i.slug == categorySlug).FirstOrDefault();
+                        var secondCat = Model.CategoriesModel.Where(i => i.slug == categorySubSlug).FirstOrDefault();
+
+                        <h2>@Html.Raw(cat.name) / @Html.Raw(firstCat.name) / @Html.Raw(secondCat.name)</h2>
+                    }
                 }
             }
 
@@ -47,6 +68,7 @@
 
 
                     @{
+
                         var prods = Model.ProductModel.ToList();
                         HashSet<int> catIds = new HashSet<int>();
                         foreach (var prod in prods)
@@ -62,20 +84,34 @@
 
                         foreach (var finalCatId in catIds)
                         {
-                            //1 level
-                            var thisCat = Model.CategoriesModel.Where(i => i.id == finalCatId && i.maincat == "Žiadna").FirstOrDefault();
-                            //2 level - maincat != Ziadna a topcat == Ziadna?
-
-                            if (thisCat != null)
+                            if (categorySlug == null)
                             {
-                                <div class="col-md-auto subcatthumb py-2 m-1">
-                                    <a href="@Url.Action("Type", "Home", new { catslug = @Html.Raw(thisCat.slug) })">
-                                        <div style="background-image: url(/Uploads/@thisCat.image); background-size: contain;"></div>
-                                        <p>@thisCat.name</p>
-                                    </a>
-                                </div>
-                            }
+                                var thisCat = Model.CategoriesModel.Where(i => i.id == finalCatId && i.maincat == "Žiadna").FirstOrDefault();
 
+                                if (thisCat != null)
+                                {
+                                    <div class="col-md-auto subcatthumb py-2 m-1">
+                                        <a href="@Url.Action("Type", "Home", new { catslug = @Html.Raw(thisCat.slug) })">
+                                            <div style="background-image: url(/Uploads/@thisCat.image); background-size: contain;"></div>
+                                            <p>@thisCat.name</p>
+                                        </a>
+                                    </div>
+                                }
+                            }
+                            else if (categorySlug != null && categorySubSlug == null)
+                            {
+                                var thisCat = Model.CategoriesModel.Where(i => i.id == finalCatId && i.maincat != "Žiadna").FirstOrDefault();
+
+                                if (thisCat != null)
+                                {
+                                    <div class="col-md-auto subcatthumb py-2 m-1">
+                                        <a href="@Url.Action("Type", "Home", new { catslug = @Html.Raw(categorySlug), subslug = @Html.Raw(thisCat.slug) })">
+                                            <div style="background-image: url(/Uploads/@thisCat.image); background-size: contain;"></div>
+                                            <p>@thisCat.name</p>
+                                        </a>
+                                    </div>
+                                }
+                            }
                         }
                     }
 
