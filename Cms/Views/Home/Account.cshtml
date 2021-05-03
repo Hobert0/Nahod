@@ -13,6 +13,44 @@
 
     <h2 class="pt-5">Zoznam vašich posledných objednávok</h2>
     <hr />
+
+    @foreach (var userMeta in Model.AllUsersMetaModel)
+    {
+        int rating = userMeta.rating;
+        decimal sum = userMeta.sum;
+
+        string actualDiscount = "";
+        string nextDiscount = "";
+        decimal remainingSum = 0;
+        string discountLevel = "";
+
+        switch (rating)
+        {
+            case 1:
+                actualDiscount = "5%";
+                nextDiscount = "10%";
+                remainingSum = 500 - sum;
+                discountLevel = "strieborným";
+
+                break;
+            case 2:
+                actualDiscount = "10%";
+                nextDiscount = "15%";
+                remainingSum = 1000 - sum;
+                discountLevel = "zlatým";
+                break;
+
+        }
+
+        if (remainingSum > 0)
+        {
+            <div class="alert alert-primary" role="alert">
+                @Html.Raw("Vaša aktuálna zlava je " + actualDiscount + ". Nakúpte ešte za " + remainingSum.ToString("N2") + "€ a stanete sa " + discountLevel + " zákazníkom a vaša zlava sa zvýši na " + nextDiscount + ".")
+            </div>
+        }
+    }
+
+    <hr />
     <table class="table mb-5" style="font-size: 14px;">
         <thead class="thead-light">
             <tr>

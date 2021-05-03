@@ -26,9 +26,9 @@ html, body {
             outline-width: 0px;
         }
 
-    .header-top .info .icon {
-        width: 15px;
-        margin-right: 10px;
+    .header-top .info i {
+        font-size: 15px;
+        margin-right: 5px;
     }
 
     .header-top .info span {
@@ -423,7 +423,7 @@ html, body {
     }
 
 .articles {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     margin-top: 40px;
 }
 
@@ -436,31 +436,35 @@ html, body {
         margin-bottom: 20px;
     }
 
-    .articles .article:hover {
-        text-decoration: none;
+    .articles .article {
+        margin-bottom: 20px;
     }
 
-    .articles .article img {
-        width: 100%;
-    }
-
-    .articles .article .header {
-        font-weight: bold;
-        text-align: center;
-        margin-top: 10px;
-        font-size: 14px;
-        color: black;
-    }
-
-    .articles .article .date {
-        font-size: 12px;
-        text-align: center;
-        color: rgba(0,0,0,0.5);
-    }
-
-        .articles .article .date i {
-            margin-right: 5px;
+        .articles .article:hover {
+            text-decoration: none;
         }
+
+        .articles .article img {
+            width: 100%;
+        }
+
+        .articles .article .header {
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            color: black;
+        }
+
+        .articles .article .date {
+            font-size: 12px;
+            text-align: center;
+            color: rgba(0,0,0,0.5);
+        }
+
+            .articles .article .date i {
+                margin-right: 5px;
+            }
 
 .footer-wrapper {
     background-color: #242223;
@@ -539,3 +543,8 @@ html, body {
     .error a {
         color: red !important;
     }
+
+
+.slick-slider {
+    margin-bottom: 0px !important;
+}

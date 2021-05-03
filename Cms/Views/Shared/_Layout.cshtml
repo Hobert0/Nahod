@@ -177,18 +177,32 @@
 
     <div class="container-fluid w-75">
         <div class="row d-flex align-items-center header-top">
-            <div class="col-md-2">
-                <a href="/">
-                    <img class="logo" src="/Content/images/logo-nahod-sk.svg">
-                </a>
-                <div class="row mobile-menu">
-                    <div id="main">
-                        <button class="openbtn" onclick="openNav()">☰ Kategórie</button>
+            <div class="col-lg-2 col-md-2 col-sm-12 col-12">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-lg-12 col-md-12 col-sm-4 col-4">
+                        <a href="/">
+                            <img class="logo" src="/Content/images/logo-nahod-sk.svg">
+                        </a>
+                    </div>
+                    <div class="col-sm-8 col-8 d-block d-sm-block d-md-none d-lg-none">
+                        <div class="row justify-content-end">
+                            <div id="main col-sm-8 col-6 justify-content-end">
+                                <button class="openbtn" onclick="openNav()">☰ Kategórie</button>
+                            </div>
+
+                            <div class="col-sm-4 col-6 cart d-flex align-items-center justify-content-end">
+                                <a href="@Url.Action("Basket", "Home")">
+                                    <i class="icon-fishing-net"></i>
+                                    <span id="cart-qty" class="cart-qty">@cartitems</span>
+                                    <span id="cart-total" class="cart-total">@cartsum.ToString("n2") €</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-4 search">
+            <div class="col-lg-4 col-md-4 col-sm-12 search">
 
                 @using (Html.BeginForm("SearchProduct", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform", @class = "form-inline search" }))
                 {
@@ -197,21 +211,24 @@
             </div>
 
 
-            <div class="col-md-4 info">
+            <div class="col-lg-4 col-md-3 col-sm-12 info">
                 <div class="row">
-                    <div class="col-md-4 d-flex align-items-center">
-                        <img class="icon" src="~/Content/images/phone-call.svg">
-                        <span>+421 948 610 250</span>
+                    <div class="col-lg-6 d-md-none d-lg-flex align-items-center flex-wrap">
+                        <div>
+                            <i class="icon-phone"></i>
+                            <span>+421 948 610 250</span>
+                        </div>
+                        <div>
+                            <i class="icon-envelope"></i>
+                            <span>info@nahod.sk</span>
+                        </div>
                     </div>
-                    <div class="col-md-4 d-flex align-items-center">
-                        <img class="icon" src="~/Content/images/envelope.svg">
-                        <span>info@nahod.sk</span>
-                    </div>
-                    <div class="col-md-4 d-flex align-items-center">
+                    <div class="col-lg-6 col-md-12 d-flex align-items-center">
                         @{
                             if (username != "")
                             {
-                                <img class="icon" src="~/Content/images/phone-call.svg"><span>
+                                <i class="icon-user"></i>
+                                <span>
                                     Vitajte @username!<br>
                                     @if (role == "0")
                                     {
@@ -225,14 +242,14 @@
                             }
                             else
                             {
-                                <img class="icon" src="~/Content/images/phone-call.svg">
+                                <i class="icon-user"></i>
                                 <span><a href="#" class="login-modal">Prihlásiť sa</a> / <a href="#" class="register-modal">Registrovať</a></span>
                             }
                         }
                     </div>
                 </div>
             </div>
-            <div class="col-md-2 cart d-flex align-items-center">
+            <div class="col-lg-2 col-md-3 d-md-flex d-sm-none d-none cart align-items-center">
 
                 <a href="@Url.Action("Basket", "Home")">
                     <i class="icon-fishing-net"></i>
@@ -379,14 +396,6 @@
         }
     </div>
 
-
-
-
-    @*LOGIN MODAL*@
-    <<<<<<< HEAD
-
-    =======
-    >>>>>>> 92c98406b5b2e86f8f43fe5fff469c214bd5c220
     <script>
         function onSubmit(token) {
             document.getElementById("Subscribeform").submit();
@@ -485,6 +494,7 @@
             $("#myModalReg .closereg").click(function () {
                 $("#myModalReg").css("display", "none");
             });
+        });
 
     </script>
 
@@ -493,7 +503,6 @@
         {
             Entities db = new Entities();
             var userId = (int)Session["userid"];
-            var user = db.users.Where(i => i.id == userId).FirstOrDefault();
             var userMeta = db.usersmeta.Where(i => i.userid == userId).FirstOrDefault();
 
             int rating = userMeta.rating;
@@ -522,37 +531,36 @@
 
             }
 
-            if (remainingSum > 0) { 
+            if (remainingSum > 0 && Request.QueryString["userLogin"] == "true")
+            {
                 <script>
-
-
-
-                    $loginStr = "Vaša aktuálna zlava je actualDiscount%. Nakúpte ešte za remainingSum€ a stanete sa discountLevel zákazníkom a vaša zlava sa zvýši na nextDiscount%";
-                    toastr["warning"]($loginStr);
-                    toastr.options = {
-                        "closeButton": true,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": false,
-                        "positionClass": "toast-top-right",
-                        "preventDuplicates": false,
-                        "showDuration": "300",
-                        "hideDuration": "1000",
-                        "timeOut": "5000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
-                    }
-
+                    $(document).ready(function () {
+                        $loginStr = "Vaša aktuálna zlava je @actualDiscount. Nakúpte ešte za @remainingSum.ToString("N2") € a stanete sa @discountLevel zákazníkom a vaša zlava sa zvýši na @nextDiscount.";
+                        toastr["success"]($loginStr);
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": false,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "15000",
+                            "extendedTimeOut": "5000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+                    });
                 </script>
             }
         }
     }
 
 
-    });
+
 
 
 </body>

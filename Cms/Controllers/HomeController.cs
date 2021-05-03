@@ -589,6 +589,8 @@ namespace Cms.Controllers
                         Icdph = user.icdph,
                     };
                 }
+
+                model.AllUsersMetaModel = db.usersmeta.Where(i => i.userid == usID).ToList();
             }
             return View(model);
         }

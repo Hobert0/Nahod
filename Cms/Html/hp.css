@@ -26,8 +26,8 @@ html, body {
             outline-width: 0px;
         }
 
-    .header-top .info .icon {
-        width: 15px;
+    .header-top .info i {
+        font-size: 15px;
         margin-right: 10px;
     }
 

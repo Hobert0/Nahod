@@ -143,13 +143,14 @@
                             <strong>Kód produktu: </strong>@prod.number<br />
                             <strong>Dostupnosť: </strong>@Html.Raw(onStock)<br />
                             @{
-                                if (prod.custom3 != "" && prod.custom3 != null) {
+                                if (prod.custom3 != "" && prod.custom3 != null)
+                                {
                                     foreach (var brand in Model.BrandsModel.Where(i => i.id == Int32.Parse(prod.custom3)))
                                     {
-                                    <strong>Výrobca: </strong><a href="">@Html.Raw(brand.name)</a><br />
-                                        }
+                                        <strong>Výrobca: </strong><a href="">@Html.Raw(brand.name)</a><br />
                                     }
                                 }
+                            }
                             @Html.Raw((prod.custom8 != "" && prod.custom8 != null) ? "<strong>Typ: </strong>" + Html.Raw(prod.custom8) + "<br />" : "")
                             @Html.Raw((prod.custom9 != "" && prod.custom9 != null) ? "<strong>Výkon: </strong>" + Html.Raw(prod.custom9) + " kW<br />" : "")
                             @Html.Raw((prod.custom10 != "" && prod.custom10 != null) ? "<strong>Rozloha miestnosti: </strong>" + Html.Raw(prod.custom10) + " m<sup>2</sup><br />" : "")
