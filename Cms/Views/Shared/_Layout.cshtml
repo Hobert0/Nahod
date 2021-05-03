@@ -1,5 +1,5 @@
 ﻿@model Cms.Models.MultipleIndexModel
-
+@using Cms.Models;
 
 
 @{
@@ -383,7 +383,10 @@
 
 
     @*LOGIN MODAL*@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 92c98406b5b2e86f8f43fe5fff469c214bd5c220
     <script>
         function onSubmit(token) {
             document.getElementById("Subscribeform").submit();
@@ -482,8 +485,80 @@
             $("#myModalReg .closereg").click(function () {
                 $("#myModalReg").css("display", "none");
             });
+
+            /*
+
+                $loginStr = "Vaša aktuálna zlava je actualDiscount%. Nakúpte ešte za remainingSum€ a stanete sa discountLevel zákazníkom a vaša zlava sa zvýši na nextDiscount%";
+            toastr["warning"]($loginStr);
+                toastr.options = {
+                    "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+                }
+
+
+             */
+
+            //ak je pritomny GET parameter userLogin tak zobrazime info o clenstve
+
+            @{
+                if (Session["userid"] != null)
+                {
+                    Entities db = new Entities();
+                    var userId = (int)Session["userid"];
+                    var user = db.users.Where(i => i.id == userId).FirstOrDefault();
+                    var userMeta = db.usersmeta.Where(i => i.userid == userId).FirstOrDefault();
+
+                    int rating = userMeta.rating;
+                    decimal sum = userMeta.sum;
+
+                    string actualDiscount = "aa";
+                    string nextDiscount = "";
+                    decimal remainingSum = 0;
+                    string discountLevel = "";
+
+                               <script>
+                            $abc = "@actualDiscount";
+    </script>
+
+                    switch (rating)
+                    {
+                        case 1:
+                            actualDiscount = "5%";
+                            nextDiscount = "10%";
+                            remainingSum = 500 - sum;
+                            discountLevel = "strieborným";
+
+                 
+
+    break;
+case 2:
+    actualDiscount = "10%";
+    nextDiscount = "15%";
+    remainingSum = 1000 - sum;
+    discountLevel = "zlatým";
+    break;
+
+
+}
+}
+}
+
+
         });
     </script>
+
 
 </body>
 </html>

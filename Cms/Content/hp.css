@@ -251,6 +251,7 @@ html, body {
             font-weight: 300 !important;
             color: #929292;
             height: 30px;
+            overflow: hidden;
         }
 
         .products .product .prod-prices {
