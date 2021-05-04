@@ -330,12 +330,16 @@ namespace Cms.Controllers
                     um.rating = 3;
 
                     //email
+                    string body_rating = this.createRatingEmailBody(orderNumber, "15");
+                    this.SendHtmlFormattedEmail("Vyššia zľavová skupina!", body_rating, o.email, "rating", orderNumber);
                 }
                 else if (sum >= 500)
                 {
                     um.rating = 2;
 
                     //email
+                    string body_rating = this.createRatingEmailBody(orderNumber, "10");
+                    this.SendHtmlFormattedEmail("Vyššia zľavová skupina!", body_rating, o.email, "rating", orderNumber);
                 }
 
                 um.sum = sum;
@@ -364,6 +368,24 @@ namespace Cms.Controllers
             model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
             model.OrderDataModel = db.orders.Where(i => i.ordernumber == orderNumber).ToList();
             return View(model);
+        }
+
+        private string createRatingEmailBody(string orderNumber, string discount)
+        {
+            var orderdetail = db.orders.Where(i => i.ordernumber == orderNumber).ToList();
+
+            string body = string.Empty;
+            //using streamreader for reading my htmltemplate   
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/Shared/RatingOrderEmail.cshtml")))
+            {
+                body = reader.ReadToEnd();
+            }
+
+            var str = "Ďakujeme za vaše objednávky a zároveň Vás posúvame do vyššej zľavovej skupiny a dostávate zákaznicku zľavu " + discount + " %.";
+
+            body = body.Replace("{Text}", str);
+
+            return body;
         }
 
         private string createEmailBody(string orderNumber, string toWho)

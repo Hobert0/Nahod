@@ -550,6 +550,12 @@
 */
 
     @media (max-width: 767px) {
+
+        .header-top .cart .cart-qty {
+            left: initial !important;
+            margin-left: -12px;
+        }
+
         .w-75 {
             width: 100% !important;
         }
