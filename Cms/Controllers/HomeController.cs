@@ -182,7 +182,7 @@ namespace Cms.Controllers
             return View(model);
         }
 
-        [Route("znacka/{brand}/{page?}/{id?}")]
+        [Route("znacka/{brand}/{catslug?}/{subslug?}/{page?}/{id?}")]
         public ActionResult Brand(string brand, string catslug, string subslug)
         {
 
@@ -227,6 +227,18 @@ namespace Cms.Controllers
             ProductsController pc = new ProductsController();
             ViewData["typ"] = pc.SelectionZaradenie();
             ViewData["znacka"] = pc.SelectionBrand();
+
+            List<decimal?> prices = new List<decimal?>();
+
+            foreach (var item in model.ProductModel)
+            {
+                prices.Add(item.price);
+                prices.Add(item.discountprice);
+            }
+            prices.Sort();
+
+            ViewData["minPrice"] = prices.FirstOrDefault();
+            ViewData["maxPrice"] = prices.LastOrDefault();
 
             return View(model);
         }
@@ -274,6 +286,18 @@ namespace Cms.Controllers
             ProductsController pc = new ProductsController();
             ViewData["typ"] = pc.SelectionZaradenie();
             ViewData["znacka"] = pc.SelectionBrand();
+
+            List<decimal?> prices = new List<decimal?>();
+
+            foreach (var item in model.ProductModel)
+            {
+                prices.Add(item.price);
+                prices.Add(item.discountprice);
+            }
+            prices.Sort();
+
+            ViewData["minPrice"] = prices.FirstOrDefault();
+            ViewData["maxPrice"] = prices.LastOrDefault();
 
             return View(model);
         }

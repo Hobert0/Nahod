@@ -116,10 +116,7 @@ $("#addproductbtn").click(function () {
         "hideMethod": "fadeOut",
         "onclick": function () { document.location.href = '/kosik'; }
     }
-
-    document.getElementById("cart-qty").innerHTML = result.length;
-    document.getElementById("cart-total").innerHTML = $sum + " €";
-    
-
-
+   
+    $(".cart-qty").html(result.length);
+    $(".cart-total").html($sum.replace(".",",") + " €");
 });

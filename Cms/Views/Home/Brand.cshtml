@@ -22,68 +22,88 @@
     <div class="row py-0 py-sm-4">
 
         <div class="col">
+
             @foreach (var brand in Model.BrandsModel.Where(i => i.id == catID))
             {
                 ViewBag.Title = brand.name + " -";
                 ViewBag.Description = brand.description;
-                <h2>@Html.Raw(brand.name)</h2>
-                <div class="container-fluid">
-                    <div class="row justify-content-md">
+
+                if (categorySlug == null)
+                {
+                    <h2>@Html.Raw(brand.name)</h2>
+                }
+                else if (categorySlug != null && categorySubSlug == null)
+                {
+                    var firstCat = Model.CategoriesModel.Where(i => i.slug == categorySlug).FirstOrDefault();
+
+                    <h2>@Html.Raw(brand.name) / @Html.Raw(firstCat.name)</h2>
+                }
+                else if (categorySlug != null && categorySubSlug != null)
+                {
+                    var firstCat = Model.CategoriesModel.Where(i => i.slug == categorySlug).FirstOrDefault();
+                    var secondCat = Model.CategoriesModel.Where(i => i.slug == categorySubSlug).FirstOrDefault();
+
+                    <h2>@Html.Raw(brand.name) / @Html.Raw(firstCat.name) / @Html.Raw(secondCat.name)</h2>
+                }
+            }
+
+            <div class="container-fluid">
+                <div class="row justify-content-md">
 
 
-                        @{
+                    @{
 
-                            var prods = Model.ProductModel.ToList();
-                            HashSet<int> catIds = new HashSet<int>();
-                            foreach (var prod in prods)
+                        var prods = Model.ProductModel.ToList();
+                        HashSet<int> catIds = new HashSet<int>();
+                        foreach (var prod in prods)
+                        {
+
+                            dynamic cats = JsonConvert.DeserializeObject(prod.category);
+                            foreach (var cat in cats)
                             {
-
-                                dynamic cats = JsonConvert.DeserializeObject(prod.category);
-                                foreach (var cat in cats)
-                                {
-                                    catIds.Add(Int32.Parse(cat.Value.ToString()));
-                                }
-
+                                catIds.Add(Int32.Parse(cat.Value.ToString()));
                             }
 
-                            foreach (var finalCatId in catIds)
+                        }
+
+                        foreach (var finalCatId in catIds)
+                        {
+                            if (categorySlug == null)
                             {
-                                if (categorySlug == null)
-                                {
-                                    var thisCat = Model.CategoriesModel.Where(i => i.id == finalCatId && i.maincat == "Žiadna").FirstOrDefault();
+                                var thisCat = Model.CategoriesModel.Where(i => i.id == finalCatId && i.maincat == "Žiadna").FirstOrDefault();
 
-                                    if (thisCat != null)
-                                    {
-                                        <div class="col-md-auto subcatthumb py-2 m-1">
-                                            <a href="@Url.Action("Brand", "Home", new { catslug = @Html.Raw(thisCat.slug) })">
-                                                <div style="background-image: url(/Uploads/@thisCat.image); background-size: contain;"></div>
-                                                <p>@thisCat.name</p>
-                                            </a>
-                                        </div>
-                                    }
+                                if (thisCat != null)
+                                {
+                                    <div class="col-md-auto subcatthumb py-2 m-1">
+                                        <a href="@Url.Action("Brand", "Home", new { catslug = @Html.Raw(thisCat.slug) })">
+                                            <div style="background-image: url(/Uploads/@thisCat.image); background-size: contain;"></div>
+                                            <p>@thisCat.name</p>
+                                        </a>
+                                    </div>
                                 }
-                                else if (categorySlug != null && categorySubSlug == null)
-                                {
-                                    var thisCat = Model.CategoriesModel.Where(i => i.id == finalCatId && i.maincat != "Žiadna").FirstOrDefault();
+                            }
+                            else if (categorySlug != null && categorySubSlug == null)
+                            {
+                                var thisCat = Model.CategoriesModel.Where(i => i.id == finalCatId && i.maincat != "Žiadna").FirstOrDefault();
 
-                                    if (thisCat != null)
-                                    {
-                                        <div class="col-md-auto subcatthumb py-2 m-1">
-                                            <a href="@Url.Action("Brand", "Home", new { catslug = @Html.Raw(categorySlug), subslug = @Html.Raw(thisCat.slug) })">
-                                                <div style="background-image: url(/Uploads/@thisCat.image); background-size: contain;"></div>
-                                                <p>@thisCat.name</p>
-                                            </a>
-                                        </div>
-                                    }
+                                if (thisCat != null)
+                                {
+                                    <div class="col-md-auto subcatthumb py-2 m-1">
+                                        <a href="@Url.Action("Brand", "Home", new { catslug = @Html.Raw(categorySlug), subslug = @Html.Raw(thisCat.slug) })">
+                                            <div style="background-image: url(/Uploads/@thisCat.image); background-size: contain;"></div>
+                                            <p>@thisCat.name</p>
+                                        </a>
+                                    </div>
                                 }
                             }
                         }
+                    }
 
-                    </div>
                 </div>
-                <hr />
+            </div>
+            <hr />
 
-            }
+
 
             @{
                 Html.RenderPartial("_Filter");

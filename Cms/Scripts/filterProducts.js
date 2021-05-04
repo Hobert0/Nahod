@@ -18,7 +18,10 @@ $(".productfilter").change(function (e) {
     if (dropdownValTyp != "") {
         var i = filteredData.length;
         while (i--) {
-            if (filteredData[i].type != dropdownValTyp) {
+
+            $thisType = JSON.parse(filteredData[i].type);
+
+            if (jQuery.inArray(parseInt(dropdownValTyp), $thisType) === -1) {
                 filteredData.splice(i, 1);
             }
         }
