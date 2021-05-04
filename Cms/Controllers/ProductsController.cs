@@ -1618,7 +1618,8 @@ namespace Cms.Controllers
             {
                 /*AK duplikujeme produkt vytvori nove foldre*/
                 var sourcePath = HttpContext.Server.MapPath("~/Uploads/avatar_product.jpg");
-                var destinationPath = HttpContext.Server.MapPath("~/Uploads/" + o.image);
+                var destinationPath = 
+                    ("~/Uploads/" + o.image);
                 var miestoUlozenia = "~/Uploads/" + ulozObrazok;
                 var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia));
                 if (System.IO.File.Exists(sourcePath))

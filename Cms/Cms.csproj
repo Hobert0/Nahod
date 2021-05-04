@@ -491,6 +491,7 @@
       <DependentUpon>DBcms.edmx</DependentUpon>
       <LastGenOutput>DBcms.cs</LastGenOutput>
     </Content>
+    <Content Include="MoneyS3\Objednavky.xml" />
     <Content Include="Scripts\add_product_to_cart.js" />
     <Content Include="Scripts\add_product_to_wishlist.js" />
     <Content Include="Scripts\add_to_session.js" />

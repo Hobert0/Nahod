@@ -6,10 +6,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Net.Http;
-using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Data.Entity.SqlServer;
 using System.Globalization;
+using System.IO;
+using System.Xml.Serialization;
+using System.Xml;
+using System.Xml.Schema;
+using System.Data;
 
 namespace Cms.Controllers
 {
@@ -303,6 +307,104 @@ namespace Cms.Controllers
             result = new { data = user };
 
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("exportObjS3"), EnableCors(origins: "*", headers: "*", methods: "*")]
+        public string ExportObjMoneyS3(string username, string userid)
+        {
+            var path = HttpContext.Server.MapPath("~/Models/_Import.xsd");
+            XmlTextReader reader = new XmlTextReader(path);
+           // XmlSchema myschema = XmlSchema.Read(reader, ValidationCallback);
+            
+            //var data = ImportMoneyS3 { Field1 = "test1", Field2 = "test2" };
+            //var serializer = new XmlSerializer(typeof(MyClass));
+            using (var stream = new StreamWriter("C:\\test.xml"))
+            //serializer.Serialize(stream, data);
+            return "Oki";
+        }
+
+        [Route("importSKladS3"), EnableCors(origins: "*", headers: "*", methods: "*")]
+        public string ImportMonS3(string ExpZasobyName)
+        {
+            var path = "http://nahod.sk.amber.globenet.cz/import/" + ExpZasobyName;
+            XmlTextReader reader = new XmlTextReader(path);
+            while (reader.Read())
+            {
+                // Do some work here on the data.
+                Console.WriteLine(reader.Name);
+                //string tempf = reader.Katalog;
+                //string tempc = reader.Cena;
+                //string feels = reader.StavZasoby;
+            }
+
+            XmlDocument doc1 = new XmlDocument();
+            doc1.Load("http://nahod.sk.amber.globenet.cz/import/" + ExpZasobyName);
+            XmlElement root = doc1.DocumentElement;
+            XmlNodeList nodes = root.SelectNodes("/MoneyData/SeznamZasoba/Zasoba");
+
+           // XmlNodeList nodes = oNode.SelectNodes("Katalog");
+
+            foreach (XmlNode node in nodes)
+            {
+                var sklad = node.SelectSingleNode("StavZasoby/Zasoba").InnerText;
+                var cislo = node.SelectSingleNode("KmKarta/Katalog").InnerText;
+                var cena = node.SelectSingleNode("PC/Cena1/Cena").InnerText;
+                var zlava = node.SelectSingleNode("Sleva").InnerText;
+                decimal cenasdph = 0;
+                decimal cenapozlave = 0;
+                //vypocet ceny s DPH
+                if (cena != null)
+                {
+                    cenasdph = decimal.Parse(cena.Replace(".", ","));
+                }
+
+                var product = db.products.Where(i => i.number == cislo).FirstOrDefault();
+                if (product != null)
+                {
+                    product.stock = sklad;
+                    product.price = cenasdph * decimal.Parse("1,2");
+
+                    //ak je produkt v zlave
+                    if (zlava != "0")
+                    {
+                        cenapozlave = product.price * (1 - (decimal.Parse(zlava.Replace(".", ",")) / 100));
+                        product.discountprice = cenapozlave;
+                    }
+                    else
+                    {
+                        product.discountprice = null;
+                    }
+
+                    db.SaveChanges();
+                }
+                else
+                {
+                    //poku3a sa najst hladany produkt medzi variantami
+                    var productinvariants = db.variants.Where(i => i.number == cislo).FirstOrDefault();
+                    if (productinvariants != null)
+                    {
+                        var variantprice = cenasdph * decimal.Parse("1,2");
+
+                        productinvariants.stock = sklad;
+                        productinvariants.price = variantprice;
+
+                        //ak je produkt v zlave
+                        if (zlava != "0")
+                        {
+                            cenapozlave = variantprice * (1 - (decimal.Parse(zlava.Replace(".", ",")) / 100));
+                            productinvariants.discountprice = cenapozlave;
+                        }
+                        else
+                        {
+                            productinvariants.discountprice = null;
+                        }
+
+                        db.SaveChanges();
+                    }
+                }
+            }          
+
+            return "Oki";
         }
 
     }
