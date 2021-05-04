@@ -74,13 +74,13 @@ namespace Cms.Controllers
         public ActionResult Blog()
         {
             var model = new MultipleIndexModel();
-            model.ProductModel = db.products.ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
             model.BlogModel = db.blog.ToList();
-            model.BrandsModel = db.brands.ToList();
-            model.CategoriesModel = db.categories.ToList();
+            model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
+            model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
             ViewData["Homepage"] = "true";
             return View(model);
@@ -149,12 +149,12 @@ namespace Cms.Controllers
             }
 
             var model = new MultipleIndexModel();
-            model.ProductModel = db.products.ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
-            model.CategoriesModel = db.categories.ToList();
-            model.BrandsModel = db.brands.ToList();
+            model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
+            model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
 
             var kategoria = db.categories.Where(i => i.slug == catslug).Select(o => o.name);
@@ -183,7 +183,7 @@ namespace Cms.Controllers
         }
 
         [Route("znacka/{brand}/{page?}/{id?}")]
-        public ActionResult Brand(string brand)
+        public ActionResult Brand(string brand, string catslug, string subslug)
         {
 
             var model = new MultipleIndexModel();
@@ -191,15 +191,42 @@ namespace Cms.Controllers
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
-            model.CategoriesModel = db.categories.ToList();
-            model.BrandsModel = db.brands.ToList();
-            model.TypesModel = db.types.ToList();
+            model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
+            model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
+            model.TypesModel = db.types.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
-            var kategoria = db.brands.Where(i => i.slug == brand).Select(o => o.name);
-            var categoryID = db.brands.Where(i => i.slug == brand).First().id;
+            var brnd = db.brands.Where(i => i.slug == brand).Select(o => o.name);
+            var brndID = db.brands.Where(i => i.slug == brand).First().id;
+            
+            //2.level .. vsetky kategorie produktov ktore su v danom type a maju kategoriu
+            if (catslug != null && subslug == null)
+            {
+                var catId = db.categories.Where(i => i.slug == catslug).First().id;
+                model.ProductModel = db.products.Where(i => i.custom3.Contains(brndID.ToString()) && i.category.Contains(catId.ToString())).ToList();
+            }
 
-            ViewData["Category"] = kategoria;
-            ViewData["CatId"] = categoryID;
+            //3.level .. vsetky kategorie produktov ktore su v danom type a maju subkategoriu
+            else if (catslug != null && subslug != null)
+            {
+                var catId = db.categories.Where(i => i.slug == subslug).First().id;
+                model.ProductModel = db.products.Where(i => i.custom3.Contains(brndID.ToString()) && i.category.Contains(catId.ToString())).ToList();
+            }
+            //1.level .. vsetky unikatne kategorie danych produktov v zaradeni
+            else
+            {
+                model.ProductModel = db.products.Where(i => i.custom3.Contains(brndID.ToString())).ToList();
+            }
+
+            ViewData["Category"] = brnd;
+            ViewData["CatId"] = brndID;
+
+
+            ViewData["catslug"] = catslug;
+            ViewData["subslug"] = subslug;
+            ProductModel pm = new ProductModel();
+            ProductsController pc = new ProductsController();
+            ViewData["typ"] = pc.SelectionZaradenie();
+            ViewData["znacka"] = pc.SelectionBrand();
 
             return View(model);
         }
@@ -212,9 +239,9 @@ namespace Cms.Controllers
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
-            model.CategoriesModel = db.categories.ToList();
-            model.BrandsModel = db.brands.ToList();
-            model.TypesModel = db.types.ToList();
+            model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
+            model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
+            model.TypesModel = db.types.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
             var type = db.types.Where(i => i.slug == typ).Select(o => o.name);
             var typeId = db.types.Where(i => i.slug == typ).First().id;
@@ -243,6 +270,10 @@ namespace Cms.Controllers
 
             ViewData["catslug"] = catslug;
             ViewData["subslug"] = subslug;
+            ProductModel pm = new ProductModel();
+            ProductsController pc = new ProductsController();
+            ViewData["typ"] = pc.SelectionZaradenie();
+            ViewData["znacka"] = pc.SelectionBrand();
 
             return View(model);
         }
@@ -263,12 +294,12 @@ namespace Cms.Controllers
             }
 
             model.SlideshowModel = db.slideshow.Where(o => o.page == slug).ToList();
-            model.ProductModel = db.products.ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
-            model.BrandsModel = db.brands.ToList();
+            model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
             model.PagesModel = db.pages.Where(i => i.slug == slug).ToList();
-            model.CategoriesModel = db.categories.ToList();
+            model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
 
             List<decimal?> prices = new List<decimal?>();
             List<decimal> kw = new List<decimal>();
@@ -312,13 +343,13 @@ namespace Cms.Controllers
             }
 
             model.SlideshowModel = db.slideshow.Where(o => o.page == slug).ToList();
-            model.ProductModel = db.products.ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
-            model.BrandsModel = db.brands.ToList();
+            model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
             model.BlogModel = db.blog.Where(i => i.slug == slug).ToList();
             model.PagesModel = db.pages.ToList();
-            model.CategoriesModel = db.categories.ToList();
+            model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             return View(model);
         }
 
@@ -471,13 +502,13 @@ namespace Cms.Controllers
         {
             var model = new MultipleIndexModel();
             model.EsettingsModel = db.e_settings.ToList();
-            model.ProductModel = db.products.ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
             model.VariantModel = db.variants.ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
-            model.BrandsModel = db.brands.ToList();
+            model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
             model.CouponsModel = db.coupons.ToList();
-            model.CategoriesModel = db.categories.ToList();
+            model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
 
             if (Session["userid"] != null)
@@ -522,11 +553,11 @@ namespace Cms.Controllers
         {
             var model = new MultipleIndexModel();
             model.EsettingsModel = db.e_settings.ToList();
-            model.ProductModel = db.products.ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
-            model.BrandsModel = db.brands.ToList();
-            model.CategoriesModel = db.categories.ToList();
+            model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
+            model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
 
             if (Session["userid"] != null)
@@ -560,11 +591,11 @@ namespace Cms.Controllers
         {
             var model = new MultipleIndexModel();
             model.EsettingsModel = db.e_settings.ToList();
-            model.ProductModel = db.products.ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
-            model.BrandsModel = db.brands.ToList();
-            model.CategoriesModel = db.categories.ToList();
+            model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
+            model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
 
             if (Session["userid"] != null)
@@ -610,11 +641,11 @@ namespace Cms.Controllers
             }
 
             model.EsettingsModel = db.e_settings.ToList();
-            model.ProductModel = db.products.ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
-            model.BrandsModel = db.brands.ToList();
-            model.CategoriesModel = db.categories.ToList();
+            model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
+            model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.VariantModel = db.variants.ToList();
             model.AttributesModel = db.attributes.ToList();
             model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
@@ -664,12 +695,12 @@ namespace Cms.Controllers
 
 
             var model = new MultipleIndexModel();
-            model.ProductModel = db.products.ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
-            model.CategoriesModel = db.categories.ToList();
-            model.BrandsModel = db.brands.ToList();
+            model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
+            model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
             model.ProductsPaged = db.products.ToList().Where(p => p.title.ToLower().Contains(term.ToLower())).OrderByDescending(x => x.id)
                      .ToPagedList(pageNumber, pageSize);

@@ -297,7 +297,7 @@ namespace Cms.Controllers
         {
             List<SelectListItem> brand = new List<SelectListItem>();
             brand.Add(new SelectListItem { Text = "", Value = "" });
-            foreach (var cat in db.brands)
+            foreach (var cat in db.brands.OrderBy(i => i.name))
             {
                 brand.Add(new SelectListItem { Text = cat.name, Value = cat.id.ToString() });
             }
@@ -321,7 +321,7 @@ namespace Cms.Controllers
         {
             List<SelectListItem> znacka = new List<SelectListItem>();
             znacka.Add(new SelectListItem { Text = "", Value = "" });
-            foreach (var cat in db.categories)
+            foreach (var cat in db.categories.OrderBy(i => i.name))
             {
                 /*
                 if (cat.topcat2 == "" || cat.topcat2 == "Žiadna")
@@ -342,7 +342,7 @@ namespace Cms.Controllers
         {
             List<SelectListItem> znacka = new List<SelectListItem>();
             znacka.Add(new SelectListItem { Text = "", Value = "" });
-            foreach (var type in db.types)
+            foreach (var type in db.types.OrderBy(i => i.name))
             {
                 znacka.Add(new SelectListItem { Text = type.name, Value = type.id.ToString() });
             }

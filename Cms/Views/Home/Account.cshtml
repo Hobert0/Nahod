@@ -45,7 +45,7 @@
         if (remainingSum > 0)
         {
             <div class="alert alert-primary" role="alert">
-                @Html.Raw("Vaša aktuálna zlava je " + actualDiscount + ". Nakúpte ešte za " + remainingSum.ToString("N2") + "€ a stanete sa " + discountLevel + " zákazníkom a vaša zlava sa zvýši na " + nextDiscount + ".")
+                @Html.Raw("Vaša aktuálna zľava je <strong>" + actualDiscount + "</strong>. <strong>Nakúpte ešte za " + remainingSum.ToString("N2") + "€</strong> a stanete sa " + discountLevel + " zákazníkom - Vaša zľava sa <strong>zvýši na " + nextDiscount + ".</strong>")
             </div>
         }
     }

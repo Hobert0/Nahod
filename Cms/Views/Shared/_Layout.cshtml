@@ -190,11 +190,11 @@
                                 <button class="openbtn" onclick="openNav()">☰ Kategórie</button>
                             </div>
 
-                            <div class="col-sm-4 col-6 cart d-flex align-items-center justify-content-end">
+                            <div class="col-sm-4 col-5 cart d-flex align-items-center justify-content-end pl-0">
                                 <a href="@Url.Action("Basket", "Home")">
-                                    <i class="icon-fishing-net"></i>
-                                    <span id="cart-qty" class="cart-qty">@cartitems</span>
-                                    <span id="cart-total" class="cart-total">@cartsum.ToString("n2") €</span>
+                                    <i class="icon-fishing-net" style="font-size: 25px;margin-right: 0px;"></i>
+                                    <span id="cart-qty" class="cart-qty" style="left: 15px;">@cartitems</span>
+                                    <span id="cart-total" class="cart-total" style="font-size: 12px;">@cartsum.ToString("n2") €</span>
                                 </a>
                             </div>
                         </div>
@@ -213,7 +213,7 @@
 
             <div class="col-lg-4 col-md-3 col-sm-12 info">
                 <div class="row">
-                    <div class="col-lg-6 d-md-none d-lg-flex align-items-center flex-wrap">
+                    <div class="col-lg-6 d-none d-lg-flex align-items-center flex-wrap">
                         <div>
                             <i class="icon-phone"></i>
                             <span>+421 948 610 250</span>
@@ -223,29 +223,31 @@
                             <span>info@nahod.sk</span>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-12 d-flex align-items-center">
-                        @{
-                            if (username != "")
-                            {
-                                <i class="icon-user"></i>
-                                <span>
-                                    Vitajte @username!<br>
-                                    @if (role == "0")
-                                    {
-                                        <a href="/cms"><u>Administrácia</u></a><br>
-                                    }
-                                    <a href="@Url.Action("Account", "Home")"><u>Môj účet</u></a><br><a class="logout" href="@Url.Action("LogOut", "Admin")"><u>Odhlásiť sa</u></a>
-                                </span>
-                                <input type="hidden" name="userName" id="userName" value="@Session["username"]">
-                                <input type="hidden" name="userId" id="userId" value="@Session["userid"]">
+                    <div class="col-lg-6 col-md-12 d-flex align-items-center pt-1">
+                        <div class="ml-auto">
+                            @{
+                                if (username != "")
+                                {
+                                    <i class="icon-user"></i>
+                                    <span>
+                                        Vitajte @username!<br>
+                                        @if (role == "0")
+                                        {
+                                            <a href="/cms"><u>Administrácia</u></a><br>
+                                        }
+                                        <a href="@Url.Action("Account", "Home")"><u>Môj účet</u></a><br><a class="logout" href="@Url.Action("LogOut", "Admin")"><u>Odhlásiť sa</u></a>
+                                    </span>
+                                    <input type="hidden" name="userName" id="userName" value="@Session["username"]">
+                                    <input type="hidden" name="userId" id="userId" value="@Session["userid"]">
 
+                                }
+                                else
+                                {
+                                    <i class="icon-user"></i>
+                                    <span><a href="#" class="login-modal">Prihlásiť sa</a> / <a href="#" class="register-modal">Registrovať</a></span>
+                                }
                             }
-                            else
-                            {
-                                <i class="icon-user"></i>
-                                <span><a href="#" class="login-modal">Prihlásiť sa</a> / <a href="#" class="register-modal">Registrovať</a></span>
-                            }
-                        }
+                        </div>
                     </div>
                 </div>
             </div>

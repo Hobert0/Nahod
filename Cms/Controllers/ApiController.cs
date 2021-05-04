@@ -25,7 +25,9 @@ namespace Cms.Controllers
             var variants = db.variants.OrderBy(o => o.num).ToList();
             if (brand)
             {
-                result = new { data = FetchByBrand(catslug).ProductModel, variants };
+                //subslug - kategoria level 1
+                //subslug2 - kategoria level 2
+                result = new { data = FetchByBrand(catslug, subslug, subslug2).ProductModel, variants };
             }
             else if (type)
             {
@@ -245,12 +247,28 @@ namespace Cms.Controllers
             return model;
         }
 
-        private MultipleIndexModel FetchByBrand(string brand)
+        private MultipleIndexModel FetchByBrand(string brand, string catSlug1, string catSlug2)
         {
-            var categoryID = db.brands.Where(i => i.slug == brand).First().id;
+            var brandID = db.brands.Where(i => i.slug == brand).First().id.ToString();
 
             var model = new MultipleIndexModel();
-            model.ProductModel = db.products.ToList().Where(c => c.custom3 == categoryID.ToString()).OrderByDescending(x => x.id);
+            if (catSlug1 != null && catSlug2 == null)
+            {
+
+                var catId = db.categories.Where(i => i.slug == catSlug1).First().id.ToString();
+                model.ProductModel = db.products.Where(i => i.custom3.Contains(brandID) && i.category.Contains(catId)).OrderByDescending(x => x.id).ToList();
+            }
+            else if (catSlug1 != null && catSlug2 != null)
+            {
+
+                var catId = db.categories.Where(i => i.slug == catSlug2).First().id.ToString();
+                model.ProductModel = db.products.Where(i => i.custom3.Contains(brandID) && i.category.Contains(catId)).OrderByDescending(x => x.id).ToList();
+            }
+            else
+            {
+                model.ProductModel = db.products.Where(c => c.custom3.Contains(brandID)).OrderByDescending(x => x.id).ToList();
+            }
+
 
             return model;
         }

@@ -110,6 +110,16 @@
 
                         <hr />
                         <p style="font-size: 16px;">
+                            <strong>Kód produktu: </strong>@prod.number<br />
+                            @{
+                                if (prod.custom3 != "" && prod.custom3 != null)
+                                {
+                                    foreach (var brand in Model.BrandsModel.Where(i => i.id == Int32.Parse(prod.custom3)))
+                                    {
+                                        <strong>Výrobca: </strong><a href="/znacka/@brand.slug">@Html.Raw(brand.name)</a><br />
+                                    }
+                                }
+                            }
                             @{ var onStock = "";
                                 if (prod.custom1 == "" || prod.custom1 == null)
                                 {
@@ -140,17 +150,9 @@
                                     onStock = "<span style='color:#1e7e34;'>Produkt je na sklade</span>";
                                 }
                             }
-                            <strong>Kód produktu: </strong>@prod.number<br />
+
                             <strong>Dostupnosť: </strong>@Html.Raw(onStock)<br />
-                            @{
-                                if (prod.custom3 != "" && prod.custom3 != null)
-                                {
-                                    foreach (var brand in Model.BrandsModel.Where(i => i.id == Int32.Parse(prod.custom3)))
-                                    {
-                                        <strong>Výrobca: </strong><a href="">@Html.Raw(brand.name)</a><br />
-                                    }
-                                }
-                            }
+
                             @Html.Raw((prod.custom8 != "" && prod.custom8 != null) ? "<strong>Typ: </strong>" + Html.Raw(prod.custom8) + "<br />" : "")
                             @Html.Raw((prod.custom9 != "" && prod.custom9 != null) ? "<strong>Výkon: </strong>" + Html.Raw(prod.custom9) + " kW<br />" : "")
                             @Html.Raw((prod.custom10 != "" && prod.custom10 != null) ? "<strong>Rozloha miestnosti: </strong>" + Html.Raw(prod.custom10) + " m<sup>2</sup><br />" : "")
@@ -188,7 +190,7 @@
                                 @if (prod.discountprice != null)
                                 {
                                     cena = (decimal)prod.discountprice;
-                            <p class="discount-price-text" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;"><span class="discount-label">Akciová cena</span> <strong style="font-size:30px;"><span class="actual-price">@cena.ToString("N2")</span> €</strong> </p>
+<p class="discount-price-text" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;"><span class="discount-label">Akciová cena</span> <strong style="font-size:30px;"><span class="actual-price">@cena.ToString("N2")</span> €</strong> </p>
                         }
                         else
                         {
