@@ -126,18 +126,18 @@ namespace Cms.Controllers
 
             if (subslug == null && catslug != "novinky" && catslug != "zlavy")
             {
-                id = db.categories.Where(i => i.slug == catslug).First().id.ToString();
+                id = db.categories.Where(i => i.deleted == false && i.slug == catslug).First().id.ToString();
             }
             else if (subslug != null && subslug2 == null && catslug != "novinky" && catslug != "zlavy")
             {
                 var topcatName = db.categories.Where(i => i.slug == catslug).First().name;
-                id = db.categories.Where(i => i.slug == subslug && i.maincat == topcatName).First().id.ToString();
+                id = db.categories.Where(i => i.deleted == false && i.slug == subslug && i.maincat == topcatName).First().id.ToString();
             }
             else if (subslug2 != null && subslug3 == null && catslug != "novinky" && catslug != "zlavy")
             {
                 var topcatName = db.categories.Where(i => i.slug == catslug).First().name;
                 var topcat2Name = db.categories.Where(i => i.slug == subslug).First().name;
-                id = db.categories.Where(i => i.slug == subslug2 && i.maincat == topcatName && i.topcat == topcat2Name).First().id.ToString();
+                id = db.categories.Where(i => i.deleted == false && i.slug == subslug2 && i.maincat == topcatName && i.topcat == topcat2Name).First().id.ToString();
             }
             else if (subslug3 != null && catslug != "novinky" && catslug != "zlavy")
             {
@@ -145,11 +145,11 @@ namespace Cms.Controllers
                 var topcatName = db.categories.Where(i => i.slug == subslug).First().name;
                 var topcat2Name = db.categories.Where(i => i.slug == subslug2).First().name;
 
-                id = db.categories.Where(i => i.slug == subslug3 && i.maincat == maincatName && i.topcat == topcatName && i.topcat2 == topcat2Name).First().id.ToString();
+                id = db.categories.Where(i => i.deleted == false && i.slug == subslug3 && i.maincat == maincatName && i.topcat == topcatName && i.topcat2 == topcat2Name).First().id.ToString();
             }
 
             var model = new MultipleIndexModel();
-            model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false && o.category.Contains(id.ToString())).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
@@ -165,7 +165,8 @@ namespace Cms.Controllers
             ProductModel pm = new ProductModel();
             ProductsController pc = new ProductsController();
             ViewData["typ"] = pc.SelectionZaradenie();
-            ViewData["znacka"] = pc.SelectionBrand();
+            ViewData["znacka"] = pc.SelectionBrandFiltered(model.ProductModel);
+            ViewData["pageType"] = "category";
 
             List<decimal?> prices = new List<decimal?>();
 
@@ -202,19 +203,19 @@ namespace Cms.Controllers
             if (catslug != null && subslug == null)
             {
                 var catId = db.categories.Where(i => i.slug == catslug).First().id;
-                model.ProductModel = db.products.Where(i => i.custom3.Contains(brndID.ToString()) && i.category.Contains(catId.ToString())).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.custom3.Contains(brndID.ToString()) && i.category.Contains(catId.ToString())).ToList();
             }
 
             //3.level .. vsetky kategorie produktov ktore su v danom type a maju subkategoriu
             else if (catslug != null && subslug != null)
             {
                 var catId = db.categories.Where(i => i.slug == subslug).First().id;
-                model.ProductModel = db.products.Where(i => i.custom3.Contains(brndID.ToString()) && i.category.Contains(catId.ToString())).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.custom3.Contains(brndID.ToString()) && i.category.Contains(catId.ToString())).ToList();
             }
             //1.level .. vsetky unikatne kategorie danych produktov v zaradeni
             else
             {
-                model.ProductModel = db.products.Where(i => i.custom3.Contains(brndID.ToString())).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.custom3.Contains(brndID.ToString())).ToList();
             }
 
             ViewData["Category"] = brnd;
@@ -226,7 +227,8 @@ namespace Cms.Controllers
             ProductModel pm = new ProductModel();
             ProductsController pc = new ProductsController();
             ViewData["typ"] = pc.SelectionZaradenie();
-            ViewData["znacka"] = pc.SelectionBrand();
+            //ViewData["znacka"] = pc.SelectionBrand();
+            ViewData["pageType"] = "brand";
 
             List<decimal?> prices = new List<decimal?>();
 
@@ -262,18 +264,18 @@ namespace Cms.Controllers
             if (catslug != null && subslug == null)
             {
                 var catId = db.categories.Where(i => i.slug == catslug).First().id;
-                model.ProductModel = db.products.Where(i => i.type.Contains(typeId.ToString()) && i.category.Contains(catId.ToString())).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.type.Contains(typeId.ToString()) && i.category.Contains(catId.ToString())).ToList();
             }
 
             //3.level .. vsetky kategorie produktov ktore su v danom type a maju subkategoriu
             else if (catslug != null && subslug != null) {
                 var catId = db.categories.Where(i => i.slug == subslug).First().id;
-                model.ProductModel = db.products.Where(i => i.type.Contains(typeId.ToString()) && i.category.Contains(catId.ToString())).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.type.Contains(typeId.ToString()) && i.category.Contains(catId.ToString())).ToList();
             }
             //1.level .. vsetky unikatne kategorie danych produktov v zaradeni
             else
             {
-                model.ProductModel = db.products.Where(i => i.type.Contains(typeId.ToString())).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.type.Contains(typeId.ToString())).ToList();
             }
 
             ViewData["Category"] = type;
@@ -285,7 +287,8 @@ namespace Cms.Controllers
             ProductModel pm = new ProductModel();
             ProductsController pc = new ProductsController();
             ViewData["typ"] = pc.SelectionZaradenie();
-            ViewData["znacka"] = pc.SelectionBrand();
+            ViewData["znacka"] = pc.SelectionBrandFiltered(model.ProductModel);
+            ViewData["pageType"] = "type";
 
             List<decimal?> prices = new List<decimal?>();
 

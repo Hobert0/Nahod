@@ -110,7 +110,7 @@
 
                         <hr />
                         <p style="font-size: 16px;">
-                            <strong>Kód produktu: </strong>@prod.number<br />
+                            <strong>Kód produktu: </strong><span id="prodNumVal">@prod.number</span><br />
                             @{
                                 if (prod.custom3 != "" && prod.custom3 != null)
                                 {
@@ -291,8 +291,38 @@
 
                                                 @{
                                                     //var variants = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).ToList();
-                                                    var vars = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).OrderBy(o => o.attribute_id).ThenBy(o => o.num).ToList();
+                                                    var varFirstAttrId = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id) && o.num == 1).FirstOrDefault().attribute_id;
+                                                    var varsFirst = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id) && o.attribute_id == varFirstAttrId).OrderBy(o => o.num).ToList();
+                                                    var vars = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id) && o.attribute_id != varFirstAttrId).OrderBy(o => o.attribute_id).ThenBy(o => o.num).ToList();
 
+                                                    if (varsFirst.Count() > 0)
+                                                    {
+
+                                                        isVariable = true;
+
+                                                        List<SelectListItem> options = new List<SelectListItem>();
+
+                                                        var lastAttrName = "";
+                                                        foreach (var variant in varsFirst)
+                                                        {
+
+                                                            var attrId = variant.attribute_id;
+                                                            var attrName = Model.AttributesModel.Where(o => o.id == attrId).SingleOrDefault().name;
+
+                                                            if (lastAttrName != attrName)
+                                                            {
+                                                                <p style="color: #c7c7c7; font-size: 12px;padding: 10px;">@attrName</p>
+                                                            }
+
+                                                            options.Add(new SelectListItem { Text = variant.value, Value = (variant.price.ToString() + "|" + variant.discountprice.ToString()) + "|" + variant.number });
+
+                                                            lastAttrName = attrName;
+                                                        }
+
+                                                        @Html.DropDownList(lastAttrName, options, null, new { @class = "form-control color-box" })
+                                                    }
+
+                                                    //ak je viac druhov variant
                                                     if (vars.Count() > 0)
                                                     {
                                                         List<SelectListItem> options = new List<SelectListItem>();
@@ -300,8 +330,6 @@
                                                         var lastAttrName = "";
                                                         foreach (var variant in vars)
                                                         {
-
-                                                            isVariable = true;
 
                                                             var attrId = variant.attribute_id;
                                                             var attrName = Model.AttributesModel.Where(o => o.id == attrId).SingleOrDefault().name;
@@ -318,7 +346,7 @@
                                                                 <p style="color: #c7c7c7; font-size: 12px;padding: 10px;">@attrName</p>
                                                             }
 
-                                                            options.Add(new SelectListItem { Text = variant.value, Value = (variant.price.ToString() + "|" + variant.discountprice.ToString()) });
+                                                            options.Add(new SelectListItem { Text = variant.value, Value = (variant.price.ToString() + "|" + variant.discountprice.ToString()) + "|" + variant.number });
 
                                                             lastAttrName = attrName;
                                                         }
@@ -904,6 +932,9 @@
 
                     $thisDiscount = $thisPrices[1].replace(",", ".");
                     $thisDiscount = parseFloat($thisDiscount == "" ? 0 : $thisDiscount);
+
+                    $prodNumber = $thisPrices[2];
+                    $("#prodNumVal").text($prodNumber);
 
                     if ($thisDiscount == 0) {
 

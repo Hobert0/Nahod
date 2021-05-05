@@ -12,6 +12,14 @@ $(".productfilter").change(function (e) {
     let dropdownValVyrobca = $('#Vyrobca').val();
     let price = $('#ex3').val().split(',');
 
+    if (typeof dropdownValTyp === "undefined") {
+        dropdownValTyp = "";
+    }
+
+    if (typeof dropdownValVyrobca === "undefined") {
+        dropdownValVyrobca = "";
+    }
+
     let minPrice = price[0];
     let maxPrice = price[1];
 

@@ -13,7 +13,7 @@
 <div class="col-12 filter-container">
     <div class="form-group">
         <div class="row">
-            @if (ViewData["typ"] != null)
+            @if (ViewData["typ"] != null && ViewData["pageType"] != "type")
             {
                 <div class="col-lg-3 col-md-6 px-2" style="text-align: left; display: inline-block;">
                     <div>
@@ -22,7 +22,7 @@
                     </div>
                 </div>
             }
-            @if (ViewData["znacka"] != null)
+            @if (ViewData["znacka"] != null && ViewData["pageType"] != "brand")
             {
                 <div class="col-lg-3 col-md-6 px-2" style="text-align: left; display: inline-block;">
                     <div>

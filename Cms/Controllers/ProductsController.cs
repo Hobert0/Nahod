@@ -303,6 +303,27 @@ namespace Cms.Controllers
             }
             return brand;
         }
+        /*Brands - products (only brands from products)*/
+        public List<SelectListItem> SelectionBrandFiltered(IEnumerable<products> prods)
+        {
+
+            HashSet<int> prodBrandId = new HashSet<int>();
+            foreach (var prod in prods) {
+                if (prod.custom3 != "" && prod.custom3 != null)
+                {
+                    prodBrandId.Add(Int32.Parse(prod.custom3));
+                }
+            }
+
+            List<SelectListItem> brand = new List<SelectListItem>();
+            brand.Add(new SelectListItem { Text = "", Value = "" });
+            foreach (var brandId in prodBrandId)
+            {
+                var item = db.brands.Where(i => i.id == brandId).FirstOrDefault();
+                brand.Add(new SelectListItem { Text = item.name, Value = item.id.ToString() });
+            }
+            return brand;
+        }
         /*Category - Add category*/
         public List<SelectListItem> SelectionKategorieMain()
         {
@@ -428,7 +449,7 @@ namespace Cms.Controllers
 
                 }
 
-                var variants = db.variants.Where(item => item.prod_id == id).OrderBy(o => o.num).ToList();
+                var variants = db.variants.Where(item => item.prod_id == id && item.deleted == false).OrderBy(o => o.num).ToList();
                 model.Variants = JsonConvert.SerializeObject(variants);
 
                 ProductModel pm = new ProductModel();
@@ -692,6 +713,17 @@ namespace Cms.Controllers
             model.Title = data.title;
             model.Weight = data.weight;
             model.Weightunit = data.weightunit;
+            model.Heureka = data.heureka;
+            model.HeurekaDarcek = data.heurekadarcek;
+
+            if (data.heurekadarcek == true)
+            {
+                model.HeurekaDarcekText = data.heurekadarcektext;
+            }
+            else
+            {
+                model.HeurekaDarcekText = null;
+            }
             model.TitleImage = null;
 
             //Varianty
@@ -773,6 +805,7 @@ namespace Cms.Controllers
             foreach (var oldVar in oldVariants)
             {
                 db.variants.Remove(oldVar);
+                //oldVar.deleted = true;
             }
 
             dynamic vars = JsonConvert.DeserializeObject(model.Variants);
