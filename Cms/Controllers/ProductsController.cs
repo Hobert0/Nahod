@@ -1095,6 +1095,13 @@ namespace Cms.Controllers
                     {
                         var InputFileName = Path.GetFileName(file.FileName);
                         var ServerSavePath = Path.Combine(Server.MapPath(miestoUlozenia + InputFileName));
+                        var ulozObrazok = DateTime.Now.Date.ToString("dd.MM.yyyy") + "/" + DateTime.Now.ToString("HHmmss") + "/";
+
+                        if (miestoUlozenia == "~/Uploads/")
+                        {
+                            var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia + ulozObrazok));
+                            ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
+                        }
                         //Save file to server folder  
                         byte[] fileByte;
                         using (var reader = new BinaryReader(file.InputStream))
@@ -1112,7 +1119,7 @@ namespace Cms.Controllers
                         if (model.Image != isTheSameImage)
                         {
                             var data = db.types.Single(i => i.id == model.Id);
-                            data.image = isTheSameImage;
+                            data.image = ulozObrazok + InputFileName;
                             db.SaveChanges();
                         }
                         //assigning file uploaded status to ViewBag for showing message to user.  
@@ -1197,6 +1204,13 @@ namespace Cms.Controllers
                     {
                         var InputFileName = Path.GetFileName(file.FileName);
                         var ServerSavePath = Path.Combine(Server.MapPath(miestoUlozenia + InputFileName));
+                        var ulozObrazok = DateTime.Now.Date.ToString("dd.MM.yyyy") + "/" + DateTime.Now.ToString("HHmmss") + "/";
+
+                        if (miestoUlozenia == "~/Uploads/")
+                        {
+                            var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia + ulozObrazok));
+                            ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
+                        }
                         //Save file to server folder  
                         byte[] fileByte;
                         using (var reader = new BinaryReader(file.InputStream))
@@ -1219,7 +1233,7 @@ namespace Cms.Controllers
                         if (model.Image != isTheSameImage)
                         {
                             var data = db.brands.Single(i => i.id == model.Id);
-                            data.image = isTheSameImage;
+                            data.image = ulozObrazok + InputFileName;
                             db.SaveChanges();
                         }
                         //assigning file uploaded status to ViewBag for showing message to user.  
@@ -1254,6 +1268,7 @@ namespace Cms.Controllers
                     {
                         var InputFileName = Path.GetFileName(file.FileName);
                         var ServerSavePath = Path.Combine(Server.MapPath(miestoUlozenia) + InputFileName);
+                       
                         //Save file to server folder  
                         byte[] fileByte;
                         using (var reader = new BinaryReader(file.InputStream))
@@ -1295,6 +1310,13 @@ namespace Cms.Controllers
                     {
                         var InputFileName = Path.GetFileName(file.FileName);
                         var ServerSavePath = Path.Combine(Server.MapPath(miestoUlozenia + InputFileName));
+                        var ulozObrazok = DateTime.Now.Date.ToString("dd.MM.yyyy") + "/" + DateTime.Now.ToString("HHmmss") + "/";
+
+                        if (miestoUlozenia == "~/Uploads/")
+                        {
+                            var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia + ulozObrazok));
+                            ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
+                        }
                         //Save file to server folder  
                         byte[] fileByte;
                         using (var reader = new BinaryReader(file.InputStream))
@@ -1312,7 +1334,7 @@ namespace Cms.Controllers
                         if (model.Image != isTheSameImage)
                         {
                             var data = db.products.Single(i => i.id == model.Id);
-                            data.image = isTheSameImage;
+                            data.image = ulozObrazok + InputFileName;
                             db.SaveChanges();
                         }
                         //assigning file uploaded status to ViewBag for showing message to user.  

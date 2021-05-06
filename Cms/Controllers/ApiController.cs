@@ -14,6 +14,10 @@ using System.Xml.Serialization;
 using System.Xml;
 using System.Xml.Schema;
 using System.Data;
+using System.Xml.Linq;
+using Newtonsoft.Json;
+using System.Text.RegularExpressions;
+using OfficeOpenXml;
 
 namespace Cms.Controllers
 {
@@ -281,16 +285,20 @@ namespace Cms.Controllers
             var typeID = db.types.Where(i => i.slug == type).First().id.ToString();
             var model = new MultipleIndexModel();
 
-            if (catSlug1 != null && catSlug2 == null) {
-                
+            if (catSlug1 != null && catSlug2 == null)
+            {
+
                 var catId = db.categories.Where(i => i.slug == catSlug1).First().id.ToString();
                 model.ProductModel = db.products.Where(i => i.type.Contains(typeID) && i.category.Contains(catId)).OrderByDescending(x => x.id).ToList();
-            } else if (catSlug1 != null && catSlug2 != null) {
-                
+            }
+            else if (catSlug1 != null && catSlug2 != null)
+            {
+
                 var catId = db.categories.Where(i => i.slug == catSlug2).First().id.ToString();
                 model.ProductModel = db.products.Where(i => i.type.Contains(typeID) && i.category.Contains(catId)).OrderByDescending(x => x.id).ToList();
             }
-            else {
+            else
+            {
                 model.ProductModel = db.products.Where(c => c.type.Contains(typeID)).OrderByDescending(x => x.id).ToList();
             }
 
@@ -310,102 +318,120 @@ namespace Cms.Controllers
         }
 
         [Route("exportObjS3"), EnableCors(origins: "*", headers: "*", methods: "*")]
-        public string ExportObjMoneyS3(string username, string userid)
+        public string ExportObjMoneyS3()
         {
-            var path = HttpContext.Server.MapPath("~/Models/_Import.xsd");
-            XmlTextReader reader = new XmlTextReader(path);
-           // XmlSchema myschema = XmlSchema.Read(reader, ValidationCallback);
-            
-            //var data = ImportMoneyS3 { Field1 = "test1", Field2 = "test2" };
-            //var serializer = new XmlSerializer(typeof(MyClass));
-            using (var stream = new StreamWriter("C:\\test.xml"))
-            //serializer.Serialize(stream, data);
-            return "Oki";
+
+            MultipleIndexModel model = new MultipleIndexModel();
+            MemoryStream ms = new MemoryStream();
+            XmlWriterSettings xws = new XmlWriterSettings();
+            xws.OmitXmlDeclaration = true;
+            xws.Indent = true;
+            var filemane = DateTime.Now.Ticks.ToString() + ".xml";
+
+            var order = db.orders.FirstOrDefault();
+
+    
+                objednavkaType obj = new objednavkaType
+                {
+                    //obj.CasVystave = DateTime.Parse(order.date,CultureInfo.InvariantCulture);
+                    DruhDopravy = order.shipping,
+                    Poznamka = order.comment,
+                    TypTransakce = order.payment,
+                    DCislo = decimal.Parse(order.ordernumber),
+                };
+        
+        XmlSerializer serializer = new XmlSerializer(typeof(objednavkaType));
+            using (StreamWriter writer = new StreamWriter(Server.MapPath("~/export/"+ filemane)))
+            {
+                serializer.Serialize(writer, obj);
+            }
+
+            return filemane;            
         }
 
         [Route("importSKladS3"), EnableCors(origins: "*", headers: "*", methods: "*")]
-        public string ImportMonS3(string ExpZasobyName)
+public string ImportMonS3(string ExpZasobyName)
+{
+    var path = "http://nahod.sk.amber.globenet.cz/import/" + ExpZasobyName;
+    XmlTextReader reader = new XmlTextReader(path);
+    while (reader.Read())
+    {
+        // Do some work here on the data.
+        Console.WriteLine(reader.Name);
+        //string tempf = reader.Katalog;
+        //string tempc = reader.Cena;
+        //string feels = reader.StavZasoby;
+    }
+
+    XmlDocument doc1 = new XmlDocument();
+    doc1.Load("http://nahod.sk.amber.globenet.cz/import/" + ExpZasobyName);
+    XmlElement root = doc1.DocumentElement;
+    XmlNodeList nodes = root.SelectNodes("/MoneyData/SeznamZasoba/Zasoba");
+
+    // XmlNodeList nodes = oNode.SelectNodes("Katalog");
+
+    foreach (XmlNode node in nodes)
+    {
+        var sklad = node.SelectSingleNode("StavZasoby/Zasoba").InnerText;
+        var cislo = node.SelectSingleNode("KmKarta/Katalog").InnerText;
+        var cena = node.SelectSingleNode("PC/Cena1/Cena").InnerText;
+        var zlava = node.SelectSingleNode("Sleva").InnerText;
+        decimal cenasdph = 0;
+        decimal cenapozlave = 0;
+        //vypocet ceny s DPH
+        if (cena != null)
         {
-            var path = "http://nahod.sk.amber.globenet.cz/import/" + ExpZasobyName;
-            XmlTextReader reader = new XmlTextReader(path);
-            while (reader.Read())
+            cenasdph = decimal.Parse(cena.Replace(".", ","));
+        }
+
+        var product = db.products.Where(i => i.number == cislo).FirstOrDefault();
+        if (product != null)
+        {
+            product.stock = sklad;
+            product.price = cenasdph * decimal.Parse("1,2");
+
+            //ak je produkt v zlave
+            if (zlava != "0")
             {
-                // Do some work here on the data.
-                Console.WriteLine(reader.Name);
-                //string tempf = reader.Katalog;
-                //string tempc = reader.Cena;
-                //string feels = reader.StavZasoby;
+                cenapozlave = product.price * (1 - (decimal.Parse(zlava.Replace(".", ",")) / 100));
+                product.discountprice = cenapozlave;
+            }
+            else
+            {
+                product.discountprice = null;
             }
 
-            XmlDocument doc1 = new XmlDocument();
-            doc1.Load("http://nahod.sk.amber.globenet.cz/import/" + ExpZasobyName);
-            XmlElement root = doc1.DocumentElement;
-            XmlNodeList nodes = root.SelectNodes("/MoneyData/SeznamZasoba/Zasoba");
-
-           // XmlNodeList nodes = oNode.SelectNodes("Katalog");
-
-            foreach (XmlNode node in nodes)
+            db.SaveChanges();
+        }
+        else
+        {
+            //poku3a sa najst hladany produkt medzi variantami
+            var productinvariants = db.variants.Where(i => i.number == cislo).FirstOrDefault();
+            if (productinvariants != null)
             {
-                var sklad = node.SelectSingleNode("StavZasoby/Zasoba").InnerText;
-                var cislo = node.SelectSingleNode("KmKarta/Katalog").InnerText;
-                var cena = node.SelectSingleNode("PC/Cena1/Cena").InnerText;
-                var zlava = node.SelectSingleNode("Sleva").InnerText;
-                decimal cenasdph = 0;
-                decimal cenapozlave = 0;
-                //vypocet ceny s DPH
-                if (cena != null)
+                var variantprice = cenasdph * decimal.Parse("1,2");
+
+                productinvariants.stock = sklad;
+                productinvariants.price = variantprice;
+
+                //ak je produkt v zlave
+                if (zlava != "0")
                 {
-                    cenasdph = decimal.Parse(cena.Replace(".", ","));
-                }
-
-                var product = db.products.Where(i => i.number == cislo).FirstOrDefault();
-                if (product != null)
-                {
-                    product.stock = sklad;
-                    product.price = cenasdph * decimal.Parse("1,2");
-
-                    //ak je produkt v zlave
-                    if (zlava != "0")
-                    {
-                        cenapozlave = product.price * (1 - (decimal.Parse(zlava.Replace(".", ",")) / 100));
-                        product.discountprice = cenapozlave;
-                    }
-                    else
-                    {
-                        product.discountprice = null;
-                    }
-
-                    db.SaveChanges();
+                    cenapozlave = variantprice * (1 - (decimal.Parse(zlava.Replace(".", ",")) / 100));
+                    productinvariants.discountprice = cenapozlave;
                 }
                 else
                 {
-                    //poku3a sa najst hladany produkt medzi variantami
-                    var productinvariants = db.variants.Where(i => i.number == cislo).FirstOrDefault();
-                    if (productinvariants != null)
-                    {
-                        var variantprice = cenasdph * decimal.Parse("1,2");
-
-                        productinvariants.stock = sklad;
-                        productinvariants.price = variantprice;
-
-                        //ak je produkt v zlave
-                        if (zlava != "0")
-                        {
-                            cenapozlave = variantprice * (1 - (decimal.Parse(zlava.Replace(".", ",")) / 100));
-                            productinvariants.discountprice = cenapozlave;
-                        }
-                        else
-                        {
-                            productinvariants.discountprice = null;
-                        }
-
-                        db.SaveChanges();
-                    }
+                    productinvariants.discountprice = null;
                 }
-            }          
 
-            return "Oki";
+                db.SaveChanges();
+            }
         }
+    }
+
+    return "Oki";
+}
 
     }
 }
