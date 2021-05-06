@@ -24,7 +24,7 @@
           <Property Name="title" Type="text" Nullable="false" />
           <Property Name="date" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="meno" Type="bool" Nullable="false" />
-          <Property Name="excerpt" Type="text" Nullable="false" />
+          <Property Name="excerpt" Type="text" />
           <Property Name="image" Type="text" Nullable="false" />
           <Property Name="gallery" Type="text" Nullable="false" />
         </EntityType>
@@ -36,7 +36,7 @@
           <Property Name="name" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="slug" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="description" Type="text" Nullable="false" />
-          <Property Name="image" Type="text" Nullable="false" />
+          <Property Name="image" Type="text" />
           <Property Name="priority" Type="int" />
           <Property Name="deleted" Type="bool" Nullable="false" />
         </EntityType>
@@ -356,7 +356,6 @@
     <edmx:ConceptualModels>
       <Schema Namespace="hobcModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="blog" EntityType="hobcModel.blog" />
           <EntitySet Name="deliver_city" EntityType="hobcModel.deliver_city" />
           <EntitySet Name="e_settings" EntityType="hobcModel.e_settings" />
           <EntitySet Name="newsletter" EntityType="hobcModel.newsletter" />
@@ -364,7 +363,6 @@
           <EntitySet Name="settings" EntityType="hobcModel.settings" />
           <EntitySet Name="wishlist" EntityType="hobcModel.wishlist" />
           <EntitySet Name="attributes" EntityType="hobcModel.attributes" />
-          <EntitySet Name="brands" EntityType="hobcModel.brands" />
           <EntitySet Name="users" EntityType="hobcModel.users" />
           <EntitySet Name="types" EntityType="hobcModel.types" />
           <EntitySet Name="slideshow" EntityType="hobcModel.slideshow" />
@@ -375,21 +373,9 @@
           <EntitySet Name="products" EntityType="hobcModel.products" />
           <EntitySet Name="coupons" EntityType="hobcModel.coupons" />
           <EntitySet Name="categories" EntityType="hobcModel.categories" />
+          <EntitySet Name="brands" EntityType="hobcModel.brands" />
+          <EntitySet Name="blog" EntityType="hobcModel.blog" />
         </EntityContainer>
-        <EntityType Name="blog">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="slug" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="content" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="title" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="date" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="meno" Type="Boolean" Nullable="false" />
-          <Property Name="excerpt" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="image" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="gallery" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="deliver_city">
           <Key>
             <PropertyRef Name="id" />
@@ -492,18 +478,6 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="value" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="deleted" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="brands">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="slug" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="description" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="image" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="priority" Type="Int32" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="users">
@@ -701,27 +675,38 @@
           <Property Name="heurekadarcektext" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="brands">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="slug" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="image" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="priority" Type="Int32" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="blog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="slug" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="content" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="date" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="meno" Type="Boolean" Nullable="false" />
+          <Property Name="excerpt" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="image" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="gallery" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="hobcModelStoreContainer" CdmEntityContainer="Entities">
-          <EntitySetMapping Name="blog">
-            <EntityTypeMapping TypeName="hobcModel.blog">
-              <MappingFragment StoreEntitySet="blog">
-                <ScalarProperty Name="gallery" ColumnName="gallery" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="excerpt" ColumnName="excerpt" />
-                <ScalarProperty Name="meno" ColumnName="meno" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="content" ColumnName="content" />
-                <ScalarProperty Name="slug" ColumnName="slug" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="deliver_city">
             <EntityTypeMapping TypeName="hobcModel.deliver_city">
               <MappingFragment StoreEntitySet="deliver_city">
@@ -828,19 +813,6 @@
               <MappingFragment StoreEntitySet="attributes">
                 <ScalarProperty Name="deleted" ColumnName="deleted" />
                 <ScalarProperty Name="value" ColumnName="value" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="brands">
-            <EntityTypeMapping TypeName="hobcModel.brands">
-              <MappingFragment StoreEntitySet="brands">
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="priority" ColumnName="priority" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="slug" ColumnName="slug" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
@@ -1047,6 +1019,34 @@
                 <ScalarProperty Name="maincat" ColumnName="maincat" />
                 <ScalarProperty Name="slug" ColumnName="slug" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="brands">
+            <EntityTypeMapping TypeName="hobcModel.brands">
+              <MappingFragment StoreEntitySet="brands">
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="priority" ColumnName="priority" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="slug" ColumnName="slug" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="blog">
+            <EntityTypeMapping TypeName="hobcModel.blog">
+              <MappingFragment StoreEntitySet="blog">
+                <ScalarProperty Name="gallery" ColumnName="gallery" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="excerpt" ColumnName="excerpt" />
+                <ScalarProperty Name="meno" ColumnName="meno" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="slug" ColumnName="slug" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

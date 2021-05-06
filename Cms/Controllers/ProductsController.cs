@@ -308,7 +308,8 @@ namespace Cms.Controllers
         {
 
             HashSet<int> prodBrandId = new HashSet<int>();
-            foreach (var prod in prods) {
+            foreach (var prod in prods)
+            {
                 if (prod.custom3 != "" && prod.custom3 != null)
                 {
                     prodBrandId.Add(Int32.Parse(prod.custom3));
@@ -354,7 +355,7 @@ namespace Cms.Controllers
                     znacka.Add(new SelectListItem { Text = cat.name + " → " + cat.topcat2 + " → " + cat.topcat, Value = cat.id.ToString() });
                 }
                 */
-                znacka.Add(new SelectListItem { Text = cat.name , Value = cat.id.ToString() });
+                znacka.Add(new SelectListItem { Text = cat.name, Value = cat.id.ToString() });
             }
             return znacka;
         }
@@ -518,7 +519,8 @@ namespace Cms.Controllers
             {
                 o.heurekadarcektext = model.HeurekaDarcekText;
             }
-            else {
+            else
+            {
                 o.heurekadarcektext = null;
             }
 
@@ -528,7 +530,8 @@ namespace Cms.Controllers
             {
                 o.discountprice = Decimal.Parse(model.Discountprice, CultureInfo.InvariantCulture);
             }
-            else {
+            else
+            {
                 o.discountprice = null;
             }
             o.custom1 = model.Custom1;
@@ -590,7 +593,8 @@ namespace Cms.Controllers
                     {
                         v.discountprice = Decimal.Parse(model.Discountprice, CultureInfo.InvariantCulture);
                     }
-                    else {
+                    else
+                    {
                         v.discountprice = null;
                     }
 
@@ -771,7 +775,8 @@ namespace Cms.Controllers
             {
                 o.discountprice = Decimal.Parse(model.Discountprice, CultureInfo.InvariantCulture);
             }
-            else {
+            else
+            {
                 o.discountprice = null;
             }
             o.custom1 = model.Custom1;
@@ -822,18 +827,22 @@ namespace Cms.Controllers
                 {
                     v.price = varP.price;
                 }
-                else {
+                else
+                {
                     v.price = Decimal.Parse(model.Price, CultureInfo.InvariantCulture);
                 }
 
                 if (varP.discountprice != null && varP.discountprice != "")
                 {
                     v.discountprice = varP.discountprice;
-                } else if (model.Discountprice != "NaN" && model.Discountprice != null) {
+                }
+                else if (model.Discountprice != "NaN" && model.Discountprice != null)
+                {
 
                     v.discountprice = Decimal.Parse(model.Discountprice, CultureInfo.InvariantCulture);
                 }
-                else {
+                else
+                {
                     v.discountprice = null;
                 }
 
@@ -914,7 +923,8 @@ namespace Cms.Controllers
             foreach (var product in products)
             {
                 //odchecknute produkty nezmenime
-                if (notCheckedProdsArr.Contains(product.id) == false) {
+                if (notCheckedProdsArr.Contains(product.id) == false)
+                {
 
                     decimal changedPrice = product.price + product.price * Decimal.Parse(multiplePricePerc, CultureInfo.InvariantCulture) / 100;
 
@@ -1031,7 +1041,8 @@ namespace Cms.Controllers
                         }
                         var isTheSameImage = "";
 
-                        if (model.Image != null) {
+                        if (model.Image != null)
+                        {
                             isTheSameImage = model.Image.Substring(0, model.Image.LastIndexOf("/") + 1) + InputFileName;
                         }
 
@@ -1046,9 +1057,9 @@ namespace Cms.Controllers
                         {
                             Random r = new Random();
                             var data = db.categories.Single(i => i.id == model.Id);
-                            data.image = model.Image.Substring(0, model.Image.LastIndexOf("/") + 1) + r.Next() + "_"+ InputFileName;
+                            data.image = model.Image.Substring(0, model.Image.LastIndexOf("/") + 1) + r.Next() + "_" + InputFileName;
                             db.SaveChanges();
-                            img.Save(Path.Combine(Server.MapPath("~/Uploads/"+data.image)));
+                            img.Save(Path.Combine(Server.MapPath("~/Uploads/" + data.image)));
                         }
                         //assigning file uploaded status to ViewBag for showing message to user.  
                         ViewBag.UploadStatus = subor.Count().ToString() + " files uploaded successfully.";
@@ -1199,7 +1210,12 @@ namespace Cms.Controllers
                         }
                         img.Save(ServerSavePath);
 
-                        var isTheSameImage = model.Image.Substring(0, model.Image.LastIndexOf("/") + 1) + InputFileName;
+                        var isTheSameImage = "";
+                        if (model.Image != null)
+                        {
+                            isTheSameImage = model.Image.Substring(0, model.Image.LastIndexOf("/") + 1) + InputFileName;
+                        }
+
                         if (model.Image != isTheSameImage)
                         {
                             var data = db.brands.Single(i => i.id == model.Id);
@@ -1651,7 +1667,7 @@ namespace Cms.Controllers
             {
                 /*AK duplikujeme produkt vytvori nove foldre*/
                 var sourcePath = HttpContext.Server.MapPath("~/Uploads/avatar_product.jpg");
-                var destinationPath = 
+                var destinationPath =
                     ("~/Uploads/" + o.image);
                 var miestoUlozenia = "~/Uploads/" + ulozObrazok;
                 var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia));

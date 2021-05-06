@@ -291,7 +291,12 @@
 
                                                 @{
                                                     //var variants = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).ToList();
-                                                    var varFirstAttrId = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id) && o.num == 1).FirstOrDefault().attribute_id;
+                                                    var varFirstAttrId = 0;
+
+                                                    if (Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).Count() > 0) {
+                                                        varFirstAttrId = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id) && o.num == 1).FirstOrDefault().attribute_id;
+                                                    }
+
                                                     var varsFirst = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id) && o.attribute_id == varFirstAttrId).OrderBy(o => o.num).ToList();
                                                     var vars = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id) && o.attribute_id != varFirstAttrId).OrderBy(o => o.attribute_id).ThenBy(o => o.num).ToList();
 
