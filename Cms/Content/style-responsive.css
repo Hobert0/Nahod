@@ -910,6 +910,7 @@
         #address .next-step-container,
         #shipping .next-step-container {
             margin: 0;
+            margin-bottom: 10px;
         }
 
             #cart .next-step-container div,
