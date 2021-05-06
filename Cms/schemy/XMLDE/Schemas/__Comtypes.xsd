@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Radovan Horacek (CIGLER SOFTWARE) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:complexType name="souhrnDPHType">
+		<xs:sequence>
+			<xs:element name="Zaklad0" type="castkaType" minOccurs="0"/>
+			<xs:element name="Zaklad5" type="castkaType" minOccurs="0"/>
+			<xs:element name="Zaklad22" type="castkaType" minOccurs="0"/>
+			<xs:element name="DPH5" type="castkaType" minOccurs="0"/>
+			<xs:element name="DPH22" type="castkaType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="menaType">
+		<xs:sequence>
+			<xs:element name="Kod">
+				<xs:annotation>
+					<xs:documentation>Kód měny, kontrola na Seznam Cizích měn IMPORT: ANO, EXPORT: ANO </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Mnozstvi" default="1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Množství měny pro zadaný kurs. Default=1 IMPORT: ANO, EXPORT: ANO </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="11"/>
+						<xs:fractionDigits value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Kurs" type="castkaType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Kurs měny IMPORT: ANO, EXPORT: ANO </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VlajkaType">
+		<xs:sequence>
+			<xs:element name="IDUser" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>ID uživatele, u globálních vlajek=0. IMPORT: NE, EXPORT: ANO </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NameUser" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Jméno uživatele. u globáních vlajek se neexportuje,  IMPORT: NE, EXPORT: ANO </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IDFlag" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>ID vlajky. IMPORT: NE, EXPORT: ANO </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Title" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Popis příznaku. IMPORT: NE, EXPORT: ANO </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Enabled" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Povolení příznaku (přítomnost v nabídce). IMPORT: NE, EXPORT: ANO </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Remark" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Komentář příznaku. Pouze u globálních příznaků.(existence) IMPORT: NE, EXPORT: ANO </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RFWidth" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>šířka komentáře (v pixelech). IMPORT: NE, EXPORT: ANO </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RFHeight" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>výška komentáře (v pixelech). IMPORT: NE, EXPORT: ANO </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="doklRefType">
+		<xs:sequence>
+			<xs:element name="IDDokladu" type="xs:long">
+				<xs:annotation>
+					<xs:documentation>Jedinečný identifikátor dokladu</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CisloDokladu" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Uživatelské číslo dokladu</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DruhDokladu" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Druh dokladu:
+
+1) Hradící doklady:
+B = bankovní
+P = pokladní
+I = interní doklad
+
+2) Hrazené doklady
+FV = faktura vydaná
+FP = faktura přijatá
+KP = pohledávka
+KZ = závazek
+ID = interní doklad</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:NMTOKEN">
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Rok">
+				<xs:annotation>
+					<xs:documentation>Rok, do kterého doklad spadá</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="castkaType">
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="15"/>
+			<xs:fractionDigits value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="mnozstviType">
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="15"/>
+			<xs:fractionDigits value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="procentoType">
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="15"/>
+			<xs:fractionDigits value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="cisloType">
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="15"/>
+			<xs:fractionDigits value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="celeCisloType">
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="15"/>
+			<xs:fractionDigits value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="zkratkaType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="popisType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="vycetType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ucetType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="windows-1250"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Josef NovĂˇk (Barbone) -->
+<schema xmlns="http://www.w3.org/2001/XMLSchema" version="24.04.01">
+	<annotation>
+		<documentation>SchĂ©ma pro seznam vzniklĂ˝ch chyb</documentation>
+	</annotation>
+	<element name="Chyby">
+		<complexType mixed="false">
+			<sequence>
+				<element name="Chyba" maxOccurs="unbounded">
+					<annotation>
+						<documentation>Element odpovĂ­dĂˇ jednomu objektu tĹ™Ă­dy Chyba.</documentation>
+					</annotation>
+					<complexType mixed="false">
+						<sequence>
+							<element name="Text" type="string">
+								<annotation>
+									<documentation>TextovĂ˝ popis chyby.</documentation>
+								</annotation>
+							</element>
+							<element name="Zasobnik" type="string" minOccurs="0">
+								<annotation>
+									<documentation>Pokud se jednĂˇ o vĂ˝jimku, je pĹ™ipojen otisk zĂˇsobnĂ­ku.</documentation>
+								</annotation>
+							</element>
+						</sequence>
+						<attribute name="Typ" type="string">
+							<annotation>
+								<documentation>Typ chyby: K - kritickĂˇ, N - nepropustnĂˇ, P - propustnĂˇ, E - vĂ˝jimka
+java.</documentation>
+							</annotation>
+						</attribute>
+						<attribute name="Radek" type="string">
+							<annotation>
+								<documentation>ÄŚĂ­slo Ĺ™Ăˇdku v souboru (pouze pokud lze), nebo index opakujĂ­cĂ­ se
+poloĹľky.</documentation>
+							</annotation>
+						</attribute>
+						<attribute name="Polozka" type="string">
+							<annotation>
+								<documentation>Identifikace poloĹľky.</documentation>
+							</annotation>
+						</attribute>
+						<attribute name="Oddil" type="string">
+							<annotation>
+								<documentation>Identifikace oddĂ­lu, ve kterĂ©m se poloĹľka nachĂˇzĂ­.</documentation>
+							</annotation>
+						</attribute>
+						<attribute name="DoplInfo" type="string">
+							<annotation>
+								<documentation>DoplĹujĂ­cĂ­ informace, kde se poloĹľka chyba nachĂˇzĂ­.</documentation>
+							</annotation>
+						</attribute>
+						<attribute name="Zkr" type="string">
+							<annotation>
+								<documentation>Zkratka chyby, neboli jeji identifikĂˇtor</documentation>
+							</annotation>
+						</attribute>
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+</schema>

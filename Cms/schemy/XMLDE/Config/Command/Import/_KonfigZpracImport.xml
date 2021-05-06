@@ -1,0 +1,694 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Import description="">
+	<Entity name="Firma" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="IČO">
+				<Field name="ICO"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description="IČO">
+				<Field name="ICO"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="NoAction" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="Firma_Osoba" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Kód partnera">
+				<Field name="KodPartn"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description="Kód partnera">
+				<Field name="KodPartn"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="Firma_BankSpojeni" enabled="0" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="Sklad" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="0" description="Kód skladu">
+				<Field name="KodSkladu"/>
+			</Key>
+			<Mode auto="0" newValue="Error" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description="Kód skladu">
+				<Field name="KodSkladu"/>
+			</Key>
+			<Mode auto="0" newValue="Error" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="KmKarta" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Čárový kód">
+				<Field name="BarCode"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description="Čárový kód">
+				<Field name="BarCode"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="Zasoba" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Kmenová karta + Sklad">
+				<Field name="KmKarta"/>
+				<Field name="Sklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="VyrobniCisloPrij" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="0" description="Výrobní číslo">
+				<Field name="VyrobniCis"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="0" description="Výrobní číslo">
+				<Field name="VyrobniCis"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="Append" noValue="Append" moreValues="Append"/>
+		</Embedded>
+	</Entity>
+	<Entity name="VyrobniCisloVyd" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="0" description="Výrobní číslo">
+				<Field name="VyrobniCis"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="0" description="Výrobní číslo">
+				<Field name="VyrobniCis"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="NoAction" moreValues="Append"/>
+		</Embedded>
+	</Entity>
+	<Entity name="VyrobniCisloInvD" enabled="0" visible="1">
+		<StandAlone take="0">
+			<Key auto="0" description="Výrobní číslo">
+				<Field name="VyrobniCis"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="0" description="Výrobní číslo">
+				<Field name="VyrobniCis"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="Zakazka" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Zkratka">
+				<Field name="Zkrat"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="FaktPrijata" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Číslo dokladu">
+				<Field name="Doklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="ZasobaSklPolFP" enabled="0" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description="Kmenová karta + Sklad">
+				<Field name="KmKarta"/>
+				<Field name="Sklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="FaktVydana" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="0" description="Číslo dokladu">
+				<Field name="Doklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="ZasobaSklPolFV" enabled="0" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description="Kmenová karta + Sklad">
+				<Field name="KmKarta"/>
+				<Field name="Sklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="ObjPrij" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="0" description="Číslo dokladu">
+				<Field name="Doklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="ZasobaSklPolOP" enabled="0" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description="Kmenová karta + Sklad">
+				<Field name="KmKarta"/>
+				<Field name="Sklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="ObjVyd" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Číslo dokladu">
+				<Field name="Doklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="ZasobaSklPolOV" enabled="0" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description="Kmenová karta + Sklad">
+				<Field name="KmKarta"/>
+				<Field name="Sklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="NabPrij" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="0" description="Číslo dokladu">
+				<Field name="Doklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="ZasobaSklPolNP" enabled="0" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description="Kmenová karta + Sklad">
+				<Field name="KmKarta"/>
+				<Field name="Sklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="NabVyd" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Číslo dokladu">
+				<Field name="Doklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="ZasobaSklPolNV" enabled="0" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description="Kmenová karta + Sklad">
+				<Field name="KmKarta"/>
+				<Field name="Sklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="PoptPrij" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="0" description="Číslo dokladu">
+				<Field name="Doklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="ZasobaSklPolPP" enabled="0" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description="Kmenová karta + Sklad">
+				<Field name="KmKarta"/>
+				<Field name="Sklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="PoptVyd" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Číslo dokladu">
+				<Field name="Doklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="ZasobaSklPolPV" enabled="0" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description="Kmenová karta + Sklad">
+				<Field name="KmKarta"/>
+				<Field name="Sklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="BankDoklad" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Číslo dokladu">
+				<Field name="Doklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="PoklDoklad" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="0" description="Číslo dokladu">
+				<Field name="Doklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="IntDoklad" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Číslo dokladu">
+				<Field name="Doklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="DLPrij" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Číslo dokladu">
+				<Field name="CisloDokla"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="ZasobaSklPolDP" enabled="0" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description="Kmenová karta + Sklad">
+				<Field name="KmKarta"/>
+				<Field name="Sklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="DLVyd" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Číslo dokladu">
+				<Field name="CisloDokla"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="ZasobaSklPolDV" enabled="0" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description="Kmenová karta + Sklad">
+				<Field name="KmKarta"/>
+				<Field name="Sklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="Prijemka" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Číslo dokladu">
+				<Field name="CisloDokla"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="ZasobaSklPolDV" enabled="0" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="Vydejka" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Číslo dokladu">
+				<Field name="CisloDokla"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="ZasobaSklPolDV" enabled="0" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="Prodejka" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Číslo dokladu">
+				<Field name="CisloDokla"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="ZasobaSklPolDV" enabled="0" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="Prevodka" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="0" description="Číslo dokladu">
+				<Field name="CisloDokla"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="0" description="Číslo dokladu">
+				<Field name="CisloDokla"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="ZasobaSklPolDV" enabled="0" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="InvDoklad" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="0" description="Číslo dokladu + Číslo inventury">
+				<Field name="CisloD"/>
+				<Field name="InvID"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="0" description="Číslo dokladu + Číslo inventury">
+				<Field name="CisloD"/>
+				<Field name="InvID"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Append" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="ZasobaSklPolInvD" enabled="0" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description="Kmenová karta + Sklad">
+				<Field name="KmKarta"/>
+				<Field name="Sklad"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="NoAction" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="Cinnost" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Zkratka">
+				<Field name="Zkrat"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="NoAction" existingValue="NoAction" noValue="NoAction" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="ClenDPH" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Zkratka+DatumOd">
+				<Field name="Zkrat"/>
+				<Field name="DatumOd"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="NoAction" existingValue="NoAction" noValue="NoAction" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="Predkontace" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Zkratka">
+				<Field name="Zkrat"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="NoAction" existingValue="NoAction" noValue="NoAction" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="ZauctovaniDPH" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Zkratka">
+				<Field name="Zkrat"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="NoAction" existingValue="NoAction" noValue="NoAction" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="PredkontaceDE" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Zkratka">
+				<Field name="Zkrat"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="NoAction" existingValue="NoAction" noValue="NoAction" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="ZauctovaniDPH_DE" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Zkratka">
+				<Field name="Zkrat"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="NoAction" existingValue="NoAction" noValue="NoAction" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="UcOsnova" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Účet">
+				<Field name="Ucet"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="NoAction" existingValue="NoAction" noValue="NoAction" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="UcPohyb" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Zkratka">
+				<Field name="Zkrat"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="NoAction" existingValue="NoAction" noValue="NoAction" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="Stredisko" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Zkratka">
+				<Field name="Zkrat"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="NoAction" existingValue="NoAction" noValue="NoAction" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="BankUcetPokladna" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="1" description="Zkratka">
+				<Field name="Zkrat"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description=""/>
+			<Mode auto="0" newValue="NoAction" existingValue="NoAction" noValue="NoAction" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+	<Entity name="TypMzdovehoPriplatku" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="0" description="Zkratka">
+				<Field name="Zkratka"/>
+			</Key>
+			<Mode auto="0" newValue="Error" existingValue="NoAction" noValue="Error" moreValues="NoAction"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="1" description="Zkratka">
+				<Field name="Zkratka"/>
+			</Key>
+			<Mode auto="0" newValue="Error" existingValue="NoAction" noValue="Error" moreValues="NoAction"/>
+		</Embedded>
+	</Entity>
+	<Entity name="Mzda" enabled="1" visible="1">
+		<StandAlone take="0">
+			<Key auto="0" description="Os. číslo + Měsíc + Rok">
+				<Field name="OsCislo"/>
+				<Field name="Mesic"/>
+				<Field name="Rok"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Error" moreValues="Error"/>
+		</StandAlone>
+		<Embedded take="0">
+			<Key auto="0" description="Os. číslo + Měsíc + Rok">
+				<Field name="OsCislo"/>
+				<Field name="Mesic"/>
+				<Field name="Rok"/>
+			</Key>
+			<Mode auto="0" newValue="Append" existingValue="Update" noValue="Error" moreValues="Error"/>
+		</Embedded>
+	</Entity>
+</Import>

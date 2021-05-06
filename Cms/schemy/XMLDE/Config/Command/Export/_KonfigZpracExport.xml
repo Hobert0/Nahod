@@ -1,0 +1,703 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Export description="">
+	<Node name="Firma" enabled="1">
+		<Instructions/>
+		<Node name="Firma_Skupina" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="Firma_Osoba" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="Firma_BankSpojeni" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="KmKarta" enabled="1">
+		<Instructions/>
+		<Node name="SKmKomponenta" enabled="1">
+			<Instructions/>
+			<Node name="KmKarta" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="Sklad" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+		<Node name="Parametr" enabled="1">
+			<Instructions>
+				<Filter>-1</Filter>
+			</Instructions>
+		</Node>
+		<Node name="ParametrKarty" enabled="1">
+			<Instructions>
+				<Filter>-1</Filter>
+			</Instructions>
+		</Node>
+	</Node>
+	<Node name="SKmKomponenta" enabled="1">
+		<Instructions/>
+		<Node name="KmKarta" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="Sklad" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="Sklad_Pol" enabled="1">
+		<Instructions/>
+		<Node name="VyrobniCisloVyd" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="KmKarta" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="Sklad" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="SubPolozka" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="Zasoba" enabled="1">
+		<Instructions/>
+		<Node name="Zasoba_Skupina" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="Sklad" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="KmKarta" enabled="1">
+			<Instructions/>
+			<Node name="SKmKomponenta" enabled="1">
+				<Instructions/>
+				<Node name="KmKarta" enabled="1">
+					<Instructions/>
+				</Node>
+				<Node name="Sklad" enabled="1">
+					<Instructions/>
+				</Node>
+			</Node>
+			<Node name="Parametr" enabled="1">
+				<Instructions>
+					<Filter>-1</Filter>
+				</Instructions>
+			</Node>
+			<Node name="ParametrKarty" enabled="1">
+				<Instructions>
+					<Filter>-1</Filter>
+				</Instructions>
+			</Node>
+		</Node>
+		<Node name="Alternativa" enabled="1">
+			<Instructions/>
+			<Node name="KmKarta" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="Sklad" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+		<Node name="Prislusenstvi" enabled="1">
+			<Instructions/>
+			<Node name="KmKarta" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="Sklad" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+	</Node>
+	<Node name="TypKusovnik" enabled="1">
+		<Instructions/>
+		<Node name="TypKusovnik_Vse" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="KmKarta" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="Sklad" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="ZakKusovnik" enabled="1">
+		<Instructions/>
+		<Node name="KmKarta" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="Sklad" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="Zakazka" enabled="1">
+		<Instructions/>
+		<Node name="Firma" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="ZakKusovnik" enabled="1">
+			<Instructions/>
+			<Node name="KmKarta" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="Sklad" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+	</Node>
+	<Node name="FaktPrijata" enabled="1">
+		<Instructions/>
+		<Node name="Firma" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="Fakt_Pol" enabled="1">
+			<Instructions/>
+			<Node name="Fakt_SklPol" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="VyrobniCisloPrij" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="Sklad" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="KmKarta" enabled="1">
+				<Instructions/>
+				<Node name="SKmKomponenta" enabled="1">
+					<Instructions/>
+					<Node name="KmKarta" enabled="1">
+						<Instructions/>
+					</Node>
+					<Node name="Sklad" enabled="1">
+						<Instructions/>
+					</Node>
+				</Node>
+			</Node>
+		</Node>
+		<Node name="UhradaFP" enabled="1">
+			<Instructions/>
+			<Node name="Uhrada_PDUhradaFP" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+		<Node name="SubPolozka" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="SouvisejiciDoklady" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="FaktVydana" enabled="1">
+		<Instructions/>
+		<Node name="Firma" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="Fakt_Pol" enabled="1">
+			<Instructions/>
+			<Node name="Fakt_SklPol" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="VyrobniCisloVyd" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="Sklad" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="KmKarta" enabled="1">
+				<Instructions/>
+				<Node name="SKmKomponenta" enabled="1">
+					<Instructions/>
+					<Node name="KmKarta" enabled="1">
+						<Instructions/>
+					</Node>
+					<Node name="Sklad" enabled="1">
+						<Instructions/>
+					</Node>
+				</Node>
+			</Node>
+		</Node>
+		<Node name="UhradaFV" enabled="1">
+			<Instructions/>
+			<Node name="Uhrada_PDUhradaFV" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+		<Node name="SubPolozka" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="Fakt_SeznamNepPlateb" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="SouvisejiciDoklady" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="IntDoklad" enabled="1">
+		<Instructions/>
+		<Node name="Firma" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="IntDokl_RPol" enabled="1">
+			<Instructions/>
+			<Node name="Firma" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+	</Node>
+	<Node name="Polozka" enabled="1">
+		<Instructions/>
+		<Node name="Sklad" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="KmKarta" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="SubPolozka" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="NesklPolozka" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="PoklDoklad" enabled="1">
+		<Instructions/>
+		<Node name="Firma" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="PoklDoklad_RPol" enabled="1">
+			<Instructions/>
+			<Node name="Firma" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+		<Node name="PoklDoklad_NPol" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="BankDoklad" enabled="1">
+		<Instructions/>
+		<Node name="Firma" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="Ucet" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="Pohledavka" enabled="1">
+		<Instructions/>
+		<Node name="Firma" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="Pohledavka_RPol" enabled="1">
+			<Instructions/>
+			<Node name="Firma" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+	</Node>
+	<Node name="Zavazek" enabled="1">
+		<Instructions/>
+		<Node name="Firma" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="Zavazek_RPol" enabled="1">
+			<Instructions/>
+			<Node name="Firma" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+	</Node>
+	<Node name="ObjPrij" enabled="1">
+		<Instructions/>
+		<Node name="Firma" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="ObjPrij_Pol" enabled="1">
+			<Instructions/>
+			<Node name="Sklad" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="KmKarta" enabled="1">
+				<Instructions/>
+				<Node name="SKmKomponenta" enabled="1">
+					<Instructions/>
+					<Node name="KmKarta" enabled="1">
+						<Instructions/>
+					</Node>
+					<Node name="Sklad" enabled="1">
+						<Instructions/>
+					</Node>
+				</Node>
+			</Node>
+			<Node name="NesklPolozka" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+		<Node name="SubPolozka" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="ObjVyd" enabled="1">
+		<Instructions/>
+		<Node name="Firma" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="ObjVyd_Pol" enabled="1">
+			<Instructions/>
+			<Node name="Sklad" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="KmKarta" enabled="1">
+				<Instructions/>
+				<Node name="SKmKomponenta" enabled="1">
+					<Instructions/>
+					<Node name="KmKarta" enabled="1">
+						<Instructions/>
+					</Node>
+					<Node name="Sklad" enabled="1">
+						<Instructions/>
+					</Node>
+				</Node>
+			</Node>
+			<Node name="NesklPolozka" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+		<Node name="SubPolozka" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="NabPrij" enabled="1">
+		<Instructions/>
+		<Node name="Firma" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="NabPrij_Pol" enabled="1">
+			<Instructions/>
+			<Node name="Sklad" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="KmKarta" enabled="1">
+				<Instructions/>
+				<Node name="SKmKomponenta" enabled="1">
+					<Instructions/>
+					<Node name="KmKarta" enabled="1">
+						<Instructions/>
+					</Node>
+					<Node name="Sklad" enabled="1">
+						<Instructions/>
+					</Node>
+				</Node>
+			</Node>
+			<Node name="NesklPolozka" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+		<Node name="SubPolozka" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="NabVyd" enabled="1">
+		<Instructions/>
+		<Node name="Firma" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="NabVyd_Pol" enabled="1">
+			<Instructions/>
+			<Node name="Sklad" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="KmKarta" enabled="1">
+				<Instructions/>
+				<Node name="SKmKomponenta" enabled="1">
+					<Instructions/>
+					<Node name="KmKarta" enabled="1">
+						<Instructions/>
+					</Node>
+					<Node name="Sklad" enabled="1">
+						<Instructions/>
+					</Node>
+				</Node>
+			</Node>
+			<Node name="NesklPolozka" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+		<Node name="SubPolozka" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="PoptPrij" enabled="1">
+		<Instructions/>
+		<Node name="Firma" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="PoptPrij_Pol" enabled="1">
+			<Instructions/>
+			<Node name="Sklad" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="KmKarta" enabled="1">
+				<Instructions/>
+				<Node name="SKmKomponenta" enabled="1">
+					<Instructions/>
+					<Node name="KmKarta" enabled="1">
+						<Instructions/>
+					</Node>
+					<Node name="Sklad" enabled="1">
+						<Instructions/>
+					</Node>
+				</Node>
+			</Node>
+			<Node name="NesklPolozka" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+		<Node name="SubPolozka" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="PoptVyd" enabled="1">
+		<Instructions/>
+		<Node name="Firma" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="PoptVyd_Pol" enabled="1">
+			<Instructions/>
+			<Node name="Sklad" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="KmKarta" enabled="1">
+				<Instructions/>
+				<Node name="SKmKomponenta" enabled="1">
+					<Instructions/>
+					<Node name="KmKarta" enabled="1">
+						<Instructions/>
+					</Node>
+					<Node name="Sklad" enabled="1">
+						<Instructions/>
+					</Node>
+				</Node>
+			</Node>
+			<Node name="NesklPolozka" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+		<Node name="SubPolozka" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="Prijemka" enabled="1">
+		<Instructions/>
+		<Node name="Firma" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="Prijemka_Pol" enabled="1">
+			<Instructions/>
+			<Node name="VyrobniCisloPrij" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="KmKarta" enabled="1">
+				<Instructions/>
+				<Node name="SKmKomponenta" enabled="1">
+					<Instructions/>
+					<Node name="KmKarta" enabled="1">
+						<Instructions/>
+					</Node>
+					<Node name="Sklad" enabled="1">
+						<Instructions/>
+					</Node>
+				</Node>
+			</Node>
+			<Node name="Sklad" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+		<Node name="SubPolozka" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="Vydejka" enabled="1">
+		<Instructions/>
+		<Node name="Firma" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="Vydejka_Pol" enabled="1">
+			<Instructions/>
+			<Node name="VyrobniCisloVyd" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="KmKarta" enabled="1">
+				<Instructions/>
+				<Node name="SKmKomponenta" enabled="1">
+					<Instructions/>
+					<Node name="KmKarta" enabled="1">
+						<Instructions/>
+					</Node>
+					<Node name="Sklad" enabled="1">
+						<Instructions/>
+					</Node>
+				</Node>
+			</Node>
+			<Node name="Sklad" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+		<Node name="SubPolozka" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="DLPrij" enabled="1">
+		<Instructions/>
+		<Node name="Firma" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="DLPrij_Pol" enabled="1">
+			<Instructions/>
+			<Node name="VyrobniCisloPrij" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="KmKarta" enabled="1">
+				<Instructions/>
+				<Node name="SKmKomponenta" enabled="1">
+					<Instructions/>
+					<Node name="KmKarta" enabled="1">
+						<Instructions/>
+					</Node>
+					<Node name="Sklad" enabled="1">
+						<Instructions/>
+					</Node>
+				</Node>
+			</Node>
+			<Node name="Sklad" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+		<Node name="SubPolozka" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="DLVyd" enabled="1">
+		<Instructions/>
+		<Node name="Firma" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="DLVyd_Pol" enabled="1">
+			<Instructions/>
+			<Node name="VyrobniCisloVyd" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="KmKarta" enabled="1">
+				<Instructions/>
+				<Node name="SKmKomponenta" enabled="1">
+					<Instructions/>
+					<Node name="KmKarta" enabled="1">
+						<Instructions/>
+					</Node>
+					<Node name="Sklad" enabled="1">
+						<Instructions/>
+					</Node>
+				</Node>
+			</Node>
+			<Node name="Sklad" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+		<Node name="SubPolozka" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="Prodejka" enabled="1">
+		<Instructions/>
+		<Node name="Firma" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="Prodejka_Pol" enabled="1">
+			<Instructions/>
+			<Node name="VyrobniCisloVyd" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="KmKarta" enabled="1">
+				<Instructions/>
+				<Node name="SKmKomponenta" enabled="1">
+					<Instructions/>
+					<Node name="KmKarta" enabled="1">
+						<Instructions/>
+					</Node>
+					<Node name="Sklad" enabled="1">
+						<Instructions/>
+					</Node>
+				</Node>
+			</Node>
+			<Node name="Sklad" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+		<Node name="SubPolozka" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="SklDoklad_SeznamNepPlateb" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="Prevodka" enabled="1">
+		<Instructions/>
+		<Node name="Sklad" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="Firma" enabled="1">
+			<Instructions/>
+		</Node>
+		<Node name="Prevodka_Pol" enabled="1">
+			<Instructions/>
+			<Node name="VyrobniCisloVyd" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="KmKarta" enabled="1">
+				<Instructions/>
+				<Node name="SKmKomponenta" enabled="1">
+					<Instructions/>
+					<Node name="KmKarta" enabled="1">
+						<Instructions/>
+					</Node>
+					<Node name="Sklad" enabled="1">
+						<Instructions/>
+					</Node>
+				</Node>
+			</Node>
+			<Node name="Sklad" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+		<Node name="SubPolozka" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+	<Node name="InvDoklad" enabled="1">
+		<Instructions>
+			<Filter>-1</Filter>
+		</Instructions>
+		<Node name="InvDoklad_Pol" enabled="1">
+			<Instructions/>
+			<Node name="VyrobniCisloInvD" enabled="1">
+				<Instructions/>
+			</Node>
+			<Node name="KmKarta" enabled="1">
+				<Instructions/>
+				<Node name="SKmKomponenta" enabled="1">
+					<Instructions/>
+					<Node name="KmKarta" enabled="1">
+						<Instructions/>
+					</Node>
+					<Node name="Sklad" enabled="1">
+						<Instructions/>
+					</Node>
+				</Node>
+			</Node>
+			<Node name="Sklad" enabled="1">
+				<Instructions/>
+			</Node>
+		</Node>
+		<Node name="SubPolozka" enabled="1">
+			<Instructions/>
+		</Node>
+	</Node>
+</Export>
