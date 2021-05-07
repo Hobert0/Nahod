@@ -1049,7 +1049,14 @@ namespace Cms.Controllers
                         if (model.Image != isTheSameImage)
                         {
                             var data = db.categories.Single(i => i.id == model.Id);
-                            data.image = ulozObrazok + InputFileName;
+                            if (isTheSameImage == "")
+                            {
+                                data.image = ulozObrazok + InputFileName;
+                            }
+                            else
+                            {
+                                data.image = isTheSameImage;
+                            }
                             db.SaveChanges();
                             img.Save(ServerSavePath);
                         }
@@ -1119,7 +1126,14 @@ namespace Cms.Controllers
                         if (model.Image != isTheSameImage)
                         {
                             var data = db.types.Single(i => i.id == model.Id);
-                            data.image = ulozObrazok + InputFileName;
+                            if (isTheSameImage == "")
+                            {
+                                data.image = ulozObrazok + InputFileName;
+                            }
+                            else
+                            {
+                                data.image = isTheSameImage;
+                            }
                             db.SaveChanges();
                         }
                         //assigning file uploaded status to ViewBag for showing message to user.  
@@ -1233,7 +1247,12 @@ namespace Cms.Controllers
                         if (model.Image != isTheSameImage)
                         {
                             var data = db.brands.Single(i => i.id == model.Id);
-                            data.image = ulozObrazok + InputFileName;
+                            if(isTheSameImage == "") {
+                                data.image = ulozObrazok + InputFileName;
+                            } else
+                            {
+                                data.image = isTheSameImage;
+                            }
                             db.SaveChanges();
                         }
                         //assigning file uploaded status to ViewBag for showing message to user.  
@@ -1334,7 +1353,14 @@ namespace Cms.Controllers
                         if (model.Image != isTheSameImage)
                         {
                             var data = db.products.Single(i => i.id == model.Id);
-                            data.image = ulozObrazok + InputFileName;
+                            if (isTheSameImage == "")
+                            {
+                                data.image = ulozObrazok + InputFileName;
+                            }
+                            else
+                            {
+                                data.image = isTheSameImage;
+                            }
                             db.SaveChanges();
                         }
                         //assigning file uploaded status to ViewBag for showing message to user.  
