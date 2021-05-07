@@ -988,6 +988,7 @@ namespace Cms.Controllers
                     {
                         img.Resize(1000 + 1, 1000 + 1, true).Crop(1, 1);
                     }
+
                     img.Save(ServerSavePath);
                     //assigning file uploaded status to ViewBag for showing message to user.  
                     ViewBag.UploadStatus = files.Count().ToString() + " files uploaded successfully.";
@@ -1058,6 +1059,12 @@ namespace Cms.Controllers
                                 data.image = isTheSameImage;
                             }
                             db.SaveChanges();
+                            var fileformat = InputFileName.Split('.');
+                            if (img.ImageFormat != fileformat[1])
+                            {
+                                InputFileName = fileformat[0] + "." + img.ImageFormat;
+                                ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
+                            }
                             img.Save(ServerSavePath);
                         }
                         else
@@ -1119,6 +1126,12 @@ namespace Cms.Controllers
                         if (img.Width > 1000)
                         {
                             img.Resize(1000 + 1, 1000 + 1, true).Crop(1, 1);
+                        }
+                        var fileformat = InputFileName.Split('.');
+                        if (img.ImageFormat != fileformat[1])
+                        {
+                            InputFileName = fileformat[0] + "." + img.ImageFormat;
+                            ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
                         }
                         img.Save(ServerSavePath);
 
@@ -1236,6 +1249,14 @@ namespace Cms.Controllers
                         {
                             img.Resize(1000 + 1, 1000 + 1, true).Crop(1, 1);
                         }
+
+                        var fileformat = InputFileName.Split('.');
+                        if (img.ImageFormat != fileformat[1])
+                        {
+                            InputFileName = fileformat[0] + "." + img.ImageFormat;
+                            ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
+                        }
+
                         img.Save(ServerSavePath);
 
                         var isTheSameImage = "";
@@ -1299,6 +1320,7 @@ namespace Cms.Controllers
                         {
                             img.Resize(1000 + 1, 1000 + 1, true).Crop(1, 1);
                         }
+
                         img.Save(ServerSavePath);
                         //assigning file uploaded status to ViewBag for showing message to user.  
                         ViewBag.UploadStatus = files.Count().ToString() + " files uploaded successfully.";
