@@ -42,7 +42,7 @@ namespace Cms.Controllers
             model.PagesModel = db.pages.ToList();
             model.BlogModel = db.blog.ToList();
             model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
-            model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
+            model.CategoriesModel = db.categories.Where(o => o.deleted == false && o.maincat == "Žiadna").ToList();
             model.TypesModel = db.types.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.ToList();
 
@@ -149,7 +149,7 @@ namespace Cms.Controllers
             }
 
             var model = new MultipleIndexModel();
-            model.ProductModel = db.products.Where(o => o.deleted == false && o.category.Contains(id.ToString())).ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false && (o.category.Contains("[" + id.ToString() + ",") || o.category.Contains("," + id.ToString() + ",") || o.category.Contains("," + id.ToString() + "]"))).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
@@ -167,6 +167,9 @@ namespace Cms.Controllers
             ViewData["typ"] = pc.SelectionZaradenie();
             ViewData["znacka"] = pc.SelectionBrandFiltered(model.ProductModel);
             ViewData["pageType"] = "category";
+
+            ViewData["catslug"] = catslug;
+            ViewData["subslug"] = subslug;
 
             List<decimal?> prices = new List<decimal?>();
 
@@ -203,19 +206,19 @@ namespace Cms.Controllers
             if (catslug != null && subslug == null)
             {
                 var catId = db.categories.Where(i => i.slug == catslug).First().id;
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.custom3.Contains(brndID.ToString()) && i.category.Contains(catId.ToString())).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.custom3 == brndID.ToString() && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]"))).ToList();
             }
 
             //3.level .. vsetky kategorie produktov ktore su v danom type a maju subkategoriu
             else if (catslug != null && subslug != null)
             {
                 var catId = db.categories.Where(i => i.slug == subslug).First().id;
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.custom3.Contains(brndID.ToString()) && i.category.Contains(catId.ToString())).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.custom3 == brndID.ToString() && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]"))).ToList();
             }
             //1.level .. vsetky unikatne kategorie danych produktov v zaradeni
             else
             {
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.custom3.Contains(brndID.ToString())).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.custom3 == brndID.ToString()).ToList();
             }
 
             ViewData["Category"] = brnd;
@@ -264,18 +267,18 @@ namespace Cms.Controllers
             if (catslug != null && subslug == null)
             {
                 var catId = db.categories.Where(i => i.slug == catslug).First().id;
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.type.Contains(typeId.ToString()) && i.category.Contains(catId.ToString())).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && (i.type.Contains("[" + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + "]")) && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]"))).ToList();
             }
 
             //3.level .. vsetky kategorie produktov ktore su v danom type a maju subkategoriu
             else if (catslug != null && subslug != null) {
                 var catId = db.categories.Where(i => i.slug == subslug).First().id;
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.type.Contains(typeId.ToString()) && i.category.Contains(catId.ToString())).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && (i.type.Contains("[" + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + "]")) && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]"))).ToList();
             }
             //1.level .. vsetky unikatne kategorie danych produktov v zaradeni
             else
             {
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.type.Contains(typeId.ToString())).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && (i.type.Contains("[" + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + "]"))).ToList();
             }
 
             ViewData["Category"] = type;
@@ -405,7 +408,7 @@ namespace Cms.Controllers
             {
                 var catId = cat.id.ToString();
 
-                var filteredProds = db.products.Where(i => i.deleted == false && i.heureka == true && i.category.Contains(catId)).ToList();
+                var filteredProds = db.products.Where(i => i.deleted == false && i.heureka == true && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]"))).ToList();
                 finalProds.AddRange(filteredProds);
             }
 

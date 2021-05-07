@@ -265,7 +265,7 @@
             <div class="col-md">
                 @{
                     var cats = Model.CategoriesModel;
-                    foreach (var cat in cats.Where(i => i.maincat == "Žiadna" && i.topcat == "Žiadna" && i.topcat2 == "Žiadna"))
+                    foreach (var cat in cats.Where(i => i.deleted == false && i.maincat == "Žiadna" && i.topcat == "Žiadna" && i.topcat2 == "Žiadna"))
                     {
                         <a href="/kat/@cat.slug">@cat.name</a>
                     }
@@ -308,10 +308,32 @@
                     <a href="#"><img class="icon" src="~/Content/images/youtube.svg"></a>
                 </div>
                 <div class="col-md-3 col-6">
-                    <img src="/Html/banner.png">
+                    <!--<img src="/Html/banner.png">-->
+                    @{
+                        var slideshows = Model.SlideshowModel.Where(o => o.page == "footer-left");
+                        foreach (var slideshow in slideshows)
+                        {
+
+                            var url = slideshow.url != "" ? slideshow.url : "#";
+                            <a href="@url">
+                                <img src="Uploads/slideshow/@slideshow.image">
+                            </a>
+                        }
+                    }
                 </div>
                 <div class="col-md-3 col-6">
-                    <img src="/Html/banner.png">
+                    <!--<img src="/Html/banner.png">-->
+                    @{
+                        slideshows = Model.SlideshowModel.Where(o => o.page == "footer-right");
+                        foreach (var slideshow in slideshows)
+                        {
+
+                            var url = slideshow.url != "" ? slideshow.url : "#";
+                            <a href="@url">
+                                <img src="Uploads/slideshow/@slideshow.image">
+                            </a>
+                        }
+                    }
                 </div>
             </div>
 
