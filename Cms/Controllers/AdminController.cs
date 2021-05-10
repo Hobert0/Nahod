@@ -526,6 +526,27 @@ namespace Cms.Controllers
 
             db.users.Add(o);
             db.SaveChanges();
+
+            usersmeta u = new usersmeta();
+
+            var thisId = db.users.Where(i => i.username == model.UsersModel.Username).SingleOrDefault().id;
+
+            u.userid = thisId;
+            u.name = "";
+            u.surname = "";
+            u.address = "";
+            u.city = "";
+            u.zip = "";
+            u.phone = "";
+            u.email = model.UsersModel.Username;
+            u.news = true;
+            u.gdpr = true;
+            u.created = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
+            u.rating = 1;
+
+            db.usersmeta.Add(u);
+            db.SaveChanges();
+
             TempData["IsValid"] = true;
             ViewBag.IsValid = true;
 
@@ -575,11 +596,13 @@ namespace Cms.Controllers
             u.news = true;
             u.gdpr = true;
             u.created = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
+            u.rating = 1;
 
             db.usersmeta.Add(u);
             db.SaveChanges();
-            //TempData["IsValid"] = true;
-            //ViewBag.IsValid = true;
+            
+            TempData["IsValid"] = true;
+            ViewBag.IsValid = true;
 
             return RedirectToAction("Users", "Admin");
         }
