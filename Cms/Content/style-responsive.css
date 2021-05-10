@@ -318,7 +318,9 @@
 */
 
     @media (max-width: 1024px) {
-
+        .gallery-wrapper  .slick-arrow {
+            display: inline-block !important;
+        }
         .slick-arrow {
             display: none !important;
         }
@@ -787,6 +789,20 @@
             padding-bottom: 0;
         }
 
+        .filterprod {
+            width: 47.5%;
+        }
+
+        .products .product .prod-header {
+            height: 70px;
+        }
+
+        .products .product .prod-add-to-cart .prod-icon {
+            width: 27px;
+            top: -1px;
+            padding-right: 1px;
+            left: -13px;
+        }
         .slider .tooltip.bs-tooltip-top {
             display: none;
         }

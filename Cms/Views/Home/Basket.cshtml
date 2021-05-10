@@ -481,14 +481,16 @@
                             <hr />
                             <div class="form-row">
                                 <div class="col-md-10">
-                                    @if (item.pay1_enbl && item.pay1 != null)
+
+                                    @if (item.pay4_enbl && item.pay4 != null)
                                     {
-                                        <label class="cont" id="pay1">
-                                            V hotovosti pri osobnom odbere<strong style="float: right"> @item.pay1 €</strong>
-                                            <input type="radio" name="payment" value="pay1" onclick="checkPayment();payMent();">
+                                        <label class="cont" id="pay4">
+                                            Dobierkou<strong style="float: right"> @item.pay4 €</strong>
+                                            <input type="radio" name="payment" value="pay4" onclick="checkPayment();payMent();">
                                             <span class="checkmar"></span>
                                         </label>
                                     }
+
                                     @if (item.pay2_enbl && item.pay2 != null)
                                     {
                                         <label class="cont" id="pay2">
@@ -497,6 +499,7 @@
                                             <span class="checkmar"></span>
                                         </label>
                                     }
+
                                     @if (item.pay3_enbl && item.pay3 != null)
                                     {
                                         <label class="cont" id="pay3">
@@ -506,11 +509,11 @@
                                         </label>
                                     }
 
-                                    @if (item.pay4_enbl && item.pay4 != null)
+                                    @if (item.pay1_enbl && item.pay1 != null)
                                     {
-                                        <label class="cont" id="pay4">
-                                            Dobierkou<strong style="float: right"> @item.pay4 €</strong>
-                                            <input type="radio" name="payment" value="pay4" onclick="checkPayment();payMent();">
+                                        <label class="cont" id="pay1">
+                                            V hotovosti pri osobnom odbere<strong style="float: right"> @item.pay1 €</strong>
+                                            <input type="radio" name="payment" value="pay1" onclick="checkPayment();payMent();">
                                             <span class="checkmar"></span>
                                         </label>
                                     }

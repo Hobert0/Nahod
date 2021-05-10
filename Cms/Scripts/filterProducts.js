@@ -11,6 +11,10 @@ $(".productfilter").change(function (e) {
     let dropdownValTyp = $('#Typ').val();
     let dropdownValVyrobca = $('#Vyrobca').val();
     let price = $('#ex3').val().split(',');
+    let skladom = $('#skladom');
+    let novinky = $('#novinky');
+    let vypredaj = $('#vypredaj');
+    let akcie = $('#akcie');
 
     if (typeof dropdownValTyp === "undefined") {
         dropdownValTyp = "";
@@ -44,6 +48,49 @@ $(".productfilter").change(function (e) {
         }
     }
 
+    if (skladom.is(":checked")) {
+        var i = filteredData.length;
+        while (i--) {
+            if (filteredData[i].stock <= 0) {
+                filteredData.splice(i, 1);
+            }
+        }
+    }
+
+    if (vypredaj.is(":checked")) {
+        var i = filteredData.length;
+        while (i--) {
+            if (!filteredData[i].recommended) {
+                filteredData.splice(i, 1);
+            }
+        }
+    }
+
+    if (akcie.is(":checked")) {
+        var i = filteredData.length;
+        while (i--) {
+            if (filteredData[i].discountprice == null) {
+                filteredData.splice(i, 1);
+            }
+        }
+    }
+
+    if (novinky.is(":checked")) {
+        var i = filteredData.length;
+        while (i--) {
+            let dt = filteredData[i].date.replace(" ", "").replace(" ", "").replace(".", "-").replace(".", "-");
+            dt = dt.substring(0, dt.length - 9);//datum pridania + 10 dni
+            var splited = dt.split('-');
+            var datetoTransform = splited[2] + "-" + splited[1] + "-" + splited[0]
+            var pridaneDna = Date.parse(datetoTransform);
+            var date = new Date(pridaneDna )
+            date.setDate(date.getDate() + 10);
+
+            if (date <= Date.now()) {
+                filteredData.splice(i, 1);
+            }
+        }
+    }
 
     var p = filteredData.length;
     while (p--) {

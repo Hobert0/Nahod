@@ -37,6 +37,7 @@ function fetchProducts(page, bybrand, search, bytype) {
             allvariants = data.variants;
             renderProducts(page, undefined, allproductsdata, allvariants);
         },
+
         error: function () {
             alert('Error! Please try again.');
         }
@@ -145,7 +146,7 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
             }
         }
 
-        let $row = '<div class="col-md-5ths product mb-2 mx-1">';
+        let $row = '<div class="col-md-5ths filterprod product mb-2 mx-1">';
 
         $row += '<a href="/detail-produktu/' + item.id + '/' + slug + '">';
         $row += '<div class="thumb" style="background-image: url(' + escape("/Uploads/" + item.image) + '); height: 11vw;background-size:contain;"></div>'
@@ -160,7 +161,7 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
         var date10days = new Date();
         date10days = date10days.setDate(date10days.getDate() - 10);
 
-        if (postedDate >= date10days) {
+        if (postedDate <= date10days) {
             $row += '<span class="prod-new">novinka</span>';
         }
         $row += '</div><div class="prod-header">' + item.title + '</div>';
@@ -256,7 +257,7 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
                         break;
                 }
 
-                $row += '<span class="prod-discount">' + defaultPrice.replace(".",",") + ' €</span> <span class="prod-base">' + ratingPrice.toFixedNoRounding(2) + ' €</span>';
+                $row += '<span class="prod-discount">' + defaultPrice.toString().replace(".",",") + ' €</span> <span class="prod-base">' + ratingPrice.toFixedNoRounding(2) + ' €</span>';
                 actualPrice = ratingPrice;
             }
             else {

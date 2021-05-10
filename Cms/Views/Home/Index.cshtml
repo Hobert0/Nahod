@@ -54,7 +54,7 @@
                     <img class="icon" src="~/Content/images/price-tag.svg">
                 </div>
                 <div class="col-md-10 pl-2">
-                    <p class="header">Zľava 5-10%</p>
+                    <p class="header">Zľava 5-15%</p>
                     <p class="text">Ihneď po <a href="#" class="register-modal"><u>registrácii</u></a></p>
                 </div>
             </div>
@@ -87,8 +87,8 @@
                     <img class="icon" src="~/Content/images/fishing.svg">
                 </div>
                 <div class="col-md-10 pl-2">
-                    <p class="header">Kvalita</p>
-                    <p class="text">Len tie najkvalitnejšie značky</p>
+                    <p class="header">Odborné poradenstvo</p>
+                    <p class="text">Viac ako 20 rokov skúseností</p>
                 </div>
             </div>
         </div>
@@ -626,7 +626,7 @@
 
                         var url = slideshow.url != "" ? slideshow.url : "#";
 
-                        <a href="@url" class="bottom-banner banner" style="background-image: url(Uploads/slideshow/@slideshow.image);">
+                        <a href="@url" class="bottom-banner banner" style="background-image: url('/Uploads/slideshow/@Html.Raw(slideshow.image)');">
                             <div class="container">
 
                                 @{
@@ -651,7 +651,7 @@
 
                         var url = slideshow.url != "" ? slideshow.url : "#";
 
-                        <a href="@url" class="bottom-banner banner" style="background-image: url(Uploads/slideshow/@slideshow.image);">
+                        <a href="@url" class="bottom-banner banner" style="background-image: url('/Uploads/slideshow/@Html.Raw(slideshow.image)');">
                             <div class="container">
 
                                 @{
@@ -672,7 +672,9 @@
         <div class="col-md-12 no-gutters">
             <div class="row">
                 <h2 class="col-md-12">
-                    Aktuálne články
+                    <a href="/blog">
+                        Aktuálne články
+                    </a>
                 </h2>
             </div>
             <div class="row">
@@ -702,35 +704,35 @@
         $('.top-banner-wrapper').slick();
         $('.middle-banner-wrapper').slick();
         $('.products-row').slick({
-            infinite: true,
-            slidesToShow: 5,
-            slidesToScroll: 5,
-            responsive: [
-                {
-                    breakpoint: 1024,
-                    settings: {
-                        slidesToShow: 4,
-                        slidesToScroll: 4,
-                        infinite: true,
-                        dots: true
-                    }
-                },
-                {
-                    breakpoint: 600,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 2
-                    }
-                },
-                {
-                    breakpoint: 480,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 2
-                    }
-                }]
-        });
-
+                    infinite: true,
+                    slidesToShow: 5,
+                    slidesToScroll: 5,
+                    responsive: [
+                        {
+                            breakpoint: 1024,
+                            settings: {
+                                slidesToShow: 4,
+                                slidesToScroll: 4,
+                                infinite: true,
+                                dots: true
+                            }
+                        },
+                        {
+                            breakpoint: 600,
+                            settings: {
+                                slidesToShow: 2,
+                                slidesToScroll: 2
+                            }
+                        },
+                        {
+                            breakpoint: 480,
+                            settings: {
+                                slidesToShow: 2,
+                                slidesToScroll: 2
+                            }
+                        }]
+                });
+       
         $("#Subscribeform a.rect-button").click(function (e) {
             e.preventDefault();
 

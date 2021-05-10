@@ -13,18 +13,10 @@
 <div class="col-12 filter-container">
     <div class="form-group">
         <div class="row">
-            @if (ViewData["typ"] != null && ViewData["pageType"] != "type")
-            {
-                <div class="col-lg-3 col-md-6 px-2" style="text-align: left; display: inline-block;">
-                    <div>
-                        <small><strong>@Html.Label("Typ rybolovu:", htmlAttributes: new { @class = "control-label col-md-12 px-0" })</strong></small>
-                        @Html.DropDownList("Typ", (IEnumerable<SelectListItem>)ViewData["typ"], new { @class = "form-control productfilter" })
-                    </div>
-                </div>
-            }
+
             @if (ViewData["znacka"] != null && ViewData["pageType"] != "brand")
             {
-                <div class="col-lg-3 col-md-6 px-2" style="text-align: left; display: inline-block;">
+                <div class="col-lg-2 col-md-6 px-2" style="text-align: left; display: inline-block;">
                     <div>
                         <small>
                             <strong>
@@ -35,14 +27,51 @@
                     </div>
                 </div>
             }
-
-            <div class="col-md-6 px-2 pl-4 range-container pricerange" style="text-align: left; display: inline-block;">
-                <div class="pt-4">
+            @if (ViewData["typ"] != null && ViewData["pageType"] != "type")
+            {
+                <div class="col-lg-2 col-md-6 px-2" style="text-align: left; display: inline-block;">
+                    <div>
+                        <small><strong>@Html.Label("Typ rybolovu:", htmlAttributes: new { @class = "control-label col-md-12 px-0" })</strong></small>
+                        @Html.DropDownList("Typ", (IEnumerable<SelectListItem>)ViewData["typ"], new { @class = "form-control productfilter" })
+                    </div>
+                </div>
+            }
+            <div class="col-lg-4 col-md-6 px-2 pl-4 range-container pricerange" style="text-align: left; display: inline-block;">
+                <div class="pt-2">
                     <small>
                         <strong>Cena od - do:</strong>
                     </small>
                     <div class="range">
                         <small class="pr-3">0 €</small> <input id="ex3" type="text" class="span2 productfilter" value="" data-slider-min="0" data-slider-max="@maxPrice.ToString()" data-slider-step="10" data-slider-value="[0,@maxPrice.ToString()]" /> <small class="pl-3">@maxPrice.ToString() €</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 px-2 pl-4" style="text-align: left; display: inline-block;">
+                <div class="pt-4 row">
+                    <div class="col-3">
+                        <input class="form-check-input productfilter" type="checkbox" value="" id="skladom">
+                        <label class="form-check-label" for="skladom">
+                            Skladom
+                        </label>
+                    </div>
+
+                    <div class="col-3">
+                        <input class="form-check-input productfilter" type="checkbox" value="" id="novinky">
+                        <label class="form-check-label" for="novinky">
+                            Novinky
+                        </label>
+                    </div>
+                    <div class="col-3">
+                        <input class="form-check-input productfilter" type="checkbox" value="" id="vypredaj">
+                        <label class="form-check-label" for="vypredaj">
+                            Výpredaj
+                        </label>
+                    </div>
+                    <div class="col-3">
+                        <input class="form-check-input productfilter" type="checkbox" value="" id="akcie">
+                        <label class="form-check-label" for="akcie">
+                            Akcia
+                        </label>
                     </div>
                 </div>
             </div>

@@ -283,7 +283,7 @@ namespace Cms.Controllers
             string body = this.createEmailBody(o.ordernumber, "customer");
             string body_owner = this.createEmailBody(o.ordernumber, "owner");
             this.SendHtmlFormattedEmail("Ďakujeme za objednávku!", body, o.email, "customer", o.ordernumber);
-            this.SendHtmlFormattedEmail("Nová objednávka na Vašom e-shope!", body_owner, ownerEmail, "owner", o.ordernumber);
+            this.SendHtmlFormattedEmail("OBJEDNÁVKA Č.: "+ o.ordernumber+"", body_owner, ownerEmail, "owner", o.ordernumber);
 
             //remove session
             Session["cartitems"] = new List<dynamic>();
@@ -367,6 +367,7 @@ namespace Cms.Controllers
             model.BrandsModel = db.brands.ToList();
             model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
             model.OrderDataModel = db.orders.Where(i => i.ordernumber == orderNumber).ToList();
+
             return View(model);
         }
 
@@ -518,7 +519,7 @@ namespace Cms.Controllers
                 {
                     stringBuilder.Append("<tr>");
                     stringBuilder.AppendLine("<td width='9' align='left' valign='middle' style='margin-top:0;margin-bottom:0;color:#000000;line-height:1.36;width:9px;border-bottom:1px solid #c8c8c8'> </td>");
-                    stringBuilder.AppendLine("<td align='left' valign='middle' style='margin-top:0;margin-bottom:0;color:#000000;line-height:1.36;border-bottom:1px solid #c8c8c8'>" + item.product + "</td>");
+                    stringBuilder.AppendLine("<td align='left' valign='middle' style='margin-top:0;margin-bottom:0;color:#000000;line-height:1.36;border-bottom:1px solid #c8c8c8'><a href='https://nahod.sk/detail-produktu/" + prodId + "' target='_blank'> " + item.product + "</a></td>");
                     stringBuilder.AppendLine("<td align='left' valign='middle' style='margin-top:0;margin-bottom:0;color:#000000;line-height:1.36;border-bottom:1px solid #c8c8c8'>" + (item.variant != "" ? (item.variant2 != "" ? item.variant + " " + item.variant2 : item.variant) : "") + "</td>");
                     stringBuilder.AppendLine("<td align='left' valign='middle' style='margin-top:0;margin-bottom:0;color:#000000;line-height:1.36;border-bottom:1px solid #c8c8c8'>" + item.pieces + "</td>");
                     stringBuilder.AppendLine("<td align='left' valign='middle' style='margin-top:0;margin-bottom:0;color:#000000;line-height:1.36;border-bottom:1px solid #c8c8c8'>" + item.price + " €</td>");
@@ -557,7 +558,7 @@ namespace Cms.Controllers
                 var sett1 = db.e_settings.ToList();
                 var sett2 = db.settings.ToList();
                 /*ZMENIT*/
-                var eshopname = "Nahod";
+                var eshopname = "Nahod.sk - Rybárske potreby";
 
                 //foreach(var s in sett1)
                 //{
@@ -585,27 +586,16 @@ namespace Cms.Controllers
                 }
 
                 mailMessage.IsBodyHtml = true;
-
                 mailMessage.To.Add(new MailAddress(email));
-
                 SmtpClient smtp = new SmtpClient();
-
                 smtp.Host = ConfigurationManager.AppSettings["Host"];
-
                 smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
-
                 System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
-
                 NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"]; //reading from web.config  
-
                 NetworkCred.Password = ConfigurationManager.AppSettings["Password"]; //reading from web.config  
-
                 smtp.UseDefaultCredentials = true;
-
                 smtp.Credentials = NetworkCred;
-
                 smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
-
                 smtp.Send(mailMessage);
             }
         }

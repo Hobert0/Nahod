@@ -573,6 +573,7 @@ namespace Cms.Controllers
             u.dic = model.UsersmetaModel.Dic;
             u.icdph = model.UsersmetaModel.Icdph;
             u.news = true;
+            u.rating = 1;
             u.gdpr = true;
             u.created = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
 

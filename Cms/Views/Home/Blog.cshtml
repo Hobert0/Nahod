@@ -1,48 +1,51 @@
 ﻿@model Cms.Models.MultipleIndexModel
+@using System.Text.RegularExpressions
 
 @{
-    ViewBag.Title = "Blog";
+    ViewBag.Title = "Aktuality - ";
 }
-    <style>
-    #front-picture, #services{
+<style>
+    #front-picture, #services {
         display: none !important;
     }
-    </style>
-    <section id="blog" class="py-4">
-        <div class="container-fluid w-75">
-            <div class="col-md-12">
-                <h1 class="pb-4">Blog</h1>
+</style>
+<section id="blog" class="py-4">
+    <div class="container-fluid w-75">
+        <div>
+            <h1 class="pb-4">Aktuality</h1>
 
-                <div class="row">
-                    @if (ViewBag.Details == null)
+            <div class="row">
+                @if (ViewBag.Details == null)
+                {
+                    foreach (var item in Model.BlogModel.OrderByDescending(x => x.id))
                     {
-                        foreach (var item in Model.BlogModel.OrderByDescending(x => x.id))
-                        {
-                            <div class="col-6 col-md-6 col-lg-4 pb-5">
-                                <a href="@Url.Action("BlogPage", "Home", new { slug = item.slug })" class="product_detail">
-                                    <div style="overflow:hidden;">
-                                        <div class="thumb" style="background-image: url('/Uploads/@Html.DisplayFor(modelItem => item.image)');height: 320px;background-position-y: 0;"></div>
-                                    </div>
-                                </a>
-                                <a href="@Url.Action("BlogPage", "Home", new { slug = item.slug })" class="product_detail">
-                                    <p class="subscribe-title" style="line-height: 22px;">@Html.DisplayFor(modelItem => item.title)</p>
-                                </a>
-                                <small class="text-justify excerpt">
-                                    @if (item.content.Length > 250)
-                                    {@Html.Raw(item.content.Substring(0, 250) + "...")}
-                                else
-                                { @Html.Raw(item.content)}
-                                </small>
-                                <a href="@Url.Action("BlogPage", "Home", new { slug = item.slug })" class="product_detail">
-                                    <p class="btn-blog">celý článok</p>
-                                </a>
-                            </div>
+                        var shortdescription = Regex.Replace(item.content, "<.*?>", String.Empty);
 
-                        }
+                        <div class="col-6 col-md-6 col-lg-4 pb-5">
+                            <a href="@Url.Action("BlogPage", "Home", new { slug = item.slug })" class="product_detail">
+                                <div style="overflow:hidden;">
+                                    <div class="thumb" style="background-image: url('/Uploads/@Html.DisplayFor(modelItem => item.image)');height: 320px;background-position-y: 0;"></div>
+                                </div>
+                            </a>
+                            <a href="@Url.Action("BlogPage", "Home", new { slug = item.slug })" class="product_detail">
+                                <p class="subscribe-title" style="line-height: 22px;">@Html.DisplayFor(modelItem => item.title)</p>
+                            </a>
+                            <small class="text-justify excerpt">
+                                @if (shortdescription.Length > 250)
+                                {@Html.Raw(shortdescription.Substring(0, 250) + "...")}
+                            else
+                            { @Html.Raw(shortdescription)}
+                            </small>
+                            <a href="@Url.Action("BlogPage", "Home", new { slug = item.slug })" class="product_detail">
+                                <p class="btn-blog">celý článok</p>
+                            </a>
+                        </div>
+
                     }
+                }
 
-                </div>
             </div>
-            </div>
-    </section>
+        </div>
+    </div>
+</section>
 

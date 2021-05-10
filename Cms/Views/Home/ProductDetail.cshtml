@@ -55,19 +55,24 @@
                                 foreach (var topcat in Model.CategoriesModel.Where(o => o.name == cat.name))
                                 {
                                     var categoryname = "";
+                                    var maincatslug = "";
                                     if (topcat.maincat == "Žiadna")
-                                    { categoryname = topcat.name; }
+                                    {
+                                        categoryname = topcat.name;
+                                        maincatslug = topcat.slug;
+                                    }
                                     else
                                     {
                                         categoryname = topcat.maincat;
-                                    }
+                                        maincatslug = Model.CategoriesModel.Where(o => o.name == topcat.maincat).FirstOrDefault().slug;
 
-                                    <li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(topcat.slug) })">@categoryname</a></li>
+                                    }
+                                    <li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(maincatslug) })">@categoryname</a></li>
                                     if (topcat.maincat != "Žiadna")
                                     {
                                         foreach (var subcat in Model.CategoriesModel.Where(o => o.name == cat.name && o.maincat == cat.maincat))
                                         {
-                                            <li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(topcat.slug), subslug = @Html.Raw(subcat.slug) })">@subcat.name</a></li>
+                                            <li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(maincatslug), subslug = @Html.Raw(subcat.slug) })">@subcat.name</a></li>
 
                                             @*<li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(topcat.slug), subslug = @Html.Raw(subcat.slug), subslug2 = @Html.Raw(cat.slug) })">@cat.name</a></li>*@
                                         }
@@ -91,13 +96,15 @@
                         </a>
                         @if (Directory.Exists(Server.MapPath("~/Uploads/" + prod.gallery)))
                         {
-                            foreach (var imgPath in Directory.GetFiles(Server.MapPath("~/Uploads/" + prod.gallery)))
-                            {
+                            <div class="gallery-wrapper">
+                                @foreach (var imgPath in Directory.GetFiles(Server.MapPath("~/Uploads/" + prod.gallery)))
+                                {
                                 var img = new FileInfo(imgPath);
-                                <a href="@Url.Content(String.Format("~/Uploads/" + prod.gallery + "{0}", img.Name))" data-toggle="lightbox" data-gallery="example-gallery" style="padding:5px 1px 0 0;display: inline-block;width:22%;">
-                                    <img style="width:100%; height:120px;float:left;object-fit: cover;" src="@Url.Content(String.Format("~/Uploads/" + prod.gallery + "{0}", img.Name))" class="img-fluid galleryimg-small" />
+                                <a href="@Url.Content(String.Format("~/Uploads/" + prod.gallery + "{0}", img.Name))" data-toggle="lightbox" data-gallery="example-gallery" style="padding:5px 1px 0 0;display: inline-block;width:18%;">
+                                    <img style="width:100%; height:90px;float:left;object-fit: cover;" src="@Url.Content(String.Format("~/Uploads/" + prod.gallery + "{0}", img.Name))" class="img-fluid galleryimg-small" />
                                 </a>
-                            }
+                                }
+                            </div>
                         }
 
                         <br>
@@ -123,21 +130,21 @@
                             @{ var onStock = "";
                                 if (prod.custom1 == "" || prod.custom1 == null)
                                 {
-                                    prod.custom1 = "20";
+                                    prod.custom1 = "0";
                                 }
                                 if (prod.stock != null && prod.stock != "")
                                 {
                                     if (decimal.Parse(prod.stock) > decimal.Parse(prod.custom1))
                                     {
-                                        onStock = "<span style='color:#1e7e34;'>Produkt je na sklade</span>";
+                                        onStock = "<span style='color:#1e7e34;'>Skladom</span>";
                                     }
                                     else if (decimal.Parse(prod.stock) <= decimal.Parse(prod.custom1) && decimal.Parse(prod.stock) > 0)
                                     {
-                                        onStock = "<span style='color:#e89300;'>Pozor, skladom menej ako " + prod.stock + " ks</span>";
+                                        onStock = "<span style='color:#e89300;'>Dodanie do 3-10 dní</span>";
                                     }
                                     else if (decimal.Parse(prod.stock) == 0)
                                     {
-                                        onStock = "<span style='color:#1e7e34;'>Produkt je na sklade</span>";
+                                        onStock = "<span style='color:#e89300;'>Dodanie do 3-10 dní</span>";
                                     }
                                     else if (decimal.Parse(prod.stock) < 0)
                                     {
@@ -147,7 +154,7 @@
                                 }
                                 else
                                 {
-                                    onStock = "<span style='color:#1e7e34;'>Produkt je na sklade</span>";
+                                    onStock = "<span style='color:#1e7e34;'>Skladom</span>";
                                 }
                             }
 
@@ -190,7 +197,7 @@
                                 @if (prod.discountprice != null)
                                 {
                                     cena = (decimal)prod.discountprice;
-<p class="discount-price-text" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;"><span class="discount-label">Akciová cena</span> <strong style="font-size:30px;"><span class="actual-price">@cena.ToString("N2")</span> €</strong> </p>
+                            <p class="discount-price-text" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;"><span class="discount-label">Akciová cena</span> <strong style="font-size:30px;"><span class="actual-price">@cena.ToString("N2")</span> €</strong> </p>
                         }
                         else
                         {
@@ -293,7 +300,8 @@
                                                     //var variants = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).ToList();
                                                     var varFirstAttrId = 0;
 
-                                                    if (Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).Count() > 0) {
+                                                    if (Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).Count() > 0)
+                                                    {
                                                         varFirstAttrId = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id) && o.num == 1).FirstOrDefault().attribute_id;
                                                     }
 
@@ -988,6 +996,39 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script>
         $(document).ready(function () {
+            $('.gallery-wrapper').slick({
+                infinite: true,
+                slidesToShow: 5,
+                slidesToScroll: 2,
+                responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 4,
+                            slidesToScroll: 2,
+                            infinite: true,
+                            arrows: true
+                        }
+                    },
+                    {
+                        breakpoint: 600,
+                        settings: {
+                            slidesToShow: 4,
+                            slidesToScroll: 2,
+                             arrows: true,
+
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 4,
+                            slidesToScroll: 2,
+                            arrows: true,
+
+                        }
+                    }]
+            });
             $('.products-row').slick({
                 infinite: true,
                 slidesToShow: 5,

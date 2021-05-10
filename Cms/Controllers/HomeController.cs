@@ -81,7 +81,7 @@ namespace Cms.Controllers
             model.BlogModel = db.blog.ToList();
             model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
-            model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
+            model.SlideshowModel = db.slideshow.ToList();
             ViewData["Homepage"] = "true";
             return View(model);
         }
@@ -155,7 +155,7 @@ namespace Cms.Controllers
             model.PagesModel = db.pages.ToList();
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
-            model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
+            model.SlideshowModel = db.slideshow.ToList();
 
             var kategoria = db.categories.Where(i => i.slug == catslug).Select(o => o.name);
             var sub = db.categories.Where(i => i.slug == subslug).Select(o => o.name);
@@ -198,7 +198,7 @@ namespace Cms.Controllers
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
             model.TypesModel = db.types.Where(o => o.deleted == false).ToList();
-            model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
+            model.SlideshowModel = db.slideshow.ToList();
             var brnd = db.brands.Where(i => i.slug == brand).Select(o => o.name);
             var brndID = db.brands.Where(i => i.slug == brand).First().id;
             
@@ -539,7 +539,7 @@ namespace Cms.Controllers
             model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
             model.CouponsModel = db.coupons.ToList();
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
-            model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
+            model.SlideshowModel = db.slideshow.ToList();
 
             if (Session["userid"] != null)
             {
@@ -588,7 +588,7 @@ namespace Cms.Controllers
             model.PagesModel = db.pages.ToList();
             model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
-            model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
+            model.SlideshowModel = db.slideshow.ToList();
 
             if (Session["userid"] != null)
             {
@@ -626,7 +626,7 @@ namespace Cms.Controllers
             model.PagesModel = db.pages.ToList();
             model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
-            model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
+            model.SlideshowModel = db.slideshow.ToList();
 
             if (Session["userid"] != null)
             {
@@ -678,7 +678,7 @@ namespace Cms.Controllers
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.VariantModel = db.variants.ToList();
             model.AttributesModel = db.attributes.ToList();
-            model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
+            model.SlideshowModel = db.slideshow.ToList();
 
             if (id == null)
             {
@@ -731,7 +731,7 @@ namespace Cms.Controllers
             model.PagesModel = db.pages.ToList();
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
-            model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
+            model.SlideshowModel = db.slideshow.ToList();
             model.ProductsPaged = db.products.ToList().Where(p => p.title.ToLower().Contains(term.ToLower())).OrderByDescending(x => x.id)
                      .ToPagedList(pageNumber, pageSize);
 
