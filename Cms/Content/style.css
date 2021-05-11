@@ -151,7 +151,6 @@ h3 {
 }
 
 .dropdown .brands {
-    width: 16vw !important;
 }
 
 .topmenu-col {
@@ -1100,9 +1099,9 @@ input[type="radio"][disabled] {
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #303030;
+    background-color: #ffffff;
     left: 0;
-    width: 50vw;
+    width: 90%;
     padding: 10px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 99;
@@ -1120,18 +1119,19 @@ input[type="radio"][disabled] {
 .dropdown:hover .dropdown-content {
     display: block;
 }
-
+.dropdown-content h3 {
+    font-size: .9rem;
+}
 /* Create three equal columns that floats next to each other */
 .column {
     float: left;
     width: 33.33%;
     padding: 10px;
-    background-color: #303030;
+    background-color: #ffffff;
 }
 
     .column a {
         float: none;
-        color: #fff;
         padding: 5px 20px;
         text-decoration: none;
         display: block;
@@ -1139,17 +1139,32 @@ input[type="radio"][disabled] {
     }
 
     .column h3 {
-        color: #fff;
+        margin-top: 15px;
         padding-bottom: 5px;
-        border-bottom: 1px solid #333;
     }
 
         .column h3:hover {
             color: #fe8a00;
         }
+.dropdown-content img {
+    width: 80px;
+    max-height: 80px;
+    float: left;
+    padding-right: 10px;
+}
+.dropdown-content .subs {
+    font-size: 13px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
 
-    .column a:hover {
-        background-color: #303030;
+.smallmenu {
+    margin-left: 80px;
+    margin-top: -15px;
+}
+
+    .smallmenu a:hover, .dropdown-content.brands a:hover {
+        font-weight: bold;
     }
 
 .dropbtn .fa-caret-down {

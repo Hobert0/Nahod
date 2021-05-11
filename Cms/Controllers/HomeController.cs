@@ -42,7 +42,7 @@ namespace Cms.Controllers
             model.PagesModel = db.pages.ToList();
             model.BlogModel = db.blog.ToList();
             model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
-            model.CategoriesModel = db.categories.Where(o => o.deleted == false && o.maincat == "Žiadna").ToList();
+            model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.TypesModel = db.types.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.ToList();
 

@@ -286,19 +286,9 @@
                 </a>
             </div>
         </div>
-
-        <div class="row header-bottom navbar">
-            <div class="col-md">
-                @{
-                    var cats = Model.CategoriesModel;
-                    foreach (var cat in cats.Where(i => i.deleted == false && i.maincat == "Žiadna" && i.topcat == "Žiadna" && i.topcat2 == "Žiadna"))
-                    {
-                        <a href="/kat/@cat.slug">@cat.name</a>
-                    }
-                }
-
-            </div>
-        </div>
+        @{
+            Html.RenderPartial("_MenuHeader");
+        }
     </div>
 
     @RenderBody()
