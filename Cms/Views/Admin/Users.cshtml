@@ -117,9 +117,9 @@
 
         if (item.role == 1)
         {
-            if (meta.category == 1) { category = "Bronzový"; }
-            else if (meta.category == 2) { category = "Strieborný"; }
-            else if (meta.category == 3) { category = "Zlatý"; }
+            if (meta.rating == 1) { category = "Bronzový"; }
+            else if (meta.rating == 2) { category = "Strieborný"; }
+            else if (meta.rating == 3) { category = "Zlatý"; }
 
             <td>@Html.DisplayFor(modelItem => meta.news, new { htmlAttributes = new { @Value = " " } })</td>
             <td>@Html.DisplayFor(modelItem => meta.gdpr, new { htmlAttributes = new { @Value = " " } })</td>
@@ -157,11 +157,14 @@
 
 
     <td align="center"> @Html.ActionLink("Editovať", "UserEdit", "Admin", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important; font-size:13px;margin-right: 2px;" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteAccount", "Home", new { userId = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tohoto zamestnanca?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete zamestnanca." })</td>
-    @{ var user = Model.AllWishlistModel.Where(i => i.userid == item.id).SingleOrDefault();
+    @{ 
+        /*
+        var user = Model.AllWishlistModel.Where(i => i.userid == item.id).SingleOrDefault();
         if (user != null)
         {
             <td align="center"><a href="@Url.Action("Oblubene", "Admin", new { id = item.id })">@HttpUtility.HtmlDecode("&#10084;")</a></td>
         }
+        */
     }
 
 </tr>

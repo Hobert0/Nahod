@@ -526,7 +526,7 @@
 
             <div class="mt-1 pb-3 row col-12">
                 <strong>Varianty</strong>
-                <a id="btnAddVar"><img style="cursor:pointer;margin-left: 10px" src="~/Content/images/plus.svg" width="25" /></a><a id="btnDelVar"><img src="~/Content/images/negative.svg" width="25" style="cursor:pointer;margin-left: 5px" /></a>
+                <a id="btnAddVar"><img style="cursor:pointer;margin-left: 10px" src="~/Content/images/plus.svg" width="25" /></a><!--<a id="btnDelVar"><img src="~/Content/images/negative.svg" width="25" style="cursor:pointer;margin-left: 5px" /></a>-->
             </div>
 
             <div num="1" class="clonedVarSection row m-0 activeInputSize" style="width:90%;">
@@ -583,6 +583,9 @@
                             </select>
                         </div>
                     </div>
+                </div>
+                <div class="">
+                    <a class="btnDelVar" style="display:none;"><img src="~/Content/images/negative.svg" width="25" style="cursor:pointer;margin-left: 10px;margin-top: 5px;" /></a>
                 </div>
             </div>
         </div>
@@ -811,25 +814,45 @@
 
             $('#univerzalVariableProduct').append(newSection);
 
-            $('#btnDelVar').attr('style', 'display:inline-block');
+            $('.btnDelVar').attr('style', 'display:inline-block');
 
             //if (newNum == 10)
             //    $('#btnAddVar').attr('disabled', 'disabled');
         });
 
-        $('#btnDelVar').click(function () {
+        $(document).on('click', '.btnDelVar', function () {
+
+            var thisNum = $(this).parents(".clonedVarSection").attr("num");
             var num = $('.clonedVarSection').length; // how many "duplicatable" input fields we currently have
-            $('.clonedVarSection[num=' + num + ']').remove();     // remove the last element
+
+            $('.clonedVarSection[num=' + thisNum + ']').remove();     // remove the last element
+
+            //reorder
+            var tempCounter = 1;
+            $('.clonedVarSection').each(function () {
+
+                $(this).attr('num', tempCounter);
+
+                $(this).find("input.varNum").attr("name", "varNum" + tempCounter).attr("id", "varNum" + tempCounter).val(tempCounter);
+                $(this).find("select.varAttrs").attr("name", "varAttrs" + tempCounter).attr("id", "varAttrs" + tempCounter);
+                $(this).find("select.varAttrsValues").attr("name", "varAttrsValues" + tempCounter).attr("id", "varAttrsValues" + tempCounter);
+                $(this).find("input.varNumber").attr("name", "varNumber" + tempCounter).attr("id", "varNumber" + tempCounter);
+                $(this).find("input.varStock").attr("name", "varStock" + tempCounter).attr("id", "varStock" + tempCounter);
+                $(this).find("input.varPrice").attr("name", "varPrice" + tempCounter).attr("id", "varPrice" + tempCounter);
+                $(this).find("input.varDiscountPrice").attr("name", "varDiscountPrice" + tempCounter).attr("id", "varDiscountPrice" + tempCounter);
+
+                tempCounter++;
+            });
 
             // enable the "add" button
             //$('#btnAddVar').attr('disabled', '');
 
             // if only one element remains, disable the "remove" button
             if (num - 1 == 1)
-                $('#btnDelVar').attr('style', 'display:none');
+                $('.btnDelVar').attr('style', 'display:none');
         });
 
-        $('#btnDelVar').attr('style', 'display:none');
+        //$('#btnDelVar').attr('style', 'display:none');
 
         //inicializacia variant ak existuju
         if ($("#Variants").val() != "[]") {

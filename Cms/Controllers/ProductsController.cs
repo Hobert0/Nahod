@@ -894,9 +894,9 @@ namespace Cms.Controllers
         }
 
         [HttpPost]
-        public ActionResult MultipleEditPrice(string multiplePricePerc, bool? isDiscountMultiple, string catId, string brandId, string priceFrom, string priceTo, bool? isDiscount, string notCheckedProds)
+        public ActionResult MultipleEditPrice(string multiplePricePerc, bool? isDiscountMultiple, string catId, string brandId, string priceFrom, string priceTo, bool? isDiscount, string checkedProds)
         {
-
+            /*
             List<products> products = null;
             decimal priceFromDec = Decimal.Parse(priceFrom, CultureInfo.InvariantCulture);
             decimal priceToDec = Decimal.Parse(priceTo, CultureInfo.InvariantCulture);
@@ -917,14 +917,19 @@ namespace Cms.Controllers
             {
                 products = (isDiscount != null && isDiscount == true) ? db.products.Where(x => x.deleted == false && x.price >= priceFromDec && x.price <= priceToDec && x.discountprice != null).ToList() : db.products.Where(x => x.deleted == false && x.price >= priceFromDec && x.price <= priceToDec).ToList();
             }
+            */
 
-            var notCheckedProdsArr = JsonConvert.DeserializeObject<int[]>(notCheckedProds);
+            var checkedProdsArr = JsonConvert.DeserializeObject<int[]>(checkedProds);
 
-            foreach (var product in products)
+            //foreach (var product in products)
+            foreach (int checkedProdId in checkedProdsArr)
             {
+
+                var product = db.products.Where(x => x.deleted == false && x.id == checkedProdId).FirstOrDefault();
+
                 //odchecknute produkty nezmenime
-                if (notCheckedProdsArr.Contains(product.id) == false)
-                {
+                //if (checkedProdsArr.Contains(product.id) == true)
+                //{
 
                     decimal changedPrice = product.price + product.price * Decimal.Parse(multiplePricePerc, CultureInfo.InvariantCulture) / 100;
 
@@ -952,7 +957,7 @@ namespace Cms.Controllers
                             variant.discountprice = changedVarPrice;
                         }
                     }
-                }
+                //}
             }
 
             db.SaveChanges();

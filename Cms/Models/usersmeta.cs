@@ -30,7 +30,6 @@ namespace Cms.Models
         public bool news { get; set; }
         public bool gdpr { get; set; }
         public bool to_remove { get; set; }
-        public sbyte category { get; set; }
         public decimal sum { get; set; }
         public int rating { get; set; }
         public string created { get; set; }
