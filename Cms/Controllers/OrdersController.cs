@@ -966,6 +966,20 @@ namespace Cms.Controllers
             return RedirectToAction("Orders", "Admin");
         }
 
+        [HttpPost]
+        public ActionResult OrderNote(int ordId, string noteText)
+        {
+
+
+            var order = db.orders.Where(x => x.deleted == false && x.id == ordId).FirstOrDefault();
+
+            order.note = noteText;
+
+            db.SaveChanges();
+
+            return RedirectToAction("OrderDetail", "Orders", new { orderNumber = order.ordernumber});
+        }
+
         public void SendTest()
         {
             using (MailMessage mailMessage = new MailMessage())

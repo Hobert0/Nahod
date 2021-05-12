@@ -41,6 +41,7 @@ namespace Cms.Models
         public string zip_shipp { get; set; }
         public string phone_shipp { get; set; }
         public string comment { get; set; }
+        public string note { get; set; }
         public string usedcoupon { get; set; }
         public Nullable<int> userid { get; set; }
         public bool deleted { get; set; }

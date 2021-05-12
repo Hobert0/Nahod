@@ -931,33 +931,63 @@ namespace Cms.Controllers
                 //if (checkedProdsArr.Contains(product.id) == true)
                 //{
 
-                    decimal changedPrice = product.price + product.price * Decimal.Parse(multiplePricePerc, CultureInfo.InvariantCulture) / 100;
+                decimal changedPrice = product.price + product.price * Decimal.Parse(multiplePricePerc, CultureInfo.InvariantCulture) / 100;
+
+                if (isDiscountMultiple == null || isDiscountMultiple == false)
+                {
+                    product.price = changedPrice;
+                }
+                else
+                {
+                    product.discountprice = changedPrice;
+                }
+
+                var variants = db.variants.Where(x => x.deleted == false && x.prod_id == product.id).ToList();
+
+                foreach (var variant in variants)
+                {
+                    decimal changedVarPrice = (decimal)variant.price + (decimal)variant.price * Decimal.Parse(multiplePricePerc, CultureInfo.InvariantCulture) / 100;
 
                     if (isDiscountMultiple == null || isDiscountMultiple == false)
                     {
-                        product.price = changedPrice;
+                        variant.price = changedVarPrice;
                     }
                     else
                     {
-                        product.discountprice = changedPrice;
+                        variant.discountprice = changedVarPrice;
                     }
+                }
+                //}
+            }
 
-                    var variants = db.variants.Where(x => x.deleted == false && x.prod_id == product.id).ToList();
+            db.SaveChanges();
 
+            return RedirectToAction("Products", "Admin");
+        }
+
+        [HttpPost]
+        public ActionResult MultipleDelete(string checkedProds)
+        {
+
+
+            var checkedProdsArr = JsonConvert.DeserializeObject<int[]>(checkedProds);
+
+            //foreach (var product in products)
+            foreach (int checkedProdId in checkedProdsArr)
+            {
+
+                var product = db.products.Where(x => x.deleted == false && x.id == checkedProdId).FirstOrDefault();
+                var variants = db.variants.Where(x => x.deleted == false && x.prod_id == checkedProdId).ToList();
+
+                product.deleted = true;
+
+                if (variants.Count > 0)
+                {
                     foreach (var variant in variants)
                     {
-                        decimal changedVarPrice = (decimal)variant.price + (decimal)variant.price * Decimal.Parse(multiplePricePerc, CultureInfo.InvariantCulture) / 100;
-
-                        if (isDiscountMultiple == null || isDiscountMultiple == false)
-                        {
-                            variant.price = changedVarPrice;
-                        }
-                        else
-                        {
-                            variant.discountprice = changedVarPrice;
-                        }
+                        variant.deleted = true;
                     }
-                //}
+                }
             }
 
             db.SaveChanges();
@@ -1273,9 +1303,11 @@ namespace Cms.Controllers
                         if (model.Image != isTheSameImage)
                         {
                             var data = db.brands.Single(i => i.id == model.Id);
-                            if(isTheSameImage == "") {
+                            if (isTheSameImage == "")
+                            {
                                 data.image = ulozObrazok + InputFileName;
-                            } else
+                            }
+                            else
                             {
                                 data.image = isTheSameImage;
                             }
@@ -1313,7 +1345,7 @@ namespace Cms.Controllers
                     {
                         var InputFileName = Path.GetFileName(file.FileName);
                         var ServerSavePath = Path.Combine(Server.MapPath(miestoUlozenia) + InputFileName);
-                       
+
                         //Save file to server folder  
                         byte[] fileByte;
                         using (var reader = new BinaryReader(file.InputStream))

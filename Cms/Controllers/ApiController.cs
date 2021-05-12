@@ -147,6 +147,17 @@ namespace Cms.Controllers
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public JsonResult EditOrderNote(string value, string ordNum)
+        {
+            var order = db.orders.Where(a => a.ordernumber == ordNum).SingleOrDefault();
+
+            order.note = value;
+
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
         private int CategoryId(string catslug, string subslug, string subslug2, string subslug3)
         {
             int id = 0;

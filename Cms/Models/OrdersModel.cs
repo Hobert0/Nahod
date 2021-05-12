@@ -34,6 +34,7 @@ namespace Cms.Models
         public string ZipShipp { get; set; }
         public string PhoneShipp { get; set; }
         public string Comment { get; set; }
+        public string Note { get; set; }
         public string UsedCoupon{ get; set; }
     }
 }

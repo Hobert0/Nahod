@@ -17,13 +17,13 @@
         <EntityTypeShape EntityType="hobcModel.slideshow" Width="1.5" PointX="7.375" PointY="14.75" />
         <EntityTypeShape EntityType="hobcModel.variants" Width="1.5" PointX="3.375" PointY="11.75" />
         <EntityTypeShape EntityType="hobcModel.ordermeta" Width="1.5" PointX="14.375" PointY="0.75" />
-        <EntityTypeShape EntityType="hobcModel.orders" Width="1.5" PointX="14.375" PointY="4.75" />
         <EntityTypeShape EntityType="hobcModel.products" Width="1.5" PointX="14.375" PointY="12.75" />
         <EntityTypeShape EntityType="hobcModel.coupons" Width="1.5" PointX="3.375" PointY="15.75" />
         <EntityTypeShape EntityType="hobcModel.categories" Width="1.5" PointX="12.25" PointY="1" />
         <EntityTypeShape EntityType="hobcModel.brands" Width="1.5" PointX="9.375" PointY="0.75" />
         <EntityTypeShape EntityType="hobcModel.blog" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="hobcModel.usersmeta" Width="1.5" PointX="11.375" PointY="5.75" />
+        <EntityTypeShape EntityType="hobcModel.orders" Width="1.5" PointX="14.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

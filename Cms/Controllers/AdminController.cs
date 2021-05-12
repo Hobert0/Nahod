@@ -68,7 +68,8 @@ namespace Cms.Controllers
                     AddressShipp = a.address_shipp,
                     CityShipp = a.city_shipp,
                     ZipShipp = a.zip_shipp,
-                    Comment = a.comment
+                    Comment = a.comment,
+                    Note = a.note
                 }).ToList();
 
 
@@ -375,7 +376,9 @@ namespace Cms.Controllers
             if (Session["username"] != null && Session["role"].ToString() == "0")
             {
                 MultipleIndexModel model = new MultipleIndexModel();
+
                 model.OrderDataModel = db.orders.ToList();
+                
                 ViewBag.DataPoints = JsonConvert.SerializeObject(db.orders.ToList(), _jsonSetting);
                 return View(model);
             }

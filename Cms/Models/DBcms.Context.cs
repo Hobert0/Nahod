@@ -37,12 +37,12 @@ namespace Cms.Models
         public virtual DbSet<slideshow> slideshow { get; set; }
         public virtual DbSet<variants> variants { get; set; }
         public virtual DbSet<ordermeta> ordermeta { get; set; }
-        public virtual DbSet<orders> orders { get; set; }
         public virtual DbSet<products> products { get; set; }
         public virtual DbSet<coupons> coupons { get; set; }
         public virtual DbSet<categories> categories { get; set; }
         public virtual DbSet<brands> brands { get; set; }
         public virtual DbSet<blog> blog { get; set; }
         public virtual DbSet<usersmeta> usersmeta { get; set; }
+        public virtual DbSet<orders> orders { get; set; }
     }
 }

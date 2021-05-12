@@ -108,12 +108,12 @@
             <div class="jumbotron">
                 <h3>Finálna cena <i style="font-weight: normal; font-size: 16px;">(zahrnutá doprava aj platba)</i></h3>
                 @if (ord.usedcoupon != "")
-{
+                {
                     <span>Použitý zľavový kupón <strong>@ord.usedcoupon</strong></span><br />
-}
+                }
                 <strong style="font-size: 2em;">@{decimal final = ord.finalprice;} @final.ToString("N")€</strong>
                 @{
-    var cenabezdph = Convert.ToDecimal(final * 100 / 120).ToString("N");
+                    var cenabezdph = Convert.ToDecimal(final * 100 / 120).ToString("N");
                 }
                 <br />
                 <i>Cena bez DPH @cenabezdph€</i>
@@ -126,8 +126,20 @@
             <h3>Doprava a platba</h3>
             <strong>Spôsob dodania:</strong> @trans &nbsp;&nbsp;&nbsp;<strong>Cena: @shipPrice&nbsp;€</strong><br />
             <strong>Platba:</strong> @pay  &nbsp;&nbsp;&nbsp;<strong>Cena: @payPrice&nbsp;€</strong><br /><br />
-            <h3>Poznámka k objednávke</h3>
-            <p>@ord.comment</p>
+            <h3>Poznámka k objednávke - zákazník</h3>
+            <p>@(ord.comment == "" || ord.comment == null? "Žiadna": ord.comment)</p>
+
+            <h3>Poznámka k objednávke - admin</h3>
+
+            @using (Html.BeginForm("OrderNote", "Orders", FormMethod.Post, new { enctype = "multipart/form-data", id = "OrderNote" }))
+            {
+                <div style="width:25%;">
+                    <input type="hidden" name="ordId" value="@ord.id">
+                    <textarea name="noteText" style="width:100%;">@ord.note</textarea><br>
+                    <input type="submit" value="Uložiť" id="btnSubmit" class="btn btn-success" style="float:right;" />
+                </div>
+            }
+
         </div>
     </div>
 
@@ -145,9 +157,9 @@
     </thead>
 
     @foreach (var product in Model.OrderMetaModel)
-{
-    foreach (var num in Model.ProductModel.Where(i => i.id == Int32.Parse(product.productid)))
     {
+        foreach (var num in Model.ProductModel.Where(i => i.id == Int32.Parse(product.productid)))
+        {
             <tr>
                 <td>@Html.DisplayFor(modelItem => num.number)</td>
                 <td><img src="~/Uploads/@Html.DisplayFor(modelItem => product.productimage)" style="width: 50px;" /></td>
@@ -156,10 +168,11 @@
                 <td>@Html.DisplayFor(modelItem => product.variant) @Html.DisplayFor(modelItem => product.variant2)</td>
                 <td style="background-color: lightyellow; text-align: center;"><strong>@Html.DisplayFor(modelItem => product.price)&nbsp;€</strong></td>
             </tr>
+        }
     }
-}
 </table>
-@if (storno != 2) { 
-<u>@Html.ActionLink("Stornovať objednávku", "StornoOrder", "Orders", new { id = ordNumber, confirm = true }, new { onclick = "return confirm('Naozaj chcete stornovať objednávku?')", @class = "small", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne stornujete objednávku." })</u>
+@if (storno != 2)
+{
+    <u>@Html.ActionLink("Stornovať objednávku", "StornoOrder", "Orders", new { id = ordNumber, confirm = true }, new { onclick = "return confirm('Naozaj chcete stornovať objednávku?')", @class = "small", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne stornujete objednávku." })</u>
 }
 

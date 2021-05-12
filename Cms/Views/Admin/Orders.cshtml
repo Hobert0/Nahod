@@ -19,8 +19,9 @@
             <th>Doprava</th>
             <th>Cena spolu</th>
             <th>Stav</th>
-            <th>Poznámka</th>
-            <th style="text-align: center; width: 25vw;">Detail | Vybaviť</th>
+            <th>Poznámka Zákazník</th>
+            <th>Poznámka Admin</th>
+            <th style="text-align: center; width: 30vw;">Detail | Vybaviť | Stornovať</th>
             <!--<th>PDF faktúra</th>-->
             <th>Typ zákazníka</th>
             <th>Kategória zákazníka</th>
@@ -64,17 +65,22 @@
             }
 
             var visibility = "";
+            var visibilityStorno = "";
             var stornostyle = "";
+            var trStyle = "";
             if (item.Status == 1)
             {
                 visibility = "visibility: hidden !important;";
                 status = "Vybavená";
+                trStyle = "background-color: rgba(0,255,0,0.25);";
+
             }
             else if (item.Status == 2)
             {
                 visibility = "visibility: hidden !important;";
                 stornostyle = "opacity: .2 !important;";
                 status = "Stornovaná";
+                visibilityStorno = "visibility: hidden !important;";
             }
             else
             {
@@ -82,7 +88,7 @@
                 status = "Prijatá";
             }
 
-<tr>
+<tr style="@trStyle">
     @{if (item.Status == 2)
         {
             <td class="p-0" style="width: 1px;">
@@ -111,6 +117,7 @@
     <td style="background-color: #e4ffe3; text-align: center;@stornostyle"><strong>@Html.DisplayFor(modelItem => item.Finalprice) €</strong></td>
     <td style="@stornostyle">@status</td>
     <td style="@stornostyle">@Html.DisplayFor(modelItem => item.Comment)</td>
+    <td class="editable" style="@stornostyle">@Html.DisplayFor(modelItem => item.Note)</td>
     <!--
     <td style="@stornostyle">
         @using (Html.BeginForm("UpdateOrderNote", "Orders", FormMethod.Post, new { id = "NoteForm" }))
@@ -126,7 +133,7 @@
         }
     </td>
     -->
-    <td style="@stornostyle" align="center">@Html.ActionLink("Detail", "OrderDetail", "Orders", new { orderNumber = item.Ordernumber }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#10003;"), "FinishedOrder", "Orders", new { orderNumber = item.Ordernumber, confirm = true }, new { onclick = "return confirm('Naozaj chcete potvdiť objednávku ako odoslanú?')", @class = "btn btn-success finished", style = "padding:.375rem .75rem !important;" + visibility + "", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne potvrdíte objednávku." })</td>
+    <td style="@stornostyle width:30vw;" align="center">@Html.ActionLink("Detail", "OrderDetail", "Orders", new { orderNumber = item.Ordernumber }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#10003;"), "FinishedOrder", "Orders", new { orderNumber = item.Ordernumber, confirm = true }, new { onclick = "return confirm('Naozaj chcete potvdiť objednávku ako odoslanú?')", @class = "btn btn-success finished", style = "padding:.375rem .75rem !important;" + visibility + "", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne potvrdíte objednávku." }) @Html.ActionLink(HttpUtility.HtmlDecode("&#9747;"), "StornoOrder", "Orders", new { id = item.Ordernumber, confirm = true }, new { onclick = "return confirm('Naozaj chcete stornovať objednávku??')", @class = "btn btn-danger", style = "padding:.375rem .75rem !important;" + visibilityStorno + "", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne stornujete objednávku." })</td>
     <!--
     <td>
         <a style="@stornostyle" href="@Url.Action("PdfOrder", "Orders", new { orderNumber = item.Ordernumber })"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF faktúra" title="PDF faktúra" /></a> @{if (item.Status == 2)
@@ -150,6 +157,48 @@
         if ($("#NoteForm textarea").attr("value") != "") {
             $("#NoteForm textarea").text($("#NoteForm textarea").attr("value"));
         }
+
+        //editacia poznamky od admina
+        $(document).on("dblclick", ".editable", function () {
+            //len ak uz nemame otvorenu editaciu
+            if ($(".editValue").length == 0) {
+                $name = $(this).attr("name");
+
+                $value = $(this).text().trim();
+
+                $html = '<input class="editValue" type="text" name="editValue" value="' + $value + '"><a class="btn btn-warning editValueSave" href="#" style="margin-top:5px;">Zmeniť</a><a class="btn editValueCancel" style="margin-left:5px;margin-top:5px;">Zrušiť</a>';
+
+                $(this).attr("defValue", $value);
+
+                $(this).html($html);
+            }
+        });
+
+        $(document).on("click", ".editValueSave", function () {
+            $value = $(this).parents(".editable").find(".editValue").val();
+            $ordNum = $(this).parents("tr").find("td").eq(1).text();
+
+            $thisObj = $(this);
+
+            let APIurl = "/Api/EditOrderNote";
+            $.ajax({
+                url: APIurl,
+                type: 'GET',
+                async: false,
+                data: { value: $value, ordNum: $ordNum },
+                dataType: 'json',
+                success: function (data) {
+                    $thisObj.parents(".editable").text($value);
+                }
+            });
+
+        });
+
+        $(document).on("click", ".editValueCancel", function () {
+           $value = $(this).parents(".editable").attr("defValue");
+
+           $(this).parents(".editable").text($value);
+        });
     });
 </script>
 

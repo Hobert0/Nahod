@@ -65,9 +65,10 @@
 
 <h2>Produkty v eshope</h2>
 <hr />
-<button class="btn btn-success" type="button" value="Create" style="margin: 5px 0 10px;padding: 7px 22px;" onclick="location.href='@Url.Action("AddProduct", "Products")'">+ Pridať produkt</button>
+<button class="btn btn-success" type="button" value="Create" style="margin: 5px 0 10px;padding: 7px 22px;" onclick="location.href='@Url.Action("AddProduct", "Products")'">+ Pridať produkt</button><br>
 <button class="btn btn-warning" type="button" value="MultiPriceEdit" data-toggle="modal" data-target="#multiPriceEdit" style="margin: 5px 0 10px;padding: 7px 22px;">Hromadná úprava cien</button>
-<button class="btn btn-danger" type="button" value="CheckAll" style="margin: 5px 0 10px;padding: 7px 22px;">Označiť všetky zobrazené</button>
+<button class="btn btn-dark" type="button" value="MultiDelete" data-toggle="modal" data-target="#multiDelete" style="margin: 5px 0 10px;padding: 7px 22px;">Hromadné mazanie</button>
+<button class="btn btn-danger" type="button" value="CheckAll" style="margin: 5px 10px 10px;padding: 7px 22px;">Označiť všetky zobrazené</button>
 <div class="modal" id="multiPriceEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -113,6 +114,28 @@
                             <input type="hidden" name="checkedProds" value="">
 
                             <input type="submit" value="Upraviť cenu zobrazených a označených produktov" id="btnSubmit" class="btn btn-success" disabled="true"/>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="multiDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLongTitle">Hromadné mazanie</h2>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                @using (Html.BeginForm("MultipleDelete", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "multipleDeleteForm" }))
+                {
+                    <div class="form-group">
+                        <div style="text-align:center">
+                            <input type="hidden" name="checkedProds" value="">
+
+                            <input type="submit" value="Zmazať zobrazené a označené produkty" id="btnSubmit" class="btn btn-success" disabled="true" />
                         </div>
                     </div>
                 }
@@ -497,7 +520,8 @@
             });
 
         }
-        
+
+        //hromadna editacia cien
         function validateMultipleEditData() {
             $res = true;
 
@@ -578,6 +602,40 @@
             }
         });
 
+        //hromadne mazanie
+        $("button[value=MultiDelete]").click(function () {
+            $checkedProdsCounter = 0;
+            $("#productsTable tbody tr input[name=multipleEditCheckbox]:checked").each(function () {
+                $checkedProdsCounter++;
+            });
+
+            $("#multipleDeleteForm input[type=submit]").val("Zmazať " + $checkedProdsCounter + " zobrazené a označené produkty");
+
+            if ($checkedProdsCounter == 0) {
+                $("#multipleDeleteForm input[type=submit]").attr("disabled", true);
+            } else {
+                $("#multipleDeleteForm input[type=submit]").attr("disabled", false);
+            }
+        });
+
+        $("#multipleDeleteForm input[type=submit]").click(function (e) {
+            e.preventDefault();
+
+
+            //zistime pocet ceknutych produktov
+            $checkedArr = [];
+
+            //ak nie je zaskrtnute tlacidlo pre VSETKY vyfiltrovane
+            $("#productsTable tbody tr input[name=multipleEditCheckbox]:checked").each(function () {
+                $checkedArr.push($(this).parents("tr").find("td").eq(0).text());
+            });
+
+            $("#multipleDeleteForm input[name=checkedProds]").val(JSON.stringify($checkedArr));
+
+            $("#multipleDeleteForm").submit();
+            
+        });
+
         $(document).on("dblclick", ".editable", function () {
             //len ak uz nemame otvorenu editaciu
             if ($(".editValue").length == 0) {
@@ -618,9 +676,6 @@
             }
 
             $thisObj = $(this);
-
-            console.log($name);
-            console.log($value);
 
             let APIurl = "/Api/EditProductValues";
             $.ajax({

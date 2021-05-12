@@ -99,10 +99,10 @@
                             <div class="gallery-wrapper">
                                 @foreach (var imgPath in Directory.GetFiles(Server.MapPath("~/Uploads/" + prod.gallery)))
                                 {
-                                var img = new FileInfo(imgPath);
-                                <a href="@Url.Content(String.Format("~/Uploads/" + prod.gallery + "{0}", img.Name))" data-toggle="lightbox" data-gallery="example-gallery" style="padding:5px 1px 0 0;display: inline-block;width:18%;">
-                                    <img style="width:100%; height:90px;float:left;object-fit: cover;" src="@Url.Content(String.Format("~/Uploads/" + prod.gallery + "{0}", img.Name))" class="img-fluid galleryimg-small" />
-                                </a>
+                                    var img = new FileInfo(imgPath);
+                                    <a href="@Url.Content(String.Format("~/Uploads/" + prod.gallery + "{0}", img.Name))" data-toggle="lightbox" data-gallery="example-gallery" style="padding:5px 1px 0 0;display: inline-block;width:18%;">
+                                        <img style="width:100%; height:90px;float:left;object-fit: cover;" src="@Url.Content(String.Format("~/Uploads/" + prod.gallery + "{0}", img.Name))" class="img-fluid galleryimg-small" />
+                                    </a>
                                 }
                             </div>
                         }
@@ -272,10 +272,14 @@
                                         }
                                     }
 
-
-                                    if (Session["username"] == null)
+                                    //ak nie je discount price
+                                    if (Session["username"] == null && prod.discountprice == null)
                                     {
-                                        <p style="font-size: 12px; text-align: right;"><a href="#" class="register-modal"><u>Zaregistrujte sa</u></a> a získajte zľavu ďalších 5%</p>
+                                        <!--<p style="font-size: 12px; text-align: right;"><a href="#" class="register-modal"><u>Zaregistrujte sa</u></a> a získajte zľavu ďalších 5%</p>-->
+                                        
+                                        var priceAfterReg = prod.price * (decimal)0.95;
+                                        
+                                        <p style="font-size: 12px; text-align: right;" id="afterRegInfo">Cena po <a href="#" class="register-modal"><u>registrácii</u></a>: <span>@priceAfterReg.ToString("N2")</span> € (-5%)</p>
                                     }
 
                                     if (prod.price == 0) //ak je zadana suma nula
@@ -961,13 +965,22 @@
 
                             $(".discount-price-text, .discount-price-del").removeClass("d-none");
                             $(".w-discount-price").addClass("d-none");
+
+                            //ak user je prihlaseny, skryjeme info o cene po registracii
+                            $("#afterRegInfo").style("display", "none");
                         } else {
                             $(".actual-price").text($thisPrice.toFixedNoRounding(2));
                             $("#actual-price-w-tax").text(($thisPrice * 100 / 120).toFixedNoRounding(2));
 
                             $(".discount-price-text, .discount-price-del").addClass("d-none");
                             $(".w-discount-price").removeClass("d-none");
+
+                            //ak user neni prihlaseny a nie je zlava, zobrazime info o cene po registracii
+                            $afterRegPrice = $thisPrice * 0.95;
+                            $("#afterRegInfo span").text($afterRegPrice.toFixedNoRounding(2));
+                            $("#afterRegInfo").style("display", "block");
                         }
+
                     } else {
 
                         $(".actual-price").text($thisDiscount.toFixedNoRounding(2));
@@ -979,6 +992,9 @@
 
                         $(".discount-price-text, .discount-price-del").removeClass("d-none");
                         $(".w-discount-price").addClass("d-none");
+
+                        //ak user neni prihlaseny a je zlava, skryjeme info o cene po registracii
+                        $("#afterRegInfo").style("display", "none");
                     }
                 }
 
@@ -1015,7 +1031,7 @@
                         settings: {
                             slidesToShow: 4,
                             slidesToScroll: 2,
-                             arrows: true,
+                            arrows: true,
 
                         }
                     },
