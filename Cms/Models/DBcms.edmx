@@ -149,6 +149,7 @@
           <Property Name="address" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="city" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="zip" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="country" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="phone" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="companyname" Type="varchar" MaxLength="150" />
@@ -167,6 +168,7 @@
           <Property Name="companyname_shipp" Type="varchar" MaxLength="150" />
           <Property Name="city_shipp" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="zip_shipp" Type="varchar" MaxLength="10" />
+          <Property Name="country_shipp" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="phone_shipp" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="comment" Type="text" />
           <Property Name="note" Type="text" />
@@ -293,6 +295,7 @@
           <Property Name="address" Type="text" Nullable="false" />
           <Property Name="city" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="zip" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="country" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="phone" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="email" Type="text" Nullable="false" />
           <Property Name="companyname" Type="text" />
@@ -373,8 +376,8 @@
           <EntitySet Name="categories" EntityType="hobcModel.categories" />
           <EntitySet Name="brands" EntityType="hobcModel.brands" />
           <EntitySet Name="blog" EntityType="hobcModel.blog" />
-          <EntitySet Name="usersmeta" EntityType="hobcModel.usersmeta" />
           <EntitySet Name="orders" EntityType="hobcModel.orders" />
+          <EntitySet Name="usersmeta" EntityType="hobcModel.usersmeta" />
         </EntityContainer>
         <EntityType Name="deliver_city">
           <Key>
@@ -640,31 +643,6 @@
           <Property Name="image" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="gallery" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="usersmeta">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="userid" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="surname" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="address" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="city" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="zip" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="phone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="email" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="companyname" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="ico" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="dic" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="icdph" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="news" Type="Boolean" Nullable="false" />
-          <Property Name="gdpr" Type="Boolean" Nullable="false" />
-          <Property Name="to_remove" Type="Boolean" Nullable="false" />
-          <Property Name="sum" Type="Decimal" Nullable="false" />
-          <Property Name="rating" Type="Int32" Nullable="false" />
-          <Property Name="created" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="deleted" Type="Boolean" Nullable="false" />
-        </EntityType>
         <EntityType Name="orders">
           <Key>
             <PropertyRef Name="id" />
@@ -676,6 +654,7 @@
           <Property Name="address" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="city" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="zip" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="country" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="phone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="companyname" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
@@ -694,11 +673,38 @@
           <Property Name="companyname_shipp" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="city_shipp" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="zip_shipp" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="country_shipp" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="phone_shipp" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="comment" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="note" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="usedcoupon" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="userid" Type="Int32" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usersmeta">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="surname" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="zip" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="country" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="companyname" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="ico" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="dic" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="icdph" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="news" Type="Boolean" Nullable="false" />
+          <Property Name="gdpr" Type="Boolean" Nullable="false" />
+          <Property Name="to_remove" Type="Boolean" Nullable="false" />
+          <Property Name="sum" Type="Decimal" Nullable="false" />
+          <Property Name="rating" Type="Int32" Nullable="false" />
+          <Property Name="created" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
         </EntityType>
         </Schema>
@@ -988,32 +994,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="usersmeta">
-            <EntityTypeMapping TypeName="hobcModel.usersmeta">
-              <MappingFragment StoreEntitySet="usersmeta">
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="created" ColumnName="created" />
-                <ScalarProperty Name="rating" ColumnName="rating" />
-                <ScalarProperty Name="sum" ColumnName="sum" />
-                <ScalarProperty Name="to_remove" ColumnName="to_remove" />
-                <ScalarProperty Name="gdpr" ColumnName="gdpr" />
-                <ScalarProperty Name="news" ColumnName="news" />
-                <ScalarProperty Name="icdph" ColumnName="icdph" />
-                <ScalarProperty Name="dic" ColumnName="dic" />
-                <ScalarProperty Name="ico" ColumnName="ico" />
-                <ScalarProperty Name="companyname" ColumnName="companyname" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="phone" ColumnName="phone" />
-                <ScalarProperty Name="zip" ColumnName="zip" />
-                <ScalarProperty Name="city" ColumnName="city" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="surname" ColumnName="surname" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="userid" ColumnName="userid" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="orders">
             <EntityTypeMapping TypeName="hobcModel.orders">
               <MappingFragment StoreEntitySet="orders">
@@ -1023,6 +1003,7 @@
                 <ScalarProperty Name="note" ColumnName="note" />
                 <ScalarProperty Name="comment" ColumnName="comment" />
                 <ScalarProperty Name="phone_shipp" ColumnName="phone_shipp" />
+                <ScalarProperty Name="country_shipp" ColumnName="country_shipp" />
                 <ScalarProperty Name="zip_shipp" ColumnName="zip_shipp" />
                 <ScalarProperty Name="city_shipp" ColumnName="city_shipp" />
                 <ScalarProperty Name="companyname_shipp" ColumnName="companyname_shipp" />
@@ -1041,12 +1022,40 @@
                 <ScalarProperty Name="companyname" ColumnName="companyname" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="country" ColumnName="country" />
                 <ScalarProperty Name="zip" ColumnName="zip" />
                 <ScalarProperty Name="city" ColumnName="city" />
                 <ScalarProperty Name="address" ColumnName="address" />
                 <ScalarProperty Name="surname" ColumnName="surname" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="ordernumber" ColumnName="ordernumber" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usersmeta">
+            <EntityTypeMapping TypeName="hobcModel.usersmeta">
+              <MappingFragment StoreEntitySet="usersmeta">
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="sum" ColumnName="sum" />
+                <ScalarProperty Name="to_remove" ColumnName="to_remove" />
+                <ScalarProperty Name="gdpr" ColumnName="gdpr" />
+                <ScalarProperty Name="news" ColumnName="news" />
+                <ScalarProperty Name="icdph" ColumnName="icdph" />
+                <ScalarProperty Name="dic" ColumnName="dic" />
+                <ScalarProperty Name="ico" ColumnName="ico" />
+                <ScalarProperty Name="companyname" ColumnName="companyname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="zip" ColumnName="zip" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

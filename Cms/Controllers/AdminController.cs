@@ -257,13 +257,16 @@ namespace Cms.Controllers
             um.dic = model.UsersmetaModel.Dic;
             um.email = model.AdminLoginModel.Username;
             um.icdph = model.UsersmetaModel.Icdph;
-            um.ico = model.UsersmetaModel.Dic;
+            um.ico = model.UsersmetaModel.Ico;
             um.name = model.UsersmetaModel.Name;
             um.news = model.UsersmetaModel.News;
             um.gdpr = true;
             um.phone = model.UsersmetaModel.Phone;
             um.surname = model.UsersmetaModel.Surname;
             um.zip = model.UsersmetaModel.Zip;
+            um.country = model.UsersmetaModel.Country;
+            um.created = DateTime.Now.ToString("d.M.yyyy HH:mm:ss");
+            um.rating = 1;
             um.userid = db.users.Select(i => i.id).Max();
 
             db.usersmeta.Add(um);
@@ -273,6 +276,11 @@ namespace Cms.Controllers
             Session["username"] = model.AdminLoginModel.Username;
             Session["role"] = 1;
             Session["userid"] = db.users.Where(i => i.email == model.AdminLoginModel.Username).Select(i => i.id).FirstOrDefault();
+
+            //odosleme email o uspesnom zaregistrovani
+            OrdersController oc = new OrdersController();
+            string body = oc.createRegisterEmailBody(um.name);
+            oc.SendHtmlFormattedEmail("Ďakujeme za registráciu!", body, o.email, "register", "");
 
             string returnUrl = model.UsersmetaModel.ReturnUrl;
             return Redirect(returnUrl);
@@ -493,7 +501,7 @@ namespace Cms.Controllers
         {
             if (Session["username"] != null && Session["role"].ToString() == "0")
             {
-                var user = db.users.Where(item => item.id == id).Join(db.usersmeta, a => a.id, b => b.userid, (a, b) => new UsersmetaModel { Id = b.id, Userid = b.userid, Name = b.name, Surname = b.surname, Address = b.address, City = b.city, Zip = b.zip, Phone = b.phone, Email = b.email, Companyname = b.companyname, Ico = b.ico, Dic = b.dic, Icdph = b.icdph, News = b.news, Gdpr = b.gdpr }).SingleOrDefault();
+                var user = db.users.Where(item => item.id == id).Join(db.usersmeta, a => a.id, b => b.userid, (a, b) => new UsersmetaModel { Id = b.id, Userid = b.userid, Name = b.name, Surname = b.surname, Address = b.address, City = b.city, Zip = b.zip, Country = b.country, Phone = b.phone, Email = b.email, Companyname = b.companyname, Ico = b.ico, Dic = b.dic, Icdph = b.icdph, News = b.news, Gdpr = b.gdpr }).SingleOrDefault();
                 MultipleIndexModel model = new MultipleIndexModel();
                 model.UsersmetaModel = user;
 
@@ -540,6 +548,7 @@ namespace Cms.Controllers
             u.address = "";
             u.city = "";
             u.zip = "";
+            u.country = "";
             u.phone = "";
             u.email = model.UsersModel.Username;
             u.news = true;
@@ -590,6 +599,7 @@ namespace Cms.Controllers
             u.address = model.UsersmetaModel.Address;
             u.city = model.UsersmetaModel.City;
             u.zip = model.UsersmetaModel.Zip;
+            u.country = model.UsersmetaModel.Country;
             u.phone = model.UsersmetaModel.Phone;
             u.email = model.UsersmetaModel.Name;
             u.companyname = model.UsersmetaModel.Companyname;
@@ -597,7 +607,6 @@ namespace Cms.Controllers
             u.dic = model.UsersmetaModel.Dic;
             u.icdph = model.UsersmetaModel.Icdph;
             u.news = true;
-            u.rating = 1;
             u.gdpr = true;
             u.created = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
             u.rating = 1;
@@ -621,6 +630,7 @@ namespace Cms.Controllers
             u.address = model.UsersmetaModel.Address;
             u.city = model.UsersmetaModel.City;
             u.zip = model.UsersmetaModel.Zip;
+            u.country = model.UsersmetaModel.Country;
             u.phone = model.UsersmetaModel.Phone;
             u.email = model.UsersmetaModel.Name;
             u.companyname = model.UsersmetaModel.Companyname;

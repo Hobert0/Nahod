@@ -14,6 +14,7 @@ namespace Cms.Models
         public string Address { get; set; }
         public string City { get; set; }
         public string Zip { get; set; }
+        public string Country { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public string Companyname { get; set; }
@@ -32,6 +33,7 @@ namespace Cms.Models
         public string CompanynameShipp { get; set; }
         public string CityShipp { get; set; }
         public string ZipShipp { get; set; }
+        public string CountryShipp { get; set; }
         public string PhoneShipp { get; set; }
         public string Comment { get; set; }
         public string Note { get; set; }

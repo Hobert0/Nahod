@@ -640,13 +640,22 @@
                             <div class="col">
                                 <div class="form-group">
                                     <div class="col-md-14">
+                                        @Html.EditorFor(model => model.OrdersModel.Country, new { htmlAttributes = new { @class = "form-control", placeholder = "Štát*" } })
+                                        @Html.ValidationMessageFor(model => model.OrdersModel.Country, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="col-md-14">
                                         @Html.EditorFor(model => model.OrdersModel.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Telefón*" } })
                                         @Html.ValidationMessageFor(model => model.OrdersModel.Phone, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col">
                                 <div class="form-group">
                                     <div class="col-md-14">
@@ -655,6 +664,9 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                        </div>
+                        <div class="row">
                             <div class="col">
                                 <div class="form-group">
                                     <div class="col-md-14">
@@ -663,8 +675,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col">
                                 <div class="form-group">
                                     <div class="col-md-14">
@@ -673,6 +683,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col">
                                 <div class="form-group">
                                     <div class="col-md-14">
@@ -681,8 +693,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col">
                                 <div class="form-group">
                                     <div class="col-md-14">
@@ -690,8 +700,6 @@
                                         @Html.ValidationMessageFor(model => model.OrdersModel.Icdph, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col">
                             </div>
                         </div>
                         <div class="row">
@@ -734,11 +742,22 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <div class="col-md-14">
+                                            @Html.EditorFor(model => model.OrdersModel.CompanynameShipp, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov firmy" } })
+                                            @Html.ValidationMessageFor(model => model.OrdersModel.CompanynameShipp, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <div class="col-md-14">
                                             @Html.EditorFor(model => model.OrdersModel.AddressShipp, new { htmlAttributes = new { @class = "form-control", placeholder = "Ulica, číslo domu" } })
                                             @Html.ValidationMessageFor(model => model.OrdersModel.AddressShipp, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 </div>
+                                
+                            </div>
+                            <div class="row">
                                 <div class="col">
                                     <div class="form-group">
                                         <div class="col-md-14">
@@ -747,13 +766,22 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col">
                                     <div class="form-group">
                                         <div class="col-md-14">
                                             @Html.EditorFor(model => model.OrdersModel.ZipShipp, new { htmlAttributes = new { @class = "form-control", placeholder = "PSČ" } })
                                             @Html.ValidationMessageFor(model => model.OrdersModel.ZipShipp, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <div class="col-md-14">
+                                            @Html.EditorFor(model => model.OrdersModel.CountryShipp, new { htmlAttributes = new { @class = "form-control", placeholder = "Štát" } })
+                                            @Html.ValidationMessageFor(model => model.OrdersModel.CountryShipp, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 </div>

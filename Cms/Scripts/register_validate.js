@@ -7,13 +7,14 @@
     var address = document.getElementsByName("UsersmetaModel.Address")[0].value;
     var city = document.getElementsByName("UsersmetaModel.City")[0].value;
     var zip = document.getElementsByName("UsersmetaModel.Zip")[0].value;
+    var country = document.getElementsByName("UsersmetaModel.Country")[0].value;
     var phone = document.getElementsByName("UsersmetaModel.Phone")[0].value;
 
     if (!passwordCheck()) {
         return false;
     }
 
-    if (name !== "" && surname !== "" && address !== "" && city !== "" && zip !== "" && phone !== "" && username !== ""  && validateEmail(username) === true) {
+    if (name !== "" && surname !== "" && address !== "" && city !== "" && zip !== "" && country !== "" && phone !== "" && username !== "" && validateEmail(username) === true) {
         if (condition.checked === true) {
             if (!checkUsername(username)) {
                 document.getElementById("emailexist").style = "display: block;";
@@ -21,74 +22,80 @@
             } else {
                 document.getElementById("emailexist").style = "display: none;";
             }
-                return true;
-            } else {
-                document.getElementById("conditioncheck2").style.border = "1px solid #ff4545";
-                toastr["error"]("Je potrebné súhlasiť s obchodnými podmienkami a podmienkami ochrany osobných údajov.");
-
-                toastr.options = {
-                    "closeButton": true,
-                    "debug": false,
-                    "newestOnTop": false,
-                    "progressBar": false,
-                    "positionClass": "toast-top-right",
-                    "preventDuplicates": false,
-                    "onclick": null,
-                    "showDuration": "300",
-                    "hideDuration": "1000",
-                    "timeOut": "5000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
-                }
-                return false;
-            }
-
+            return true;
         } else {
-            if (name == "") {
-                document.getElementsByName("UsersmetaModel.Name")[0].style.borderColor = "#ff4545";
-            } else {
-                document.getElementsByName("UsersmetaModel.Name")[0].style.borderColor = "#ced4da";
-            }
-            if (surname == "") {
-                document.getElementsByName("UsersmetaModel.Surname")[0].style.borderColor = "#ff4545";
-            } else {
-                document.getElementsByName("UsersmetaModel.Surname")[0].style.borderColor = "#ced4da";
+            document.getElementById("conditioncheck2").style.border = "1px solid #ff4545";
+            toastr["error"]("Je potrebné súhlasiť s obchodnými podmienkami a podmienkami ochrany osobných údajov.");
 
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
             }
-            if (address == "") {
-                document.getElementsByName("UsersmetaModel.Address")[0].style.borderColor = "#ff4545";
-            } else {
-                document.getElementsByName("UsersmetaModel.Address")[0].style.borderColor = "#ced4da";
+            return false;
+        }
 
-            }
-            if (city == "") {
-                document.getElementsByName("UsersmetaModel.City")[0].style.borderColor = "#ff4545";
-            } else {
-                document.getElementsByName("UsersmetaModel.City")[0].style.borderColor = "#ced4da";
+    } else {
+        if (name == "") {
+            document.getElementsByName("UsersmetaModel.Name")[0].style.borderColor = "#ff4545";
+        } else {
+            document.getElementsByName("UsersmetaModel.Name")[0].style.borderColor = "#ced4da";
+        }
+        if (surname == "") {
+            document.getElementsByName("UsersmetaModel.Surname")[0].style.borderColor = "#ff4545";
+        } else {
+            document.getElementsByName("UsersmetaModel.Surname")[0].style.borderColor = "#ced4da";
 
-            }
-            if (zip == "") {
-                document.getElementsByName("UsersmetaModel.Zip")[0].style.borderColor = "#ff4545";
-            } else {
-                document.getElementsByName("UsersmetaModel.Zip")[0].style.borderColor = "#ced4da";
+        }
+        if (address == "") {
+            document.getElementsByName("UsersmetaModel.Address")[0].style.borderColor = "#ff4545";
+        } else {
+            document.getElementsByName("UsersmetaModel.Address")[0].style.borderColor = "#ced4da";
 
-            }
-            if (phone == "") {
-                document.getElementsByName("UsersmetaModel.Phone")[0].style.borderColor = "#ff4545";
-            } else {
-                document.getElementsByName("UsersmetaModel.Phone")[0].style.borderColor = "#ced4da";
+        }
+        if (city == "") {
+            document.getElementsByName("UsersmetaModel.City")[0].style.borderColor = "#ff4545";
+        } else {
+            document.getElementsByName("UsersmetaModel.City")[0].style.borderColor = "#ced4da";
 
-            }
-            if (username === "" || validateEmail(username) !== true) {
-                document.getElementById("userEmail").style.borderColor = "#ff4545";
-            } else {
-                document.getElementById("userEmail").style.borderColor = "#ced4da";
-            }
+        }
+        if (zip == "") {
+            document.getElementsByName("UsersmetaModel.Zip")[0].style.borderColor = "#ff4545";
+        } else {
+            document.getElementsByName("UsersmetaModel.Zip")[0].style.borderColor = "#ced4da";
 
-            toastr["warning"]("Údaje nie sú vyplnené alebo sú vyplnené nesprávne.");
+        }
+        if (country == "") {
+            document.getElementsByName("UsersmetaModel.Country")[0].style.borderColor = "#ff4545";
+        } else {
+            document.getElementsByName("UsersmetaModel.Country")[0].style.borderColor = "#ced4da";
+
+        }
+        if (phone == "") {
+            document.getElementsByName("UsersmetaModel.Phone")[0].style.borderColor = "#ff4545";
+        } else {
+            document.getElementsByName("UsersmetaModel.Phone")[0].style.borderColor = "#ced4da";
+
+        }
+        if (username === "" || validateEmail(username) !== true) {
+            document.getElementById("userEmail").style.borderColor = "#ff4545";
+        } else {
+            document.getElementById("userEmail").style.borderColor = "#ced4da";
+        }
+
+        toastr["warning"]("Údaje nie sú vyplnené alebo sú vyplnené nesprávne.");
         toastr.options = {
             "closeButton": true,
             "debug": false,
@@ -106,9 +113,9 @@
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         };
-            return false;
-        }
-    
+        return false;
+    }
+
 }
 
 function checkUsername(email) {
@@ -118,7 +125,7 @@ function checkUsername(email) {
         url: 'Admin/EmailExist',
         async: false,
         data: { email: email },
-         success: function (response) {
+        success: function (response) {
             //call is successfully completed and we got result in data
             if (response.success) {
                 // success code here

@@ -554,6 +554,7 @@ namespace Cms.Controllers
                         Address = user.address,
                         City = user.city,
                         Zip = user.zip,
+                        Country = user.country,
                         Phone = user.phone,
                         Email = user.email,
                         Companyname = user.companyname,

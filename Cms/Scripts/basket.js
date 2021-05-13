@@ -183,6 +183,7 @@ function validateBasketForm() {
     var address = document.getElementsByName("OrdersModel.Address")[0].value;
     var city = document.getElementsByName("OrdersModel.City")[0].value;
     var zip = document.getElementsByName("OrdersModel.Zip")[0].value;
+    var country = document.getElementsByName("OrdersModel.Country")[0].value;
     var phone = document.getElementsByName("OrdersModel.Phone")[0].value;
     var email = document.getElementsByName("OrdersModel.Email")[0].value;
 
@@ -191,6 +192,7 @@ function validateBasketForm() {
     var address_ship = document.getElementsByName("OrdersModel.AddressShipp")[0].value;
     var city_ship = document.getElementsByName("OrdersModel.CityShipp")[0].value;
     var zip_ship = document.getElementsByName("OrdersModel.ZipShipp")[0].value;
+    var country_ship = document.getElementsByName("OrdersModel.CountryShipp")[0].value;
     var phone_ship = document.getElementsByName("OrdersModel.PhoneShipp")[0].value;
 
     if (checkBox.checked == true) {
@@ -199,6 +201,7 @@ function validateBasketForm() {
             address != "" &&
             city != "" &&
             zip != "" &&
+            country != "" &&
             phone != "" &&
             email != "" &&
             validateEmail(email) == true &&
@@ -207,6 +210,7 @@ function validateBasketForm() {
             address_ship != "" &&
             city_ship != "" &&
             zip_ship != "" &&
+            country_ship != "" &&
             phone_ship != "") {
             if (condition.checked === true) {
                 return true;
@@ -264,6 +268,12 @@ function validateBasketForm() {
                 document.getElementsByName("OrdersModel.Zip")[0].style.borderColor = "#ced4da";
 
             }
+            if (country == "") {
+                document.getElementsByName("OrdersModel.Country")[0].style.borderColor = "#ff4545";
+            } else {
+                document.getElementsByName("OrdersModel.Country")[0].style.borderColor = "#ced4da";
+
+            }
             if (phone == "") {
                 document.getElementsByName("OrdersModel.Phone")[0].style.borderColor = "#ff4545";
             } else {
@@ -306,6 +316,12 @@ function validateBasketForm() {
                 document.getElementsByName("OrdersModel.ZipShipp")[0].style.borderColor = "#ced4da";
 
             }
+            if (country_ship == "") {
+                document.getElementsByName("OrdersModel.CountryShipp")[0].style.borderColor = "#ff4545";
+            } else {
+                document.getElementsByName("OrdersModel.CountryShipp")[0].style.borderColor = "#ced4da";
+
+            }
             if (phone_ship == "") {
                 document.getElementsByName("OrdersModel.PhoneShipp")[0].style.borderColor = "#ff4545";
             } else {
@@ -333,7 +349,7 @@ function validateBasketForm() {
             return false;
         }
     } else {
-        if (name != "" && surname != "" && address != "" && city != "" && zip != "" && phone != "" && email != "" && validateEmail(email) == true) {
+        if (name != "" && surname != "" && address != "" && city != "" && zip != "" && country != "" && phone != "" && email != "" && validateEmail(email) == true) {
             if (condition.checked == true) {
                 return true;
             } else {
@@ -389,6 +405,12 @@ function validateBasketForm() {
                 document.getElementsByName("OrdersModel.Zip")[0].style.borderColor = "#ff4545";
             } else {
                 document.getElementsByName("OrdersModel.Zip")[0].style.borderColor = "#ced4da";
+
+            }
+            if (country == "") {
+                document.getElementsByName("OrdersModel.Country")[0].style.borderColor = "#ff4545";
+            } else {
+                document.getElementsByName("OrdersModel.Country")[0].style.borderColor = "#ced4da";
 
             }
             if (phone == "") {

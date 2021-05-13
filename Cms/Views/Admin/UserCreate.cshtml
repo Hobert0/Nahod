@@ -98,13 +98,22 @@
                 <div class="col">
                     <div class="form-group">
                         <div class="col-md-14">
+                            @Html.EditorFor(model => model.UsersmetaModel.Country, new { htmlAttributes = new { @class = "form-control", placeholder = "Štát*" } })
+                            @Html.ValidationMessageFor(model => model.UsersmetaModel.Country, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <div class="col-md-14">
                             @Html.EditorFor(model => model.UsersmetaModel.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Telefón*" } })
                             @Html.ValidationMessageFor(model => model.UsersmetaModel.Phone, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col">
                     <div class="form-group">
                         <div class="col-md-14">
@@ -113,6 +122,9 @@
                         </div>
                     </div>
                 </div>
+
+            </div>
+            <div class="row">
                 <div class="col">
                     <div class="form-group">
                         <div class="col-md-14">
@@ -121,8 +133,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col">
                     <div class="form-group">
                         <div class="col-md-14">
@@ -131,6 +141,10 @@
                         </div>
                     </div>
                 </div>
+
+            </div>
+
+            <div class="row">
                 <div class="col">
                     <div class="form-group">
                         <div class="col-md-14">
@@ -139,7 +153,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="col">
+                    
+                </div>
             </div>
+
         </div>
 
         <div id="alert" class="text-danger" style="display: none;">Zadané heslá sa nezhodujú!</div>
@@ -226,6 +244,14 @@
             $("#UsersmetaModel_Zip").removeClass("error");
         }
 
+        if ($("#UsersmetaModel_Country").val() == "") {
+            $("#UsersmetaModel_Country").addClass("error");
+
+            valid = false;
+        } else {
+            $("#UsersmetaModel_Country").removeClass("error");
+        }
+
         if ($("#UsersmetaModel_Phone").val() == "") {
             $("#UsersmetaModel_Phone").addClass("error");
 
@@ -260,7 +286,7 @@
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                //some errror, some show err msg to user and log the error  
+                //some errror, some show err msg to user and log the error
             }
         });
         return bool;

@@ -42,7 +42,7 @@ namespace Cms.Models
         public virtual DbSet<categories> categories { get; set; }
         public virtual DbSet<brands> brands { get; set; }
         public virtual DbSet<blog> blog { get; set; }
-        public virtual DbSet<usersmeta> usersmeta { get; set; }
         public virtual DbSet<orders> orders { get; set; }
+        public virtual DbSet<usersmeta> usersmeta { get; set; }
     }
 }

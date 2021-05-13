@@ -68,6 +68,7 @@ namespace Cms.Controllers
             o.address = model.OrdersModel.Address;
             o.city = model.OrdersModel.City;
             o.zip = model.OrdersModel.Zip;
+            o.country = model.OrdersModel.Country;
             o.phone = model.OrdersModel.Phone;
             o.email = model.OrdersModel.Email;
             o.companyname = model.OrdersModel.Companyname;
@@ -85,6 +86,7 @@ namespace Cms.Controllers
             o.companyname_shipp = model.OrdersModel.CompanynameShipp ?? "";
             o.city_shipp = model.OrdersModel.CityShipp ?? "";
             o.zip_shipp = model.OrdersModel.ZipShipp ?? "";
+            o.country_shipp = model.OrdersModel.CountryShipp ?? "";
             o.phone_shipp = model.OrdersModel.PhoneShipp ?? "";
             o.comment = model.OrdersModel.Comment;
             o.usedcoupon = coupon ?? "";
@@ -389,6 +391,23 @@ namespace Cms.Controllers
             return body;
         }
 
+        public string createRegisterEmailBody(string name)
+        {
+           
+            string body = string.Empty;
+            //using streamreader for reading my htmltemplate   
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/Shared/RegisterEmail.cshtml")))
+            {
+                body = reader.ReadToEnd();
+            }
+
+            var str = "Ďakujeme " + name + " za registráciu na Nahoď.sk.";
+
+            body = body.Replace("{Text}", str);
+
+            return body;
+        }
+
         private string createEmailBody(string orderNumber, string toWho)
         {
             var orderdetail = db.orders.Where(i => i.ordernumber == orderNumber).ToList();
@@ -490,12 +509,15 @@ namespace Cms.Controllers
                 body = body.Replace("{Address}", o.address);
                 body = body.Replace("{Zip}", o.zip);
                 body = body.Replace("{City}", o.city);
+                body = body.Replace("{Country}", o.country);
                 body = body.Replace("{Shipping}", trans);
                 body = body.Replace("{FirstName-shipp}", o.name_shipp);
                 body = body.Replace("{Surname-shipp}", o.surname_shipp);
+                body = body.Replace("{Companyname-shipp}", o.companyname_shipp);
                 body = body.Replace("{Address-shipp}", o.address_shipp);
                 body = body.Replace("{Zip-shipp}", o.zip_shipp);
                 body = body.Replace("{City-shipp}", o.city_shipp);
+                body = body.Replace("{Country-shipp}", o.country_shipp);
                 body = body.Replace("{Tel}", o.phone);
                 body = body.Replace("{Finalprice}", o.finalprice.ToString());
                 body = body.Replace("{PaymentPrice}", payPrice.ToString());
@@ -551,7 +573,7 @@ namespace Cms.Controllers
             return stringBuilder.ToString();
         }
 
-        private void SendHtmlFormattedEmail(string subject, string body, string email, string toWho, string ordnumber)
+        public void SendHtmlFormattedEmail(string subject, string body, string email, string toWho, string ordnumber)
         {
             using (MailMessage mailMessage = new MailMessage())
             {

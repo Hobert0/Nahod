@@ -12,7 +12,7 @@
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        @Html.EditorFor(model => model.UsersmetaModel.Userid, new { htmlAttributes = new { @class = "form-control", placeholder = "Id", style="display:none;" } })
+        @Html.EditorFor(model => model.UsersmetaModel.Userid, new { htmlAttributes = new { @class = "form-control", placeholder = "Id", style = "display:none;" } })
 
         <div class="row">
             <div class="col">
@@ -62,13 +62,22 @@
             <div class="col">
                 <div class="form-group">
                     <div class="col-md-14">
+                        @Html.EditorFor(model => model.UsersmetaModel.Country, new { htmlAttributes = new { @class = "form-control", placeholder = "Štát*" } })
+                        @Html.ValidationMessageFor(model => model.UsersmetaModel.Country, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <div class="col-md-14">
                         @Html.EditorFor(model => model.UsersmetaModel.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Telefón*" } })
                         @Html.ValidationMessageFor(model => model.UsersmetaModel.Phone, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col">
                 <div class="form-group">
                     <div class="col-md-14">
@@ -77,6 +86,9 @@
                     </div>
                 </div>
             </div>
+
+        </div>
+        <div class="row">
             <div class="col">
                 <div class="form-group">
                     <div class="col-md-14">
@@ -85,8 +97,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col">
                 <div class="form-group">
                     <div class="col-md-14">
@@ -95,6 +105,11 @@
                     </div>
                 </div>
             </div>
+
+        </div>
+
+
+        <div class="row">
             <div class="col">
                 <div class="form-group">
                     <div class="col-md-14">
@@ -103,7 +118,12 @@
                     </div>
                 </div>
             </div>
+            <div class="col">
+                
+            </div>
         </div>
+
+
     </div>
 
     <div class="form-group">
@@ -111,7 +131,7 @@
             <input type="submit" value="Uložiť" class="btn btn-success" />
         </div>
     </div>
-  
+
 
 }
 
@@ -190,6 +210,14 @@
             valid = false;
         } else {
             $("#UsersmetaModel_Zip").removeClass("error");
+        }
+
+        if ($("#UsersmetaModel_Country").val() == "") {
+            $("#UsersmetaModel_Country").addClass("error");
+
+            valid = false;
+        } else {
+            $("#UsersmetaModel_Country").removeClass("error");
         }
 
         if ($("#UsersmetaModel_Phone").val() == "") {
