@@ -391,23 +391,6 @@ namespace Cms.Controllers
             return body;
         }
 
-        public string createRegisterEmailBody(string name)
-        {
-           
-            string body = string.Empty;
-            //using streamreader for reading my htmltemplate   
-            using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/Shared/RegisterEmail.cshtml")))
-            {
-                body = reader.ReadToEnd();
-            }
-
-            var str = "Ďakujeme " + name + " za registráciu na Nahoď.sk.";
-
-            body = body.Replace("{Text}", str);
-
-            return body;
-        }
-
         private string createEmailBody(string orderNumber, string toWho)
         {
             var orderdetail = db.orders.Where(i => i.ordernumber == orderNumber).ToList();

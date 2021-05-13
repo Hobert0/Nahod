@@ -19,8 +19,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>
-    </Use64BitIISExpress>
+    <Use64BitIISExpress>true</Use64BitIISExpress>
     <IISExpressSSLPort>44334</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -802,7 +801,7 @@
     <Content Include="Views\Shared\_ProductItem.cshtml" />
     <Content Include="Views\Home\Type.cshtml" />
     <Content Include="Views\Shared\RatingOrderEmail.cshtml" />
-    <Content Include="Views\Shared\RegisterEmail.cshtml" />
+    <EmbeddedResource Include="Views\Shared\RegisterEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

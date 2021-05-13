@@ -279,7 +279,7 @@ namespace Cms.Controllers
 
             //odosleme email o uspesnom zaregistrovani
             OrdersController oc = new OrdersController();
-            string body = oc.createRegisterEmailBody(um.name);
+            string body = createRegisterEmailBody(um.name);
             oc.SendHtmlFormattedEmail("Ďakujeme za registráciu!", body, o.email, "register", "");
 
             string returnUrl = model.UsersmetaModel.ReturnUrl;
@@ -648,8 +648,23 @@ namespace Cms.Controllers
             var countOrders = db.orders.Where(i => i.status != 1).Count().ToString();
             return Content(countOrders);
         }
+        private string createRegisterEmailBody(string name)
+        {
 
-        
+            string body = string.Empty;
+            //using streamreader for reading my htmltemplate   
+            using (StreamReader rea = new StreamReader(Server.MapPath("~/Views/Shared/RegisterEmail.cshtml")))
+            {
+                body = rea.ReadToEnd();
+            }
+
+            var str = "Ďakujeme " + name + " za registráciu na Nahoď.sk.";
+
+            body = body.Replace("{Text}", str);
+
+            return body;
+        }
+
 
     }
 }
