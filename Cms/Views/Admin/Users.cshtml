@@ -43,19 +43,6 @@
             </div>
         </div>
 
-        <!--
-        <div class="row" style="margin:0">
-            <div class="col-md-2" style="padding:0">
-                <div class="form-group">
-                    <div class="col-md-13">
-                        @Html.DropDownListFor(model => model.UsersModel.Role, (IEnumerable<SelectListItem>)ViewData["Rola"], new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.UsersModel.Role, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-        </div>
-        -->
-
         <div id="alert" class="text-danger" style="display: none;">Zadané heslá sa nezhodujú!</div>
         <div class="form-group">
             <div>
@@ -71,8 +58,10 @@
 <table id="myTable" class="table">
     <thead>
         <tr>
+            <!--
             <th>Id</th>
             <th>Rola</th>
+            -->
             <th>Používateľské meno</th>
             <th>Meno</th>
             <th>Priezvisko</th>
@@ -94,15 +83,17 @@
     </thead>
     @if (ViewBag.Details == null)
     {
-        foreach (var item in Model.AllUsersPaged.OrderBy(i => i.id))
+        foreach (var item in Model.AllUsers.OrderBy(i => i.id))
         {
             if (item.role == 1) { userRole = "Zákazník"; }
             else if (item.role == 0) { userRole = "Admin"; }
             else if (item.role == 2) { userRole = "Newsletter subscriber"; }
 
 <tr>
+    <!--
     <td>@Html.DisplayFor(modelItem => item.id)</td>
     <td>@Html.Raw(userRole)</td>
+    -->
 
     <td><strong>@Html.DisplayFor(modelItem => item.username)</strong></td>
     @foreach (var meta in Model.AllUsersMetaModel.Where(u => u.userid == item.id))

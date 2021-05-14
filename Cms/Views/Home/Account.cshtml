@@ -162,13 +162,22 @@
                 <div class="col">
                     <div class="form-group">
                         <div class="col-md-14">
+                            @Html.DropDownListFor(model => model.OrdersModel.Country, (IEnumerable<SelectListItem>)ViewData["countries"], new { @class = "form-control", placeholder = "Štát*" })
+                            @Html.ValidationMessageFor(model => model.OrdersModel.Country, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <div class="col-md-14">
                             @Html.EditorFor(model => model.OrdersModel.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Telefón*" } })
                             @Html.ValidationMessageFor(model => model.OrdersModel.Phone, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col">
                     <div class="form-group">
                         <div class="col-md-14">
@@ -177,6 +186,9 @@
                         </div>
                     </div>
                 </div>
+
+            </div>
+            <div class="row">
                 <div class="col">
                     <div class="form-group">
                         <div class="col-md-14">
@@ -185,8 +197,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col">
                     <div class="form-group">
                         <div class="col-md-14">
@@ -195,6 +205,9 @@
                         </div>
                     </div>
                 </div>
+
+            </div>
+            <div class="row">
                 <div class="col">
                     <div class="form-group">
                         <div class="col-md-14">
@@ -203,8 +216,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col">
                     <div class="form-group">
                         <div class="col-md-14">
@@ -213,6 +224,11 @@
                         </div>
                     </div>
                 </div>
+
+            </div>
+
+
+            <div class="row">
                 <div class="col">
                     <div class="form-group">
                         <div style="text-align:right">
@@ -229,8 +245,9 @@
                     </div>
                 </div>
             </div>
-        }
-    </div>
 
-</div>
+                }
+            </div>
+
+        </div>
 

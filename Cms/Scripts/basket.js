@@ -74,6 +74,10 @@ function checkTransfer() {
             document.getElementById("pay1").style.display = "block";
     }
 
+    //vyplnime zhrnutie
+    var shipName = $('input[name="transfer"]:checked').parent().find(".shipName").text();
+    $(".transferCheck").text(shipName);
+
 }
 function checkPayment() {
     var pay = document.querySelector('input[name="payment"]:checked').value;
@@ -94,16 +98,22 @@ function checkPayment() {
         if (document.getElementById("transfer1") != null)
             document.getElementById("transfer1").style.display = "block";
     }
+
+    //vyplnime zhrnutie
+    var payName = $('input[name="payment"]:checked').parent().find(".payName").text();
+    $(".paymentCheck").text(payName);
 }
 
 function showShipping() {
     var cart = document.getElementById("cart");
     var shipping = document.getElementById("shipping");
     var address = document.getElementById("address");
+    var check = document.getElementById("check");
 
     cart.style.display = "none";
     shipping.style.display = "block";
     address.style.display = "none";
+    check.style.display = "none";
 
 }
 
@@ -115,9 +125,11 @@ function showAddress(userId) {
         var cart = document.getElementById("cart");
         var shipping = document.getElementById("shipping");
         var address = document.getElementById("address");
+        var check = document.getElementById("check");
         cart.style.display = "none";
         shipping.style.display = "none";
         address.style.display = "block";
+        check.style.display = "none";
 
         /*
         if (userId == null) {
@@ -148,13 +160,26 @@ function showAddress(userId) {
 
 }
 
+function showCheck() {
+    var cart = document.getElementById("cart");
+    var shipping = document.getElementById("shipping");
+    var address = document.getElementById("address");
+    var check = document.getElementById("check");
+    cart.style.display = "none";
+    shipping.style.display = "none";
+    address.style.display = "none";
+    check.style.display = "block";
+}
+
 function showCart() {
     var cart = document.getElementById("cart");
     var shipping = document.getElementById("shipping");
     var address = document.getElementById("address");
+    var check = document.getElementById("check");
     cart.style.display = "block";
     shipping.style.display = "none";
     address.style.display = "none";
+    check.style.display = "none";
 }
 
 function shippingAddr() {
@@ -175,6 +200,7 @@ function validateRadio(radios) {
 }
 
 function validateBasketForm() {
+
     var checkBox = document.getElementById("myCheck");
     var condition = document.getElementById("conditionbask");
 
@@ -213,6 +239,9 @@ function validateBasketForm() {
             country_ship != "" &&
             phone_ship != "") {
             if (condition.checked === true) {
+
+                showCheck();
+
                 return true;
             } else {
                 document.getElementById("conditioncheckbask").style.border = "1px solid #ff4545";
@@ -351,6 +380,9 @@ function validateBasketForm() {
     } else {
         if (name != "" && surname != "" && address != "" && city != "" && zip != "" && country != "" && phone != "" && email != "" && validateEmail(email) == true) {
             if (condition.checked == true) {
+
+                showCheck();
+
                 return true;
             } else {
                 document.getElementById("conditioncheckbask").style.border = "1px solid #ff4545";

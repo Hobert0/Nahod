@@ -17,7 +17,7 @@
     }
 </style>
 <div class="container-fluid w-75">
-    @using (Html.BeginForm("NewOrder", "Orders", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform", name = "", onsubmit = "return validateBasketForm()" }))
+    @using (Html.BeginForm("NewOrder", "Orders", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform", name = "" }))
     {
         @Html.AntiForgeryToken()
         <div class="form-horizontal">
@@ -445,7 +445,7 @@
                                     @if (item.transfer1_enbl && item.transfer1 != null)
                                     {
                                         <label class="cont" id="transfer1">
-                                            Kuriérska spoločnosť<strong style="float: right">
+                                            <span class="shipName">Kuriérska spoločnosť</span><strong style="float: right">
                                                 <script>document.write(transfer1);</script> €
                                             </strong>
                                             <input type="radio" name="transfer" value="transfer1" onclick="checkTransfer();shippPay();">
@@ -455,7 +455,7 @@
                                     @if (item.transfer2_enbl && item.transfer2 != null)
                                     {
                                         <label class="cont" id="transfer2">
-                                            Slovenská pošta<strong style="float: right">
+                                            <span class="shipName">Slovenská pošta</span><strong style="float: right">
                                                 <script>document.write(transfer2);</script> €
                                             </strong>
                                             <input type="radio" name="transfer" value="transfer2" onclick="checkTransfer();shippPay();">
@@ -465,7 +465,7 @@
                                     @if (item.transfer3_enbl && item.transfer3 != null)
                                     {
                                         <label class="cont" id="transfer3">
-                                            Osobný odber<strong style="float: right">
+                                            <span class="shipName">Osobný odber</span><strong style="float: right">
                                                 <script>document.write(transfer3);</script> €
                                             </strong>
                                             <input type="radio" name="transfer" value="transfer3" onclick="checkTransfer();shippPay();">
@@ -486,7 +486,7 @@
                                     @if (item.pay4_enbl && item.pay4 != null)
                                     {
                                         <label class="cont" id="pay4">
-                                            Dobierkou<strong style="float: right"> @item.pay4 €</strong>
+                                            <span class="payName">Dobierkou</span><strong style="float: right"> @item.pay4 €</strong>
                                             <input type="radio" name="payment" value="pay4" onclick="checkPayment();payMent();">
                                             <span class="checkmar"></span>
                                         </label>
@@ -495,7 +495,7 @@
                                     @if (item.pay2_enbl && item.pay2 != null)
                                     {
                                         <label class="cont" id="pay2">
-                                            Kartou<strong style="float: right"> @item.pay2 €</strong>
+                                            <span class="payName">Kartou</span><strong style="float: right"> @item.pay2 €</strong>
                                             <input type="radio" name="payment" value="pay2" onclick="checkPayment();payMent();">
                                             <span class="checkmar"></span>
                                         </label>
@@ -504,7 +504,7 @@
                                     @if (item.pay3_enbl && item.pay3 != null)
                                     {
                                         <label class="cont" id="pay3">
-                                            Bankovým prevodom<strong style="float: right">@item.pay3 €</strong>
+                                            <span class="payName">Bankovým prevodom</span><strong style="float: right">@item.pay3 €</strong>
                                             <input type="radio" name="payment" value="pay3" onclick="checkPayment();payMent();">
                                             <span class="checkmar"></span>
                                         </label>
@@ -513,7 +513,7 @@
                                     @if (item.pay1_enbl && item.pay1 != null)
                                     {
                                         <label class="cont" id="pay1">
-                                            V hotovosti pri osobnom odbere<strong style="float: right"> @item.pay1 €</strong>
+                                            <span class="payName">V hotovosti pri osobnom odbere</span><strong style="float: right"> @item.pay1 €</strong>
                                             <input type="radio" name="payment" value="pay1" onclick="checkPayment();payMent();">
                                             <span class="checkmar"></span>
                                         </label>
@@ -640,12 +640,12 @@
                             <div class="col">
                                 <div class="form-group">
                                     <div class="col-md-14">
-                                        @Html.EditorFor(model => model.OrdersModel.Country, new { htmlAttributes = new { @class = "form-control", placeholder = "Štát*" } })
+                                        @Html.DropDownListFor(model => model.OrdersModel.Country, (IEnumerable<SelectListItem>)ViewData["countries"], new { @class = "form-control", placeholder = "Štát*" })
                                         @Html.ValidationMessageFor(model => model.OrdersModel.Country, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                         <div class="row">
                             <div class="col">
@@ -664,7 +664,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                         <div class="row">
                             <div class="col">
@@ -755,7 +755,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <div class="row">
                                 <div class="col">
@@ -774,7 +774,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <div class="row">
                                 <div class="col">
@@ -846,15 +846,89 @@
                     @Html.EditorFor(model => model.OrdersModel.Finalprice, new { htmlAttributes = new { @class = "form-control", placeholder = "Finalnacena", id = "final3", style = "display:none;" } })
                     @Html.EditorFor(model => model.OrdersModel.UsedCoupon, new { htmlAttributes = new { @class = "form-control", id = "usecoupon", style = "display:none;" } })
                 </div>
+
+                <div class="form-group next-step-container" style="overflow:hidden;">
+                    <div style="width:50%;float:left;">
+                        <a class="btn btn-secondary my-4" onclick="showShipping()" style="color: #ffffff;">Späť</a>
+                    </div>
+                    <div style="width: 50%; float: right;text-align: right;">
+                        <a class="btn btn-danger my-4" style="color: #ffffff" onclick="validateBasketForm()">Pokračovať v objednávke</a>
+                    </div>
+                </div>
+            </div>
+            <div id="check" style="display: none;">
+                <div class="row basket py-0 py-sm-5">
+                    <div class="col old"><a onclick="showCart()" style="cursor: pointer;"><img src="~/Content/images/cart_white.svg" alt="Košík" style="width: 30px; margin-right: 10px;" />Košík</a></div>
+                    <div class="col old"><a onclick="showShipping()" style="cursor: pointer;"><img src="~/Content/images/car_white.svg" alt="Doprava a platba" style="width: 30px; margin-right: 10px;" />Doprava a platba</a></div>
+                    <div class="col old"><a onclick="showAddress()" style="cursor: pointer;"><img src="~/Content/images/mail_white.svg" alt="Adresa" style="width: 30px; margin-right: 10px;" />Adresa</a></div>
+                    <div class="col active"><img src="~/Content/images/Infobox_info_icon_white.svg" alt="Zhrnutie objednávky" style="width: 30px; margin-right: 10px;" />Zhrnutie objednávky</div>
+                </div>
+
+                <table class="table mt-2 mt-sm-0" style="font-size: 14px;" id="myTable2">
+                    @{
+                        foreach (var item in cart)
+                        {
+
+                            var thisProd = Model.ProductModel.Where(i => i.id == item.product.Value).SingleOrDefault();
+
+                            <tr>
+                                <td style="width: 70px"><img src="~/Uploads/@Html.DisplayFor(modelItem => thisProd.image)" style="width: 50px" /></td>
+                                <td><strong>@Html.Raw(thisProd.title)</strong></td>
+
+                                <td style="text-align: center;">
+                                    @if (item.variant != "")
+                                    {
+                                        @Html.Raw(item.variant) @Html.Raw(" ") @Html.Raw(item.variant2)
+                                    }
+                                </td>
+
+                                <td style="text-align: center;">
+                                    <div class="cart-item-amount">
+                                        <input type="number" value="@Html.Raw(item.quantity)" disabled>
+                                    </div>
+                                </td>
+
+                                @{
+                                    productprice = Convert.ToDecimal(item.price);
+                                    quantity = Convert.ToDecimal(item.quantity);
+                                }
+                                <td><strong style="font-size: 16px;">@productprice.ToString("n2") €</strong></td>
+                            </tr>
+                        }
+                    }
+                </table>
+
+                <div class="row" style="margin-top:40px;">
+                    <div class="col-12 col-sm-6 pt-3 pt-sm-0">
+                        <h3>Spôsob dopravy</h3>
+                        <hr />
+                        <div class="form-row">
+                            <div class="col-md-10">
+                                <p class="transferCheck"></p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-sm-6 py-3 py-sm-0">
+                        <h3>Spôsob platby</h3>
+                        <hr />
+                        <div class="form-row">
+                            <div class="col-md-10">
+                                <p class="paymentCheck"></p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
                 <div class="form-group next-step-container" style="overflow:hidden;">
                     <div style="width:50%; float: left;">
-                        <a class="btn btn-secondary my-4" onclick="showShipping()" style="color: #ffffff;">Späť</a>
+                        <a class="btn btn-secondary my-4" onclick="showAddress()" style="color: #ffffff;">Späť</a>
                     </div>
                     <div style="width: 50%; float: right; text-align: right">
                         <input type="submit" class="btn btn-danger my-4" value="Dokončiť objednávku s povinnosťou platby">
                     </div>
                 </div>
-
             </div>
         </div>
     }
@@ -902,5 +976,6 @@
     }
         $('.removeCart').click(function (data) {
         removeFromCart(data.target.id);
-    });
+        });
+
 </script>

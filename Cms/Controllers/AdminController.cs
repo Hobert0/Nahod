@@ -449,6 +449,7 @@ namespace Cms.Controllers
         {
             if (Session["username"] != null && Session["role"].ToString() == "0")
             {
+                /*
                 ViewBag.CurrentSort = sortOrder;
                 if (searchString != null)
                 {
@@ -466,12 +467,16 @@ namespace Cms.Controllers
                 UsersModel zamMod = new UsersModel();
                 var model = new MultipleIndexModel();
                 model.AllUsersPaged = db.users.Where(i => i.deleted == false).ToList().OrderBy(x => Guid.NewGuid()).ToPagedList(pageNumber, pageSize);
+                */
+
+                var model = new MultipleIndexModel();
+                model.AllUsers = db.users.Where(i => i.deleted == false).ToList();
                 model.AllUsersMetaModel = db.usersmeta.Where(i => i.deleted == false).ToList();
 
                 model.AllWishlistModel = db.wishlist.ToList();
 
 
-                ViewData["Rola"] = zamMod.SelectionRola();
+                //ViewData["Rola"] = zamMod.SelectionRola();
                 return View(model);
             }
             else
@@ -488,6 +493,8 @@ namespace Cms.Controllers
                 
                 var model = new MultipleIndexModel();
 
+                ViewData["countries"] = SelectionCountries();
+
                 return View(model);
             }
             else
@@ -501,9 +508,12 @@ namespace Cms.Controllers
         {
             if (Session["username"] != null && Session["role"].ToString() == "0")
             {
-                var user = db.users.Where(item => item.id == id).Join(db.usersmeta, a => a.id, b => b.userid, (a, b) => new UsersmetaModel { Id = b.id, Userid = b.userid, Name = b.name, Surname = b.surname, Address = b.address, City = b.city, Zip = b.zip, Country = b.country, Phone = b.phone, Email = b.email, Companyname = b.companyname, Ico = b.ico, Dic = b.dic, Icdph = b.icdph, News = b.news, Gdpr = b.gdpr }).SingleOrDefault();
+                var user = db.users.Where(item => item.id == id).Join(db.usersmeta, a => a.id, b => b.userid, (a, b) => new UsersmetaModel { Id = b.id, Userid = b.userid, Name = b.name, Surname = b.surname, Address = b.address, City = b.city, Zip = b.zip, Country = b.country, Phone = b.phone, Email = b.email, Companyname = b.companyname, Ico = b.ico, Dic = b.dic, Icdph = b.icdph, News = b.news, Gdpr = b.gdpr, Rating = b.rating }).SingleOrDefault();
                 MultipleIndexModel model = new MultipleIndexModel();
                 model.UsersmetaModel = user;
+
+                ViewData["countries"] = SelectionCountries();
+                ViewData["ratings"] = SelectionRatings();
 
                 return View(model);
             }
@@ -637,6 +647,7 @@ namespace Cms.Controllers
             u.ico = model.UsersmetaModel.Ico;
             u.dic = model.UsersmetaModel.Dic;
             u.icdph = model.UsersmetaModel.Icdph;
+            u.rating = model.UsersmetaModel.Rating;
 
             db.SaveChanges();
 
@@ -665,6 +676,28 @@ namespace Cms.Controllers
             return body;
         }
 
+        /*Countries*/
+        public List<SelectListItem> SelectionCountries()
+        {
+            List<SelectListItem> countries = new List<SelectListItem>();
+
+            countries.Add(new SelectListItem { Text = "Slovenská republika", Value = "Slovenská republika" });
+            countries.Add(new SelectListItem { Text = "Česká republika", Value = "Česká republika" });
+
+            return countries;
+        }
+
+        /*Ratings*/
+        public List<SelectListItem> SelectionRatings()
+        {
+            List<SelectListItem> countries = new List<SelectListItem>();
+
+            countries.Add(new SelectListItem { Text = "Bronzový", Value = "1" });
+            countries.Add(new SelectListItem { Text = "Strieborný", Value = "2" });
+            countries.Add(new SelectListItem { Text = "Zlatý", Value = "3" });
+
+            return countries;
+        }
 
     }
 }

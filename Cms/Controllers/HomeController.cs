@@ -46,6 +46,7 @@ namespace Cms.Controllers
             model.TypesModel = db.types.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.ToList();
 
+            ViewData["countries"] = new AdminController().SelectionCountries();
             ViewData["Homepage"] = "true";
             return View(model);
         }
@@ -83,6 +84,9 @@ namespace Cms.Controllers
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.ToList();
             ViewData["Homepage"] = "true";
+
+            ViewData["countries"] = new AdminController().SelectionCountries();
+
             return View(model);
         }
 
@@ -183,6 +187,8 @@ namespace Cms.Controllers
             ViewData["minPrice"] = prices.FirstOrDefault();
             ViewData["maxPrice"] = prices.LastOrDefault();
 
+            ViewData["countries"] = new AdminController().SelectionCountries();
+
             return View(model);
         }
 
@@ -245,6 +251,8 @@ namespace Cms.Controllers
             ViewData["minPrice"] = prices.FirstOrDefault();
             ViewData["maxPrice"] = prices.LastOrDefault();
 
+            ViewData["countries"] = new AdminController().SelectionCountries();
+
             return View(model);
         }
 
@@ -304,6 +312,8 @@ namespace Cms.Controllers
 
             ViewData["minPrice"] = prices.FirstOrDefault();
             ViewData["maxPrice"] = prices.LastOrDefault();
+
+            ViewData["countries"] = new AdminController().SelectionCountries();
 
             return View(model);
         }
@@ -380,6 +390,9 @@ namespace Cms.Controllers
             model.BlogModel = db.blog.Where(i => i.slug == slug).ToList();
             model.PagesModel = db.pages.ToList();
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
+
+            ViewData["countries"] = new AdminController().SelectionCountries();
+
             return View(model);
         }
 
@@ -575,6 +588,7 @@ namespace Cms.Controllers
                 model.AllUsersMetaModel = null;
             }
 
+            ViewData["countries"] = new AdminController().SelectionCountries();
 
             return View(model);
         }
@@ -643,6 +657,7 @@ namespace Cms.Controllers
                         Address = user.address,
                         City = user.city,
                         Zip = user.zip,
+                        Country = user.country,
                         Phone = user.phone,
                         Email = user.email,
                         Companyname = user.companyname,
@@ -652,6 +667,7 @@ namespace Cms.Controllers
                     };
                 }
 
+                ViewData["countries"] = new AdminController().SelectionCountries();
                 model.AllUsersMetaModel = db.usersmeta.Where(i => i.userid == usID).ToList();
             }
             return View(model);
@@ -692,6 +708,7 @@ namespace Cms.Controllers
                 return View(model);
             }
 
+            ViewData["countries"] = new AdminController().SelectionCountries();
             ViewData["Detaily"] = data;
             return View(model);
         }
@@ -755,6 +772,7 @@ namespace Cms.Controllers
                 o.address = model.OrdersModel.Address;
                 o.city = model.OrdersModel.City;
                 o.zip = model.OrdersModel.Zip;
+                o.country = model.OrdersModel.Country;
                 o.phone = model.OrdersModel.Phone;
                 o.email = model.OrdersModel.Email;
                 o.companyname = model.OrdersModel.Companyname;

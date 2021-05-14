@@ -329,7 +329,11 @@ namespace Cms.Controllers
 
                 if (sum >= 1000)
                 {
-                    um.rating = 3;
+                    //zmenime rating len ak je nizsi, kvoli manualnej editacie ratingov pre znamych
+                    if (um.rating < 3) 
+                    {
+                        um.rating = 3;
+                    }
 
                     //email
                     string body_rating = this.createRatingEmailBody(orderNumber, "15");
@@ -337,7 +341,11 @@ namespace Cms.Controllers
                 }
                 else if (sum >= 500)
                 {
-                    um.rating = 2;
+                    //zmenime rating len ak je nizsi, kvoli manualnej editacie ratingov pre znamych
+                    if (um.rating < 2)
+                    {
+                        um.rating = 2;
+                    }
 
                     //email
                     string body_rating = this.createRatingEmailBody(orderNumber, "10");
@@ -369,6 +377,8 @@ namespace Cms.Controllers
             model.BrandsModel = db.brands.ToList();
             model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
             model.OrderDataModel = db.orders.Where(i => i.ordernumber == orderNumber).ToList();
+
+            ViewData["countries"] = new AdminController().SelectionCountries();
 
             return View(model);
         }

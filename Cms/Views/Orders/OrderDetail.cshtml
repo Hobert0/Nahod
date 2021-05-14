@@ -28,6 +28,7 @@
     var addrship = ord.address_shipp;
     var zipship = ord.zip_shipp;
     var cityship = ord.city_shipp;
+    var countryship = ord.country_shipp;
     var companyship = ord.companyname_shipp;
     var phoneship = ord.phone_shipp;
     if (nameshipp == "")
@@ -37,6 +38,7 @@
         addrship = ord.address;
         zipship = ord.zip;
         cityship = ord.city;
+        countryship = ord.country;
         companyship = ord.companyname;
         phoneship = ord.phone;
     }
@@ -87,7 +89,7 @@
         <div class="col">
             <h3>Fakturačné údaje</h3>
             <strong>Meno a priezvisko:</strong> @ord.name @ord.surname<br />
-            <strong>Adresa:</strong> @ord.address, @ord.zip @ord.city<br />
+            <strong>Adresa:</strong> @ord.address, @ord.zip @ord.city @ord.country<br />
             <strong>E-mail:</strong> @ord.email<br />
             <strong>Telefón:</strong> @ord.phone<br /><br />
             <strong>Názov spoločnosti:</strong> @ord.companyname<br />
@@ -99,7 +101,7 @@
         <div class="col">
             <h3>Dodacie údaje</h3>
             <strong>Meno a priezvisko:</strong> @nameshipp @surnameshipp<br />
-            <strong>Adresa:</strong> @addrship, @zipship @cityship<br />
+            <strong>Adresa:</strong> @addrship, @zipship @cityship @countryship<br />
             <strong>Telefón:</strong> @phoneship<br />
             <strong>Názov spoločnosti:</strong> @companyship<br /><br />
         </div>

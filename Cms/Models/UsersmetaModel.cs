@@ -23,6 +23,7 @@ namespace Cms.Models
         public string Icdph { get; set; }
         public bool News { get; set; }
         public bool Gdpr { get; set; }
+        public int Rating { get; set; }
         public string ReturnUrl { get; set; }
     }
 }
