@@ -658,7 +658,7 @@ namespace Cms.Controllers
                 body = rea.ReadToEnd();
             }
 
-            var str = "Ďakujeme " + name + " za registráciu na Nahoď.sk.";
+            var str = "Ďakujeme " + name + " za registráciu na Nahoď.sk. Automaticky od nás získavate zľavu 5% na všetok nezľavnený tovar.";
 
             body = body.Replace("{Text}", str);
 
