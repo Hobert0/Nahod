@@ -85,14 +85,14 @@
                 </nav>
 
                 <div class="row product-detail">
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-6 text-center">
 
                         <div class="show-mobile">
                             <h2 class="pb-2">@prod.title</h2><br />
                         </div>
-
+                        
                         <a href="~/Uploads/@prod.image" data-toggle="lightbox" data-gallery="example-gallery">
-                            <img src="~/Uploads/@prod.image" alt="@prod.title" style="width: 90%;" class="galleryimg" />
+                            <img src="~/Uploads/@prod.image" alt="@prod.title" class="galleryimg" />
                         </a>
                         @if (Directory.Exists(Server.MapPath("~/Uploads/" + prod.gallery)))
                         {

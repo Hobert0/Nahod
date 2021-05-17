@@ -780,7 +780,7 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <div class="col-md-14">
-                                            @Html.EditorFor(model => model.OrdersModel.CountryShipp, new { htmlAttributes = new { @class = "form-control", placeholder = "Štát" } })
+                                            @Html.DropDownListFor(model => model.OrdersModel.CountryShipp, (IEnumerable<SelectListItem>)ViewData["countries"], new { @class = "form-control", placeholder = "Štát*" })
                                             @Html.ValidationMessageFor(model => model.OrdersModel.CountryShipp, "", new { @class = "text-danger" })
                                         </div>
                                     </div>

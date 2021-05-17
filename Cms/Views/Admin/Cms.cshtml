@@ -114,7 +114,7 @@ function parseDate(input) {
     </thead>
     @if (ViewBag.Details == null)
     {
-        foreach (var item in modelItems.OrderDataModel.OrderByDescending(i => i.id).Take(8))
+        foreach (var item in modelItems.OrderDataModel.OrderByDescending(i => i.id).Take(30))
         {
             var trans = "";
             var status = "";

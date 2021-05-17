@@ -277,6 +277,12 @@
 
         /**BLOG-END*/
 
+        /**PRODUCT**/
+        #product iframe{
+            width:100%;
+        }
+        /***PRODUCT-END**/
+
     }
 
     /* Small devices (portrait tablets and large phones, 600px and up) */

@@ -3,29 +3,35 @@
     <div class="row header-bottom navbar link-container">
         @foreach (var cat in Model.CategoriesModel.Where(i => i.deleted == false && i.maincat == "Žiadna" && i.topcat == "Žiadna" && i.topcat2 == "Žiadna"))
         {
-            <div class="dropdown">
-                <a class="dropbtn" href="/kat/@cat.slug">@cat.name<i class="fa fa-caret-down"></i></a>
-                <div class="dropdown-content">
-                    <div>
-                        @foreach (var category in Model.CategoriesModel.Where(x => x.maincat == cat.name && x.deleted == false))
-                        {
-                            <div class="column">
-                                <a href="@Url.Action("Category", "Home", new {catslug = category.slug})">
-                                    <img src="/Uploads/@category.image" alt="@category.name"/>
-                                    <h3>@category.name</h3>
-                                </a>
-                                <div class="smallmenu">
-                                    @foreach (var subcat2 in Model.CategoriesModel.Where(o => o.topcat2 == "Žiadna" && o.topcat == category.name))
-                                    {
-                                        <a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(cat.slug), subslug = @Html.Raw(category.slug), subslug2 = @Html.Raw(subcat2.slug)})" class="subs">@Html.Raw(subcat2.name)</a>
-                                    }
+            if (Model.CategoriesModel.Where(x => x.maincat == cat.name && x.deleted == false).Count() > 0)
+            {
+                <div class="dropdown">
+                    <a class="dropbtn" href="/kat/@cat.slug">@cat.name<i class="fa fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <div>
+                            @foreach (var category in Model.CategoriesModel.Where(x => x.maincat == cat.name && x.deleted == false))
+                            {
+                                <div class="column">
+                                    <a href="@Url.Action("Category", "Home", new {subslug = category.slug, catslug = @Html.Raw(cat.slug)})">
+                                        <img src="/Uploads/@category.image" alt="@category.name" />
+                                        <h3>@category.name</h3>
+                                    </a>
+                                    <div class="smallmenu">
+                                        @foreach (var subcat2 in Model.CategoriesModel.Where(o => o.topcat2 == "Žiadna" && o.topcat == category.name))
+                                        {
+                                            <a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(cat.slug), subslug = @Html.Raw(category.slug), subslug2 = @Html.Raw(subcat2.slug)})" class="subs">@Html.Raw(subcat2.name)</a>
+                                        }
+                                    </div>
                                 </div>
-                            </div>
-                        }
-
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <a class="dropbtn" href="/kat/@cat.slug">@cat.name</a>
+            }
         }
         <div class="dropdown">
             <a class="dropbtn">značky<i class="fa fa-caret-down"></i></a>
@@ -33,7 +39,7 @@
                 <div class="row">
                     @foreach (var brand in Model.BrandsModel.OrderBy(o => o.priority))
                     {
-                        <div class="col-2" >
+                        <div class="col-2">
                             <a href="/znacka/@Html.Raw(brand.slug)">
                                 @brand.name
                             </a>
