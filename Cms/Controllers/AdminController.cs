@@ -69,7 +69,8 @@ namespace Cms.Controllers
                     CityShipp = a.city_shipp,
                     ZipShipp = a.zip_shipp,
                     Comment = a.comment,
-                    Note = a.note
+                    Note = a.note,
+                    UserRating = a.user_rating
                 }).ToList();
 
 

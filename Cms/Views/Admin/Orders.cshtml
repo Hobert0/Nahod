@@ -18,12 +18,11 @@
             <th>Platba</th>
             <th>Doprava</th>
             <th>Cena spolu</th>
-            <th>Stav</th>
             <th>Poznámka Zákazník</th>
             <th>Poznámka Admin</th>
+            <th>Stav</th>
             <th style="text-align: center; width: 30vw;">Detail | Vybaviť | Stornovať</th>
             <!--<th>PDF faktúra</th>-->
-            <th>Typ zákazníka</th>
             <th>Kategória zákazníka</th>
         </tr>
     </thead>
@@ -88,6 +87,20 @@
                 status = "Prijatá";
             }
 
+            var userCategory = "";
+            if (item.UserRating == 1)
+            {
+                userCategory = "Bronzový";
+            }
+            else if (item.UserRating == 2)
+            {
+                userCategory = "Strieborný";
+            }
+            else if (item.UserRating == 3)
+            {
+                userCategory = "Zlatý";
+            }
+
 <tr style="@trStyle">
     @{if (item.Status == 2)
         {
@@ -115,9 +128,9 @@
     <td style="@stornostyle">@payment</td>
     <td style="@stornostyle">@trans</td>
     <td style="background-color: #e4ffe3; text-align: center;@stornostyle"><strong>@Html.DisplayFor(modelItem => item.Finalprice) €</strong></td>
-    <td style="@stornostyle">@status</td>
     <td style="@stornostyle">@Html.DisplayFor(modelItem => item.Comment)</td>
     <td class="editable" style="@stornostyle">@Html.DisplayFor(modelItem => item.Note)</td>
+    <td style="@stornostyle">@status</td>
     <!--
     <td style="@stornostyle">
         @using (Html.BeginForm("UpdateOrderNote", "Orders", FormMethod.Post, new { id = "NoteForm" }))
@@ -140,8 +153,7 @@
             {<a href="@Url.Action("PdfStorno", "Orders", new { orderNumber = item.Ordernumber })"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF dobropis" title="PDF dobropis" /></a>}}
     </td>
     -->
-    <td style="@stornostyle"></td>
-    <td style="@stornostyle"></td>
+    <td style="@stornostyle">@userCategory</td>
 
 
 </tr>

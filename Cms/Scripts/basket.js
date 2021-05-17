@@ -40,6 +40,11 @@ function payMent() {
         document.getElementById("final2").innerHTML = (Number(finalprice) + eval(pay)).toFixed(2);
         document.getElementById("final3").value = (Number(finalprice) + eval(pay)).toFixed(2);
 
+        document.getElementById("pricedph21").innerHTML =
+            (Math.round(Number(finalprice) + eval(pay)) * 100 / 120).toFixed(2);
+        document.getElementById("final21").innerHTML = (Number(finalprice) + eval(pay)).toFixed(2);
+        document.getElementById("final31").value = (Number(finalprice) + eval(pay)).toFixed(2);
+
     } else {
         var ship = document.querySelector('input[name="transfer"]:checked').value;
         if (isNaN(eval(ship))) { ship = 0; } else { ship = eval(ship); }
@@ -50,6 +55,11 @@ function payMent() {
             (Math.round(Number(finalprice) + eval(ship) + eval(pay)) * 100 / 120).toFixed(2);
         document.getElementById("final2").innerHTML = (Number(finalprice) + eval(ship) + eval(pay)).toFixed(2);
         document.getElementById("final3").value = (Number(finalprice) + eval(ship) + eval(pay)).toFixed(2);
+
+        document.getElementById("pricedph21").innerHTML =
+            (Math.round(Number(finalprice) + eval(ship) + eval(pay)) * 100 / 120).toFixed(2);
+        document.getElementById("final21").innerHTML = (Number(finalprice) + eval(ship) + eval(pay)).toFixed(2);
+        document.getElementById("final31").value = (Number(finalprice) + eval(ship) + eval(pay)).toFixed(2);
 
     }
 }
@@ -76,7 +86,10 @@ function checkTransfer() {
 
     //vyplnime zhrnutie
     var shipName = $('input[name="transfer"]:checked').parent().find(".shipName").text();
-    $(".transferCheck").text(shipName);
+    $(".transferCheckText").text(shipName);
+
+    var shipPrice = $('input[name="transfer"]:checked').parent().find(".shipPrice").text().split(';')[1];
+    $(".transferCheckPrice").text(shipPrice);
 
 }
 function checkPayment() {
@@ -101,7 +114,10 @@ function checkPayment() {
 
     //vyplnime zhrnutie
     var payName = $('input[name="payment"]:checked').parent().find(".payName").text();
-    $(".paymentCheck").text(payName);
+    $(".paymentCheckText").text(payName);
+
+    var payPrice = $('input[name="payment"]:checked').parent().find(".payPrice").text();
+    $(".paymentCheckPrice").text(payPrice);
 }
 
 function showShipping() {
@@ -238,6 +254,73 @@ function validateBasketForm() {
             zip_ship != "" &&
             country_ship != "" &&
             phone_ship != "") {
+
+            //doplnime udaje do check sekcie
+            $(".checkName .value").text(name);
+            $(".checkSurname .value").text(surname);
+            $(".checkAddress .value").text(address);
+            $(".checkCity .value").text(city);
+            $(".checkZip .value").text(zip);
+            $(".checkCountry .value").text(country);
+            $(".checkPhone .value").text(phone);
+            $(".checkEmail .value").text(email);
+
+            var companyname = document.getElementsByName("OrdersModel.Companyname")[0].value;
+            if (companyname != "") {
+                $(".checkCompanyname .value").text(companyname);
+            }
+            else {
+                $(".checkCompanyname .value").text("");
+            }
+            var ico = document.getElementsByName("OrdersModel.Ico")[0].value;
+            if (ico != "") {
+                $(".checkIco .value").text(ico);
+            }
+            else {
+                $(".checkIco .value").text("");
+            }
+            var dic = document.getElementsByName("OrdersModel.Dic")[0].value;
+            if (dic != "") {
+                $(".checkDic .value").text(dic);
+            }
+            else {
+                $(".checkDic .value").text("");
+            }
+            var icdph = document.getElementsByName("OrdersModel.Icdph")[0].value;
+            if (icdph != "") {
+                $(".checkIcdph .value").text(icdph);
+            }
+            else {
+                $(".checkIcdph .value").text("");
+            }
+            var comment = document.getElementsByName("OrdersModel.Comment")[0].value;
+            if (comment != "") {
+                $(".checkComment .value").text(comment);
+            } else {
+                $(".checkComment .value").text("");
+            }
+
+            
+
+            $(".checkNameShipp .value").text(name_ship);
+            $(".checkSurnameShipp .value").text(surname_ship);
+            
+            $(".checkAddressShip .value").text(address_ship);
+            $(".checkCityShipp .value").text(city_ship);
+            $(".checkZipShipp .value").text(zip_ship);
+            $(".checkCountryShipp .value").text(country_ship);
+            $(".checkPhoneShipp .value").text(phone_ship);
+
+            var companynameShipp = document.getElementsByName("OrdersModel.CompanynameShipp")[0].value;
+            if (companynameShipp != "") {
+                $(".checkCompanynameShipp .value").text(companynameShipp);
+            }
+            else {
+                $(".checkCompanynameShipp .value").text("");
+            }
+
+            $("#checkShippingAdr").css("display", "block");
+
             if (condition.checked === true) {
 
                 showCheck();
@@ -379,6 +462,54 @@ function validateBasketForm() {
         }
     } else {
         if (name != "" && surname != "" && address != "" && city != "" && zip != "" && country != "" && phone != "" && email != "" && validateEmail(email) == true) {
+
+            //doplnime udaje do check sekcie
+            $(".checkName .value").text(name);
+            $(".checkSurname .value").text(surname);
+            $(".checkAddress .value").text(address);
+            $(".checkCity .value").text(city);
+            $(".checkZip .value").text(zip);
+            $(".checkCountry .value").text(country);
+            $(".checkPhone .value").text(phone);
+            $(".checkEmail .value").text(email);
+
+            var companyname = document.getElementsByName("OrdersModel.Companyname")[0].value;
+            if (companyname != "") {
+                $(".checkCompanyname .value").text(companyname);
+            }
+            else {
+                $(".checkCompanyname .value").text("");
+            }
+            var ico = document.getElementsByName("OrdersModel.Ico")[0].value;
+            if (ico != "") {
+                $(".checkIco .value").text(ico);
+            }
+            else {
+                $(".checkIco .value").text("");
+            }
+            var dic = document.getElementsByName("OrdersModel.Dic")[0].value;
+            if (dic != "") {
+                $(".checkDic .value").text(dic);
+            }
+            else {
+                $(".checkDic .value").text("");
+            }
+            var icdph = document.getElementsByName("OrdersModel.Icdph")[0].value;
+            if (icdph != "") {
+                $(".checkIcdph .value").text(icdph);
+            }
+            else {
+                $(".checkIcdph .value").text("");
+            }
+            var comment = document.getElementsByName("OrdersModel.Comment")[0].value;
+            if (comment != "") {
+                $(".checkComment .value").text(comment);
+            } else {
+                $(".checkComment .value").text("");
+            }
+
+            $("#checkShippingAdr").css("display", "none");
+
             if (condition.checked == true) {
 
                 showCheck();

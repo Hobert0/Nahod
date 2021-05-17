@@ -104,12 +104,11 @@ function parseDate(input) {
             <th>Platba</th>
             <th>Doprava</th>
             <th>Cena spolu</th>
-            <th>Stav</th>
             <th>Poznámka Zákazník</th>
             <th>Poznámka Admin</th>
+            <th>Stav</th>
             <th style="text-align: center; width: 30vw;">Detail | Vybaviť | Stornovať</th>
             <!--<th>PDF faktúra</th>-->
-            <th>Typ zákazníka</th>
             <th>Kategória zákazníka</th>
         </tr>
     </thead>
@@ -174,6 +173,20 @@ function parseDate(input) {
                 status = "Prijatá";
             }
 
+            var userCategory = "";
+            if (item.user_rating == 1)
+            {
+                userCategory = "Bronzový";
+            }
+            else if (item.user_rating == 2)
+            {
+                userCategory = "Strieborný";
+            }
+            else if (item.user_rating == 3)
+            {
+                userCategory = "Zlatý";
+            }
+
             <tr style="@trStyle">
                 @{if (item.status == 2)
                     {
@@ -201,9 +214,10 @@ function parseDate(input) {
                 <td style="@stornostyle">@payment</td>
                 <td style="@stornostyle">@trans</td>
                 <td style="background-color: #e4ffe3; text-align: center;@stornostyle"><strong>@Html.DisplayFor(modelItem => item.finalprice) €</strong></td>
-                <td style="@stornostyle">@status</td>
+
                 <td style="@stornostyle">@Html.DisplayFor(modelItem => item.comment)</td>
                 <td class="editable" style="@stornostyle">@Html.DisplayFor(modelItem => item.note)</td>
+                <td style="@stornostyle">@status</td>
                 <!--
                 <td style="@stornostyle">
                     @using (Html.BeginForm("UpdateOrderNote", "Orders", FormMethod.Post, new { id = "NoteForm" }))
@@ -226,8 +240,7 @@ function parseDate(input) {
                         {<a href="@Url.Action("PdfStorno", "Orders", new { orderNumber = item.ordernumber })"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF dobropis" title="PDF dobropis" /></a>}}
                 </td>
                 -->
-                <td style="@stornostyle"></td>
-                <td style="@stornostyle"></td>
+                <td style="@stornostyle">@userCategory</td>
 
 
             </tr>
@@ -361,7 +374,7 @@ function parseDate(input) {
 
 <script>
     $(document).ready(function () {
-        
+
 
         //editacia poznamky od admina
         $(document).on("dblclick", ".editable", function () {

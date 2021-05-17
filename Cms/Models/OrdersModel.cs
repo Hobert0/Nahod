@@ -37,6 +37,7 @@ namespace Cms.Models
         public string PhoneShipp { get; set; }
         public string Comment { get; set; }
         public string Note { get; set; }
-        public string UsedCoupon{ get; set; }
+        public string UsedCoupon { get; set; }
+        public int UserRating { get; set; }
     }
 }

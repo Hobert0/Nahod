@@ -335,7 +335,6 @@ namespace Cms.Controllers
                         um.rating = 3;
                     }
 
-                    //email
                     string body_rating = this.createRatingEmailBody(orderNumber, "15");
                     this.SendHtmlFormattedEmail("Vyššia zľavová skupina!", body_rating, o.email, "rating", orderNumber);
                 }
@@ -347,15 +346,16 @@ namespace Cms.Controllers
                         um.rating = 2;
                     }
 
-                    //email
                     string body_rating = this.createRatingEmailBody(orderNumber, "10");
                     this.SendHtmlFormattedEmail("Vyššia zľavová skupina!", body_rating, o.email, "rating", orderNumber);
                 }
 
                 um.sum = sum;
+                o.user_rating = um.rating;
             }
 
             o.status = 1;
+           
             db.SaveChanges();
 
             string body_finished = this.createEmailBody(orderNumber, "finished");
