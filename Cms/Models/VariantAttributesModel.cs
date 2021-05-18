@@ -11,5 +11,6 @@ namespace Cms.Models
         public string AttrName { get; set; }
         public int ProdId { get; set; }
         public string AttrValue { get; set; }
+        public string Stock { get; set; }
     }
 }

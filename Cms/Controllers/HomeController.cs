@@ -35,7 +35,7 @@ namespace Cms.Controllers
                 model.AllUsersMetaModel = null;
             }
 
-            model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false && o.active == true).ToList();
             model.VariantModel = db.variants.Where(o => o.deleted == false).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
@@ -75,7 +75,7 @@ namespace Cms.Controllers
         public ActionResult Blog()
         {
             var model = new MultipleIndexModel();
-            model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false && o.active == true).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
@@ -153,7 +153,7 @@ namespace Cms.Controllers
             }
 
             var model = new MultipleIndexModel();
-            model.ProductModel = db.products.Where(o => o.deleted == false && (o.category.Contains("[" + id.ToString() + ",") || o.category.Contains("," + id.ToString() + ",") || o.category.Contains("," + id.ToString() + "]"))).ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false && o.active == true && (o.category.Contains("[" + id.ToString() + ",") || o.category.Contains("," + id.ToString() + ",") || o.category.Contains("," + id.ToString() + "]"))).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
@@ -197,7 +197,7 @@ namespace Cms.Controllers
         {
 
             var model = new MultipleIndexModel();
-            model.ProductModel = db.products.Where(i => i.custom3 == brand).ToList();
+            model.ProductModel = db.products.Where(i => i.custom3 == brand && i.deleted == false && i.active == true).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
@@ -212,19 +212,19 @@ namespace Cms.Controllers
             if (catslug != null && subslug == null)
             {
                 var catId = db.categories.Where(i => i.slug == catslug).First().id;
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.custom3 == brndID.ToString() && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]"))).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && i.custom3 == brndID.ToString() && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]"))).ToList();
             }
 
             //3.level .. vsetky kategorie produktov ktore su v danom type a maju subkategoriu
             else if (catslug != null && subslug != null)
             {
                 var catId = db.categories.Where(i => i.slug == subslug).First().id;
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.custom3 == brndID.ToString() && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]"))).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && i.custom3 == brndID.ToString() && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]"))).ToList();
             }
             //1.level .. vsetky unikatne kategorie danych produktov v zaradeni
             else
             {
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.custom3 == brndID.ToString()).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && i.custom3 == brndID.ToString()).ToList();
             }
 
             ViewData["Category"] = brnd;
@@ -275,18 +275,18 @@ namespace Cms.Controllers
             if (catslug != null && subslug == null)
             {
                 var catId = db.categories.Where(i => i.slug == catslug).First().id;
-                model.ProductModel = db.products.Where(i => i.deleted == false && (i.type.Contains("[" + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + "]")) && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]"))).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && (i.type.Contains("[" + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + "]")) && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]"))).ToList();
             }
 
             //3.level .. vsetky kategorie produktov ktore su v danom type a maju subkategoriu
             else if (catslug != null && subslug != null) {
                 var catId = db.categories.Where(i => i.slug == subslug).First().id;
-                model.ProductModel = db.products.Where(i => i.deleted == false && (i.type.Contains("[" + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + "]")) && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]"))).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && (i.type.Contains("[" + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + "]")) && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]"))).ToList();
             }
             //1.level .. vsetky unikatne kategorie danych produktov v zaradeni
             else
             {
-                model.ProductModel = db.products.Where(i => i.deleted == false && (i.type.Contains("[" + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + "]"))).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && (i.type.Contains("[" + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + "]"))).ToList();
             }
 
             ViewData["Category"] = type;
@@ -334,7 +334,7 @@ namespace Cms.Controllers
             }
 
             model.SlideshowModel = db.slideshow.Where(o => o.page == slug).ToList();
-            model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false && o.active == true).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
             model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
@@ -383,7 +383,7 @@ namespace Cms.Controllers
             }
 
             model.SlideshowModel = db.slideshow.Where(o => o.page == slug).ToList();
-            model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false && o.active == true).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
             model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
@@ -421,7 +421,7 @@ namespace Cms.Controllers
             {
                 var catId = cat.id.ToString();
 
-                var filteredProds = db.products.Where(i => i.deleted == false && i.heureka == true && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]"))).ToList();
+                var filteredProds = db.products.Where(i => i.deleted == false && i.active == true && i.heureka == true && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]"))).ToList();
                 finalProds.AddRange(filteredProds);
             }
 
@@ -545,7 +545,7 @@ namespace Cms.Controllers
         {
             var model = new MultipleIndexModel();
             model.EsettingsModel = db.e_settings.ToList();
-            model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false && o.active == true).ToList();
             model.VariantModel = db.variants.ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
@@ -598,7 +598,7 @@ namespace Cms.Controllers
         {
             var model = new MultipleIndexModel();
             model.EsettingsModel = db.e_settings.ToList();
-            model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false && o.active == true).ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
             model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
@@ -636,7 +636,7 @@ namespace Cms.Controllers
         {
             var model = new MultipleIndexModel();
             model.EsettingsModel = db.e_settings.ToList();
-            model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false && o.active == true).ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
             model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
@@ -688,7 +688,7 @@ namespace Cms.Controllers
             }
 
             model.EsettingsModel = db.e_settings.ToList();
-            model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false && o.active == true).ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
             model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
@@ -743,7 +743,7 @@ namespace Cms.Controllers
 
 
             var model = new MultipleIndexModel();
-            model.ProductModel = db.products.Where(o => o.deleted == false).ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false && o.active == true).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();

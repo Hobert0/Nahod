@@ -42,6 +42,7 @@ namespace Cms.Models
         public bool heureka { get; set; }
         public bool heurekadarcek { get; set; }
         public string heurekadarcektext { get; set; }
+        public bool active { get; set; }
         public bool deleted { get; set; }
     }
 }

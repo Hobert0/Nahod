@@ -90,7 +90,7 @@
                         <div class="show-mobile">
                             <h2 class="pb-2">@prod.title</h2><br />
                         </div>
-                        
+
                         <a href="~/Uploads/@prod.image" data-toggle="lightbox" data-gallery="example-gallery">
                             <img src="~/Uploads/@prod.image" alt="@prod.title" class="galleryimg" />
                         </a>
@@ -276,9 +276,9 @@
                                     if (Session["username"] == null && prod.discountprice == null)
                                     {
                                         <!--<p style="font-size: 12px; text-align: right;"><a href="#" class="register-modal"><u>Zaregistrujte sa</u></a> a získajte zľavu ďalších 5%</p>-->
-                                        
+
                                         var priceAfterReg = prod.price * (decimal)0.95;
-                                        
+
                                         <p style="font-size: 12px; text-align: right;" id="afterRegInfo">Cena po <a href="#" class="register-modal"><u>registrácii</u></a>: <span>@priceAfterReg.ToString("N2")</span> € (-5%)</p>
                                     }
 
@@ -372,19 +372,27 @@
                                                     }
                                                 }
 
-                                                <p style="color: #c7c7c7; font-size: 12px; padding: 10px;">Množstvo</p>
-                                                <div class="cart-item-amount">
-                                                    <button type="button" class="inc button">−</button>
-                                                    <input type="number" name="amount[1050506]" value="1" min="1" max="30000" class="" id="quantity">
-                                                    <button type="button" class="dec button">+</button>
-                                                </div>
-
+                                                @{ if (prod.active == true)
+                                                    {
+                                                        <p style="color: #c7c7c7; font-size: 12px; padding: 10px;">Množstvo</p>
+                                                        <div class="cart-item-amount">
+                                                            <button type="button" class="inc button">−</button>
+                                                            <input type="number" name="amount[1050506]" value="1" min="1" max="30000" class="" id="quantity">
+                                                            <button type="button" class="dec button">+</button>
+                                                        </div>
+                                                    }
+                                                }
 
                                             </div>
-                                            <div class="add-to-cart col-lg-8">
-                                                <button id="addproductbtn" isvariableproduct="@isVariable.ToString()" class="btn btn-color addtocart"><img src="/Content/images/cart_white.svg" style="width: 20px;" alt="search">PRIDAŤ DO KOŠÍKA</button>
 
-                                            </div>
+                                            @{ if (prod.active == true)
+                                                {
+                                                    <div class="add-to-cart col-lg-8">
+                                                        <button id="addproductbtn" isvariableproduct="@isVariable.ToString()" class="btn btn-color addtocart"><img src="/Content/images/cart_white.svg" style="width: 20px;" alt="search">PRIDAŤ DO KOŠÍKA</button>
+
+                                                    </div>
+                                                }
+                                            }
 
                                             @*
                                                 <div class="col-lg-4 col-sm-6 col-12 product-variation">

@@ -128,7 +128,7 @@ namespace Cms.Controllers
                 MultipleIndexModel model = new MultipleIndexModel();
                 model.CategoriesModel = db.categories.ToList();
                 model.ProductModel = db.products.Where(x => x.deleted == false).OrderByDescending(a => a.id).ToList();
-                model.VariantAttributesModel = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a,b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value }).OrderByDescending(a => a.ProdId).ThenBy(a => a.AttrName).ToList();
+                model.VariantAttributesModel = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a,b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value, Stock = a.stock }).OrderByDescending(a => a.ProdId).ThenBy(a => a.AttrName).ToList();
 
                 ViewData["kategoria"] = SelectionKategoria();
                 ViewData["znacka"] = SelectionBrand();

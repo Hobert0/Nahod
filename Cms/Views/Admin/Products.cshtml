@@ -112,6 +112,7 @@
                             <input type="hidden" name="priceFrom" value="">
                             <input type="hidden" name="priceTo" value="">
                             <input type="hidden" name="isDiscount" value="">
+                            <input type="hidden" name="isInactive" value="">
                             <input type="hidden" name="checkedProds" value="">
 
                             <input type="submit" value="Upraviť cenu zobrazených a označených produktov" id="btnSubmit" class="btn btn-success" disabled="true" />
@@ -189,10 +190,13 @@
         <div class="mt-1" style="width: 180px;">
         </div>
         <div class="row">
-            <div class="col-md-7 mt-4">
+            <div class="col-md-4 mt-4">
                 @Html.CheckBox("filterByDiscount") &nbsp;Zobraziť len zľavnené produkty
             </div>
-            <div class="form-group col-md-5 mt-3">
+            <div class="col-md-4 mt-4">
+                @Html.CheckBox("filterByInactive") &nbsp;Zobraziť len neaktívne produkty
+            </div>
+            <div class="form-group col-md-4 mt-3">
                 <div style="text-align:right">
                     <input type="button" value="Filtrovať" id="filterButton" class="btn btn-success" />
                 </div>
@@ -216,6 +220,7 @@
             <th>Varianty</th>
             <th>Heureka</th>
             <th>Množstvo</th>
+            <th>Aktívne</th>
             <th style="text-align: center; width:175px;">Akcie</th>
         </tr>
     </thead>
@@ -282,11 +287,18 @@
                         @{
                             //variant.number obsahuje nazov vlastnosti
                             string variantsStr = "";
+                            int varsStock = 0;
                             if (variantsAttributes.Where(o => o.ProdId == item.id).ToList().Count > 0)
                             {
                                 string varType = "";
                                 foreach (var variant in variantsAttributes.Where(o => o.ProdId == item.id))
                                 {
+
+                                    if (variant.Stock != "")
+                                    {
+                                        varsStock += Int32.Parse(variant.Stock);
+                                    }
+
                                     if (varType != variant.AttrName)
                                     {
                                         variantsStr += variant.AttrName + ": ";
@@ -305,7 +317,19 @@
                         @Html.DisplayFor(modelItem => item.heureka)
                     </td>
                     <td name="stock" style="text-align:center;">
-                        @Html.DisplayFor(modelItem => item.stock)
+
+                        @{
+                            string stockStr = item.stock;
+                            if (variantsStr != "")
+                            {
+                                stockStr = varsStock.ToString();
+                            }
+                        }
+                        @stockStr
+
+                    </td>
+                    <td class="editable" name="active" style="text-align:center;">
+                        @Html.DisplayFor(modelItem => item.active)
                     </td>
                     <td align="center">
                         @Html.ActionLink("Editovať", "EditProduct", "Products", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important; font-size:13px;margin-right: 2px;" }) <a href="@Url.Action("DuplicateProduct", "Products", new { id = item.id })" class="btn btn-success" style="padding: 5px 10px;margin-right: 2px;" title="Duplikovať produkt"><img src="~/Content/images/duplicate.png" width="15" style="margin-top: -3px;"></a> @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteProduct", "Products", new { id = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tento produkt?')", @class = "btn btn-danger", style = "padding: 5px 10px;", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete produkt." })
@@ -375,12 +399,13 @@
             $priceFrom = $("#filterByPriceFrom").val() == "" ? 0 : $("#filterByPriceFrom").val().replace(",", ".");
             $priceTo = $("#filterByPriceTo").val() == "" ? 99999 : $("#filterByPriceTo").val().replace(",", ".");
             $isDiscount = $("#filterByDiscount").is(":checked");
+            $isInactive = $("#filterByInactive").is(":checked");
 
             $.ajax({
                 url: APIurl,
                 type: 'GET',
                 async: false,
-                data: { catId: $catId, brandId: $brandId, priceFrom: $priceFrom, priceTo: $priceTo, isDiscount: $isDiscount },
+                data: { catId: $catId, brandId: $brandId, priceFrom: $priceFrom, priceTo: $priceTo, isDiscount: $isDiscount, isInactive: $isInactive  },
                 dataType: 'json',
                 success: function (data) {
                     //add rows to dataTable
@@ -412,8 +437,14 @@
 
 
                         //varianty
+                        $varsStock = 0;
                         $.each($variants, function (i, v) {
                             if (v.ProdId == data[$i].id) {
+
+                                if (v.Stock != "") {
+                                    $varsStock += parseInt(v.Stock);
+                                }
+
                                 if ($varType != v.AttrName) {
                                     $variantsStr += v.AttrName + ": ";
                                 }
@@ -430,6 +461,11 @@
                             }
                         });
 
+                        $stockStr = data[$i].stock;
+                        if ($variantsStr != "") {
+                            $stockStr = $varsStock.toString();
+                        }
+
                         $thisSet = [];
                         $thisSet.push(data[$i].id);
                         $thisSet.push('<input type="checkbox" name="multipleEditCheckbox">');
@@ -442,7 +478,8 @@
                         $thisSet.push($variantsStr);
                         $thisSet.push(data[$i].date);
                         $thisSet.push('<input class="check-box" disabled="disabled" ' + (data[$i].heureka == true ? 'checked="checked"' : '') + ' type="checkbox">');
-                        $thisSet.push(data[$i].stock);
+                        $thisSet.push($stockStr);
+                        $thisSet.push('<input class="check-box" disabled="disabled" ' + (data[$i].active == true ? 'checked="checked"' : '') + ' type="checkbox">');
                         $thisSet.push('<a class="btn btn-warning" href="/produkty/editovat-produkt/' + data[$i].id + '" style = "color:#ffffff !important; font-size:13px;margin-right: 2px;" >Editovať</a><a href="/Products/DuplicateProduct/' + data[$i].id + '" class="btn btn-success" style="padding: 5px 10px;margin-right: 2px;" title="Duplikovať produkt"><img src="/Content/images/duplicate.png" width="15" style="margin-top: -3px;"></a><a class="btn btn-danger" style="padding: 5px 10px;" data-placement="top" data-toggle="tooltip" href="/Products/DeleteProduct/' + data[$i].id + '?confirm=True" onclick=\'return confirm("Naozaj chcete vymazať tento produkt?")\' title="Kliknutím nenávratne vymažete produkt.">×</a>' +
                             '<div class="popover__wrapper" id="info-0" style="display:none;">' +
                             '<a href="#">' +
@@ -479,6 +516,7 @@
                             { title: "Dátum" },
                             { title: "Heureka" },
                             { title: "Množstvo" },
+                            { title: "Aktívne" },
                             { title: "Akcie" }
 
                         ],
@@ -489,7 +527,7 @@
                             //upravime css
                             $('#productsTable thead th').eq(0).attr("style", "display:none;");
                             //$('#productsTable thead th').eq(3).attr("style", "width: 350px;");
-                            $('#productsTable thead th').eq(12).attr("style", "text-align: center;width:175px;");
+                            $('#productsTable thead th').eq(13).attr("style", "text-align: center;width:175px;");
 
                             $('#productsTable tbody tr').each(function () {
 
@@ -499,12 +537,14 @@
                                 $tds.eq(6).attr("style", "background-color: lightcyan; text-align: center;");
                                 $tds.eq(10).attr("style", "text-align: center;");
                                 $tds.eq(11).attr("style", "text-align: center;");
+                                $tds.eq(12).attr("style", "text-align: center;");
 
                                 $tds.eq(2).addClass("editable").attr("name", "number");
                                 $tds.eq(4).addClass("editable").attr("name", "title");
                                 $tds.eq(5).addClass("editable").attr("name", "price");
                                 $tds.eq(6).addClass("editable").attr("name", "discountprice");
                                 $tds.eq(10).addClass("editable").attr("name", "heureka");
+                                $tds.eq(12).addClass("editable").attr("name", "active");
                             });
                         }
                     });
@@ -595,6 +635,7 @@
                 $("#multipleEditPriceForm input[name=priceFrom]").val($("#filterByPriceFrom").val() == "" ? 0 : $("#filterByPriceFrom").val().replace(",", "."));
                 $("#multipleEditPriceForm input[name=priceTo]").val($("#filterByPriceTo").val() == "" ? 99999 : $("#filterByPriceTo").val().replace(",", "."));
                 $("#multipleEditPriceForm input[name=isDiscount]").val($("#filterByDiscount").is(":checked"));
+                $("#multipleEditPriceForm input[name=isInactive]").val($("#filterByInactive").is(":checked"));
                 $("#multipleEditPriceForm input[name=checkedProds]").val(JSON.stringify($checkedArr));
 
                 $("#multipleEditPriceForm").submit();
@@ -640,7 +681,7 @@
             if ($(".editValue").length == 0) {
                 $name = $(this).attr("name");
 
-                if ($name == "recommended" || $name == "heureka") {
+                if ($name == "active" || $name == "heureka") {
                     $isChecked = $(this).find("input[type=checkbox]").is(":checked");
                     $defValue = $isChecked;
 
@@ -666,7 +707,7 @@
             $id = $(this).parents("tr").find("td").eq(0).text();
             $name = $(this).parents(".editable").attr("name");
 
-            if ($name == "recommended" || $name == "heureka") {
+            if ($name == "active" || $name == "heureka") {
                 $value = $(this).parents(".editable").find(".editValue").is(":checked").toString();
             }
 
@@ -697,7 +738,7 @@
                             }
                         }
                     }
-                    else if ($name == "recommended" || $name == "heureka") {
+                    else if ($name == "active" || $name == "heureka") {
                         $thisObj.parents(".editable").html('<input ' + ($value == "true" ? 'checked="checked"' : '') + 'class="check-box" disabled="disabled" type="checkbox">');
                     }
                     else {
@@ -712,7 +753,7 @@
             $value = $(this).parents(".editable").attr("defValue");
             $name = $(this).parents(".editable").attr("name");
 
-            if ($name != "recommended" && $name != "heureka") {
+            if ($name != "active" && $name != "heureka") {
                 $(this).parents(".editable").text($value);
             } else {
                 $(this).parents(".editable").html('<input ' + ($value == "true" ? 'checked="checked"' : '') + 'class="check-box" disabled="disabled" type="checkbox">');
