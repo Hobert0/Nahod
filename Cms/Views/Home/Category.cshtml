@@ -124,7 +124,7 @@
                                     </div>
                                 }
                             }
-                            
+
                         }
                     }
 
@@ -152,6 +152,168 @@
                     }
                 </div>
             </div>
+
+            <hr />
+
+            <div class="container-fluid category-most-sold">
+
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-12">
+                        <h3>Najpredávanejšie</h3>
+                    </div>
+                </div>
+
+                @{
+                    var mostSoldCounter = 1;
+                    foreach (var item in (IEnumerable<int[]>)ViewData["mostSold"])
+                    {
+                        var prod = Model.ProductModel.Where(i => i.id == item[0]).FirstOrDefault();
+                        var img = prod.image;
+                        var title = prod.title;
+
+                        var slug = helper.ToUrlSlug(prod.title);
+                        var link = "/detail-produktu/" + prod.id + "/" + slug;
+
+                        var variants = Model.VariantModel.Where(o => o.prod_id == prod.id).OrderBy(o => o.num).ToList();
+
+
+                        decimal variantPriceFrom = 99999;
+                        int firstAttrId = 0;
+                        foreach (var variant in variants)
+                        {
+
+                            if (firstAttrId == 0)
+                            {
+                                firstAttrId = variant.attribute_id;
+                            }
+
+                            if (firstAttrId == variant.attribute_id)
+                            {
+                                if (variant.discountprice != null)
+                                {
+                                    if (variant.discountprice < variantPriceFrom)
+                                    {
+                                        variantPriceFrom = (decimal)variant.discountprice;
+                                    }
+                                }
+                                else
+                                {
+
+                                    decimal thisPrice = 0;
+                                    //rating
+                                    if (Session["username"] != null)
+                                    {
+                                        int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
+                                        decimal defaultPrice = (decimal)variant.price;
+                                        decimal ratingPrice = 0;
+
+                                        switch (rating)
+                                        {
+                                            case 1:
+                                                ratingPrice = (decimal)0.95 * defaultPrice;
+                                                break;
+                                            case 2:
+                                                ratingPrice = (decimal)0.9 * defaultPrice;
+                                                break;
+                                            case 3:
+                                                ratingPrice = (decimal)0.85 * defaultPrice;
+                                                break;
+                                        }
+
+                                        thisPrice = ratingPrice;
+                                    }
+                                    else
+                                    {
+                                        thisPrice = (decimal)variant.price;
+                                    }
+
+                                    if (thisPrice < variantPriceFrom)
+                                    {
+                                        variantPriceFrom = thisPrice;
+                                    }
+
+                                }
+                            }
+                        }
+
+                        string actualPrice = "";
+                        if (variantPriceFrom != 99999)
+                        {
+                            actualPrice = "od " + variantPriceFrom.ToString("N2") + " €";
+                        }
+                        else
+                        {
+
+                            if (prod.discountprice != null)
+                            {
+                                actualPrice = ((decimal)prod.discountprice).ToString("N2") + " €";
+                            }
+                            else
+                            {
+                                //rating
+                                if (Session["username"] != null)
+                                {
+                                    int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
+                                    decimal defaultPrice = prod.price;
+                                    decimal ratingPrice = 0;
+
+                                    switch (rating)
+                                    {
+                                        case 1:
+                                            ratingPrice = (decimal)0.95 * defaultPrice;
+                                            break;
+                                        case 2:
+                                            ratingPrice = (decimal)0.9 * defaultPrice;
+                                            break;
+                                        case 3:
+                                            ratingPrice = (decimal)0.85 * defaultPrice;
+                                            break;
+                                    }
+
+                                    actualPrice = ratingPrice.ToString("N2") + " €";
+                                }
+                                else
+                                {
+                                    actualPrice = prod.price.ToString("N2") + " €";
+                                }
+                            }
+
+                        }
+                        actualPrice = actualPrice.Replace(",", ".");
+
+                        var style = "";
+                        var clss = "";
+                        if (mostSoldCounter > 3)
+                        {
+                            style = "display: none;";
+                        }
+                        else
+                        {
+                            clss = "alwaysShow";
+                        }
+                        <div class="row prod-row @clss" style="@style">
+                            <div class="col-9">
+                                <a href="@link" style="display: flex; justify-content: flex-start;align-items: center;">@mostSoldCounter. <img src="~/Uploads/@img"><p>@title</p></a>
+                            </div>
+                            <div class="col-3" style="text-align: right;">
+                                @actualPrice
+                            </div>
+                        </div>
+
+                        mostSoldCounter++;
+                    }
+
+
+                }
+
+                <div class="row more-row">
+                    <div class="col-12" style="text-align: center;">
+                        <a href="#" class="showMoreProds">Zobraziť ďalšie produkty</a>
+                    </div>
+                </div>
+
+            </div>
+
             <hr />
 
             @{
@@ -172,3 +334,17 @@
 <script src="~/Scripts/filterProducts.js"></script>
 
 <script src="~/Scripts/add_to_session.js"></script>
+<script>
+    $(".showMoreProds").click(function (e) {
+        e.preventDefault();
+
+        if ($(this).text() == "Zobraziť ďalšie produkty") {
+            $(".category-most-sold .prod-row").css("display", "flex");
+            $(this).text("Skryť");
+        } else {
+            $(".category-most-sold .prod-row:not(.alwaysShow)").css("display", "none");
+            $(this).text("Zobraziť ďalšie produkty");
+        }
+
+    });
+</script>

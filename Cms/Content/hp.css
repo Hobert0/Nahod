@@ -161,6 +161,7 @@ html, body {
 
     .rounded-button:hover {
         text-decoration: none;
+        cursor: pointer;
     }
 
 .products {

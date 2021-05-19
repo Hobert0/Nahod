@@ -160,6 +160,17 @@ namespace Cms.Controllers
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.ToList();
+            model.VariantModel = db.variants.ToList();
+
+            if (Session["userid"] != null)
+            {
+                var userToSend = Int32.Parse(Session["userid"].ToString());
+                model.AllUsersMetaModel = db.usersmeta.Where(i => i.userid == userToSend).ToList();
+            }
+            else
+            {
+                model.AllUsersMetaModel = null;
+            }
 
             var kategoria = db.categories.Where(i => i.slug == catslug).Select(o => o.name);
             var sub = db.categories.Where(i => i.slug == subslug).Select(o => o.name);
@@ -176,18 +187,27 @@ namespace Cms.Controllers
             ViewData["subslug"] = subslug;
 
             List<decimal?> prices = new List<decimal?>();
+            List<int[]> ordersCount = new List<int[]>();
 
             foreach (var item in model.ProductModel)
             {
                 prices.Add(item.price);
                 prices.Add(item.discountprice);
+
+                int[] arr = new int[] { item.id, db.ordermeta.Where(o => o.productid == item.id.ToString()).Count() };
+                ordersCount.Add(arr);
             }
             prices.Sort();
+            var ordersCountSorted = ordersCount.OrderByDescending(o => o[1]).Take(10);
 
             ViewData["minPrice"] = prices.FirstOrDefault();
             ViewData["maxPrice"] = prices.LastOrDefault();
 
             ViewData["countries"] = new AdminController().SelectionCountries();
+
+            //najpredavanejsie
+            ViewData["mostSold"] = ordersCountSorted;
+
 
             return View(model);
         }

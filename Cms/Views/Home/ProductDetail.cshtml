@@ -140,11 +140,11 @@
                                     }
                                     else if (decimal.Parse(prod.stock) <= decimal.Parse(prod.custom1) && decimal.Parse(prod.stock) > 0)
                                     {
-                                        onStock = "<span style='color:#e89300;'>Dodanie do 3-10 dní</span>";
+                                        onStock = "<a href='#' class='watchdog-modal'><span style='color:#e89300;'>Dodanie do 3-10 dní</span><i style='margin-left: 10px;' class='fas fa-dog'></i></a>";
                                     }
                                     else if (decimal.Parse(prod.stock) == 0)
                                     {
-                                        onStock = "<span style='color:#e89300;'>Dodanie do 3-10 dní</span>";
+                                        onStock = "<a href='#' class='watchdog-modal'><span style='color:#e89300;'>Dodanie do 3-10 dní</span><i style='margin-left: 10px;' class='fas fa-dog'></i></a>";
                                     }
                                     else if (decimal.Parse(prod.stock) < 0)
                                     {
@@ -394,7 +394,7 @@
                                                 }
                                             }
 
-                                           
+
                                         </div>
 
                                     }
@@ -894,6 +894,10 @@
 
     </div>
 
+    @{
+        Html.RenderPartial("_Watchdog");
+    }
+
     @foreach (var prod in (IEnumerable<Cms.Models.products>)ViewBag.Detaily)
     {
 
@@ -1070,4 +1074,15 @@
     <script src="~/Scripts/add_product_to_cart.js"></script>
     <script src="~/Scripts/add_to_session.js"></script>
 
+    <script>
+        $(document).ready(function () {
+            $(".watchdog-modal").click(function () {
+                $("#myModalWatchdog").css("display", "flex");
+            });
 
+            $("#myModalWatchdog .close").click(function () {
+                $("#myModalWatchdog").css("display", "none");
+            });
+
+        });
+    </script>

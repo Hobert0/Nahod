@@ -1546,3 +1546,38 @@ height: 50px;
 .show-mobile {
     display: none;
 }
+
+/* Kategoria - najpredavanejsie */
+.category-most-sold h3 {
+    font-size: 16px;
+    color: black;
+    font-weight: bold;
+}
+
+.category-most-sold .prod-row {
+    border-top: 1px solid #ececec;
+    display: flex;
+    align-items: center;
+}
+
+    .category-most-sold .prod-row > div {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .category-most-sold .prod-row img {
+        max-width: 50px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .category-most-sold .prod-row img {
+        max-width: 50px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+.category-most-sold .more-row a {
+    margin-top: 10px;
+    display: inline-block;
+}
