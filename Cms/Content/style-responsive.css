@@ -799,6 +799,12 @@
             width: 47.5%;
         }
 
+        .najnizsiacena {
+            width: 100%;
+            text-align: right;
+            margin-top: 9px;
+        }
+        
         .products .product .prod-header {
             height: 70px;
         }

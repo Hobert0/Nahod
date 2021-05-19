@@ -221,7 +221,7 @@
                                         cena = prod.price;
                                         if ((prod.custom6).ToString() == "True")
                                         {
-                                            <div class="w-discount-price" style="text-align: right;font-size:30px;color: #ff8b00;"><strong>od @cena.ToString("N2") €</strong></div>
+                                            <div class="w-discount-price" style="text-align: right;font-size:25px;color: #303030;"><strong>od @cena.ToString("N2") €</strong></div>
                                         }
                                         else
                                         {
@@ -266,7 +266,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <div class="w-discount-price" style="text-align: right;font-size:30px;color: #ff8b00;"><strong><span class="actual-price">@cena.ToString("N2")</span> €</strong></div>
+                                                    <div class="w-discount-price" style="text-align: right;font-size:25px;color: #303030;"><strong><span class="actual-price">@cena.ToString("N2")</span> €</strong></div>
                                                 }
                                             }
                                         }
@@ -279,7 +279,7 @@
 
                                         var priceAfterReg = prod.price * (decimal)0.95;
 
-                                        <p style="font-size: 12px; text-align: right;" id="afterRegInfo">Cena po <a href="#" class="register-modal"><u>registrácii</u></a>: <span>@priceAfterReg.ToString("N2")</span> € (-5%)</p>
+                                        <p style="font-size: 15px; text-align: right;" id="afterRegInfo">Cena po <a href="#" class="register-modal"><u>registrácii</u> (-5%)</a>: <strong style="color:#ff8b00;font-size: 30px;">@priceAfterReg.ToString("N2") €</strong></p>
                                     }
 
                                     if (prod.price == 0) //ak je zadana suma nula
@@ -394,33 +394,7 @@
                                                 }
                                             }
 
-                                            @*
-                                                <div class="col-lg-4 col-sm-6 col-12 product-variation">
-                                                    @if (prod.custom6 != null && prod.custom6 != "" && prod.custom6 != "False")
-                                                    {
-                                                        isvariablecolor = true;
-                                                        <p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;margin-top:-80px;">FARBA</p>
-                                                        @Html.DropDownList("color", emptylist, "", new { @class = "form-control color-box" })
-                                                    }
-                                                    @if (prod.custom4 != null && prod.custom4 != "")
-                                                    {
-                                                        isvariableproduct = true;
-                                                        <p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;">VEĽKOSŤ</p>
-                                                        @Html.DropDownList("size", emptylist, "", new { @class = "form-control select-box", onchange = "showSize()" })
-                                                        @Html.DropDownList("size2", emptylist, "", new { @class = "form-control select-box2", style = "display:none;margin-top:10px;" })
-                                                    }
-                                                    <p style="color: #c7c7c7; font-size: 12px; text-align: center; padding: 10px;">MNOŽSTVO</p>
-                                                    <div class="cart-item-amount">
-                                                        <button type="button" class="inc button">−</button>
-                                                        <input type="number" name="amount[1050506]" value="1" min="1" max="30000" class="" id="quantity">
-                                                        <button type="button" class="dec button">+</button>
-                                                    </div>
-                                                </div>
-                                                <div class="add-to-cart col-lg-8">
-                                                    <button id="addproductbtn" isvariableproduct="@isvariableproduct.ToString()" isvariablecolor="@isvariablecolor.ToString()" class="btn btn-color addtocart"><img src="/Content/images/cart_white.svg" style="width: 20px;" alt="search">PRIDAŤ DO KOŠÍKA</button>
-
-                                                </div>
-                                            *@
+                                           
                                         </div>
 
                                     }

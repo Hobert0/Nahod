@@ -94,7 +94,7 @@ function parseDate(input) {
 </script>
 <h2>Najnovšie objednávky</h2>
 <hr />
-<table id="myTable" class="table" style="font-size: 14px;">
+<table id="myTable" class="table" style="font-size: 13px;">
     <thead>
         <tr>
             <th></th>
@@ -216,7 +216,7 @@ function parseDate(input) {
                 <td style="background-color: #e4ffe3; text-align: center;@stornostyle"><strong>@Html.DisplayFor(modelItem => item.finalprice) €</strong></td>
 
                 <td style="@stornostyle">@Html.DisplayFor(modelItem => item.comment)</td>
-                <td class="editable" style="@stornostyle">@Html.DisplayFor(modelItem => item.note)</td>
+                <td class="editable" style="@stornostyle width:35vw;">@Html.DisplayFor(modelItem => item.note)</td>
                 <td style="@stornostyle">@status</td>
                 <!--
                 <td style="@stornostyle">

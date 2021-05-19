@@ -8,7 +8,7 @@
 
 <h2>Objednávky</h2>
 <hr />
-<table id="myTable" class="table" style="font-size: 14px;">
+<table id="myTable" class="table" style="font-size: 13px;">
     <thead>
         <tr>
             <th></th>
@@ -105,7 +105,7 @@
     @{if (item.Status == 2)
         {
             <td class="p-0" style="width: 1px;">
-                <div class="popover__wrapper" style="display: inline-block;position: absolute; margin-left: -20px;margin-top: -40px;">
+                <div class="popover__wrapper" style="display: inline-block;position: absolute; margin-left: 10px;margin-top: 7px;">
                     <a href="#">
                         <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
                     </a>
@@ -129,7 +129,7 @@
     <td style="@stornostyle">@trans</td>
     <td style="background-color: #e4ffe3; text-align: center;@stornostyle"><strong>@Html.DisplayFor(modelItem => item.Finalprice) €</strong></td>
     <td style="@stornostyle">@Html.DisplayFor(modelItem => item.Comment)</td>
-    <td class="editable" style="@stornostyle">@Html.DisplayFor(modelItem => item.Note)</td>
+    <td class="editable" style="@stornostyle width:35vw;">@Html.DisplayFor(modelItem => item.Note)</td>
     <td style="@stornostyle">@status</td>
     <!--
     <td style="@stornostyle">

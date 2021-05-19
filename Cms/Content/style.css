@@ -667,9 +667,13 @@ footer {
     background-position: 50% 50%;
 }
 
+.slick-track {
+    margin: auto !important;
+}
+
 .galleryimg {
     max-height: 420px;
-    max-width: 900%;
+    max-width: 90%;
 }
 
 .gallery-wrapper {
