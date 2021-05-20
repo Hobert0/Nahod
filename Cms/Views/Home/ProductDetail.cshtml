@@ -39,6 +39,7 @@
                 ViewBag.Description = desc;
                 category = prod.category;
                 id = prod.id.ToString();
+                <input type="hidden" id="prodId" value="@id">
                 <script>
 				var id = @id;
                 </script>
@@ -953,7 +954,7 @@
                             $(".w-discount-price").addClass("d-none");
 
                             //ak user je prihlaseny, skryjeme info o cene po registracii
-                            $("#afterRegInfo").style("display", "none");
+                            $("#afterRegInfo").css("display", "none");
                         } else {
                             $(".actual-price").text($thisPrice.toFixedNoRounding(2));
                             $("#actual-price-w-tax").text(($thisPrice * 100 / 120).toFixedNoRounding(2));
@@ -964,7 +965,7 @@
                             //ak user neni prihlaseny a nie je zlava, zobrazime info o cene po registracii
                             $afterRegPrice = $thisPrice * 0.95;
                             $("#afterRegInfo span").text($afterRegPrice.toFixedNoRounding(2));
-                            $("#afterRegInfo").style("display", "block");
+                            $("#afterRegInfo").css("display", "block");
                         }
 
                     } else {
@@ -980,7 +981,7 @@
                         $(".w-discount-price").addClass("d-none");
 
                         //ak user neni prihlaseny a je zlava, skryjeme info o cene po registracii
-                        $("#afterRegInfo").style("display", "none");
+                        $("#afterRegInfo").css("display", "none");
                     }
                 }
 

@@ -330,6 +330,40 @@
                 </div>
             </div>
         </div>
+
+        <br />
+        <h3>PDF Dokumenty</h3>
+        <hr />
+
+        <div class="row" style="margin-top: 10px;">
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Všeobecné obchodné podmienky</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12 btnvyber">
+                        <a id="btn_vis" style="cursor:pointer">Vyber dokument</a>
+                        @Html.TextBoxFor(model => model.VopPdf, "", new { @type = "file", @class = "form-control", @accept = "pdf", @style = "max-width: 67%;height:60px;display:none;", @id = "bttn", @onchange = "pressed()" })
+                        <label id="fileLabel">Nie je vybratý žiadny dokument.</label>
+
+                    </div>
+                </div>
+            </div>
+            <div class="mt-1 text-right" style="width: 180px;">
+                <strong>Reklamančný poriadok</strong>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <div class="col-md-12 btnvyber">
+                        <a id="btn_vis" style="cursor:pointer">Vyber dokument</a>
+                        @Html.TextBoxFor(model => model.ReturnPdf, "", new { @type = "file", @class = "form-control", @accept = "pdf", @style = "max-width: 67%;height:60px;display:none;", @id = "bttn", @onchange = "pressed()" })
+                        <label id="fileLabel">Nie je vybratý žiadny dokument.</label>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="form-group pt-5">
             <div style="text-align:right">
                 <input type="submit" value="Uložiť zmeny" class="btn btn-success" />
@@ -338,4 +372,32 @@
     </div>
 }
 
+<script>
+    $("#btn_vis").click(function () {
+        $("#bttn").trigger('click');
+    });
 
+    window.pressed = function () {
+        var a = document.getElementById('bttn');
+        if (a.files.length > 1) {
+            fileLabel.innerHTML = "Boli vybraté " + a.files.length + " fotografie.";
+        }
+        else if (a.files.length = 1) {
+            fileLabel.innerHTML = "Bola vybratá " + a.files.length + " fotografia.";
+        }
+    };
+
+    $("#bttn_vis").click(function () {
+        $("#btttn").trigger('click');
+    });
+
+    window.press = function () {
+        var a = document.getElementById('btttn');
+        if (a.files.length > 1) {
+            fileLabell.innerHTML = "Boli vybraté " + a.files.length + " fotografie.";
+        }
+        else if (a.files.length = 1) {
+            fileLabell.innerHTML = "Bola vybratá " + a.files.length + " fotografia.";
+        }
+    };
+</script>

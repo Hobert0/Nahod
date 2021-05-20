@@ -341,108 +341,144 @@ namespace Cms.Controllers
 
             var order = db.orders.FirstOrDefault();
 
-    
-                objednavkaType obj = new objednavkaType
-                {
-                    //obj.CasVystave = DateTime.Parse(order.date,CultureInfo.InvariantCulture);
-                    DruhDopravy = order.shipping,
-                    Poznamka = order.comment,
-                    TypTransakce = order.payment,
-                    DCislo = decimal.Parse(order.ordernumber),
-                };
-        
-        XmlSerializer serializer = new XmlSerializer(typeof(objednavkaType));
-            using (StreamWriter writer = new StreamWriter(Server.MapPath("~/export/"+ filemane)))
+
+            objednavkaType obj = new objednavkaType
+            {
+                //obj.CasVystave = DateTime.Parse(order.date,CultureInfo.InvariantCulture);
+                DruhDopravy = order.shipping,
+                Poznamka = order.comment,
+                TypTransakce = order.payment,
+                DCislo = decimal.Parse(order.ordernumber),
+            };
+
+            XmlSerializer serializer = new XmlSerializer(typeof(objednavkaType));
+            using (StreamWriter writer = new StreamWriter(Server.MapPath("~/export/" + filemane)))
             {
                 serializer.Serialize(writer, obj);
             }
 
-            return filemane;            
+            return filemane;
         }
 
         [Route("importSKladS3"), EnableCors(origins: "*", headers: "*", methods: "*")]
-public string ImportMonS3(string ExpZasobyName)
-{
-    var path = "http://nahod.sk.amber.globenet.cz/import/" + ExpZasobyName;
-    XmlTextReader reader = new XmlTextReader(path);
-    while (reader.Read())
-    {
-        // Do some work here on the data.
-        Console.WriteLine(reader.Name);
-        //string tempf = reader.Katalog;
-        //string tempc = reader.Cena;
-        //string feels = reader.StavZasoby;
-    }
-
-    XmlDocument doc1 = new XmlDocument();
-    doc1.Load("http://nahod.sk.amber.globenet.cz/import/" + ExpZasobyName);
-    XmlElement root = doc1.DocumentElement;
-    XmlNodeList nodes = root.SelectNodes("/MoneyData/SeznamZasoba/Zasoba");
-
-    // XmlNodeList nodes = oNode.SelectNodes("Katalog");
-
-    foreach (XmlNode node in nodes)
-    {
-        var sklad = node.SelectSingleNode("StavZasoby/Zasoba").InnerText;
-        var cislo = node.SelectSingleNode("KmKarta/Katalog").InnerText;
-        var cena = node.SelectSingleNode("PC/Cena1/Cena").InnerText;
-        var zlava = node.SelectSingleNode("Sleva").InnerText;
-        decimal cenasdph = 0;
-        decimal cenapozlave = 0;
-        //vypocet ceny s DPH
-        if (cena != null)
+        public string ImportMonS3(string ExpZasobyName)
         {
-            cenasdph = decimal.Parse(cena.Replace(".", ","));
-        }
-
-        var product = db.products.Where(i => i.number == cislo).FirstOrDefault();
-        if (product != null)
-        {
-            product.stock = sklad;
-            product.price = cenasdph * decimal.Parse("1,2");
-
-            //ak je produkt v zlave
-            if (zlava != "0")
+            var path = "http://nahod.sk.amber.globenet.cz/import/" + ExpZasobyName;
+            XmlTextReader reader = new XmlTextReader(path);
+            while (reader.Read())
             {
-                cenapozlave = product.price * (1 - (decimal.Parse(zlava.Replace(".", ",")) / 100));
-                product.discountprice = cenapozlave;
-            }
-            else
-            {
-                product.discountprice = null;
+                // Do some work here on the data.
+                Console.WriteLine(reader.Name);
+                //string tempf = reader.Katalog;
+                //string tempc = reader.Cena;
+                //string feels = reader.StavZasoby;
             }
 
-            db.SaveChanges();
-        }
-        else
-        {
-            //poku3a sa najst hladany produkt medzi variantami
-            var productinvariants = db.variants.Where(i => i.number == cislo).FirstOrDefault();
-            if (productinvariants != null)
+            XmlDocument doc1 = new XmlDocument();
+            doc1.Load("http://nahod.sk.amber.globenet.cz/import/" + ExpZasobyName);
+            XmlElement root = doc1.DocumentElement;
+            XmlNodeList nodes = root.SelectNodes("/MoneyData/SeznamZasoba/Zasoba");
+
+            // XmlNodeList nodes = oNode.SelectNodes("Katalog");
+
+            foreach (XmlNode node in nodes)
             {
-                var variantprice = cenasdph * decimal.Parse("1,2");
-
-                productinvariants.stock = sklad;
-                productinvariants.price = variantprice;
-
-                //ak je produkt v zlave
-                if (zlava != "0")
+                var sklad = node.SelectSingleNode("StavZasoby/Zasoba").InnerText;
+                var cislo = node.SelectSingleNode("KmKarta/Katalog").InnerText;
+                var cena = node.SelectSingleNode("PC/Cena1/Cena").InnerText;
+                var zlava = node.SelectSingleNode("Sleva").InnerText;
+                decimal cenasdph = 0;
+                decimal cenapozlave = 0;
+                //vypocet ceny s DPH
+                if (cena != null)
                 {
-                    cenapozlave = variantprice * (1 - (decimal.Parse(zlava.Replace(".", ",")) / 100));
-                    productinvariants.discountprice = cenapozlave;
+                    cenasdph = decimal.Parse(cena.Replace(".", ","));
+                }
+
+                var product = db.products.Where(i => i.number == cislo).FirstOrDefault();
+                if (product != null)
+                {
+                    product.stock = sklad;
+                    product.price = cenasdph * decimal.Parse("1,2");
+
+                    //ak je produkt v zlave
+                    if (zlava != "0")
+                    {
+                        cenapozlave = product.price * (1 - (decimal.Parse(zlava.Replace(".", ",")) / 100));
+                        product.discountprice = cenapozlave;
+                    }
+                    else
+                    {
+                        product.discountprice = null;
+                    }
+
+                    //odosleme emaily ak existuju watchdogy na dany produkt
+                    var watchdogs = db.watchdog.Where(i => i.prod_id == product.id && i.sent == false).ToList();
+
+                    foreach (var watchdog in watchdogs)
+                    {
+                       
+                        HelperController helper = new HelperController();
+                        var slug = helper.ToUrlSlug(product.title);
+                        var prodName = product.title;
+                        var prodLink = "https://nahod.sk/detail-produktu/" + product.id + "/" + slug;
+
+                        //odosleme email o uspesnom zaregistrovani
+                        OrdersController oc = new OrdersController();
+                        string body = createWatchdogEmailBody(prodName, prodLink);
+                        oc.SendHtmlFormattedEmail("Požadovaný tovar je naskladnený!", body, watchdog.email, "watchdog", "");
+
+                        watchdog.sent = true;
+                    }
+
+                    db.SaveChanges();
                 }
                 else
                 {
-                    productinvariants.discountprice = null;
+                    //poku3a sa najst hladany produkt medzi variantami
+                    var productinvariants = db.variants.Where(i => i.number == cislo).FirstOrDefault();
+                    if (productinvariants != null)
+                    {
+                        var variantprice = cenasdph * decimal.Parse("1,2");
+
+                        productinvariants.stock = sklad;
+                        productinvariants.price = variantprice;
+
+                        //ak je produkt v zlave
+                        if (zlava != "0")
+                        {
+                            cenapozlave = variantprice * (1 - (decimal.Parse(zlava.Replace(".", ",")) / 100));
+                            productinvariants.discountprice = cenapozlave;
+                        }
+                        else
+                        {
+                            productinvariants.discountprice = null;
+                        }
+
+                        db.SaveChanges();
+                    }
                 }
-
-                db.SaveChanges();
             }
-        }
-    }
 
-    return "Oki";
-}
+            return "Oki";
+        }
+
+        private string createWatchdogEmailBody(string prodName, string prodLink)
+        {
+
+            string body = string.Empty;
+            //using streamreader for reading my htmltemplate   
+            using (StreamReader rea = new StreamReader(Server.MapPath("~/Views/Shared/WatchdogEmail.cshtml")))
+            {
+                body = rea.ReadToEnd();
+            }
+
+            var str = "Požadovaný tovar <a href='" + prodLink + "'>" + prodName + "</a> je na sklade.";
+
+            body = body.Replace("{Text}", str);
+
+            return body;
+        }
 
     }
 }
