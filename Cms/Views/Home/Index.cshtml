@@ -48,45 +48,45 @@
 </div>
 <div class="container-fluid w-75">
     <div class="row benefits">
-        <div class="col-md col-6">
+        <div class="col-md col-6 benefit">
             <div class="row d-flex align-items-center">
-                <div class="col-md-2 pr-0">
+                <div class="col-lg-2 col-md-4 pl-1">
                     <img class="icon" src="~/Content/images/price-tag.svg">
                 </div>
-                <div class="col-md-10 pl-2">
+                <div class="col-lg-10 col-md-8 pl-2">
                     <p class="header">Zľava 5-15%</p>
                     <p class="text">Ihneď po <a href="#" class="register-modal"><u>registrácii</u></a></p>
                 </div>
             </div>
         </div>
-        <div class="col-md col-6">
+        <div class="col-md col-6 benefit">
             <div class="row d-flex align-items-center">
-                <div class="col-md-2 pr-0">
+                <div class="col-lg-2 col-md-4 pl-1">
                     <img class="icon" src="~/Content/images/fast.svg">
                 </div>
-                <div class="col-md-10 pl-2">
+                <div class="col-lg-10 col-md-8 pl-2">
                     <p class="header">Doprava zdarma</p>
                     <p class="text">Pri objednávke nad 49 €</p>
                 </div>
             </div>
         </div>
-        <div class="col-md col-6">
+        <div class="col-md col-6 benefit">
             <div class="row d-flex align-items-center">
-                <div class="col-md-2 pr-0">
+                <div class="col-lg-2 col-md-4 pl-1">
                     <img class="icon" src="~/Content/images/gift.svg">
                 </div>
-                <div class="col-md-10 pl-2">
+                <div class="col-lg-10 col-md-8 pl-2">
                     <p class="header">Darčeky</p>
                     <p class="text">K nákupu nad 49 €</p>
                 </div>
             </div>
         </div>
-        <div class="col-md col-6">
+        <div class="col-md col-6 benefit">
             <div class="row d-flex align-items-center">
-                <div class="col-md-2 pr-0">
+                <div class="col-lg-2 col-md-4 pl-1">
                     <img class="icon" src="~/Content/images/fishing.svg">
                 </div>
-                <div class="col-md-10 pl-2">
+                <div class="col-lg-10 col-md-8 pl-2">
                     <p class="header">Poradenstvo</p>
                     <p class="text">Cez 20 r. skúseností</p>
                 </div>
@@ -373,12 +373,12 @@
 </div>
 <div class="container-fluid" id="hp-newsletter">
     <div class="row hp-newsletter">
-        <div class="col-md-4 offset-md-2">
+        <div class="col-lg-4 offset-lg-2 col-md-5 offset-md-1">
             <div class="hp-header">Získajte okamžitú zľavu 10%</div>
             <div class="hp-text">Chcete byť pravidelne informovaní o novinkách a zvýhodnených akciách?</div>
             <div class="hp-text font-weight-bold">Prihláste sa k odberu noviniek</div>
         </div>
-        <div class="col-md-4">
+        <div class="col-lg-4 col-md-5 newsletter-form">
             <div class="d-flex align-items-center hp-email-wrapper">
                 <!--
                 <input type="email" name="newsletter-email" placeholder="E-mail">
@@ -730,35 +730,35 @@
         $('.top-banner-wrapper').slick();
         $('.middle-banner-wrapper').slick();
         $('.products-row').slick({
-                    infinite: true,
-                    slidesToShow: 5,
-                    slidesToScroll: 5,
-                    responsive: [
-                        {
-                            breakpoint: 1024,
-                            settings: {
-                                slidesToShow: 4,
-                                slidesToScroll: 4,
-                                infinite: true,
-                                dots: true
-                            }
-                        },
-                        {
-                            breakpoint: 600,
-                            settings: {
-                                slidesToShow: 2,
-                                slidesToScroll: 2
-                            }
-                        },
-                        {
-                            breakpoint: 480,
-                            settings: {
-                                slidesToShow: 2,
-                                slidesToScroll: 2
-                            }
-                        }]
-                });
-       
+            infinite: true,
+            slidesToShow: 5,
+            slidesToScroll: 5,
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 4,
+                        slidesToScroll: 4,
+                        infinite: true,
+                        dots: true
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                }]
+        });
+
         $("#Subscribeform a.rect-button").click(function (e) {
             e.preventDefault();
 

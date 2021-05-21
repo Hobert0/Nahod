@@ -9,8 +9,8 @@
     outline: none;
 }
 
-.header-container.mobile-header{
-	display: none;
+.header-container.mobile-header {
+    display: none;
 }
 
 /*HIDE reCaptcha*/
@@ -683,6 +683,7 @@ footer {
 .gallery-wrapper {
     width: 100%;
 }
+
     .gallery-wrapper .slick-slide {
         margin: 0px 2px;
     }
@@ -695,23 +696,24 @@ footer {
     .gallery-wrapper .slick-prev {
         left: -25px;
     }
+
     .gallery-wrapper .slick-next {
         right: -12px;
     }
 
-    .gallery-wrapper .slick-track{
-        margin-left:0;
+    .gallery-wrapper .slick-track {
+        margin-left: 0;
     }
 
-    .title {
-        padding: 15px 0 8px;
-        font-family: 'Open Sans', sans-serif;
-        text-align: center;
-        font-weight: bold;
-        color: #303030;
-        letter-spacing: 0;
-        font-size: 14px;
-    }
+.title {
+    padding: 15px 0 8px;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    font-weight: bold;
+    color: #303030;
+    letter-spacing: 0;
+    font-size: 14px;
+}
 
     .title:hover {
         color: #303030;
@@ -1067,6 +1069,7 @@ input[type="radio"][disabled] {
         font-weight: 600;
         font-size: 13px;
     }
+
     .subcatthumb:hover {
         -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
         -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
@@ -1127,6 +1130,7 @@ input[type="radio"][disabled] {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
 .dropdown-content h3 {
     font-size: .9rem;
 }
@@ -1154,12 +1158,14 @@ input[type="radio"][disabled] {
         .column h3:hover {
             color: #fe8a00;
         }
+
 .dropdown-content img {
     width: 80px;
     max-height: 80px;
     float: left;
     padding-right: 10px;
 }
+
 .dropdown-content .subs {
     font-size: 13px;
     padding-top: 0;
@@ -1273,10 +1279,10 @@ input[type="radio"][disabled] {
         text-decoration: underline !important;
     }
 
-    #page p {
-        padding: 0 20px;
-        text-align: justify;
-    }
+#page p {
+    padding: 0 20px;
+    text-align: justify;
+}
 
 #page-blog {
     display: inline-block;
@@ -1518,7 +1524,7 @@ button:focus {
 }
 
 .cart-item-amount {
-height: 50px;
+    height: 50px;
 }
 
     .cart-item-amount input[type=number] {

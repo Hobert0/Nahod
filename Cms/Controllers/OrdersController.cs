@@ -86,7 +86,7 @@ namespace Cms.Controllers
             o.companyname_shipp = model.OrdersModel.CompanynameShipp ?? "";
             o.city_shipp = model.OrdersModel.CityShipp ?? "";
             o.zip_shipp = model.OrdersModel.ZipShipp ?? "";
-            o.country_shipp = model.OrdersModel.CountryShipp ?? "";
+            o.country_shipp = model.OrdersModel.NameShipp != null ? model.OrdersModel.CountryShipp : "";
             o.phone_shipp = model.OrdersModel.PhoneShipp ?? "";
             o.comment = model.OrdersModel.Comment;
             o.usedcoupon = coupon ?? "";
@@ -325,7 +325,6 @@ namespace Cms.Controllers
                 {
                     sum = prevSumEntity.Sum(x => x.finalprice);
                 }
-                //sum += o.finalprice;
 
                 if (sum >= 1000)
                 {
@@ -333,10 +332,11 @@ namespace Cms.Controllers
                     if (um.rating < 3) 
                     {
                         um.rating = 3;
+
+                        string body_rating = this.createRatingEmailBody(orderNumber, "15");
+                        this.SendHtmlFormattedEmail("Vyššia zľavová skupina!", body_rating, o.email, "rating", orderNumber);
                     }
 
-                    string body_rating = this.createRatingEmailBody(orderNumber, "15");
-                    this.SendHtmlFormattedEmail("Vyššia zľavová skupina!", body_rating, o.email, "rating", orderNumber);
                 }
                 else if (sum >= 500)
                 {
@@ -344,10 +344,11 @@ namespace Cms.Controllers
                     if (um.rating < 2)
                     {
                         um.rating = 2;
+
+                        string body_rating = this.createRatingEmailBody(orderNumber, "10");
+                        this.SendHtmlFormattedEmail("Vyššia zľavová skupina!", body_rating, o.email, "rating", orderNumber);
                     }
 
-                    string body_rating = this.createRatingEmailBody(orderNumber, "10");
-                    this.SendHtmlFormattedEmail("Vyššia zľavová skupina!", body_rating, o.email, "rating", orderNumber);
                 }
 
                 um.sum = sum;
@@ -537,7 +538,7 @@ namespace Cms.Controllers
                     stringBuilder.AppendLine("<td align='left' valign='middle' style='margin-top:0;margin-bottom:0;color:#000000;line-height:1.36;border-bottom:1px solid #c8c8c8'><a href='https://nahod.sk/detail-produktu/" + prodId + "' target='_blank'> " + item.product + "</a></td>");
                     stringBuilder.AppendLine("<td align='left' valign='middle' style='margin-top:0;margin-bottom:0;color:#000000;line-height:1.36;border-bottom:1px solid #c8c8c8'>" + (item.variant != "" ? (item.variant2 != "" ? item.variant + " " + item.variant2 : item.variant) : "") + "</td>");
                     stringBuilder.AppendLine("<td align='left' valign='middle' style='margin-top:0;margin-bottom:0;color:#000000;line-height:1.36;border-bottom:1px solid #c8c8c8'>" + item.pieces + "</td>");
-                    stringBuilder.AppendLine("<td align='left' valign='middle' style='margin-top:0;margin-bottom:0;color:#000000;line-height:1.36;border-bottom:1px solid #c8c8c8'>" + item.price + " €</td>");
+                    stringBuilder.AppendLine("<td align='left' valign='middle' style='margin-top:0;margin-bottom:0;color:#000000;line-height:1.36;border-bottom:1px solid #c8c8c8'>" + item.price.ToString("#.##") + " €</td>");
                     stringBuilder.AppendLine("<td width='9' align='left' valign='middle' style='margin-top:0;margin-bottom:0;color:#000000;line-height:1.36;width:9px;border-bottom:1px solid #c8c8c8'> </td>");
                     stringBuilder.AppendLine("</tr>");
 
@@ -570,7 +571,7 @@ namespace Cms.Controllers
         {
             using (MailMessage mailMessage = new MailMessage())
             {
-                var sett1 = db.e_settings.ToList();
+                var sett1 = db.e_settings.FirstOrDefault();
                 var sett2 = db.settings.ToList();
                 /*ZMENIT*/
                 var eshopname = "Nahod.sk - Rybárske potreby";
@@ -586,18 +587,27 @@ namespace Cms.Controllers
                 mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
                 mailMessage.Subject = subject;
 
+                var pdfVopPath = sett1.vopPdf;
+                var pdfReturnPath = sett1.returnPdf;
+
                 mailMessage.Body = body;
                 if (toWho == "customer")
                 {
                     //priloha do emailu poucenie spotrebitela
-                    //Attachment attachment = new Attachment(Server.MapPath("~/Content/images/poucenie_spotrebitela.pdf"));
-                    //mailMessage.Attachments.Add(attachment);	//add the attachment
+                    Attachment attachment1 = new Attachment(Server.MapPath("~/Uploads/" + pdfVopPath));
+                    mailMessage.Attachments.Add(attachment1);	//add the attachment
+
+                    Attachment attachment2 = new Attachment(Server.MapPath("~/Uploads/" + pdfReturnPath));
+                    mailMessage.Attachments.Add(attachment2);	//add the attachment
                 }
                 else if (toWho == "finished")
                 {
                     //PdfSave(ordnumber);
-                    //Attachment attachment = new Attachment(Server.MapPath("~/Content/invoices/fa_" + ordnumber + ".pdf"));
-                    //mailMessage.Attachments.Add(attachment);	//add the attachment
+                    Attachment attachment1 = new Attachment(Server.MapPath("~/Uploads/" + pdfVopPath));
+                    mailMessage.Attachments.Add(attachment1);	//add the attachment
+
+                    Attachment attachment2 = new Attachment(Server.MapPath("~/Uploads/" + pdfReturnPath));
+                    mailMessage.Attachments.Add(attachment2);	//add the attachment
                 }
 
                 mailMessage.IsBodyHtml = true;

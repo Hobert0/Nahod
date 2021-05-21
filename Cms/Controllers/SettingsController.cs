@@ -53,7 +53,8 @@ namespace Cms.Controllers
                     model.DeliveryPrice1 = set.deliveryprice1;
                     model.DeliveryPrice2 = set.deliveryprice2;
                     model.DeliveryPrice3 = set.deliveryprice3;
-
+                    model.VopPdf = set.vopPdf;
+                    model.ReturnPdf = set.returnPdf;
                 }
                 return View(model);
             }
@@ -113,10 +114,6 @@ namespace Cms.Controllers
             }
 
             var ulozObrazokVop = DateTime.Now.Date.ToString("dd.MM.yyyy") + "/" + DateTime.Now.ToString("HHmmss") + "/";
-            if (nazovSuboruVop == "")
-            {
-                nazovSuboruVop = "avatar_product.jpg";
-            }
 
             var nazovSuboruReturn = string.Empty;
             if (model.ReturnPdfImage != null)
@@ -132,27 +129,23 @@ namespace Cms.Controllers
             }
 
             var ulozObrazokReturn = DateTime.Now.Date.ToString("dd.MM.yyyy") + "/" + DateTime.Now.ToString("HHmmss") + "/";
-            if (nazovSuboruReturn == "")
-            {
-                nazovSuboruReturn = "avatar_product.jpg";
-            }
 
 
             var o = db.e_settings.Single(i => i.id == 1);
 
-            if(model.Transfer1 != null){ model.Transfer1 = model.Transfer1.Replace(",", ".");}
-            if(model.Transfer2 != null){ model.Transfer2 = model.Transfer2.Replace(",", "."); }
-            if(model.Transfer3 != null){ model.Transfer3 = model.Transfer3.Replace(",", ".");}
-            if(model.Transfer4 != null){ model.Transfer4 = model.Transfer4.Replace(",", ".");}
-            if(model.Transfer5 != null){ model.Transfer5 = model.Transfer5.Replace(",", "."); }
-            if(model.DeliveryPrice1 != null) { model.DeliveryPrice1 = model.DeliveryPrice1.Replace(",", "."); }
-            if(model.DeliveryPrice2 != null) { model.DeliveryPrice1 = model.DeliveryPrice1.Replace(",", "."); }
-            if(model.DeliveryPrice3 != null) { model.DeliveryPrice1 = model.DeliveryPrice1.Replace(",", "."); }
+            if (model.Transfer1 != null) { model.Transfer1 = model.Transfer1.Replace(",", "."); }
+            if (model.Transfer2 != null) { model.Transfer2 = model.Transfer2.Replace(",", "."); }
+            if (model.Transfer3 != null) { model.Transfer3 = model.Transfer3.Replace(",", "."); }
+            if (model.Transfer4 != null) { model.Transfer4 = model.Transfer4.Replace(",", "."); }
+            if (model.Transfer5 != null) { model.Transfer5 = model.Transfer5.Replace(",", "."); }
+            if (model.DeliveryPrice1 != null) { model.DeliveryPrice1 = model.DeliveryPrice1.Replace(",", "."); }
+            if (model.DeliveryPrice2 != null) { model.DeliveryPrice1 = model.DeliveryPrice1.Replace(",", "."); }
+            if (model.DeliveryPrice3 != null) { model.DeliveryPrice1 = model.DeliveryPrice1.Replace(",", "."); }
 
-            if (model.Pay1 != null){ model.Pay1 = model.Pay1.Replace(",", "."); }
-            if (model.Pay2 != null){ model.Pay2 = model.Pay2.Replace(",", ".");}
-            if (model.Pay3 != null){ model.Pay3 = model.Pay3.Replace(",", ".");}
-            if (model.Pay4 != null){model.Pay4 = model.Pay4.Replace(",", ".");}
+            if (model.Pay1 != null) { model.Pay1 = model.Pay1.Replace(",", "."); }
+            if (model.Pay2 != null) { model.Pay2 = model.Pay2.Replace(",", "."); }
+            if (model.Pay3 != null) { model.Pay3 = model.Pay3.Replace(",", "."); }
+            if (model.Pay4 != null) { model.Pay4 = model.Pay4.Replace(",", "."); }
 
             o.companyname = model.Companyname;
             o.address = model.Address;
@@ -183,10 +176,17 @@ namespace Cms.Controllers
             o.deliveryprice1 = model.DeliveryPrice1;
             o.deliveryprice2 = model.DeliveryPrice2;
             o.deliveryprice3 = model.DeliveryPrice3;
-            o.vopPdf = ulozObrazokVop + nazovSuboruVop;
-            o.returnPdf = ulozObrazokReturn + nazovSuboruReturn;
-            o.returnPdf = model.ReturnPdf;
 
+            if (model.VopPdfImage[0] != null)
+            {
+                o.vopPdf = ulozObrazokVop + nazovSuboruVop;
+            }
+
+            if (model.ReturnPdfImage[0] != null)
+            {
+                o.returnPdf = ulozObrazokReturn + nazovSuboruReturn;
+            }
+ 
             db.SaveChanges();
 
             if (model.VopPdfImage != null)
@@ -391,20 +391,8 @@ namespace Cms.Controllers
                     var InputFileName = Path.GetFileName(file.FileName);
                     var ServerSavePath = Path.Combine(Server.MapPath(miestoUlozenia) + InputFileName);
 
-                    byte[] fileByte;
-                    using (var reader = new BinaryReader(file.InputStream))
-                    {
-                        fileByte = reader.ReadBytes(file.ContentLength);
-                    }
-                    WebImage img = new WebImage(fileByte);
-                    if (img.Width > 1000)
-                    {
-                        img.Resize(1000 + 1, 1000 + 1, true).Crop(1, 1);
-                    }
+                    file.SaveAs(ServerSavePath);
 
-                    img.Save(ServerSavePath);
-                    //assigning file uploaded status to ViewBag for showing message to user.  
-                    ViewBag.UploadStatus = files.Count().ToString() + " files uploaded successfully.";
                 }
 
             }
