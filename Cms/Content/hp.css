@@ -58,7 +58,7 @@ html, body {
     }
 
     .header-top .cart .cart-qty {
-        left: 5px;
+        left: -7px;
         font-size: 12px;
         font-weight: 500;
         position: absolute;

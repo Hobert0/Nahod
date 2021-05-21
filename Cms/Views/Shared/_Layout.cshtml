@@ -143,7 +143,7 @@
                     return b > 0 ? (a + "0".repeat(b)) : a;
                 }
 
-                $('#search').autocomplete({
+                $('.searchinput').autocomplete({
                     minLength: 2,
                     source: '/hladat',
                     select: function (event, ui) {
@@ -154,8 +154,8 @@
 
                         return false;
                     }
-                })
-                    .autocomplete("instance")._renderItem = function (ul, item) {
+                }).each(function () {
+                    $(this).autocomplete("instance")._renderItem = function (ul, item) {
                         let cena = item.price + "€";
                         var slug = string_to_slug(item.title);
 
@@ -163,6 +163,7 @@
                             .append("<div><a href='/detail-produktu/" + item.id + "/" + slug + "'><div style='width: 20%;display: inline-block;vertical-align: top;'><img src='/Uploads/" + item.image + "' style='max-width:50px;max-height:50px;'></div><div style='width: 75%;display: inline-block;margin-left:10px;text-align:left;font-size: 14px;'><strong>" + item.title + "</strong><br><span style='font-size: 12px;'>" + cena + "</span></div></a></div>")
                             .appendTo(ul);
                     };
+                });
 
                 function string_to_slug(str) {
                     str = str.replace(/^\s+|\s+$/g, ''); // trim
@@ -194,92 +195,94 @@
                 height="0" width="0" style="display:none;visibility:hidden"></iframe>
     </noscript>
     <!-- End Google Tag Manager (noscript) -->
+    <!-- mobile version -->
+    <div class="header-container mobile-header container-fluid w-75">
+        <div class="row d-flex justify-content-between align-items-center header-top">
+            <div class="d-flex justify-content-between col-12 top">
+                <div class="d-flex align-items-center">
+                    <span class="openbtn" onclick="openNav()">☰<br> <span>Menu</span></span>
+                </div>
+                <a href="/" class="logo">
+                    <img class="logo" src="/Content/images/nahod-white.svg">
+                </a>
+                <div class="d-flex justify-content-end align-items-center">
+                    <div class="cart d-flex align-items-center justify-content-end pl-0 mt-1">
 
-	<!-- mobile version -->
-	<div class="header-container mobile-header container-fluid w-75">
-		<div class="row d-flex justify-content-between align-items-center header-top">
-				<div class="d-flex justify-content-between col-12 top">
-					<div class="d-flex">
-						<span class="openbtn" onclick="openNav()">☰<br> <span>Menu</span></span>
-					</div>
-					<a href="/" class="logo">
-						<img class="logo" src="/Content/images/nahod-white.svg">
-					</a>
-					<div class="d-flex justify-content-end align-items-center">
-						<div class="cart d-flex align-items-center justify-content-end pl-0">
-							<a>
-								@{
-								if (username != "")
-								{
-								<i class="icon-user"></i>
-								<span>
-                                        Vitajte @username!<br>
-                                        @if (role == "0")
-                                        {
-                                            <a href="/cms"><u>Administrácia</u></a><br>
-                                        }
-                                        <a href="@Url.Action("Account", "Home")"><u>Môj účet</u></a><a class="logout ml-2" href="@Url.Action("LogOut", "Admin")"><u>Odhlásiť sa</u></a>
-							</span>
-							<input type="hidden" name="userName" id="userName" value="@Session["username"]">
-							<input type="hidden" name="userId" id="userId" value="@Session["userid"]">
+                        @{
+                            if (username != "")
+                            {
+                                <a href="@Url.Action("Account", "Home")" class="ml-2">
+                                    <i class="icon-user"></i>
+                                </a>
+                                <span>
+                                    @if (role == "0")
+                                    {
+                                        <a href="/cms"><u>Administrácia</u></a><br>
+                                    }
+                                    <a class="logout ml-2" href="@Url.Action("LogOut", "Admin")">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                    </a>
+                                </span>
+                                <input type="hidden" name="userName" id="userName" value="@Session["username"]">
+                                <input type="hidden" name="userId" id="userId" value="@Session["userid"]">
 
-							}
-							else
-							{
-							<span>
-                                        <i class="icon-login login-modal"></i>
-                                    </span>
-							}
-							}
-							</a>
-
-							<a href="@Url.Action("Basket", "Home")">
-							<i class="icon-fishing-net" style="font-size: 25px;margin-right: 0px;"></i>
-							<span id="cart-qty" class="cart-qty" style="left: 15px;">@cartitems</span>
-							</a>
-						</div>
-					</div>
-				</div>
-
-			<div class="col-xl-5 col-lg-4 col-md-4 col-sm-12 search bottom">
-
-				@using (Html.BeginForm("SearchProduct", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform", @class = "form-inline search" }))
-				{
-				@Html.Editor("term", new { htmlAttributes = new { type = "search", id = "search", placeholder = "Vyhľadať produkt" } })
-				}
-			</div>
+                            }
+                            else
+                            {
+                                <span>
+                                    <i class="icon-login login-modal"></i>
+                                </span>
+                            }
+                        }
 
 
-			<div class="col-lg-3 col-md-2 col-sm-12 info" style="white-space: nowrap;">
-				<div class="row">
-					<div class="col-lg-6 d-none d-lg-flex align-items-center flex-wrap">
-						<div>
-							<i class="icon-phone"></i>
-							<span>+421 948 610 250</span>
-						</div>
-						<div>
-							<i class="icon-envelope"></i>
-							<span>info@nahod.sk</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-2 col-md-3 d-md-flex d-sm-none d-none cart align-items-center">
+                        <a href="@Url.Action("Basket", "Home")" class="ml-2">
+                            <i class="icon-fishing-net" style="font-size: 25px;margin-right: 0px;"></i>
+                            <span id="cart-qty" class="cart-qty" style="left: 15px;">@cartitems</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-				<a href="@Url.Action("Basket", "Home")">
-				<i class="icon-fishing-net"></i>
-				<span id="cart-qty" class="cart-qty">@cartitems</span>
-				<span id="cart-total" class="cart-total">@cartsum.ToString("n2") €</span>
-				</a>
-			</div>
-		</div>
-		@{
-		Html.RenderPartial("_MenuHeader");
-		}
-	</div>
+            <div class="col-xl-5 col-lg-4 col-md-4 col-sm-12 search bottom">
 
-	<!-- desktop version -->
-    <div class="header-container container-fluid w-75">
+                @using (Html.BeginForm("SearchProduct", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform", @class = "form-inline search" }))
+                {
+                    @Html.Editor("term", new { htmlAttributes = new { type = "search", @class = "searchinput", placeholder = "Vyhľadať produkt" } })
+                }
+            </div>
+
+
+            <div class="col-lg-3 col-md-2 col-sm-12 info" style="white-space: nowrap;">
+                <div class="row">
+                    <div class="col-lg-6 d-none d-lg-flex align-items-center flex-wrap">
+                        <div>
+                            <i class="icon-phone"></i>
+                            <span>+421 948 610 250</span>
+                        </div>
+                        <div>
+                            <i class="icon-envelope"></i>
+                            <span>info@nahod.sk</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 d-md-flex d-sm-none d-none cart align-items-center">
+
+                <a href="@Url.Action("Basket", "Home")">
+                    <i class="icon-fishing-net"></i>
+                    <span id="cart-qty" class="cart-qty">@cartitems</span>
+                    <span id="cart-total" class="cart-total">@cartsum.ToString("n2") €</span>
+                </a>
+            </div>
+        </div>
+        @{
+            Html.RenderPartial("_MenuHeader");
+        }
+    </div>
+
+    <!-- desktop version -->
+    <div class="header-container desktop-header container-fluid w-75">
         <div class="row d-flex align-items-center header-top">
             <div class="col-lg-2 col-md-2 col-sm-12 col-12">
                 <div class="row justify-content-between align-items-center">
@@ -310,12 +313,12 @@
 
                 @using (Html.BeginForm("SearchProduct", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform", @class = "form-inline search" }))
                 {
-                    @Html.Editor("term", new { htmlAttributes = new { type = "search", id = "search", placeholder = "Vyhľadať produkt" } })
+                    @Html.Editor("term", new { htmlAttributes = new { type = "search", @class = "searchinput", placeholder = "Vyhľadať produkt" } })
                 }
             </div>
 
 
-            <div class="col-lg-3 col-md-2 col-sm-12 info" style="white-space: nowrap;">
+            <div class="col-lg-3 col-md-3 col-sm-12 info" style="white-space: nowrap;">
                 <div class="row">
                     <div class="col-lg-6 d-none d-lg-flex align-items-center flex-wrap">
                         <div>
@@ -334,7 +337,9 @@
                                 {
                                     <i class="icon-user"></i>
                                     <span>
-                                        Vitajte @username!<br>
+                                        <span class="greeting">
+                                            @username!<br>
+                                        </span>
                                         @if (role == "0")
                                         {
                                             <a href="/cms"><u>Administrácia</u></a><br>
@@ -361,11 +366,13 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-3 d-md-flex d-sm-none d-none cart align-items-center">
+            <div class="col-lg-2 col-md-3 d-md-flex d-sm-none d-none cart align-items-center justify-content-end">
 
                 <a href="@Url.Action("Basket", "Home")">
-                    <i class="icon-fishing-net"></i>
-                    <span id="cart-qty" class="cart-qty">@cartitems</span>
+                    <span class="cart-sum position-relative">
+                        <i class="icon-fishing-net"></i>
+                        <span id="cart-qty" class="cart-qty">@cartitems</span>
+                    </span>
                     <span id="cart-total" class="cart-total">@cartsum.ToString("n2") €</span>
                 </a>
             </div>
@@ -495,13 +502,13 @@
         @foreach (var cat in Model.CategoriesModel.Where(i => i.maincat == "Žiadna"))
         {
             <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(cat.slug)})" class="sub_catsmenu">
-                <div class="category-image" style="background-image:url(https://via.placeholder.com/150)"></div>
+                <div class="category-image" style="background-image:url('/Uploads/@cat.image')"></div>
                 <h3 class="firstcat">
-                @Html.Raw(cat.name)
-                <span class="toggle-category">
-                    <i class="fas fa-caret-up closed active"></i>
-                    <i class="fas fa-caret-down opened"></i>
-                </span>
+                    @Html.Raw(cat.name)
+                    <span class="toggle-category">
+                        <i class="fas fa-caret-up closed active"></i>
+                        <i class="fas fa-caret-down opened"></i>
+                    </span>
                 </h3>
             </a>
             <ul>
@@ -516,7 +523,7 @@
                     if (dropdowncounter > 1)
                     {
                         <a class="dropdown-btn sub_catsmenu" style="color:#fff">
-                            <div class="category-image" style="background-image:url(/Uploads/@subcat.image)"></div>
+                            <div class="category-image" style="background-image:url('/Uploads/@subcat.image')"></div>
                             <li><strong>@Html.Raw(subcat.name)</strong></li>
                         </a>
 
@@ -526,7 +533,7 @@
                     else
                     {
                         <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(cat.slug), subslug = @Html.Raw(subcat.slug)})" class="sub_catsmenu" style="color:#fff">
-                            <div class="category-image" style="background-image:url(/Uploads/@subcat.image)"></div>
+                            <div class="category-image" style="background-image:url('/Uploads/@subcat.image')"></div>
                             <li><strong>@Html.Raw(subcat.name)</strong></li>
                         </a>
 
@@ -613,13 +620,13 @@
         function openNav() {
             // document.getElementById("mySidebar").style.width = "250px";
             // document.getElementById("main").style.marginLeft = "250px";
-			document.getElementById("mySidebar").classList.toggle("active");
+            document.getElementById("mySidebar").classList.toggle("active");
         }
 
         function closeNav() {
             // document.getElementById("mySidebar").style.width = "0";
             // document.getElementById("main").style.marginLeft = "0";
-			document.getElementById("mySidebar").classList.toggle("active");
+            document.getElementById("mySidebar").classList.toggle("active");
         }
 
         jQuery(document).on('click',
@@ -627,6 +634,12 @@
             function (e) {
                 e.stopPropagation()
             })
+
+        $(document).on('keypress', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+            }
+        });
     </script>
 
 
@@ -648,7 +661,7 @@
                 $("#myModalReg").css("display", "none");
             });
 
-            $('h3.firstcat span').on('click',function(event){
+            $('h3.firstcat span').on('click', function (event) {
                 event.preventDefault();
                 event.stopPropagation();
 

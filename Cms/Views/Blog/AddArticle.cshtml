@@ -33,7 +33,8 @@
                     <div class="col-md-12 btnvyber">
                         <a id="btn_vis" style="cursor:pointer">Vyber fotografie</a>
                         @Html.TextBoxFor(model => model.TitleImage, "", new { @type = "file", @class = "form-control", @accept = "jpg|png|jpeg|gif", @style = "max-width: 67%;height:60px;display:none;", @id = "bttn", @onchange = "pressed()" })
-                        <label id="fileLabel">Nie je vybratá žiadna fotografia.</label>
+                        <label id="
+                               ">Nie je vybratá žiadna fotografia.</label>
                         @Html.ValidationMessageFor(model => model.TitleImage, "", new { @class = "text-danger" })
                     </div>
                 </div>

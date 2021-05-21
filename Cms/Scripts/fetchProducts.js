@@ -47,7 +47,7 @@ function fetchProducts(page, bybrand, search, bytype) {
 
 }
 
-function fetchUser(username, id) {    
+function fetchUser(username, id) {
     let APIurl = "/Api/FetchUser";
 
     $.ajax({
@@ -146,6 +146,7 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
             }
         }
 
+        /* let $row = '<div class="col-md-5ths filterprod product mb-2 mx-1">'; */
         let $row = '<div class="col-md-5ths filterprod product mb-2 mx-1">';
 
         $row += '<a href="/detail-produktu/' + item.id + '/' + slug + '">';
@@ -167,7 +168,7 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
         $row += '</div><div class="prod-header">' + item.title + '</div>';
 
         var shortdescription = "";
-        if (item.description != null) {            
+        if (item.description != null) {
             shortdescription = stripHtml(item.description).substring(0, 60) + "...";
         }
 
@@ -257,20 +258,20 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
                         break;
                 }
 
-                $row += '<span class="prod-discount">' + defaultPrice.toString().replace(".",",") + ' €</span> <span class="prod-base">' + ratingPrice.toFixedNoRounding(2) + ' €</span>';
+                $row += '<span class="prod-discount">' + defaultPrice.toString().replace(".", ",") + ' €</span> <span class="prod-base">' + ratingPrice.toFixedNoRounding(2) + ' €</span>';
                 actualPrice = ratingPrice;
             }
             else {
                 $row += '<span class="prod-base">' + item.price.toFixedNoRounding(2).replace(".", ",") + ' €</span>';
                 actualPrice = item.price;
             }
-        }    
+        }
 
         $row += '</div></a>';
         let actualPriceStr = actualPrice.toFixedNoRounding(2);
         $row += '<a onclick="addToCart(' + item.id + ',' + isVariant + ',' + actualPriceStr + ')" class="prod-add-to-cart"><div style="text-align: center;"> <img class="prod-icon" src="/Content/images/cart.svg" alt="cart"><span>Pridať do košíka</span></span></div>';
 
-        
+
         $row = $($row)
 
         $container.append($row);

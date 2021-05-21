@@ -3,12 +3,15 @@
 @using System.Linq;
 @using Newtonsoft.Json.Linq
 @using Newtonsoft.Json;
+@using Cms.Controllers
 @model Cms.Models.MultipleIndexModel
 
 @{
     ViewBag.Title = "Basket";
     ViewBag.Shipping = "";
     ViewBag.Payment = "";
+
+    HelperController helper = new HelperController();
 }
 
 <style>
@@ -50,7 +53,13 @@
 
                                 <tr>
                                     <td style="width: 70px"><img src="~/Uploads/@Html.DisplayFor(modelItem => thisProd.image)" style="width: 50px" /></td>
-                                    <td><strong>@Html.Raw(thisProd.title)</strong></td>
+
+                                    @{
+                                        var slug = helper.ToUrlSlug(thisProd.title);
+                                    }
+
+
+                                    <td><strong><a href="/detail-produktu/@thisProd.id/@slug">@Html.Raw(thisProd.title)</a></strong></td>
 
                                     <td style="text-align: center;">
                                         @if (item.variant != "")
@@ -206,6 +215,15 @@
                                                     finalpriceDiscount.Add(quantity * thisDiscount);
                                                 }
                                             }
+                                            else
+                                            {
+                                                productprice = povodnacena * (1 - coupondiscount);
+
+                                                decimal thisDiscount = povodnacena * coupondiscount;
+                                                finalpriceDiscount.Add(quantity * thisDiscount);
+
+                                            }
+
                                         }
                                     }
                                 }
@@ -866,34 +884,37 @@
 
                 <table class="table mt-2 mt-sm-0" style="font-size: 14px;" id="myTable2">
                     @{
-                        foreach (var item in cart)
+                        if (cart != null)
                         {
+                            foreach (var item in cart)
+                            {
 
-                            var thisProd = Model.ProductModel.Where(i => i.id == item.product.Value).SingleOrDefault();
+                                var thisProd = Model.ProductModel.Where(i => i.id == item.product.Value).SingleOrDefault();
 
-                            <tr>
-                                <td style="width: 70px"><img src="~/Uploads/@Html.DisplayFor(modelItem => thisProd.image)" style="width: 50px" /></td>
-                                <td><strong>@Html.Raw(thisProd.title)</strong></td>
+                                <tr>
+                                    <td style="width: 70px"><img src="~/Uploads/@Html.DisplayFor(modelItem => thisProd.image)" style="width: 50px" /></td>
+                                    <td><strong>@Html.Raw(thisProd.title)</strong></td>
 
-                                <td style="text-align: center;">
-                                    @if (item.variant != "")
-                                    {
-                                        @Html.Raw(item.variant) @Html.Raw(" ") @Html.Raw(item.variant2)
+                                    <td style="text-align: center;">
+                                        @if (item.variant != "")
+                                        {
+                                            @Html.Raw(item.variant) @Html.Raw(" ") @Html.Raw(item.variant2)
+                                        }
+                                    </td>
+
+                                    <td style="text-align: center;">
+                                        <div class="cart-item-amount">
+                                            <input type="number" value="@Html.Raw(item.quantity)" disabled>
+                                        </div>
+                                    </td>
+
+                                    @{
+                                        productprice = Convert.ToDecimal(item.price);
+                                        quantity = Convert.ToDecimal(item.quantity);
                                     }
-                                </td>
-
-                                <td style="text-align: center;">
-                                    <div class="cart-item-amount">
-                                        <input type="number" value="@Html.Raw(item.quantity)" disabled>
-                                    </div>
-                                </td>
-
-                                @{
-                                    productprice = Convert.ToDecimal(item.price);
-                                    quantity = Convert.ToDecimal(item.quantity);
-                                }
-                                <td><strong style="font-size: 16px;">@productprice.ToString("n2") €</strong></td>
-                            </tr>
+                                    <td><strong style="font-size: 16px;">@productprice.ToString("n2") €</strong></td>
+                                </tr>
+                            }
                         }
                     }
                 </table>

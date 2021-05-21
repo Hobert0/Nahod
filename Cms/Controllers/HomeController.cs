@@ -383,6 +383,8 @@ namespace Cms.Controllers
             ViewData["minM2"] = room.FirstOrDefault();
             ViewData["maxM2"] = room.LastOrDefault();
 
+            ViewData["countries"] = new AdminController().SelectionCountries();
+
             return View(model);
         }
 

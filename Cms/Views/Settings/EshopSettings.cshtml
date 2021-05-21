@@ -23,353 +23,374 @@
 @using (Html.BeginForm("SaveEshopSettings", "Settings", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
 {
     @Html.AntiForgeryToken()
-    <div class="form-horizontal">
+<div class="form-horizontal">
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <h3>Fakturačné údaje e-shopu</h3>
+    <h3>Fakturačné údaje e-shopu</h3>
 
-        <div class="form-group">
-            <div class="col-md-11">
-                @Html.EditorFor(model => model.Companyname, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov obchodu" } })
-                @Html.ValidationMessageFor(model => model.Companyname, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        <div class="col-md-11">
+            @Html.EditorFor(model => model.Companyname, new { htmlAttributes = new { @class = "form-control", placeholder = "Názov obchodu" } })
+            @Html.ValidationMessageFor(model => model.Companyname, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Adresa" } })
-                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", placeholder = "Mesto" } })
-                        @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
-                    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Adresa" } })
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Custom, new { htmlAttributes = new { @class = "form-control", placeholder = "Psč" } })
-                        @Html.ValidationMessageFor(model => model.Custom, "", new { @class = "text-danger" })
-                    </div>
+        <div class="col">
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", placeholder = "Mesto" } })
+                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
                 </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control", placeholder = "Krajina" } })
-                        @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Ico, new { htmlAttributes = new { @class = "form-control", placeholder = "IČO" } })
-                        @Html.ValidationMessageFor(model => model.Ico, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Dic, new { htmlAttributes = new { @class = "form-control", placeholder = "DIČ" } })
-                        @Html.ValidationMessageFor(model => model.Dic, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Icdph, new { htmlAttributes = new { @class = "form-control", placeholder = "IČ DPH" } })
-                        @Html.ValidationMessageFor(model => model.Icdph, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Accountnumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Číslo účtu" } })
-                        @Html.ValidationMessageFor(model => model.Accountnumber, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-
-        </div>
-
-        <br />
-        <h3>Doprava</h3>
-        <hr />
-        <p class="explain">Zvoľte možnosti dopravy povolené na e-shope a ich cenu. Druh dopravy je možné ľubovoľne aktivovať a deaktivovať.</p>
-        <div class="row">
-            <div class="col">
-                <div class="form-row" style="padding-left: 15px;padding-bottom: 15px;">
-                    @Html.LabelFor(model => model.Transfer1, "Kuriérska spoločnosť (€)", htmlAttributes: new { @class = "control-label col-md-6" })
-                    <div class="col-md-3">
-                        @Html.EditorFor(model => model.Transfer1, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
-                        @Html.ValidationMessageFor(model => model.Transfer1, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-2 pt-2">
-                        @Html.CheckBoxFor(model => model.Transfer1Enbl, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Transfer1Enbl, "", new { @class = "text-danger" })
-                        <div class="popover__wrapper">
-                            <a href="#">
-                                <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
-                            </a>
-                            <div class="push popover__content">
-                                <p class="popover__message">Aktivovať/deaktivovať druh dopravy.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-row" style="padding-left: 15px;padding-bottom: 15px;">
-                    @Html.LabelFor(model => model.Transfer2, "Slovenská pošta (€)", htmlAttributes: new { @class = "control-label col-md-6" })
-                    <div class="col-md-3">
-                        @Html.EditorFor(model => model.Transfer2, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
-                        @Html.ValidationMessageFor(model => model.Transfer2, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-2 pt-2">
-                        @Html.CheckBoxFor(model => model.Transfer2Enbl, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Transfer2Enbl, "", new { @class = "text-danger" })
-                        <div class="popover__wrapper">
-                            <a href="#">
-                                <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
-                            </a>
-                            <div class="push popover__content">
-                                <p class="popover__message">Aktivovať/deaktivovať druh dopravy.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="form-row" style="padding-left: 15px;padding-bottom: 15px;">
-                    @Html.LabelFor(model => model.Transfer3, "Osobný odber (€)", htmlAttributes: new { @class = "control-label col-md-6" })
-                    <div class="col-md-3">
-                        @Html.EditorFor(model => model.Transfer3, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
-                        @Html.ValidationMessageFor(model => model.Transfer3, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-2 pt-2">
-                        @Html.CheckBoxFor(model => model.Transfer3Enbl, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Transfer3Enbl, "", new { @class = "text-danger" })
-                        <div class="popover__wrapper">
-                            <a href="#">
-                                <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
-                            </a>
-                            <div class="push popover__content">
-                                <p class="popover__message">Aktivovať/deaktivovať druh dopravy.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col">
-
-            </div>
-        </div>
-        <br />
-        <br />
-        <h3>Podnastavenia dopravy</h3>
-        <p class="explain">Zvoľte dodatočné možnosti dopravy.</p>
-        <div class="row">
-            <div class="col">
-                <div class="col-md-12">
-                    <div class="form-row" style="padding-left:15px;padding-bottom:15px">
-                        @Html.LabelFor(model => model.Transfer5, "Doprava zadarmo od (€)", htmlAttributes: new { @class = "control-label col-md-6" })
-                        <div class="col-md-3">
-                            @Html.EditorFor(model => model.Transfer5, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
-                            @Html.ValidationMessageFor(model => model.Transfer5, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-row" style="padding-left:15px;padding-bottom:15px">
-                        @Html.LabelFor(model => model.DeliveryPrice1, "Doprava do 100€", htmlAttributes: new { @class = "control-label col-md-6" })
-                        <div class="col-md-3">
-                            @Html.EditorFor(model => model.DeliveryPrice1, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
-                            @Html.ValidationMessageFor(model => model.DeliveryPrice1, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="col-md-12">
-                    <div class="form-row" style="padding-left:15px;padding-bottom:15px">
-                        @Html.LabelFor(model => model.DeliveryPrice2, "Doprava od 100€ do 500€", htmlAttributes: new { @class = "control-label col-md-6" })
-                        <div class="col-md-3">
-                            @Html.EditorFor(model => model.DeliveryPrice2, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
-                            @Html.ValidationMessageFor(model => model.DeliveryPrice2, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-row" style="padding-left:15px;padding-bottom:15px">
-                        @Html.LabelFor(model => model.DeliveryPrice3, "Doprava od 500€", htmlAttributes: new { @class = "control-label col-md-6" })
-                        <div class="col-md-3">
-                            @Html.EditorFor(model => model.DeliveryPrice3, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
-                            @Html.ValidationMessageFor(model => model.DeliveryPrice3, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br />
-        <h3>Platba</h3>
-        <hr />
-        <p class="explain">Zvoľte možnosti platby povolené na e-shope a ich cenu. Druh platby je možné ľubovoľne aktivovať a deaktivovať.</p>
-
-        <div class="row">
-            <div class="col">
-                <div class="form-row" style="padding-left: 15px;padding-bottom: 15px;">
-                    @Html.LabelFor(model => model.Pay1, "V hotovosti pri osobnom odbere (€)", htmlAttributes: new { @class = "control-label col-md-6" })
-                    <div class="col-md-3">
-                        @Html.EditorFor(model => model.Pay1, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
-                        @Html.ValidationMessageFor(model => model.Pay1, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-2 pt-2">
-                        @Html.CheckBoxFor(model => model.Pay1Enbl, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Pay1Enbl, "", new { @class = "text-danger" })
-                        <div class="popover__wrapper">
-                            <a href="#">
-                                <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
-                            </a>
-                            <div class="push popover__content">
-                                <p class="popover__message">Aktivovať/deaktivovať druh platby.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col">
-                <div class="form-row" style="padding-left: 15px;padding-bottom: 15px;">
-                    @Html.LabelFor(model => model.Pay2, "Kartou (€)", htmlAttributes: new { @class = "control-label col-md-6" })
-                    <div class="col-md-3">
-                        @Html.EditorFor(model => model.Pay2, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
-                        @Html.ValidationMessageFor(model => model.Pay2, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-2 pt-2">
-                        @Html.CheckBoxFor(model => model.Pay2Enbl, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Pay2Enbl, "", new { @class = "text-danger" })
-                        <div class="popover__wrapper">
-                            <a href="#">
-                                <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
-                            </a>
-                            <div class="push popover__content">
-                                <p class="popover__message">Aktivovať/deaktivovať druh platby.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="form-row" style="padding-left: 15px;padding-bottom: 15px;">
-                    @Html.LabelFor(model => model.Pay3, "Bankovým prevodom (€)", htmlAttributes: new { @class = "control-label col-md-6" })
-                    <div class="col-md-3">
-                        @Html.EditorFor(model => model.Pay3, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
-                        @Html.ValidationMessageFor(model => model.Pay3, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-2 pt-2">
-                        @Html.CheckBoxFor(model => model.Pay3Enbl, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Pay3Enbl, "", new { @class = "text-danger" })
-                        <div class="popover__wrapper">
-                            <a href="#">
-                                <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
-                            </a>
-                            <div class="push popover__content">
-                                <p class="popover__message">Aktivovať/deaktivovať druh platby.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col">
-                <div class="form-row" style="padding-left: 15px;padding-bottom: 15px;">
-                    @Html.LabelFor(model => model.Pay4, "Dobierkou (€)", htmlAttributes: new { @class = "control-label col-md-6" })
-                    <div class="col-md-3">
-                        @Html.EditorFor(model => model.Pay4, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
-                        @Html.ValidationMessageFor(model => model.Pay4, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-2 pt-2">
-                        @Html.CheckBoxFor(model => model.Pay4Enbl, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Pay4Enbl, "", new { @class = "text-danger" })
-                        <div class="popover__wrapper">
-                            <a href="#">
-                                <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
-                            </a>
-                            <div class="push popover__content">
-                                <p class="popover__message">Aktivovať/deaktivovať druh platby.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <br />
-        <h3>PDF Dokumenty</h3>
-        <hr />
-
-        <div class="row" style="margin-top: 10px;">
-            <div class="mt-1 text-right" style="width: 180px;">
-                <strong>Všeobecné obchodné podmienky</strong>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <div class="col-md-12 btnvyber">
-                        <a id="btn_vis" style="cursor:pointer">Vyber dokument</a>
-                        @Html.TextBoxFor(model => model.VopPdf, "", new { @type = "file", @class = "form-control", @accept = "pdf", @style = "max-width: 67%;height:60px;display:none;", @id = "bttn", @onchange = "pressed()" })
-                        <label id="fileLabel">Nie je vybratý žiadny dokument.</label>
-
-                    </div>
-                </div>
-            </div>
-            <div class="mt-1 text-right" style="width: 180px;">
-                <strong>Reklamančný poriadok</strong>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <div class="col-md-12 btnvyber">
-                        <a id="btn_vis" style="cursor:pointer">Vyber dokument</a>
-                        @Html.TextBoxFor(model => model.ReturnPdf, "", new { @type = "file", @class = "form-control", @accept = "pdf", @style = "max-width: 67%;height:60px;display:none;", @id = "bttn", @onchange = "pressed()" })
-                        <label id="fileLabel">Nie je vybratý žiadny dokument.</label>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group pt-5">
-            <div style="text-align:right">
-                <input type="submit" value="Uložiť zmeny" class="btn btn-success" />
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Custom, new { htmlAttributes = new { @class = "form-control", placeholder = "Psč" } })
+                    @Html.ValidationMessageFor(model => model.Custom, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control", placeholder = "Krajina" } })
+                    @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Ico, new { htmlAttributes = new { @class = "form-control", placeholder = "IČO" } })
+                    @Html.ValidationMessageFor(model => model.Ico, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Dic, new { htmlAttributes = new { @class = "form-control", placeholder = "DIČ" } })
+                    @Html.ValidationMessageFor(model => model.Dic, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Icdph, new { htmlAttributes = new { @class = "form-control", placeholder = "IČ DPH" } })
+                    @Html.ValidationMessageFor(model => model.Icdph, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Accountnumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Číslo účtu" } })
+                    @Html.ValidationMessageFor(model => model.Accountnumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+    </div>
+
+    <br />
+    <h3>Doprava</h3>
+    <hr />
+    <p class="explain">Zvoľte možnosti dopravy povolené na e-shope a ich cenu. Druh dopravy je možné ľubovoľne aktivovať a deaktivovať.</p>
+    <div class="row">
+        <div class="col">
+            <div class="form-row" style="padding-left: 15px;padding-bottom: 15px;">
+                @Html.LabelFor(model => model.Transfer1, "Kuriérska spoločnosť (€)", htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.Transfer1, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
+                    @Html.ValidationMessageFor(model => model.Transfer1, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 pt-2">
+                    @Html.CheckBoxFor(model => model.Transfer1Enbl, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Transfer1Enbl, "", new { @class = "text-danger" })
+                    <div class="popover__wrapper">
+                        <a href="#">
+                            <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
+                        </a>
+                        <div class="push popover__content">
+                            <p class="popover__message">Aktivovať/deaktivovať druh dopravy.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-row" style="padding-left: 15px;padding-bottom: 15px;">
+                @Html.LabelFor(model => model.Transfer2, "Slovenská pošta (€)", htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.Transfer2, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
+                    @Html.ValidationMessageFor(model => model.Transfer2, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 pt-2">
+                    @Html.CheckBoxFor(model => model.Transfer2Enbl, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Transfer2Enbl, "", new { @class = "text-danger" })
+                    <div class="popover__wrapper">
+                        <a href="#">
+                            <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
+                        </a>
+                        <div class="push popover__content">
+                            <p class="popover__message">Aktivovať/deaktivovať druh dopravy.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-row" style="padding-left: 15px;padding-bottom: 15px;">
+                @Html.LabelFor(model => model.Transfer3, "Osobný odber (€)", htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.Transfer3, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
+                    @Html.ValidationMessageFor(model => model.Transfer3, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 pt-2">
+                    @Html.CheckBoxFor(model => model.Transfer3Enbl, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Transfer3Enbl, "", new { @class = "text-danger" })
+                    <div class="popover__wrapper">
+                        <a href="#">
+                            <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
+                        </a>
+                        <div class="push popover__content">
+                            <p class="popover__message">Aktivovať/deaktivovať druh dopravy.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col">
+
+        </div>
+    </div>
+    <br />
+    <br />
+    <h3>Podnastavenia dopravy</h3>
+    <p class="explain">Zvoľte dodatočné možnosti dopravy.</p>
+    <div class="row">
+        <div class="col">
+            <div class="col-md-12">
+                <div class="form-row" style="padding-left:15px;padding-bottom:15px">
+                    @Html.LabelFor(model => model.Transfer5, "Doprava zadarmo od (€)", htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-3">
+                        @Html.EditorFor(model => model.Transfer5, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
+                        @Html.ValidationMessageFor(model => model.Transfer5, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-row" style="padding-left:15px;padding-bottom:15px">
+                    @Html.LabelFor(model => model.DeliveryPrice1, "Doprava do 100€", htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-3">
+                        @Html.EditorFor(model => model.DeliveryPrice1, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
+                        @Html.ValidationMessageFor(model => model.DeliveryPrice1, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="col-md-12">
+                <div class="form-row" style="padding-left:15px;padding-bottom:15px">
+                    @Html.LabelFor(model => model.DeliveryPrice2, "Doprava od 100€ do 500€", htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-3">
+                        @Html.EditorFor(model => model.DeliveryPrice2, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
+                        @Html.ValidationMessageFor(model => model.DeliveryPrice2, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-row" style="padding-left:15px;padding-bottom:15px">
+                    @Html.LabelFor(model => model.DeliveryPrice3, "Doprava od 500€", htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-3">
+                        @Html.EditorFor(model => model.DeliveryPrice3, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
+                        @Html.ValidationMessageFor(model => model.DeliveryPrice3, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <h3>Platba</h3>
+    <hr />
+    <p class="explain">Zvoľte možnosti platby povolené na e-shope a ich cenu. Druh platby je možné ľubovoľne aktivovať a deaktivovať.</p>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-row" style="padding-left: 15px;padding-bottom: 15px;">
+                @Html.LabelFor(model => model.Pay1, "V hotovosti pri osobnom odbere (€)", htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.Pay1, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
+                    @Html.ValidationMessageFor(model => model.Pay1, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 pt-2">
+                    @Html.CheckBoxFor(model => model.Pay1Enbl, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Pay1Enbl, "", new { @class = "text-danger" })
+                    <div class="popover__wrapper">
+                        <a href="#">
+                            <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
+                        </a>
+                        <div class="push popover__content">
+                            <p class="popover__message">Aktivovať/deaktivovať druh platby.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col">
+            <div class="form-row" style="padding-left: 15px;padding-bottom: 15px;">
+                @Html.LabelFor(model => model.Pay2, "Kartou (€)", htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.Pay2, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
+                    @Html.ValidationMessageFor(model => model.Pay2, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 pt-2">
+                    @Html.CheckBoxFor(model => model.Pay2Enbl, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Pay2Enbl, "", new { @class = "text-danger" })
+                    <div class="popover__wrapper">
+                        <a href="#">
+                            <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
+                        </a>
+                        <div class="push popover__content">
+                            <p class="popover__message">Aktivovať/deaktivovať druh platby.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-row" style="padding-left: 15px;padding-bottom: 15px;">
+                @Html.LabelFor(model => model.Pay3, "Bankovým prevodom (€)", htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.Pay3, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
+                    @Html.ValidationMessageFor(model => model.Pay3, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 pt-2">
+                    @Html.CheckBoxFor(model => model.Pay3Enbl, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Pay3Enbl, "", new { @class = "text-danger" })
+                    <div class="popover__wrapper">
+                        <a href="#">
+                            <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
+                        </a>
+                        <div class="push popover__content">
+                            <p class="popover__message">Aktivovať/deaktivovať druh platby.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col">
+            <div class="form-row" style="padding-left: 15px;padding-bottom: 15px;">
+                @Html.LabelFor(model => model.Pay4, "Dobierkou (€)", htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.Pay4, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
+                    @Html.ValidationMessageFor(model => model.Pay4, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 pt-2">
+                    @Html.CheckBoxFor(model => model.Pay4Enbl, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Pay4Enbl, "", new { @class = "text-danger" })
+                    <div class="popover__wrapper">
+                        <a href="#">
+                            <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
+                        </a>
+                        <div class="push popover__content">
+                            <p class="popover__message">Aktivovať/deaktivovať druh platby.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <h3>PDF Dokumenty</h3>
+    <hr />
+
+    @Html.EditorFor(model => model.VopPdf, new { htmlAttributes = new { @class = "form-control", style = "display:none !important;"} })
+    @Html.EditorFor(model => model.ReturnPdf, new { htmlAttributes = new { @class = "form-control", style = "display:none !important;" } })
+
+    <div class="row" style="margin-top: 10px;">
+        <div class="mt-1 text-right" style="width: 180px;">
+            <strong>Všeobecné obchodné podmienky</strong>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <div class="col-md-12 btnvyber">
+                    <a id="btn_vis" style="cursor:pointer">Vyber dokument</a>
+                    @Html.TextBoxFor(model => model.VopPdfImage, "", new { @type = "file", @class = "form-control", @accept = "pdf", @style = "max-width: 67%;height:60px;display:none;", @id = "bttn", @onchange = "pressed1()" })
+
+                    @{
+                        var fileLabelText = "Nie je vybratý žiadny dokument.";
+                        if (Model.VopPdf != null)
+                        {
+                            fileLabelText = Model.VopPdf;
+                        }
+                    }
+                    <br><br>
+                    <label id="fileLabel">@fileLabelText</label>
+
+                </div>
+            </div>
+        </div>
+        <div class="mt-1 text-right" style="width: 180px;">
+            <strong>Reklamančný poriadok</strong>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <div class="col-md-12 btnvyber">
+                    <a id="bttn_vis" style="cursor:pointer">Vyber dokument</a>
+                    @Html.TextBoxFor(model => model.ReturnPdfImage, "", new { @type = "file", @class = "form-control", @accept = "pdf", @style = "max-width: 67%;height:60px;display:none;", @id = "btttn", @onchange = "pressed2()" })
+
+                    @{
+                        fileLabelText = "Nie je vybratý žiadny dokument.";
+                        if (Model.ReturnPdf != null)
+                        {
+                            fileLabelText = Model.ReturnPdf;
+                        }
+                    }
+                    <br><br>
+                    <label id="fileLabell">@fileLabelText</label>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group pt-5">
+        <div style="text-align:right">
+            <input type="submit" value="Uložiť zmeny" class="btn btn-success" />
+        </div>
+    </div>
+</div>
 }
 
 <script>
@@ -377,13 +398,13 @@
         $("#bttn").trigger('click');
     });
 
-    window.pressed = function () {
+    window.pressed1 = function () {
         var a = document.getElementById('bttn');
         if (a.files.length > 1) {
-            fileLabel.innerHTML = "Boli vybraté " + a.files.length + " fotografie.";
+            fileLabel.innerHTML = "Boli vybratý " + a.files.length + " dokument.";
         }
         else if (a.files.length = 1) {
-            fileLabel.innerHTML = "Bola vybratá " + a.files.length + " fotografia.";
+            fileLabel.innerHTML = "Bola vybratý " + a.files.length + " dokument.";
         }
     };
 
@@ -391,13 +412,13 @@
         $("#btttn").trigger('click');
     });
 
-    window.press = function () {
+    window.pressed2 = function () {
         var a = document.getElementById('btttn');
         if (a.files.length > 1) {
-            fileLabell.innerHTML = "Boli vybraté " + a.files.length + " fotografie.";
+            fileLabell.innerHTML = "Boli vybratý " + a.files.length + " dokument.";
         }
         else if (a.files.length = 1) {
-            fileLabell.innerHTML = "Bola vybratá " + a.files.length + " fotografia.";
+            fileLabell.innerHTML = "Bola vybratý " + a.files.length + " dokument.";
         }
     };
 </script>
