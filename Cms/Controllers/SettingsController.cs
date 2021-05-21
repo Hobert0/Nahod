@@ -98,6 +98,46 @@ namespace Cms.Controllers
         [HttpPost]
         public async Task<ActionResult> SaveEshopSettings(EsettingsModel model)
         {
+
+            var nazovSuboruVop = string.Empty;
+            if (model.VopPdfImage != null)
+            {
+                HttpPostedFileBase[] subor = model.VopPdfImage;
+                if (model.VopPdfImage[0] != null)
+                {
+                    foreach (HttpPostedFileBase file in subor)
+                    {
+                        nazovSuboruVop = Path.GetFileName(file.FileName);
+                    }
+                }
+            }
+
+            var ulozObrazokVop = DateTime.Now.Date.ToString("dd.MM.yyyy") + "/" + DateTime.Now.ToString("HHmmss") + "/";
+            if (nazovSuboruVop == "")
+            {
+                nazovSuboruVop = "avatar_product.jpg";
+            }
+
+            var nazovSuboruReturn = string.Empty;
+            if (model.ReturnPdfImage != null)
+            {
+                HttpPostedFileBase[] subor = model.ReturnPdfImage;
+                if (model.ReturnPdfImage[0] != null)
+                {
+                    foreach (HttpPostedFileBase file in subor)
+                    {
+                        nazovSuboruReturn = Path.GetFileName(file.FileName);
+                    }
+                }
+            }
+
+            var ulozObrazokReturn = DateTime.Now.Date.ToString("dd.MM.yyyy") + "/" + DateTime.Now.ToString("HHmmss") + "/";
+            if (nazovSuboruReturn == "")
+            {
+                nazovSuboruReturn = "avatar_product.jpg";
+            }
+
+
             var o = db.e_settings.Single(i => i.id == 1);
 
             if(model.Transfer1 != null){ model.Transfer1 = model.Transfer1.Replace(",", ".");}
@@ -143,8 +183,29 @@ namespace Cms.Controllers
             o.deliveryprice1 = model.DeliveryPrice1;
             o.deliveryprice2 = model.DeliveryPrice2;
             o.deliveryprice3 = model.DeliveryPrice3;
+            o.vopPdf = ulozObrazokVop + nazovSuboruVop;
+            o.returnPdf = ulozObrazokReturn + nazovSuboruReturn;
+            o.returnPdf = model.ReturnPdf;
 
             db.SaveChanges();
+
+            if (model.VopPdfImage != null)
+            {
+                if (model.VopPdfImage[0] != null)
+                {
+                    await UploadFiles(model.VopPdfImage, ulozObrazokVop);
+                }
+                
+            }
+
+            if (model.ReturnPdfImage != null)
+            {
+                if (model.ReturnPdfImage[0] != null)
+                {
+                    await UploadFiles(model.ReturnPdfImage, ulozObrazokReturn);
+                }
+
+            }
 
             return RedirectToAction("EshopSettings");
         }
@@ -311,5 +372,44 @@ namespace Cms.Controllers
             return View();
         }
         /*SLIDESHOW SETTINGS - END */
+
+        [HttpPost]
+        public async Task<ActionResult> UploadFiles(HttpPostedFileBase[] files, string foto)
+        {
+            //Ensure model state is valid  
+            //iterating through multiple file collection   
+            var miestoUlozenia = "~/Uploads/" + foto;
+            var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia));
+
+
+            foreach (HttpPostedFileBase file in files)
+            {
+
+                //Checking file is available to save.  
+                if (file != null)
+                {
+                    var InputFileName = Path.GetFileName(file.FileName);
+                    var ServerSavePath = Path.Combine(Server.MapPath(miestoUlozenia) + InputFileName);
+
+                    byte[] fileByte;
+                    using (var reader = new BinaryReader(file.InputStream))
+                    {
+                        fileByte = reader.ReadBytes(file.ContentLength);
+                    }
+                    WebImage img = new WebImage(fileByte);
+                    if (img.Width > 1000)
+                    {
+                        img.Resize(1000 + 1, 1000 + 1, true).Crop(1, 1);
+                    }
+
+                    img.Save(ServerSavePath);
+                    //assigning file uploaded status to ViewBag for showing message to user.  
+                    ViewBag.UploadStatus = files.Count().ToString() + " files uploaded successfully.";
+                }
+
+            }
+            // ReSharper disable once Mvc.ViewNotResolved
+            return View();
+        }
     }
 }

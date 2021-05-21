@@ -841,5 +841,24 @@ namespace Cms.Controllers
             return RedirectToAction("LogOut", "Admin");
             */
         }
+
+        [HttpPost]
+        public ActionResult CreateWatchdog(string watchdogEmail, int thisProdId, string returnUrl)
+        {
+            watchdog w = new watchdog();
+
+            w.email = watchdogEmail;
+            w.prod_id = thisProdId;
+            w.sent = false;
+
+            db.watchdog.Add(w);
+
+            if (db.watchdog.Where(i => i.email == watchdogEmail && i.prod_id == thisProdId && i.sent == false).Count() == 0)
+            {
+                db.SaveChanges();
+            }
+
+            return Redirect(returnUrl);
+        }
     }
 }

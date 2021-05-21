@@ -26,7 +26,6 @@ namespace Cms.Models
         }
     
         public virtual DbSet<deliver_city> deliver_city { get; set; }
-        public virtual DbSet<e_settings> e_settings { get; set; }
         public virtual DbSet<newsletter> newsletter { get; set; }
         public virtual DbSet<pages> pages { get; set; }
         public virtual DbSet<settings> settings { get; set; }
@@ -44,5 +43,7 @@ namespace Cms.Models
         public virtual DbSet<usersmeta> usersmeta { get; set; }
         public virtual DbSet<orders> orders { get; set; }
         public virtual DbSet<products> products { get; set; }
+        public virtual DbSet<watchdog> watchdog { get; set; }
+        public virtual DbSet<e_settings> e_settings { get; set; }
     }
 }

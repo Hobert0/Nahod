@@ -114,6 +114,8 @@
           <Property Name="deliveryprice1" Type="text" />
           <Property Name="deliveryprice2" Type="text" />
           <Property Name="deliveryprice3" Type="text" />
+          <Property Name="vopPdf" Type="text" />
+          <Property Name="returnPdf" Type="text" />
         </EntityType>
         <EntityType Name="newsletter">
           <Key>
@@ -327,6 +329,15 @@
           <Property Name="num" Type="int" Nullable="false" />
           <Property Name="deleted" Type="bool" Nullable="false" />
         </EntityType>
+        <EntityType Name="watchdog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="prod_id" Type="int" Nullable="false" />
+          <Property Name="sent" Type="bool" Nullable="false" />
+        </EntityType>
         <EntityType Name="wishlist">
           <Key>
             <PropertyRef Name="id" />
@@ -354,6 +365,7 @@
           <EntitySet Name="users" EntityType="Self.users" Schema="hobertocnahod" store:Type="Tables" />
           <EntitySet Name="usersmeta" EntityType="Self.usersmeta" Schema="hobertocnahod" store:Type="Tables" />
           <EntitySet Name="variants" EntityType="Self.variants" Schema="hobertocnahod" store:Type="Tables" />
+          <EntitySet Name="watchdog" EntityType="Self.watchdog" Schema="hobertocnahod" store:Type="Tables" />
           <EntitySet Name="wishlist" EntityType="Self.wishlist" Schema="hobertocnahod" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -362,7 +374,6 @@
       <Schema Namespace="hobcModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="deliver_city" EntityType="hobcModel.deliver_city" />
-          <EntitySet Name="e_settings" EntityType="hobcModel.e_settings" />
           <EntitySet Name="newsletter" EntityType="hobcModel.newsletter" />
           <EntitySet Name="pages" EntityType="hobcModel.pages" />
           <EntitySet Name="settings" EntityType="hobcModel.settings" />
@@ -380,6 +391,8 @@
           <EntitySet Name="usersmeta" EntityType="hobcModel.usersmeta" />
           <EntitySet Name="orders" EntityType="hobcModel.orders" />
           <EntitySet Name="products" EntityType="hobcModel.products" />
+          <EntitySet Name="watchdog" EntityType="hobcModel.watchdog" />
+          <EntitySet Name="e_settings" EntityType="hobcModel.e_settings" />
         </EntityContainer>
         <EntityType Name="deliver_city">
           <Key>
@@ -387,41 +400,6 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="city" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="e_settings">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="companyname" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="address" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="city" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="state" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ico" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="dic" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="icdph" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="accountnumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="transfer1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="transfer2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="transfer3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="transfer4" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="transfer5" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="pay1" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="pay1_enbl" Type="Boolean" Nullable="false" />
-          <Property Name="pay2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="pay2_enbl" Type="Boolean" Nullable="false" />
-          <Property Name="pay3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="pay3_enbl" Type="Boolean" Nullable="false" />
-          <Property Name="pay4" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="pay4_enbl" Type="Boolean" Nullable="false" />
-          <Property Name="transfer1_enbl" Type="Boolean" Nullable="false" />
-          <Property Name="transfer2_enbl" Type="Boolean" Nullable="false" />
-          <Property Name="transfer3_enbl" Type="Boolean" Nullable="false" />
-          <Property Name="transfer4_enbl" Type="Boolean" Nullable="false" />
-          <Property Name="custom" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="deliveryprice1" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="deliveryprice2" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="deliveryprice3" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="newsletter">
           <Key>
@@ -711,6 +689,52 @@
           <Property Name="active" Type="Boolean" Nullable="false" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="watchdog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="prod_id" Type="Int32" Nullable="false" />
+          <Property Name="sent" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="e_settings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="companyname" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ico" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="dic" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="icdph" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="accountnumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="transfer1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="transfer2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="transfer3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="transfer4" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="transfer5" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pay1" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="pay1_enbl" Type="Boolean" Nullable="false" />
+          <Property Name="pay2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pay2_enbl" Type="Boolean" Nullable="false" />
+          <Property Name="pay3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pay3_enbl" Type="Boolean" Nullable="false" />
+          <Property Name="pay4" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pay4_enbl" Type="Boolean" Nullable="false" />
+          <Property Name="transfer1_enbl" Type="Boolean" Nullable="false" />
+          <Property Name="transfer2_enbl" Type="Boolean" Nullable="false" />
+          <Property Name="transfer3_enbl" Type="Boolean" Nullable="false" />
+          <Property Name="transfer4_enbl" Type="Boolean" Nullable="false" />
+          <Property Name="custom" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="deliveryprice1" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="deliveryprice2" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="deliveryprice3" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="vopPdf" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="returnPdf" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -721,42 +745,6 @@
             <EntityTypeMapping TypeName="hobcModel.deliver_city">
               <MappingFragment StoreEntitySet="deliver_city">
                 <ScalarProperty Name="city" ColumnName="city" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="e_settings">
-            <EntityTypeMapping TypeName="hobcModel.e_settings">
-              <MappingFragment StoreEntitySet="e-settings">
-                <ScalarProperty Name="deliveryprice3" ColumnName="deliveryprice3" />
-                <ScalarProperty Name="deliveryprice2" ColumnName="deliveryprice2" />
-                <ScalarProperty Name="deliveryprice1" ColumnName="deliveryprice1" />
-                <ScalarProperty Name="custom" ColumnName="custom" />
-                <ScalarProperty Name="transfer4_enbl" ColumnName="transfer4_enbl" />
-                <ScalarProperty Name="transfer3_enbl" ColumnName="transfer3_enbl" />
-                <ScalarProperty Name="transfer2_enbl" ColumnName="transfer2_enbl" />
-                <ScalarProperty Name="transfer1_enbl" ColumnName="transfer1_enbl" />
-                <ScalarProperty Name="pay4_enbl" ColumnName="pay4_enbl" />
-                <ScalarProperty Name="pay4" ColumnName="pay4" />
-                <ScalarProperty Name="pay3_enbl" ColumnName="pay3_enbl" />
-                <ScalarProperty Name="pay3" ColumnName="pay3" />
-                <ScalarProperty Name="pay2_enbl" ColumnName="pay2_enbl" />
-                <ScalarProperty Name="pay2" ColumnName="pay2" />
-                <ScalarProperty Name="pay1_enbl" ColumnName="pay1_enbl" />
-                <ScalarProperty Name="pay1" ColumnName="pay1" />
-                <ScalarProperty Name="transfer5" ColumnName="transfer5" />
-                <ScalarProperty Name="transfer4" ColumnName="transfer4" />
-                <ScalarProperty Name="transfer3" ColumnName="transfer3" />
-                <ScalarProperty Name="transfer2" ColumnName="transfer2" />
-                <ScalarProperty Name="transfer1" ColumnName="transfer1" />
-                <ScalarProperty Name="accountnumber" ColumnName="accountnumber" />
-                <ScalarProperty Name="icdph" ColumnName="icdph" />
-                <ScalarProperty Name="dic" ColumnName="dic" />
-                <ScalarProperty Name="ico" ColumnName="ico" />
-                <ScalarProperty Name="state" ColumnName="state" />
-                <ScalarProperty Name="city" ColumnName="city" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="companyname" ColumnName="companyname" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1062,6 +1050,54 @@
                 <ScalarProperty Name="number" ColumnName="number" />
                 <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="watchdog">
+            <EntityTypeMapping TypeName="hobcModel.watchdog">
+              <MappingFragment StoreEntitySet="watchdog">
+                <ScalarProperty Name="sent" ColumnName="sent" />
+                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="e_settings">
+            <EntityTypeMapping TypeName="hobcModel.e_settings">
+              <MappingFragment StoreEntitySet="e-settings">
+                <ScalarProperty Name="returnPdf" ColumnName="returnPdf" />
+                <ScalarProperty Name="vopPdf" ColumnName="vopPdf" />
+                <ScalarProperty Name="deliveryprice3" ColumnName="deliveryprice3" />
+                <ScalarProperty Name="deliveryprice2" ColumnName="deliveryprice2" />
+                <ScalarProperty Name="deliveryprice1" ColumnName="deliveryprice1" />
+                <ScalarProperty Name="custom" ColumnName="custom" />
+                <ScalarProperty Name="transfer4_enbl" ColumnName="transfer4_enbl" />
+                <ScalarProperty Name="transfer3_enbl" ColumnName="transfer3_enbl" />
+                <ScalarProperty Name="transfer2_enbl" ColumnName="transfer2_enbl" />
+                <ScalarProperty Name="transfer1_enbl" ColumnName="transfer1_enbl" />
+                <ScalarProperty Name="pay4_enbl" ColumnName="pay4_enbl" />
+                <ScalarProperty Name="pay4" ColumnName="pay4" />
+                <ScalarProperty Name="pay3_enbl" ColumnName="pay3_enbl" />
+                <ScalarProperty Name="pay3" ColumnName="pay3" />
+                <ScalarProperty Name="pay2_enbl" ColumnName="pay2_enbl" />
+                <ScalarProperty Name="pay2" ColumnName="pay2" />
+                <ScalarProperty Name="pay1_enbl" ColumnName="pay1_enbl" />
+                <ScalarProperty Name="pay1" ColumnName="pay1" />
+                <ScalarProperty Name="transfer5" ColumnName="transfer5" />
+                <ScalarProperty Name="transfer4" ColumnName="transfer4" />
+                <ScalarProperty Name="transfer3" ColumnName="transfer3" />
+                <ScalarProperty Name="transfer2" ColumnName="transfer2" />
+                <ScalarProperty Name="transfer1" ColumnName="transfer1" />
+                <ScalarProperty Name="accountnumber" ColumnName="accountnumber" />
+                <ScalarProperty Name="icdph" ColumnName="icdph" />
+                <ScalarProperty Name="dic" ColumnName="dic" />
+                <ScalarProperty Name="ico" ColumnName="ico" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="companyname" ColumnName="companyname" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

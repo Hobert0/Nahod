@@ -44,5 +44,7 @@ namespace Cms.Models
         public string deliveryprice1 { get; set; }
         public string deliveryprice2 { get; set; }
         public string deliveryprice3 { get; set; }
+        public string vopPdf { get; set; }
+        public string returnPdf { get; set; }
     }
 }
