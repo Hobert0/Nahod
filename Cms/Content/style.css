@@ -9,6 +9,10 @@
     outline: none;
 }
 
+.header-container.mobile-header{
+	display: none;
+}
+
 /*HIDE reCaptcha*/
 .grecaptcha-badge {
     visibility: hidden !important;
