@@ -325,7 +325,7 @@ namespace Cms.Controllers
                 {
                     sum = prevSumEntity.Sum(x => x.finalprice);
                 }
-                sum += o.finalprice;
+                //sum += o.finalprice;
 
                 if (sum >= 1000)
                 {

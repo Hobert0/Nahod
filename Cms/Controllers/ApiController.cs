@@ -337,7 +337,8 @@ namespace Cms.Controllers
             XmlWriterSettings xws = new XmlWriterSettings();
             xws.OmitXmlDeclaration = true;
             xws.Indent = true;
-            var filemane = DateTime.Now.Ticks.ToString() + ".xml";
+            //var filemane = DateTime.Now.Ticks.ToString() + ".xml";
+            var filemane = "test.xml";
 
             var order = db.orders.FirstOrDefault();
 
@@ -345,19 +346,24 @@ namespace Cms.Controllers
             objednavkaType obj = new objednavkaType
             {
                 //obj.CasVystave = DateTime.Parse(order.date,CultureInfo.InvariantCulture);
-                DruhDopravy = order.shipping,
-                Poznamka = order.comment,
-                TypTransakce = order.payment,
+                DruhDopravy = RemoveInvalidXmlChars(order.shipping),
+                Poznamka = RemoveInvalidXmlChars(order.comment),
+                TypTransakce = RemoveInvalidXmlChars(order.payment),
                 DCislo = decimal.Parse(order.ordernumber),
+                //CasVystave = DateTime.ParseExact(order.date, "dd.MM.yyyy HH:mm:ss", CultureInfo.InvariantCulture),
+                Celkem = order.finalprice,
+                VarSymbol = RemoveInvalidXmlChars(order.ordernumber),
+
             };
 
-            XmlSerializer serializer = new XmlSerializer(typeof(objednavkaType));
+            XmlSerializer serializer = new XmlSerializer(typeof(MoneyDat));
             using (StreamWriter writer = new StreamWriter(Server.MapPath("~/export/" + filemane)))
             {
                 serializer.Serialize(writer, obj);
             }
+            return "Oki";
 
-            return filemane;
+            // return filemane;
         }
 
         [Route("importSKladS3"), EnableCors(origins: "*", headers: "*", methods: "*")]
@@ -417,7 +423,7 @@ namespace Cms.Controllers
 
                     foreach (var watchdog in watchdogs)
                     {
-                       
+
                         HelperController helper = new HelperController();
                         var slug = helper.ToUrlSlug(product.title);
                         var prodName = product.title;
@@ -462,23 +468,34 @@ namespace Cms.Controllers
 
             return "Oki";
         }
-
-        private string createWatchdogEmailBody(string prodName, string prodLink)
+        static string RemoveInvalidXmlChars(string text)
         {
-
-            string body = string.Empty;
-            //using streamreader for reading my htmltemplate   
-            using (StreamReader rea = new StreamReader(Server.MapPath("~/Views/Shared/WatchdogEmail.cshtml")))
-            {
-                body = rea.ReadToEnd();
+            if (text != null) { 
+                var validXmlChars = text.Where(ch => XmlConvert.IsXmlChar(ch)).ToArray();
+                return new string(validXmlChars);
             }
-
-            var str = "Požadovaný tovar <a href='" + prodLink + "'>" + prodName + "</a> je na sklade.";
-
-            body = body.Replace("{Text}", str);
-
-            return body;
+            else
+            {
+                return "";
+            }
         }
 
+        private string createWatchdogEmailBody(string prodName, string prodLink)
+    {
+
+        string body = string.Empty;
+        //using streamreader for reading my htmltemplate   
+        using (StreamReader rea = new StreamReader(Server.MapPath("~/Views/Shared/WatchdogEmail.cshtml")))
+        {
+            body = rea.ReadToEnd();
+        }
+
+        var str = "Požadovaný tovar <a href='" + prodLink + "'>" + prodName + "</a> je na sklade.";
+
+        body = body.Replace("{Text}", str);
+
+        return body;
     }
+
+}
 }
