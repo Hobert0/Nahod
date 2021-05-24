@@ -356,7 +356,7 @@ namespace Cms.Controllers
 
             };
 
-            XmlSerializer serializer = new XmlSerializer(typeof(MoneyDat));
+            XmlSerializer serializer = new XmlSerializer(typeof(objednavkaType));
             using (StreamWriter writer = new StreamWriter(Server.MapPath("~/export/" + filemane)))
             {
                 serializer.Serialize(writer, obj);
