@@ -337,33 +337,231 @@ namespace Cms.Controllers
             XmlWriterSettings xws = new XmlWriterSettings();
             xws.OmitXmlDeclaration = true;
             xws.Indent = true;
-            //var filemane = DateTime.Now.Ticks.ToString() + ".xml";
+            var url_part1 = "";
+            var url_part2 = "";
+            var url_part3 = "";
+
             var filemane = "test.xml";
 
-            var order = db.orders.FirstOrDefault();
+            var order = db.orders.ToList();
 
+            XDocument xdoc = new XDocument(
+                new XDeclaration("1.0", "utf-8", "yes")
+            );
 
-            objednavkaType obj = new objednavkaType
+            XElement xRoot = new XElement("MoneyData");
+            xdoc.Add(xRoot);
+            XElement xRoot2 = new XElement("SeznamObjPrij");
+            xRoot.Add(xRoot2);
+
+            foreach (var product in order)
             {
-                //obj.CasVystave = DateTime.Parse(order.date,CultureInfo.InvariantCulture);
-                DruhDopravy = RemoveInvalidXmlChars(order.shipping),
-                Poznamka = RemoveInvalidXmlChars(order.comment),
-                TypTransakce = RemoveInvalidXmlChars(order.payment),
-                DCislo = decimal.Parse(order.ordernumber),
-                //CasVystave = DateTime.ParseExact(order.date, "dd.MM.yyyy HH:mm:ss", CultureInfo.InvariantCulture),
-                Celkem = order.finalprice,
-                VarSymbol = RemoveInvalidXmlChars(order.ordernumber),
+                //var prodDesc = Regex.Replace(product.description, "<.*?>", String.Empty);
 
-            };
+                XElement xRoot3 = new XElement("ObjPrij");
 
-            XmlSerializer serializer = new XmlSerializer(typeof(objednavkaType));
-            using (StreamWriter writer = new StreamWriter(Server.MapPath("~/export/" + filemane)))
-            {
-                serializer.Serialize(writer, obj);
+                XElement doc = new XElement("Doklad", product.ordernumber);
+                XElement doc2 = new XElement("Popis", product.name + " " + product.surname);
+                XElement doc3 = new XElement("Vystaveno", product.date);
+                XElement xRoot4 = new XElement("DodOdb");
+                XElement doc4 = new XElement("ObchNazev", product.name + " " + product.surname);
+
+                if (product.companyname != null)
+                {
+                    doc4 = new XElement("ObchNazev", product.companyname);
+                }
+
+                XElement xRoot5 = new XElement("ObchAdresa");
+
+                XElement doc5 = new XElement("Ulice", product.address);
+                XElement doc6 = new XElement("Misto", product.city);
+                XElement doc7 = new XElement("PSC", product.zip);
+                XElement doc8 = new XElement("Stat", product.country);
+                XElement doc9 = new XElement("KodStatu", "SK");
+
+                XElement doc10 = new XElement("FaktNazev", product.name + " " + product.surname);
+                if (product.companyname != null)
+                {
+                    doc10 = new XElement("FaktNazev", product.companyname);
+                }
+
+                XElement doc11 = new XElement("ICO", product.ico);
+                XElement doc12 = new XElement("DIC", product.icdph);
+
+                XElement xRoot6 = new XElement("FaktAdresa");
+                XElement doc13 = new XElement("Ulice", product.address);
+                XElement doc14 = new XElement("Misto", product.city);
+                XElement doc15 = new XElement("PSC", product.zip);
+                XElement doc16 = new XElement("Stat", product.country);
+                XElement doc17 = new XElement("KodStatu", "SK");
+
+                XElement doc18 = new XElement("Nazev", product.name_shipp + " " + product.surname_shipp + "  " + product.companyname_shipp);
+                XElement xRoot7 = new XElement("Adresa");
+                XElement doc19 = new XElement("Ulice", product.address_shipp);
+                XElement doc20 = new XElement("Misto", product.city_shipp);
+                XElement doc21 = new XElement("PSC", product.zip_shipp);
+                XElement doc22 = new XElement("Stat", product.country_shipp);
+
+               // XElement doc23 = new XElement("GUID", product.ordernumber);
+
+                XElement xRoot8 = new XElement("Tel");
+                XElement doc24 = new XElement("Pred", "");
+                XElement doc25 = new XElement("Cislo", product.phone);
+                XElement doc26 = new XElement("EMail", product.email);
+                XElement doc27 = new XElement("PlatceDPH", "0");
+
+                if (product.icdph != null)
+                {
+                    doc27 = new XElement("PlatceDPH", "1");
+                }
+
+                XElement doc28 = new XElement("FyzOsoba", "");
+                XElement doc29 = new XElement("Banka", "");
+                XElement doc30 = new XElement("Ucet", "");
+                XElement doc31 = new XElement("KodBanky", "");
+                XElement doc32 = new XElement("DICSK", product.dic);
+
+                XElement xRoot9 = new XElement("KonecPrij");
+
+                XElement doc33 = new XElement("KPFromOdb", "0");
+                XElement doc34 = new XElement("Celkem", product.finalprice);
+
+                XElement doc35 = new XElement("PlatPodm", PaymentType(product.payment));
+                XElement shipping = new XElement("Doprava", ShippingType(product.shipping));
+                XElement doc36 = new XElement("CasVystave", product.date);
+                XElement doc37 = new XElement("DatumVysta", product.date);
+                XElement doc38 = new XElement("Nadpis", "Prijatá objednávka");
+                XElement doc39 = new XElement("PrimDoklad", product.ordernumber);
+                XElement doc40 = new XElement("SazbaDPH2", "20");
+                XElement doc41 = new XElement("Sleva", "0");
+                XElement doc42 = new XElement("Pojisteno", "0");
+
+
+                xRoot2.Add(xRoot3);
+                xRoot3.Add(doc);
+                xRoot3.Add(doc2);
+                xRoot3.Add(doc3);
+
+                xRoot3.Add(xRoot4); //DodOdb
+
+                xRoot4.Add(doc4);
+
+                xRoot4.Add(xRoot5);//ObchodAdresa
+
+                xRoot5.Add(doc5);
+                xRoot5.Add(doc6);
+                xRoot5.Add(doc7);
+                xRoot5.Add(doc8);
+                xRoot5.Add(doc9);
+
+                xRoot4.Add(doc10);
+                xRoot4.Add(doc11);
+                xRoot4.Add(doc12);
+
+                xRoot4.Add(xRoot6); //FaktAdresa
+                xRoot6.Add(doc13);
+                xRoot6.Add(doc14);
+                xRoot6.Add(doc15);
+                xRoot6.Add(doc16);
+                xRoot6.Add(doc17);
+
+                xRoot4.Add(doc18);
+
+                xRoot4.Add(xRoot7); //Adresa
+                xRoot7.Add(doc19);
+                xRoot7.Add(doc20);
+                xRoot7.Add(doc21);
+                xRoot7.Add(doc22);
+
+                //xRoot4.Add(doc23); //GUID
+
+                xRoot4.Add(xRoot8); //Tel
+                xRoot8.Add(doc24);
+                xRoot8.Add(doc25);
+
+                xRoot4.Add(doc26);
+                xRoot4.Add(doc27);
+                xRoot4.Add(doc28);
+                xRoot4.Add(doc29);
+                xRoot4.Add(doc30);
+                xRoot4.Add(doc31);
+                xRoot4.Add(doc32);
+
+                xRoot3.Add(xRoot9); // KonecPrij
+
+                xRoot9.Add(doc33);
+                xRoot9.Add(doc34);
+                xRoot9.Add(doc35);
+                xRoot9.Add(shipping);
+                xRoot9.Add(doc36);
+                xRoot9.Add(doc37);
+                xRoot9.Add(doc38);
+                xRoot9.Add(doc39);
+                xRoot9.Add(doc40);
+                xRoot9.Add(doc41);
+                xRoot9.Add(doc42);
+
+                var ordermeta = db.ordermeta.Where(i => i.ordernumber == product.ordernumber).ToList();
+
+                foreach (var item in ordermeta)
+                {
+                    XElement xRoot10 = new XElement("Polozka");
+                    XElement doc43 = new XElement("Popis", item.product + " " + item.variant + " " + item.variant2);
+                    XElement doc44 = new XElement("PocetMJ", item.pieces);
+                    XElement doc45 = new XElement("Cena", item.price);
+                    XElement doc46 = new XElement("SazbaDPH", "20");
+                    XElement doc47 = new XElement("TypCeny", "0");
+                    XElement doc48 = new XElement("Sleva", "0");
+                    XElement doc49 = new XElement("Popis", item.product + " " + item.variant + " " + item.variant2);
+
+                    XElement xRoot11 = new XElement("KmKarta");
+
+                    XElement doc50 = new XElement("Popis", item.product + " " + item.variant + " " + item.variant2);
+                    XElement doc51 = new XElement("Zkrat", item.product);
+                    XElement doc52 = new XElement("MJ", "ks");
+
+                    var prodId = int.Parse(item.productid);
+                    var customId = db.products.Where(i => i.id == prodId).FirstOrDefault();
+
+                    XElement doc53 = new XElement("UzivCode", "0");
+                    //XElement doc54 = new XElement("GUID", "0");
+                    XElement doc55 = new XElement("Katalog", "0");
+
+                    if (customId != null)
+                    {
+                        doc53 = new XElement("UzivCode", customId.number);
+                        //doc54 = new XElement("GUID", customId.number);
+                        doc55 = new XElement("Katalog", customId.number);
+                    }
+                    
+                    xRoot9.Add(xRoot10); // Polozka
+
+                    xRoot10.Add(doc43);
+                    xRoot10.Add(doc44);
+                    xRoot10.Add(doc45);
+                    xRoot10.Add(doc46);
+                    xRoot10.Add(doc47);
+                    xRoot10.Add(doc48);
+                    xRoot10.Add(doc49);
+
+                    xRoot10.Add(xRoot11); // KmKarta
+
+                    xRoot11.Add(doc50);
+                    xRoot11.Add(doc51);
+                    xRoot11.Add(doc52);
+                    xRoot11.Add(doc53);
+                    xRoot11.Add(doc55);
+                }
+
             }
+
+            using (Stream writer = new FileStream(Server.MapPath("~/export/" + filemane), FileMode.Create))
+            {
+                xdoc.Save(writer);
+            }
+
             return "Oki";
 
-            // return filemane;
         }
 
         [Route("importSKladS3"), EnableCors(origins: "*", headers: "*", methods: "*")]
@@ -470,7 +668,8 @@ namespace Cms.Controllers
         }
         static string RemoveInvalidXmlChars(string text)
         {
-            if (text != null) { 
+            if (text != null)
+            {
                 var validXmlChars = text.Where(ch => XmlConvert.IsXmlChar(ch)).ToArray();
                 return new string(validXmlChars);
             }
@@ -481,21 +680,55 @@ namespace Cms.Controllers
         }
 
         private string createWatchdogEmailBody(string prodName, string prodLink)
-    {
-
-        string body = string.Empty;
-        //using streamreader for reading my htmltemplate   
-        using (StreamReader rea = new StreamReader(Server.MapPath("~/Views/Shared/WatchdogEmail.cshtml")))
         {
-            body = rea.ReadToEnd();
+
+            string body = string.Empty;
+            //using streamreader for reading my htmltemplate   
+            using (StreamReader rea = new StreamReader(Server.MapPath("~/Views/Shared/WatchdogEmail.cshtml")))
+            {
+                body = rea.ReadToEnd();
+            }
+
+            var str = "Požadovaný tovar <a href='" + prodLink + "'>" + prodName + "</a> je na sklade.";
+
+            body = body.Replace("{Text}", str);
+
+            return body;
         }
 
-        var str = "Požadovaný tovar <a href='" + prodLink + "'>" + prodName + "</a> je na sklade.";
+        private string PaymentType(string payment)
+        {
+            switch (payment)
+            {
+                case "pay1":
+                    return "V hotovosti pri osobnom odbere";
+                case "pay2":
+                    return "Kartou";
+                case "pay3":
+                    return "Bankovým prevodom";
+                case "pay4":
+                    return "Dobierkou";
+                default:
+                    return "";
+            }
 
-        body = body.Replace("{Text}", str);
+        }
 
-        return body;
+        private string ShippingType(string shipping)
+        {
+            switch (shipping)
+            {
+                case "transfer1":
+                    return "Kuriérska spoločnosť";
+                case "transfer2":
+                    return "Slovenská pošta";
+                case "transfer3":
+                    return "Osobný odber";
+                default:
+                    return "";
+            }
+
+        }
+
     }
-
-}
 }

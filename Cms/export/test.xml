@@ -1,0 +1,5405 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MoneyData>
+  <SeznamObjPrij>
+    <ObjPrij>
+      <Doklad>210001</Doklad>
+      <Popis>test test</Popis>
+      <Vystaveno>31.3.2021 11:05:35</Vystaveno>
+      <DodOdb>
+        <ObchNazev>test test</ObchNazev>
+        <ObchAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>test test</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>147.62</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Osobný odber</Doprava>
+        <CasVystave>31.3.2021 11:05:35</CasVystave>
+        <DatumVysta>31.3.2021 11:05:35</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210001</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Produkt1  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>10.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Produkt1  </Popis>
+          <KmKarta>
+            <Popis>Produkt1  </Popis>
+            <Zkrat>Produkt1</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>wwfwfwf  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>1331.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>wwfwfwf  </Popis>
+          <KmKarta>
+            <Popis>wwfwfwf  </Popis>
+            <Zkrat>wwfwfwf</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>aaafefef  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>13431.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>aaafefef  </Popis>
+          <KmKarta>
+            <Popis>aaafefef  </Popis>
+            <Zkrat>aaafefef</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210002</Doklad>
+      <Popis>test test</Popis>
+      <Vystaveno>31.3.2021 11:17:33</Vystaveno>
+      <DodOdb>
+        <ObchNazev>test test</ObchNazev>
+        <ObchAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>test test</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>147.62</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Osobný odber</Doprava>
+        <CasVystave>31.3.2021 11:17:33</CasVystave>
+        <DatumVysta>31.3.2021 11:17:33</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210002</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>wwfwfwf  </Popis>
+          <PocetMJ>2</PocetMJ>
+          <Cena>2662.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>wwfwfwf  </Popis>
+          <KmKarta>
+            <Popis>wwfwfwf  </Popis>
+            <Zkrat>wwfwfwf</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>wwfwfwf  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>1331.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>wwfwfwf  </Popis>
+          <KmKarta>
+            <Popis>wwfwfwf  </Popis>
+            <Zkrat>wwfwfwf</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>aaafefef  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>13431.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>aaafefef  </Popis>
+          <KmKarta>
+            <Popis>aaafefef  </Popis>
+            <Zkrat>aaafefef</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210003</Doklad>
+      <Popis>test test</Popis>
+      <Vystaveno>31.3.2021 11:20:50</Vystaveno>
+      <DodOdb>
+        <ObchNazev>test test</ObchNazev>
+        <ObchAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>test test</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>147.62</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Osobný odber</Doprava>
+        <CasVystave>31.3.2021 11:20:50</CasVystave>
+        <DatumVysta>31.3.2021 11:20:50</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210003</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>wwfwfwf  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>1331.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>wwfwfwf  </Popis>
+          <KmKarta>
+            <Popis>wwfwfwf  </Popis>
+            <Zkrat>wwfwfwf</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>aaafefef  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>13431.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>aaafefef  </Popis>
+          <KmKarta>
+            <Popis>aaafefef  </Popis>
+            <Zkrat>aaafefef</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210004</Doklad>
+      <Popis>test test</Popis>
+      <Vystaveno>31.3.2021 11:20:53</Vystaveno>
+      <DodOdb>
+        <ObchNazev>test test</ObchNazev>
+        <ObchAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>test test</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>147.62</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Osobný odber</Doprava>
+        <CasVystave>31.3.2021 11:20:53</CasVystave>
+        <DatumVysta>31.3.2021 11:20:53</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210004</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210005</Doklad>
+      <Popis>test test</Popis>
+      <Vystaveno>31.3.2021 11:25:30</Vystaveno>
+      <DodOdb>
+        <ObchNazev>test test</ObchNazev>
+        <ObchAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>test test</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>134.31</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Osobný odber</Doprava>
+        <CasVystave>31.3.2021 11:25:30</CasVystave>
+        <DatumVysta>31.3.2021 11:25:30</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210005</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>aaafefef  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>13431.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>aaafefef  </Popis>
+          <KmKarta>
+            <Popis>aaafefef  </Popis>
+            <Zkrat>aaafefef</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210006</Doklad>
+      <Popis>test test</Popis>
+      <Vystaveno>31.3.2021 11:27:28</Vystaveno>
+      <DodOdb>
+        <ObchNazev>test test</ObchNazev>
+        <ObchAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>test test</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>134.31</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Osobný odber</Doprava>
+        <CasVystave>31.3.2021 11:27:28</CasVystave>
+        <DatumVysta>31.3.2021 11:27:28</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210006</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>aaafefef  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>134.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>aaafefef  </Popis>
+          <KmKarta>
+            <Popis>aaafefef  </Popis>
+            <Zkrat>aaafefef</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210007</Doklad>
+      <Popis>Mario Hersel</Popis>
+      <Vystaveno>7.4.2021 11:46:11</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Mario Hersel</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Mario Hersel</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0919023914</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>20.12</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Osobný odber</Doprava>
+        <CasVystave>7.4.2021 11:46:11</CasVystave>
+        <DatumVysta>7.4.2021 11:46:11</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210007</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210008</Doklad>
+      <Popis>test test</Popis>
+      <Vystaveno>8.4.2021 10:30:14</Vystaveno>
+      <DodOdb>
+        <ObchNazev>test test</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>test test</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0919023914</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>19.00</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>8.4.2021 10:30:14</CasVystave>
+        <DatumVysta>8.4.2021 10:30:14</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210008</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Test1 Modrá 2</Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>9.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test1 Modrá 2</Popis>
+          <KmKarta>
+            <Popis>Test1 Modrá 2</Popis>
+            <Zkrat>Test1</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>Test1 Zelená 2</Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>5.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test1 Zelená 2</Popis>
+          <KmKarta>
+            <Popis>Test1 Zelená 2</Popis>
+            <Zkrat>Test1</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210009</Doklad>
+      <Popis>Mario Hersel</Popis>
+      <Vystaveno>8.4.2021 10:35:24</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Mario Hersel</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Mario Hersel</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0919023914</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>40.24</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>8.4.2021 10:35:24</CasVystave>
+        <DatumVysta>8.4.2021 10:35:24</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210009</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210010</Doklad>
+      <Popis>Mario Hersel</Popis>
+      <Vystaveno>8.4.2021 10:39:14</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Mario Hersel</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Mario Hersel</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0919023914</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>25.12</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>8.4.2021 10:39:14</CasVystave>
+        <DatumVysta>8.4.2021 10:39:14</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210010</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Test1 Modrá 2</Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>9.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test1 Modrá 2</Popis>
+          <KmKarta>
+            <Popis>Test1 Modrá 2</Popis>
+            <Zkrat>Test1</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>Test2  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>11.12</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test2  </Popis>
+          <KmKarta>
+            <Popis>Test2  </Popis>
+            <Zkrat>Test2</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210011</Doklad>
+      <Popis>Mario Hersel</Popis>
+      <Vystaveno>8.4.2021 10:41:49</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Mario Hersel</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Mario Hersel</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0919023914</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>41.24</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>8.4.2021 10:41:49</CasVystave>
+        <DatumVysta>8.4.2021 10:41:49</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210011</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Test1 Modrá 1</Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>9.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test1 Modrá 1</Popis>
+          <KmKarta>
+            <Popis>Test1 Modrá 1</Popis>
+            <Zkrat>Test1</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>Test1 Zelená 1</Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>5.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test1 Zelená 1</Popis>
+          <KmKarta>
+            <Popis>Test1 Zelená 1</Popis>
+            <Zkrat>Test1</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>Test2  </Popis>
+          <PocetMJ>2</PocetMJ>
+          <Cena>22.24</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test2  </Popis>
+          <KmKarta>
+            <Popis>Test2  </Popis>
+            <Zkrat>Test2</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210012</Doklad>
+      <Popis>Mario Hersel</Popis>
+      <Vystaveno>8.4.2021 11:55:10</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Mario Hersel</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Mario Hersel</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0919023914</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>39.12</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>8.4.2021 11:55:10</CasVystave>
+        <DatumVysta>8.4.2021 11:55:10</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210012</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Test1 Modrá 1</Popis>
+          <PocetMJ>2</PocetMJ>
+          <Cena>18.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test1 Modrá 1</Popis>
+          <KmKarta>
+            <Popis>Test1 Modrá 1</Popis>
+            <Zkrat>Test1</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>Test1 Zelená 2</Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>5.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test1 Zelená 2</Popis>
+          <KmKarta>
+            <Popis>Test1 Zelená 2</Popis>
+            <Zkrat>Test1</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>Test2  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>11.12</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test2  </Popis>
+          <KmKarta>
+            <Popis>Test2  </Popis>
+            <Zkrat>Test2</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210013</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>9.4.2021 09:43:22</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>0.00</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>9.4.2021 09:43:22</CasVystave>
+        <DatumVysta>9.4.2021 09:43:22</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210013</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Test1 Zelená 2</Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>5.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test1 Zelená 2</Popis>
+          <KmKarta>
+            <Popis>Test1 Zelená 2</Popis>
+            <Zkrat>Test1</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>Test1 Modrá 2</Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>9.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test1 Modrá 2</Popis>
+          <KmKarta>
+            <Popis>Test1 Modrá 2</Popis>
+            <Zkrat>Test1</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210014</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>9.4.2021 10:33:23</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>0.00</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>9.4.2021 10:33:23</CasVystave>
+        <DatumVysta>9.4.2021 10:33:23</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210014</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Test1 Zelená 2</Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>5.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test1 Zelená 2</Popis>
+          <KmKarta>
+            <Popis>Test1 Zelená 2</Popis>
+            <Zkrat>Test1</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>Test1 Modrá 2</Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>9.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test1 Modrá 2</Popis>
+          <KmKarta>
+            <Popis>Test1 Modrá 2</Popis>
+            <Zkrat>Test1</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210015</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>9.4.2021 10:36:24</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>0.00</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>9.4.2021 10:36:24</CasVystave>
+        <DatumVysta>9.4.2021 10:36:24</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210015</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Test1 Modrá 2</Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>9.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test1 Modrá 2</Popis>
+          <KmKarta>
+            <Popis>Test1 Modrá 2</Popis>
+            <Zkrat>Test1</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210016</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>9.4.2021 10:40:00</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>0.00</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>9.4.2021 10:40:00</CasVystave>
+        <DatumVysta>9.4.2021 10:40:00</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210016</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Test1 Modrá 2</Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>9.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test1 Modrá 2</Popis>
+          <KmKarta>
+            <Popis>Test1 Modrá 2</Popis>
+            <Zkrat>Test1</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210017</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>9.4.2021 10:51:51</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>holicka.robert@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>0.00</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>9.4.2021 10:51:51</CasVystave>
+        <DatumVysta>9.4.2021 10:51:51</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210017</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Test1 Modrá 2</Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>9.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test1 Modrá 2</Popis>
+          <KmKarta>
+            <Popis>Test1 Modrá 2</Popis>
+            <Zkrat>Test1</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210018</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>9.4.2021 10:58:58</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>19.00</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>9.4.2021 10:58:58</CasVystave>
+        <DatumVysta>9.4.2021 10:58:58</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210018</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Test1 Zelená 2</Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>5.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test1 Zelená 2</Popis>
+          <KmKarta>
+            <Popis>Test1 Zelená 2</Popis>
+            <Zkrat>Test1</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>Test1 Modrá 2</Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>9.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test1 Modrá 2</Popis>
+          <KmKarta>
+            <Popis>Test1 Modrá 2</Popis>
+            <Zkrat>Test1</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210019</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>9.4.2021 11:00:42</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>14.00</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>9.4.2021 11:00:42</CasVystave>
+        <DatumVysta>9.4.2021 11:00:42</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210019</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Test1 Modrá 2</Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>9.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test1 Modrá 2</Popis>
+          <KmKarta>
+            <Popis>Test1 Modrá 2</Popis>
+            <Zkrat>Test1</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210020</Doklad>
+      <Popis>Mario Hersel</Popis>
+      <Vystaveno>12.4.2021 11:58:15</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Mario Hersel</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Mario Hersel</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0919023914</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>16.12</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>12.4.2021 11:58:15</CasVystave>
+        <DatumVysta>12.4.2021 11:58:15</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210020</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Test2  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>11.12</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test2  </Popis>
+          <KmKarta>
+            <Popis>Test2  </Popis>
+            <Zkrat>Test2</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210021</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>12.4.2021 12:15:31</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>15.56</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>12.4.2021 12:15:31</CasVystave>
+        <DatumVysta>12.4.2021 12:15:31</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210021</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210022</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>12.4.2021 12:17:31</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>15.56</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>12.4.2021 12:17:31</CasVystave>
+        <DatumVysta>12.4.2021 12:17:31</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210022</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210023</Doklad>
+      <Popis>Mario Hersel</Popis>
+      <Vystaveno>12.4.2021 12:19:09</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Mario Hersel</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Mario Hersel</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0919023914</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>16.12</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>12.4.2021 12:19:09</CasVystave>
+        <DatumVysta>12.4.2021 12:19:09</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210023</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Test2  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>11.12</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test2  </Popis>
+          <KmKarta>
+            <Popis>Test2  </Popis>
+            <Zkrat>Test2</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210024</Doklad>
+      <Popis>test test</Popis>
+      <Vystaveno>12.4.2021 12:21:09</Vystaveno>
+      <DodOdb>
+        <ObchNazev>test test</ObchNazev>
+        <ObchAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>test test</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>holicka.robert@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>16.12</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>12.4.2021 12:21:09</CasVystave>
+        <DatumVysta>12.4.2021 12:21:09</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210024</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Test2  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>11.12</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test2  </Popis>
+          <KmKarta>
+            <Popis>Test2  </Popis>
+            <Zkrat>Test2</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210025</Doklad>
+      <Popis>test test</Popis>
+      <Vystaveno>12.4.2021 12:23:18</Vystaveno>
+      <DodOdb>
+        <ObchNazev>test test</ObchNazev>
+        <ObchAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>test test</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>16.12</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>12.4.2021 12:23:18</CasVystave>
+        <DatumVysta>12.4.2021 12:23:18</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210025</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Test2  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>11.12</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test2  </Popis>
+          <KmKarta>
+            <Popis>Test2  </Popis>
+            <Zkrat>Test2</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210026</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>13.4.2021 15:17:20</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>holicka.robert@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>150.60</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>13.4.2021 15:17:20</CasVystave>
+        <DatumVysta>13.4.2021 15:17:20</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210026</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Test2  </Popis>
+          <PocetMJ>10</PocetMJ>
+          <Cena>10.46</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test2  </Popis>
+          <KmKarta>
+            <Popis>Test2  </Popis>
+            <Zkrat>Test2</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>Prút na ryby  </Popis>
+          <PocetMJ>3</PocetMJ>
+          <Cena>12.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Prút na ryby  </Popis>
+          <KmKarta>
+            <Popis>Prút na ryby  </Popis>
+            <Zkrat>Prút na ryby</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210027</Doklad>
+      <Popis>Mario test</Popis>
+      <Vystaveno>15.4.2021 10:03:25</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Mario test</ObchNazev>
+        <ObchAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Mario test</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>38.00</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>15.4.2021 10:03:25</CasVystave>
+        <DatumVysta>15.4.2021 10:03:25</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210027</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Prút na ryby  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>33.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Prút na ryby  </Popis>
+          <KmKarta>
+            <Popis>Prút na ryby  </Popis>
+            <Zkrat>Prút na ryby</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210028</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>15.4.2021 10:05:38</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>holicka.robert@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>14.31</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>15.4.2021 10:05:38</CasVystave>
+        <DatumVysta>15.4.2021 10:05:38</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210028</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Prut na sumcov Modrá 2</Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>9.31</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Prut na sumcov Modrá 2</Popis>
+          <KmKarta>
+            <Popis>Prut na sumcov Modrá 2</Popis>
+            <Zkrat>Prut na sumcov</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210029</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>15.4.2021 10:07:53</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>14.31</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>15.4.2021 10:07:53</CasVystave>
+        <DatumVysta>15.4.2021 10:07:53</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210029</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Test1 Modrá 2</Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>9.31</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test1 Modrá 2</Popis>
+          <KmKarta>
+            <Popis>Test1 Modrá 2</Popis>
+            <Zkrat>Test1</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210030</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>15.4.2021 10:15:30</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>17.00</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>15.4.2021 10:15:30</CasVystave>
+        <DatumVysta>15.4.2021 10:15:30</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210030</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Prút na ryby  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>12.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Prút na ryby  </Popis>
+          <KmKarta>
+            <Popis>Prút na ryby  </Popis>
+            <Zkrat>Prút na ryby</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210031</Doklad>
+      <Popis>Mario Hersel</Popis>
+      <Vystaveno>15.4.2021 10:28:38</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Mario Hersel</ObchNazev>
+        <ObchAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Mario Hersel</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>27.22</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>15.4.2021 10:28:38</CasVystave>
+        <DatumVysta>15.4.2021 10:28:38</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210031</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>fefeefef  </Popis>
+          <PocetMJ>2</PocetMJ>
+          <Cena>11.11</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>fefeefef  </Popis>
+          <KmKarta>
+            <Popis>fefeefef  </Popis>
+            <Zkrat>fefeefef</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210032</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>16.4.2021 09:55:24</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>14.00</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>16.4.2021 09:55:24</CasVystave>
+        <DatumVysta>16.4.2021 09:55:24</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210032</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Test3  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>9.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test3  </Popis>
+          <KmKarta>
+            <Popis>Test3  </Popis>
+            <Zkrat>Test3</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210033</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>16.4.2021 09:56:53</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>14.00</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>16.4.2021 09:56:53</CasVystave>
+        <DatumVysta>16.4.2021 09:56:53</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210033</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Test3  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>9.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Test3  </Popis>
+          <KmKarta>
+            <Popis>Test3  </Popis>
+            <Zkrat>Test3</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210034</Doklad>
+      <Popis>Peter Bezecny</Popis>
+      <Vystaveno>16.4.2021 10:23:12</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Ing.Peter Bezecný - NAHOĎ</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Andrjw</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Ing.Peter Bezecný - NAHOĎ</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Andrjw</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0911350400</Cislo>
+        </Tel>
+        <EMail>info@nahod.sk</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>10.00</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>16.4.2021 10:23:12</CasVystave>
+        <DatumVysta>16.4.2021 10:23:12</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210034</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Prut na sumcov Zelená 1</Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>5.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Prut na sumcov Zelená 1</Popis>
+          <KmKarta>
+            <Popis>Prut na sumcov Zelená 1</Popis>
+            <Zkrat>Prut na sumcov</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210035</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>21.4.2021 11:22:13</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>holicka.robert@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>9.00</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>21.4.2021 11:22:13</CasVystave>
+        <DatumVysta>21.4.2021 11:22:13</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210035</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>TestKupon  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>9.50</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>TestKupon  </Popis>
+          <KmKarta>
+            <Popis>TestKupon  </Popis>
+            <Zkrat>TestKupon</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210036</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>21.4.2021 11:29:44</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>9.00</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>21.4.2021 11:29:44</CasVystave>
+        <DatumVysta>21.4.2021 11:29:44</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210036</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>TestKupon  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>9.50</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>TestKupon  </Popis>
+          <KmKarta>
+            <Popis>TestKupon  </Popis>
+            <Zkrat>TestKupon</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>0</UzivCode>
+            <Katalog>0</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210037</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>4.5.2021 11:44:54</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>4.50</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>4.5.2021 11:44:54</CasVystave>
+        <DatumVysta>4.5.2021 11:44:54</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210037</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>FRESH BOILIES 18mm 250ml World Record Carp Corn  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>4.50</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>FRESH BOILIES 18mm 250ml World Record Carp Corn  </Popis>
+          <KmKarta>
+            <Popis>FRESH BOILIES 18mm 250ml World Record Carp Corn  </Popis>
+            <Zkrat>FRESH BOILIES 18mm 250ml World Record Carp Corn</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>47030416</UzivCode>
+            <Katalog>47030416</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210038</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>4.5.2021 11:58:30</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>567.12</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>4.5.2021 11:58:30</CasVystave>
+        <DatumVysta>4.5.2021 11:58:30</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210038</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+          <PocetMJ>4</PocetMJ>
+          <Cena>75.20</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+          <KmKarta>
+            <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+            <Zkrat>Delphin CAPRI / 3 diely</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>121207365</UzivCode>
+            <Katalog>121207365</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>PENN Squall Lever Drag 40 60 </Popis>
+          <PocetMJ>3</PocetMJ>
+          <Cena>189.05</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>PENN Squall Lever Drag 40 60 </Popis>
+          <KmKarta>
+            <Popis>PENN Squall Lever Drag 40 60 </Popis>
+            <Zkrat>PENN Squall Lever Drag 40</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>MYSOPT001</UzivCode>
+            <Katalog>MYSOPT001</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210039</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>4.5.2021 12:08:12</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>75.20</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>4.5.2021 12:08:12</CasVystave>
+        <DatumVysta>4.5.2021 12:08:12</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210039</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>75.20</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+          <KmKarta>
+            <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+            <Zkrat>Delphin CAPRI / 3 diely</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>121207365</UzivCode>
+            <Katalog>121207365</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210040</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>4.5.2021 12:11:22</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>75.20</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>4.5.2021 12:11:22</CasVystave>
+        <DatumVysta>4.5.2021 12:11:22</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210040</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>75.20</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+          <KmKarta>
+            <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+            <Zkrat>Delphin CAPRI / 3 diely</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>121207365</UzivCode>
+            <Katalog>121207365</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210041</Doklad>
+      <Popis>Mario Hersel</Popis>
+      <Vystaveno>5.5.2021 10:15:19</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Mario Hersel</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Mario Hersel</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>4.50</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>5.5.2021 10:15:19</CasVystave>
+        <DatumVysta>5.5.2021 10:15:19</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210041</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>FRESH BOILIES 18mm 250ml World Record Carp Corn  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>4.50</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>FRESH BOILIES 18mm 250ml World Record Carp Corn  </Popis>
+          <KmKarta>
+            <Popis>FRESH BOILIES 18mm 250ml World Record Carp Corn  </Popis>
+            <Zkrat>FRESH BOILIES 18mm 250ml World Record Carp Corn</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>47030416</UzivCode>
+            <Katalog>47030416</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210042</Doklad>
+      <Popis>Mario Hersel</Popis>
+      <Vystaveno>5.5.2021 10:15:23</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Mario Hersel</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Mario Hersel</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>4.50</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>5.5.2021 10:15:23</CasVystave>
+        <DatumVysta>5.5.2021 10:15:23</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210042</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210043</Doklad>
+      <Popis>Mario Hersel</Popis>
+      <Vystaveno>5.5.2021 10:29:26</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Mario Hersel</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Mario Hersel</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Cepenska 4305/123</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0919023914</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>3.20</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>5.5.2021 10:29:26</CasVystave>
+        <DatumVysta>5.5.2021 10:29:26</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210043</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>3.20</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+          <KmKarta>
+            <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+            <Zkrat>PVA vrecko hranaté s otvormi Delphin XXL / 5ks</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>851010090</UzivCode>
+            <Katalog>851010090</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210044</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>6.5.2021 09:43:20</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>103.70</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>6.5.2021 09:43:20</CasVystave>
+        <DatumVysta>6.5.2021 09:43:20</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210044</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Delphin MOHYCAN 2500 3500 Kovová cievka pre Delphin MOHYCAN 2500</Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>134.82</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Delphin MOHYCAN 2500 3500 Kovová cievka pre Delphin MOHYCAN 2500</Popis>
+          <KmKarta>
+            <Popis>Delphin MOHYCAN 2500 3500 Kovová cievka pre Delphin MOHYCAN 2500</Popis>
+            <Zkrat>Delphin MOHYCAN 2500</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode />
+            <Katalog />
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>Náhradný akumulátor pre vyvážaciu loďku PRISMA  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>35.70</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Náhradný akumulátor pre vyvážaciu loďku PRISMA  </Popis>
+          <KmKarta>
+            <Popis>Náhradný akumulátor pre vyvážaciu loďku PRISMA  </Popis>
+            <Zkrat>Náhradný akumulátor pre vyvážaciu loďku PRISMA</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>10 017</UzivCode>
+            <Katalog>10 017</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210045</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>6.5.2021 09:55:54</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>10.44</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>6.5.2021 09:55:54</CasVystave>
+        <DatumVysta>6.5.2021 09:55:54</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210045</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>FRESH BOILIES 18mm 250ml World Record Carp Corn  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>10.44</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>FRESH BOILIES 18mm 250ml World Record Carp Corn  </Popis>
+          <KmKarta>
+            <Popis>FRESH BOILIES 18mm 250ml World Record Carp Corn  </Popis>
+            <Zkrat>FRESH BOILIES 18mm 250ml World Record Carp Corn</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>47030416</UzivCode>
+            <Katalog>47030416</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210046</Doklad>
+      <Popis>Peter Bezecny</Popis>
+      <Vystaveno>10.5.2021 11:16:43</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Ing.Peter Bezecný - NAHOĎ</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Andrjw 45</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Ing.Peter Bezecný - NAHOĎ</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Andrjw 45</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0911350400</Cislo>
+        </Tel>
+        <EMail>info@nahod.sk</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>286.65</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>10.5.2021 11:16:43</CasVystave>
+        <DatumVysta>10.5.2021 11:16:43</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210046</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Mivardi dáždnik s bočnicami PVC Camou  </Popis>
+          <PocetMJ>3</PocetMJ>
+          <Cena>81.90</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Mivardi dáždnik s bočnicami PVC Camou  </Popis>
+          <KmKarta>
+            <Popis>Mivardi dáždnik s bočnicami PVC Camou  </Popis>
+            <Zkrat>Mivardi dáždnik s bočnicami PVC Camou</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>M-AUSC250C</UzivCode>
+            <Katalog>M-AUSC250C</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>Signalizátor záberu Delphin SKIPER Zelená </Popis>
+          <PocetMJ>5</PocetMJ>
+          <Cena>7.99</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Signalizátor záberu Delphin SKIPER Zelená </Popis>
+          <KmKarta>
+            <Popis>Signalizátor záberu Delphin SKIPER Zelená </Popis>
+            <Zkrat>Signalizátor záberu Delphin SKIPER</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode></UzivCode>
+            <Katalog></Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210047</Doklad>
+      <Popis>Test Hobertop</Popis>
+      <Vystaveno>10.5.2021 15:22:52</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Test Hobertop</ObchNazev>
+        <ObchAdresa>
+          <Ulice>A.hlinku</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Test Hobertop</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>A.hlinku</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0908495537</Cislo>
+        </Tel>
+        <EMail>info@hoberto.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>66.00</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>10.5.2021 15:22:52</CasVystave>
+        <DatumVysta>10.5.2021 15:22:52</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210047</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Giants fishing Cestovní taška Deluxe Carryall Xlarge  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>66.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Giants fishing Cestovní taška Deluxe Carryall Xlarge  </Popis>
+          <KmKarta>
+            <Popis>Giants fishing Cestovní taška Deluxe Carryall Xlarge  </Popis>
+            <Zkrat>Giants fishing Cestovní taška Deluxe Carryall Xlarge</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>KEYMUL001</UzivCode>
+            <Katalog>KEYMUL001</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210048</Doklad>
+      <Popis>Peter Bezecny</Popis>
+      <Vystaveno>12.5.2021 13:06:48</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Ing.Peter Bezecný - NAHOĎ</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Andrjw</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Ing.Peter Bezecný - NAHOĎ</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Andrjw</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0911350400</Cislo>
+        </Tel>
+        <EMail>info@nahod.sk</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>726.25</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>12.5.2021 13:06:48</CasVystave>
+        <DatumVysta>12.5.2021 13:06:48</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210048</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Spací vak Giants Fishing 5 Season Maxi  </Popis>
+          <PocetMJ>4</PocetMJ>
+          <Cena>90.81</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Spací vak Giants Fishing 5 Season Maxi  </Popis>
+          <KmKarta>
+            <Popis>Spací vak Giants Fishing 5 Season Maxi  </Popis>
+            <Zkrat>Spací vak Giants Fishing 5 Season Maxi</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>G-22204</UzivCode>
+            <Katalog>G-22204</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>Bait-Tech krmítková zmes groundbaits Envy Hemp &amp; Halibut Method 2kg  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>7.84</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Bait-Tech krmítková zmes groundbaits Envy Hemp &amp; Halibut Method 2kg  </Popis>
+          <KmKarta>
+            <Popis>Bait-Tech krmítková zmes groundbaits Envy Hemp &amp; Halibut Method 2kg  </Popis>
+            <Zkrat>Bait-Tech krmítková zmes groundbaits Envy Hemp &amp; Halibut Method 2kg</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>BT-2500006</UzivCode>
+            <Katalog>BT-2500006</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>Nerezová vidlička Hardcore 65 - 115cm </Popis>
+          <PocetMJ>2</PocetMJ>
+          <Cena>18.91</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Nerezová vidlička Hardcore 65 - 115cm </Popis>
+          <KmKarta>
+            <Popis>Nerezová vidlička Hardcore 65 - 115cm </Popis>
+            <Zkrat>Nerezová vidlička Hardcore</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode></UzivCode>
+            <Katalog></Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+          <PocetMJ>2</PocetMJ>
+          <Cena>147.42</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+          <KmKarta>
+            <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+            <Zkrat>Delphin CAPRI / 3 diely</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>121207365</UzivCode>
+            <Katalog>121207365</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210049</Doklad>
+      <Popis>Peter Bezecny</Popis>
+      <Vystaveno>12.5.2021 13:07:15</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Ing.Peter Bezecný - NAHOĎ</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Andrjw</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Ing.Peter Bezecný - NAHOĎ</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Andrjw</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0911350400</Cislo>
+        </Tel>
+        <EMail>info@nahod.sk</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>726.25</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>12.5.2021 13:07:15</CasVystave>
+        <DatumVysta>12.5.2021 13:07:15</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210049</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210050</Doklad>
+      <Popis>test test</Popis>
+      <Vystaveno>13.5.2021 09:27:00</Vystaveno>
+      <DodOdb>
+        <ObchNazev>test test</ObchNazev>
+        <ObchAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>test test</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0919023914</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>27.06</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>13.5.2021 09:27:00</CasVystave>
+        <DatumVysta>13.5.2021 09:27:00</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210050</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>PVA sieťka náhradná Delphin / 10m široká 37mm </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>17.98</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>PVA sieťka náhradná Delphin / 10m široká 37mm </Popis>
+          <KmKarta>
+            <Popis>PVA sieťka náhradná Delphin / 10m široká 37mm </Popis>
+            <Zkrat>PVA sieťka náhradná Delphin / 10m</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode></UzivCode>
+            <Katalog></Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>8.08</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+          <KmKarta>
+            <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+            <Zkrat>PVA vrecko hranaté s otvormi Delphin XXL / 5ks</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>851010090</UzivCode>
+            <Katalog>851010090</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210051</Doklad>
+      <Popis>a a</Popis>
+      <Vystaveno>13.5.2021 09:56:47</Vystaveno>
+      <DodOdb>
+        <ObchNazev>a a</ObchNazev>
+        <ObchAdresa>
+          <Ulice>a</Ulice>
+          <Misto>a</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>a a</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>a</Ulice>
+          <Misto>a</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>a a  a</Nazev>
+        <Adresa>
+          <Ulice>a</Ulice>
+          <Misto>a</Misto>
+          <PSC>a</PSC>
+          <Stat>a</Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>9.08</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>13.5.2021 09:56:47</CasVystave>
+        <DatumVysta>13.5.2021 09:56:47</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210051</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>8.08</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+          <KmKarta>
+            <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+            <Zkrat>PVA vrecko hranaté s otvormi Delphin XXL / 5ks</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>851010090</UzivCode>
+            <Katalog>851010090</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210052</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>13.5.2021 10:03:12</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat>a</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat>a</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>a a  a</Nazev>
+        <Adresa>
+          <Ulice>a</Ulice>
+          <Misto>a</Misto>
+          <PSC>a</PSC>
+          <Stat>a</Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>9.08</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>13.5.2021 10:03:12</CasVystave>
+        <DatumVysta>13.5.2021 10:03:12</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210052</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>8.08</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+          <KmKarta>
+            <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+            <Zkrat>PVA vrecko hranaté s otvormi Delphin XXL / 5ks</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>851010090</UzivCode>
+            <Katalog>851010090</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210053</Doklad>
+      <Popis>a a</Popis>
+      <Vystaveno>14.5.2021 10:03:17</Vystaveno>
+      <DodOdb>
+        <ObchNazev>a a</ObchNazev>
+        <ObchAdresa>
+          <Ulice>a</Ulice>
+          <Misto>a</Misto>
+          <PSC>a</PSC>
+          <Stat>Česká republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>a a</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>a</Ulice>
+          <Misto>a</Misto>
+          <PSC>a</PSC>
+          <Stat>Česká republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>a</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>9.08</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>14.5.2021 10:03:17</CasVystave>
+        <DatumVysta>14.5.2021 10:03:17</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210053</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>8.08</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+          <KmKarta>
+            <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+            <Zkrat>PVA vrecko hranaté s otvormi Delphin XXL / 5ks</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>851010090</UzivCode>
+            <Katalog>851010090</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210054</Doklad>
+      <Popis>Mario test</Popis>
+      <Vystaveno>14.5.2021 10:06:57</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Mario test</ObchNazev>
+        <ObchAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat>Česká republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Mario test</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat>Česká republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>9.08</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>14.5.2021 10:06:57</CasVystave>
+        <DatumVysta>14.5.2021 10:06:57</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210054</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>8.08</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+          <KmKarta>
+            <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+            <Zkrat>PVA vrecko hranaté s otvormi Delphin XXL / 5ks</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>851010090</UzivCode>
+            <Katalog>851010090</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210055</Doklad>
+      <Popis>test test</Popis>
+      <Vystaveno>14.5.2021 12:27:42</Vystaveno>
+      <DodOdb>
+        <ObchNazev>test test</ObchNazev>
+        <ObchAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>test test</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>9.08</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>14.5.2021 12:27:42</CasVystave>
+        <DatumVysta>14.5.2021 12:27:42</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210055</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>8.08</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+          <KmKarta>
+            <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+            <Zkrat>PVA vrecko hranaté s otvormi Delphin XXL / 5ks</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>851010090</UzivCode>
+            <Katalog>851010090</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210056</Doklad>
+      <Popis>test test</Popis>
+      <Vystaveno>14.5.2021 12:31:32</Vystaveno>
+      <DodOdb>
+        <ObchNazev>test test</ObchNazev>
+        <ObchAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>test test</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>9.08</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>14.5.2021 12:31:32</CasVystave>
+        <DatumVysta>14.5.2021 12:31:32</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210056</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>8.08</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+          <KmKarta>
+            <Popis>PVA vrecko hranaté s otvormi Delphin XXL / 5ks  </Popis>
+            <Zkrat>PVA vrecko hranaté s otvormi Delphin XXL / 5ks</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>851010090</UzivCode>
+            <Katalog>851010090</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210057</Doklad>
+      <Popis>asd asd</Popis>
+      <Vystaveno>15.5.2021 19:18:29</Vystaveno>
+      <DodOdb>
+        <ObchNazev>asd asd</ObchNazev>
+        <ObchAdresa>
+          <Ulice>asd</Ulice>
+          <Misto>asd</Misto>
+          <PSC>asd</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>asd asd</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>asd</Ulice>
+          <Misto>asd</Misto>
+          <PSC>asd</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>asd</Cislo>
+        </Tel>
+        <EMail>asd@ASD.SK</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>117.70</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>15.5.2021 19:18:29</CasVystave>
+        <DatumVysta>15.5.2021 19:18:29</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210057</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Kaprársky stolík XL  </Popis>
+          <PocetMJ>3</PocetMJ>
+          <Cena>38.90</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Kaprársky stolík XL  </Popis>
+          <KmKarta>
+            <Popis>Kaprársky stolík XL  </Popis>
+            <Zkrat>Kaprársky stolík XL</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>M-CTXL</UzivCode>
+            <Katalog>M-CTXL</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210058</Doklad>
+      <Popis>Peter Bezecny</Popis>
+      <Vystaveno>17.5.2021 20:25:43</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Ing.Peter Bezecný - NAHOĎ</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Andrjw</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Ing.Peter Bezecný - NAHOĎ</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Andrjw</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat>Slovenská republika</Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0911350400</Cislo>
+        </Tel>
+        <EMail>info@nahod.sk</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>208.18</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>17.5.2021 20:25:43</CasVystave>
+        <DatumVysta>17.5.2021 20:25:43</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210058</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>147.42</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+          <KmKarta>
+            <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+            <Zkrat>Delphin CAPRI / 3 diely</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>121207365</UzivCode>
+            <Katalog>121207365</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>LK Lumino isotope Modrá </Popis>
+          <PocetMJ>2</PocetMJ>
+          <Cena>29.88</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>LK Lumino isotope Modrá </Popis>
+          <KmKarta>
+            <Popis>LK Lumino isotope Modrá </Popis>
+            <Zkrat>LK Lumino isotope</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode />
+            <Katalog />
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210059</Doklad>
+      <Popis>TEST test</Popis>
+      <Vystaveno>21.5.2021 11:03:55</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Test firma</ObchNazev>
+        <ObchAdresa>
+          <Ulice>123456</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Test firma</FaktNazev>
+        <ICO>test</ICO>
+        <DIC>test</DIC>
+        <FaktAdresa>
+          <Ulice>123456</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat>Slovenská republika</Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908234026</Cislo>
+        </Tel>
+        <EMail>navratil.milann@gmail.com</EMail>
+        <PlatceDPH>1</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK>test</DICSK>
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>294.84</Celkem>
+        <PlatPodm>Bankovým prevodom</PlatPodm>
+        <Doprava>Osobný odber</Doprava>
+        <CasVystave>21.5.2021 11:03:55</CasVystave>
+        <DatumVysta>21.5.2021 11:03:55</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210059</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+          <PocetMJ>2</PocetMJ>
+          <Cena>147.42</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+          <KmKarta>
+            <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+            <Zkrat>Delphin CAPRI / 3 diely</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>121207365</UzivCode>
+            <Katalog>121207365</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210060</Doklad>
+      <Popis>test test</Popis>
+      <Vystaveno>21.5.2021 13:40:37</Vystaveno>
+      <DodOdb>
+        <ObchNazev>test test</ObchNazev>
+        <ObchAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>test test</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat>Slovenská republika</Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>163.32</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>21.5.2021 13:40:37</CasVystave>
+        <DatumVysta>21.5.2021 13:40:37</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210060</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>LK Baits NEW CRASH BALL - zakrmovacia raketa  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>14.90</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>LK Baits NEW CRASH BALL - zakrmovacia raketa  </Popis>
+          <KmKarta>
+            <Popis>LK Baits NEW CRASH BALL - zakrmovacia raketa  </Popis>
+            <Zkrat>LK Baits NEW CRASH BALL - zakrmovacia raketa</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>31020603</UzivCode>
+            <Katalog>31020603</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>147.42</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+          <KmKarta>
+            <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+            <Zkrat>Delphin CAPRI / 3 diely</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>121207365</UzivCode>
+            <Katalog>121207365</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210061</Doklad>
+      <Popis>a a</Popis>
+      <Vystaveno>21.5.2021 14:22:55</Vystaveno>
+      <DodOdb>
+        <ObchNazev>a</ObchNazev>
+        <ObchAdresa>
+          <Ulice>a</Ulice>
+          <Misto>a</Misto>
+          <PSC>a</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>a</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>a</Ulice>
+          <Misto>a</Misto>
+          <PSC>a</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat>Slovenská republika</Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>a</Cislo>
+        </Tel>
+        <EMail>abc@abc.sk</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>14.41</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>21.5.2021 14:22:55</CasVystave>
+        <DatumVysta>21.5.2021 14:22:55</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210061</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>LK Baits NEW CRASH BALL - zakrmovacia raketa  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>14.16</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>LK Baits NEW CRASH BALL - zakrmovacia raketa  </Popis>
+          <KmKarta>
+            <Popis>LK Baits NEW CRASH BALL - zakrmovacia raketa  </Popis>
+            <Zkrat>LK Baits NEW CRASH BALL - zakrmovacia raketa</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>31020603</UzivCode>
+            <Katalog>31020603</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210062</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>21.5.2021 15:15:50</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat>Česká republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat>Česká republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat>Česká republika</Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>57.70</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>21.5.2021 15:15:50</CasVystave>
+        <DatumVysta>21.5.2021 15:15:50</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210062</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>LK Baits NEW CRASH BALL - zakrmovacia raketa  </Popis>
+          <PocetMJ>2</PocetMJ>
+          <Cena>12.67</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>LK Baits NEW CRASH BALL - zakrmovacia raketa  </Popis>
+          <KmKarta>
+            <Popis>LK Baits NEW CRASH BALL - zakrmovacia raketa  </Popis>
+            <Zkrat>LK Baits NEW CRASH BALL - zakrmovacia raketa</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>31020603</UzivCode>
+            <Katalog>31020603</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>LK Lumino isotope Žltá </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>29.88</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>LK Lumino isotope Žltá </Popis>
+          <KmKarta>
+            <Popis>LK Lumino isotope Žltá </Popis>
+            <Zkrat>LK Lumino isotope</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode />
+            <Katalog />
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210063</Doklad>
+      <Popis>test test</Popis>
+      <Vystaveno>21.5.2021 15:24:54</Vystaveno>
+      <DodOdb>
+        <ObchNazev>test test</ObchNazev>
+        <ObchAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>test test</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat>Slovenská republika</Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>148.42</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>21.5.2021 15:24:54</CasVystave>
+        <DatumVysta>21.5.2021 15:24:54</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210063</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>147.42</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+          <KmKarta>
+            <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+            <Zkrat>Delphin CAPRI / 3 diely</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>121207365</UzivCode>
+            <Katalog>121207365</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210064</Doklad>
+      <Popis>test test</Popis>
+      <Vystaveno>21.5.2021 15:26:37</Vystaveno>
+      <DodOdb>
+        <ObchNazev>test test</ObchNazev>
+        <ObchAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>test test</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>148.42</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>21.5.2021 15:26:37</CasVystave>
+        <DatumVysta>21.5.2021 15:26:37</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210064</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>147.42</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+          <KmKarta>
+            <Popis>Delphin CAPRI / 3 diely 1+1 </Popis>
+            <Zkrat>Delphin CAPRI / 3 diely</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>121207365</UzivCode>
+            <Katalog>121207365</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210065</Doklad>
+      <Popis>test test</Popis>
+      <Vystaveno>21.5.2021 15:30:03</Vystaveno>
+      <DodOdb>
+        <ObchNazev>test test</ObchNazev>
+        <ObchAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>test test</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>14.41</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>21.5.2021 15:30:03</CasVystave>
+        <DatumVysta>21.5.2021 15:30:03</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210065</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>LK Baits NEW CRASH BALL - zakrmovacia raketa  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>14.90</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>LK Baits NEW CRASH BALL - zakrmovacia raketa  </Popis>
+          <KmKarta>
+            <Popis>LK Baits NEW CRASH BALL - zakrmovacia raketa  </Popis>
+            <Zkrat>LK Baits NEW CRASH BALL - zakrmovacia raketa</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>31020603</UzivCode>
+            <Katalog>31020603</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210066</Doklad>
+      <Popis>a a</Popis>
+      <Vystaveno>21.5.2021 15:38:02</Vystaveno>
+      <DodOdb>
+        <ObchNazev>a a</ObchNazev>
+        <ObchAdresa>
+          <Ulice>a</Ulice>
+          <Misto>a</Misto>
+          <PSC>a</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>a a</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>a</Ulice>
+          <Misto>a</Misto>
+          <PSC>a</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>a</Cislo>
+        </Tel>
+        <EMail>abcd@abcd.sk</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>774.98</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>21.5.2021 15:38:02</CasVystave>
+        <DatumVysta>21.5.2021 15:38:02</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210066</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>LK Baits NEW CRASH BALL - zakrmovacia raketa  </Popis>
+          <PocetMJ>1</PocetMJ>
+          <Cena>14.16</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>LK Baits NEW CRASH BALL - zakrmovacia raketa  </Popis>
+          <KmKarta>
+            <Popis>LK Baits NEW CRASH BALL - zakrmovacia raketa  </Popis>
+            <Zkrat>LK Baits NEW CRASH BALL - zakrmovacia raketa</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>31020603</UzivCode>
+            <Katalog>31020603</Katalog>
+          </KmKarta>
+        </Polozka>
+        <Polozka>
+          <Popis>Rybárska zavážacia loďka BL  </Popis>
+          <PocetMJ>2</PocetMJ>
+          <Cena>379.91</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Rybárska zavážacia loďka BL  </Popis>
+          <KmKarta>
+            <Popis>Rybárska zavážacia loďka BL  </Popis>
+            <Zkrat>Rybárska zavážacia loďka BL</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>625 001</UzivCode>
+            <Katalog>625 001</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210067</Doklad>
+      <Popis>a a</Popis>
+      <Vystaveno>21.5.2021 15:42:40</Vystaveno>
+      <DodOdb>
+        <ObchNazev>a a</ObchNazev>
+        <ObchAdresa>
+          <Ulice>a</Ulice>
+          <Misto>a</Misto>
+          <PSC>a</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>a a</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>a</Ulice>
+          <Misto>a</Misto>
+          <PSC>a</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>a</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>760.82</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>21.5.2021 15:42:40</CasVystave>
+        <DatumVysta>21.5.2021 15:42:40</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210067</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Rybárska zavážacia loďka BL  </Popis>
+          <PocetMJ>2</PocetMJ>
+          <Cena>379.91</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Rybárska zavážacia loďka BL  </Popis>
+          <KmKarta>
+            <Popis>Rybárska zavážacia loďka BL  </Popis>
+            <Zkrat>Rybárska zavážacia loďka BL</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>625 001</UzivCode>
+            <Katalog>625 001</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210068</Doklad>
+      <Popis>a a</Popis>
+      <Vystaveno>21.5.2021 15:48:54</Vystaveno>
+      <DodOdb>
+        <ObchNazev>a a</ObchNazev>
+        <ObchAdresa>
+          <Ulice>a</Ulice>
+          <Misto>a</Misto>
+          <PSC>a</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>a a</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>a</Ulice>
+          <Misto>a</Misto>
+          <PSC>a</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>a</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>720.82</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>21.5.2021 15:48:54</CasVystave>
+        <DatumVysta>21.5.2021 15:48:54</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210068</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Rybárska zavážacia loďka BL  </Popis>
+          <PocetMJ>2</PocetMJ>
+          <Cena>399.90</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Rybárska zavážacia loďka BL  </Popis>
+          <KmKarta>
+            <Popis>Rybárska zavážacia loďka BL  </Popis>
+            <Zkrat>Rybárska zavážacia loďka BL</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>625 001</UzivCode>
+            <Katalog>625 001</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210069</Doklad>
+      <Popis>Robert Holicka</Popis>
+      <Vystaveno>22.5.2021 09:47:13</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert Holicka</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 3557/8</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert Holicka</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 3557/8</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0908495537</Cislo>
+        </Tel>
+        <EMail>robo0897@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>114.40</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>22.5.2021 09:47:13</CasVystave>
+        <DatumVysta>22.5.2021 09:47:13</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210069</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Náhradný akumulátor pre vyvážaciu loďku PRISMA  </Popis>
+          <PocetMJ>3</PocetMJ>
+          <Cena>42.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Náhradný akumulátor pre vyvážaciu loďku PRISMA  </Popis>
+          <KmKarta>
+            <Popis>Náhradný akumulátor pre vyvážaciu loďku PRISMA  </Popis>
+            <Zkrat>Náhradný akumulátor pre vyvážaciu loďku PRISMA</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>10 017</UzivCode>
+            <Katalog>10 017</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210070</Doklad>
+      <Popis>Robert Holicka</Popis>
+      <Vystaveno>24.5.2021 15:03:57</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert Holicka</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 3557/8</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert Holicka</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 3557/8</Ulice>
+          <Misto>Sered</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0908495537</Cislo>
+        </Tel>
+        <EMail>robo0897@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>114.40</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>24.5.2021 15:03:57</CasVystave>
+        <DatumVysta>24.5.2021 15:03:57</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210070</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+      </KonecPrij>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210071</Doklad>
+      <Popis>Peter Bezecny</Popis>
+      <Vystaveno>24.5.2021 16:44:00</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Ing.Peter Bezecný - NAHOĎ</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Andrjw</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Ing.Peter Bezecný - NAHOĎ</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Andrjw</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0911350400</Cislo>
+        </Tel>
+        <EMail>bezecny.peter@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij>
+        <KPFromOdb>0</KPFromOdb>
+        <Celkem>379.00</Celkem>
+        <PlatPodm>Dobierkou</PlatPodm>
+        <Doprava>Kuriérska spoločnosť</Doprava>
+        <CasVystave>24.5.2021 16:44:00</CasVystave>
+        <DatumVysta>24.5.2021 16:44:00</DatumVysta>
+        <Nadpis>Prijatá objednávka</Nadpis>
+        <PrimDoklad>210071</PrimDoklad>
+        <SazbaDPH2>20</SazbaDPH2>
+        <Sleva>0</Sleva>
+        <Pojisteno>0</Pojisteno>
+        <Polozka>
+          <Popis>Navijak PENN AFFINITY II LC 8000 </Popis>
+          <PocetMJ>2</PocetMJ>
+          <Cena>189.00</Cena>
+          <SazbaDPH>20</SazbaDPH>
+          <TypCeny>0</TypCeny>
+          <Sleva>0</Sleva>
+          <Popis>Navijak PENN AFFINITY II LC 8000 </Popis>
+          <KmKarta>
+            <Popis>Navijak PENN AFFINITY II LC 8000 </Popis>
+            <Zkrat>Navijak PENN AFFINITY II LC</Zkrat>
+            <MJ>ks</MJ>
+            <UzivCode>MYSOPT001</UzivCode>
+            <Katalog>MYSOPT001</Katalog>
+          </KmKarta>
+        </Polozka>
+      </KonecPrij>
+    </ObjPrij>
+  </SeznamObjPrij>
+</MoneyData>
