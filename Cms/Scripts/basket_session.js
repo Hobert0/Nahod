@@ -34,22 +34,15 @@ function decreaseCount(productid) {
 
     for (var i = 0; i < addtocart.length; i++) {
         if (productid === addtocart[i].id) {
-            cart.product = addtocart[i].product;
-            cart.variant = addtocart[i].variant;
-            cart.variant2 = addtocart[i].variant2;
-            cart.price = addtocart[i].price;
+            addtocart[i].quantity = quantity.toString();
+
         }
     }
 
     if (cart.quantity === "0") {
         removeFromCart(productid.toString());
     } else {        
-        addtocart.push(cart);
-        var index = addtocart.findIndex(i => i.id === productid);
-        if (index > -1) {
-            addtocart.splice(index, 1);
-        }
-
+       
         sessionStorage.setItem('addtocart', JSON.stringify(addtocart));
         localStorage.setItem('addtocart', JSON.stringify(addtocart));
 
@@ -95,18 +88,10 @@ function increaseCount(productid) {
 
     for (var i = 0; i < addtocart.length; i++) {
         if (productid === addtocart[i].id) {
-            cart.product = addtocart[i].product;
-            cart.variant = addtocart[i].variant;
-            cart.variant2 = addtocart[i].variant2;
-            cart.price = addtocart[i].price;
+            addtocart[i].quantity = quantity.toString();
         }
     }
 
-    addtocart.push(cart);
-    var index = addtocart.findIndex(i => i.id === productid);
-    if (index > -1) {
-        addtocart.splice(index, 1);
-    }
     sessionStorage.setItem('addtocart', JSON.stringify(addtocart));
     localStorage.setItem('addtocart', JSON.stringify(addtocart));
 

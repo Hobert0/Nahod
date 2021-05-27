@@ -35,6 +35,14 @@
                 </div>
 
                 <table class="table mt-2 mt-sm-0" style="font-size: 14px;" id="myTable">
+                    <thead>
+                        <th></th>
+                        <th>Názov</th>
+                        <th class="text-center">Variant</th>
+                        <th class="text-center">Množstvo</th>
+                        <th>Cena</th>
+                        <th>Odstrániť</th>
+                    </thead>
                     @{
                         List<dynamic> cart = new List<dynamic>();
                         cart = (List<dynamic>)Session["cartitems"];
@@ -52,7 +60,7 @@
                                 var thisProd = Model.ProductModel.Where(i => i.id == item.product.Value).SingleOrDefault();
 
                                 <tr>
-                                    <td style="width: 70px"><img src="~/Uploads/@Html.DisplayFor(modelItem => thisProd.image)" style="width: 50px" /></td>
+                                    <td style="width: 70px;text-align: center;"><img src="~/Uploads/@Html.DisplayFor(modelItem => thisProd.image)" style="max-width: 50px;max-height: 50px;" /></td>
 
                                     @{
                                         var slug = helper.ToUrlSlug(thisProd.title);
@@ -886,13 +894,20 @@
                     @{
                         if (cart != null)
                         {
+                            <thead>
+                            <th></th>
+                            <th>Názov</th>
+                            <th class="text-center">Variant</th>
+                            <th class="text-center">Množstvo</th>
+                            <th>Cena</th>
+                            </thead>
                             foreach (var item in cart)
                             {
 
                                 var thisProd = Model.ProductModel.Where(i => i.id == item.product.Value).SingleOrDefault();
 
                                 <tr>
-                                    <td style="width: 70px"><img src="~/Uploads/@Html.DisplayFor(modelItem => thisProd.image)" style="width: 50px" /></td>
+                                    <td style="width: 70px;text-align: center;"><img src="~/Uploads/@Html.DisplayFor(modelItem => thisProd.image)" style="max-width: 50px;max-height: 50px;" /></td>
                                     <td><strong>@Html.Raw(thisProd.title)</strong></td>
 
                                     <td style="text-align: center;">

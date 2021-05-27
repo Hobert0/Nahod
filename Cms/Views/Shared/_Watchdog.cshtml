@@ -10,7 +10,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <h3>Watchdog</h3>
+                <h3>Strážiť dostupnosť</h3>
                 @using (Html.BeginForm("CreateWatchdog", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "watchdogForm" }))
                 {
 
@@ -18,24 +18,21 @@
                         <hr />
 
                         <p style="margin-bottom: 10px;">
-                            Tento produkt nie je v tomto okamihu skladom. Pomocou formulára môžte odoslať požiadavku na jeho dodanie na sklad a akonáhle sa tento produkt naskladní, príde vám e-mail.
+                            Zadajte Váš e-mail a my Vám zašleme informáciu akonáhle produkt naskladníme.
                         </p>
 
-                        <label class="control-label" for="watchdogEmail">E-mail</label>
                         <div class="form-group row ml-0 p-0 col mb-10">
                             <div class="col-md-12 p-0">
-                                @Html.Editor("watchdogEmail", new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.Editor("watchdogEmail", new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
                             </div>
                         </div>
 
 
                         <div class="form-group">
                             <div class="right" style="text-align: right;">
-                                <input type="submit" value="Odoslať" class="btn btn-color-blue col-3" />
+                                <input type="submit" value="Strážiť" class="btn btn-color-blue col-12 col-md-3" />
                             </div>
-                            <div class="col-md-10 text-danger p-0 mt-2 wrongpass" style="display: none;">
-                                Meno alebo heslo je zadané nesprávne!
-                            </div>
+                            
                         </div>
                     </div>
                     @Html.Hidden("thisProdId", "")

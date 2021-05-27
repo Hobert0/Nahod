@@ -336,7 +336,7 @@ footer {
     z-index: 999;
     top: 0;
     left: 0;
-    background-color: #303030;
+    background-color: #fff;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
@@ -346,15 +346,12 @@ footer {
         padding: 5px 8px 5px 18px;
         text-decoration: none;
         font-size: 25px;
-        border-bottom: 1px solid #1f1f1f;
-        color: #ffffff;
+        border-bottom: 1px solid #d8d8d8;
+        color: #333333;
         display: block;
         transition: 0.3s;
     }
 
-        .sidebar a:hover {
-            color: #f1f1f1;
-        }
 
     .sidebar .closebtn {
         position: absolute;

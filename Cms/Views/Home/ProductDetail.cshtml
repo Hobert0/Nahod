@@ -35,7 +35,7 @@
             {
                 var desc = Html.Raw(prod.description).ToString();
                 ViewBag.Title = prod.title + " -";
-                ViewBag.Image = "https://shop.nahod.sk/Uploads/" + prod.image;
+                ViewBag.Image = "https://nahod.sk/Uploads/" + prod.image;
                 ViewBag.Description = desc;
                 category = prod.category;
                 id = prod.id.ToString();
@@ -141,11 +141,11 @@
                                     }
                                     else if (decimal.Parse(prod.stock) <= decimal.Parse(prod.custom1) && decimal.Parse(prod.stock) > 0)
                                     {
-                                        onStock = "<a href='#' class='watchdog-modal'><span style='color:#e89300;'>Dodanie do 3-10 dní</span><i style='margin-left: 10px;' class='fas fa-dog'></i></a>";
+                                        onStock = "<a href='#' class='watchdog-modal'><span style='color:#e89300;'>Dodanie 3-10 dní</span><br><small><u>Strážiť dostupnosť</u></small><i style='margin-left: 10px;' class='fas fa-dog'></i><br><small>Zadajte Váš e-mail a my Vám zašleme informáciu akonáhle produkt naskladníme.</small></a>";
                                     }
                                     else if (decimal.Parse(prod.stock) == 0)
                                     {
-                                        onStock = "<a href='#' class='watchdog-modal'><span style='color:#e89300;'>Dodanie do 3-10 dní</span><i style='margin-left: 10px;' class='fas fa-dog'></i></a>";
+                                        onStock = "<a href='#' class='watchdog-modal'><span style='color:#e89300;'>Dodanie 3-10 dní</span><br><small><u>Strážiť dostupnosť</u></small><i style='margin-left: 10px;' class='fas fa-dog'></i><br><small>Zadajte Váš e-mail a my Vám zašleme informáciu akonáhle produkt naskladníme.</small></a>";
                                     }
                                     else if (decimal.Parse(prod.stock) < 0)
                                     {
@@ -166,7 +166,7 @@
                             @Html.Raw((prod.custom10 != "" && prod.custom10 != null) ? "<strong>Rozloha miestnosti: </strong>" + Html.Raw(prod.custom10) + " m<sup>2</sup><br />" : "")
 
                             <hr />
-                            <div class="row">
+                            <div class="row printicons">
                                 <div class="col-auto">
                                     <i class="fas fa-print"></i>
                                     <a href="#" onclick="window.print()">Tlačiť</a>
@@ -198,11 +198,11 @@
                                 @if (prod.discountprice != null)
                                 {
                                     cena = (decimal)prod.discountprice;
-                            <p class="discount-price-text" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;"><span class="discount-label">Akciová cena</span> <strong style="font-size:30px;"><span class="actual-price">@cena.ToString("N2")</span> €</strong> </p>
+                            <p class="discount-price-text" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;"><span class="discount-label">Akciová cena</span> <strong style="font-size:30px;"><span class="actual-price">@cena.ToString("N2")</span> €</strong><br /><small style="font-size: 12px;color: #333;">Na produkt sa <strong>nevzťahuje</strong> zľava po prihlásení.</small></p>
                         }
                         else
                         {
-                            <p class="discount-price-text d-none" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;"><span class="discount-label">Akciová cena</span> <strong style="font-size:30px;"><span class="actual-price">0</span> €</strong> </p>
+                    <p class="discount-price-text d-none" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;"><span class="discount-label">Akciová cena</span> <strong style="font-size:30px;"><span class="actual-price">0</span> €</strong><br /><small style="font-size: 12px;color: #333;">Na produkt sa <strong>nevzťahuje</strong> zľava po prihlásení.</small></p>
                         }
                                 @{
                                     if (prod.discountprice != null)
@@ -421,7 +421,9 @@
             <div class="col-md-12 no-gutters">
                 <div class="row">
                     <h2 class="col-md-12">
-                        Odporúčané produkty
+                        <a href="/kat/odporucame">
+                            Odporúčané produkty
+                        </a>
                     </h2>
                 </div>
 
@@ -627,7 +629,9 @@
             <div class="col-md-12 no-gutters">
                 <div class="row">
                     <h2 class="col-md-12">
-                        Novinky v e-shope
+                        <a href="/kat/novinky">
+                            Novinky v e-shope
+                        </a>
                     </h2>
                 </div>
                 <div class="row products-row">

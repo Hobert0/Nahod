@@ -463,9 +463,9 @@ namespace Cms.Controllers
                 XElement doc2 = new XElement("PRODUCTNAME", product.title);
                 XElement doc3 = new XElement("PRODUCT", product.title);
                 XElement doc4 = new XElement("DESCRIPTION", prodDesc);
-                XElement doc5 = new XElement("URL", "https://shop.nahod.sk" + Url.Action("ProductDetail", "Home", new { id = product.id }));
-                XElement doc6 = new XElement("IMGURL", "https://shop.nahod.sk/Uploads/" + product.image);
-                XElement doc7 = new XElement("IMGURL_ALTERNATIVE", "https://shop.nahod.sk/Uploads/" + product.image);
+                XElement doc5 = new XElement("URL", "https://nahod.sk" + Url.Action("ProductDetail", "Home", new { id = product.id }));
+                XElement doc6 = new XElement("IMGURL", "https://nahod.sk/Uploads/" + product.image);
+                XElement doc7 = new XElement("IMGURL_ALTERNATIVE", "https://nahod.sk/Uploads/" + product.image);
                 XElement doc8 = new XElement("VIDEO_URL", "");
                 XElement doc9 = new XElement("PRICE_VAT", product.price);
                 XElement doc10 = null;

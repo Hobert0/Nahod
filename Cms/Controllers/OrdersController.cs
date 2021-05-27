@@ -376,7 +376,7 @@ namespace Cms.Controllers
             model.PagesModel = db.pages.ToList();
             model.CategoriesModel = db.categories.ToList();
             model.BrandsModel = db.brands.ToList();
-            model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
+            model.SlideshowModel = db.slideshow.ToList();
             model.OrderDataModel = db.orders.Where(i => i.ordernumber == orderNumber).ToList();
 
             ViewData["countries"] = new AdminController().SelectionCountries();
@@ -574,7 +574,7 @@ namespace Cms.Controllers
                 var sett1 = db.e_settings.FirstOrDefault();
                 var sett2 = db.settings.ToList();
                 /*ZMENIT*/
-                var eshopname = "Nahod.sk - Rybárske potreby";
+                var eshopname = "NAHOD.sk";
 
                 //foreach(var s in sett1)
                 //{
@@ -1010,7 +1010,7 @@ namespace Cms.Controllers
             using (MailMessage mailMessage = new MailMessage())
             {
                 /*ZMENIT*/
-                var eshopname = "Nahod";
+                var eshopname = "NAHOD.sk";
 
                 //Zvlast nastaveny email FROM (pouziva iny server)
                 //mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["UserName"], eshopname);

@@ -65,25 +65,6 @@ function payMent() {
 }
 
 function checkTransfer() {
-    var ship = document.querySelector('input[name="transfer"]:checked').value;
-    document.getElementById("ship").value = ship;
-    ship == '@ViewBag.Ship';
-    if (ship == "transfer3") {
-        if (document.getElementById("pay4") != null)
-            document.getElementById("pay4").style.display = "none";
-    } else {
-        if (document.getElementById("pay4") != null)
-            document.getElementById("pay4").style.display = "block";
-    }
-
-    if (ship == "transfer1" || ship == "transfer2") {
-        if (document.getElementById("pay1") != null)
-            document.getElementById("pay1").style.display = "none";
-    } else {
-        if (document.getElementById("pay1") != null)
-            document.getElementById("pay1").style.display = "block";
-    }
-
     //vyplnime zhrnutie
     var shipName = $('input[name="transfer"]:checked').parent().find(".shipName").text();
     $(".transferCheckText").text(shipName);
@@ -93,25 +74,7 @@ function checkTransfer() {
 
 }
 function checkPayment() {
-    var pay = document.querySelector('input[name="payment"]:checked').value;
-    document.getElementById("platba").value = pay;
-    pay == '@ViewBag.Pay';
-    if (pay == "pay4") {
-        if (document.getElementById("transfer3") != null)
-            document.getElementById("transfer3").style.display = "none";
-    } else {
-        if (document.getElementById("transfer3") != null)
-            document.getElementById("transfer3").style.display = "block";
-    }
-
-    if (pay == "pay1") {
-        if (document.getElementById("transfer1") != null)
-            document.getElementById("transfer1").style.display = "none";
-    } else {
-        if (document.getElementById("transfer1") != null)
-            document.getElementById("transfer1").style.display = "block";
-    }
-
+   
     //vyplnime zhrnutie
     var payName = $('input[name="payment"]:checked').parent().find(".payName").text();
     $(".paymentCheckText").text(payName);
