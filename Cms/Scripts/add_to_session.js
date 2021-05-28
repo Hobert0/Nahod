@@ -60,7 +60,7 @@
         cart.quantity = quantity;
         cart.product = id;
         cart.price = price;
-
+        cart.userLogged = $("#userId").length ? true : false;
 
         addtocart.push(cart);
 

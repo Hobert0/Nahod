@@ -1136,6 +1136,11 @@
 		text-align: center;
 	}
 
+	#cart .table .pricePerItem {
+		font-size: 10px !important;
+		text-align: center;
+	}
+
 	#cart .button-container,
 	#shipping .button-container {
 		display: flex;
