@@ -75,6 +75,7 @@ $("#addproductbtn").click(function () {
     cart.price = price;
     cart.variant = variant;
     cart.variant2 = variant2;
+    cart.userLogged = $("#userId").length ? true : false;
 
     addtocart.push(cart);
 

@@ -5,25 +5,34 @@
     if (document.querySelectorAll('input[name="payment"]:checked').length === 0) {
 
         document.getElementById("pricedph").innerHTML =
-            (Math.round(Number(finalprice) + eval(ship)) * 100 / 120).toFixed(2);
+            ((Number(finalprice) + eval(ship)) * 100 / 120).toFixed(2);
         document.getElementById("final").innerHTML = (Number(finalprice) + eval(ship)).toFixed(2);
-        document.getElementById("pricedph2").innerHTML =
-            (Math.round(Number(finalprice) + eval(ship)) * 100 / 120).toFixed(2);
-        document.getElementById("final2").innerHTML = (Number(finalprice) + eval(ship)).toFixed(2);
-        document.getElementById("final3").value = (Number(finalprice) + eval(ship)).toFixed(2);
+        //document.getElementById("pricedph2").innerHTML =
+        //    (Math.round(Number(finalprice) + eval(ship)) * 100 / 120).toFixed(2);
+        //document.getElementById("final2").innerHTML = (Number(finalprice) + eval(ship)).toFixed(2);
+        //document.getElementById("final3").value = (Number(finalprice) + eval(ship)).toFixed(2);
+
+        document.getElementById("pricedph21").innerHTML =
+            ((Number(finalprice) + eval(ship)) * 100 / 120).toFixed(2);
+        document.getElementById("final21").innerHTML = (Number(finalprice) + eval(ship)).toFixed(2);
+        document.getElementById("final31").value = (Number(finalprice) + eval(ship)).toFixed(2);
 
     } else {
 
         var pay = document.querySelector('input[name="payment"]:checked').value;
         if (isNaN(eval(pay))) { pay = 0; } else { pay = eval(pay); }
         document.getElementById("pricedph").innerHTML =
-            (Math.round(Number(finalprice) + eval(ship) + pay) * 100 / 120).toFixed(2);
-        document.getElementById("final").innerHTML = (Number(finalprice) + eval(ship) + pay).toFixed(2);
-        document.getElementById("pricedph2").innerHTML =
-            (Math.round(Number(finalprice) + eval(ship) + pay) * 100 / 120).toFixed(2);
-        document.getElementById("final2").innerHTML = (Number(finalprice) + eval(ship) + pay).toFixed(2);
-        document.getElementById("final3").value = (Number(finalprice) + eval(ship) + pay).toFixed(2);
+            ((Number(finalprice) + eval(ship) + pay) * 100 / 120).toFixedNoRounding(2);
+        document.getElementById("final").innerHTML = (Number(finalprice) + eval(ship) + pay).toFixedNoRounding(2);
+        //document.getElementById("pricedph2").innerHTML =
+        //    (Math.round(Number(finalprice) + eval(ship) + pay) * 100 / 120).toFixed(2);
+        //document.getElementById("final2").innerHTML = (Number(finalprice) + eval(ship) + pay).toFixed(2);
+        //document.getElementById("final3").value = (Number(finalprice) + eval(ship) + pay).toFixed(2);
 
+        document.getElementById("pricedph21").innerHTML =
+            ((Number(finalprice) + eval(ship) + pay) * 100 / 120).toFixed(2);
+        document.getElementById("final21").innerHTML = (Number(finalprice) + eval(ship) + pay).toFixedNoRounding(2);
+        document.getElementById("final31").value = (Number(finalprice) + eval(ship) + pay).toFixedNoRounding(2);
     }
 }
 
@@ -33,41 +42,43 @@ function payMent() {
     if (document.querySelectorAll('input[name="transfer"]:checked').length === 0) {
 
         document.getElementById("pricedph").innerHTML =
-            (Math.round(Number(finalprice) + eval(pay)) * 100 / 120).toFixed(2);
-        document.getElementById("final").innerHTML = (Number(finalprice) + eval(pay)).toFixed(2);
-        document.getElementById("pricedph2").innerHTML =
-            (Math.round(Number(finalprice) + eval(pay)) * 100 / 120).toFixed(2);
-        document.getElementById("final2").innerHTML = (Number(finalprice) + eval(pay)).toFixed(2);
-        document.getElementById("final3").value = (Number(finalprice) + eval(pay)).toFixed(2);
+            ((Number(finalprice) + eval(pay)) * 100 / 120).toFixedNoRounding(2);
+        document.getElementById("final").innerHTML = (Number(finalprice) + eval(pay)).toFixedNoRounding(2);
+        //document.getElementById("pricedph2").innerHTML =
+        //    (Math.round(Number(finalprice) + eval(pay)) * 100 / 120).toFixed(2);
+        //document.getElementById("final2").innerHTML = (Number(finalprice) + eval(pay)).toFixed(2);
+        //document.getElementById("final3").value = (Number(finalprice) + eval(pay)).toFixed(2);
 
         document.getElementById("pricedph21").innerHTML =
-            (Math.round(Number(finalprice) + eval(pay)) * 100 / 120).toFixed(2);
-        document.getElementById("final21").innerHTML = (Number(finalprice) + eval(pay)).toFixed(2);
-        document.getElementById("final31").value = (Number(finalprice) + eval(pay)).toFixed(2);
+            ((Number(finalprice) + eval(pay)) * 100 / 120).toFixed(2);
+        document.getElementById("final21").innerHTML = (Number(finalprice) + eval(pay)).toFixedNoRounding(2);
+        document.getElementById("final31").value = (Number(finalprice) + eval(pay)).toFixedNoRounding(2);
 
     } else {
         var ship = document.querySelector('input[name="transfer"]:checked').value;
         if (isNaN(eval(ship))) { ship = 0; } else { ship = eval(ship); }
         document.getElementById("pricedph").innerHTML =
-            (Math.round(Number(finalprice) + eval(ship) + eval(pay)) * 100 / 120).toFixed(2);
-        document.getElementById("final").innerHTML = (Number(finalprice) + eval(ship) + eval(pay)).toFixed(2);
-        document.getElementById("pricedph2").innerHTML =
-            (Math.round(Number(finalprice) + eval(ship) + eval(pay)) * 100 / 120).toFixed(2);
-        document.getElementById("final2").innerHTML = (Number(finalprice) + eval(ship) + eval(pay)).toFixed(2);
-        document.getElementById("final3").value = (Number(finalprice) + eval(ship) + eval(pay)).toFixed(2);
+            ((Number(finalprice) + eval(ship) + eval(pay)) * 100 / 120).toFixedNoRounding(2);
+        document.getElementById("final").innerHTML = (Number(finalprice) + eval(ship) + eval(pay)).toFixedNoRounding(2);
+        //document.getElementById("pricedph2").innerHTML =
+        //    (Math.round(Number(finalprice) + eval(ship) + eval(pay)) * 100 / 120).toFixed(2);
+        //document.getElementById("final2").innerHTML = (Number(finalprice) + eval(ship) + eval(pay)).toFixed(2);
+        //document.getElementById("final3").value = (Number(finalprice) + eval(ship) + eval(pay)).toFixed(2);
 
         document.getElementById("pricedph21").innerHTML =
-            (Math.round(Number(finalprice) + eval(ship) + eval(pay)) * 100 / 120).toFixed(2);
-        document.getElementById("final21").innerHTML = (Number(finalprice) + eval(ship) + eval(pay)).toFixed(2);
-        document.getElementById("final31").value = (Number(finalprice) + eval(ship) + eval(pay)).toFixed(2);
+            ((Number(finalprice) + eval(ship) + eval(pay)) * 100 / 120).toFixed(2);
+        document.getElementById("final21").innerHTML = (Number(finalprice) + eval(ship) + eval(pay)).toFixedNoRounding(2);
+        document.getElementById("final31").value = (Number(finalprice) + eval(ship) + eval(pay)).toFixedNoRounding(2);
 
     }
 }
 
 function checkTransfer() {
-    var ship = document.querySelector('input[name="transfer"]:checked').value;
+
+    var ship = document.querySelector('input[name="transfer"]:checked').value;  
     document.getElementById("ship").value = ship;
     ship == '@ViewBag.Ship';
+
     if (ship == "transfer3") {
         document.getElementById("pay4").style.display = "none";
     } else {
@@ -90,6 +101,22 @@ function checkTransfer() {
 }
 function checkPayment() {
 
+    var pay = document.querySelector('input[name="payment"]:checked').value;
+    document.getElementById("platba").value = pay;
+    pay == '@ViewBag.Pay';
+
+    if (pay == "pay4") {
+        document.getElementById("transfer3").style.display = "none";
+    } else {
+        document.getElementById("transfer3").style.display = "block";
+    }
+
+    if (pay == "pay1") {
+        document.getElementById("transfer1").style.display = "none";
+    } else {
+        document.getElementById("transfer1").style.display = "block";
+    }
+   
     //vyplnime zhrnutie
     var payName = $('input[name="payment"]:checked').parent().find(".payName").text();
     $(".paymentCheckText").text(payName);
@@ -113,9 +140,9 @@ function showShipping() {
 
 function showAddress(userId) {
     var modal = document.getElementById("myModal");
-    var transradio = document.getElementsByName("transfer");
-    var payradio = document.getElementsByName("payment");
-    if (validateRadio(transradio) && validateRadio(payradio)) {
+    //var transradio = document.getElementsByName("transfer");
+    //var payradio = document.getElementsByName("payment");
+    //if (validateRadio(transradio) && validateRadio(payradio)) {
         var cart = document.getElementById("cart");
         var shipping = document.getElementById("shipping");
         var address = document.getElementById("address");
@@ -125,12 +152,11 @@ function showAddress(userId) {
         address.style.display = "block";
         check.style.display = "none";
 
-        /*
         if (userId == null) {
             modal.style.display = "block";
         }
-        */
-        
+
+    /*
     } else {
         toastr["warning"]("Zvoľte spôsob dopravy a platby.");
         toastr.options = {
@@ -151,18 +177,41 @@ function showAddress(userId) {
             "hideMethod": "fadeOut"
         }
     }
-
+    */
 }
 
 function showCheck() {
-    var cart = document.getElementById("cart");
-    var shipping = document.getElementById("shipping");
-    var address = document.getElementById("address");
-    var check = document.getElementById("check");
-    cart.style.display = "none";
-    shipping.style.display = "none";
-    address.style.display = "none";
-    check.style.display = "block";
+    var transradio = document.getElementsByName("transfer");
+    var payradio = document.getElementsByName("payment");
+    if (validateRadio(transradio) && validateRadio(payradio)) {
+        var cart = document.getElementById("cart");
+        var shipping = document.getElementById("shipping");
+        var address = document.getElementById("address");
+        var check = document.getElementById("check");
+        cart.style.display = "none";
+        shipping.style.display = "none";
+        address.style.display = "none";
+        check.style.display = "block";
+    } else {
+        toastr["warning"]("Zvoľte spôsob dopravy a platby.");
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    }
 }
 
 function showCart() {
@@ -301,7 +350,7 @@ function validateBasketForm() {
 
             if (condition.checked === true) {
 
-                showCheck();
+                showShipping();
 
                 return true;
             } else {
@@ -490,7 +539,7 @@ function validateBasketForm() {
 
             if (condition.checked == true) {
 
-                showCheck();
+                showShipping();
 
                 return true;
             } else {
