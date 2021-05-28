@@ -65,6 +65,21 @@ function payMent() {
 }
 
 function checkTransfer() {
+    var ship = document.querySelector('input[name="transfer"]:checked').value;
+    document.getElementById("ship").value = ship;
+    ship == '@ViewBag.Ship';
+    if (ship == "transfer3") {
+        document.getElementById("pay4").style.display = "none";
+    } else {
+        document.getElementById("pay4").style.display = "block";
+    }
+
+    if (ship == "transfer1" || ship == "transfer2") {
+        document.getElementById("pay1").style.display = "none";
+    } else {
+        document.getElementById("pay1").style.display = "block";
+    }
+
     //vyplnime zhrnutie
     var shipName = $('input[name="transfer"]:checked').parent().find(".shipName").text();
     $(".transferCheckText").text(shipName);
@@ -74,7 +89,7 @@ function checkTransfer() {
 
 }
 function checkPayment() {
-   
+
     //vyplnime zhrnutie
     var payName = $('input[name="payment"]:checked').parent().find(".payName").text();
     $(".paymentCheckText").text(payName);

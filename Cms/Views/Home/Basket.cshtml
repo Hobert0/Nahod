@@ -527,6 +527,15 @@
                                         </label>
                                     }
 
+                                    @if (item.pay1_enbl && item.pay1 != null)
+                                    {
+                                        <label class="cont" id="pay1">
+                                            <span class="payName">V hotovosti pri osobnom odbere</span><strong class="payPrice" style="float: right"> @item.pay1 €</strong>
+                                            <input type="radio" name="payment" value="pay1" onclick="checkPayment();payMent();">
+                                            <span class="checkmar"></span>
+                                        </label>
+                                    }
+
                                     @if (item.pay3_enbl && item.pay3 != null)
                                     {
                                         <label class="cont" id="pay3">
@@ -536,14 +545,7 @@
                                         </label>
                                     }
 
-                                    @if (item.pay1_enbl && item.pay1 != null)
-                                    {
-                                        <label class="cont" id="pay1">
-                                            <span class="payName">V hotovosti pri osobnom odbere</span><strong class="payPrice" style="float: right"> @item.pay1 €</strong>
-                                            <input type="radio" name="payment" value="pay1" onclick="checkPayment();payMent();">
-                                            <span class="checkmar"></span>
-                                        </label>
-                                    }
+
 
                                 </div>
                             </div>
