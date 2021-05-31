@@ -5,17 +5,17 @@
     if (document.querySelectorAll('input[name="payment"]:checked').length === 0) {
 
         document.getElementById("pricedph").innerHTML =
-            ((Number(finalprice) + eval(ship)) * 100 / 120).toFixed(2);
-        document.getElementById("final").innerHTML = (Number(finalprice) + eval(ship)).toFixed(2);
+            ((Number(finalprice) + eval(ship)) * 100 / 120).toFixedNoRounding(2);
+        document.getElementById("final").innerHTML = (Number(finalprice) + eval(ship)).toFixedNoRounding(2);
         //document.getElementById("pricedph2").innerHTML =
         //    (Math.round(Number(finalprice) + eval(ship)) * 100 / 120).toFixed(2);
         //document.getElementById("final2").innerHTML = (Number(finalprice) + eval(ship)).toFixed(2);
         //document.getElementById("final3").value = (Number(finalprice) + eval(ship)).toFixed(2);
 
         document.getElementById("pricedph21").innerHTML =
-            ((Number(finalprice) + eval(ship)) * 100 / 120).toFixed(2);
-        document.getElementById("final21").innerHTML = (Number(finalprice) + eval(ship)).toFixed(2);
-        document.getElementById("final31").value = (Number(finalprice) + eval(ship)).toFixed(2);
+            ((Number(finalprice) + eval(ship)) * 100 / 120).toFixedNoRounding(2);
+        document.getElementById("final21").innerHTML = (Number(finalprice) + eval(ship)).toFixedNoRounding(2);
+        document.getElementById("final31").value = (Number(finalprice) + eval(ship)).toFixedNoRounding(2);
 
     } else {
 
@@ -95,7 +95,12 @@ function checkTransfer() {
     var shipName = $('input[name="transfer"]:checked').parent().find(".shipName").text();
     $(".transferCheckText").text(shipName);
 
-    var shipPrice = $('input[name="transfer"]:checked').parent().find(".shipPrice").text().split(';')[1];
+    var shipPrice = $('input[name="transfer"]:checked').parent().find(".shipPrice").html().split('</script>')[1];
+
+    if (typeof shipPrice === "undefined") {
+        shipPrice = $('input[name="transfer"]:checked').parent().find(".shipPrice").text();
+    }
+
     $(".transferCheckPrice").text(shipPrice);
 
 }
@@ -350,6 +355,12 @@ function validateBasketForm() {
 
             if (condition.checked === true) {
 
+                //ak sme sa vratili a je uz zakliknuta nejaka moznost dorucenia, tak ak zmenine krajinu dorucenia automaticky zmenime aj cenu
+                if ($("input[name=transfer]").is(":checked")) {
+                    checkTransfer();
+                    shippPay();
+                }
+
                 showShipping();
 
                 return true;
@@ -538,6 +549,12 @@ function validateBasketForm() {
             $("#checkShippingAdr").css("display", "none");
 
             if (condition.checked == true) {
+
+                //ak sme sa vratili a je uz zakliknuta nejaka moznost dorucenia, tak ak zmenine krajinu dorucenia automaticky zmenime aj cenu
+                if ($("input[name=transfer]").is(":checked")) {
+                    checkTransfer();
+                    shippPay();
+                }
 
                 showShipping();
 

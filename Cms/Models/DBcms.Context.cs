@@ -45,5 +45,6 @@ namespace Cms.Models
         public virtual DbSet<products> products { get; set; }
         public virtual DbSet<watchdog> watchdog { get; set; }
         public virtual DbSet<e_settings> e_settings { get; set; }
+        public virtual DbSet<userstoken> userstoken { get; set; }
     }
 }

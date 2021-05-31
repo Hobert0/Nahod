@@ -58,10 +58,14 @@
                                 Meno alebo heslo je zadané nesprávne!
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <a href="@Url.Action("ForgotPassword", "Home")">Zabudol som heslo</a>
+                        </div>
                     </div>
 
                     @Html.HiddenFor(model => model.AdminLoginModel.ReturnUrl, new { Value = HttpContext.Current.Request.Url.AbsoluteUri })
-                
+
                 }
             </div>
             <div class="col-12 col-md-6">

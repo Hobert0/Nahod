@@ -437,7 +437,7 @@
                 <div class="row basket py-0 py-sm-5">
                     <div class="col old"><a onclick="showCart()" style="cursor: pointer;"><img src="~/Content/images/cart_white.svg" alt="Košík" style="width: 30px; margin-right: 10px;" />Košík</a></div>
                     <div class="col active"><img src="~/Content/images/mail_white.svg" alt="Adresa" style="width: 30px; margin-right: 10px;" />Adresa</div>
-                    <div class="col"><a onclick="showShipping()" style="cursor: pointer;"><img src="~/Content/images/car_white.svg" alt="Doprava a platba" style="width: 30px; margin-right: 10px;" />Doprava a platba</a></div>
+                    <div class="col"><img src="~/Content/images/car_white.svg" alt="Doprava a platba" style="width: 30px; margin-right: 10px;" />Doprava a platba</div>
                     <div class="col"><img src="~/Content/images/Infobox_info_icon_white.svg" alt="Zhrnutie objednávky" style="width: 30px; margin-right: 10px;" />Zhrnutie objednávky</div>
                 </div>
                 <p class="small"><i>Údaje označené hviezdičkou(*) sú povinné.</i></p><br />
@@ -752,7 +752,7 @@
             <div id="shipping" style="display: none;">
                 <div class="row basket py-0 py-sm-5">
                     <div class="col old"><a onclick="showCart()" style="cursor: pointer;"><img src="~/Content/images/cart_white.svg" alt="Košík" style="width: 30px; margin-right: 10px;" />Košík</a></div>
-                    <div class="col old"><img src="~/Content/images/mail_white.svg" alt="Adresa" style="width: 30px; margin-right: 10px;" />Adresa</div>
+                    <div class="col old"><a onclick="showAddress(false)" style="cursor: pointer;"><img src="~/Content/images/mail_white.svg" alt="Adresa" style="width: 30px; margin-right: 10px;" />Adresa</a></div>
                     <div class="col active"><img src="~/Content/images/car_white.svg" alt="Doprava a platba" style="width: 30px; margin-right: 10px;" />Doprava a platba</div>
                     <div class="col"><img src="~/Content/images/Infobox_info_icon_white.svg" alt="Zhrnutie objednávky" style="width: 30px; margin-right: 10px;" />Zhrnutie objednávky</div>
                 </div>
@@ -786,6 +786,10 @@
                     {
                         <script>transfer1 = @item.transfer1;</script>
                     }
+                    if (item.transfer4 != null)
+                    {
+                        <script>transfer4 = @item.transfer4;</script>
+                    }
                     if (item.transfer2_enbl && item.transfer2 != null)
                     {
                         <script>transfer2 = @item.transfer2; </script>
@@ -806,6 +810,7 @@
                             transfer4 = "0";
                         </script>
                     }
+                    /*
                     else if (finalprice.Sum() <= 100)
                     {
                         <script>
@@ -833,6 +838,7 @@
                         transfer4 = "@item.deliveryprice3";
                         </script>
                     }
+                    */
 
                     <div class="row">
                         <div class="col-12 col-sm-6 pt-3 pt-sm-0">
@@ -844,8 +850,15 @@
                                     {
                                         <label class="cont" id="transfer1">
                                             <span class="shipName">Kuriérska spoločnosť</span><strong class="shipPrice" style="float: right">
-                                                <script>document.write(transfer1);</script> €
+                                                <script>
+                                                    if ($("#OrdersModel_Country").val() == "Slovenská republika") {
+                                                        document.write(transfer1);
+                                                    } else if ($("#OrdersModel_Country").val() == "Česká republika") {
+                                                        document.write(transfer4);
+                                                    }
+                                                </script> €
                                             </strong>
+
                                             <input type="radio" name="transfer" value="transfer1" onclick="checkTransfer();shippPay();">
                                             <span class="checkmar"></span>
                                         </label>
@@ -940,21 +953,25 @@
                                         }
                                         Zľava: - @discountText€
                                     </span><br />
-                                    <span>Celkom bez DPH €</span><span id="pricedph" value=""><script type="text/javascript">document.write(pricedph)</script>
+                                    <span>Celkom bez DPH €</span><span id="pricedph" value="">
+                                        <script type="text/javascript">document.write(pricedph)</script>
                                     </span><br />
                                     <strong style="float: right; font-size:20px">
-                                        K úhrade €<span id="final" value=""><script type="text/javascript">document.write(finalprice.toFixed(2))</script>
+                                        K úhrade €<span id="final" value="">
+                                            <script type="text/javascript">document.write(finalprice.toFixed(2))</script>
                                         </span>
                                     </strong>
                                 }
                                 else
                                 {
                                     <div>
-                                        <span>Celkom bez DPH €</span><span id="pricedph" value=""><script type="text/javascript">document.write(pricedph)</script>
+                                        <span>Celkom bez DPH €</span><span id="pricedph" value="">
+                                            <script type="text/javascript">document.write(pricedph)</script>
                                         </span><br />
                                     </div>
                                     <strong style="float: right; font-size:20px">
-                                        K úhrade €<span id="final" value=""><script type="text/javascript">document.write(finalprice.toFixed(2))</script>
+                                        K úhrade €<span id="final" value="">
+                                            <script type="text/javascript">document.write(finalprice.toFixed(2))</script>
                                         </span>
                                     </strong>
 
@@ -976,8 +993,8 @@
             <div id="check" style="display: none;">
                 <div class="row basket py-0 py-sm-5">
                     <div class="col old"><a onclick="showCart()" style="cursor: pointer;"><img src="~/Content/images/cart_white.svg" alt="Košík" style="width: 30px; margin-right: 10px;" />Košík</a></div>
-                    <div class="col old"><a onclick="showShipping()" style="cursor: pointer;"><img src="~/Content/images/car_white.svg" alt="Doprava a platba" style="width: 30px; margin-right: 10px;" />Doprava a platba</a></div>
-                    <div class="col old"><a onclick="showAddress()" style="cursor: pointer;"><img src="~/Content/images/mail_white.svg" alt="Adresa" style="width: 30px; margin-right: 10px;" />Adresa</a></div>
+                    <div class="col old"><a onclick="showAddress(false)" style="cursor: pointer;"><img src="~/Content/images/car_white.svg" alt="Doprava a platba" style="width: 30px; margin-right: 10px;" />Doprava a platba</a></div>
+                    <div class="col old"><a onclick="showShipping()" style="cursor: pointer;"><img src="~/Content/images/mail_white.svg" alt="Adresa" style="width: 30px; margin-right: 10px;" />Adresa</a></div>
                     <div class="col active"><img src="~/Content/images/Infobox_info_icon_white.svg" alt="Zhrnutie objednávky" style="width: 30px; margin-right: 10px;" />Zhrnutie objednávky</div>
                 </div>
 
@@ -1295,6 +1312,50 @@
 <script src="~/Scripts/basket_session.js"></script>
 
 <script>
+
+    //zmena krajiny dorucenia
+    $("#OrdersModel_Country").change(function () {
+        if ($("#myCheck").is(":checked") == false) {
+            if ($(this).val() == "Slovenská republika") {
+                $("input[name=transfer][value=transfer4]").val("transfer1");
+                $("#transfer1 .shipPrice").text(transfer1 + " €");
+            } else if ($(this).val() == "Česká republika") {
+                $("input[name=transfer][value=transfer1]").val("transfer4");
+                $("#transfer1 .shipPrice").text(transfer4 + " €");
+            }
+        }
+    });
+
+    $("#OrdersModel_CountryShipp").change(function () {
+        if ($(this).val() == "Slovenská republika") {
+            $("input[name=transfer][value=transfer4]").val("transfer1");
+            $("#transfer1 .shipPrice").text(transfer1 + " €");
+        } else if ($(this).val() == "Česká republika") {
+            $("input[name=transfer][value=transfer1]").val("transfer4");
+            $("#transfer1 .shipPrice").text(transfer4 + " €");
+        }
+    });
+
+    $("#myCheck").change(function () {
+        if ($("#myCheck").is(":checked")) {
+            if ($("#OrdersModel_CountryShipp").val() == "Slovenská republika") {
+                $("input[name=transfer][value=transfer4]").val("transfer1");
+                $("#transfer1 .shipPrice").text(transfer1 + " €");
+            } else if ($("#OrdersModel_CountryShipp").val() == "Česká republika") {
+                $("input[name=transfer][value=transfer1]").val("transfer4");
+                $("#transfer1 .shipPrice").text(transfer4 + " €");
+            }
+        } else {
+            if ($("#OrdersModel_Country").val() == "Slovenská republika") {
+                $("input[name=transfer][value=transfer4]").val("transfer1");
+                $("#transfer1 .shipPrice").text(transfer1 + " €");
+            } else if ($("#OrdersModel_Country").val() == "Česká republika") {
+                $("input[name=transfer][value=transfer1]").val("transfer4");
+                $("#transfer1 .shipPrice").text(transfer4 + " €");
+            }
+        }
+    });
+
     function useCoupon() {
         var coupon = document.getElementById("coupon").value;
 

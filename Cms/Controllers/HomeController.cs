@@ -862,5 +862,51 @@ namespace Cms.Controllers
 
             return Redirect(returnUrl);
         }
+
+        [Route("obnovahesla")]
+        public ActionResult ForgotPassword()
+        {
+            var model = new MultipleIndexModel();
+            model.EsettingsModel = db.e_settings.ToList();
+            model.SettingsModel = db.settings.ToList();
+            model.PagesModel = db.pages.ToList();
+            model.BlogModel = db.blog.ToList();
+            model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
+            model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
+            model.SlideshowModel = db.slideshow.ToList();
+
+            ViewData["countries"] = new AdminController().SelectionCountries();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult ForgotPasswordSendLink(string forgotPasswordEmail)
+        {
+            userstoken t = new userstoken();
+
+            t.token = RandomString(8);
+            t.time = DateTime.Now.ToString("d.M.yyyy HH:mm:ss");
+            t.email = forgotPasswordEmail;
+
+            db.userstoken.Add(t);
+
+            db.SaveChanges();
+
+            //odosleme email v ktorom bude linka na ktorej bude odkaz na controller funkciu ktora zavola view a overi sa token
+
+            //nasledne v tej dalsej funkcii ktora bude vlastne submit form sa overi time a ak do 30 min tak to zmenime
+
+            return RedirectToAction("Index");
+        }
+
+        private static Random random = new Random();
+        public static string RandomString(int length)
+        {
+            const string chars = "abcdefghijklmnopqrstuvwxyABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
     }
 }
