@@ -474,6 +474,8 @@ namespace Cms.Controllers
                 var finalCena = Convert.ToDecimal(o.finalprice, CultureInfo.InvariantCulture);
                 var iban = db.e_settings.Select(i => i.accountnumber).FirstOrDefault();
                 var freeshipping = db.e_settings.Select(i => i.transfer5).FirstOrDefault();
+                
+                /*
                 if (finalCena < 100)
                 {
                     shipSql = string.Format("select deliveryprice1 from `e-settings`");
@@ -486,6 +488,7 @@ namespace Cms.Controllers
                 {
                     shipSql = string.Format("select deliveryprice3 from `e-settings`");
                 }
+                */
 
                 var shipPrice = db.Database.SqlQuery<string>(shipSql).FirstOrDefault();
 

@@ -813,6 +813,7 @@
     <Content Include="Views\Shared\_Watchdog.cshtml" />
     <Content Include="Views\Shared\WatchdogEmail.cshtml" />
     <Content Include="Views\Home\ForgotPassword.cshtml" />
+    <Content Include="Views\Home\PasswordChange.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

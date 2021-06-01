@@ -77,6 +77,7 @@ function checkTransfer() {
 
     var ship = document.querySelector('input[name="transfer"]:checked').value;  
     document.getElementById("ship").value = ship;
+
     ship == '@ViewBag.Ship';
 
     if (ship == "transfer3") {

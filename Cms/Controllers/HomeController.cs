@@ -15,6 +15,8 @@ using System.Xml.Linq;
 using Cms.Models;
 using Newtonsoft.Json;
 using PagedList;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Cms.Controllers
 {
@@ -669,6 +671,7 @@ namespace Cms.Controllers
             {
                 var usID = Int32.Parse(Session["userid"].ToString());
                 model.OrderDataModel = db.orders.Where(o => o.userid == usID).ToList();
+                model.OrderMetaModel = db.ordermeta;
                 var userdata = db.usersmeta.Where(i => i.userid == usID).ToList();
                 foreach (var user in userdata)
                 {
@@ -893,9 +896,85 @@ namespace Cms.Controllers
 
             db.SaveChanges();
 
+            //odosleme email o uspesnom zaregistrovani
+            OrdersController oc = new OrdersController();
+            string body = createForgotEmailBody(t.token);
+            oc.SendHtmlFormattedEmail("Obnova hesla", body, forgotPasswordEmail, "forgotEmail", "");
+
             //odosleme email v ktorom bude linka na ktorej bude odkaz na controller funkciu ktora zavola view a overi sa token
 
             //nasledne v tej dalsej funkcii ktora bude vlastne submit form sa overi time a ak do 30 min tak to zmenime
+
+            return RedirectToAction("Index");
+        }
+
+        [Route("zmenahesla/{token}")]
+        public ActionResult PasswordChange(string token) {
+
+            //overime, ci token bol vygenerovany do 30m odteraz a ci vobec existuje
+            var userstoken = db.userstoken.Where(i => i.token == token).FirstOrDefault();
+
+            if (userstoken != null)
+            {
+                var email = userstoken.email;
+                var now = DateTime.Now;
+                var before = DateTime.Parse(userstoken.time).AddMinutes(30);
+
+                if (DateTime.Compare(before, now) > 0)
+                {
+
+                    ViewData["validToken"] = true;
+                    ViewData["token"] = token;
+                    ViewData["email"] = email;
+                }
+                else
+                {
+                    ViewData["validToken"] = false;
+                }
+            }
+            else
+            {
+                ViewData["validToken"] = false;
+            }
+
+            var model = new MultipleIndexModel();
+            model.EsettingsModel = db.e_settings.ToList();
+            model.SettingsModel = db.settings.ToList();
+            model.PagesModel = db.pages.ToList();
+            model.BlogModel = db.blog.ToList();
+            model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
+            model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
+            model.SlideshowModel = db.slideshow.ToList();
+
+            ViewData["countries"] = new AdminController().SelectionCountries();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult PasswordChangeAction(string Password, string Email, string Token)
+        {
+
+            var user = db.users.Where(i => i.email == Email).FirstOrDefault();
+
+            MD5CryptoServiceProvider md5provider = new MD5CryptoServiceProvider();
+            md5provider.ComputeHash(ASCIIEncoding.ASCII.GetBytes(Password));
+            byte[] overHeslo = md5provider.Hash;
+            StringBuilder hesloDb = new StringBuilder();
+
+            for (int i = 0; i < overHeslo.Length; i++)
+            {
+                hesloDb.Append(overHeslo[i].ToString("x2"));
+            }
+            string heslo = hesloDb.ToString();
+
+            user.password = heslo;
+
+            //zmazeme token
+            var userstoken = db.userstoken.Where(i => i.token == Token).FirstOrDefault();
+            db.userstoken.Remove(userstoken);
+
+            db.SaveChanges();
 
             return RedirectToAction("Index");
         }
@@ -906,6 +985,24 @@ namespace Cms.Controllers
             const string chars = "abcdefghijklmnopqrstuvwxyABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        private string createForgotEmailBody(string token)
+        {
+
+            string body = string.Empty;
+            //using streamreader for reading my htmltemplate   
+            using (StreamReader rea = new StreamReader(Server.MapPath("~/Views/Shared/RegisterEmail.cshtml")))
+            {
+                body = rea.ReadToEnd();
+            }
+
+            var link = "<a href='https://www.nahod.sk/zmenahesla/" + token + "'>Obnova hesla</a>";
+
+            var str = "Kliknite na naslednovný link do 30 minút:" + link;
+            body = body.Replace("{Text}", str);
+
+            return body;
         }
 
     }

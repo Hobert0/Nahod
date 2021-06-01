@@ -96,8 +96,27 @@
                     <td>@Html.DisplayFor(modelItem => item.date)</td>
                     <td>@trans</td>
                     <td style="background-color: #e4ffe3; text-align: center;"><strong>@Html.DisplayFor(modelItem => item.finalprice) €</strong></td>
-                    <!--<td><a href="@Url.Action("PdfOrder", "Orders", new {orderNumber = item.ordernumber})"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF faktúra" /></a></td>-->
+                    <!--<td><a href="@Url.Action("PdfOrder", "Orders", new { orderNumber = item.ordernumber })"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF faktúra" /></a></td>-->
                 </tr>
+
+                var om = Model.OrderMetaModel.Where(i => i.ordernumber == item.ordernumber).ToList();
+
+                foreach (var prod in om)
+                {
+                    <tr>
+                        <td></td>
+                        <td>@prod.product</td>
+                        <td>
+                            @if (prod.variant != "")
+                            {
+                                @Html.Raw(prod.variant) @Html.Raw(" ") @Html.Raw(prod.variant2)
+                            }
+                        </td>
+                        <td>@Html.Raw(prod.pieces)@Html.Raw("x")</td>
+                        <td style="background-color: #e4ffe3; text-align: center;"><strong>@prod.price €</strong></td>
+                    </tr>
+                }
+
             }
 
 
@@ -246,8 +265,8 @@
                 </div>
             </div>
 
-                }
-            </div>
+        }
+    </div>
 
-        </div>
+</div>
 
