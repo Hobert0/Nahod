@@ -46,5 +46,6 @@ namespace Cms.Models
         public string deliveryprice3 { get; set; }
         public string vopPdf { get; set; }
         public string returnPdf { get; set; }
+        public string cancelPdf { get; set; }
     }
 }

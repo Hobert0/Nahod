@@ -154,13 +154,16 @@
 	}
 
 	.cart-item-amount input[type=number] {
-		float: right;
+		/*float: right;*/
+		display: block;
+		margin: 0 auto;
 	}
 
 	.cart-item-amount button {
 		width: 30px;
 		display: block;
-		float: left;
+		/*float: left;*/
+		margin: 0 auto !important;
 	}
 
 	#myTable td {
@@ -290,6 +293,23 @@
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
+}
+
+@media (min-width: 768px) {
+	.d-sm-table-cell-custom {
+		display: table-cell !important;
+	}
+
+	.basketBackButton {
+		width: 50%;
+		float: left;
+	}
+
+	.basketForwardButton {
+		width: 50%;
+		float: right;
+		text-align: right;
+	}
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -627,6 +647,24 @@
 
 @media (max-width: 767px) {
 
+	.basketBackButton, .basketForwardButton {
+		width: 100%;
+		float: none;
+		text-align: center;
+	}
+
+	.basketForwardButton {
+		margin-top: 10px;
+	}
+
+	#cart table tbody td:last-child {
+		border-top: none;
+	}
+
+	#cart .cart-item-amount {
+		display: block;
+		height: initial !important;
+	}
 
 	.header-container:not(.mobile-header) {
 		display: none;
@@ -1059,7 +1097,8 @@
 	}
 
 	.products .product .prod-header {
-		height: 70px;
+		height: 75px;
+		overflow: hidden;
 	}
 
 	.products .product .prod-add-to-cart .prod-icon {
@@ -1208,9 +1247,14 @@
 
 			#cart .next-step-container div a,
 			#shipping .next-step-container div a,
-			#address .next-step-container div a {
+			#address .next-step-container div a
+			{
 				margin: 0 !important;
 			}
+
+	#check .next-step-container div input, #check .next-step-container div a {
+		margin: 0 !important;
+	}
 
 			#address .next-step-container div input {
 				max-width: 100%;

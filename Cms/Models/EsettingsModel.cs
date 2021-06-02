@@ -39,7 +39,9 @@ namespace Cms.Models
         public string DeliveryPrice3 { get; set; }
         public string VopPdf { get; set; }
         public string ReturnPdf { get; set; }
+        public string CancelPdf { get; set; }
         public HttpPostedFileBase[] VopPdfImage { get; set; }
         public HttpPostedFileBase[] ReturnPdfImage { get; set; }
+        public HttpPostedFileBase[] CancelPdfImage { get; set; }
     }
 }

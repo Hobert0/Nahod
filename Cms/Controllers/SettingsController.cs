@@ -130,6 +130,20 @@ namespace Cms.Controllers
 
             var ulozObrazokReturn = DateTime.Now.Date.ToString("dd.MM.yyyy") + "/" + DateTime.Now.ToString("HHmmss") + "/";
 
+            var nazovSuboruCancel = string.Empty;
+            if (model.CancelPdfImage != null)
+            {
+                HttpPostedFileBase[] subor = model.CancelPdfImage;
+                if (model.CancelPdfImage[0] != null)
+                {
+                    foreach (HttpPostedFileBase file in subor)
+                    {
+                        nazovSuboruCancel = Path.GetFileName(file.FileName);
+                    }
+                }
+            }
+
+            var ulozObrazokCancel = DateTime.Now.Date.ToString("dd.MM.yyyy") + "/" + DateTime.Now.ToString("HHmmss") + "/";
 
             var o = db.e_settings.Single(i => i.id == 1);
 
@@ -186,7 +200,12 @@ namespace Cms.Controllers
             {
                 o.returnPdf = ulozObrazokReturn + nazovSuboruReturn;
             }
- 
+
+            if (model.CancelPdfImage[0] != null)
+            {
+                o.cancelPdf = ulozObrazokCancel + nazovSuboruCancel;
+            }
+
             db.SaveChanges();
 
             if (model.VopPdfImage != null)
@@ -203,6 +222,15 @@ namespace Cms.Controllers
                 if (model.ReturnPdfImage[0] != null)
                 {
                     await UploadFiles(model.ReturnPdfImage, ulozObrazokReturn);
+                }
+
+            }
+
+            if (model.CancelPdfImage != null)
+            {
+                if (model.CancelPdfImage[0] != null)
+                {
+                    await UploadFiles(model.CancelPdfImage, ulozObrazokCancel);
                 }
 
             }

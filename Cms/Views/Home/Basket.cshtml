@@ -41,7 +41,7 @@
                     <th class="text-center">Variant</th>
                     <th class="text-center">Množstvo</th>
                     <th>Cena</th>
-                    <th>Odstrániť</th>
+                    <th class="d-none d-sm-table-cell-custom">Odstrániť</th>
                     </thead>
                     @{
                         List<dynamic> cart = new List<dynamic>();
@@ -740,10 +740,10 @@
                 </div>
 
                 <div class="form-group next-step-container" style="overflow:hidden;">
-                    <div style="width:50%;float:left;">
+                    <div class="basketBackButton" style="">
                         <a class="btn btn-secondary my-4" onclick="showCart()" style="color: #ffffff;">Späť</a>
                     </div>
-                    <div style="width: 50%; float: right;text-align: right;">
+                    <div class="basketForwardButton">
                         <a class="btn btn-danger my-4" style="color: #ffffff" onclick="validateBasketForm()">Pokračovať v objednávke</a>
                     </div>
                 </div>
@@ -859,11 +859,25 @@
                                                 </script> €
                                             </strong>
 
-                                            <!-- TO DO -->
-                                            <input type="radio" name="transfer" value="transfer1" onclick="checkTransfer();shippPay();">
+                                            @{ 
+                                                var transferVal = "transfer1";
+                                                if (Model.OrdersModel != null)
+                                                {
+                                                    if (Model.OrdersModel.Country == "Slovenská republika")
+                                                    {
+                                                        transferVal = "transfer1";
+                                                    }
+                                                    else if (Model.OrdersModel.Country == "Česká republika")
+                                                    {
+                                                        transferVal = "transfer4";
+                                                    }
+                                                }
+                                            }
+
+                                            <input type="radio" name="transfer" value="@transferVal" onclick="checkTransfer();shippPay();">
                                             <span class="checkmar"></span>
                                         </label>
-                                    }
+                                                }
                                     @if (item.transfer2_enbl && item.transfer2 != null)
                                     {
                                         <label class="cont" id="transfer2">
@@ -981,10 +995,10 @@
                         </div>
                     </div>
                     <div class="form-group next-step-container" style="overflow:hidden;">
-                        <div style="width:50%;float:left;">
+                        <div class="basketBackButton" style="">
                             <a class="btn btn-secondary my-4" onclick="showAddress(false)" style="color: #ffffff;">Späť</a>
                         </div>
-                        <div style="width: 50%; float: right;text-align: right;">
+                        <div class="basketForwardButton">
                             <a class="btn btn-danger my-4" style="color: #ffffff" onclick="showCheck()">Pokračovať v objednávke</a>
                         </div>
                     </div>
@@ -1298,10 +1312,10 @@
                 </div>
 
                 <div class="form-group next-step-container" style="overflow:hidden;">
-                    <div style="width:50%; float: left;">
+                    <div class="basketBackButton" style="">
                         <a class="btn btn-secondary my-4" onclick="showShipping()" style="color: #ffffff;">Späť</a>
                     </div>
-                    <div style="width: 50%; float: right; text-align: right">
+                    <div class="basketForwardButton">
                         <input type="submit" class="btn btn-danger my-4" value="Dokončiť objednávku s povinnosťou platby">
                     </div>
                 </div>

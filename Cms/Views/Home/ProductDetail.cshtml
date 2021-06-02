@@ -947,14 +947,16 @@
                     if ($thisDiscount == 0) {
 
                         if ($("input[name=userRating]").length) {
+
                             $(".actual-price").text($thisPrice.toFixedNoRounding(2));
                             $("#actual-price-w-tax").text(($thisPrice * 100 / 120).toFixedNoRounding(2));
 
                             $(".discount-price-del del").text($thisPriceDefault.toFixedNoRounding(2) + " €");
 
-                            $(".discount-label").text("Cena po registrácii");
+                            $(".discount-label").text("Vaša cena so zľavou");
 
                             $(".discount-price-text, .discount-price-del").removeClass("d-none");
+                            $(".discount-price-text small").addClass("d-none");
                             $(".w-discount-price").addClass("d-none");
 
                             //ak user je prihlaseny, skryjeme info o cene po registracii
@@ -964,6 +966,7 @@
                             $("#actual-price-w-tax").text(($thisPrice * 100 / 120).toFixedNoRounding(2));
 
                             $(".discount-price-text, .discount-price-del").addClass("d-none");
+                            $(".discount-price-text small").addClass("d-none");
                             $(".w-discount-price").removeClass("d-none");
 
                             //ak user neni prihlaseny a nie je zlava, zobrazime info o cene po registracii
@@ -982,6 +985,7 @@
                         $(".discount-label").text("Akciová cena");
 
                         $(".discount-price-text, .discount-price-del").removeClass("d-none");
+                        $(".discount-price-text small").removeClass("d-none");
                         $(".w-discount-price").addClass("d-none");
 
                         //ak user neni prihlaseny a je zlava, skryjeme info o cene po registracii

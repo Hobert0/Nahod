@@ -388,7 +388,7 @@
         <div class="container-fluid w-75">
             <div class="row footer-top">
                 <div class="col-md-3">
-                    <h3>Nahod e-shop</h3>
+                    <h3>NAHOD.SK e-shop</h3>
                     <ul>
                         @{ if (username != "")
                             {
@@ -528,7 +528,7 @@
                         </a>
 
                         /*If is more than one element in menu*/
-                        <i style="color:#fff" class="fa fa-plus dropdown-btn"></i>
+                        <!--<i style="color:#fff" class="fa fa-plus dropdown-btn"></i>-->
                     }
                     else
                     {
@@ -621,12 +621,14 @@
             // document.getElementById("mySidebar").style.width = "250px";
             // document.getElementById("main").style.marginLeft = "250px";
             document.getElementById("mySidebar").classList.toggle("active");
+            $(".mobile-header .openbtn i").toggleClass("fa-bars").toggleClass("fa-times");
         }
 
         function closeNav() {
             // document.getElementById("mySidebar").style.width = "0";
             // document.getElementById("main").style.marginLeft = "0";
             document.getElementById("mySidebar").classList.toggle("active");
+            $(".mobile-header .openbtn i").removeClass("fa-times").addClass("fa-bars");
         }
 
         jQuery(document).on('click',

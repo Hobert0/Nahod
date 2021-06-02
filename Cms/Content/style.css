@@ -1573,18 +1573,17 @@ button:focus {
     }
 
     .category-most-sold .prod-row img {
-        max-width: 50px;
+        max-height: 40px;
         margin-left: 10px;
         margin-right: 10px;
     }
 
-    .category-most-sold .prod-row img {
-        max-width: 50px;
-        margin-left: 10px;
-        margin-right: 10px;
-    }
 
 .category-most-sold .more-row a {
     margin-top: 10px;
     display: inline-block;
+}
+
+#toast-container > div {
+    opacity: 1 !important;
 }

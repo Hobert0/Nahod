@@ -592,25 +592,49 @@ namespace Cms.Controllers
 
                 var pdfVopPath = sett1.vopPdf;
                 var pdfReturnPath = sett1.returnPdf;
+                var pdfCancelPath = sett1.cancelPdf;
 
                 mailMessage.Body = body;
                 if (toWho == "customer")
                 {
                     //priloha do emailu poucenie spotrebitela
-                    Attachment attachment1 = new Attachment(Server.MapPath("~/Uploads/" + pdfVopPath));
-                    mailMessage.Attachments.Add(attachment1);	//add the attachment
+                    if (pdfVopPath != null)
+                    {
+                        Attachment attachment1 = new Attachment(Server.MapPath("~/Uploads/" + pdfVopPath));
+                        mailMessage.Attachments.Add(attachment1);   //add the attachment
+                    }
 
-                    Attachment attachment2 = new Attachment(Server.MapPath("~/Uploads/" + pdfReturnPath));
-                    mailMessage.Attachments.Add(attachment2);	//add the attachment
+                    if (pdfReturnPath != null) {
+                        Attachment attachment2 = new Attachment(Server.MapPath("~/Uploads/" + pdfReturnPath));
+                        mailMessage.Attachments.Add(attachment2);   //add the attachment
+                    }
+
+                    if (pdfCancelPath != null)
+                    {
+                        Attachment attachment3 = new Attachment(Server.MapPath("~/Uploads/" + pdfCancelPath));
+                        mailMessage.Attachments.Add(attachment3);   //add the attachment
+                    }
                 }
                 else if (toWho == "finished")
                 {
                     //PdfSave(ordnumber);
-                    Attachment attachment1 = new Attachment(Server.MapPath("~/Uploads/" + pdfVopPath));
-                    mailMessage.Attachments.Add(attachment1);	//add the attachment
+                    if (pdfVopPath != null)
+                    {
+                        Attachment attachment1 = new Attachment(Server.MapPath("~/Uploads/" + pdfVopPath));
+                        mailMessage.Attachments.Add(attachment1);   //add the attachment
+                    }
 
-                    Attachment attachment2 = new Attachment(Server.MapPath("~/Uploads/" + pdfReturnPath));
-                    mailMessage.Attachments.Add(attachment2);	//add the attachment
+                    if (pdfReturnPath != null)
+                    {
+                        Attachment attachment2 = new Attachment(Server.MapPath("~/Uploads/" + pdfReturnPath));
+                        mailMessage.Attachments.Add(attachment2);   //add the attachment
+                    }
+
+                    if (pdfCancelPath != null)
+                    {
+                        Attachment attachment3 = new Attachment(Server.MapPath("~/Uploads/" + pdfCancelPath));
+                        mailMessage.Attachments.Add(attachment3);   //add the attachment
+                    }
                 }
 
                 mailMessage.IsBodyHtml = true;

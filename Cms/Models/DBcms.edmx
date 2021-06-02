@@ -116,6 +116,7 @@
           <Property Name="deliveryprice3" Type="text" />
           <Property Name="vopPdf" Type="text" />
           <Property Name="returnPdf" Type="text" />
+          <Property Name="cancelPdf" Type="text" />
         </EntityType>
         <EntityType Name="newsletter">
           <Key>
@@ -402,8 +403,8 @@
           <EntitySet Name="orders" EntityType="hobcModel.orders" />
           <EntitySet Name="products" EntityType="hobcModel.products" />
           <EntitySet Name="watchdog" EntityType="hobcModel.watchdog" />
-          <EntitySet Name="e_settings" EntityType="hobcModel.e_settings" />
           <EntitySet Name="userstoken" EntityType="hobcModel.userstoken" />
+          <EntitySet Name="e_settings" EntityType="hobcModel.e_settings" />
         </EntityContainer>
         <EntityType Name="deliver_city">
           <Key>
@@ -709,6 +710,15 @@
           <Property Name="prod_id" Type="Int32" Nullable="false" />
           <Property Name="sent" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="userstoken">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="token" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="time" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="e_settings">
           <Key>
             <PropertyRef Name="id" />
@@ -745,15 +755,7 @@
           <Property Name="deliveryprice3" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="vopPdf" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="returnPdf" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="userstoken">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="token" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="time" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="cancelPdf" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1084,9 +1086,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="userstoken">
+            <EntityTypeMapping TypeName="hobcModel.userstoken">
+              <MappingFragment StoreEntitySet="userstoken">
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="token" ColumnName="token" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="e_settings">
             <EntityTypeMapping TypeName="hobcModel.e_settings">
               <MappingFragment StoreEntitySet="e-settings">
+                <ScalarProperty Name="cancelPdf" ColumnName="cancelPdf" />
                 <ScalarProperty Name="returnPdf" ColumnName="returnPdf" />
                 <ScalarProperty Name="vopPdf" ColumnName="vopPdf" />
                 <ScalarProperty Name="deliveryprice3" ColumnName="deliveryprice3" />
@@ -1118,16 +1131,6 @@
                 <ScalarProperty Name="city" ColumnName="city" />
                 <ScalarProperty Name="address" ColumnName="address" />
                 <ScalarProperty Name="companyname" ColumnName="companyname" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="userstoken">
-            <EntityTypeMapping TypeName="hobcModel.userstoken">
-              <MappingFragment StoreEntitySet="userstoken">
-                <ScalarProperty Name="time" ColumnName="time" />
-                <ScalarProperty Name="token" ColumnName="token" />
-                <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

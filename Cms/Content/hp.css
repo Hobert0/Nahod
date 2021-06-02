@@ -244,6 +244,7 @@ html, body {
             font-weight: bold;
             margin-bottom: 5px;
             height: 50px;
+            overflow: hidden;
         }
 
         .products .product .prod-text {
