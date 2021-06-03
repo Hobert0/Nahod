@@ -38,7 +38,7 @@
                     <thead>
                     <th></th>
                     <th>Názov</th>
-                    <th class="text-center">Variant</th>
+                    <th class="text-center"></th>
                     <th class="text-center">Množstvo</th>
                     <th>Cena</th>
                     <th class="d-none d-sm-table-cell-custom">Odstrániť</th>
@@ -395,8 +395,8 @@
                                         }
                                     }
                                     Zľava: - @discountText€
-                                </span><br />
-                                <span>Celkom bez DPH €@(Html.Raw((finalprice.Sum() * 100 / 120).ToString("#.##").Replace(",", ".")))</span><br />
+                                </span><br  class="d-none d-sm-block" />
+                                <span>Celkom bez DPH €@(Html.Raw((finalprice.Sum() * 100 / 120).ToString("#.##").Replace(",", ".")))</span><br class="d-none d-sm-block" />
                                 <strong style="float: right; font-size: 20px">K úhrade €@(Html.Raw(finalprice.Sum().ToString("#.00").Replace(",", ".")))</strong>
                                 <script>
                         var pricedph = @(Html.Raw((finalprice.Sum() * 100 / 120).ToString("#.##").Replace(",", ".")));
@@ -405,7 +405,7 @@
                             }
                             else
                             {
-                                <span>Celkom bez DPH €@(Html.Raw((finalprice.Sum() * 100 / 120).ToString("n2").Replace(",", ".")))</span><br />
+                                <span>Celkom bez DPH €@(Html.Raw((finalprice.Sum() * 100 / 120).ToString("n2").Replace(",", ".")))</span><br class="d-none d-sm-block">
                                 <strong style="float: right; font-size: 20px">K úhrade €@(Html.Raw(finalprice.Sum().ToString("#.00").Replace(",", ".")))</strong>
                                 <script>
                         var pricedph = @(Html.Raw((finalprice.Sum() * 100 / 120).ToString("#.##").Replace(",", ".")));
@@ -967,10 +967,10 @@
                                             }
                                         }
                                         Zľava: - @discountText€
-                                    </span><br />
+                                    </span><br  class="d-none d-sm-block" />
                                     <span>Celkom bez DPH €</span><span id="pricedph" value="">
                                         <script type="text/javascript">document.write(pricedph)</script>
-                                    </span><br />
+                                    </span><br  class="d-none d-sm-block" />
                                     <strong style="float: right; font-size:20px">
                                         K úhrade €<span id="final" value="">
                                             <script type="text/javascript">document.write(finalprice.toFixed(2))</script>
@@ -1020,7 +1020,7 @@
                             <thead>
                             <th></th>
                             <th>Názov</th>
-                            <th class="text-center">Variant</th>
+                            <th class="text-center"></th>
                             <th class="text-center">Množstvo</th>
                             <th>Cena</th>
                             </thead>
@@ -1084,19 +1084,19 @@
                     </div>
                 </div>
 
-                <div class="row" style="margin-top:60px;">
+                <div class="row checkInfoRow" style="margin-top:60px;">
                     <div class="col-12 col-sm-6 pt-3 pt-sm-0">
                         <h3>Fakturačné údaje</h3>
                         <hr />
                         <div class="row">
-                            <div class="col">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <div class="col-md-14 checkName">
                                         <strong>Meno: </strong><span class="value"></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <div class="col-md-14 checkSurname">
                                         <strong>Priezvisko: </strong><span class="value"></span>
@@ -1105,14 +1105,14 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <div class="col-md-14 checkAddress">
                                         <strong>Ulica, číslo domu: </strong><span class="value"></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <div class="col-md-14 checkCity">
                                         <strong>Mesto: </strong><span class="value"></span>
@@ -1121,14 +1121,14 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <div class="col-md-14 checkZip">
                                         <strong>PSČ: </strong><span class="value"></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <div class="col-md-14 checkCountry">
                                         <strong>Štát: </strong><span class="value"></span>
@@ -1138,14 +1138,14 @@
 
                         </div>
                         <div class="row">
-                            <div class="col">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <div class="col-md-14 checkPhone">
                                         <strong>Telefón: </strong><span class="value"></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <div class="col-md-14 checkEmail">
                                         <strong>E-mail: </strong><span class="value"></span>
@@ -1155,14 +1155,14 @@
 
                         </div>
                         <div class="row">
-                            <div class="col">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <div class="col-md-14 checkCompanyname">
                                         <strong>Názov firmy: </strong><span class="value"></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <div class="col-md-14 checkIco">
                                         <strong>IČO: </strong><span class="value"></span>
@@ -1171,14 +1171,14 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <div class="col-md-14 checkDic">
                                         <strong>DIČ: </strong><span class="value"></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <div class="col-md-14 checkIcdph">
                                         <strong>IČ DPH: </strong><span class="value"></span>
@@ -1202,14 +1202,14 @@
                             <h3>Doručovacie údaje</h3>
                             <hr />
                             <div class="row">
-                                <div class="col">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <div class="col-md-14 checkNameShipp">
                                             <strong>Meno: </strong><span class="value"></span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <div class="col-md-14 checkSurnameShipp">
                                             <strong>Priezvisko: </strong><span class="value"></span>
@@ -1218,14 +1218,14 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <div class="col-md-14 checkCompanynameShipp">
                                             <strong>Názov firmy: </strong><span class="value"></span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <div class="col-md-14 checkAddressShip">
                                             <strong>Ulica, číslo domu: </strong><span class="value"></span>
@@ -1235,14 +1235,14 @@
 
                             </div>
                             <div class="row">
-                                <div class="col">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <div class="col-md-14 checkCityShipp">
                                             <strong>Mesto: </strong><span class="value"></span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <div class="col-md-14 checkZipShipp">
                                             <strong>PSČ: </strong><span class="value"></span>
@@ -1252,14 +1252,14 @@
 
                             </div>
                             <div class="row">
-                                <div class="col">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <div class="col-md-14 checkCountryShipp">
                                             <strong>Štát: </strong><span class="value"></span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <div class="col-md-14 checkPhoneShipp">
                                             <strong>Telefón: </strong><span class="value"></span>
@@ -1272,8 +1272,8 @@
                     </div>
 
                 </div>
-                <div class="form-group pb-4 mt-4 price" style="border-top: 1px solid rgba(0,0,0,.1)">
-                    <div style="text-align: right">
+                <div class="form-group mt-4 price" style="border-top: 1px solid rgba(0,0,0,.1)">
+                    <div style="">
                         @{if (@TempData["Coupons"] != null)
                             {
                                 var tempamount = @TempData["Amount"];
@@ -1301,7 +1301,7 @@
                                 <span>
                                     Celkom bez DPH €<span id="pricedph21" value=""></span>
                                 </span><br />
-                                <strong style="float: right; font-size:20px">
+                                <strong style="font-size:20px">
                                     K úhrade €<span id="final21" value=""></span>
                                 </strong>
                             }
@@ -1327,6 +1327,11 @@
 <script src="~/Scripts/basket_session.js"></script>
 
 <script>
+
+    $("#cart .next-step-container a,.basketForwardButton, .basketBackButton").click(function () {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    });
 
     //zmena krajiny dorucenia
     $("#OrdersModel_Country").change(function () {
