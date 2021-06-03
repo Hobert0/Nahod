@@ -671,7 +671,7 @@ namespace Cms.Controllers
             }
 
             var str = "Ďakujeme " + name + " za registráciu, stali ste sa našim <strong><u>bronzovým zákazníkom</u></strong>. Odteraz získavate automaticky <strong><u>zľavu 5%</u></strong> na všetok nezľavnený tovar.";
-            str += "<br><br>Pri ďalších objednávkach môžete získať <strong><u>zľavu až 15%</u></strong><br><ul><li>Bronzový zákazník zľava 5% pri objednávke nad 1 EUR</li><li>Strieborný zákazník zľava 10% pri objednávke nad 500 EUR</li><li>Zlatý zákazník zľava 15% pri objednávke nad 1000 EUR</li></ul>";
+            str += "<br><br>Pri ďalších objednávkach môžete získať <strong><u>zľavu až 15%</u></strong><br><ul><li>Bronzový zákazník zľava 5% ihneď po registrácií</li><li>Strieborný zákazník zľava 10%, ak je výška všetkých predošlých objednávok nad 500€</li><li>Zlatý zákazník zľava 15%, ak je výška všetkých predošlých objednávok nad 1000€</li></ul>";
             body = body.Replace("{Text}", str);
 
             return body;

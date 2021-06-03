@@ -28,9 +28,13 @@
 		height: 110px;
 	}
 
-	.navigation, .categories, .footer-cont {
-		display: none;
-	}
+    .vyhody-reg{
+        display:none;
+    }
+
+    .navigation, .categories, .footer-cont {
+        display: none;
+    }
 
 	.head-cont {
 		margin-top: -40px;
