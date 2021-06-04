@@ -11,6 +11,10 @@
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 767px) {
 
+	.removeCart {
+		font-size: 16px;
+	}
+
 	h2:after {
 		width: 50vw;
 	}
@@ -129,9 +133,11 @@
 		width: 100% !important;
 	}
 
+	/*
 	.galleryimg-small {
 		height: auto !important;
 	}
+	*/
 
 	/*BASKET*/
 	.basket .col {
@@ -179,7 +185,7 @@
 	}
 
 	#myTable tr td:nth-child(1) {
-		width: 50px !important;
+		/*width: 50px !important;*/
 		padding: 0;
 	}
 
@@ -351,12 +357,27 @@
 @media only screen and (min-width: 1200px) {
 }
 
+@media only screen and (min-width: 1025px) {
+	.my-account-link {
+		padding-left: 24px;
+	}
+}
+
 /* CUSTOM */
 /*MEDIA QUERIES*/
 /*
 ##Device = Tablets, Ipads (portrait)
 ##Screen = B/w 768px to 1024px
 */
+
+@media (min-width: 0px) and (max-width: 575px) {
+	.col-xs-6 {
+		-webkit-box-flex: 0;
+		-ms-flex: 0 0 50%;
+		flex: 0 0 50%;
+		max-width: 50%;
+	}
+}
 
 @media (max-width: 1024px) {
 
@@ -371,11 +392,16 @@
 		top: 0;
 		bottom: 0;
 		display: flex;
+		/*
 		align-items: center;
 		justify-content: center;
+		text-align: center;
+		*/
 		font-size: 22px;
 		padding: 10px;
-		text-align: center;
+		margin-left: 10px;
+		align-items: flex-end;
+		justify-content: flex-start;
 	}
 
 	.benefits .benefit {
@@ -659,6 +685,24 @@
 
 @media (max-width: 767px) {
 
+	.ekko-lightbox-nav-overlay {
+		display: none !important;
+	}
+
+	html, body {
+		overflow-x: hidden;
+	}
+
+	.category-most-sold {
+		font-size: 13px;
+	}
+
+	.categoryHeader {
+		margin-left: 10px;
+		margin-right: 10px;
+		margin-top: 10px;
+	}
+
 	.product-detail .printicons {
 		display: flex;
 		justify-content: center;
@@ -683,7 +727,7 @@
 	}
 
 	#check .basketForwardButton input {
-		font-size: 15px;
+		font-size: 13px;
 	}
 
 	#cart table tbody td:last-child {
@@ -1123,6 +1167,10 @@
 		width: 100%;
 		text-align: right;
 		margin-top: 9px;
+
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
 	}
 
 	.products .product .prod-header {

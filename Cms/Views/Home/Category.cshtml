@@ -47,19 +47,19 @@
 
                     if (cat.maincat == "Žiadna")
                     {
-                        <h2>@Html.Raw(cat.name)</h2>
+                        <h2 class="categoryHeader">@Html.Raw(cat.name)</h2>
                     }
                     else if (cat.topcat == "" || cat.topcat == "Žiadna")
                     {
-                        <h2>@Html.Raw(cat.maincat) / @Html.Raw(cat.name)</h2>
+                        <h2 class="categoryHeader">@Html.Raw(cat.maincat) / @Html.Raw(cat.name)</h2>
                     }
                     else if (cat.topcat2 == "" || cat.topcat2 == "Žiadna")
                     {
-                        <h2>@Html.Raw(cat.topcat) / @Html.Raw(cat.name)</h2>
+                        <h2 class="categoryHeader">@Html.Raw(cat.topcat) / @Html.Raw(cat.name)</h2>
                     }
                     else
                     {
-                        <h2>@Html.Raw(cat.topcat2) / @Html.Raw(cat.name)</h2>
+                        <h2 class="categoryHeader">@Html.Raw(cat.topcat2) / @Html.Raw(cat.name)</h2>
                     }
                 }
             }
@@ -292,10 +292,10 @@
                             clss = "alwaysShow";
                         }
                         <div class="row prod-row @clss" style="@style">
-                            <div class="col-9">
+                            <div class="col-8">
                                 <a href="@link" style="display: flex; justify-content: flex-start;align-items: center;">@mostSoldCounter. <img src="~/Uploads/@img"><p>@title</p></a>
                             </div>
-                            <div class="col-3" style="text-align: right;">
+                            <div class="col-4" style="text-align: right;">
                                 @actualPrice
                             </div>
                         </div>

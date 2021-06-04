@@ -289,7 +289,7 @@ namespace Cms.Controllers
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
             model.TypesModel = db.types.Where(o => o.deleted == false).ToList();
-            model.SlideshowModel = db.slideshow.Where(o => o.page == "default").ToList();
+            model.SlideshowModel = db.slideshow.ToList();
             var type = db.types.Where(i => i.slug == typ).Select(o => o.name);
             var typeId = db.types.Where(i => i.slug == typ).First().id;
 
@@ -406,7 +406,7 @@ namespace Cms.Controllers
                 return View();
             }
 
-            model.SlideshowModel = db.slideshow.Where(o => o.page == slug).ToList();
+            model.SlideshowModel = db.slideshow.ToList();
             model.ProductModel = db.products.Where(o => o.deleted == false && o.active == true).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();

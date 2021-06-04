@@ -39,7 +39,7 @@
                     <th></th>
                     <th>Názov</th>
                     <th class="text-center"></th>
-                    <th class="text-center">Množstvo</th>
+                    <th class="text-center">Počet</th>
                     <th>Cena</th>
                     <th class="d-none d-sm-table-cell-custom">Odstrániť</th>
                     </thead>
@@ -114,7 +114,7 @@
                                 }
 
                                 <tr>
-                                    <td style="width: 70px;text-align: center;"><img src="~/Uploads/@Html.DisplayFor(modelItem => thisProd.image)" style="max-width: 50px;max-height: 50px;" /></td>
+                                    <td style="text-align: center;"><img src="~/Uploads/@Html.DisplayFor(modelItem => thisProd.image)" style="max-width: 30px;max-height: 50px;" /></td>
 
                                     @{
                                         var slug = helper.ToUrlSlug(thisProd.title);
@@ -909,6 +909,15 @@
                             <div class="form-row">
                                 <div class="col-md-10">
 
+                                    @if (item.pay1_enbl && item.pay1 != null)
+                                    {
+                                        <label class="cont" id="pay1">
+                                            <span class="payName">V hotovosti pri osobnom odbere</span><strong class="payPrice" style="float: right"> @item.pay1 €</strong>
+                                            <input type="radio" name="payment" value="pay1" onclick="checkPayment();payMent();">
+                                            <span class="checkmar"></span>
+                                        </label>
+                                    }
+
                                     @if (item.pay4_enbl && item.pay4 != null)
                                     {
                                         <label class="cont" id="pay4">
@@ -936,14 +945,7 @@
                                         </label>
                                     }
 
-                                    @if (item.pay1_enbl && item.pay1 != null)
-                                    {
-                                        <label class="cont" id="pay1">
-                                            <span class="payName">V hotovosti pri osobnom odbere</span><strong class="payPrice" style="float: right"> @item.pay1 €</strong>
-                                            <input type="radio" name="payment" value="pay1" onclick="checkPayment();payMent();">
-                                            <span class="checkmar"></span>
-                                        </label>
-                                    }
+
 
                                 </div>
                             </div>
@@ -1021,7 +1023,7 @@
                             <th></th>
                             <th>Názov</th>
                             <th class="text-center"></th>
-                            <th class="text-center">Množstvo</th>
+                            <th class="text-center">Počet</th>
                             <th>Cena</th>
                             </thead>
                             foreach (var item in cart)
@@ -1030,7 +1032,7 @@
                                 var thisProd = Model.ProductModel.Where(i => i.id == item.product.Value).SingleOrDefault();
 
                                 <tr>
-                                    <td style="width: 70px;text-align: center;"><img src="~/Uploads/@Html.DisplayFor(modelItem => thisProd.image)" style="max-width: 50px;max-height: 50px;" /></td>
+                                    <td style="text-align: center;"><img src="~/Uploads/@Html.DisplayFor(modelItem => thisProd.image)" style="max-width: 30px;max-height: 50px;" /></td>
                                     <td><strong>@Html.Raw(thisProd.title)</strong></td>
 
                                     <td style="text-align: center;">

@@ -113,7 +113,7 @@ $(".productfilter").change(function (e) {
     renderProducts(undefined, undefined, filteredData, undefined, false);
 });
 
-$("#sortbyprice").click(function (e) {
+$(".sortbyprice").click(function (e) {
     var url = new URL(window.location.href);
     page = url.searchParams.get("page") ?? 1;
     localStorage.setItem('sorted', true);

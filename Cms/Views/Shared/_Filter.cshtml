@@ -36,7 +36,7 @@
                     </div>
                 </div>
             }
-            <div class="col-lg-4 col-md-6 px-2 pl-4 range-container pricerange" style="text-align: left; display: inline-block;">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6 px-2 pl-4 range-container pricerange" style="text-align: left; display: inline-block;">
                 <div class="pt-2">
                     <small>
                         <strong>Cena od - do:</strong>
@@ -44,6 +44,11 @@
                     <div class="range">
                         <small class="pr-3">0 €</small> <input id="ex3" type="text" class="span2 productfilter" value="" data-slider-min="0" data-slider-max="@maxPrice.ToString()" data-slider-step="10" data-slider-value="[0,@maxPrice.ToString()]" /> <small class="pl-3">@maxPrice.ToString() €</small>
                     </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xs-6 najnizsiacena d-md-none d-lg-none">
+                <div class="sortbyprice" style="cursor:pointer;">
+                    <small><strong>Najnižšia cena</strong></small><i style="margin-left: 5px;vertical-align: middle;" class="fas fa-chevron-down"></i>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 px-2 pl-4" style="text-align: left; display: inline-block;">
@@ -73,8 +78,8 @@
                             <small><strong>Akcia</strong></small>
                         </label>
                     </div>
-                    <div class="col-auto najnizsiacena">
-                        <div id="sortbyprice" style="cursor:pointer;">
+                    <div class="col-auto najnizsiacena d-none d-md-block">
+                        <div class="sortbyprice" style="cursor:pointer;">
                             <small><strong>Najnižšia cena</strong></small><i style="margin-left: 5px;vertical-align: middle;" class="fas fa-chevron-down"></i>
                         </div>
                     </div>

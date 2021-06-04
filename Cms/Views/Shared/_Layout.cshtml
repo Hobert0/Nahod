@@ -344,7 +344,7 @@
                                         {
                                             <a href="/cms"><u>Administrácia</u></a><br>
                                         }
-                                        <a href="@Url.Action("Account", "Home")"><u>Môj účet</u></a><a class="logout ml-2" href="@Url.Action("LogOut", "Admin")"><u>Odhlásiť sa</u></a>
+                                        <a href="@Url.Action("Account", "Home")"><u class="my-account-link">Môj účet</u></a><a class="logout ml-2" href="@Url.Action("LogOut", "Admin")"><u>Odhlásiť sa</u></a>
                                     </span>
                                     <input type="hidden" name="userName" id="userName" value="@Session["username"]">
                                     <input type="hidden" name="userId" id="userId" value="@Session["userid"]">
@@ -479,7 +479,9 @@
         Html.RenderPartial("_RegisterHeader");
     }
     <div id="mySidebar" class="sidebar sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        
+        <!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>-->
+        
         @*<a class="dropdown-btn sub_catsmenu"><h3 class="firstcat" style="color: #fff;padding: 20px 0 0;">Značky </h3></a><i style="margin-top: -33px;color:#fff" class="fa fa-caret-down dropdown-btn"></i>
             <div class="dropdown-container">
 

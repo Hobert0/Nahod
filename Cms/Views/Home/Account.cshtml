@@ -51,13 +51,15 @@
     }
 
     <hr />
-    <table class="table mb-5" style="font-size: 14px;">
+    <table id="accountTable" class="table mb-5" style="font-size: 14px;">
         <thead class="thead-light">
             <tr>
+                <th></th>
                 <th>Č. ob.</th>
-                <th style="width: 25vw;">Meno a priezvisko, adresa</th>
+                <!--<th style="width: 25vw;">Meno a priezvisko, adresa</th>-->
                 <th>Dátum</th>
-                <th>Doprava</th>
+                <!--<th>Doprava</th>-->
+                <th></th>
                 <th>Cena spolu</th>
                 <!--<th>PDF faktúra</th>-->
 
@@ -91,10 +93,12 @@
                 }
 
                 <tr>
+                    <td obj_id="@item.id"><i style="cursor: pointer;" class="fas fa-plus"></i></td>
                     <td>@Html.DisplayFor(modelItem => item.ordernumber)</td>
-                    <td><strong>@Html.DisplayFor(modelItem => item.name) @Html.DisplayFor(modelItem => item.surname)</strong>&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.address), @Html.DisplayFor(modelItem => item.city) @Html.DisplayFor(modelItem => item.zip)</td>
+                    <!--<td><strong>@Html.DisplayFor(modelItem => item.name) @Html.DisplayFor(modelItem => item.surname)</strong>&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.address), @Html.DisplayFor(modelItem => item.city) @Html.DisplayFor(modelItem => item.zip)</td>-->
                     <td>@Html.DisplayFor(modelItem => item.date)</td>
-                    <td>@trans</td>
+                    <!--<td>@trans</td>-->
+                    <td></td>
                     <td style="background-color: #e4ffe3; text-align: center;"><strong>@Html.DisplayFor(modelItem => item.finalprice) €</strong></td>
                     <!--<td><a href="@Url.Action("PdfOrder", "Orders", new { orderNumber = item.ordernumber })"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF faktúra" /></a></td>-->
                 </tr>
@@ -103,17 +107,19 @@
 
                 foreach (var prod in om)
                 {
-                    <tr>
+                    <tr class="table-row-@item.id" style="display: none;">
                         <td></td>
-                        <td>@prod.product</td>
+                        <td><small>@prod.product</small></td>
                         <td>
-                            @if (prod.variant != "")
-                            {
-                                @Html.Raw(prod.variant) @Html.Raw(" ") @Html.Raw(prod.variant2)
-                            }
+                            <small>
+                                @if (prod.variant != "")
+                                {
+                                    @Html.Raw(prod.variant) @Html.Raw(" ") @Html.Raw(prod.variant2)
+                                }
+                            </small>
                         </td>
-                        <td>@Html.Raw(prod.pieces)@Html.Raw("x")</td>
-                        <td style="background-color: #e4ffe3; text-align: center;"><strong>@prod.price €</strong></td>
+                        <td><small>@Html.Raw(prod.pieces)@Html.Raw("x")</small></td>
+                        <td style="text-align: center;"><small><strong>@prod.price €</strong></small></td>
                     </tr>
                 }
 
@@ -270,3 +276,16 @@
 
 </div>
 
+<script>
+    $(document).ready(function () {
+        $("#accountTable tbody tr > td:first-child").click(function () {
+            $orderId = $(this).attr("obj_id");
+
+            if ($(".table-row-" + $orderId).css("display") == "none") {
+                $(".table-row-" + $orderId).css("display", "table-row");
+            } else {
+                $(".table-row-" + $orderId).css("display", "none");
+            }
+        });
+    });
+</script>

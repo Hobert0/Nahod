@@ -109,7 +109,6 @@
                         }
 
                         <br>
-                        <br>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="hide-mobile">
@@ -143,14 +142,11 @@
                                     {
                                         onStock = "<a href='#' class='watchdog-modal'><span style='color:#e89300;'>Dodanie 3-10 dní</span><br><small><u>Strážiť dostupnosť</u></small><i style='margin-left: 10px;' class='fas fa-dog'></i><br><small>Zadajte Váš e-mail a my Vám zašleme informáciu akonáhle produkt naskladníme.</small></a>";
                                     }
-                                    else if (decimal.Parse(prod.stock) == 0)
+                                    else if (decimal.Parse(prod.stock) <= 0)
                                     {
                                         onStock = "<a href='#' class='watchdog-modal'><span style='color:#e89300;'>Dodanie 3-10 dní</span><br><small><u>Strážiť dostupnosť</u></small><i style='margin-left: 10px;' class='fas fa-dog'></i><br><small>Zadajte Váš e-mail a my Vám zašleme informáciu akonáhle produkt naskladníme.</small></a>";
                                     }
-                                    else if (decimal.Parse(prod.stock) < 0)
-                                    {
-                                        onStock = "<span>Produkt na objednávku</span>";
-                                    }
+                                    
 
                                 }
                                 else
