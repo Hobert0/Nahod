@@ -96,7 +96,7 @@
     <div class="row types">
         @{
             var types = Model.TypesModel;
-            foreach (var type in types.OrderBy(i => i.id))
+            foreach (var type in types.OrderBy(i => i.id).Take(4))
             {
                 <a href="/typ/@type.slug" class="col-md-3 pr-1 pl-1 categoryblock col-6">
                     <img src="/uploads/@type.image">
@@ -105,6 +105,14 @@
             }
 
         }
+        <a href="/kat/kemping-outdoor/bivaky-a-pristresky" class="col-md-3 pr-1 pl-1 categoryblock col-6">
+            <img src="/uploads/images/bivaky pristresky.png">
+            <p class="header">Bivaky a prístrešky</p>
+        </a>
+        <a href="/kat/kemping-outdoor/kresla-a-stolicky" class="col-md-3 pr-1 pl-1 categoryblock col-6">
+            <img src="/uploads/images/kresla.png">
+            <p class="header">Kreslá</p>
+        </a>
         <a href="/kat/rybarske-navijaky" class="col-md-3 pr-1 pl-1 categoryblock col-6">
             <img src="/uploads/images/navijaky.png">
             <p class="header">Navijaky</p>
@@ -113,17 +121,14 @@
             <img src="/uploads/images/pruty.png">
             <p class="header">Prúty</p>
         </a>
+
+        <a href="/kat/tasky-batohy-a-puzdra" class="col-md-3 pr-1 pl-1 categoryblock col-6">
+            <img src="/uploads/images/tasky a obaly.png">
+            <p class="header">Tašky a obaly</p>
+        </a>
         <a href="/kat/stojany-a-vidlicky" class="col-md-3 pr-1 pl-1 categoryblock col-6">
             <img src="/uploads/images/stojany.png">
             <p class="header">Stojany</p>
-        </a>
-        <a href="/kat/kemping-outdoor/kresla-a-stolicky" class="col-md-3 pr-1 pl-1 categoryblock col-6">
-            <img src="/uploads/images/kresla.png">
-            <p class="header">Kreslá</p>
-        </a>
-        <a href="/kat/kemping-outdoor/bivaky-a-pristresky" class="col-md-3 pr-1 pl-1 categoryblock col-6">
-            <img src="/uploads/images/bivaky pristresky.png">
-            <p class="header">Bivaky a prístrešky</p>
         </a>
         <a href="/kat/clny-motory-sonary" class="col-md-3 pr-1 pl-1 categoryblock col-6">
             <img src="/uploads/images/clny a motory.png">
@@ -133,10 +138,8 @@
             <img src="/uploads/images/oblecenie.png">
             <p class="header">Oblečenie</p>
         </a>
-        <a href="/kat/tasky-batohy-a-puzdra" class="col-md-3 pr-1 pl-1 categoryblock col-6">
-            <img src="/uploads/images/tasky a obaly.png">
-            <p class="header">Tašky a obaly</p>
-        </a>
+
+      
     </div>
     <div class="row more-types">
         <div class="col-md-12">
@@ -389,9 +392,8 @@
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @Html.EditorFor(model => model.UsersModel.Email, new { htmlAttributes = new { @id = "subscriberEmail", placeholder = "E-mail" } })
-                    <a class="rect-button">Prihlásiť sa k odberu</a>
-                    <button data-sitekey="6LfAQx0bAAAAAGAGalVF2LJcUyuLJ7O8kNqH8W2u" class="g-recaptcha d-none" data-callback="onSubmit" data-action="submit">Prihlásiť sa k odberu</button>
+                    @Html.EditorFor(model => model.UsersModel.Email, new { htmlAttributes = new { @id = "subscriberEmail", placeholder = "E-mail" } })          
+                    <button data-sitekey="6LfAQx0bAAAAAGAGalVF2LJcUyuLJ7O8kNqH8W2u" class="g-recaptcha rect-button" data-callback="onSubmit" data-action="submit">Prihlásiť sa k odberu</button>
                     @Html.ValidationMessageFor(model => model.UsersModel.Email, "", new { @class = "text-danger" })
                 }
             </div>

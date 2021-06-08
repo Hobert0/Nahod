@@ -645,6 +645,11 @@
 		display: block;
 	}
 
+	.product-cart-container small strong {
+		width: auto !important;
+		display: inline !important;
+	}
+
 	/**
 	CART
  */
@@ -684,6 +689,10 @@
 */
 
 @media (max-width: 767px) {
+
+	.products .product .prod-prices .prod-discount {
+		display: block;
+	}
 
 	.ekko-lightbox-nav-overlay {
 		display: none !important;
@@ -1169,7 +1178,7 @@
 		margin-top: 9px;
 
 		display: flex;
-		align-items: center;
+		align-items: flex-end;
 		justify-content: flex-end;
 	}
 

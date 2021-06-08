@@ -194,11 +194,11 @@
                                 @if (prod.discountprice != null)
                                 {
                                     cena = (decimal)prod.discountprice;
-                            <p class="discount-price-text" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;"><span class="discount-label">Akciová cena</span> <strong style="font-size:30px;"><span class="actual-price">@cena.ToString("N2")</span> €</strong><br /><small style="font-size: 12px;color: #333;">Na produkt sa <strong>nevzťahuje</strong> zľava po prihlásení.</small></p>
+                            <p class="discount-price-text" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;"><span class="discount-label">Akciová cena</span> <strong style="font-size:30px;"><span class="actual-price">@cena.ToString("N2")</span> €</strong><br class="d-none d-sm-block"/><small style="font-size: 12px;color: #333;">Na produkt sa <strong>nevzťahuje</strong> zľava po prihlásení.</small></p>
                         }
                         else
                         {
-                    <p class="discount-price-text d-none" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;"><span class="discount-label">Akciová cena</span> <strong style="font-size:30px;"><span class="actual-price">0</span> €</strong><br /><small style="font-size: 12px;color: #333;">Na produkt sa <strong>nevzťahuje</strong> zľava po prihlásení.</small></p>
+                    <p class="discount-price-text d-none" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;"><span class="discount-label">Akciová cena</span> <strong style="font-size:30px;"><span class="actual-price">0</span> €</strong><br class="d-none d-sm-block" /><small style="font-size: 12px;color: #333;">Na produkt sa <strong>nevzťahuje</strong> zľava po prihlásení.</small></p>
                         }
                                 @{
                                     if (prod.discountprice != null)

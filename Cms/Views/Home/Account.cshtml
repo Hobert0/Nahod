@@ -11,7 +11,7 @@
 </style>
 <div class="container-fluid w-75">
 
-    <h2 class="pt-5">Zoznam vašich posledných objednávok</h2>
+    <h2 class="pt-5">Vaše objednávky</h2>
     <hr />
 
     @foreach (var userMeta in Model.AllUsersMetaModel)
@@ -99,7 +99,7 @@
                     <td>@Html.DisplayFor(modelItem => item.date)</td>
                     <!--<td>@trans</td>-->
                     <td></td>
-                    <td style="background-color: #e4ffe3; text-align: center;"><strong>@Html.DisplayFor(modelItem => item.finalprice) €</strong></td>
+                    <td style="background-color: #e4ffe3; text-align: center; white-space: nowrap;"><strong>@Html.DisplayFor(modelItem => item.finalprice) €</strong></td>
                     <!--<td><a href="@Url.Action("PdfOrder", "Orders", new { orderNumber = item.ordernumber })"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF faktúra" /></a></td>-->
                 </tr>
 
@@ -119,7 +119,7 @@
                             </small>
                         </td>
                         <td><small>@Html.Raw(prod.pieces)@Html.Raw("x")</small></td>
-                        <td style="text-align: center;"><small><strong>@prod.price €</strong></small></td>
+                        <td style="text-align: center; white-space: nowrap;"><small><strong>@prod.price €</strong></small></td>
                     </tr>
                 }
 

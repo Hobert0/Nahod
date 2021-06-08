@@ -236,34 +236,40 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
         if (variantPriceFrom != 99999) {
             $row += '<span class="prod-price-from">od ' + variantPriceFrom.replace(".", ",") + ' €</span>';
         } else {
-            //rating
-            if (username != null) {
 
-                if (exist != null) {
-                    rating = exist.rating;
+            if (item.discountprice != null) {
+                $row += '<span class="prod-discount">' + item.price.toFixedNoRounding(2) + ' €</span><span class="prod-base">' + item.discountprice.toFixedNoRounding(2) + ' €</span>';
+                actualPrice = item.discountprice;
+            } else {
+                //rating
+                if (username != null) {
+
+                    if (exist != null) {
+                        rating = exist.rating;
+                    }
+
+                    let defaultPrice = item.price;
+                    let ratingPrice = 0;
+
+                    switch (rating) {
+                        case 1:
+                            ratingPrice = 0.95 * defaultPrice;
+                            break;
+                        case 2:
+                            ratingPrice = 0.9 * defaultPrice;
+                            break;
+                        case 3:
+                            ratingPrice = 0.85 * defaultPrice;
+                            break;
+                    }
+
+                    $row += '<span class="prod-discount">' + defaultPrice.toString().replace(".", ",") + ' €</span> <span class="prod-base">' + ratingPrice.toFixedNoRounding(2) + ' €</span>';
+                    actualPrice = ratingPrice;
                 }
-
-                let defaultPrice = item.price;
-                let ratingPrice = 0;
-
-                switch (rating) {
-                    case 1:
-                        ratingPrice = 0.95 * defaultPrice;
-                        break;
-                    case 2:
-                        ratingPrice = 0.9 * defaultPrice;
-                        break;
-                    case 3:
-                        ratingPrice = 0.85 * defaultPrice;
-                        break;
+                else {
+                    $row += '<span class="prod-base">' + item.price.toFixedNoRounding(2).replace(".", ",") + ' €</span>';
+                    actualPrice = item.price;
                 }
-
-                $row += '<span class="prod-discount">' + defaultPrice.toString().replace(".", ",") + ' €</span> <span class="prod-base">' + ratingPrice.toFixedNoRounding(2) + ' €</span>';
-                actualPrice = ratingPrice;
-            }
-            else {
-                $row += '<span class="prod-base">' + item.price.toFixedNoRounding(2).replace(".", ",") + ' €</span>';
-                actualPrice = item.price;
             }
         }
 
