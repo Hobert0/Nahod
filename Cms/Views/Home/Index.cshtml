@@ -376,6 +376,7 @@
         <div class="col-lg-4 offset-lg-2 col-md-5 offset-md-1">
             <div class="hp-header">Získajte okamžitú zľavu 10%</div>
             <div class="hp-text">Prihláste sa k odberu noviniek a emailom obdržíte kupón na zľavu 10%</div>
+            @Html.Raw(TempData["msg"])
         </div>
         <div class="col-lg-4 col-md-5 newsletter-form">
             <div class="d-flex align-items-center hp-email-wrapper">
@@ -390,7 +391,7 @@
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.EditorFor(model => model.UsersModel.Email, new { htmlAttributes = new { @id = "subscriberEmail", placeholder = "E-mail" } })
                     <a class="rect-button">Prihlásiť sa k odberu</a>
-                    <button data-sitekey="6LcR9pQaAAAAAIXX1pzZbO8Esnn4EAX1sqOilguE" class="g-recaptcha d-none" data-callback="onSubmit" data-action="submit">Prihlásiť sa k odberu</button>
+                    <button data-sitekey="6LfAQx0bAAAAAGAGalVF2LJcUyuLJ7O8kNqH8W2u" class="g-recaptcha d-none" data-callback="onSubmit" data-action="submit">Prihlásiť sa k odberu</button>
                     @Html.ValidationMessageFor(model => model.UsersModel.Email, "", new { @class = "text-danger" })
                 }
             </div>
@@ -399,7 +400,6 @@
             </div>
         </div>
         <div class="container">
-            @Html.Raw(TempData["msg"])
         </div>
     </div>
 

@@ -147,12 +147,10 @@ namespace Cms.Controllers
                 }
                 ViewBag.CureentFilter = searchString;
 
-                int pageSize = 12;
-                int pageNumber = (page ?? 1);
 
                 MultipleIndexModel model = new MultipleIndexModel();
 
-                model.AllUsersPaged = db.users.Where(i => i.role == 1).ToList().OrderBy(x => Guid.NewGuid()).ToPagedList(pageNumber, pageSize);
+                model.AllUsers = db.users.Where(i => i.role == 1).ToList();
                 model.AllUsersMetaModel = db.usersmeta.Where(n => n.news == true).ToList();
                 //model.AllUsersMetaModel = db.usersmeta.ToList();
                 model.AllNewslettersModel = db.newsletter.Where(k => k.id == newsletterId).ToList();
@@ -290,7 +288,7 @@ namespace Cms.Controllers
         {
             //Validate Google recaptcha
             var response = Request["g-recaptcha-response"];
-            string secretKey = "6LcR9pQaAAAAAIuVm5s9aAOnNjmuDj6DoDrwJcVk";
+            string secretKey = "6LfAQx0bAAAAAAFaQvmwM-Q13RNOW0y5HOoanhcl";
             var client = new WebClient();
             var result = client.DownloadString(string.Format(
                 "https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secretKey, response));
@@ -331,7 +329,7 @@ namespace Cms.Controllers
                 TempData["msg"] = "<small class='text-warning'>Prihlásenie medzi odoberateľov našeho newslettru sa nezdarilo. Prosím, kontaktujte nás.</small>";
             }
 
-            return Redirect(Url.Content("/#newsletter"));
+            return Redirect(Url.Content("/#hp-newsletter"));
 
 
         }

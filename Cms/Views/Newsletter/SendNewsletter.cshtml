@@ -22,7 +22,7 @@
     @if (ViewBag.Details == null)
     {
 
-        foreach (var item in Model.AllUsersPaged.OrderBy(i => i.id))
+        foreach (var item in Model.AllUsers.OrderBy(i => i.id))
         {
             <tr>
                 @*<td><strong>@Html.DisplayFor(modelItem => item.email)</strong></td>*@
@@ -42,33 +42,34 @@
 
 
 </table>
+
 <hr />
 <div class="container-fluid">
     <div class="row">
         <div class="col">
             <a id="buttonDeselect"><u>Odznačiť všetkých | Označiť všetkých</u></a>
         </div>
-            <div class="col" style="text-align: right;">
-                @Html.ActionLink("Odoslať všetkým", "SendAllNewsletter", "Newsletter", new { id = idOfTemplate }, new { @class = "btn btn-warning" })
-                <input type="button" id="buttonSelected" value="Odoslať vybraným" class="btn btn-primary" />
-            </div>
+        <div class="col" style="text-align: right;">
+            @Html.ActionLink("Odoslať všetkým", "SendAllNewsletter", "Newsletter", new { id = idOfTemplate }, new { @class = "btn btn-warning" })
+            <input type="button" id="buttonSelected" value="Odoslať vybraným" class="btn btn-primary" />
         </div>
     </div>
+</div>
 
-    <script>
-        $(document).ready(function () {
-            var isAllCheck = true;
-            $("#buttonDeselect").click(function (e) {
-                var cbarray = document.getElementsByName("emailSend");
-                for (var i = 0; i < cbarray.length; i++) {
-                    cbarray[i].checked = !isAllCheck
-                }
-                isAllCheck = !isAllCheck;
-            });
+<script>
+    $(document).ready(function () {
+        var isAllCheck = true;
+        $("#buttonDeselect").click(function (e) {
+            var cbarray = document.getElementsByName("emailSend");
+            for (var i = 0; i < cbarray.length; i++) {
+                cbarray[i].checked = !isAllCheck
+            }
+            isAllCheck = !isAllCheck;
         });
-    </script>
+    });
+</script>
 
-    <script>
+<script>
     $(document).ready(function () {
         $("#buttonSelected").click(function (e) {
             var cbarray = document.getElementsByName("emailSend");
@@ -97,4 +98,4 @@
             window.location.href = "/newsletter";
         });
     });
-    </script>
+</script>
