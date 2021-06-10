@@ -170,6 +170,7 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
         var shortdescription = "";
         if (item.description != null) {
             shortdescription = stripHtml(item.description).substring(0, 60) + "...";
+            shortdescription = shortdescription.replace(/\&nbsp;/g, '');
         }
 
         $row += '<div class="prod-text">' + shortdescription + '</div>';

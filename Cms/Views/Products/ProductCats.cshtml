@@ -154,7 +154,7 @@
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.id)</td>
-                    <td id="foto-@item.id"><img src="~/Uploads/@Html.DisplayTextFor(modelItem => item.image)" style="height: 40px;" /></td>
+                    <td id="foto-@item.id"><img src="~/Uploads/@Html.Raw(item.image)" style="height: 40px;" /></td>
                     <td><strong id="name-@item.id">@Html.DisplayFor(modelItem => item.name)</strong></td>
                     <td id="slug-@item.id">@Html.DisplayFor(modelItem => item.slug)</td>
                     <td id="main-@item.id">@Html.DisplayFor(modelItem => item.maincat)</td>
@@ -175,6 +175,7 @@
     $(document).ready(function () {
         $('#catsTable').DataTable({
             "order": [0, 'desc'],
+            "pageLength": 100,
             "language": {
                 "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Slovak.json"
             }

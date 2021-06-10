@@ -489,17 +489,17 @@ namespace Cms.Controllers
 
                 xRoot3.Add(xRoot9); // KonecPrij
 
-                xRoot9.Add(doc33);
-                xRoot9.Add(doc34);
-                xRoot9.Add(doc35);
-                xRoot9.Add(shipping);
-                xRoot9.Add(doc36);
-                xRoot9.Add(doc37);
-                xRoot9.Add(doc38);
-                xRoot9.Add(doc39);
-                xRoot9.Add(doc40);
-                xRoot9.Add(doc41);
-                xRoot9.Add(doc42);
+                xRoot3.Add(doc33);
+                xRoot3.Add(doc34);
+                xRoot3.Add(doc35);
+                xRoot3.Add(shipping);
+                xRoot3.Add(doc36);
+                xRoot3.Add(doc37);
+                xRoot3.Add(doc38);
+                xRoot3.Add(doc39);
+                xRoot3.Add(doc40);
+                xRoot3.Add(doc41);
+                xRoot3.Add(doc42);
 
                 var ordermeta = db.ordermeta.Where(i => i.ordernumber == product.ordernumber).ToList();
 

@@ -651,6 +651,7 @@ namespace Cms.Controllers
                                 {
                                     if (allphotos[i] != "")
                                     {
+                                        try { 
                                         Thread.Sleep(500);
                                         byte[] data = webClient.DownloadData(allphotos[i]);
 
@@ -669,11 +670,16 @@ namespace Cms.Controllers
                                                 yourImage.Save(path.FullName + imagename + ".jpg", ImageFormat.Jpeg);
                                             }
                                         }
+                                        }
+                                        catch (Exception ex)
+                                        {
+
+                                        }
                                     }
                                 }
                             }
 
-                            product.title = fields[102];
+                            product.title = fields[103];
                             product.stock = fields[6];
                             product.recommended = false;
                             product.number = fields[13];
@@ -690,11 +696,11 @@ namespace Cms.Controllers
 
                             if (fields[64] != "0,05" && fields[64] != "0,08" && fields[64] != "0,1")
                             {
-                                if (fields[64] == "percentage")
+                                if (fields[65] == "percentage")
                                 {
                                     product.discountprice = Decimal.Parse(fields[8]) - (Decimal.Parse(fields[8]) * Decimal.Parse(fields[64]));
                                 }
-                                else if (fields[64] == "amount")
+                                else if (fields[65] == "amount")
                                 {
                                     product.discountprice = Decimal.Parse(fields[8]) - Decimal.Parse(fields[64]);
                                 }
@@ -714,8 +720,9 @@ namespace Cms.Controllers
                             }
 
                             product.deleted = false;
+                            product.active = true;
                             product.date = DateTime.Now.ToString();
-                            product.description = fields[96];
+                            product.description = fields[97];
 
                             if (!isvariant)
                             {
@@ -725,20 +732,20 @@ namespace Cms.Controllers
                             }
 
                             //ci je variabilny
-                            if (fields[43] != "" && isvariant)
+                            if (fields[43] != "" && isvariant) //43 - Combination Reference
                             {
-                                var title = fields[102];
+                                var title = fields[103];
                                 var addedproduct = db.products.Where(i => i.title == title).FirstOrDefault();
                                 variants v = new variants();
                                 v.prod_id = addedproduct.id;
                                 v.price = Decimal.Parse(fields[8]) + Decimal.Parse(fields[49]);
                                 if (fields[64] != "0,05" && fields[64] != "0,08" && fields[64] != "0,1")
                                 {
-                                    if (fields[64] == "percentage")
+                                    if (fields[65] == "percentage")
                                     {
                                         v.discountprice = Decimal.Parse(fields[8]) - (Decimal.Parse(fields[8]) * Decimal.Parse(fields[64]));
                                     }
-                                    else if (fields[64] == "amount")
+                                    else if (fields[65] == "amount")
                                     {
                                         v.discountprice = Decimal.Parse(fields[8]) - Decimal.Parse(fields[64]);
                                     }

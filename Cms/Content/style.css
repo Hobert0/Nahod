@@ -1575,6 +1575,7 @@ button:focus {
 
     .category-most-sold .prod-row img {
         max-height: 40px;
+        max-width: 50px;
         margin-left: 10px;
         margin-right: 10px;
     }

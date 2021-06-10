@@ -4,6 +4,7 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -295,13 +296,14 @@ namespace Cms.Controllers
             var obj = JObject.Parse(result);
             var status = (bool)obj.SelectToken("success");
 
-            if (status)
+            if (status && model.UsersModel.Email != null && model.UsersModel.Email != "")
             {
                 users u = new users();
                 u.username = model.UsersModel.Email;
                 u.email = model.UsersModel.Email;
                 u.password = "123456";
                 u.role = 2;
+                u.deleted = false;
 
                 db.users.Add(u);
                 db.SaveChanges();
@@ -318,9 +320,20 @@ namespace Cms.Controllers
                 n.companyname = "";
                 n.phone = "";
                 n.zip = "";
+                n.country = "";
+                n.deleted = false;
+                n.created = DateTime.Now.ToString();
+                n.news = true;
+                n.gdpr = true;
 
                 db.usersmeta.Add(n);
                 db.SaveChanges();
+
+                //odosleme email o uspesnom zaregistrovani do newslettru
+                OrdersController oc = new OrdersController();
+                string body = createNewsletterEmailBody();
+                oc.SendHtmlFormattedEmail("Ďakujeme za registráciu do newslettru!", body, n.email, "register", "");
+
 
                 TempData["msg"] = "<small class='text-success'>Úspešne sme Vás pridali medzi odoberateľov našeho emailu. Ďakujeme.</small>";
             }
@@ -332,6 +345,23 @@ namespace Cms.Controllers
             return Redirect(Url.Content("/#hp-newsletter"));
 
 
+        }
+
+        private string createNewsletterEmailBody()
+        {
+
+            string body = string.Empty;
+            //using streamreader for reading my htmltemplate   
+            using (StreamReader rea = new StreamReader(Server.MapPath("~/Views/Shared/RegisterEmail.cshtml")))
+            {
+                body = rea.ReadToEnd();
+            }
+
+            var str = "Ďakujeme za prihlásenie sa k odberu noviniek. Za odmenu od nás získavate kupón na <strong><u>zľavu 10%</u></strong> na všetok nezľavnený tovar.";
+            str += "<br><br>Pri objednávke stačí zadať kód <strong><u>NAHOD10</u></strong> a zľava 10% sa automaticky uplatní.";
+            body = body.Replace("{Text}", str);
+
+            return body;
         }
 
     }

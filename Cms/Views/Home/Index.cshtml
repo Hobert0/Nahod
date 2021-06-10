@@ -6,6 +6,8 @@
 
 @{
     HelperController helper = new HelperController();
+    ViewBag.Image = "https://nahod.sk/Uploads/images/og.jpg";
+
 }
 
 <div class="top-banner-wrapper banner-wrapper">
@@ -15,7 +17,7 @@
         {
             var url = slideshow.url != "" ? slideshow.url : "#";
 
-            <a href="@url" class="top-banner banner" style="background-image: url(Uploads/slideshow/@slideshow.image);">
+            <a href="@url" class="top-banner banner" style="background-image: url('Uploads/slideshow/@slideshow.image');">
                 <div class="container">
 
                     @{
@@ -37,8 +39,9 @@
                         {
                             <div class="subtext d-none">@slideshow.subtext</div>
                         }
-
+                        if (slideshow.button != null) { 
                         <span class="rounded-button">@slideshow.button</span>
+                        }
                     }
 
                 </div>
@@ -139,7 +142,7 @@
             <p class="header">Oblečenie</p>
         </a>
 
-      
+
     </div>
     <div class="row more-types">
         <div class="col-md-12">
@@ -382,7 +385,7 @@
             @Html.Raw(TempData["msg"])
         </div>
         <div class="col-lg-4 col-md-5 newsletter-form">
-            <div class="d-flex align-items-center hp-email-wrapper">
+            <div class="align-items-center hp-email-wrapper">
                 <!--
                 <input type="email" name="newsletter-email" placeholder="E-mail">
                 <a href="#" class="rect-button">Prihlásiť sa k odberu</a>
@@ -392,8 +395,8 @@
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @Html.EditorFor(model => model.UsersModel.Email, new { htmlAttributes = new { @id = "subscriberEmail", placeholder = "E-mail" } })          
-                    <button data-sitekey="6LfAQx0bAAAAAGAGalVF2LJcUyuLJ7O8kNqH8W2u" class="g-recaptcha rect-button" data-callback="onSubmit" data-action="submit">Prihlásiť sa k odberu</button>
+                    @Html.EditorFor(model => model.UsersModel.Email, new { htmlAttributes = new { @id = "subscriberEmail", placeholder = "E-mail" } })
+                    <button data-sitekey="6LfAQx0bAAAAAGAGalVF2LJcUyuLJ7O8kNqH8W2u" class="g-recaptcha rect-button" data-callback="validateNewsletter" data-action="submit">Prihlásiť sa k odberu</button>
                     @Html.ValidationMessageFor(model => model.UsersModel.Email, "", new { @class = "text-danger" })
                 }
             </div>
@@ -414,7 +417,7 @@
 
             var url = slideshow.url != "" ? slideshow.url : "#";
 
-            <a href="@url" class="middle-banner banner" style="background-image: url(Uploads/slideshow/@slideshow.image);">
+            <a href="@url" class="middle-banner banner" style="background-image: url('Uploads/slideshow/@slideshow.image');">
                 <div class="container">
 
                     @{
@@ -436,8 +439,10 @@
                         {
                             <div class="subtext d-none">@slideshow.subtext</div>
                         }
-
+                        if (slideshow.button != null)
+                        {
                         <span href="#" class="rounded-button">@slideshow.button</span>
+                        }
                     }
 
                 </div>
@@ -727,6 +732,32 @@
 
 
 <script>
+    function validateNewsletter() {
+        if (isEmail($("#subscriberEmail").val()) && $("#hp-newsletter-checkbox").is(":checked")) {
+
+            $("#Subscribeform input").removeClass("error");
+            $(".hp-newsletter label[for=hp-newsletter-checkbox]").removeClass("error");
+            $("#Subscribeform").submit();
+
+
+        } else if (!isEmail($("#subscriberEmail").val())) {
+
+            $("#Subscribeform input").addClass("error");
+            return false;
+
+        } else if (!$("#hp-newsletter-checkbox").is(":checked")) {
+
+            $("#Subscribeform input").removeClass("error");
+            $(".hp-newsletter label[for=hp-newsletter-checkbox]").addClass("error");
+            return false;
+        }
+    }
+
+    function isEmail(email) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return regex.test(email);
+    }
+
     $(document).ready(function () {
         $('.top-banner-wrapper').slick();
         $('.middle-banner-wrapper').slick();
@@ -760,31 +791,8 @@
                 }]
         });
 
-        $("#Subscribeform a.rect-button").click(function (e) {
-            e.preventDefault();
 
-            if (isEmail($("#subscriberEmail").val()) && $("#hp-newsletter-checkbox").is(":checked")) {
 
-                $("#Subscribeform input").removeClass("error");
-                $(".hp-newsletter label[for=hp-newsletter-checkbox]").removeClass("error");
-
-                $("#Subscribeform").submit();
-
-            } else if (!isEmail($("#subscriberEmail").val())) {
-
-                $("#Subscribeform input").addClass("error");
-
-            } else if (!$("#hp-newsletter-checkbox").is(":checked")) {
-
-                $("#Subscribeform input").removeClass("error");
-                $(".hp-newsletter label[for=hp-newsletter-checkbox]").addClass("error");
-            }
-        });
-
-        function isEmail(email) {
-            var regex = /^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-            return regex.test(email);
-        }
     });
 
     //show 4 elements at beginning

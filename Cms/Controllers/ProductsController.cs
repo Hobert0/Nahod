@@ -1058,6 +1058,7 @@ namespace Cms.Controllers
                         var InputFileName = Path.GetFileName(file.FileName);
                         var ServerSavePath = Path.Combine(Server.MapPath(miestoUlozenia + InputFileName));
                         var ulozObrazok = DateTime.Now.Date.ToString("dd.MM.yyyy") + "/" + DateTime.Now.ToString("HHmmss") + "/";
+                        var fileformat = InputFileName.Split('.');
 
                         if (miestoUlozenia == "~/Uploads/")
                         {
@@ -1082,6 +1083,12 @@ namespace Cms.Controllers
                             isTheSameImage = model.Image.Substring(0, model.Image.LastIndexOf("/") + 1) + InputFileName;
                         }
 
+                        if (img.ImageFormat != fileformat[1])
+                        {
+                            InputFileName = fileformat[0] + "." + img.ImageFormat;
+                            ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
+                        }
+
                         if (model.Image != isTheSameImage)
                         {
                             var data = db.categories.Single(i => i.id == model.Id);
@@ -1094,21 +1101,25 @@ namespace Cms.Controllers
                                 data.image = isTheSameImage;
                             }
                             db.SaveChanges();
-                            var fileformat = InputFileName.Split('.');
+
+                            img.Save(ServerSavePath);
+                        }
+                        else
+                        {
                             if (img.ImageFormat != fileformat[1])
                             {
                                 InputFileName = fileformat[0] + "." + img.ImageFormat;
                                 ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
                             }
-                            img.Save(ServerSavePath);
-                        }
-                        else
-                        {
+
                             Random r = new Random();
                             var data = db.categories.Single(i => i.id == model.Id);
+
                             data.image = model.Image.Substring(0, model.Image.LastIndexOf("/") + 1) + r.Next() + "_" + InputFileName;
                             db.SaveChanges();
-                            img.Save(Path.Combine(Server.MapPath("~/Uploads/" + data.image)));
+                            
+                            img.Save(ServerSavePath);
+                            //img.Save(Path.Combine(Server.MapPath("~/Uploads/" + data.image)));
                         }
                         //assigning file uploaded status to ViewBag for showing message to user.  
                         ViewBag.UploadStatus = subor.Count().ToString() + " files uploaded successfully.";
@@ -1145,6 +1156,7 @@ namespace Cms.Controllers
                         var InputFileName = Path.GetFileName(file.FileName);
                         var ServerSavePath = Path.Combine(Server.MapPath(miestoUlozenia + InputFileName));
                         var ulozObrazok = DateTime.Now.Date.ToString("dd.MM.yyyy") + "/" + DateTime.Now.ToString("HHmmss") + "/";
+                        var fileformat = InputFileName.Split('.');
 
                         if (miestoUlozenia == "~/Uploads/")
                         {
@@ -1162,7 +1174,6 @@ namespace Cms.Controllers
                         {
                             img.Resize(1000 + 1, 1000 + 1, true).Crop(1, 1);
                         }
-                        var fileformat = InputFileName.Split('.');
                         if (img.ImageFormat != fileformat[1])
                         {
                             InputFileName = fileformat[0] + "." + img.ImageFormat;
@@ -1267,6 +1278,7 @@ namespace Cms.Controllers
                         var InputFileName = Path.GetFileName(file.FileName);
                         var ServerSavePath = Path.Combine(Server.MapPath(miestoUlozenia + InputFileName));
                         var ulozObrazok = DateTime.Now.Date.ToString("dd.MM.yyyy") + "/" + DateTime.Now.ToString("HHmmss") + "/";
+                        var fileformat = InputFileName.Split('.');
 
                         if (miestoUlozenia == "~/Uploads/")
                         {
@@ -1285,7 +1297,6 @@ namespace Cms.Controllers
                             img.Resize(1000 + 1, 1000 + 1, true).Crop(1, 1);
                         }
 
-                        var fileformat = InputFileName.Split('.');
                         if (img.ImageFormat != fileformat[1])
                         {
                             InputFileName = fileformat[0] + "." + img.ImageFormat;
@@ -1389,6 +1400,7 @@ namespace Cms.Controllers
                         var InputFileName = Path.GetFileName(file.FileName);
                         var ServerSavePath = Path.Combine(Server.MapPath(miestoUlozenia + InputFileName));
                         var ulozObrazok = DateTime.Now.Date.ToString("dd.MM.yyyy") + "/" + DateTime.Now.ToString("HHmmss") + "/";
+                        var fileformat = InputFileName.Split('.');
 
                         if (miestoUlozenia == "~/Uploads/")
                         {
@@ -1406,6 +1418,13 @@ namespace Cms.Controllers
                         {
                             img.Resize(1000 + 1, 1000 + 1, true).Crop(1, 1);
                         }
+
+                        if (img.ImageFormat != fileformat[1])
+                        {
+                            InputFileName = fileformat[0] + "." + img.ImageFormat;
+                            ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
+                        }
+
                         img.Save(ServerSavePath);
 
                         var isTheSameImage = model.Image.Substring(0, model.Image.LastIndexOf("/") + 1) + InputFileName;
