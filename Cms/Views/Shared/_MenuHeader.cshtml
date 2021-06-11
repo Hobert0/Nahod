@@ -17,7 +17,7 @@
                                         <h3>@category.name</h3>
                                     </a>
                                     <div class="smallmenu">
-                                        @foreach (var subcat2 in Model.CategoriesModel.Where(o => o.topcat2 == "Žiadna" && o.topcat == category.name))
+                                        @foreach (var subcat2 in Model.CategoriesModel.Where(o => o.topcat2 == "Žiadna" && o.topcat == category.id.ToString()))
                                         {
                                             <a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(cat.slug), subslug = @Html.Raw(category.slug), subslug2 = @Html.Raw(subcat2.slug)})" class="subs">@Html.Raw(subcat2.name)</a>
                                         }

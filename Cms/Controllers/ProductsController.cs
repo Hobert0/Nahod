@@ -332,7 +332,7 @@ namespace Cms.Controllers
             kategoria.Add(new SelectListItem { Text = "", Value = "" });
             foreach (var cat in db.categories.Where(i => i.maincat == "Žiadna"))
             {
-                kategoria.Add(new SelectListItem { Text = cat.name, Value = cat.name.ToString() });
+                kategoria.Add(new SelectListItem { Text = cat.name, Value = cat.id.ToString() });
             }
             return kategoria;
         }

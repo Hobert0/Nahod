@@ -173,14 +173,14 @@ namespace Cms.Controllers
             else if (subslug2 != null && subslug3 == null && catslug != "novinky" && catslug != "zlavy")
             {
                 var topcatName = db.categories.Where(i => i.slug == catslug).First().id.ToString();
-                var topcat2Name = db.categories.Where(i => i.slug == subslug).First().name;
+                var topcat2Name = db.categories.Where(i => i.slug == subslug).First().id.ToString();
                 id = db.categories.Where(i => i.slug == subslug2 && i.maincat == topcatName && i.topcat == topcat2Name).First().id;
             }
             else if (subslug3 != null && catslug != "novinky" && catslug != "zlavy")
             {
                 var maincatName = db.categories.Where(i => i.slug == catslug).First().id.ToString();
-                var topcatName = db.categories.Where(i => i.slug == subslug).First().name;
-                var topcat2Name = db.categories.Where(i => i.slug == subslug2).First().name;
+                var topcatName = db.categories.Where(i => i.slug == subslug).First().id.ToString();
+                var topcat2Name = db.categories.Where(i => i.slug == subslug2).First().id.ToString();
 
                 id = db.categories.Where(i => i.slug == subslug3 && i.maincat == maincatName && i.topcat == topcatName && i.topcat2 == topcat2Name).First().id;
             }

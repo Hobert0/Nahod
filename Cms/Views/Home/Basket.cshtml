@@ -58,241 +58,243 @@
                             {
 
                                 var thisProd = Model.ProductModel.Where(i => i.id == item.product.Value).SingleOrDefault();
-
-                                //ak sa pouzivatel prihlasi v kosiku, je potrebne prepocitat ceny ak uz nahodou nie su a v kosiku ich nahradime
-                                if (Session["username"] != null && item.userLogged == false)
+                                if (thisProd != null)
                                 {
-
-
-                                    if (item.variant != "")
+                                    //ak sa pouzivatel prihlasi v kosiku, je potrebne prepocitat ceny ak uz nahodou nie su a v kosiku ich nahradime
+                                    if (Session["username"] != null && item.userLogged == false)
                                     {
-                                        var thisVar = Model.VariantModel.Where(i => i.prod_id == item.product.Value && i.value == item.variant.Value).SingleOrDefault();
-                                        //ak nie je uz zlavneny
-                                        if (thisVar.discountprice == null)
-                                        {
-                                            int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
 
-                                            switch (rating)
+
+                                        if (item.variant != "")
+                                        {
+                                            var thisVar = Model.VariantModel.Where(i => i.prod_id == item.product.Value && i.value == item.variant.Value).SingleOrDefault();
+                                            //ak nie je uz zlavneny
+                                            if (thisVar.discountprice == null)
                                             {
-                                                case 1:
-                                                    item.price = (decimal)0.95 * Convert.ToDecimal(item.price);
-                                                    break;
-                                                case 2:
-                                                    item.price = (decimal)0.9 * Convert.ToDecimal(item.price);
-                                                    break;
-                                                case 3:
-                                                    item.price = (decimal)0.85 * Convert.ToDecimal(item.price);
-                                                    break;
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        //ak nie je uz zlavneny
-                                        if (thisProd.discountprice == null)
-                                        {
+                                                int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
 
-                                            int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
-
-                                            switch (rating)
-                                            {
-                                                case 1:
-                                                    item.price = (decimal)0.95 * Convert.ToDecimal(item.price);
-                                                    break;
-                                                case 2:
-                                                    item.price = (decimal)0.9 * Convert.ToDecimal(item.price);
-                                                    break;
-                                                case 3:
-                                                    item.price = (decimal)0.85 * Convert.ToDecimal(item.price);
-                                                    break;
-                                            }
-                                        }
-                                    }
-
-                                    item.userLogged = true;
-
-                                }
-
-                                <tr>
-                                    <td style="text-align: center;"><img src="~/Uploads/@Html.DisplayFor(modelItem => thisProd.image)" style="max-width: 30px;max-height: 50px;" /></td>
-
-                                    @{
-                                        var slug = helper.ToUrlSlug(thisProd.title);
-                                    }
-
-
-                                    <td><strong><a href="/detail-produktu/@thisProd.id/@slug">@Html.Raw(thisProd.title)</a></strong></td>
-
-                                    <td style="text-align: center;">
-                                        @if (item.variant != "")
-                                        {
-                                            @Html.Raw(item.variant) @Html.Raw(" ") @Html.Raw(item.variant2)
-                                        }
-                                    </td>
-
-                                    <td style="text-align: center;">
-                                        <div class="cart-item-amount">
-                                            <button type="button" onclick="decreaseCount(@Html.Raw(item.id));" class="">−</button>
-                                            <input type="number" data-inventory_id="@Html.Raw(item.id)" name="amount[1050506]" value="@Html.Raw(item.quantity)" min="1" max="30000" class="" id="quantity-@Html.Raw(item.id)">
-                                            <button type="button" onclick="increaseCount(@Html.Raw(item.id));" class="">+</button>
-                                        </div>
-                                    </td>
-
-                                    @{
-                                        productprice = Convert.ToDecimal(item.price);
-                                        quantity = Convert.ToDecimal(item.quantity);
-
-                                        decimal totalproductprice = productprice * quantity;
-                                    }
-                                    <td><strong style="font-size: 16px;">@totalproductprice.ToString("n2") €</strong><br><span class="pricePerItem" style="font-size: 13px;">@productprice.ToString("n2") €/ks</span></td>
-                                    <td><div class="removeCart" id="@Html.Raw(item.id)" style="cursor:pointer;">&times;</div> </td>
-                                </tr>
-
-
-                                //Kupony
-                                if (TempData["Coupons"] != null)
-                                {
-
-                                    var couponKey = TempData["Coupons"].ToString();
-                                    var coupon = Model.CouponsModel.Where(m => m.coupon == couponKey);
-                                    var couCategoryId = coupon.Select(m => m.category_id).FirstOrDefault();
-                                    var couTypeId = coupon.Select(m => m.type_id).FirstOrDefault();
-                                    var couBrandId = coupon.Select(m => m.brand_id).FirstOrDefault();
-                                    var couProductId = coupon.Select(m => m.product_id).FirstOrDefault();
-
-                                    int thisProdId = Convert.ToInt32(item.product.Value);
-
-                                    var tempamount = TempData["Amount"];
-                                    decimal coupondiscount = Convert.ToDecimal(tempamount) / 100;
-
-                                    bool couponVerified = true;
-
-                                    //Ak je v kategorii
-                                    if (couCategoryId != null)
-                                    {
-                                        couponVerified = false;
-
-                                        if (thisProd.category != null)
-                                        {
-                                            dynamic cats = JsonConvert.DeserializeObject(thisProd.category);
-                                            foreach (var catId in cats)
-                                            {
-                                                if (couCategoryId == catId.Value)
+                                                switch (rating)
                                                 {
-                                                    couponVerified = true;
-                                                    break;
+                                                    case 1:
+                                                        item.price = (decimal)0.95 * Convert.ToDecimal(item.price);
+                                                        break;
+                                                    case 2:
+                                                        item.price = (decimal)0.9 * Convert.ToDecimal(item.price);
+                                                        break;
+                                                    case 3:
+                                                        item.price = (decimal)0.85 * Convert.ToDecimal(item.price);
+                                                        break;
                                                 }
                                             }
                                         }
-                                    }
-
-                                    //Ak je v zaradeni
-                                    if (couTypeId != null)
-                                    {
-                                        couponVerified = false;
-
-                                        if (thisProd.type != null)
+                                        else
                                         {
-                                            dynamic types = JsonConvert.DeserializeObject(thisProd.type);
-                                            foreach (var typeId in types)
+                                            //ak nie je uz zlavneny
+                                            if (thisProd.discountprice == null)
                                             {
-                                                if (couTypeId == typeId.Value)
+
+                                                int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
+
+                                                switch (rating)
                                                 {
-                                                    couponVerified = true;
-                                                    break;
+                                                    case 1:
+                                                        item.price = (decimal)0.95 * Convert.ToDecimal(item.price);
+                                                        break;
+                                                    case 2:
+                                                        item.price = (decimal)0.9 * Convert.ToDecimal(item.price);
+                                                        break;
+                                                    case 3:
+                                                        item.price = (decimal)0.85 * Convert.ToDecimal(item.price);
+                                                        break;
                                                 }
                                             }
                                         }
+
+                                        item.userLogged = true;
+
                                     }
 
-                                    //Ak je v znacke
-                                    if (couBrandId != null)
-                                    {
-                                        couponVerified = false;
+                                    <tr>
+                                        <td style="text-align: center;"><img src="~/Uploads/@Html.DisplayFor(modelItem => thisProd.image)" style="max-width: 30px;max-height: 50px;" /></td>
 
-                                        if (thisProd.custom3 != null)
+                                        @{
+                                            var slug = helper.ToUrlSlug(thisProd.title);
+                                        }
+
+
+                                        <td><strong><a href="/detail-produktu/@thisProd.id/@slug">@Html.Raw(thisProd.title)</a></strong></td>
+
+                                        <td style="text-align: center;">
+                                            @if (item.variant != "")
+                                            {
+                                                @Html.Raw(item.variant) @Html.Raw(" ") @Html.Raw(item.variant2)
+                                            }
+                                        </td>
+
+                                        <td style="text-align: center;">
+                                            <div class="cart-item-amount">
+                                                <button type="button" onclick="decreaseCount(@Html.Raw(item.id));" class="">−</button>
+                                                <input type="number" data-inventory_id="@Html.Raw(item.id)" name="amount[1050506]" value="@Html.Raw(item.quantity)" min="1" max="30000" class="" id="quantity-@Html.Raw(item.id)">
+                                                <button type="button" onclick="increaseCount(@Html.Raw(item.id));" class="">+</button>
+                                            </div>
+                                        </td>
+
+                                        @{
+                                            productprice = Convert.ToDecimal(item.price);
+                                            quantity = Convert.ToDecimal(item.quantity);
+
+                                            decimal totalproductprice = productprice * quantity;
+                                        }
+                                        <td><strong style="font-size: 16px;">@totalproductprice.ToString("n2") €</strong><br><span class="pricePerItem" style="font-size: 13px;">@productprice.ToString("n2") €/ks</span></td>
+                                        <td><div class="removeCart" id="@Html.Raw(item.id)" style="cursor:pointer;">&times;</div> </td>
+                                    </tr>
+
+
+                                    //Kupony
+                                    if (TempData["Coupons"] != null)
+                                    {
+
+                                        var couponKey = TempData["Coupons"].ToString();
+                                        var coupon = Model.CouponsModel.Where(m => m.coupon == couponKey);
+                                        var couCategoryId = coupon.Select(m => m.category_id).FirstOrDefault();
+                                        var couTypeId = coupon.Select(m => m.type_id).FirstOrDefault();
+                                        var couBrandId = coupon.Select(m => m.brand_id).FirstOrDefault();
+                                        var couProductId = coupon.Select(m => m.product_id).FirstOrDefault();
+
+                                        int thisProdId = Convert.ToInt32(item.product.Value);
+
+                                        var tempamount = TempData["Amount"];
+                                        decimal coupondiscount = Convert.ToDecimal(tempamount) / 100;
+
+                                        bool couponVerified = true;
+
+                                        //Ak je v kategorii
+                                        if (couCategoryId != null)
                                         {
-                                            if (Int32.Parse(thisProd.custom3) == couBrandId)
+                                            couponVerified = false;
+
+                                            if (thisProd.category != null)
+                                            {
+                                                dynamic cats = JsonConvert.DeserializeObject(thisProd.category);
+                                                foreach (var catId in cats)
+                                                {
+                                                    if (couCategoryId == catId.Value)
+                                                    {
+                                                        couponVerified = true;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        //Ak je v zaradeni
+                                        if (couTypeId != null)
+                                        {
+                                            couponVerified = false;
+
+                                            if (thisProd.type != null)
+                                            {
+                                                dynamic types = JsonConvert.DeserializeObject(thisProd.type);
+                                                foreach (var typeId in types)
+                                                {
+                                                    if (couTypeId == typeId.Value)
+                                                    {
+                                                        couponVerified = true;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        //Ak je v znacke
+                                        if (couBrandId != null)
+                                        {
+                                            couponVerified = false;
+
+                                            if (thisProd.custom3 != null)
+                                            {
+                                                if (Int32.Parse(thisProd.custom3) == couBrandId)
+                                                {
+                                                    couponVerified = true;
+                                                }
+                                            }
+                                        }
+
+                                        //Ak je to id produktu
+                                        if (couProductId != null)
+                                        {
+                                            couponVerified = false;
+
+                                            if (thisProd.id == couProductId)
                                             {
                                                 couponVerified = true;
                                             }
                                         }
-                                    }
-
-                                    //Ak je to id produktu
-                                    if (couProductId != null)
-                                    {
-                                        couponVerified = false;
-
-                                        if (thisProd.id == couProductId)
-                                        {
-                                            couponVerified = true;
-                                        }
-                                    }
-
-                                    if (couponVerified)
-                                    {
-
-                                        decimal povodnacena = 0;
-
-                                        //Ak to nie je uz zlavneny produkt/varianta
-                                        if (item.variant != "")
-                                        {
-
-                                            var thisVar = Model.VariantModel.Where(i => i.prod_id == item.product.Value && i.value == item.variant.Value).Single();
-
-                                            if (thisVar.discountprice != null)
-                                            {
-                                                couponVerified = false;
-                                            }
-                                            else
-                                            {
-                                                povodnacena = (decimal)thisVar.price;
-                                            }
-
-                                        }
-                                        else
-                                        {
-                                            if (thisProd.discountprice != null)
-                                            {
-                                                couponVerified = false;
-                                            }
-                                            else
-                                            {
-                                                povodnacena = thisProd.price;
-                                            }
-
-                                        }
 
                                         if (couponVerified)
                                         {
-                                            //Zistime, ci je uplatnena zlava po registracii, ak ano uplatnime tu vyssiu
-                                            if (Session["username"] != null)
+
+                                            decimal povodnacena = 0;
+
+                                            //Ak to nie je uz zlavneny produkt/varianta
+                                            if (item.variant != "")
                                             {
 
-                                                decimal cenapokupone = povodnacena * (1 - coupondiscount);
-                                                if (productprice > cenapokupone)
-                                                {
-                                                    productprice = cenapokupone;
+                                                var thisVar = Model.VariantModel.Where(i => i.prod_id == item.product.Value && i.value == item.variant.Value).Single();
 
-                                                    decimal thisDiscount = povodnacena * coupondiscount;
-                                                    finalpriceDiscount.Add(quantity * thisDiscount);
+                                                if (thisVar.discountprice != null)
+                                                {
+                                                    couponVerified = false;
                                                 }
+                                                else
+                                                {
+                                                    povodnacena = (decimal)thisVar.price;
+                                                }
+
                                             }
                                             else
                                             {
-                                                productprice = povodnacena * (1 - coupondiscount);
-
-                                                decimal thisDiscount = povodnacena * coupondiscount;
-                                                finalpriceDiscount.Add(quantity * thisDiscount);
+                                                if (thisProd.discountprice != null)
+                                                {
+                                                    couponVerified = false;
+                                                }
+                                                else
+                                                {
+                                                    povodnacena = thisProd.price;
+                                                }
 
                                             }
 
+                                            if (couponVerified)
+                                            {
+                                                //Zistime, ci je uplatnena zlava po registracii, ak ano uplatnime tu vyssiu
+                                                if (Session["username"] != null)
+                                                {
+
+                                                    decimal cenapokupone = povodnacena * (1 - coupondiscount);
+                                                    if (productprice > cenapokupone)
+                                                    {
+                                                        productprice = cenapokupone;
+
+                                                        decimal thisDiscount = povodnacena * coupondiscount;
+                                                        finalpriceDiscount.Add(quantity * thisDiscount);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    productprice = povodnacena * (1 - coupondiscount);
+
+                                                    decimal thisDiscount = povodnacena * coupondiscount;
+                                                    finalpriceDiscount.Add(quantity * thisDiscount);
+
+                                                }
+
+                                            }
                                         }
                                     }
-                                }
 
-                                finalprice.Add(quantity * productprice);
+                                    finalprice.Add(quantity * productprice);
+                                }
                             }
 
                             /*
@@ -395,7 +397,7 @@
                                         }
                                     }
                                     Zľava: - @discountText€
-                                </span><br  class="d-none d-sm-block" />
+                                </span><br class="d-none d-sm-block" />
                                 <span>Celkom bez DPH €@(Html.Raw((finalprice.Sum() * 100 / 120).ToString("#.##").Replace(",", ".")))</span><br class="d-none d-sm-block" />
                                 <strong style="float: right; font-size: 20px">K úhrade €@(Html.Raw(finalprice.Sum().ToString("#.00").Replace(",", ".")))</strong>
                                 <script>
@@ -859,7 +861,7 @@
                                                 </script> €
                                             </strong>
 
-                                            @{ 
+                                            @{
                                                 var transferVal = "transfer1";
                                                 if (Model.OrdersModel != null)
                                                 {
@@ -877,7 +879,7 @@
                                             <input type="radio" name="transfer" value="@transferVal" onclick="checkTransfer();shippPay();">
                                             <span class="checkmar"></span>
                                         </label>
-                                                }
+                                    }
                                     @if (item.transfer2_enbl && item.transfer2 != null)
                                     {
                                         <label class="cont" id="transfer2">
@@ -969,10 +971,10 @@
                                             }
                                         }
                                         Zľava: - @discountText€
-                                    </span><br  class="d-none d-sm-block" />
+                                    </span><br class="d-none d-sm-block" />
                                     <span>Celkom bez DPH €</span><span id="pricedph" value="">
                                         <script type="text/javascript">document.write(pricedph)</script>
-                                    </span><br  class="d-none d-sm-block" />
+                                    </span><br class="d-none d-sm-block" />
                                     <strong style="float: right; font-size:20px">
                                         K úhrade €<span id="final" value="">
                                             <script type="text/javascript">document.write(finalprice.toFixed(2))</script>
