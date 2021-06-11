@@ -65,7 +65,7 @@
                                     else
                                     {
                                         categoryname = topcat.maincat;
-                                        maincatslug = Model.CategoriesModel.Where(o => o.name == topcat.maincat).FirstOrDefault().slug;
+                                        maincatslug = Model.CategoriesModel.Where(o => o.id == topcat.id).FirstOrDefault().slug;
 
                                     }
                                     <li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(maincatslug) })">@categoryname</a></li>

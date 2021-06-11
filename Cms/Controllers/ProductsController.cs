@@ -1076,19 +1076,19 @@ namespace Cms.Controllers
                         {
                             img.Resize(1000 + 1, 1000 + 1, true).Crop(1, 1);
                         }
+                       
+
+                        if (img.ImageFormat != fileformat[1])
+                        {
+                            InputFileName = fileformat[0] + "." + img.ImageFormat;
+                            ServerSavePath = miestoUlozenia + InputFileName;
+                        }
                         var isTheSameImage = "";
 
                         if (model.Image != null)
                         {
                             isTheSameImage = model.Image.Substring(0, model.Image.LastIndexOf("/") + 1) + InputFileName;
                         }
-
-                        if (img.ImageFormat != fileformat[1])
-                        {
-                            InputFileName = fileformat[0] + "." + img.ImageFormat;
-                            ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
-                        }
-
                         if (model.Image != isTheSameImage)
                         {
                             var data = db.categories.Single(i => i.id == model.Id);
@@ -1109,7 +1109,7 @@ namespace Cms.Controllers
                             if (img.ImageFormat != fileformat[1])
                             {
                                 InputFileName = fileformat[0] + "." + img.ImageFormat;
-                                ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
+                                ServerSavePath = miestoUlozenia + InputFileName;
                             }
 
                             Random r = new Random();
@@ -1118,8 +1118,8 @@ namespace Cms.Controllers
                             data.image = model.Image.Substring(0, model.Image.LastIndexOf("/") + 1) + r.Next() + "_" + InputFileName;
                             db.SaveChanges();
                             
-                            img.Save(ServerSavePath);
-                            //img.Save(Path.Combine(Server.MapPath("~/Uploads/" + data.image)));
+                           // img.Save(ServerSavePath);
+                            img.Save(Path.Combine(Server.MapPath("~/Uploads/" + data.image)));
                         }
                         //assigning file uploaded status to ViewBag for showing message to user.  
                         ViewBag.UploadStatus = subor.Count().ToString() + " files uploaded successfully.";
@@ -1177,7 +1177,7 @@ namespace Cms.Controllers
                         if (img.ImageFormat != fileformat[1])
                         {
                             InputFileName = fileformat[0] + "." + img.ImageFormat;
-                            ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
+                            ServerSavePath = miestoUlozenia + InputFileName;
                         }
                         img.Save(ServerSavePath);
 
@@ -1300,7 +1300,7 @@ namespace Cms.Controllers
                         if (img.ImageFormat != fileformat[1])
                         {
                             InputFileName = fileformat[0] + "." + img.ImageFormat;
-                            ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
+                            ServerSavePath = miestoUlozenia + InputFileName;
                         }
 
                         img.Save(ServerSavePath);
@@ -1422,7 +1422,7 @@ namespace Cms.Controllers
                         if (img.ImageFormat != fileformat[1])
                         {
                             InputFileName = fileformat[0] + "." + img.ImageFormat;
-                            ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
+                            ServerSavePath = miestoUlozenia + InputFileName;
                         }
 
                         img.Save(ServerSavePath);

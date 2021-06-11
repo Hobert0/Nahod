@@ -3,13 +3,13 @@
     <div class="row header-bottom navbar link-container">
         @foreach (var cat in Model.CategoriesModel.Where(i => i.deleted == false && i.maincat == "Žiadna" && i.topcat == "Žiadna" && i.topcat2 == "Žiadna"))
         {
-            if (Model.CategoriesModel.Where(x => x.maincat == cat.name && x.deleted == false).Count() > 0)
+            if (Model.CategoriesModel.Where(x => x.maincat == cat.id.ToString() && x.deleted == false).Count() > 0)
             {
                 <div class="dropdown">
                     <a class="dropbtn" href="/kat/@cat.slug">@cat.name<i class="fa fa-caret-down"></i></a>
                     <div class="dropdown-content">
                         <div>
-                            @foreach (var category in Model.CategoriesModel.Where(x => x.maincat == cat.name && x.deleted == false))
+                            @foreach (var category in Model.CategoriesModel.Where(x => x.maincat == cat.id.ToString() && x.deleted == false))
                             {
                                 <div class="column">
                                     <a href="@Url.Action("Category", "Home", new {subslug = category.slug, catslug = @Html.Raw(cat.slug)})">
@@ -34,7 +34,7 @@
             }
         }
         <div class="dropdown">
-            <a class="dropbtn">značky<i class="fa fa-caret-down"></i></a>
+            <a class="dropbtn">výrobcovia<i class="fa fa-caret-down"></i></a>
             <div class="dropdown-content brands p-4">
                 <div class="row">
                     @foreach (var brand in Model.BrandsModel.OrderBy(o => o.priority))

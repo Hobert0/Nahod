@@ -241,7 +241,7 @@
                     <td class="hide">@item.id</td>
                     <td style="text-align:center;"><input type="checkbox" name="multipleEditCheckbox"></td>
                     <td class="editable" name="number">@Html.DisplayFor(modelItem => item.number)</td>
-                    <td><img src="~/Uploads/@Html.DisplayFor(modelItem => item.image)" style="width: 50px;" /></td>
+                    <td><img src="~/Uploads/@Html.DisplayFor(modelItem => item.image)" style="max-width: 50px;max-height: 50px;" /></td>
                     <td class="editable" name="title">@Html.DisplayFor(modelItem => item.title)</td>
                     <td class="editable" name="price" style="background-color: lightyellow; text-align: center;">@Html.DisplayFor(modelItem => item.price)&nbsp;€</td>
                     <td class="editable" name="discountprice" style="background-color: lightcyan; text-align: center;">

@@ -136,18 +136,18 @@ namespace Cms.Controllers
             }
             else if (subslug != null && subslug2 == null && catslug != "novinky" && catslug != "zlavy")
             {
-                var topcatName = db.categories.Where(i => i.slug == catslug).First().name;
+                var topcatName = db.categories.Where(i => i.slug == catslug).First().id.ToString();
                 id = db.categories.Where(i => i.deleted == false && i.slug == subslug && i.maincat == topcatName).First().id.ToString();
             }
             else if (subslug2 != null && subslug3 == null && catslug != "novinky" && catslug != "zlavy")
             {
-                var topcatName = db.categories.Where(i => i.slug == catslug).First().name;
+                var topcatName = db.categories.Where(i => i.slug == catslug).First().id.ToString();
                 var topcat2Name = db.categories.Where(i => i.slug == subslug).First().name;
                 id = db.categories.Where(i => i.deleted == false && i.slug == subslug2 && i.maincat == topcatName && i.topcat == topcat2Name).First().id.ToString();
             }
             else if (subslug3 != null && catslug != "novinky" && catslug != "zlavy")
             {
-                var maincatName = db.categories.Where(i => i.slug == catslug).First().name;
+                var maincatName = db.categories.Where(i => i.slug == catslug).First().id.ToString();
                 var topcatName = db.categories.Where(i => i.slug == subslug).First().name;
                 var topcat2Name = db.categories.Where(i => i.slug == subslug2).First().name;
 
