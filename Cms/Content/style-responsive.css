@@ -162,7 +162,7 @@
 		border-right: 20px solid transparent;
 		position: absolute;
 		left: 45%;
-		z-index: 9;
+		z-index: 1;
 	}
 
 	.cart-item-amount input[type=number] {
@@ -314,6 +314,10 @@
 
 	#check .next-step-container {
 		width: 100%;
+	}
+
+	#check .next-step-container input[type=submit]{
+		font-size: 13px;
 	}
 	
 	.d-sm-table-cell-custom {
