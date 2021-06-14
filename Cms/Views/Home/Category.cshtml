@@ -58,7 +58,9 @@
                     }
                     else if (cat.topcat2 == "" || cat.topcat2 == "Žiadna")
                     {
-                        <h2 class="categoryHeader">@Html.Raw(cat.topcat) / @Html.Raw(cat.name)</h2>
+                        var topcatID = int.Parse(cat.topcat);
+                        var topcat = Model.CategoriesModel.Where(i => i.id == topcatID).FirstOrDefault().name;
+                        <h2 class="categoryHeader">@Html.Raw(topcat) / @Html.Raw(cat.name)</h2>
                     }
                     else
                     {
@@ -107,7 +109,7 @@
                                 {
                                     <div class="col-md-auto subcatthumb py-2 m-1">
                                         <a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(categorySlug), subslug = @Html.Raw(thisCat.slug) })">
-                                            <div style="background-image: url(/Uploads/@thisCat.image); background-size: contain;"></div>
+                                            <div style="background-image: url('/Uploads/@thisCat.image'); background-size: contain;"></div>
                                             <p>@thisCat.name</p>
                                         </a>
                                     </div>
@@ -121,7 +123,7 @@
                                 {
                                     <div class="col-md-auto subcatthumb py-2 m-1">
                                         <a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(categorySlug), subslug = @Html.Raw(categorySubSlug), subslug2 = thisCat.slug })">
-                                            <div style="background-image: url(/Uploads/@thisCat.image); background-size: contain;"></div>
+                                            <div style="background-image: url('/Uploads/@thisCat.image'); background-size: contain;"></div>
                                             <p>@thisCat.name</p>
                                         </a>
                                     </div>
@@ -204,7 +206,7 @@
 
                                     decimal thisPrice = 0;
                                     //rating
-                                    if (Session["username"] != null)
+                                    if (Request.Cookies["username"].Value != null)
                                     {
                                         int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
                                         decimal defaultPrice = (decimal)variant.price;
@@ -254,7 +256,7 @@
                             else
                             {
                                 //rating
-                                if (Session["username"] != null)
+                                if (Request.Cookies["username"].Value != null)
                                 {
                                     int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
                                     decimal defaultPrice = prod.price;

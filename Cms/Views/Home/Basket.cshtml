@@ -61,7 +61,7 @@
                                 if (thisProd != null)
                                 {
                                     //ak sa pouzivatel prihlasi v kosiku, je potrebne prepocitat ceny ak uz nahodou nie su a v kosiku ich nahradime
-                                    if (Session["username"] != null && item.userLogged == false)
+                                    if (Request.Cookies["username"] != null && item.userLogged == false)
                                     {
 
 
@@ -268,7 +268,7 @@
                                             if (couponVerified)
                                             {
                                                 //Zistime, ci je uplatnena zlava po registracii, ak ano uplatnime tu vyssiu
-                                                if (Session["username"] != null)
+                                                if (Request.Cookies["username"] != null)
                                                 {
 
                                                     decimal cenapokupone = povodnacena * (1 - coupondiscount);
@@ -424,7 +424,7 @@
                     <div style="text-align: right">
                         @if (cart != null)
                         {
-                            <a class="btn btn-danger my-4" style="color: #ffffff" onclick="showAddress(@Session["userid"])">Pokračovať v objednávke</a>
+                            <a class="btn btn-danger my-4" style="color: #ffffff" onclick="showAddress(@Request.Cookies["userid"].Value)">Pokračovať v objednávke</a>
                         }
                         else
                         {
@@ -1319,7 +1319,7 @@
                     <div class="basketBackButton" style="">
                         <a class="btn btn-secondary my-4" onclick="showShipping()" style="color: #ffffff;">Späť</a>
                     </div>
-                    <div  class="basketForwardButton">
+                    <div  class="basketFinishButton">
                         <input type="submit" class="btn btn-danger my-4" id="submitorder" value="Dokončiť objednávku s povinnosťou platby">
                     </div>
                 </div>
@@ -1331,12 +1331,11 @@
 <script src="~/Scripts/basket_session.js"></script>
 
 <script>
-    $("#Myform").submit(function (e) {
+    $("#submitorder").click(function () {
             //stop submitting the form to see the disabled button effect
             e.preventDefault();
-
+        document.getElementById("submitorder").disabled = true;
             //disable the submit button
-        $("#submitorder").attr("disabled", true);
         return true;
     });
 

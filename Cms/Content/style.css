@@ -1128,6 +1128,10 @@ input[type="radio"][disabled] {
     display: block;
 }
 
+.dropdown-content .column {
+    height: 100px;
+}
+
 .dropdown-content h3 {
     font-size: .9rem;
 }

@@ -366,7 +366,7 @@
                     </div>
                     <div class="form-group">
                         <div style="text-align: right">
-                            <a class="btn btn-danger my-4" style="color: #ffffff" onclick="showAddress(@Session["userid"])">Pokračovať v objednávke</a>
+                            <a class="btn btn-danger my-4" style="color: #ffffff" onclick="showAddress(@Request.Cookies["userid"].Value)">Pokračovať v objednávke</a>
                         </div>
                     </div>
                 }

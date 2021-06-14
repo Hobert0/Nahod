@@ -100,7 +100,7 @@
                                     {
                                         decimal thisPrice = 0;
                                         //rating
-                                        if (Session["username"] != null)
+                                        if (Request.Cookies["username"] != null)
                                         {
                                             int rating = 0;
                                             var exist = Model.AllUsersMetaModel;
@@ -158,7 +158,7 @@
                                 else
                                 {
                                     //rating
-                                    if (Session["username"] != null)
+                                    if (Request.Cookies["username"] != null)
                                     {
                                         int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
                                         decimal defaultPrice = prod.price;

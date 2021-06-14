@@ -27,9 +27,9 @@ namespace Cms.Controllers
         {
             var model = new MultipleIndexModel();
 
-            if (Session["userid"] != null)
+            if (Request.Cookies["userid"] != null)
             {
-                var userToSend = Int32.Parse(Session["userid"].ToString());
+                var userToSend = Int32.Parse(Request.Cookies["userid"].Value);
                 model.AllUsersMetaModel = db.usersmeta.Where(i => i.userid == userToSend).ToList();
             }
             else
@@ -100,9 +100,9 @@ namespace Cms.Controllers
 
             var modelwish = new MultipleIndexModel();
 
-            if (Session["userid"] != null)
+            if (@Request.Cookies["userid"] != null)
             {
-                var usID = Int32.Parse(Session["userid"].ToString());
+                var usID = Int32.Parse(@Request.Cookies["userid"].Value);
                 var userdata = db.wishlist.Where(i => i.userid == usID).ToList();
                 if (userdata.Count() == 0)
                 {
@@ -164,9 +164,9 @@ namespace Cms.Controllers
             model.SlideshowModel = db.slideshow.ToList();
             model.VariantModel = db.variants.ToList();
 
-            if (Session["userid"] != null)
+            if (Request.Cookies["userid"] != null)
             {
-                var userToSend = Int32.Parse(Session["userid"].ToString());
+                var userToSend = Int32.Parse(Request.Cookies["userid"].Value);
                 model.AllUsersMetaModel = db.usersmeta.Where(i => i.userid == userToSend).ToList();
             }
             else
@@ -578,9 +578,9 @@ namespace Cms.Controllers
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.ToList();
 
-            if (Session["userid"] != null)
+            if (Request.Cookies["userid"] != null)
             {
-                var usID = Int32.Parse(Session["userid"].ToString());
+                var usID = Int32.Parse(Request.Cookies["userid"].Value);
                 var userdata = db.usersmeta.Where(i => i.userid == usID).ToList();
                 foreach (var user in userdata)
                 {
@@ -602,9 +602,9 @@ namespace Cms.Controllers
                 }
             }
 
-            if (Session["userid"] != null)
+            if (Request.Cookies["userid"] != null)
             {
-                var userToSend = Int32.Parse(Session["userid"].ToString());
+                var userToSend = Int32.Parse(Request.Cookies["userid"].Value);
                 model.AllUsersMetaModel = db.usersmeta.Where(i => i.userid == userToSend).ToList();
             }
             else
@@ -629,9 +629,9 @@ namespace Cms.Controllers
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.ToList();
 
-            if (Session["userid"] != null)
+            if (Request.Cookies["userid"] != null)
             {
-                var usID = Int32.Parse(Session["userid"].ToString());
+                var usID = Int32.Parse(Request.Cookies["userid"].Value);
                 var userdata = db.usersmeta.Where(i => i.userid == usID).ToList();
                 foreach (var user in userdata)
                 {
@@ -667,9 +667,9 @@ namespace Cms.Controllers
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.ToList();
 
-            if (Session["userid"] != null)
+            if (Request.Cookies["userid"] != null)
             {
-                var usID = Int32.Parse(Session["userid"].ToString());
+                var usID = Int32.Parse(Request.Cookies["userid"].Value);
                 model.OrderDataModel = db.orders.Where(o => o.userid == usID).ToList();
                 model.OrderMetaModel = db.ordermeta;
                 var userdata = db.usersmeta.Where(i => i.userid == usID).ToList();
@@ -702,9 +702,9 @@ namespace Cms.Controllers
         public ActionResult ProductDetail(int? id)
         {
             var model = new MultipleIndexModel();
-            if (Session["userid"] != null)
+            if (Request.Cookies["userid"]!= null)
             {
-                var userToSend = Int32.Parse(Session["userid"].ToString());
+                var userToSend = Int32.Parse(Request.Cookies["userid"].Value);
                 model.AllUsersMetaModel = db.usersmeta.Where(i => i.userid == userToSend).ToList();
             }
             else
@@ -786,9 +786,9 @@ namespace Cms.Controllers
         [HttpPost, Route("aktualizovat-udaje")]
         public async Task<ActionResult> SaveCustomerDetails(MultipleIndexModel model)
         {
-            if (Session["userid"] != null)
+            if (Request.Cookies["userid"] != null)
             {
-                var usID = Int32.Parse(Session["userid"].ToString());
+                var usID = Int32.Parse(Request.Cookies["userid"].Value);
                 var o = db.usersmeta.Single(i => i.userid == usID);
                 var u = db.users.Single(i => i.id == usID);
 

@@ -94,9 +94,9 @@ namespace Cms.Controllers
             /*Save loged user id to order*/
             var usID = 0;
 
-            if (Session["userid"] != null)
+            if (Request.Cookies["userid"] != null)
             {
-                usID = Int32.Parse(Session["userid"].ToString());
+                usID = Int32.Parse(Request.Cookies["userid"].Value);
             }
 
             o.userid = usID;
@@ -130,9 +130,9 @@ namespace Cms.Controllers
                     {
                         thisPrice = thisProd.price;
 
-                        if (Session["username"] != null)
+                        if (Request.Cookies["username"] != null)
                         {
-                            var userId = Int32.Parse(Session["userid"].ToString());
+                            var userId = Int32.Parse(Request.Cookies["userid"].Value);
                             int rating = db.usersmeta.Where(x => x.userid == userId).SingleOrDefault().rating;
 
                             switch (rating)
@@ -160,9 +160,9 @@ namespace Cms.Controllers
                     {
                         thisPrice = (decimal)thisVar.price;
 
-                        if (Session["username"] != null)
+                        if (Request.Cookies["username"] != null)
                         {
-                            var userId = Int32.Parse(Session["userid"].ToString());
+                            var userId = Int32.Parse(Request.Cookies["userid"].Value);
                             int rating = db.usersmeta.Where(x => x.userid == userId).SingleOrDefault().rating;
 
                             switch (rating)

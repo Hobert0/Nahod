@@ -26,7 +26,7 @@ namespace Cms.Controllers
         [Route("exportimport")]
         public ActionResult ExpImp()
         {
-            if (Session["username"] != null && Session["role"].ToString() == "0")
+            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
             {
                 return View();
             }

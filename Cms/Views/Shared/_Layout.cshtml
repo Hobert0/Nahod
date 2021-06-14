@@ -15,15 +15,15 @@
     }
     var username = "";
 
-    if (Session["username"] != null)
+    if (Request.Cookies["username"] != null)
     {
-        username = Session["username"].ToString();
+        username = Request.Cookies["username"].Value;
     }
 
     var role = "";
-    if (Session["role"] != null)
+    if (Request.Cookies["role"] != null)
     {
-        role = Session["role"].ToString();
+        role = Request.Cookies["role"].Value ;
     }
 
     List<dynamic> wishcount = new List<dynamic>();
@@ -223,8 +223,8 @@
                                         <i class="fas fa-sign-out-alt"></i>
                                     </a>
                                 </span>
-                                <input type="hidden" name="userName" id="userName" value="@Session["username"]">
-                                <input type="hidden" name="userId" id="userId" value="@Session["userid"]">
+                                <input type="hidden" name="userName" id="userName" value="@Request.Cookies["username"].Value">
+                                <input type="hidden" name="userId" id="userId" value="@Request.Cookies["userid"].Value">
 
                             }
                             else
@@ -346,8 +346,8 @@
                                         }
                                         <a href="@Url.Action("Account", "Home")"><u class="my-account-link">Môj účet</u></a><a class="logout ml-2" href="@Url.Action("LogOut", "Admin")"><u>Odhlásiť sa</u></a>
                                     </span>
-                                    <input type="hidden" name="userName" id="userName" value="@Session["username"]">
-                                    <input type="hidden" name="userId" id="userId" value="@Session["userid"]">
+                                    <input type="hidden" name="userName" id="userName" value="@Request.Cookies["username"].Value">
+                                    <input type="hidden" name="userId" id="userId" value="@Request.Cookies["userid"].Value">
 
                                 }
                                 else
@@ -679,40 +679,40 @@
     </script>
 
     @{
-        if (Session["userid"] != null)
+        if (Request.Cookies["userid"] != null)
         {
             Entities db = new Entities();
-            var userId = (int)Session["userid"];
-            var userMeta = db.usersmeta.Where(i => i.userid == userId).FirstOrDefault();
+            var userId = int.Parse(Request.Cookies["userid"].Value);
+        var userMeta = db.usersmeta.Where(i => i.userid == userId).FirstOrDefault();
 
-            int rating = userMeta.rating;
-            decimal sum = userMeta.sum;
+        int rating = userMeta.rating;
+        decimal sum = userMeta.sum;
 
-            string actualDiscount = "";
-            string nextDiscount = "";
-            decimal remainingSum = 0;
-            string discountLevel = "";
+        string actualDiscount = "";
+        string nextDiscount = "";
+        decimal remainingSum = 0;
+        string discountLevel = "";
 
-            switch (rating)
-            {
-                case 1:
-                    actualDiscount = "5%";
-                    nextDiscount = "10%";
-                    remainingSum = 500 - sum;
-                    discountLevel = "strieborný";
+        switch (rating)
+        {
+            case 1:
+                actualDiscount = "5%";
+                nextDiscount = "10%";
+                remainingSum = 500 - sum;
+                discountLevel = "strieborný";
 
-                    break;
-                case 2:
-                    actualDiscount = "10%";
-                    nextDiscount = "15%";
-                    remainingSum = 1000 - sum;
-                    discountLevel = "zlatý";
-                    break;
+                break;
+            case 2:
+                actualDiscount = "10%";
+                nextDiscount = "15%";
+                remainingSum = 1000 - sum;
+                discountLevel = "zlatý";
+                break;
 
-            }
+        }
 
-            if (remainingSum > 0 && Request.QueryString["userLogin"] == "true")
-            {
+        if (remainingSum > 0 && Request.QueryString["userLogin"] == "true")
+        {
                 <script>
                     $(document).ready(function () {
                         $loginStr = "Vaša aktuálna zlava je <strong>@actualDiscount</strong>. Nakúpte ešte za @remainingSum.ToString("N2") € a navýšime Vám zľavu na <strong>@nextDiscount</strong> (@discountLevel zákazník).";

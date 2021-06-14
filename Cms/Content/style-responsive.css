@@ -329,11 +329,11 @@
 		float: left;
 	}
 
-	.basketForwardButton {
-		width: 50%;
-		float: right;
-		text-align: right;
-	}
+    .basketForwardButton, .basketFinishButton {
+        width: 50%;
+        float: right;
+        text-align: right;
+    }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -731,19 +731,19 @@
 		float: none !important;
 	}
 
-	.basketBackButton, .basketForwardButton {
-		width: 100%;
-		float: none;
-		text-align: center;
-	}
+    .basketBackButton, .basketForwardButton, .basketFinishButton {
+        width: 100%;
+        float: none;
+        text-align: center;
+    }
 
-	.basketForwardButton {
-		margin-top: 10px;
-	}
+    .basketForwardButton, .basketFinishButton {
+        margin-top: 10px;
+    }
 
-	#check .basketForwardButton input {
-		font-size: 13px;
-	}
+    #check .basketForwardButton input, #check .basketFinishButton input{
+        font-size: 13px;
+    }
 
 	#cart table tbody td:last-child {
 		border-top: none;

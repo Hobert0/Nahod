@@ -36,7 +36,7 @@ namespace Cms.Controllers
         [Route("stranky")]
         public ActionResult Pages()
         {
-            if (Session["username"] != null && Session["role"].ToString() == "0")
+            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
             {
                 return View(db.pages.OrderByDescending(a => a.id).ToList());
             }
@@ -47,7 +47,7 @@ namespace Cms.Controllers
         [Route("objednavky")]
         public ActionResult Orders()
         {
-            if (Session["username"] != null && Session["role"].ToString() == "0")
+            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
             {
                 var orders = db.orders.Where(i => i.deleted == false).Select(a => new OrdersModel
                 {
@@ -85,7 +85,7 @@ namespace Cms.Controllers
         [Route("nastavenia")]
         public ActionResult Settings()
         {
-            if (Session["username"] != null && Session["role"].ToString() == "0")
+            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
             {
                 var id = 1;
                 var allsettings = db.settings.Where(item => item.id == id).ToList();
@@ -123,7 +123,7 @@ namespace Cms.Controllers
         [Route("produkty")]
         public ActionResult Products()
         {
-            if (Session["username"] != null && Session["role"].ToString() == "0")
+            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
             {
                 MultipleIndexModel model = new MultipleIndexModel();
                 model.CategoriesModel = db.categories.ToList();
@@ -177,7 +177,7 @@ namespace Cms.Controllers
         [Route("oblubene/{id}")]
         public ActionResult Oblubene(int id)
         {
-            if (Session["username"] != null && Session["role"].ToString() == "0")
+            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
             {
 
                 MultipleIndexModel model = new MultipleIndexModel();
@@ -218,9 +218,12 @@ namespace Cms.Controllers
             else
             {
                 var rola = db.users.Where(i => i.username == obj.Username).FirstOrDefault();
-                Session["username"] = obj.Username;
-                Session["role"] = rola.role;
-                Session["userid"] = rola.id;
+                Response.Cookies["username"].Value = obj.Username;
+                Response.Cookies["role"].Value = rola.role.ToString();
+                Response.Cookies["userid"].Value = rola.id.ToString();
+                Response.Cookies["username"].Expires = DateTime.Now.AddDays(1);
+                Response.Cookies["role"].Expires = DateTime.Now.AddDays(1);
+                Response.Cookies["userid"].Expires = DateTime.Now.AddDays(1);
                 return RedirectToAction("Cms");
             }
 
@@ -274,9 +277,18 @@ namespace Cms.Controllers
             db.SaveChanges();
             TempData["IsValid"] = true;
             ViewBag.IsValid = true;
-            Session["username"] = model.AdminLoginModel.Username;
-            Session["role"] = 1;
-            Session["userid"] = db.users.Where(i => i.email == model.AdminLoginModel.Username).Select(i => i.id).FirstOrDefault();
+
+            Response.Cookies["username"].Value = model.AdminLoginModel.Username;
+            Response.Cookies["role"].Value = "1";
+            Response.Cookies["userid"].Value = db.users.Where(i => i.email == model.AdminLoginModel.Username).Select(i => i.id).FirstOrDefault().ToString();
+            Response.Cookies["username"].Expires = DateTime.Now.AddDays(1);
+            Response.Cookies["role"].Expires = DateTime.Now.AddDays(1);
+            Response.Cookies["userid"].Expires = DateTime.Now.AddDays(1);
+
+
+            //Session["username"] = model.AdminLoginModel.Username;
+            //Session["role"] = 1;
+            //Session["userid"] = db.users.Where(i => i.email == model.AdminLoginModel.Username).Select(i => i.id).FirstOrDefault();
 
             //odosleme email o uspesnom zaregistrovani
             OrdersController oc = new OrdersController();
@@ -313,10 +325,16 @@ namespace Cms.Controllers
             {
                 var rola = db.users.Where(i => i.username == obj.AdminLoginModel.Username).Select(o => o.role).FirstOrDefault();
                 var userid = db.users.Where(i => i.username == obj.AdminLoginModel.Username).Select(o => o.id).FirstOrDefault();
-                Session["username"] = obj.AdminLoginModel.Username;
-                Session["role"] = rola;
-                Session["userid"] = userid;
+                //Session["username"] = obj.AdminLoginModel.Username;
+                //Session["role"] = rola;
+                //Session["userid"] = userid;
 
+                Response.Cookies["username"].Value = obj.AdminLoginModel.Username;
+                Response.Cookies["role"].Value = rola.ToString();
+                Response.Cookies["userid"].Value = userid.ToString();
+                Response.Cookies["username"].Expires = DateTime.Now.AddDays(1);
+                Response.Cookies["role"].Expires = DateTime.Now.AddDays(1);
+                Response.Cookies["userid"].Expires = DateTime.Now.AddDays(1);
 
                 var userdata = db.wishlist.Where(i => i.userid == userid).ToList();
                 if (userdata.Count() == 0)
@@ -382,7 +400,7 @@ namespace Cms.Controllers
         [Route("cms")]
         public ActionResult Cms(int? id)
         {
-            if (Session["username"] != null && Session["role"].ToString() == "0")
+            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
             {
                 MultipleIndexModel model = new MultipleIndexModel();
 
@@ -401,9 +419,11 @@ namespace Cms.Controllers
         [Route("odhlasit-sa")]
         public ActionResult LogOut()
         {
-            var rola = Session["role"].ToString();
+            var rola = Request.Cookies["role"].Value;
             FormsAuthentication.SignOut();
-            Session.Abandon(); // it will clear the session at the end of request
+            Response.Cookies["username"].Expires = DateTime.Now.AddDays(-1);
+            Response.Cookies["role"].Expires = DateTime.Now.AddDays(-1);
+            Response.Cookies["userid"].Expires = DateTime.Now.AddDays(-1);
             if (rola == "0")
             {
                 return RedirectToAction("Admin");
@@ -448,7 +468,7 @@ namespace Cms.Controllers
         [Route("pouzivatelia")]
         public ActionResult Users(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            if (Session["username"] != null && Session["role"].ToString() == "0")
+            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
             {
                 /*
                 ViewBag.CurrentSort = sortOrder;
@@ -489,7 +509,7 @@ namespace Cms.Controllers
         [Route("pouzivatelia-vytvor")]
         public ActionResult UserCreate()
         {
-            if (Session["username"] != null && Session["role"].ToString() == "0")
+            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
             {
                 
                 var model = new MultipleIndexModel();
@@ -507,7 +527,7 @@ namespace Cms.Controllers
         [Route("pouzivatelia-uprav/{id}")]
         public ActionResult UserEdit(int id)
         {
-            if (Session["username"] != null && Session["role"].ToString() == "0")
+            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
             {
                 var user = db.users.Where(item => item.id == id).Join(db.usersmeta, a => a.id, b => b.userid, (a, b) => new UsersmetaModel { Id = b.id, Userid = b.userid, Name = b.name, Surname = b.surname, Address = b.address, City = b.city, Zip = b.zip, Country = b.country, Phone = b.phone, Email = b.email, Companyname = b.companyname, Ico = b.ico, Dic = b.dic, Icdph = b.icdph, News = b.news, Gdpr = b.gdpr, Rating = b.rating }).SingleOrDefault();
                 MultipleIndexModel model = new MultipleIndexModel();

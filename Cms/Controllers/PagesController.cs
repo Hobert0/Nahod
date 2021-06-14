@@ -30,7 +30,7 @@ namespace Cms.Controllers
         [Route("editovat-stranku/{id}")]
         public ActionResult EditPage(int id)
         {
-            if (Session["username"] != null && Session["role"].ToString() == "0")
+            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
             {
                 var pages = db.pages.Where(item => item.id == id).ToList();
                 PagesModel model = new PagesModel();
@@ -51,7 +51,7 @@ namespace Cms.Controllers
         [HttpPost]
         public ActionResult Edit(PagesModel model)
         {
-            if (Session["username"] != null && Session["role"].ToString() == "0")
+            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
             {
                 var data = db.pages.Single(i => i.id == model.Id);
                 data.content = model.Content ?? "";

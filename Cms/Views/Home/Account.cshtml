@@ -261,9 +261,9 @@
 
                         </div>
                         <div style="text-align:right">
-                            @if (Session["userid"] != null)
+                            @if (Request.Cookies["userid"] != null)
                             {
-                                var usID = Int32.Parse(Session["userid"].ToString());
+                                var usID = Int32.Parse(Request.Cookies["userid"].Value);
                                 @Html.ActionLink("Zmazať účet a všetky osobné údaje", "DeleteAccount", "Home", new { userId = usID, confirm = true }, new { onclick = "return confirm('Naozaj chcete zmazať svoj účet?')", @class = "small", style = "padding:.375rem .75rem !important;" + visibility + "", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne zmažete Váš účet." })
                             }
                         </div>

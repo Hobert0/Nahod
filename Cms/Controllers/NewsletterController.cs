@@ -22,7 +22,7 @@ namespace Cms.Controllers
         [Route("newsletter")]
         public ActionResult Newsletter(string sortOrder, string currrentFilter, string searchString, int? page)
         {
-            if (Session["username"] != null && Session["role"].ToString() == "0")
+            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
             {
                 ViewBag.CurrentSort = sortOrder;
                 if (searchString != null)
@@ -54,7 +54,7 @@ namespace Cms.Controllers
         [Route("novynewsletter")]
         public ActionResult AddNewsletter()
         {
-            if (Session["username"] != null && Session["role"].ToString() == "0")
+            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
             {
                 return View();
             }
@@ -95,7 +95,7 @@ namespace Cms.Controllers
         [Route("editovat-newsletter/{newsletterId}")]
         public ActionResult EditNewsletter(int? newsletterId)
         {
-            if (Session["username"] != null && Session["role"].ToString() == "0")
+            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
             {
                 var newsletters = db.newsletter.Where(item => item.id == newsletterId).ToList();
                 NewsletterModel model = new NewsletterModel();
@@ -117,7 +117,7 @@ namespace Cms.Controllers
         [HttpPost]
         public async Task<ActionResult> EditNewsletterInDB(NewsletterModel model)
         { 
-            if (Session["username"] != null && Session["role"].ToString() == "0")
+            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
             {
                 var data = db.newsletter.Single(i => i.id == model.Id);
                 data.subject = model.Subject ?? "";
@@ -135,7 +135,7 @@ namespace Cms.Controllers
         [Route("send-newsletter/{newsletterId}")]
         public ActionResult SendNewsletter(string sortOrder, string currrentFilter, string searchString, int? page, int? newsletterId)
         {
-            if (Session["username"] != null && Session["role"].ToString() == "0")
+            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
             {
                 ViewBag.CurrentSort = sortOrder;
                 if (searchString != null)
@@ -166,7 +166,7 @@ namespace Cms.Controllers
         [Route("send-newsletter-all/{id}")]
         public ActionResult SendAllNewsletter(int id)
         {
-            if (Session["username"] != null && Session["role"].ToString() == "0")
+            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
             {
                 var allUsersNewsTrue = db.usersmeta.Where(i => i.news == true).ToList();
             var template = db.newsletter.Where(t => t.id == id).ToList();
@@ -226,7 +226,7 @@ namespace Cms.Controllers
         [Route("send-newsletter-selected/{idOfTemplate}")]
         public ActionResult SendSelectedNewsletter(int idOfTemplate, List<string> methodParam)
         {
-            if (Session["username"] != null && Session["role"].ToString() == "0")
+            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
             {
 
                 var template = db.newsletter.Where(t => t.id == idOfTemplate).ToList();

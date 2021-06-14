@@ -69,7 +69,7 @@
                 </div>
                 <div class="col-lg-10 col-md-8 pl-2">
                     <p class="header">Doprava zdarma</p>
-                    <p class="text">Pri objednávke nad 49 €</p>
+                    <p class="text">Pri objednávke nad 59 €</p>
                 </div>
             </div>
         </div>
@@ -80,7 +80,7 @@
                 </div>
                 <div class="col-lg-10 col-md-8 pl-2">
                     <p class="header">Darčeky</p>
-                    <p class="text">K nákupu nad 49 €</p>
+                    <p class="text">K nákupu nad 59 €</p>
                 </div>
             </div>
         </div>
@@ -276,7 +276,7 @@
 
                                                     decimal thisPrice = 0;
                                                     //rating
-                                                    if (Session["username"] != null)
+                                                    if (Request.Cookies["username"] != null)
                                                     {
                                                         int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
                                                         decimal defaultPrice = (decimal)variant.price;
@@ -329,7 +329,7 @@
                                             else
                                             {
                                                 //rating
-                                                if (Session["username"] != null)
+                                                if (Request.Cookies["username"] != null)
                                                 {
                                                     int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
                                                     decimal defaultPrice = prod.price;
@@ -547,7 +547,7 @@
 
                                                     decimal thisPrice = 0;
                                                     //rating
-                                                    if (Session["username"] != null)
+                                                    if (Request.Cookies["username"] != null)
                                                     {
                                                         int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
                                                         decimal defaultPrice = (decimal)variant.price;
@@ -600,7 +600,7 @@
                                             else
                                             {
                                                 //rating
-                                                if (Session["username"] != null)
+                                                if (Request.Cookies["username"] != null)
                                                 {
                                                     int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
                                                     decimal defaultPrice = prod.price;

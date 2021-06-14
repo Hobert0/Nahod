@@ -181,7 +181,7 @@
                                 decimal povodnacena = 0;
 
                                 //Zlavova politika
-                                if (Session["username"] != null)
+                                if (Request.Cookies["username"] != null)
                                 {
                                     int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
 
@@ -230,7 +230,7 @@
                                             {
 
                                                 //Zlavova politika
-                                                if (Session["username"] != null)
+                                                if (Request.Cookies["username"] != null)
                                                 {
                                                     int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
                                                     povodnacena = prod.price;
@@ -270,7 +270,7 @@
                                     }
 
                                     //ak nie je discount price
-                                    if (Session["username"] == null && prod.discountprice == null)
+                                    if (Request.Cookies["username"] == null && prod.discountprice == null)
                                     {
                                         <!--<p style="font-size: 12px; text-align: right;"><a href="#" class="register-modal"><u>Zaregistrujte sa</u></a> a získajte zľavu ďalších 5%</p>-->
 
@@ -519,7 +519,7 @@
 
                                                         decimal thisPrice = 0;
                                                         //rating
-                                                        if (Session["username"] != null)
+                                                        if (Request.Cookies["username"] != null)
                                                         {
                                                             int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
                                                             decimal defaultPrice = (decimal)variant.price;
@@ -572,7 +572,7 @@
                                                 else
                                                 {
                                                     //rating
-                                                    if (Session["username"] != null)
+                                                    if (Request.Cookies["username"] != null)
                                                     {
                                                         int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
                                                         decimal defaultPrice = prod.price;
@@ -717,7 +717,7 @@
 
                                                         decimal thisPrice = 0;
                                                         //rating
-                                                        if (Session["username"] != null)
+                                                        if (Request.Cookies["username"] != null)
                                                         {
                                                             int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
                                                             decimal defaultPrice = (decimal)variant.price;
@@ -770,7 +770,7 @@
                                                 else
                                                 {
                                                     //rating
-                                                    if (Session["username"] != null)
+                                                    if (Request.Cookies["username"] != null)
                                                     {
                                                         int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
                                                         decimal defaultPrice = prod.price;

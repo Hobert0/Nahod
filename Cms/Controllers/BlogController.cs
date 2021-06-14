@@ -18,7 +18,7 @@ namespace Cms.Controllers
         [Route("admin-blog")]
         public ActionResult Blog()
         {
-            if (Session["username"] != null && Session["role"].ToString() == "0")
+            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
             {
                 return View(db.blog.OrderByDescending(a => a.id).ToList());
             }
@@ -28,7 +28,7 @@ namespace Cms.Controllers
         [Route("blg/pridat-clanok")]
         public ActionResult AddArticle()
         {
-            if (Session["username"] != null)
+            if (Request.Cookies["username"] != null)
             {
                 return View();
             }
@@ -53,7 +53,7 @@ namespace Cms.Controllers
     [Route("editovat-blog/{id}")]
     public ActionResult EditArticle(int id)
     {
-        if (Session["username"] != null)
+        if (Request.Cookies["username"] != null)
         {
             var pages = db.blog.Where(item => item.id == id).ToList();
             BlogModel model = new BlogModel();
@@ -133,7 +133,7 @@ namespace Cms.Controllers
         [HttpPost, Route("blog/editovat-clanok/{id}")]
         public ActionResult EditBlog(BlogModel model)
     {
-        if (Session["username"] != null)
+        if (Request.Cookies["username"] != null)
         {
             var data = db.blog.Single(i => i.id == model.Id);
             data.content = model.Content ?? "";
