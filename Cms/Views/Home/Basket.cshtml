@@ -1319,8 +1319,8 @@
                     <div class="basketBackButton" style="">
                         <a class="btn btn-secondary my-4" onclick="showShipping()" style="color: #ffffff;">Späť</a>
                     </div>
-                    <div class="basketForwardButton">
-                        <input type="submit" class="btn btn-danger my-4" value="Dokončiť objednávku s povinnosťou platby">
+                    <div>
+                        <input type="submit" class="btn btn-danger my-4" id="submitorder" value="Dokončiť objednávku s povinnosťou platby">
                     </div>
                 </div>
             </div>
@@ -1331,6 +1331,14 @@
 <script src="~/Scripts/basket_session.js"></script>
 
 <script>
+    $("#Myform").submit(function (e) {
+            //stop submitting the form to see the disabled button effect
+            e.preventDefault();
+
+            //disable the submit button
+        $("#submitorder").attr("disabled", true);
+        return true;
+    });
 
     $("#cart .next-step-container a,.basketForwardButton, .basketBackButton").click(function () {
         document.body.scrollTop = 0; // For Safari

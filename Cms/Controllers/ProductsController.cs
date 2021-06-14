@@ -1063,7 +1063,6 @@ namespace Cms.Controllers
                         if (miestoUlozenia == "~/Uploads/")
                         {
                             var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia + ulozObrazok));
-                            ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
                         }
                         //Save file to server folder  
                         byte[] fileByte;
@@ -1081,8 +1080,17 @@ namespace Cms.Controllers
                         if (img.ImageFormat != fileformat[1])
                         {
                             InputFileName = fileformat[0] + "." + img.ImageFormat;
-                            ServerSavePath = miestoUlozenia + InputFileName;
+
+                            if (miestoUlozenia == "~/Uploads/")
+                            {
+                                ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
+                            }
+                            else
+                            {
+                                ServerSavePath = miestoUlozenia + InputFileName;
+                            }
                         }
+
                         var isTheSameImage = "";
 
                         if (model.Image != null)
@@ -1161,7 +1169,6 @@ namespace Cms.Controllers
                         if (miestoUlozenia == "~/Uploads/")
                         {
                             var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia + ulozObrazok));
-                            ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
                         }
                         //Save file to server folder  
                         byte[] fileByte;
@@ -1177,7 +1184,14 @@ namespace Cms.Controllers
                         if (img.ImageFormat != fileformat[1])
                         {
                             InputFileName = fileformat[0] + "." + img.ImageFormat;
-                            ServerSavePath = miestoUlozenia + InputFileName;
+                            if (miestoUlozenia == "~/Uploads/")
+                            {
+                                ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
+                            }
+                            else
+                            {
+                                ServerSavePath = miestoUlozenia + InputFileName;
+                            }
                         }
                         img.Save(ServerSavePath);
 
@@ -1283,7 +1297,6 @@ namespace Cms.Controllers
                         if (miestoUlozenia == "~/Uploads/")
                         {
                             var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia + ulozObrazok));
-                            ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
                         }
                         //Save file to server folder  
                         byte[] fileByte;
@@ -1300,7 +1313,14 @@ namespace Cms.Controllers
                         if (img.ImageFormat != fileformat[1])
                         {
                             InputFileName = fileformat[0] + "." + img.ImageFormat;
-                            ServerSavePath = miestoUlozenia + InputFileName;
+                            if (miestoUlozenia == "~/Uploads/")
+                            {
+                                ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
+                            }
+                            else
+                            {
+                                ServerSavePath = miestoUlozenia + InputFileName;
+                            }
                         }
 
                         img.Save(ServerSavePath);
@@ -1405,7 +1425,6 @@ namespace Cms.Controllers
                         if (miestoUlozenia == "~/Uploads/")
                         {
                             var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia + ulozObrazok));
-                            ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
                         }
                         //Save file to server folder  
                         byte[] fileByte;
@@ -1422,7 +1441,14 @@ namespace Cms.Controllers
                         if (img.ImageFormat != fileformat[1])
                         {
                             InputFileName = fileformat[0] + "." + img.ImageFormat;
-                            ServerSavePath = miestoUlozenia + InputFileName;
+                            if (miestoUlozenia == "~/Uploads/")
+                            {
+                                ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
+                            }
+                            else
+                            {
+                                ServerSavePath = miestoUlozenia + InputFileName;
+                            }
                         }
 
                         img.Save(ServerSavePath);

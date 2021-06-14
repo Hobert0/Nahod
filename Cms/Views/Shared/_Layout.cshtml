@@ -514,7 +514,7 @@
                 </h3>
             </a>
             <ul>
-                @foreach (var subcat in Model.CategoriesModel.Where(o => (o.maincat == cat.name && o.topcat == "") || (o.maincat == cat.name && o.topcat == "Žiadna")))
+                @foreach (var subcat in Model.CategoriesModel.Where(o => (o.maincat == cat.id.ToString() && o.topcat == "") || (o.maincat == cat.id.ToString() && o.topcat == "Žiadna")))
                 {
                     var counter3 = 0;
                     var dropdowncounter = 0;
@@ -543,7 +543,7 @@
                     if (counter3 < 1)
                     {
                         <div class="dropdown-container">
-                            @foreach (var subcat2 in Model.CategoriesModel.Where(o => o.topcat2 == subcat.name && o.topcat == cat.name))
+                            @foreach (var subcat2 in Model.CategoriesModel.Where(o => o.topcat2 == subcat.id.ToString() && o.topcat == cat.id.ToString()))
                             {
                                 <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(cat.slug), subslug = @Html.Raw(subcat.slug), subslug2 = @Html.Raw(subcat2.slug)})" class="sub_catsmenu"><li>@Html.Raw(subcat2.name)</li></a>
                             }

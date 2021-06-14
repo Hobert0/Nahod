@@ -113,13 +113,15 @@
 		width: 100%;
 		margin: 20px 0 0;
 	}
-
-	/*FOOTER*/
-	#first_footer .container .row .col-6 {
-		width: 100% !important;
-		flex-basis: auto;
-		padding-top: 10px;
-	}
+    .filterleftpadding{
+        margin-left:10px;
+    }
+    /*FOOTER*/
+    #first_footer .container .row .col-6 {
+        width: 100% !important;
+        flex-basis: auto;
+        padding-top: 10px;
+    }
 
 	#first_footer .container .row .col:nth-child(3) {
 		margin-bottom: 30px;
