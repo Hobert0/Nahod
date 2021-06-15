@@ -92,7 +92,7 @@
                             {
                                 <div class="col-md-auto subcatthumb py-2 m-1">
                                     <a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(categorySlug), subslug = @Html.Raw(category.slug) })">
-                                        <div style="background-image: url('/Uploads/@category.image'); background-size: contain;"></div>
+                                        <div style="background-image: url('/Uploads/@category.image'); background-size: contain;background-repeat: no-repeat; background-position: center;"></div>
                                         <p>@category.name</p>
                                     </a>
                                 </div>
@@ -104,7 +104,7 @@
                             {
                                 <div class="col-md-auto subcatthumb py-2 m-1">
                                     <a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(categorySlug), subslug = @Html.Raw(categorySubSlug), subslug2 = subcat2.slug })">
-                                        <div style="background-image: url('/Uploads/@subcat2.image'); background-size: contain;">
+                                        <div style="background-image: url('/Uploads/@subcat2.image'); background-size: contain;background-repeat: no-repeat; background-position: center;">
                                         </div>
                                         <p> @subcat2.name</p>
                                     </a>
