@@ -12,12 +12,18 @@
 
 <div class="top-banner-wrapper banner-wrapper">
     @{
+
         var slideshows = Model.SlideshowModel.Where(o => o.page == "hp-top");
+        if (Request.Browser.IsMobileDevice)
+        {
+            slideshows = Model.SlideshowModel.Where(o => o.page == "hp-top-responsive");
+        }
+
         foreach (var slideshow in slideshows)
         {
             var url = slideshow.url != "" ? slideshow.url : "#";
 
-            <a href="@url" class="top-banner banner" style="background-image: url('Uploads/slideshow/@slideshow.image');">
+            <a href="@url" class="top-banner banner" style="background-image: url('/Uploads/slideshow/@slideshow.image');">
                 <div class="container">
 
                     @{
@@ -39,8 +45,9 @@
                         {
                             <div class="subtext d-none">@slideshow.subtext</div>
                         }
-                        if (slideshow.button != null) { 
-                        <span class="rounded-button">@slideshow.button</span>
+                        if (slideshow.button != null)
+                        {
+                            <span class="rounded-button">@slideshow.button</span>
                         }
                     }
 
@@ -412,6 +419,10 @@
 <div class="middle-banner-wrapper banner-wrapper">
     @{
         slideshows = Model.SlideshowModel.Where(o => o.page == "hp-middle");
+        if (Request.Browser.IsMobileDevice)
+        {
+            slideshows = Model.SlideshowModel.Where(o => o.page == "hp-middle-responsive");
+        }
         foreach (var slideshow in slideshows)
         {
 
@@ -441,7 +452,7 @@
                         }
                         if (slideshow.button != null)
                         {
-                        <span href="#" class="rounded-button">@slideshow.button</span>
+                            <span href="#" class="rounded-button">@slideshow.button</span>
                         }
                     }
 
@@ -653,6 +664,10 @@
             <div class="bottom-banner-wrapper banner-wrapper">
                 @{
                     slideshows = Model.SlideshowModel.Where(o => o.page == "hp-bottom-left");
+                    if (Request.Browser.IsMobileDevice)
+                    {
+                        slideshows = Model.SlideshowModel.Where(o => o.page == "hp-bottom-left-responsive");
+                    }
                     foreach (var slideshow in slideshows)
                     {
 
@@ -678,6 +693,10 @@
             <div class="bottom-banner-wrapper banner-wrapper">
                 @{
                     slideshows = Model.SlideshowModel.Where(o => o.page == "hp-bottom-right");
+                    if (Request.Browser.IsMobileDevice)
+                    {
+                        slideshows = Model.SlideshowModel.Where(o => o.page == "hp-bottom-right-responsive");
+                    }
                     foreach (var slideshow in slideshows)
                     {
 
