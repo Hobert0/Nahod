@@ -851,11 +851,12 @@
 		z-index: 1;
 	}
 
-		#mySidebar.active {
-			height: 100%;
-			overflow: scroll;
-			padding-top: 25px;
-		}
+        #mySidebar.active {
+            height: 100%;
+            overflow: scroll;
+            padding-top: 25px;
+            overflow-x: hidden;
+        }
 
 			#mySidebar.active ul {
 				height: 0;

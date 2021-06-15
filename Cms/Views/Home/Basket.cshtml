@@ -12,6 +12,12 @@
     ViewBag.Payment = "";
 
     HelperController helper = new HelperController();
+    dynamic userID = null;
+
+    if (Request.Cookies["userid"] != null)
+    {
+        userID = Request.Cookies["userid"].Value;
+    }
 }
 
 <style>
@@ -424,7 +430,7 @@
                     <div style="text-align: right">
                         @if (cart != null)
                         {
-                            <a class="btn btn-danger my-4" style="color: #ffffff" onclick="showAddress(@Request.Cookies["userid"].Value)">Pokračovať v objednávke</a>
+                            <a class="btn btn-danger my-4" style="color: #ffffff" onclick="showAddress(@userID)">Pokračovať v objednávke</a>
                         }
                         else
                         {

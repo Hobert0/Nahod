@@ -9,6 +9,12 @@
     ViewBag.Title = "Wishlist";
     ViewBag.Shipping = "";
     ViewBag.Payment = "";
+    dynamic userID = null;
+
+    if (Request.Cookies["userid"] != null)
+    {
+        userID = Request.Cookies["userid"].Value;
+    }
 }
 
 <style>
@@ -366,7 +372,7 @@
                     </div>
                     <div class="form-group">
                         <div style="text-align: right">
-                            <a class="btn btn-danger my-4" style="color: #ffffff" onclick="showAddress(@Request.Cookies["userid"].Value)">Pokračovať v objednávke</a>
+                            <a class="btn btn-danger my-4" style="color: #ffffff" onclick="showAddress(@userID)">Pokračovať v objednávke</a>
                         </div>
                     </div>
                 }
@@ -610,11 +616,11 @@
         </div>
     }
 </div>
-    <input id="myDiv" value="@JsonConvert.SerializeObject(Session["wishitems"], Formatting.Indented)" style="display: none;"></input>
-    <script src="~/Scripts/wishlist.js"></script>
-    <script src="~/Scripts/wishlist_session.js"></script>
+<input id="myDiv" value="@JsonConvert.SerializeObject(Session["wishitems"], Formatting.Indented)" style="display: none;"></input>
+<script src="~/Scripts/wishlist.js"></script>
+<script src="~/Scripts/wishlist_session.js"></script>
 
-    <script>
+<script>
     function useCoupon() {
         var coupon = document.getElementById("coupon").value;
 
@@ -654,4 +660,4 @@
     $('.removeWish').click(function (data) {
         removeFromWishlist(data.target.id);
     });
-    </script>
+</script>

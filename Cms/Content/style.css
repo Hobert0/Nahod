@@ -1128,9 +1128,6 @@ input[type="radio"][disabled] {
     display: block;
 }
 
-.dropdown-content .column {
-    height: 100px;
-}
 
 .dropdown-content h3 {
     font-size: .9rem;
@@ -1168,8 +1165,9 @@ input[type="radio"][disabled] {
 }
 
 .dropdown-content .subs {
-    font-size: 13px;
+    font-size: 12px;
     padding-top: 0;
+    text-transform: uppercase !important;
     padding-bottom: 0;
 }
 

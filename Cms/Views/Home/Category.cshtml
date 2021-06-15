@@ -44,7 +44,7 @@
                     ViewBag.Description = cat.description;
                     catName = cat.name;
                     mainCatName = cat.maincat;
-                  
+
 
                     if (cat.maincat == "Žiadna")
                     {
@@ -52,8 +52,8 @@
                     }
                     else if (cat.topcat == "" || cat.topcat == "Žiadna")
                     {
-                          var topcatID = int.Parse(cat.maincat);
-                    var topcat = Model.CategoriesModel.Where(i => i.id == topcatID).FirstOrDefault().name;
+                        var topcatID = int.Parse(cat.maincat);
+                        var topcat = Model.CategoriesModel.Where(i => i.id == topcatID).FirstOrDefault().name;
                         <h2 class="categoryHeader">@Html.Raw(topcat) / @Html.Raw(cat.name)</h2>
                     }
                     else if (cat.topcat2 == "" || cat.topcat2 == "Žiadna")
@@ -86,51 +86,33 @@
 
                     @{
 
-                        var prods = Model.ProductModel.ToList();
-                        HashSet<int> catIds = new HashSet<int>();
-                        foreach (var prod in prods)
+                        if (categorySlug != null && categorySubSlug == null)
                         {
-
-                            dynamic cats = JsonConvert.DeserializeObject(prod.category);
-                            foreach (var cat in cats)
+                            foreach (var category in Model.CategoriesModel.Where(x => x.maincat == catID.ToString() && x.deleted == false && x.topcat == "Žiadna"))
                             {
-                                catIds.Add(Int32.Parse(cat.Value.ToString()));
+                                <div class="col-md-auto subcatthumb py-2 m-1">
+                                    <a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(categorySlug), subslug = @Html.Raw(category.slug) })">
+                                        <div style="background-image: url('/Uploads/@category.image'); background-size: contain;"></div>
+                                        <p>@category.name</p>
+                                    </a>
+                                </div>
                             }
-
+                        }
+                        else if (categorySlug != null && categorySubSlug != null)
+                        {
+                            foreach (var subcat2 in Model.CategoriesModel.Where(o => o.topcat2 == "Žiadna" && o.topcat == catID.ToString()))
+                            {
+                                <div class="col-md-auto subcatthumb py-2 m-1">
+                                    <a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(categorySlug), subslug = @Html.Raw(categorySubSlug), subslug2 = subcat2.slug })">
+                                        <div style="background-image: url('/Uploads/@subcat2.image'); background-size: contain;">
+                                        </div>
+                                        <p> @subcat2.name</p>
+                                    </a>
+                                </div>
+                            }
                         }
 
-                        foreach (var finalCatId in catIds)
-                        {
-                            if (categorySlug != null && categorySubSlug == null)
-                            {
-                                var thisCat = Model.CategoriesModel.Where(i => i.id == finalCatId && i.maincat != "Žiadna").FirstOrDefault();
 
-                                if (thisCat != null)
-                                {
-                                    <div class="col-md-auto subcatthumb py-2 m-1">
-                                        <a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(categorySlug), subslug = @Html.Raw(thisCat.slug) })">
-                                            <div style="background-image: url('/Uploads/@thisCat.image'); background-size: contain;"></div>
-                                            <p>@thisCat.name</p>
-                                        </a>
-                                    </div>
-                                }
-                            }
-                            else if (categorySlug != null && categorySubSlug != null)
-                            {
-                                var thisCat = Model.CategoriesModel.Where(i => i.id == finalCatId && i.maincat != "Žiadna" && i.topcat != "Žiadna").FirstOrDefault();
-
-                                if (thisCat != null)
-                                {
-                                    <div class="col-md-auto subcatthumb py-2 m-1">
-                                        <a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(categorySlug), subslug = @Html.Raw(categorySubSlug), subslug2 = thisCat.slug })">
-                                            <div style="background-image: url('/Uploads/@thisCat.image'); background-size: contain;"></div>
-                                            <p>@thisCat.name</p>
-                                        </a>
-                                    </div>
-                                }
-                            }
-
-                        }
                     }
 
                     @{
@@ -206,7 +188,7 @@
 
                                     decimal thisPrice = 0;
                                     //rating
-                                    if (Request.Cookies["username"].Value != null)
+                                    if (Request.Cookies["username"] != null)
                                     {
                                         int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
                                         decimal defaultPrice = (decimal)variant.price;
@@ -256,7 +238,7 @@
                             else
                             {
                                 //rating
-                                if (Request.Cookies["username"].Value != null)
+                                if (Request.Cookies["username"] != null)
                                 {
                                     int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
                                     decimal defaultPrice = prod.price;

@@ -342,7 +342,7 @@
                                         </span>
                                         @if (role == "0")
                                         {
-                                            <a href="/cms"><u>Administrácia</u></a><br>
+                                            <a href="/cms"><u class="my-account-link">Administrácia</u></a><br>
                                         }
                                         <a href="@Url.Action("Account", "Home")"><u class="my-account-link">Môj účet</u></a><a class="logout ml-2" href="@Url.Action("LogOut", "Admin")"><u>Odhlásiť sa</u></a>
                                     </span>
@@ -493,14 +493,7 @@
                 }
 
             </div>*@
-        <a href="/kat/novinky" class="sub_catsmenu">
-            <div class="category-image" style="background-image:url(https://via.placeholder.com/150)"></div>
-            <h3>Novinky</h3>
-        </a>
-        <a href="/kat/zlavy" class="sub_catsmenu">
-            <div class="category-image" style="background-image:url(https://via.placeholder.com/150)"></div>
-            <h3>Produkty v zľave</h3>
-        </a>
+
         @foreach (var cat in Model.CategoriesModel.Where(i => i.maincat == "Žiadna"))
         {
             <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(cat.slug)})" class="sub_catsmenu">

@@ -246,7 +246,7 @@
             categories.empty(); // remove any existing options
             categories.append($('<option> </option>').text(""));
             $.each(response, function (index, item) {
-                categories.append($('<option></option>').text(item.Text));
+                categories.append($('<option></option>', {value: item.ID, text: item.Text}));
             });
         });
     }
@@ -259,7 +259,7 @@
             categories.empty(); // remove any existing options
             categories.append($('<option> </option>').text(""));
             $.each(response, function (index, item) {
-                categories.append($('<option></option>').text(item.Text));
+                categories.append($('<option></option>', {value: item.ID, text: item.Text}));
             });
         });
     }

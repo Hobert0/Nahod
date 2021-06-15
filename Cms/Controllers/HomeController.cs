@@ -100,9 +100,9 @@ namespace Cms.Controllers
 
             var modelwish = new MultipleIndexModel();
 
-            if (@Request.Cookies["userid"] != null)
+            if (Request.Cookies["userid"] != null)
             {
-                var usID = Int32.Parse(@Request.Cookies["userid"].Value);
+                var usID = Int32.Parse(Request.Cookies["userid"].Value);
                 var userdata = db.wishlist.Where(i => i.userid == usID).ToList();
                 if (userdata.Count() == 0)
                 {
@@ -155,6 +155,7 @@ namespace Cms.Controllers
             }
 
             var model = new MultipleIndexModel();
+
             model.ProductModel = db.products.Where(o => o.deleted == false && o.active == true && (o.category.Contains("[" + id.ToString() + ",") || o.category.Contains("," + id.ToString() + ",") || o.category.Contains("," + id.ToString() + "]"))).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();

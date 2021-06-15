@@ -64,7 +64,8 @@
                                     }
                                     else
                                     {
-                                        categoryname = topcat.maincat;
+                                        var catId = int.Parse(topcat.maincat);
+                                        categoryname = Model.CategoriesModel.Where(o => o.id == catId).FirstOrDefault().name;
                                         maincatslug = Model.CategoriesModel.Where(o => o.id == topcat.id).FirstOrDefault().slug;
 
                                     }

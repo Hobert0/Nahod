@@ -97,6 +97,11 @@ html, body {
         margin-right: 10px;
     }
 
+        .header-bottom a:hover {
+            color: #fe8a00 !important;
+            cursor:pointer !important;
+        }
+
 .benefits {
     padding: 20px 0px;
 }
@@ -347,7 +352,7 @@ html, body {
             line-height: 40px;
             padding: 0px 10px;
             text-decoration: none;
-            border:none;
+            border: none;
         }
 
     .hp-newsletter .hp-checkbox-wrapper {
