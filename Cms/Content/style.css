@@ -1604,5 +1604,5 @@ button:focus {
     padding-right: calc(12.5% + 15px);
     z-index: 999;
     background-color: white;
-    width: 100% !important;
+    box-shadow: 0 2px 16px 0px rgb(0 0 0 / 20%);
 }
