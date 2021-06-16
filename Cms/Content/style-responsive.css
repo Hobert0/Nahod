@@ -6,7 +6,17 @@
 	.products .product {
 		min-height: 400px !important;
 	}
+    .header-bottom a {
+        font-size: 13px;
+    }
 }
+@media (max-width: 1280px) {
+    .header-bottom a {
+        font-size: 12px; 
+        margin-right: 11px;
+    }
+}
+
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 767px) {
