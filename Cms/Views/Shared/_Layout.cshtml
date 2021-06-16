@@ -668,6 +668,37 @@
 
                 that.next().toggleClass('active');
             });
+
+            //po scrollovani fixneme header na desktope
+            $(window).scroll(function (event) {
+
+                if ($(".header-container.desktop-header").css("display") != "none") {
+                    $headerHeight = $(".header-container.desktop-header").height();
+
+                    var scroll = $(window).scrollTop();
+
+                    if (scroll > 25) {
+                        $(".header-container.desktop-header").addClass("fixedHeader");
+                        $("body").css("padding-top", $headerHeight);
+
+                        $(".header-top .logo").css("width", "80%");
+                        $(".header-top").css("padding-top", "10px");
+                        $(".header-top").css("padding-bottom", "5px");
+                        $(".header-bottom").css("padding", "5px 0px");
+                        $(".header-top .search input").css("padding", "10px 20px");
+
+                    } else {
+                        $(".header-container.desktop-header").removeClass("fixedHeader");
+                        $("body").css("padding-top", 0);
+
+                        $(".header-top .logo").css("width", "100%");
+                        $(".header-top").css("padding-top", "20px");
+                        $(".header-top").css("padding-bottom", "10px");
+                        $(".header-bottom").css("padding", "10px 0px");
+                        $(".header-top .search input").css("padding", "15px 20px");
+                    }
+                }
+            });
         });
     </script>
 

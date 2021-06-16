@@ -3,6 +3,10 @@
 		width: 90% !important;
 	}
 
+	.fixedHeader {
+		left: 5%;
+	}
+
 	.products .product {
 		min-height: 400px !important;
 	}
