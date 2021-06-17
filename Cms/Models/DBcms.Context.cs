@@ -37,7 +37,6 @@ namespace Cms.Models
         public virtual DbSet<variants> variants { get; set; }
         public virtual DbSet<ordermeta> ordermeta { get; set; }
         public virtual DbSet<coupons> coupons { get; set; }
-        public virtual DbSet<categories> categories { get; set; }
         public virtual DbSet<brands> brands { get; set; }
         public virtual DbSet<blog> blog { get; set; }
         public virtual DbSet<usersmeta> usersmeta { get; set; }
@@ -46,5 +45,6 @@ namespace Cms.Models
         public virtual DbSet<watchdog> watchdog { get; set; }
         public virtual DbSet<userstoken> userstoken { get; set; }
         public virtual DbSet<e_settings> e_settings { get; set; }
+        public virtual DbSet<categories> categories { get; set; }
     }
 }

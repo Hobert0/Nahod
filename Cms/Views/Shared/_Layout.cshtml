@@ -23,7 +23,7 @@
     var role = "";
     if (Request.Cookies["role"] != null)
     {
-        role = Request.Cookies["role"].Value ;
+        role = Request.Cookies["role"].Value;
     }
 
     List<dynamic> wishcount = new List<dynamic>();
@@ -377,6 +377,9 @@
                 </a>
             </div>
         </div>
+        
+    </div>
+    <div class="header-container desktop-header container-fluid cst-container" style="background-color: #f2f2f2;">
         @{
             Html.RenderPartial("_MenuHeader");
         }
@@ -479,9 +482,8 @@
         Html.RenderPartial("_RegisterHeader");
     }
     <div id="mySidebar" class="sidebar sidenav">
-        
+
         <!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>-->
-        
         @*<a class="dropdown-btn sub_catsmenu"><h3 class="firstcat" style="color: #fff;padding: 20px 0 0;">Značky </h3></a><i style="margin-top: -33px;color:#fff" class="fa fa-caret-down dropdown-btn"></i>
             <div class="dropdown-container">
 
@@ -673,23 +675,27 @@
             $(window).scroll(function (event) {
 
                 if ($(".header-container.desktop-header").css("display") != "none") {
-                    $headerHeight = $(".header-container.desktop-header").height();
+                    $headerTopHeight = $(".header-container.desktop-header:not(.cst-container)").height();
+                    $headerBottomHeight = $(".cst-container.desktop-header").height();
 
                     var scroll = $(window).scrollTop();
 
                     if (scroll > 25) {
-                        $(".header-container.desktop-header").addClass("fixedHeader");
-                        $("body").css("padding-top", $headerHeight);
+                        $(".header-container.desktop-header:not(.cst-container)").addClass("fixedTopHeader");
+                        $(".cst-container.desktop-header").addClass("fixedBottomHeader");
+                        $(".cst-container.desktop-header").css("top", $headerTopHeight);
+                        $("body").css("padding-top", ($headerTopHeight + $headerBottomHeight));
 
                         $(".header-top .logo").css("width", "70%");
                         $(".header-top").css("padding-top", "5px");
                         $(".header-top").css("padding-bottom", "5px");
                         $(".header-bottom").css("padding", "5px 0px");
                         $(".header-top .search input").css("padding", "10px 20px");
-                
+
 
                     } else {
-                        $(".header-container.desktop-header").removeClass("fixedHeader");
+                        $(".header-container.desktop-header:not(.cst-container)").removeClass("fixedTopHeader");
+                        $(".cst-container.desktop-header").removeClass("fixedBottomHeader");
                         $("body").css("padding-top", 0);
 
                         $(".header-top .logo").css("width", "100%");
@@ -708,36 +714,36 @@
         {
             Entities db = new Entities();
             var userId = int.Parse(Request.Cookies["userid"].Value);
-        var userMeta = db.usersmeta.Where(i => i.userid == userId).FirstOrDefault();
+            var userMeta = db.usersmeta.Where(i => i.userid == userId).FirstOrDefault();
 
-        int rating = userMeta.rating;
-        decimal sum = userMeta.sum;
+            int rating = userMeta.rating;
+            decimal sum = userMeta.sum;
 
-        string actualDiscount = "";
-        string nextDiscount = "";
-        decimal remainingSum = 0;
-        string discountLevel = "";
+            string actualDiscount = "";
+            string nextDiscount = "";
+            decimal remainingSum = 0;
+            string discountLevel = "";
 
-        switch (rating)
-        {
-            case 1:
-                actualDiscount = "5%";
-                nextDiscount = "10%";
-                remainingSum = 500 - sum;
-                discountLevel = "strieborný";
+            switch (rating)
+            {
+                case 1:
+                    actualDiscount = "5%";
+                    nextDiscount = "10%";
+                    remainingSum = 500 - sum;
+                    discountLevel = "strieborný";
 
-                break;
-            case 2:
-                actualDiscount = "10%";
-                nextDiscount = "15%";
-                remainingSum = 1000 - sum;
-                discountLevel = "zlatý";
-                break;
+                    break;
+                case 2:
+                    actualDiscount = "10%";
+                    nextDiscount = "15%";
+                    remainingSum = 1000 - sum;
+                    discountLevel = "zlatý";
+                    break;
 
-        }
+            }
 
-        if (remainingSum > 0 && Request.QueryString["userLogin"] == "true")
-        {
+            if (remainingSum > 0 && Request.QueryString["userLogin"] == "true")
+            {
                 <script>
                     $(document).ready(function () {
                         $loginStr = "Vaša aktuálna zlava je <strong>@actualDiscount</strong>. Nakúpte ešte za @remainingSum.ToString("N2") € a navýšime Vám zľavu na <strong>@nextDiscount</strong> (@discountLevel zákazník).";
@@ -760,7 +766,7 @@
                             "tapToDismiss": false
                         }
                         toastr["success"]($loginStr);
-                        
+
                     });
                 </script>
             }

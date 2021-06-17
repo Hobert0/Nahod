@@ -56,6 +56,7 @@
           <Property Name="heureka" Type="bool" Nullable="false" />
           <Property Name="heurekadarcek" Type="bool" Nullable="false" />
           <Property Name="heurekadarcektext" Type="text" />
+          <Property Name="ordering" Type="int" Nullable="false" />
           <Property Name="deleted" Type="bool" Nullable="false" />
         </EntityType>
         <EntityType Name="coupons">
@@ -396,7 +397,6 @@
           <EntitySet Name="variants" EntityType="hobcModel.variants" />
           <EntitySet Name="ordermeta" EntityType="hobcModel.ordermeta" />
           <EntitySet Name="coupons" EntityType="hobcModel.coupons" />
-          <EntitySet Name="categories" EntityType="hobcModel.categories" />
           <EntitySet Name="brands" EntityType="hobcModel.brands" />
           <EntitySet Name="blog" EntityType="hobcModel.blog" />
           <EntitySet Name="usersmeta" EntityType="hobcModel.usersmeta" />
@@ -405,6 +405,7 @@
           <EntitySet Name="watchdog" EntityType="hobcModel.watchdog" />
           <EntitySet Name="userstoken" EntityType="hobcModel.userstoken" />
           <EntitySet Name="e_settings" EntityType="hobcModel.e_settings" />
+          <EntitySet Name="categories" EntityType="hobcModel.categories" />
         </EntityContainer>
         <EntityType Name="deliver_city">
           <Key>
@@ -555,24 +556,6 @@
           <Property Name="brand_id" Type="Int32" />
           <Property Name="product_id" Type="Int32" />
           <Property Name="active" Type="Boolean" Nullable="false" />
-          <Property Name="deleted" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="categories">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="slug" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="maincat" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="topcat" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="description" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="topcat2" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="image" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="priority" Type="Int32" />
-          <Property Name="heureka" Type="Boolean" Nullable="false" />
-          <Property Name="heurekadarcek" Type="Boolean" Nullable="false" />
-          <Property Name="heurekadarcektext" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="brands">
@@ -757,6 +740,25 @@
           <Property Name="returnPdf" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="cancelPdf" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="slug" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="maincat" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="topcat" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="topcat2" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="image" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="priority" Type="Int32" />
+          <Property Name="heureka" Type="Boolean" Nullable="false" />
+          <Property Name="heurekadarcek" Type="Boolean" Nullable="false" />
+          <Property Name="heurekadarcektext" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="ordering" Type="Int32" Nullable="false" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -922,25 +924,6 @@
                 <ScalarProperty Name="limit" ColumnName="limit" />
                 <ScalarProperty Name="amount" ColumnName="amount" />
                 <ScalarProperty Name="coupon" ColumnName="coupon" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="categories">
-            <EntityTypeMapping TypeName="hobcModel.categories">
-              <MappingFragment StoreEntitySet="categories">
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="heurekadarcektext" ColumnName="heurekadarcektext" />
-                <ScalarProperty Name="heurekadarcek" ColumnName="heurekadarcek" />
-                <ScalarProperty Name="heureka" ColumnName="heureka" />
-                <ScalarProperty Name="priority" ColumnName="priority" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="topcat2" ColumnName="topcat2" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="topcat" ColumnName="topcat" />
-                <ScalarProperty Name="maincat" ColumnName="maincat" />
-                <ScalarProperty Name="slug" ColumnName="slug" />
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1131,6 +1114,26 @@
                 <ScalarProperty Name="city" ColumnName="city" />
                 <ScalarProperty Name="address" ColumnName="address" />
                 <ScalarProperty Name="companyname" ColumnName="companyname" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="hobcModel.categories">
+              <MappingFragment StoreEntitySet="categories">
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="heurekadarcektext" ColumnName="heurekadarcektext" />
+                <ScalarProperty Name="heurekadarcek" ColumnName="heurekadarcek" />
+                <ScalarProperty Name="heureka" ColumnName="heureka" />
+                <ScalarProperty Name="priority" ColumnName="priority" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="topcat2" ColumnName="topcat2" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="topcat" ColumnName="topcat" />
+                <ScalarProperty Name="maincat" ColumnName="maincat" />
+                <ScalarProperty Name="slug" ColumnName="slug" />
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

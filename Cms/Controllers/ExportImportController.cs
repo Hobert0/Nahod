@@ -884,6 +884,76 @@ namespace Cms.Controllers
             return RedirectToAction("ExpImp", new { SuccesUsers = "1" });
         }
 
+        //function to import user meta to the database
+        [HttpPost, Route("import-submit-users-2")]
+        public ActionResult ImportUsers2(FormCollection formCollection)
+        {
+            if (Request != null)
+            {
+                HttpPostedFileBase file = Request.Files["UploadedFileUsers"];
+
+                if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+                {
+                    string fileName = file.FileName;
+                    string fileContentType = file.ContentType;
+                    byte[] fileBytes = new byte[file.ContentLength];
+                    var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+                    var userList = new List<UsersmetaModel>();
+                    using (var package = new ExcelPackage(file.InputStream))
+                    {
+                        var currentSheet = package.Workbook.Worksheets;
+                        var workSheet = currentSheet.First();
+                        var noOfCol = workSheet.Dimension.End.Column;
+                        var noOfRow = workSheet.Dimension.End.Row;
+
+                        for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
+                        {
+                            var user = new users();
+                            user.id = rowIterator - 1;
+                            user.username = workSheet.Cells[rowIterator, 4].Value == null ? string.Empty : workSheet.Cells[rowIterator, 4].Value.ToString();
+                            user.email = workSheet.Cells[rowIterator, 4].Value == null ? string.Empty : workSheet.Cells[rowIterator, 4].Value.ToString();
+                            user.password = null;
+                            user.role = 1;
+                            user.deleted = false;
+
+                            db.users.Add(user);
+
+                            var usersmeta = new usersmeta();
+                            usersmeta.userid = rowIterator - 1;
+                            usersmeta.name = workSheet.Cells[rowIterator, 2].Value == null ? string.Empty : workSheet.Cells[rowIterator, 2].Value.ToString();
+                            usersmeta.surname = workSheet.Cells[rowIterator, 3].Value == null ? string.Empty : workSheet.Cells[rowIterator, 3].Value.ToString();
+                            usersmeta.email = workSheet.Cells[rowIterator, 4].Value == null ? string.Empty : workSheet.Cells[rowIterator, 4].Value.ToString();
+
+                            usersmeta.sum = Convert.ToDecimal(workSheet.Cells[rowIterator, 6].Value == null ? string.Empty : workSheet.Cells[rowIterator, 6].Value.ToString());
+
+                            //usersmeta.rating = ;
+
+                            usersmeta.created = workSheet.Cells[rowIterator, 12].Value == null ? string.Empty : workSheet.Cells[rowIterator, 12].Value.ToString();
+
+                            usersmeta.deleted = false;
+
+                            /*
+                            usersmeta.gdpr = recom;
+
+                            var recom = false;
+                            var sheet = workSheet.Cells[rowIterator, 13].Value.ToString();
+                            if (sheet == "true" || sheet == "True")
+                            {
+                                recom = true;
+                            }
+                            usersmeta.news = recom;
+                            */
+
+                            db.usersmeta.Add(usersmeta);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+            }
+
+            return RedirectToAction("ExpImp", new { SuccesUsers = "1" });
+        }
+
         //TODO make an import for orders
 
     }

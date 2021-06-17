@@ -1,11 +1,29 @@
-﻿@media (max-width: 1366px) {
+﻿
+
+@media (max-width: 1366px) {
     .w-75 {
         width: 90% !important;
     }
 
-    .fixedHeader {
+    .fixedTopHeader, .fixedBottomHeader {
         padding-left: calc(5% + 15px);
         padding-right: calc(5% + 15px);
+    }
+
+    .cst-container > .row {
+        padding-left: calc(5% + 15px) !important;
+        padding-right: calc(5% + 15px) !important;
+    }
+
+    .cst-container:not(.fixedBottomHeader) .dropdown-content {
+        width: 90%;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    .fixedBottomHeader > .row {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
     }
 
     .products .product {
@@ -29,13 +47,29 @@
         width: 90% !important;
     }
 
-    .fixedHeader {
+    .fixedTopHeader, .fixedBottomHeader {
         padding-left: calc(5% + 15px);
         padding-right: calc(5% + 15px);
     }
+
+    .cst-container > .row {
+        padding-left: calc(5% + 15px) !important;
+        padding-right: calc(5% + 15px) !important;
+    }
+
+    .cst-container:not(.fixedBottomHeader) .dropdown-content {
+        width: 90%;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    .fixedBottomHeader > .row {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
 }
 
-.fixedHeader {
+.fixedTopHeader {
     width: 100% !important;
 }
 

@@ -3,13 +3,17 @@
     <div class="row header-bottom navbar link-container justify-content">
         @foreach (var cat in Model.CategoriesModel.Where(i => i.deleted == false && i.maincat == "Žiadna" && i.topcat == "Žiadna" && i.topcat2 == "Žiadna"))
         {
+            //ak kategoria obsahuje podkategorie
             if (Model.CategoriesModel.Where(x => x.maincat == cat.id.ToString() && x.deleted == false).Count() > 0)
             {
-                var modelCats = Model.CategoriesModel.Where(x => x.maincat == cat.id.ToString() && x.deleted == false && x.topcat == "Žiadna");
+                var modelCats = Model.CategoriesModel.Where(x => x.maincat == cat.id.ToString() && x.deleted == false && x.topcat == "Žiadna").OrderByDescending(i => i.ordering);
+                
+                /*
                 if (cat.id == 585)
                 {
                     modelCats = Model.CategoriesModel.Where(x => x.maincat == cat.id.ToString() && x.deleted == false && x.topcat == "Žiadna").OrderByDescending(i => i.id);
                 }
+                */
 
                 <div class="dropdown">
                     <a class="dropbtn" href="/kat/@cat.slug">@cat.name@*<i class="fa fa-caret-down"></i>*@</a>
