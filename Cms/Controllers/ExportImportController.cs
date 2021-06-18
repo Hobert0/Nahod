@@ -16,6 +16,7 @@ using System.Drawing.Imaging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Threading;
+using System.Globalization;
 
 namespace Cms.Controllers
 {
@@ -26,7 +27,7 @@ namespace Cms.Controllers
         [Route("exportimport")]
         public ActionResult ExpImp()
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 return View();
             }
@@ -651,25 +652,26 @@ namespace Cms.Controllers
                                 {
                                     if (allphotos[i] != "")
                                     {
-                                        try { 
-                                        Thread.Sleep(500);
-                                        byte[] data = webClient.DownloadData(allphotos[i]);
-
-                                        using (MemoryStream mem = new MemoryStream(data))
+                                        try
                                         {
-                                            using (var yourImage = Image.FromStream(mem))
+                                            Thread.Sleep(500);
+                                            byte[] data = webClient.DownloadData(allphotos[i]);
+
+                                            using (MemoryStream mem = new MemoryStream(data))
                                             {
-                                                // If you want it as Png
-                                                // yourImage.Save("path_to_your_file.png", ImageFormat.Png);
-                                                var imagename = DateTime.Now.Ticks.ToString();
-                                                if (i < 1)
+                                                using (var yourImage = Image.FromStream(mem))
                                                 {
-                                                    titleImagename = imagename;
+                                                    // If you want it as Png
+                                                    // yourImage.Save("path_to_your_file.png", ImageFormat.Png);
+                                                    var imagename = DateTime.Now.Ticks.ToString();
+                                                    if (i < 1)
+                                                    {
+                                                        titleImagename = imagename;
+                                                    }
+                                                    // If you want it as Jpeg
+                                                    yourImage.Save(path.FullName + imagename + ".jpg", ImageFormat.Jpeg);
                                                 }
-                                                // If you want it as Jpeg
-                                                yourImage.Save(path.FullName + imagename + ".jpg", ImageFormat.Jpeg);
                                             }
-                                        }
                                         }
                                         catch (Exception ex)
                                         {
@@ -909,40 +911,48 @@ namespace Cms.Controllers
                         for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
                         {
                             var user = new users();
-                            user.id = rowIterator - 1;
-                            user.username = workSheet.Cells[rowIterator, 4].Value == null ? string.Empty : workSheet.Cells[rowIterator, 4].Value.ToString();
-                            user.email = workSheet.Cells[rowIterator, 4].Value == null ? string.Empty : workSheet.Cells[rowIterator, 4].Value.ToString();
-                            user.password = null;
+
+                            user.username = workSheet.Cells[rowIterator, 8].Value == null ? string.Empty : workSheet.Cells[rowIterator, 8].Value.ToString();
+                            user.email = workSheet.Cells[rowIterator, 8].Value == null ? string.Empty : workSheet.Cells[rowIterator, 8].Value.ToString();
+                            user.password = "reset";
                             user.role = 1;
                             user.deleted = false;
 
                             db.users.Add(user);
+                            db.SaveChanges();
 
                             var usersmeta = new usersmeta();
-                            usersmeta.userid = rowIterator - 1;
+                            usersmeta.userid = db.users.Select(i => i.id).Max();
                             usersmeta.name = workSheet.Cells[rowIterator, 2].Value == null ? string.Empty : workSheet.Cells[rowIterator, 2].Value.ToString();
                             usersmeta.surname = workSheet.Cells[rowIterator, 3].Value == null ? string.Empty : workSheet.Cells[rowIterator, 3].Value.ToString();
-                            usersmeta.email = workSheet.Cells[rowIterator, 4].Value == null ? string.Empty : workSheet.Cells[rowIterator, 4].Value.ToString();
+                            usersmeta.email = workSheet.Cells[rowIterator, 8].Value == null ? string.Empty : workSheet.Cells[rowIterator, 8].Value.ToString();
 
-                            usersmeta.sum = Convert.ToDecimal(workSheet.Cells[rowIterator, 6].Value == null ? string.Empty : workSheet.Cells[rowIterator, 6].Value.ToString());
+                            usersmeta.address = "";
+                            usersmeta.city = "";
+                            usersmeta.zip = "";
+                            usersmeta.country = "";
+                            usersmeta.phone = "";
 
-                            //usersmeta.rating = ;
+                            usersmeta.sum = Convert.ToDecimal(workSheet.Cells[rowIterator, 14].Value == null ? "0" : workSheet.Cells[rowIterator, 14].Value.ToString(), CultureInfo.InvariantCulture);
 
-                            usersmeta.created = workSheet.Cells[rowIterator, 12].Value == null ? string.Empty : workSheet.Cells[rowIterator, 12].Value.ToString();
+                            if (usersmeta.sum >= 1000)
+                            {
+                                usersmeta.rating = 3;
+                            }
+                            else if (usersmeta.sum >= 500)
+                            {
+                                usersmeta.rating = 2;
+                            }
+                            else
+                            {
+                                usersmeta.rating = 1;
+                            }
 
+                            usersmeta.created = workSheet.Cells[rowIterator, 16].Value == null ? string.Empty : workSheet.Cells[rowIterator, 16].Value.ToString();
                             usersmeta.deleted = false;
 
-                            /*
-                            usersmeta.gdpr = recom;
-
-                            var recom = false;
-                            var sheet = workSheet.Cells[rowIterator, 13].Value.ToString();
-                            if (sheet == "true" || sheet == "True")
-                            {
-                                recom = true;
-                            }
-                            usersmeta.news = recom;
-                            */
+                            usersmeta.gdpr = workSheet.Cells[rowIterator, 15].Value == null ? false : workSheet.Cells[rowIterator, 15].Value.ToString() == "1" ? true : false;
+                            usersmeta.news = workSheet.Cells[rowIterator, 13].Value == null ? false : workSheet.Cells[rowIterator, 13].Value.ToString() == "1" ? true : false;
 
                             db.usersmeta.Add(usersmeta);
                             db.SaveChanges();

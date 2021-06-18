@@ -36,7 +36,7 @@ namespace Cms.Controllers
         [Route("stranky")]
         public ActionResult Pages()
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 return View(db.pages.OrderByDescending(a => a.id).ToList());
             }
@@ -47,7 +47,7 @@ namespace Cms.Controllers
         [Route("objednavky")]
         public ActionResult Orders()
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 var orders = db.orders.Where(i => i.deleted == false).Select(a => new OrdersModel
                 {
@@ -85,7 +85,7 @@ namespace Cms.Controllers
         [Route("nastavenia")]
         public ActionResult Settings()
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 var id = 1;
                 var allsettings = db.settings.Where(item => item.id == id).ToList();
@@ -123,7 +123,7 @@ namespace Cms.Controllers
         [Route("produkty")]
         public ActionResult Products()
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 MultipleIndexModel model = new MultipleIndexModel();
                 model.CategoriesModel = db.categories.ToList();
@@ -177,7 +177,7 @@ namespace Cms.Controllers
         [Route("oblubene/{id}")]
         public ActionResult Oblubene(int id)
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
 
                 MultipleIndexModel model = new MultipleIndexModel();
@@ -304,83 +304,90 @@ namespace Cms.Controllers
         public ActionResult UserLogin(MultipleIndexModel obj)
         {
 
-            MD5CryptoServiceProvider md5provider = new MD5CryptoServiceProvider();
-            md5provider.ComputeHash(ASCIIEncoding.ASCII.GetBytes(obj.AdminLoginModel.Password));
-            byte[] overHeslo = md5provider.Hash;
-            StringBuilder hesloDb = new StringBuilder();
-
-            for (int i = 0; i < overHeslo.Length; i++)
+            //ak je to user, ktory si musi vytvorit nove heslo
+            if (db.users.Where(i => i.username == obj.AdminLoginModel.Username && i.password == "reset").ToList().Count() > 0)
             {
-                hesloDb.Append(overHeslo[i].ToString("x2"));
-            }
-            string heslo = hesloDb.ToString();
-
-            var autorizacia = db.users.SingleOrDefault(v => v.username == obj.AdminLoginModel.Username && v.password == heslo);
-            if (autorizacia == null)
-            {
-                ViewBag.Msg = "Meno alebo heslo je zadané nesprávne!";
-                return RedirectToAction("Index", "Home", new { authorize = false });
+                return RedirectToAction("ForgotPasswordSendLinkReset", "Home", new { forgotPasswordEmail = obj.AdminLoginModel.Username });
             }
             else
             {
-                var rola = db.users.Where(i => i.username == obj.AdminLoginModel.Username).Select(o => o.role).FirstOrDefault();
-                var userid = db.users.Where(i => i.username == obj.AdminLoginModel.Username).Select(o => o.id).FirstOrDefault();
-                //Session["username"] = obj.AdminLoginModel.Username;
-                //Session["role"] = rola;
-                //Session["userid"] = userid;
 
-                Response.Cookies["username"].Value = obj.AdminLoginModel.Username;
-                Response.Cookies["role"].Value = rola.ToString();
-                Response.Cookies["userid"].Value = userid.ToString();
-                Response.Cookies["username"].Expires = DateTime.Now.AddDays(1);
-                Response.Cookies["role"].Expires = DateTime.Now.AddDays(1);
-                Response.Cookies["userid"].Expires = DateTime.Now.AddDays(1);
+                MD5CryptoServiceProvider md5provider = new MD5CryptoServiceProvider();
+                md5provider.ComputeHash(ASCIIEncoding.ASCII.GetBytes(obj.AdminLoginModel.Password));
+                byte[] overHeslo = md5provider.Hash;
+                StringBuilder hesloDb = new StringBuilder();
 
-                var userdata = db.wishlist.Where(i => i.userid == userid).ToList();
-                if (userdata.Count() == 0)
+                for (int i = 0; i < overHeslo.Length; i++)
                 {
-                    // do nothing                    
+                    hesloDb.Append(overHeslo[i].ToString("x2"));
+                }
+                string heslo = hesloDb.ToString();
+
+                var autorizacia = db.users.SingleOrDefault(v => v.username == obj.AdminLoginModel.Username && v.password == heslo);
+                if (autorizacia == null)
+                {
+                    ViewBag.Msg = "Meno alebo heslo je zadané nesprávne!";
+                    return RedirectToAction("Index", "Home", new { authorize = false });
                 }
                 else
                 {
-                    var actualWish = JsonConvert.SerializeObject(Session["wishitems"]);
+                    var rola = db.users.Where(i => i.username == obj.AdminLoginModel.Username).Select(o => o.role).FirstOrDefault();
+                    var userid = db.users.Where(i => i.username == obj.AdminLoginModel.Username).Select(o => o.id).FirstOrDefault();
+                    //Session["username"] = obj.AdminLoginModel.Username;
+                    //Session["role"] = rola;
+                    //Session["userid"] = userid;
 
-                    if (actualWish != "null")
+                    Response.Cookies["username"].Value = obj.AdminLoginModel.Username;
+                    Response.Cookies["role"].Value = rola.ToString();
+                    Response.Cookies["userid"].Value = userid.ToString();
+                    Response.Cookies["username"].Expires = DateTime.Now.AddDays(1);
+                    Response.Cookies["role"].Expires = DateTime.Now.AddDays(1);
+                    Response.Cookies["userid"].Expires = DateTime.Now.AddDays(1);
+
+                    var userdata = db.wishlist.Where(i => i.userid == userid).ToList();
+                    if (userdata.Count() == 0)
                     {
-                        actualWish = actualWish.Replace("[", "").Replace("]", "");
-
-                        var wishValues = db.wishlist.Where(i => i.userid == userid).SingleOrDefault().data;
-
-                        wishValues = wishValues.Replace("[", "").Replace("]", "");
-
-                        var newWish = "[";
-                        newWish += actualWish;
-                        newWish += ",";
-                        newWish += wishValues;
-                        newWish += "]";
-
-                        Session["wishitems"] = JsonConvert.DeserializeObject<List<dynamic>>(newWish);
-
-                        var update = db.wishlist.Where(i => i.userid == userid).Single();
-                        update.data = newWish.ToString();
-
-                        db.SaveChanges();
+                        // do nothing                    
                     }
                     else
                     {
-                        //do nothing only read from db
-                        var wishValues = db.wishlist.Where(i => i.userid == userid).SingleOrDefault().data;
-                        Session["wishitems"] = JsonConvert.DeserializeObject<List<dynamic>>(wishValues);
+                        var actualWish = JsonConvert.SerializeObject(Session["wishitems"]);
+
+                        if (actualWish != "null")
+                        {
+                            actualWish = actualWish.Replace("[", "").Replace("]", "");
+
+                            var wishValues = db.wishlist.Where(i => i.userid == userid).SingleOrDefault().data;
+
+                            wishValues = wishValues.Replace("[", "").Replace("]", "");
+
+                            var newWish = "[";
+                            newWish += actualWish;
+                            newWish += ",";
+                            newWish += wishValues;
+                            newWish += "]";
+
+                            Session["wishitems"] = JsonConvert.DeserializeObject<List<dynamic>>(newWish);
+
+                            var update = db.wishlist.Where(i => i.userid == userid).Single();
+                            update.data = newWish.ToString();
+
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            //do nothing only read from db
+                            var wishValues = db.wishlist.Where(i => i.userid == userid).SingleOrDefault().data;
+                            Session["wishitems"] = JsonConvert.DeserializeObject<List<dynamic>>(wishValues);
+                        }
+
+
                     }
 
-
+                    string returnUrl = obj.AdminLoginModel.ReturnUrl + "?userLogin=true";
+                    return Redirect(returnUrl);
                 }
-                
-                string returnUrl = obj.AdminLoginModel.ReturnUrl + "?userLogin=true";
-                return Redirect(returnUrl);
             }
-
-
         }
 
         public ActionResult EmailExist(string email)
@@ -400,7 +407,7 @@ namespace Cms.Controllers
         [Route("cms")]
         public ActionResult Cms(int? id)
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 MultipleIndexModel model = new MultipleIndexModel();
 
@@ -468,7 +475,7 @@ namespace Cms.Controllers
         [Route("pouzivatelia")]
         public ActionResult Users(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 /*
                 ViewBag.CurrentSort = sortOrder;
@@ -509,7 +516,7 @@ namespace Cms.Controllers
         [Route("pouzivatelia-vytvor")]
         public ActionResult UserCreate()
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 
                 var model = new MultipleIndexModel();
@@ -527,7 +534,7 @@ namespace Cms.Controllers
         [Route("pouzivatelia-uprav/{id}")]
         public ActionResult UserEdit(int id)
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 var user = db.users.Where(item => item.id == id).Join(db.usersmeta, a => a.id, b => b.userid, (a, b) => new UsersmetaModel { Id = b.id, Userid = b.userid, Name = b.name, Surname = b.surname, Address = b.address, City = b.city, Zip = b.zip, Country = b.country, Phone = b.phone, Email = b.email, Companyname = b.companyname, Ico = b.ico, Dic = b.dic, Icdph = b.icdph, News = b.news, Gdpr = b.gdpr, Rating = b.rating }).SingleOrDefault();
                 MultipleIndexModel model = new MultipleIndexModel();

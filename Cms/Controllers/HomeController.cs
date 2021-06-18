@@ -909,6 +909,39 @@ namespace Cms.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult ForgotPasswordSendLinkReset(string forgotPasswordEmail)
+        {
+            userstoken t = new userstoken();
+
+            t.token = RandomString(8);
+            t.time = DateTime.Now.ToString("d.M.yyyy HH:mm:ss");
+            t.email = forgotPasswordEmail;
+
+            db.userstoken.Add(t);
+
+            db.SaveChanges();
+
+            //odosleme email o uspesnom zaregistrovani
+            OrdersController oc = new OrdersController();
+            string body = createForgotEmailBody(t.token);
+            oc.SendHtmlFormattedEmail("Obnova hesla", body, forgotPasswordEmail, "forgotEmail", "");
+
+            //zobrazime stranku s oznamom
+            var model = new MultipleIndexModel();
+            model.EsettingsModel = db.e_settings.ToList();
+            model.SettingsModel = db.settings.ToList();
+            model.PagesModel = db.pages.ToList();
+            model.BlogModel = db.blog.ToList();
+            model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
+            model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
+            model.SlideshowModel = db.slideshow.ToList();
+
+            ViewData["countries"] = new AdminController().SelectionCountries();
+            ViewData["info"] = "Je potrebná aktualizácia hesla na vašom konte. Na váš email sme zaslali odkaz na aktualizáciu hesla.";
+
+            return View("ForgotPassword", model);
+        }
+
         [Route("zmenahesla/{token}")]
         public ActionResult PasswordChange(string token) {
 

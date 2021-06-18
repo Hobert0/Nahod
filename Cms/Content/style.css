@@ -1608,9 +1608,14 @@ button:focus {
 
 .fixedBottomHeader {
     position: fixed;
-    padding-left: calc(12.5% + 15px);
+
     left: 0%;
-    padding-right: calc(12.5% + 15px);
+
     z-index: 999;
     box-shadow: 0 4px 2px -2px rgb(0 0 0 / 20%);
+}
+
+.cst-container > .row {
+    padding-left: calc(12.5% + 15px) !important;
+    padding-right: calc(12.5% + 15px) !important;
 }

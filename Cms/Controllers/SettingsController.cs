@@ -16,7 +16,7 @@ namespace Cms.Controllers
         [Route("nastavenia/e-shop")]
         public ActionResult EshopSettings()
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 var id = 1;
                 var eshopsettings = db.e_settings.Where(item => item.id == id).ToList();
@@ -241,7 +241,7 @@ namespace Cms.Controllers
         [Route("nastavenia/slideshow")]
         public ActionResult Slideshow()
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 var slideshows = db.slideshow.Select(a => new SlideshowModel
                 {
@@ -264,7 +264,7 @@ namespace Cms.Controllers
         [Route("nastavenia/slideshow/edit/{stranka}")]
         public ActionResult EditSlideshow(string stranka)
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 SlideshowModel slideModel = new SlideshowModel();
                 var model = db.slideshow.Where(item => item.page == stranka).Select(a => new SlideshowModel

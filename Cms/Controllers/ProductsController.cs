@@ -21,7 +21,7 @@ namespace Cms.Controllers
         [Route("produkty/kategorie")]
         public ActionResult ProductCats()
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 MultipleIndexModel model = new MultipleIndexModel();
                 model.CategoriesModel = db.categories.Where(i => i.deleted == false).OrderByDescending(a => a.id).ToList();
@@ -36,7 +36,7 @@ namespace Cms.Controllers
         [Route("produkty/editovat-kategoriu/{id}")]
         public ActionResult EditCat(int? id) //editacia kategorie
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 var allCategories = db.categories.Where(item => item.id == id).ToList();
                 CategoriesModel model = new CategoriesModel();
@@ -95,7 +95,7 @@ namespace Cms.Controllers
         [Route("produkty/zaradenia")]
         public ActionResult ProductTypes()
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 MultipleIndexModel model = new MultipleIndexModel();
                 model.TypesModel = db.types.Where(i => i.deleted == false).OrderByDescending(a => a.id).ToList();
@@ -107,7 +107,7 @@ namespace Cms.Controllers
         [Route("produkty/editovat-zaradenie/{id}")]
         public ActionResult EditType(int? id) //editacia zaradenia
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 var allTypes = db.types.Where(item => item.id == id).ToList();
                 TypesModel model = new TypesModel();
@@ -143,7 +143,7 @@ namespace Cms.Controllers
         [Route("produkty/znacky")]
         public ActionResult ProductBrands()
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 MultipleIndexModel model = new MultipleIndexModel();
                 model.BrandsModel = db.brands.Where(i => i.deleted == false).OrderByDescending(a => a.id).ToList();
@@ -155,7 +155,7 @@ namespace Cms.Controllers
         [Route("produkty/editovat-znacku/{id}")] //editacia brands
         public ActionResult EditBrand(int? id)
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 var allBrands = db.brands.Where(item => item.id == id);
                 BrandsModel model = new BrandsModel();
@@ -189,7 +189,7 @@ namespace Cms.Controllers
         [Route("produkty/vlastnosti")]
         public ActionResult ProductAttributes()
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 MultipleIndexModel model = new MultipleIndexModel();
                 model.AttributesModel = db.attributes.Where(i => i.deleted == false).OrderByDescending(a => a.id).ToList();
@@ -201,7 +201,7 @@ namespace Cms.Controllers
         [Route("produkty/editovat-vlastnost/{id}")] //editacia attributes
         public ActionResult EditAttribute(int? id)
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 var attr = db.attributes.Where(item => item.id == id).SingleOrDefault();
                 AttributesModel model = new AttributesModel();
@@ -231,7 +231,7 @@ namespace Cms.Controllers
         [Route("produkty/zlavove-kupony")]
         public ActionResult Coupons()
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 MultipleIndexModel model = new MultipleIndexModel();
                 model.CouponsModel = db.coupons.Where(i => i.deleted == false).OrderByDescending(a => a.id).ToList();
@@ -250,7 +250,7 @@ namespace Cms.Controllers
         [Route("produkty/pridat-produkt")]
         public ActionResult AddProduct()
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 ProductModel pm = new ProductModel();
 
@@ -415,7 +415,7 @@ namespace Cms.Controllers
         [Route("produkty/editovat-produkt/{id}")]
         public ActionResult EditProduct(int? id)
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 var allproducts = db.products.Where(item => item.id == id).ToList();
                 ProductModel model = new ProductModel();

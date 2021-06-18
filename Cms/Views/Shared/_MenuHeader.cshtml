@@ -1,7 +1,7 @@
 ﻿@model Cms.Models.MultipleIndexModel
 
     <div class="row header-bottom navbar link-container justify-content">
-        @foreach (var cat in Model.CategoriesModel.Where(i => i.deleted == false && i.maincat == "Žiadna" && i.topcat == "Žiadna" && i.topcat2 == "Žiadna"))
+        @foreach (var cat in Model.CategoriesModel.Where(i => i.deleted == false && i.maincat == "Žiadna" && i.topcat == "Žiadna" && i.topcat2 == "Žiadna").OrderByDescending(i => i.ordering))
         {
             //ak kategoria obsahuje podkategorie
             if (Model.CategoriesModel.Where(x => x.maincat == cat.id.ToString() && x.deleted == false).Count() > 0)

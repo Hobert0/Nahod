@@ -18,7 +18,7 @@ namespace Cms.Controllers
         [Route("admin-blog")]
         public ActionResult Blog()
         {
-            if (Request.Cookies["username"].Value != null && Request.Cookies["role"].Value == "0")
+            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 return View(db.blog.OrderByDescending(a => a.id).ToList());
             }

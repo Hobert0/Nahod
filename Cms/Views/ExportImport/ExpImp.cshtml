@@ -121,9 +121,9 @@
                         <a href="@Url.Action("Users", "Admin")" style="color: #000;"><u>&larr; Prejsť na zoznam používateľov</u></a>
                     </div>
                 }
-                <!--<p class="card-text">Stlačením tlačidla vykonáte import do systému.</p>-->
-                <p class="card-text">Import používateľov momentálne nie je možný.</p>
-                <button onclick="" class="btn btn-success" style="margin-top:20px;" data-toggle="modal" data-target="#importUsers" disabled>Importovať</button>
+                <p class="card-text">Stlačením tlačidla vykonáte import do systému.</p>
+                <!--<p class="card-text">Import používateľov momentálne nie je možný.</p>-->
+                <button onclick="" class="btn btn-success" style="margin-top:20px;" data-toggle="modal" data-target="#importUsers">Importovať</button>
             </div>
         </div>
     </div>
@@ -132,7 +132,7 @@
 
 <div class="form-horizontal">
     <div class="modal fade" id="importUsers" tabindex="-1" role="dialog" aria-labelledby="importUsersTitle" aria-hidden="true">
-        @using (Html.BeginForm("ImportUsers", "ExportImport", FormMethod.Post, new { enctype = "multipart/form-data", id = "usersForm" }))
+        @using (Html.BeginForm("ImportUsers2", "ExportImport", FormMethod.Post, new { enctype = "multipart/form-data", id = "usersForm" }))
         {
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
