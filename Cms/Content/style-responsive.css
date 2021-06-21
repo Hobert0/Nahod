@@ -69,6 +69,14 @@
     }
 }
 
+@media (min-width: 1601px) {
+    .cst-container:not(.fixedBottomHeader) .dropdown-content {
+        width: 90%;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+}
+
 .fixedTopHeader {
     width: 100% !important;
 }
@@ -372,7 +380,6 @@
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
-
 }
 
 @media (min-width: 768px) {
@@ -436,6 +443,7 @@
     .my-account-link {
         padding-left: 24px;
     }
+
     .top-banner-wrapper, .middle-banner-wrapper {
         height: 27vw;
     }

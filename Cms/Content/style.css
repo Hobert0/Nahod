@@ -1153,7 +1153,7 @@ input[type="radio"][disabled] {
         padding-bottom: 5px;
     }
 
-        .column h3:hover {
+        .column h3:hover, .column .smallmenu a:hover {
             color: #fe8a00;
         }
 

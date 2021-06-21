@@ -96,7 +96,8 @@ html, body {
         font-weight: bold;
     }
 
-        .header-bottom a:hover {
+        
+        .header-bottom > div > a:hover {
             color: #fff !important;
             cursor:pointer !important;
         }
