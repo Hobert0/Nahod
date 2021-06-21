@@ -235,7 +235,7 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
 
         let actualPrice = 0.0;
         if (variantPriceFrom != 99999) {
-            $row += '<span class="prod-price-from">od ' + variantPriceFrom.replace(".", ",") + ' €</span>';
+            $row += '<span class="prod-discount">&zwj;</span><span class="prod-price-from">od ' + variantPriceFrom.replace(".", ",") + ' €</span>';
         } else {
 
             if (item.discountprice != null) {
@@ -268,7 +268,7 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
                     actualPrice = ratingPrice;
                 }
                 else {
-                    $row += '<span class="prod-base">' + item.price.toFixedNoRounding(2).replace(".", ",") + ' €</span>';
+                    $row += '<span class="prod-discount">&zwj;</span><span class="prod-base">' + item.price.toFixedNoRounding(2).replace(".", ",") + ' €</span>';
                     actualPrice = item.price;
                 }
             }

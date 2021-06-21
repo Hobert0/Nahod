@@ -372,9 +372,11 @@
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
+
 }
 
 @media (min-width: 768px) {
+
     #check .price {
         text-align: right;
     }
@@ -433,6 +435,13 @@
 @media only screen and (min-width: 1025px) {
     .my-account-link {
         padding-left: 24px;
+    }
+    .top-banner-wrapper, .middle-banner-wrapper {
+        height: 27vw;
+    }
+
+    .bottom-banner-wrapper {
+        height: 32vw;
     }
 }
 

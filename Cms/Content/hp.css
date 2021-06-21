@@ -94,11 +94,10 @@ html, body {
         font-size: 14px;
         color: black;
         font-weight: bold;
-        margin-right: 10px;
     }
 
         .header-bottom a:hover {
-            color: #fe8a00 !important;
+            color: #fff !important;
             cursor:pointer !important;
         }
 
