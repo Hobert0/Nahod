@@ -496,7 +496,7 @@
 
             </div>*@
 
-        @foreach (var cat in Model.CategoriesModel.Where(i => i.maincat == "Žiadna"))
+        @foreach (var cat in Model.CategoriesModel.Where(i => i.maincat == "Žiadna").OrderByDescending(i => i.ordering))
         {
             <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(cat.slug)})" class="sub_catsmenu">
                 <div class="category-image" style="background-image:url('/Uploads/@cat.image')"></div>
@@ -509,7 +509,7 @@
                 </h3>
             </a>
             <ul>
-                @foreach (var subcat in Model.CategoriesModel.Where(o => (o.maincat == cat.id.ToString() && o.topcat == "") || (o.maincat == cat.id.ToString() && o.topcat == "Žiadna")))
+                @foreach (var subcat in Model.CategoriesModel.Where(o => (o.maincat == cat.id.ToString() && o.topcat == "") || (o.maincat == cat.id.ToString() && o.topcat == "Žiadna")).OrderByDescending(i => i.ordering))
                 {
                     var counter3 = 0;
                     var dropdowncounter = 0;
