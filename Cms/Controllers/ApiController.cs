@@ -567,7 +567,7 @@ namespace Cms.Controllers
         [Route("importSKladS3"), EnableCors(origins: "*", headers: "*", methods: "*")]
         public string ImportMonS3(string ExpZasobyName)
         {
-            var path = "http://nahod.sk.amber.globenet.cz/import/" + ExpZasobyName;
+            var path = "http://nahod.sk/import/" + ExpZasobyName;
             XmlTextReader reader = new XmlTextReader(path);
             while (reader.Read())
             {
@@ -579,7 +579,7 @@ namespace Cms.Controllers
             }
 
             XmlDocument doc1 = new XmlDocument();
-            doc1.Load("http://nahod.sk.amber.globenet.cz/import/" + ExpZasobyName);
+            doc1.Load("http://nahod.sk/import/" + ExpZasobyName);
             XmlElement root = doc1.DocumentElement;
             XmlNodeList nodes = root.SelectNodes("/MoneyData/SeznamZasoba/Zasoba");
 
