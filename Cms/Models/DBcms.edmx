@@ -323,6 +323,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="token" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="time" Type="varchar" MaxLength="30" Nullable="false" />
         </EntityType>
         <EntityType Name="variants">
@@ -402,10 +403,10 @@
           <EntitySet Name="orders" EntityType="hobcModel.orders" />
           <EntitySet Name="products" EntityType="hobcModel.products" />
           <EntitySet Name="watchdog" EntityType="hobcModel.watchdog" />
-          <EntitySet Name="userstoken" EntityType="hobcModel.userstoken" />
           <EntitySet Name="e_settings" EntityType="hobcModel.e_settings" />
           <EntitySet Name="categories" EntityType="hobcModel.categories" />
           <EntitySet Name="usersmeta" EntityType="hobcModel.usersmeta" />
+          <EntitySet Name="userstoken" EntityType="hobcModel.userstoken" />
         </EntityContainer>
         <EntityType Name="deliver_city">
           <Key>
@@ -667,15 +668,6 @@
           <Property Name="prod_id" Type="Int32" Nullable="false" />
           <Property Name="sent" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="userstoken">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="token" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="time" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="e_settings">
           <Key>
             <PropertyRef Name="id" />
@@ -758,6 +750,16 @@
           <Property Name="rating" Type="Int32" Nullable="false" />
           <Property Name="created" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="userstoken">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="token" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="time" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1042,16 +1044,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="userstoken">
-            <EntityTypeMapping TypeName="hobcModel.userstoken">
-              <MappingFragment StoreEntitySet="userstoken">
-                <ScalarProperty Name="time" ColumnName="time" />
-                <ScalarProperty Name="token" ColumnName="token" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="e_settings">
             <EntityTypeMapping TypeName="hobcModel.e_settings">
               <MappingFragment StoreEntitySet="e-settings">
@@ -1134,6 +1126,17 @@
                 <ScalarProperty Name="surname" ColumnName="surname" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userstoken">
+            <EntityTypeMapping TypeName="hobcModel.userstoken">
+              <MappingFragment StoreEntitySet="userstoken">
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="token" ColumnName="token" />
+                <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

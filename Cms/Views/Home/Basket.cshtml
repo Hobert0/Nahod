@@ -73,7 +73,7 @@
 
                                         if (item.variant != "")
                                         {
-                                            var thisVar = Model.VariantModel.Where(i => i.prod_id == item.product.Value && i.value == item.variant.Value).SingleOrDefault();
+                                            var thisVar = Model.VariantModel.Where(i => i.prod_id == item.product.Value && i.value == item.variant.Value).FirstOrDefault();
                                             //ak nie je uz zlavneny
                                             if (thisVar.discountprice == null)
                                             {
@@ -766,6 +766,7 @@
                 </div>
 
                 <script>
+                    var transferFree = false;
                     var transfer1 = "0";
                     var transfer2 = "0";
                     var transfer3 = "0";
@@ -812,10 +813,11 @@
                     if (Convert.ToDecimal(item.transfer5) < finalprice.Sum())
                     {
                         <script>
-                            transfer1 = "0";
-                            transfer2 = "0";
-                            transfer3 = "0";
-                            transfer4 = "0";
+                            transferFree = true;
+                            var transfer1Free = "0";
+                            var transfer2Free = "0";
+                            var transfer3Free = "0";
+                            var transfer4Free = "0";
                         </script>
                     }
                     /*
@@ -860,7 +862,11 @@
                                             <span class="shipName">Kuriérska spoločnosť</span><strong class="shipPrice" style="float: right">
                                                 <script>
                                                     if ($("#OrdersModel_Country").val() == "Slovenská republika") {
-                                                        document.write(transfer1);
+                                                        if (transferFree) {
+                                                            document.write(transfer1Free);
+                                                        } else {
+                                                            document.write(transfer1);
+                                                        }
                                                     } else if ($("#OrdersModel_Country").val() == "Česká republika") {
                                                         document.write(transfer4);
                                                     }
@@ -1355,7 +1361,12 @@
         if ($("#myCheck").is(":checked") == false) {
             if ($(this).val() == "Slovenská republika") {
                 $("input[name=transfer][value=transfer4]").val("transfer1");
-                $("#transfer1 .shipPrice").text(transfer1 + " €");
+                if (transferFree) {
+                    $("#transfer1 .shipPrice").text(transfer1Free + " €");
+                }
+                else {
+                    $("#transfer1 .shipPrice").text(transfer1 + " €");
+                }
             } else if ($(this).val() == "Česká republika") {
                 $("input[name=transfer][value=transfer1]").val("transfer4");
                 $("#transfer1 .shipPrice").text(transfer4 + " €");
@@ -1366,7 +1377,12 @@
     $("#OrdersModel_CountryShipp").change(function () {
         if ($(this).val() == "Slovenská republika") {
             $("input[name=transfer][value=transfer4]").val("transfer1");
-            $("#transfer1 .shipPrice").text(transfer1 + " €");
+            if (transferFree) {
+                $("#transfer1 .shipPrice").text(transfer1Free + " €");
+            }
+            else {
+                $("#transfer1 .shipPrice").text(transfer1 + " €");
+            }
         } else if ($(this).val() == "Česká republika") {
             $("input[name=transfer][value=transfer1]").val("transfer4");
             $("#transfer1 .shipPrice").text(transfer4 + " €");
@@ -1377,7 +1393,12 @@
         if ($("#myCheck").is(":checked")) {
             if ($("#OrdersModel_CountryShipp").val() == "Slovenská republika") {
                 $("input[name=transfer][value=transfer4]").val("transfer1");
-                $("#transfer1 .shipPrice").text(transfer1 + " €");
+                if (transferFree) {
+                    $("#transfer1 .shipPrice").text(transfer1Free + " €");
+                }
+                else {
+                    $("#transfer1 .shipPrice").text(transfer1 + " €");
+                }
             } else if ($("#OrdersModel_CountryShipp").val() == "Česká republika") {
                 $("input[name=transfer][value=transfer1]").val("transfer4");
                 $("#transfer1 .shipPrice").text(transfer4 + " €");
@@ -1385,7 +1406,12 @@
         } else {
             if ($("#OrdersModel_Country").val() == "Slovenská republika") {
                 $("input[name=transfer][value=transfer4]").val("transfer1");
-                $("#transfer1 .shipPrice").text(transfer1 + " €");
+                if (transferFree) {
+                    $("#transfer1 .shipPrice").text(transfer1Free + " €");
+                }
+                else {
+                    $("#transfer1 .shipPrice").text(transfer1 + " €");
+                }
             } else if ($("#OrdersModel_Country").val() == "Česká republika") {
                 $("input[name=transfer][value=transfer1]").val("transfer4");
                 $("#transfer1 .shipPrice").text(transfer4 + " €");

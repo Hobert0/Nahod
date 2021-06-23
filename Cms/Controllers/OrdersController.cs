@@ -395,7 +395,7 @@ namespace Cms.Controllers
                 body = reader.ReadToEnd();
             }
 
-            var str = "Ďakujeme za vaše objednávky a zároveň Vás posúvame do vyššej zľavovej skupiny a dostávate zákaznicku zľavu " + discount + " %.";
+            var str = "Ďakujeme za vaše objednávky a zároveň Vás posúvame do vyššej zľavovej skupiny a dostávate zákaznicku zľavu <span style='white-space:nowrap;'>" + discount + " %.</span>";
 
             body = body.Replace("{Text}", str);
 

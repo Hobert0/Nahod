@@ -353,6 +353,7 @@ html, body {
             padding: 0px 10px;
             text-decoration: none;
             border: none;
+            cursor: pointer;
         }
 
     .hp-newsletter .hp-checkbox-wrapper {
@@ -369,13 +370,16 @@ html, body {
             text-decoration: underline;
         }
 
+.slick-list, .slick-track {
+    height: 100%;
+}
 
 .banner {
     display: block;
-    background-size: cover;
     background-repeat: no-repeat;
     width: 100%;
-    height: 500px !important;
+    height: 100%;
+
     margin: 0px !important;
     position: relative;
 }

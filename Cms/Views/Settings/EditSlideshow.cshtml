@@ -99,11 +99,10 @@
                         }
                         @foreach (var item in db.slideshow.Where(i => i.page == Model.Page && i.image == Model.Page + "/" + img.Name))
                         {
-                            //zakomentovane kvoli sliderom, ktore mozu mat len 1 obrazok (hp bottom left a right) aby sa dal ten prvy editovat
-                            //if (count > 1)
-                            //{
+                            if (count > 1)
+                            {
                                 @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteSlide", new { id = item.id, url = String.Format("~/Uploads/slideshow/" + Html.DisplayTextFor(model => model.Page) + "/" + "{0}", img.Name), page = Html.DisplayTextFor(model => model.Page) }, new { onclick = "return confirm('Naozaj chcete vymazať fotografiu zo slideshow?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete slide.", style = "position: absolute; margin-top: -44px;" })
-                            //}
+                            }
 
                         }
                     </div>

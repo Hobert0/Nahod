@@ -55,6 +55,7 @@ namespace Cms.Controllers
                     model.DeliveryPrice3 = set.deliveryprice3;
                     model.VopPdf = set.vopPdf;
                     model.ReturnPdf = set.returnPdf;
+                    model.CancelPdf = set.cancelPdf;
                 }
                 return View(model);
             }

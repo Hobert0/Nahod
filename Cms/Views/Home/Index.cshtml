@@ -15,6 +15,7 @@
 
         var slideshows = Model.SlideshowModel.Where(o => o.page == "hp-top");
         if (Request.Browser.IsMobileDevice)
+        //if (Request.Browser.ScreenPixelsWidth < 768)
         {
             slideshows = Model.SlideshowModel.Where(o => o.page == "hp-top-responsive");
         }
@@ -432,6 +433,7 @@
     @{
         slideshows = Model.SlideshowModel.Where(o => o.page == "hp-middle");
         if (Request.Browser.IsMobileDevice)
+        //if (Request.Browser.ScreenPixelsWidth < 768)
         {
             slideshows = Model.SlideshowModel.Where(o => o.page == "hp-middle-responsive");
         }
@@ -485,8 +487,8 @@
             </div>
             <div class="row products-row">
                 @{
-                    prods2 = Model.ProductModel.Where(o => o.recommended == true).OrderByDescending(o => o.id).Take(10);
-                    foreach (var prod in prods2)
+                    var prods3 = Model.ProductModel.Where(o => o.recommended == true).OrderByDescending(o => o.id).Take(10);
+                    foreach (var prod in prods3)
                     {
                         bool isDiscounted = false;
                         var variants = Model.VariantModel.Where(o => o.prod_id == prod.id).OrderBy(o => o.num).ToList();
@@ -688,6 +690,7 @@
                 @{
                     slideshows = Model.SlideshowModel.Where(o => o.page == "hp-bottom-left");
                     if (Request.Browser.IsMobileDevice)
+                    //if (Request.Browser.ScreenPixelsWidth < 768)
                     {
                         slideshows = Model.SlideshowModel.Where(o => o.page == "hp-bottom-left-responsive");
                     }
@@ -717,6 +720,7 @@
                 @{
                     slideshows = Model.SlideshowModel.Where(o => o.page == "hp-bottom-right");
                     if (Request.Browser.IsMobileDevice)
+                    //if (Request.Browser.ScreenPixelsWidth < 768)
                     {
                         slideshows = Model.SlideshowModel.Where(o => o.page == "hp-bottom-right-responsive");
                     }
@@ -801,8 +805,12 @@
     }
 
     $(document).ready(function () {
-        $('.top-banner-wrapper').slick();
-        $('.middle-banner-wrapper').slick();
+        $('.top-banner-wrapper').slick({
+            autoplay: true
+        });
+        $('.middle-banner-wrapper').slick({
+            autoplay: true
+        });
         $('.products-row').slick({
             infinite: true,
             slidesToShow: 5,

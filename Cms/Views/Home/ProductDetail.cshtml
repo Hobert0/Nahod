@@ -57,24 +57,29 @@
                                 {
                                     var categoryname = "";
                                     var maincatslug = "";
+                                    var categoryslug = "";
                                     if (topcat.maincat == "Žiadna")
                                     {
                                         categoryname = topcat.name;
-                                        maincatslug = topcat.slug;
+                                        //maincatslug = topcat.slug;
+                                        categoryslug = topcat.slug;
                                     }
                                     else
                                     {
                                         var catId = int.Parse(topcat.maincat);
                                         categoryname = Model.CategoriesModel.Where(o => o.id == catId).FirstOrDefault().name;
+                                        categoryslug = Model.CategoriesModel.Where(o => o.id == catId).FirstOrDefault().slug;
                                         maincatslug = Model.CategoriesModel.Where(o => o.id == topcat.id).FirstOrDefault().slug;
 
                                     }
-                                    <li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(maincatslug) })">@categoryname</a></li>
+                                    <li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(categoryslug) })">@categoryname</a></li>
                                     if (topcat.maincat != "Žiadna")
                                     {
                                         foreach (var subcat in Model.CategoriesModel.Where(o => o.name == cat.name && o.maincat == cat.maincat))
                                         {
-                                            <li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(maincatslug), subslug = @Html.Raw(subcat.slug) })">@subcat.name</a></li>
+                                            <li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(subcat.slug) })">@subcat.name</a></li>
+
+                                            @*<li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(maincatslug), subslug = @Html.Raw(subcat.slug) })">@subcat.name</a></li>*@
 
                                             @*<li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(topcat.slug), subslug = @Html.Raw(subcat.slug), subslug2 = @Html.Raw(cat.slug) })">@cat.name</a></li>*@
                                         }
@@ -147,7 +152,7 @@
                                     {
                                         onStock = "<a href='#' class='watchdog-modal'><span style='color:#e89300;'>Dodanie 3-10 dní</span><br><small><u>Strážiť dostupnosť</u></small><i style='margin-left: 10px;' class='fas fa-dog'></i><br><small>Zadajte Váš e-mail a my Vám zašleme informáciu akonáhle produkt naskladníme.</small></a>";
                                     }
-                                    
+
 
                                 }
                                 else
@@ -195,11 +200,11 @@
                                 @if (prod.discountprice != null)
                                 {
                                     cena = (decimal)prod.discountprice;
-                            <p class="discount-price-text" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;"><span class="discount-label">Akciová cena</span> <strong style="font-size:30px;"><span class="actual-price">@cena.ToString("N2")</span> €</strong><br class="d-none d-sm-block"/><small style="font-size: 12px;color: #333;">Na produkt sa <strong>nevzťahuje</strong> zľava po prihlásení.</small></p>
+                            <p class="discount-price-text" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;"><span class="discount-label">Akciová cena</span> <strong style="font-size:30px;"><span class="actual-price">@cena.ToString("N2")</span> €</strong><br class="d-none d-sm-block" /><small style="font-size: 12px;color: #333;">Na produkt sa <strong>nevzťahuje</strong> zľava po prihlásení.</small></p>
                         }
                         else
                         {
-                    <p class="discount-price-text d-none" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;"><span class="discount-label">Akciová cena</span> <strong style="font-size:30px;"><span class="actual-price">0</span> €</strong><br class="d-none d-sm-block" /><small style="font-size: 12px;color: #333;">Na produkt sa <strong>nevzťahuje</strong> zľava po prihlásení.</small></p>
+                            <p class="discount-price-text d-none" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;"><span class="discount-label">Akciová cena</span> <strong style="font-size:30px;"><span class="actual-price">0</span> €</strong><br class="d-none d-sm-block" /><small style="font-size: 12px;color: #333;">Na produkt sa <strong>nevzťahuje</strong> zľava po prihlásení.</small></p>
                         }
                                 @{
                                     if (prod.discountprice != null)

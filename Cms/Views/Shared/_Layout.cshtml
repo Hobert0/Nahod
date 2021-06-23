@@ -377,7 +377,7 @@
                 </a>
             </div>
         </div>
-        
+
     </div>
     <div class="header-container desktop-header container-fluid cst-container" style="background-color:#fe8a00;">
         @{
@@ -745,16 +745,33 @@
                     remainingSum = 1000 - sum;
                     discountLevel = "zlatý";
                     break;
+                case 3:
+                    actualDiscount = "15%";
+                    discountLevel = "zlatý";
+                    break;
 
             }
 
-            if (remainingSum > 0 && Request.QueryString["userLogin"] == "true")
+            if (actualDiscount != "" && Request.QueryString["userLogin"] == "true")
             {
-                <script>
+                var loginStr = "";
+                if (actualDiscount == "15%")
+                {
+                    //loginStr = "Vaša aktuálna zlava je <strong>" + actualDiscount + "</strong>.";
+                    loginStr = "Vaša aktuálna zlava je " + actualDiscount + ".";
+                }
+                else
+                {
+                    //loginStr = "Vaša aktuálna zlava je <strong>" + actualDiscount + "</strong>. Nakúpte ešte za " + remainingSum.ToString("N2") + " € a navýšime Vám zľavu na <strong>" + nextDiscount + "</strong> (" + discountLevel + " zákazník).";
+                    loginStr = "Vaša aktuálna zlava je " + actualDiscount + ". Nakúpte ešte za " + remainingSum.ToString("N2") + " € a navýšime Vám zľavu na " + nextDiscount + " (" + discountLevel + " zákazník).";
+                }
+
+            <script>
                     $(document).ready(function () {
-                        $loginStr = "Vaša aktuálna zlava je <strong>@actualDiscount</strong>. Nakúpte ešte za @remainingSum.ToString("N2") € a navýšime Vám zľavu na <strong>@nextDiscount</strong> (@discountLevel zákazník).";
-                        toastr.options = {
-                            "closeButton": true,
+
+                            $loginStr = '@loginStr';
+                    toastr.options = {
+                        "closeButton": true,
                             "debug": false,
                             "newestOnTop": false,
                             "progressBar": false,
@@ -771,9 +788,9 @@
                             "hideMethod": "fadeOut",
                             "tapToDismiss": false
                         }
-                        toastr["success"]($loginStr);
+                    toastr["success"]($loginStr);
 
-                    });
+                });
                 </script>
             }
         }

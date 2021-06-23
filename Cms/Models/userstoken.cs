@@ -17,6 +17,7 @@ namespace Cms.Models
         public int id { get; set; }
         public string email { get; set; }
         public string token { get; set; }
+        public string type { get; set; }
         public string time { get; set; }
     }
 }

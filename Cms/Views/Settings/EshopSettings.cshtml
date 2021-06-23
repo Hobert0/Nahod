@@ -216,7 +216,7 @@
         <div class="col-6">
             <div class="col-md-12">
                 <div class="form-row" style="padding-left:15px;padding-bottom:15px">
-                    @Html.LabelFor(model => model.Transfer5, "Doprava zadarmo od (€)", htmlAttributes: new { @class = "control-label col-md-6" })
+                    @Html.LabelFor(model => model.Transfer5, "Doprava zadarmo od SR (€)", htmlAttributes: new { @class = "control-label col-md-6" })
                     <div class="col-md-3">
                         @Html.EditorFor(model => model.Transfer5, new { htmlAttributes = new { @class = "form-control", placeholder = "Cena" } })
                         @Html.ValidationMessageFor(model => model.Transfer5, "", new { @class = "text-danger" })
@@ -360,6 +360,7 @@
 
     @Html.EditorFor(model => model.VopPdf, new { htmlAttributes = new { @class = "form-control", style = "display:none !important;" } })
     @Html.EditorFor(model => model.ReturnPdf, new { htmlAttributes = new { @class = "form-control", style = "display:none !important;" } })
+    @Html.EditorFor(model => model.CancelPdf, new { htmlAttributes = new { @class = "form-control", style = "display:none !important;" } })
 
     <div class="row" style="margin-top: 10px;">
         <div class="mt-1 text-right" style="width: 180px;">
@@ -426,7 +427,7 @@
                         }
                     }
                     <br><br>
-                    <label id="fileLabel">@fileLabelText</label>
+                    <label id="fileLabelll">@fileLabelText</label>
 
                 </div>
             </div>
@@ -474,13 +475,13 @@
         $("#bttttn").trigger('click');
     });
 
-    window.pressed2 = function () {
+    window.pressed3 = function () {
         var a = document.getElementById('bttttn');
         if (a.files.length > 1) {
-            fileLabell.innerHTML = "Boli vybratý " + a.files.length + " dokument.";
+            fileLabelll.innerHTML = "Boli vybratý " + a.files.length + " dokument.";
         }
         else if (a.files.length = 1) {
-            fileLabell.innerHTML = "Bola vybratý " + a.files.length + " dokument.";
+            fileLabelll.innerHTML = "Bola vybratý " + a.files.length + " dokument.";
         }
     };
 </script>

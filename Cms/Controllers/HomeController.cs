@@ -820,8 +820,8 @@ namespace Cms.Controllers
                 o.ico = model.OrdersModel.Ico;
                 o.dic = model.OrdersModel.Dic;
                 o.icdph = model.OrdersModel.Icdph;
-                u.email = model.OrdersModel.Email;
-                u.username = model.OrdersModel.Email;
+                //u.email = model.OrdersModel.Email;
+                //u.username = model.OrdersModel.Email;
 
                 db.SaveChanges();
             }
@@ -906,6 +906,7 @@ namespace Cms.Controllers
 
             t.token = RandomString(8);
             t.time = DateTime.Now.ToString("d.M.yyyy HH:mm:ss");
+            t.type = "default";
             t.email = forgotPasswordEmail;
 
             db.userstoken.Add(t);
@@ -930,6 +931,7 @@ namespace Cms.Controllers
 
             t.token = RandomString(8);
             t.time = DateTime.Now.ToString("d.M.yyyy HH:mm:ss");
+            t.type = "reset";
             t.email = forgotPasswordEmail;
 
             db.userstoken.Add(t);
@@ -971,6 +973,10 @@ namespace Cms.Controllers
 
                 if (DateTime.Compare(before, now) > 0)
                 {
+
+                    if (userstoken.type == "reset") {
+                        ViewData["info"] = "Po prihlásení si prosím doplňte vaše fakturačné údaje v sekcii <strong>Môj účet.</strong>";
+                    }
 
                     ViewData["validToken"] = true;
                     ViewData["token"] = token;
