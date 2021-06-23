@@ -715,9 +715,15 @@
             Entities db = new Entities();
             var userId = int.Parse(Request.Cookies["userid"].Value);
             var userMeta = db.usersmeta.Where(i => i.userid == userId).FirstOrDefault();
+            int rating = 1;
+            decimal sum = 0;
 
-            int rating = userMeta.rating;
-            decimal sum = userMeta.sum;
+            if (userMeta != null)
+            {
+                rating = userMeta.rating;
+                sum = userMeta.sum;
+            }
+
 
             string actualDiscount = "";
             string nextDiscount = "";

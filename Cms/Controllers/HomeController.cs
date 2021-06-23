@@ -472,12 +472,17 @@ namespace Cms.Controllers
                 XElement doc8 = new XElement("VIDEO_URL", "");
                 XElement doc9 = new XElement("PRICE_VAT", product.price);
                 XElement doc10 = null;
-                foreach (var brand in model.BrandsModel.Where(i => i.id == Int32.Parse(product.custom3)))
+                if (product.custom3 != null) {
+                    foreach (var brand in model.BrandsModel.Where(i => i.id == Int32.Parse(product.custom3)))
+                    {
+                        doc10 = new XElement("MANUFACTURER", "<![CDATA[" + brand.name + "]]");
+                    }
+                }
+                else
                 {
-                    doc10 = new XElement("MANUFACTURER", "<![CDATA[" + brand.name + "]]");
-                } 
+                    doc10 = new XElement("MANUFACTURER", "<![CDATA[]]");
+                }
 
-                
                 XElement doc13 = new XElement("PRODUCTNO", product.number);
                 XElement doc14 = new XElement("DELIVERY_DATE", "4");
                 XElement doc12 = null;
@@ -554,7 +559,7 @@ namespace Cms.Controllers
                     XElement doc11 = new XElement("CATEGORYTEXT", url_part1 + " | " + url_part2 + " | " + url_part3);
                     xRoot2.Add(doc11);
                 }
-             
+
                 xRoot2.Add(doc13);
                 xRoot2.Add(doc14);
                 xRoot2.Add(doc12);
@@ -562,7 +567,17 @@ namespace Cms.Controllers
                 xRoot2.Add(doc16);
             }
 
-            return Content(xdoc.ToString(), "application/xml");
+            string strXml;
+            using (var mss = new MemoryStream())
+            {
+                xdoc.Save(mss);
+                mss.Position = 0;
+                using (var sr = new StreamReader(mss))
+                {
+                    strXml = sr.ReadToEnd();
+                }
+            }
+            return Content(strXml.ToString(), "application/xml");
         }
 
         [Route("kosik")]

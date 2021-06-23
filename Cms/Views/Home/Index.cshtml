@@ -285,9 +285,15 @@
                                                     //rating
                                                     if (Request.Cookies["username"] != null)
                                                     {
-                                                        int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
+                                                        var usermeta = Model.AllUsersMetaModel.FirstOrDefault();
+                                                        var rating = 1;
                                                         decimal defaultPrice = (decimal)variant.price;
                                                         decimal ratingPrice = 0;
+
+                                                        if (usermeta != null)
+                                                        {
+                                                            rating = usermeta.rating;
+                                                        }
 
                                                         switch (rating)
                                                         {
@@ -338,9 +344,15 @@
                                                 //rating
                                                 if (Request.Cookies["username"] != null)
                                                 {
-                                                    int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
+                                                    var usermeta = Model.AllUsersMetaModel.FirstOrDefault();
+                                                    var rating = 1;
                                                     decimal defaultPrice = prod.price;
                                                     decimal ratingPrice = 0;
+
+                                                    if (usermeta != null)
+                                                    {
+                                                        rating = usermeta.rating;
+                                                    }
 
                                                     switch (rating)
                                                     {
@@ -560,10 +572,15 @@
                                                     //rating
                                                     if (Request.Cookies["username"] != null)
                                                     {
-                                                        int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
+                                                        var usermeta = Model.AllUsersMetaModel.FirstOrDefault();
+                                                        var rating = 1;
                                                         decimal defaultPrice = (decimal)variant.price;
                                                         decimal ratingPrice = 0;
 
+                                                        if (usermeta != null)
+                                                        {
+                                                            rating = usermeta.rating;
+                                                        }
                                                         switch (rating)
                                                         {
                                                             case 1:
@@ -613,9 +630,15 @@
                                                 //rating
                                                 if (Request.Cookies["username"] != null)
                                                 {
-                                                    int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
+                                                    var usermeta = Model.AllUsersMetaModel.FirstOrDefault();
+                                                    var rating = 1;
                                                     decimal defaultPrice = prod.price;
                                                     decimal ratingPrice = 0;
+
+                                                    if (usermeta != null)
+                                                    {
+                                                        rating = usermeta.rating;
+                                                    }
 
                                                     switch (rating)
                                                     {

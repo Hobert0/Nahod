@@ -402,7 +402,7 @@ namespace Cms.Controllers
                 XElement doc21 = new XElement("PSC", product.zip_shipp);
                 XElement doc22 = new XElement("Stat", product.country_shipp);
 
-               // XElement doc23 = new XElement("GUID", product.ordernumber);
+                // XElement doc23 = new XElement("GUID", product.ordernumber);
 
                 XElement xRoot8 = new XElement("Tel");
                 XElement doc24 = new XElement("Pred", "");
@@ -529,11 +529,26 @@ namespace Cms.Controllers
 
                     if (customId != null)
                     {
-                        doc53 = new XElement("UzivCode", customId.number);
-                        //doc54 = new XElement("GUID", customId.number);
-                        doc55 = new XElement("Katalog", customId.number);
+                        if (item.variant != "" && item.variant != null)
+                        {
+                            var variant = db.variants.Where(i => i.prod_id == prodId && i.value == item.variant).FirstOrDefault();
+
+                            if (variant != null)
+                            {
+                                doc53 = new XElement("UzivCode", variant.number);
+                                //doc54 = new XElement("GUID", customId.number);
+                                doc55 = new XElement("Katalog", variant.number);
+                            }
+                        }
+                        else
+                        {
+                            doc53 = new XElement("UzivCode", customId.number);
+                            //doc54 = new XElement("GUID", customId.number);
+                            doc55 = new XElement("Katalog", customId.number);
+                        }
+
                     }
-                    
+
                     xRoot9.Add(xRoot10); // Polozka
 
                     xRoot10.Add(doc43);
@@ -567,7 +582,7 @@ namespace Cms.Controllers
         [Route("importSKladS3"), EnableCors(origins: "*", headers: "*", methods: "*")]
         public string ImportMonS3(string ExpZasobyName)
         {
-            var path = "http://nahod.sk/import/" + ExpZasobyName;
+            var path = Server.MapPath("~/import/" + ExpZasobyName);
             XmlTextReader reader = new XmlTextReader(path);
             while (reader.Read())
             {
@@ -579,7 +594,7 @@ namespace Cms.Controllers
             }
 
             XmlDocument doc1 = new XmlDocument();
-            doc1.Load("http://nahod.sk/import/" + ExpZasobyName);
+            doc1.Load(path);
             XmlElement root = doc1.DocumentElement;
             XmlNodeList nodes = root.SelectNodes("/MoneyData/SeznamZasoba/Zasoba");
 
@@ -588,7 +603,12 @@ namespace Cms.Controllers
             foreach (XmlNode node in nodes)
             {
                 var sklad = node.SelectSingleNode("StavZasoby/Zasoba").InnerText;
-                var cislo = node.SelectSingleNode("KmKarta/Katalog").InnerText;
+                var cislo = "";
+                if (node.SelectSingleNode("KmKarta/Katalog") != null)
+                {
+                    cislo = node.SelectSingleNode("KmKarta/Katalog").InnerText;
+                }
+
                 var cena = node.SelectSingleNode("PC/Cena1/Cena").InnerText;
                 var zlava = node.SelectSingleNode("Sleva").InnerText;
                 decimal cenasdph = 0;
@@ -599,67 +619,70 @@ namespace Cms.Controllers
                     cenasdph = decimal.Parse(cena.Replace(".", ","));
                 }
 
-                var product = db.products.Where(i => i.number == cislo).FirstOrDefault();
-                if (product != null)
+                if (cislo != "")
                 {
-                    product.stock = sklad;
-                    product.price = cenasdph * decimal.Parse("1,2");
-
-                    //ak je produkt v zlave
-                    if (zlava != "0")
+                    var product = db.products.Where(i => i.number == cislo).FirstOrDefault();
+                    if (product != null)
                     {
-                        cenapozlave = product.price * (1 - (decimal.Parse(zlava.Replace(".", ",")) / 100));
-                        product.discountprice = cenapozlave;
-                    }
-                    else
-                    {
-                        product.discountprice = null;
-                    }
-
-                    //odosleme emaily ak existuju watchdogy na dany produkt
-                    var watchdogs = db.watchdog.Where(i => i.prod_id == product.id && i.sent == false).ToList();
-
-                    foreach (var watchdog in watchdogs)
-                    {
-
-                        HelperController helper = new HelperController();
-                        var slug = helper.ToUrlSlug(product.title);
-                        var prodName = product.title;
-                        var prodLink = "https://nahod.sk/detail-produktu/" + product.id + "/" + slug;
-
-                        //odosleme email o uspesnom zaregistrovani
-                        OrdersController oc = new OrdersController();
-                        string body = createWatchdogEmailBody(prodName, prodLink);
-                        oc.SendHtmlFormattedEmail("Požadovaný tovar je naskladnený!", body, watchdog.email, "watchdog", "");
-
-                        watchdog.sent = true;
-                    }
-
-                    db.SaveChanges();
-                }
-                else
-                {
-                    //poku3a sa najst hladany produkt medzi variantami
-                    var productinvariants = db.variants.Where(i => i.number == cislo).FirstOrDefault();
-                    if (productinvariants != null)
-                    {
-                        var variantprice = cenasdph * decimal.Parse("1,2");
-
-                        productinvariants.stock = sklad;
-                        productinvariants.price = variantprice;
+                        product.stock = sklad;
+                        product.price = cenasdph * decimal.Parse("1,2");
 
                         //ak je produkt v zlave
                         if (zlava != "0")
                         {
-                            cenapozlave = variantprice * (1 - (decimal.Parse(zlava.Replace(".", ",")) / 100));
-                            productinvariants.discountprice = cenapozlave;
+                            cenapozlave = product.price * (1 - (decimal.Parse(zlava.Replace(".", ",")) / 100));
+                            product.discountprice = cenapozlave;
                         }
                         else
                         {
-                            productinvariants.discountprice = null;
+                            product.discountprice = null;
+                        }
+
+                        //odosleme emaily ak existuju watchdogy na dany produkt
+                        var watchdogs = db.watchdog.Where(i => i.prod_id == product.id && i.sent == false).ToList();
+
+                        foreach (var watchdog in watchdogs)
+                        {
+
+                            HelperController helper = new HelperController();
+                            var slug = helper.ToUrlSlug(product.title);
+                            var prodName = product.title;
+                            var prodLink = "https://nahod.sk/detail-produktu/" + product.id + "/" + slug;
+
+                            //odosleme email o uspesnom zaregistrovani
+                            OrdersController oc = new OrdersController();
+                            string body = createWatchdogEmailBody(prodName, prodLink);
+                            oc.SendHtmlFormattedEmail("Požadovaný tovar je naskladnený!", body, watchdog.email, "watchdog", "");
+
+                            watchdog.sent = true;
                         }
 
                         db.SaveChanges();
+                    }
+                    else
+                    {
+                        //poku3a sa najst hladany produkt medzi variantami
+                        var productinvariants = db.variants.Where(i => i.number == cislo).FirstOrDefault();
+                        if (productinvariants != null)
+                        {
+                            //var variantprice = cenasdph * decimal.Parse("1,2");
+
+                            productinvariants.stock = sklad;
+                            productinvariants.price = cenasdph;
+
+                            //ak je produkt v zlave
+                            if (zlava != "0")
+                            {
+                                cenapozlave = cenasdph * (1 - (decimal.Parse(zlava.Replace(".", ",")) / 100));
+                                productinvariants.discountprice = cenapozlave;
+                            }
+                            else
+                            {
+                                productinvariants.discountprice = null;
+                            }
+
+                            db.SaveChanges();
+                        }
                     }
                 }
             }
