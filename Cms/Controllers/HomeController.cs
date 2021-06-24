@@ -230,7 +230,7 @@ namespace Cms.Controllers
             model.SlideshowModel = db.slideshow.ToList();
             var brnd = db.brands.Where(i => i.slug == brand).Select(o => o.name);
             var brndID = db.brands.Where(i => i.slug == brand).First().id;
-            
+
             //2.level .. vsetky kategorie produktov ktore su v danom type a maju kategoriu
             if (catslug != null && subslug == null)
             {
@@ -302,7 +302,8 @@ namespace Cms.Controllers
             }
 
             //3.level .. vsetky kategorie produktov ktore su v danom type a maju subkategoriu
-            else if (catslug != null && subslug != null) {
+            else if (catslug != null && subslug != null)
+            {
                 var catId = db.categories.Where(i => i.slug == subslug).First().id;
                 model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && (i.type.Contains("[" + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + "]")) && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]"))).ToList();
             }
@@ -472,7 +473,8 @@ namespace Cms.Controllers
                 XElement doc8 = new XElement("VIDEO_URL", "");
                 XElement doc9 = new XElement("PRICE_VAT", product.price);
                 XElement doc10 = null;
-                if (product.custom3 != null) {
+                if (product.custom3 != null)
+                {
                     foreach (var brand in model.BrandsModel.Where(i => i.id == Int32.Parse(product.custom3)))
                     {
                         doc10 = new XElement("MANUFACTURER", "<![CDATA[" + brand.name + "]]");
@@ -481,6 +483,12 @@ namespace Cms.Controllers
                 else
                 {
                     doc10 = new XElement("MANUFACTURER", "<![CDATA[]]");
+                }
+
+                XElement doc17 = null;
+                if (product.heurekadarcek)
+                {
+                    doc17 = new XElement("GIFT", product.heurekadarcektext);
                 }
 
                 XElement doc13 = new XElement("PRODUCTNO", product.number);
@@ -527,38 +535,58 @@ namespace Cms.Controllers
                 xRoot2.Add(doc8);
                 xRoot2.Add(doc9);
                 xRoot2.Add(doc10);
+                xRoot2.Add(doc17);
 
                 dynamic cats2 = JsonConvert.DeserializeObject(product.category);
-                foreach (var thisCatId in cats2)
+                XElement doc11 = null;
+                List<int> orderedCats = new List<int>();
+                foreach (var siglecat in cats2)
+                {
+                    int value = int.Parse(siglecat.Value.ToString());
+                    orderedCats.Add(value);
+                }
+                orderedCats.Sort();
+
+                foreach (var thisCatId in orderedCats.Take(1))
                 {
 
                     url_part1 = "";
                     url_part2 = "";
                     url_part3 = "";
-
-                    int thisCatIdInt = Int32.Parse(thisCatId.Value.ToString());
-                    var cat = model.CategoriesModel.Where(o => o.id == thisCatIdInt).FirstOrDefault();
+;
+                    var cat = model.CategoriesModel.Where(o => o.id == thisCatId).FirstOrDefault();
 
                     if (cat.maincat != "Žiadna")
                     {
-                        foreach (var topcat in model.CategoriesModel.Where(o => o.name == cat.maincat))
+                        var catid = int.Parse(cat.maincat);
+                        foreach (var topcat in model.CategoriesModel.Where(o => o.id == catid))
                         {
                             url_part1 = topcat.name;
-
-                            foreach (var subcat in model.CategoriesModel.Where(o => o.name == cat.topcat && o.topcat == cat.maincat))
+                            if (cat.topcat != "Žiadna")
                             {
-                                url_part2 = subcat.name;
-                                url_part3 = cat.name;
+                                var topcatid = int.Parse(cat.topcat);
+
+                                foreach (var subcat in model.CategoriesModel.Where(o => o.id == topcatid && o.topcat == cat.maincat))
+                                {
+                                    url_part2 = " | " + subcat.name;
+                                    url_part3 = " | " + cat.name;
+                                }
                             }
                         }
                     }
-                    else {
+                    else
+                    {
                         url_part1 = cat.name;
                     }
 
-                    XElement doc11 = new XElement("CATEGORYTEXT", url_part1 + " | " + url_part2 + " | " + url_part3);
-                    xRoot2.Add(doc11);
+                    if (url_part1 == "PRÚTY")
+                    {
+                        url_part1 = "Rybárske prúty";
+                    }
+
+                    doc11 = new XElement("CATEGORYTEXT", "Hobby | Rybárčenie | " + url_part1 + url_part2 + url_part3);
                 }
+                xRoot2.Add(doc11);
 
                 xRoot2.Add(doc13);
                 xRoot2.Add(doc14);
@@ -718,7 +746,7 @@ namespace Cms.Controllers
         public ActionResult ProductDetail(int? id)
         {
             var model = new MultipleIndexModel();
-            if (Request.Cookies["userid"]!= null)
+            if (Request.Cookies["userid"] != null)
             {
                 var userToSend = Int32.Parse(Request.Cookies["userid"].Value);
                 model.AllUsersMetaModel = db.usersmeta.Where(i => i.userid == userToSend).ToList();
@@ -960,7 +988,8 @@ namespace Cms.Controllers
         }
 
         [Route("zmenahesla/{token}")]
-        public ActionResult PasswordChange(string token) {
+        public ActionResult PasswordChange(string token)
+        {
 
             //overime, ci token bol vygenerovany do 30m odteraz a ci vobec existuje
             var userstoken = db.userstoken.Where(i => i.token == token).FirstOrDefault();
@@ -974,7 +1003,8 @@ namespace Cms.Controllers
                 if (DateTime.Compare(before, now) > 0)
                 {
 
-                    if (userstoken.type == "reset") {
+                    if (userstoken.type == "reset")
+                    {
                         ViewData["info"] = "Po prihlásení si prosím doplňte vaše fakturačné údaje v sekcii <strong>Môj účet.</strong>";
                     }
 
