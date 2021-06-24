@@ -387,6 +387,7 @@ namespace Cms.Controllers
         private string createRatingEmailBody(string orderNumber, string discount)
         {
             var orderdetail = db.orders.Where(i => i.ordernumber == orderNumber).ToList();
+            var ownerEmail = db.settings.Select(i => i.email).FirstOrDefault();
 
             string body = string.Empty;
             //using streamreader for reading my htmltemplate   
@@ -398,6 +399,8 @@ namespace Cms.Controllers
             var str = "Ďakujeme za vaše objednávky a zároveň Vás posúvame do vyššej zľavovej skupiny a dostávate zákaznicku zľavu <span style='white-space:nowrap;'>" + discount + " %.</span>";
 
             body = body.Replace("{Text}", str);
+            body = body.Replace("{CompanyData}", CompanyDataInEmial());
+            body = body.Replace("{CustomerService}", ownerEmail);
 
             return body;
         }

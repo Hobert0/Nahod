@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -351,6 +352,7 @@ namespace Cms.Controllers
         {
 
             string body = string.Empty;
+            var ownerEmail = db.settings.Select(i => i.email).FirstOrDefault();
             //using streamreader for reading my htmltemplate   
             using (StreamReader rea = new StreamReader(Server.MapPath("~/Views/Shared/RegisterEmail.cshtml")))
             {
@@ -360,8 +362,20 @@ namespace Cms.Controllers
             var str = "Ďakujeme za prihlásenie sa k odberu noviniek. Za odmenu od nás získavate kupón na <strong><u>zľavu 10%</u></strong> na všetok nezľavnený tovar.";
             str += "<br><br>Pri objednávke stačí zadať kód <strong><u>NAHOD10</u></strong> a zľava 10% sa automaticky uplatní.";
             body = body.Replace("{Text}", str);
+            body = body.Replace("{CompanyData}", CompanyDataInEmial());
+            body = body.Replace("{CustomerService}", ownerEmail);
 
             return body;
+        }
+
+        private string CompanyDataInEmial()
+        {
+            var stringBuilder = new StringBuilder();
+            foreach (var info in db.e_settings)
+            {
+                stringBuilder.Append("<p>So srdečným pozdravom, " + info.companyname + " <br>IČ DPH: " + info.icdph + " <br>IČ: " + info.ico + " <br>" + info.address + ", " + @info.city + " " + info.custom + "</p>");
+            }
+            return stringBuilder.ToString();
         }
 
     }
