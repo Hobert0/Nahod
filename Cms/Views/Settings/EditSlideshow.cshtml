@@ -33,7 +33,7 @@
             <div class="col">
                 <div class="col-md-14 btnvyber">
                     <strong>@Html.LabelFor(model => model.TitleImage, "Pridať obrázok do slideshow", htmlAttributes: new { @class = "control-label col-md-12 vyberf px-0" })</strong>
-                    <p class="alert alert-info">Zaručená správnosť zobrazenia slideshow je v rozmeroch<strong>1920x600px pre PC</strong> a <strong>370x220px pre mobil</strong>.</p>
+                    <p class="alert alert-info">Zaručená správnosť zobrazenia slideshow je v rozmeroch <strong>1920x600px pre PC</strong> a <strong>370x220px pre mobil</strong>.</p>
                     <a id="btn_vis" style="cursor:pointer">Vyber fotografie</a>
                     @Html.TextBoxFor(model => model.TitleImage, "", new { @type = "file", @class = "form-control", @accept = "jpg|png|jpeg|gif", @style = "max-width: 67%;height:60px;display:none;", @id = "bttn", @onchange = "pressed()" })
                     <label id="fileLabel">Nie je vybratá žiadna fotografia.</label>
