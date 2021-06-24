@@ -227,7 +227,7 @@
                         var slug = helper.ToUrlSlug(prod.title);
                         <div class="col-md product mx-1">
                             <a href="/detail-produktu/@prod.id/@slug">
-                                <div class="thumb" style="background-image: url(/Uploads/@prod.image); height: 11vw;background-size:contain;">
+                                <div class="thumb" style="background-image: url('/Uploads/@prod.image'); height: 11vw;background-size:contain;">
                                 </div>
                                 <div class="prod-labels">
                                     @{
@@ -516,7 +516,7 @@
                         var slug = helper.ToUrlSlug(prod.title);
                         <div class="col-md product mx-1">
                             <a href="/detail-produktu/@prod.id/@slug">
-                                <div class="thumb" style="background-image: url(/Uploads/@prod.image); height: 11vw;background-size:contain;"></div>
+                                <div class="thumb" style="background-image: url('/Uploads/@prod.image'); height: 11vw;background-size:contain;"></div>
                                 <div class="prod-labels">
                                     @{
                                         if (isDiscounted == true)
