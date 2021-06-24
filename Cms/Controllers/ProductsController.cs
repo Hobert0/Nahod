@@ -42,6 +42,7 @@ namespace Cms.Controllers
                 CategoriesModel model = new CategoriesModel();
                 foreach (var category in allCategories)
                 {
+
                     model.Id = category.id;
                     model.Name = category.name;
                     model.Slug = category.slug;
@@ -52,10 +53,14 @@ namespace Cms.Controllers
                     model.Heureka = category.heureka;
                     model.HeurekaDarcek = category.heurekadarcek;
                     model.HeurekaDarcekText = category.heurekadarcektext;
+                    model.HeurekaKategoria = category.heurekacat;
+                    model.HeurekaKategoriaNazov = category.heurekacatname;
                     model.Image = category.image;
                     ViewData["maincat"] = SelectionKategorieMain();
                     ViewData["topcat"] = SelectionKategorieNew();
                     ViewData["topcat2"] = SelectionKategoria();
+
+                    ViewData["heurekaCategories"] = SelectionHeurekaKategoria();
                 }
                 return View(model);
             }
@@ -87,6 +92,8 @@ namespace Cms.Controllers
             {
                 o.heurekadarcektext = null;
             }
+            o.heurekacat = model.HeurekaKategoria;
+            o.heurekacatname = model.HeurekaKategoriaNazov;
             db.SaveChanges();
 
             return RedirectToAction("ProductCats", "Products");
@@ -360,7 +367,69 @@ namespace Cms.Controllers
             return znacka;
         }
 
-        public List<SelectListItem> SelectionZaradenie()
+        public List<SelectListItem> SelectionHeurekaKategoria()
+        {
+            List<SelectListItem> heurekaCategories = new List<SelectListItem>();
+            heurekaCategories.Add(new SelectListItem { Text = "", Value = "" });
+            heurekaCategories.Add(new SelectListItem { Text = "Kategoria pruty", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske prúty" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Kaprove pruty", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske prúty" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Feeder pruty", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske prúty" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Teleskopicke pruty", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske prúty" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Sumcove a morske pruty", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske prúty" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Privlacove pruty", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske prúty" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Biče a delicky", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske prúty" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Spodove a markerovacie pruty", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske prúty" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Matchove a bolognesove pruty", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske prúty" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Cestovne pruty", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske prúty" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Doplnky k prutom", Value = "Heureka.sk | Hobby | Rybárčenie | Pásky a koncovky na prúty" });
+
+            heurekaCategories.Add(new SelectListItem { Text = "Kategoria Navijaky", Value = "Heureka.sk | Hobby | Rybárčenie | Navijaky" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Predná brza", Value = "Heureka.sk | Hobby | Rybárčenie | Navijaky" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Baitrunner", Value = "Heureka.sk | Hobby | Rybárčenie | Navijaky" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Zadna brzda", Value = "Heureka.sk | Hobby | Rybárčenie | Navijaky" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Multiplikator", Value = "Heureka.sk | Hobby | Rybárčenie | Navijaky" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Doplnky k prútom", Value = "E. Heureka.sk | Hobby | Rybárčenie | Príslušenstvo k navijakom" });
+
+            heurekaCategories.Add(new SelectListItem { Text = "Kemping", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske bivaky a prístrešky" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Bivaky a prístrešky", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske bivaky a prístrešky" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Kreslá a stoličky", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske sedačky a lehátka" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Lehátka", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske sedačky a lehátka" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Dážniky", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske bivaky a prístrešky" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Spacáky", Value = "Heureka.sk | Šport | Outdoorové vybavenie | Spacáky" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Čelovky a svetlá", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske osvetlenia" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Stolíky do bivaku", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske bivaky a prístrešky" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Prehozy a doplnky", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske bivaky a prístrešky" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Tasky, batohy", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárské obaly a batohy" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Termo a jedálenské tašky", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárské obaly a batohy" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Príprava jedla, nadoby, ohrevy", Value = "Heureka.sk | Šport | Outdoorové vybavenie | Outdoorové variče" });
+
+            heurekaCategories.Add(new SelectListItem { Text = "Stojany a hlásiče", Value = "Heureka.sk | Hobby | Rybárčenie | Stojany a vidlice na prúty" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Stojany", Value = "Heureka.sk | Hobby | Rybárčenie | Stojany a vidlice na prúty" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Hlásiče", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske signalizátory" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Sady signalizátorov", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske signalizátory" });
+
+            heurekaCategories.Add(new SelectListItem { Text = "Starostlivosť o úlovok", Value = "Heureka.sk | Hobby | Rybárčenie | Podberáky a vezírky" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Podberáky", Value = "Heureka.sk | Hobby | Rybárčenie | Podberáky a vezírky" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Sietky, saky, čerene", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske saky a vážiace tašky" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Podlozky pod ryby", Value = "Heureka.sk | Hobby | Rybárčenie | Podložky pod ryby" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Vahy a metre", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske váhy" });
+
+            heurekaCategories.Add(new SelectListItem { Text = "Člny", Value = "Heureka.sk | Šport | Vodné športy | Vodácke príslušenstvo | Člny" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Člny", Value = "Heureka.sk | Šport | Vodné športy | Vodácke príslušenstvo | Člny" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Elektromotory", Value = "Heureka.sk | Šport | Vodné športy | Vodácke príslušenstvo | Vodácke doplnky" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Sonary", Value = "Heureka.sk | Hobby | Rybárčenie | Echoloty a sonary" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Zavazacie lodky", Value = "Heureka.sk | Hobby | Rybárčenie | Echoloty a sonary" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Vesty", Value = "Heureka.sk | Šport | Vodné športy | Vodácke príslušenstvo | Záchranné vesty" });
+
+            heurekaCategories.Add(new SelectListItem { Text = "Oblečenie", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske oblečenie | Rybárské komplety" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Rybárske komplety", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske oblečenie | Rybárské komplety" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Prsačky a gumáky", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske oblečenie | Rybárske prsačky" });
+            heurekaCategories.Add(new SelectListItem { Text = "___Rybárska obuv", Value = "Heureka.sk | Hobby | Rybárčenie | Rybárske oblečenie | Rybárská obuv" });
+
+            return heurekaCategories;
+        }
+
+public List<SelectListItem> SelectionZaradenie()
         {
             List<SelectListItem> znacka = new List<SelectListItem>();
             znacka.Add(new SelectListItem { Text = "", Value = "" });
@@ -378,7 +447,7 @@ namespace Cms.Controllers
             znacka.Add(new SelectListItem { Text = "", Value = "" });
             foreach (var cat in db.categories.Where(i => i.topcat == "Žiadna" && i.maincat != "Žiadna"))
             {
-                znacka.Add(new SelectListItem { Text = cat.name, Value = cat.name.ToString() });
+                znacka.Add(new SelectListItem { Text = cat.name, Value = cat.id.ToString() });
             }
             return znacka;
         }
@@ -1651,6 +1720,8 @@ namespace Cms.Controllers
                 o.heurekadarcektext = null;
             }
             o.image = ulozObrazok + nazovSuboru;
+            o.heurekacat = null;
+            o.heurekacatname = null;
 
             db.categories.Add(o);
             db.SaveChanges();

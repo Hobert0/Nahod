@@ -181,6 +181,27 @@
         </div>
     </div>
 
+    
+    <div class="row">
+        <div class="mt-1 text-right" style="width: 180px;">
+            <strong>@Html.LabelFor(model => model.HeurekaKategoria, "Heureka Kategória")</strong>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <div class="col-md-12">
+
+
+                    @Html.DropDownListFor(model => model.HeurekaKategoria, (IEnumerable<SelectListItem>)ViewData["heurekaCategories"], Model.HeurekaKategoria, new { @class = "form-control", id = "heu-cat-" + Model.Id })
+                    @Html.ValidationMessageFor(model => model.HeurekaKategoria, "", new { @class = "text-danger" })
+
+
+                    @Html.HiddenFor(model => model.HeurekaKategoriaNazov, Model.HeurekaKategoriaNazov)
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
     <div class="form-group">
         <div style="text-align:right">
             <input type="submit" value="Uložiť zmeny" id="btnSubmit" class="btn btn-success" />
@@ -197,6 +218,35 @@
 <script>
 
     $(document).ready(function () {
+
+        //init kategorie
+        $maincatval = $("select[name=Maincat] option").eq(0).text();
+        $topcatval = $("select[name=Topcat] option").eq(0).text();
+        $topcat2val = $("select[name=Topcat2] option").eq(0).text();
+        $heucatval = $("select[name=HeurekaKategoria] option").eq(0).text();
+
+        if ($maincatval != "Žiadna")
+            $("select[name=Maincat]").val($maincatval);
+
+        if ($topcatval != "Žiadna")
+            $("select[name=Topcat]").val($topcatval);
+
+        if ($topcat2val != "Žiadna")
+            $("select[name=Topcat2]").val($topcat2val);
+
+        if ($heucatval != "") {
+
+            $heucatname = $("#HeurekaKategoriaNazov").val();
+            $('select[name=HeurekaKategoria] option').filter(function () {
+                return ($(this).text() == $heucatname);
+            }).prop('selected', true);
+        }
+
+        $("select[name=HeurekaKategoria]").change(function () {
+            $optionname = $(this).find("option:selected").text();
+            $("input[name=HeurekaKategoriaNazov]").val($optionname);
+        });
+
         $("#HeurekaDarcek").click(function () {
             if ($("#HeurekaDarcek").is(":checked")) {
                 $("#HeurekaDarcekText").parents(".row").removeClass("d-none");

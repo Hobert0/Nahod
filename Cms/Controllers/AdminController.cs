@@ -691,6 +691,7 @@ namespace Cms.Controllers
         {
 
             string body = string.Empty;
+            var ownerEmail = db.settings.Select(i => i.email).FirstOrDefault();
             //using streamreader for reading my htmltemplate   
             using (StreamReader rea = new StreamReader(Server.MapPath("~/Views/Shared/RegisterEmail.cshtml")))
             {
@@ -700,8 +701,20 @@ namespace Cms.Controllers
             var str = "Ďakujeme " + name + " za registráciu, stali ste sa našim <strong><u>bronzovým zákazníkom</u></strong>. Odteraz získavate automaticky <strong><u>zľavu 5%</u></strong> na všetok nezľavnený tovar.";
             str += "<br><br>Pri ďalších objednávkach môžete získať <strong><u>zľavu až 15%</u></strong><br><ul><li>Bronzový zákazník zľava 5% ihneď po registrácií</li><li>Strieborný zákazník zľava 10%, ak je výška všetkých predošlých objednávok nad 500€</li><li>Zlatý zákazník zľava 15%, ak je výška všetkých predošlých objednávok nad 1000€</li></ul>";
             body = body.Replace("{Text}", str);
+            body = body.Replace("{CompanyData}", CompanyDataInEmial());
+            body = body.Replace("{CustomerService}", ownerEmail);
 
             return body;
+        }
+
+        private string CompanyDataInEmial()
+        {
+            var stringBuilder = new StringBuilder();
+            foreach (var info in db.e_settings)
+            {
+                stringBuilder.Append("<p>So srdečným pozdravom, " + info.companyname + " <br>IČ DPH: " + info.icdph + " <br>IČ: " + info.ico + " <br>" + info.address + ", " + @info.city + " " + info.custom + "</p>");
+            }
+            return stringBuilder.ToString();
         }
 
         /*Countries*/

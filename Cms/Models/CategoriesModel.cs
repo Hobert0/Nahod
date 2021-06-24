@@ -19,6 +19,8 @@ namespace Cms.Models
         public bool Heureka { get; set; }
         public bool HeurekaDarcek { get; set; }
         public string HeurekaDarcekText { get; set; }
+        public string HeurekaKategoria { get; set; }
+        public string HeurekaKategoriaNazov { get; set; }
         public string Image { get; set; }
         public int Ordering { get; set; }
         public HttpPostedFileBase[] TitleImage { get; set; }

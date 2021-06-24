@@ -1076,6 +1076,7 @@ namespace Cms.Controllers
         {
 
             string body = string.Empty;
+            var ownerEmail = db.settings.Select(i => i.email).FirstOrDefault();
             //using streamreader for reading my htmltemplate   
             using (StreamReader rea = new StreamReader(Server.MapPath("~/Views/Shared/RegisterEmail.cshtml")))
             {
@@ -1086,8 +1087,20 @@ namespace Cms.Controllers
 
             var str = "Kliknite na naslednovný link do 30 minút:" + link;
             body = body.Replace("{Text}", str);
+            body = body.Replace("{CompanyData}", CompanyDataInEmial());
+            body = body.Replace("{CustomerService}", ownerEmail);
 
             return body;
+        }
+
+        private string CompanyDataInEmial()
+        {
+            var stringBuilder = new StringBuilder();
+            foreach (var info in db.e_settings)
+            {
+                stringBuilder.Append("<p>So srdečným pozdravom, " + info.companyname + " <br>IČ DPH: " + info.icdph + " <br>IČ: " + info.ico + " <br>" + info.address + ", " + @info.city + " " + info.custom + "</p>");
+            }
+            return stringBuilder.ToString();
         }
 
     }
