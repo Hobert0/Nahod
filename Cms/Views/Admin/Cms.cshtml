@@ -186,64 +186,64 @@ function parseDate(input) {
             {
                 userCategory = "Zlatý";
             }
+<tr style="@trStyle">
 
-            <tr style="@trStyle">
-                @{if (item.status == 2)
-                    {
-                        <td class="p-0" style="width: 1px;">
-                            <div class="popover__wrapper" style="display: inline-block;position: absolute; margin-left: -20px;margin-top: -40px;">
-                                <a href="#">
-                                    <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
-                                </a>
-                                <div class="push popover__content">
-                                    <p class="popover__message">Stornovaná objednávka!</p>
-                                </div>
-                            </div>
-                        </td>
-                    }
-                    else
-                    {
-                        <td class="p-0" style="width: 1px;"></td>
-                    }
-                }
-
-
-                <td style="@stornostyle">@Html.DisplayFor(modelItem => item.ordernumber)</td>
-                <td style="@stornostyle"><strong>@Html.DisplayFor(modelItem => item.name) @Html.DisplayFor(modelItem => item.surname)</strong><br>@Html.DisplayFor(modelItem => item.address), @Html.DisplayFor(modelItem => item.city) @Html.DisplayFor(modelItem => item.zip)</td>
-                <td style="@stornostyle">@Html.DisplayFor(modelItem => item.date)</td>
-                <td style="@stornostyle">@payment</td>
-                <td style="@stornostyle">@trans</td>
-                <td style="background-color: #e4ffe3; white-space: nowrap;text-align: center;@stornostyle"><strong>@Html.DisplayFor(modelItem => item.finalprice) €</strong></td>
-
-                <td style="@stornostyle">@Html.DisplayFor(modelItem => item.comment)</td>
-                <td class="editable" style="@stornostyle width:35vw;">@Html.DisplayFor(modelItem => item.note)</td>
-                <td style="@stornostyle">@status</td>
-                <!--
-                <td style="@stornostyle">
-                    @using (Html.BeginForm("UpdateOrderNote", "Orders", FormMethod.Post, new { id = "NoteForm" }))
-                    {
-                        @Html.TextArea("orderNote", new { @class = "form-control", placeholder = "Poznámka", Name = "orderNote", Value = item.comment })
-                        @Html.Hidden("orderId", item.id)
-
-                        <div class="form-group" style="margin-bottom:0px;">
-                            <div style="text-align: right">
-                                <input type="submit" value="Uložiť" class="btn btn-success" style="font-size:10px;margin: 0 auto;display: block;" />
-                            </div>
-                        </div>
-                    }
-                </td>
-                -->
-                <td style="@stornostyle width:30vw;" align="center">@Html.ActionLink("Detail", "OrderDetail", "Orders", new { orderNumber = item.ordernumber }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#10003;"), "FinishedOrder", "Orders", new { orderNumber = item.ordernumber, confirm = true }, new { onclick = "return confirm('Naozaj chcete potvdiť objednávku ako odoslanú?')", @class = "btn btn-success finished", style = "padding:.375rem .75rem !important;" + visibility + "", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne potvrdíte objednávku." }) @Html.ActionLink(HttpUtility.HtmlDecode("&#9747;"), "StornoOrder", "Orders", new { id = item.ordernumber, confirm = true }, new { onclick = "return confirm('Naozaj chcete stornovať objednávku??')", @class = "btn btn-danger", style = "padding:.375rem .75rem !important;" + visibilityStorno + "", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne stornujete objednávku." })</td>
-                <!--
-                <td>
-                    <a style="@stornostyle" href="@Url.Action("PdfOrder", "Orders", new { orderNumber = item.ordernumber })"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF faktúra" title="PDF faktúra" /></a> @{if (item.status == 2)
-                        {<a href="@Url.Action("PdfStorno", "Orders", new { orderNumber = item.ordernumber })"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF dobropis" title="PDF dobropis" /></a>}}
-                </td>
-                -->
-                <td style="@stornostyle">@userCategory</td>
+    @{if (item.status == 2)
+        {
+            <td class="p-0" style="width: 1px;">
+                <div class="popover__wrapper" style="display: inline-block;position: absolute; margin-left: 10px;margin-top: 7px;">
+                    <a href="#">
+                        <strong class="popover__title"><img src="/Content/images/infobox_info_icon.svg" style="width: 18px;" /></strong>
+                    </a>
+                    <div class="push popover__content">
+                        <p class="popover__message">Stornovaná objednávka!</p>
+                    </div>
+                </div>
+            </td>
+        }
+        else
+        {
+            <td class="p-0" style="width: 1px;"></td>
+        }
+    }
 
 
-            </tr>
+    <td style="@stornostyle">@Html.DisplayFor(modelItem => item.ordernumber)</td>
+    <td style="@stornostyle"><strong>@Html.DisplayFor(modelItem => item.name) @Html.DisplayFor(modelItem => item.surname)</strong><br>@Html.DisplayFor(modelItem => item.address), @Html.DisplayFor(modelItem => item.city) @Html.DisplayFor(modelItem => item.zip)</td>
+    <td style="@stornostyle">@Html.DisplayFor(modelItem => item.date)</td>
+    <td style="@stornostyle">@payment</td>
+    <td style="@stornostyle">@trans</td>
+    <td style="background-color: #e4ffe3; white-space: nowrap;text-align: center;@stornostyle"><strong>@Html.DisplayFor(modelItem => item.finalprice) €</strong></td>
+
+    <td style="@stornostyle">@Html.DisplayFor(modelItem => item.comment)</td>
+    <td class="editable" style="@stornostyle width:35vw;">@Html.DisplayFor(modelItem => item.note)</td>
+    <td style="@stornostyle">@status</td>
+    <!--
+    <td style="@stornostyle">
+        @using (Html.BeginForm("UpdateOrderNote", "Orders", FormMethod.Post, new { id = "NoteForm" }))
+        {
+            @Html.TextArea("orderNote", new { @class = "form-control", placeholder = "Poznámka", Name = "orderNote", Value = item.comment })
+            @Html.Hidden("orderId", item.id)
+
+            <div class="form-group" style="margin-bottom:0px;">
+                <div style="text-align: right">
+                    <input type="submit" value="Uložiť" class="btn btn-success" style="font-size:10px;margin: 0 auto;display: block;" />
+                </div>
+            </div>
+        }
+    </td>
+    -->
+    <td style="@stornostyle width:30vw;" align="center">@Html.ActionLink("Detail", "OrderDetail", "Orders", new { orderNumber = item.ordernumber }, new { @class = "btn btn-warning", style = "color: #ffffff !important;" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#10003;"), "FinishedOrder", "Orders", new { orderNumber = item.ordernumber, confirm = true }, new { onclick = "return confirm('Naozaj chcete potvdiť objednávku ako odoslanú?')", @class = "btn btn-success finished", style = "padding:.375rem .75rem !important;" + visibility + "", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne potvrdíte objednávku." }) @Html.ActionLink(HttpUtility.HtmlDecode("&#9747;"), "StornoOrder", "Orders", new { id = item.ordernumber, confirm = true }, new { onclick = "return confirm('Naozaj chcete stornovať objednávku??')", @class = "btn btn-danger", style = "padding:.375rem .75rem !important;" + visibilityStorno + "", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne stornujete objednávku." })</td>
+    <!--
+    <td>
+        <a style="@stornostyle" href="@Url.Action("PdfOrder", "Orders", new { orderNumber = item.ordernumber })"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF faktúra" title="PDF faktúra" /></a> @{if (item.status == 2)
+            {<a href="@Url.Action("PdfStorno", "Orders", new { orderNumber = item.ordernumber })"><img src="~/Content/images/icon-pdf.png" style="width: 30px;" alt="PDF dobropis" title="PDF dobropis" /></a>}}
+    </td>
+    -->
+    <td style="@stornostyle">@userCategory</td>
+
+
+</tr>
         }
     }
 

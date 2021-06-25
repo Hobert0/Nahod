@@ -442,13 +442,18 @@ namespace Cms.Controllers
             model.EsettingsModel = db.e_settings.ToList();
 
             List<products> finalProds = new List<products>();
-
+            HashSet<products> allProds = new HashSet<products>();
             foreach (var cat in cats)
             {
                 var catId = cat.id.ToString();
 
                 var filteredProds = db.products.Where(i => i.deleted == false && i.active == true && i.heureka == true && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]"))).ToList();
                 finalProds.AddRange(filteredProds);
+            }
+
+            foreach(var hash in finalProds)
+            {
+                allProds.Add(hash);
             }
 
             XDocument xdoc = new XDocument(
@@ -458,7 +463,7 @@ namespace Cms.Controllers
             XElement xRoot = new XElement("SHOP");
             xdoc.Add(xRoot);
 
-            foreach (var product in finalProds)
+            foreach (var product in allProds)
             {
                 var prodDesc = Regex.Replace(product.description, "<.*?>", String.Empty);
 
@@ -553,7 +558,7 @@ namespace Cms.Controllers
                     url_part1 = "";
                     url_part2 = "";
                     url_part3 = "";
-;
+
                     var cat = model.CategoriesModel.Where(o => o.id == thisCatId).FirstOrDefault();
 
                     if (cat.maincat != "Žiadna")
@@ -584,7 +589,14 @@ namespace Cms.Controllers
                         url_part1 = "Rybárske prúty";
                     }
 
-                    doc11 = new XElement("CATEGORYTEXT", "Hobby | Rybárčenie | " + url_part1 + url_part2 + url_part3);
+                    if (cat.heurekacat == null)
+                    {
+                        doc11 = new XElement("CATEGORYTEXT", "Hobby | Rybárčenie | " + url_part1 + url_part2 + url_part3);
+                    }
+                    else
+                    {
+                        doc11 = new XElement("CATEGORYTEXT", cat.heurekacat);
+                    }
                 }
                 xRoot2.Add(doc11);
 
