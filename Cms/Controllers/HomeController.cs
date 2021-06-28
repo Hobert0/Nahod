@@ -620,6 +620,96 @@ namespace Cms.Controllers
             return Content(strXml.ToString(), "application/xml");
         }
 
+        [Route("stockfeed")]
+        public ActionResult StockFeed()
+        {
+            MultipleIndexModel model = new MultipleIndexModel();
+            MemoryStream ms = new MemoryStream();
+            XmlWriterSettings xws = new XmlWriterSettings();
+            xws.OmitXmlDeclaration = true;
+            xws.Indent = true;
+            var url_part1 = "";
+            var url_part2 = "";
+            var url_part3 = "";
+
+            //model.ProductModel = db.products.Where(i => i.deleted == false && i.heureka == true).ToList();
+            //var prods = db.products.Where(i => i.deleted == false && i.heureka == true).ToList();
+            //model.BrandsModel = db.brands.ToList();
+            //model.CategoriesModel = db.categories.Where(i => i.deleted == false).ToList();
+            var cats = db.categories.Where(i => i.deleted == false && i.heureka == true).ToList();
+            //model.EsettingsModel = db.e_settings.ToList();
+
+            List<products> finalProds = new List<products>();
+            HashSet<products> allProds = new HashSet<products>();
+            foreach (var cat in cats)
+            {
+                var catId = cat.id.ToString();
+
+                var filteredProds = db.products.Where(i => i.deleted == false && i.active == true && i.heureka == true && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]"))).ToList();
+                finalProds.AddRange(filteredProds);
+            }
+
+            foreach (var hash in finalProds)
+            {
+                allProds.Add(hash);
+            }
+
+            XDocument xdoc = new XDocument(
+                new XDeclaration("1.0", "utf-8", "yes")
+            );
+
+            XElement xRoot = new XElement("item_list");
+            xdoc.Add(xRoot);
+
+            foreach (var product in allProds)
+            {
+                //uvadzat len produkty, ktore maju sklad > 0
+                if (product.stock != null && Int32.Parse(product.stock) > 0)
+                {
+                    XElement xRoot2 = new XElement("item");
+                    xRoot2.SetAttributeValue("id", product.id);
+                    XElement doc2 = new XElement("stock_quantity", product.stock);
+
+                    var dnow = DateTime.ParseExact(DateTime.Now.ToString("MM/dd/yyyy 12:00:00"), "MM/dd/yyyy HH:mm:ss",null);
+
+                    if (DateTime.Now > dnow) {
+                        //zajtra
+                        dnow = dnow.AddDays(1);
+                    } 
+                   
+                    XElement doc3 = new XElement("delivery_time", dnow.AddDays(3).ToString("yyyy-MM-dd hh:mm"));
+                    doc3.SetAttributeValue("orderDeadline", dnow.ToString("yyyy-MM-dd hh:mm"));
+
+                    XElement doc4 = new XElement("depot");
+                    doc4.SetAttributeValue("id", 4383); 
+
+                    XElement doc5 = new XElement("pickup_time", dnow.AddDays(1).ToString("yyyy-MM-dd hh:mm"));
+                    doc5.SetAttributeValue("orderDeadline", dnow.ToString("yyyy-MM-dd hh:mm"));
+
+                    XElement doc6 = new XElement("stock_quantity", product.stock);
+
+                    xRoot.Add(xRoot2);
+                    xRoot2.Add(doc2);
+                    xRoot2.Add(doc3);
+                    xRoot2.Add(doc4);
+                    doc4.Add(doc5);
+                    doc4.Add(doc6);
+                }
+            }
+
+            string strXml;
+            using (var mss = new MemoryStream())
+            {
+                xdoc.Save(mss);
+                mss.Position = 0;
+                using (var sr = new StreamReader(mss))
+                {
+                    strXml = sr.ReadToEnd();
+                }
+            }
+            return Content(strXml.ToString(), "application/xml");
+        }
+
         [Route("kosik")]
         public ActionResult Basket()
         {
