@@ -6,6 +6,16 @@ $(document).ready(function () {
 });
 
 $(".productfilter").change(function (e) {
+    renderProducts(undefined, undefined, filteredData, undefined, false);
+});
+
+function productsFilterCheck() {
+    let searchParams = new URLSearchParams(window.location.search);
+    let page = searchParams.get('page');
+
+    if (page < 1) {
+        page = 1
+    } 
     var filteredData = allproductsdata.slice();
 
     let dropdownValTyp = $('#Typ').val();
@@ -104,14 +114,15 @@ $(".productfilter").change(function (e) {
         }
     }
     
-    if(allproductsdata.length != filteredData.lenght) {
+    if (filteredData != null && allproductsdata.length != filteredData.length) {
     	$('#resetfilter').show();
     }else{
 		$('#resetfilter').hide();
-    }
+}
 
-    renderProducts(undefined, undefined, filteredData, undefined, false);
-});
+return filteredData;
+    //renderProducts(page, undefined, filteredData, undefined, false);
+}
 
 $(".sortbyprice").click(function (e) {
     var url = new URL(window.location.href);

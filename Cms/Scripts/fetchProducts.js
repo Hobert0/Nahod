@@ -94,7 +94,11 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
         window.history.replaceState({}, '', window.location.pathname)
     }
 
-    if (pagechanged) $("html").animate({ scrollTop: 0 }, "slow");
+    alldata = productsFilterCheck();
+
+    if (pagechanged) {
+        $("html").animate({ scrollTop: 0 }, "slow");
+    };
 
     const sorted = localStorage.getItem('sorted');
     if (sorted) {
@@ -157,12 +161,13 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
             $row += '<span class="prod-discount">akcia</span>';
         }
 
-        //zistim ci sa jedna o novinku, je starsia menej ako 10 dni
-        var postedDate = Date.parse(item.date);
+        //zistim ci sa jedna o novinku, je starsia menej ako 15 dni
+        var dateOfInsert = item.date.replaceAll(". ", "-").slice(0, -9).split('-');
+        var postedDate = new Date(dateOfInsert[2], dateOfInsert[1] - 1, dateOfInsert[0]).getTime();
         var date10days = new Date();
-        date10days = date10days.setDate(date10days.getDate() - 10);
+        date10days = date10days.setDate(date10days.getDate() - 15);
 
-        if (postedDate <= date10days) {
+        if (postedDate >= date10days) {
             $row += '<span class="prod-new">novinka</span>';
         }
         $row += '</div><div class="prod-header">' + item.title + '</div>';

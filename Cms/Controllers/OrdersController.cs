@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -285,11 +286,15 @@ namespace Cms.Controllers
             string body = this.createEmailBody(o.ordernumber, "customer");
             string body_owner = this.createEmailBody(o.ordernumber, "owner");
             this.SendHtmlFormattedEmail("Ďakujeme za objednávku!", body, o.email, "customer", o.ordernumber);
-            this.SendHtmlFormattedEmail("OBJEDNÁVKA Č.: "+ o.ordernumber+"", body_owner, ownerEmail, "owner", o.ordernumber);
+            this.SendHtmlFormattedEmail("OBJEDNÁVKA Č.: " + o.ordernumber + "", body_owner, ownerEmail, "owner", o.ordernumber);
 
             //remove session
             Session["cartitems"] = new List<dynamic>();
             Session["cartsum"] = 0;
+
+            //heureka Overené zákazníkmi
+            heurekaOvereneZakaznikmi(o.email, o.ordernumber);
+            
 
             return RedirectToAction("ThankYou", new { orderNumber = o.ordernumber });
         }
@@ -1068,7 +1073,31 @@ namespace Cms.Controllers
             }
 
         }
+        public static async void heurekaOvereneZakaznikmi(string email, string orderid)
+        {
+            //heureka Overené zákazníkmi
+            var secretKey = "5c09149af9a58fb6990d57032f0ba645";
+            var heurekaURL = "https://www.heureka.sk/direct/dotaznik/objednavka.php?id="+ secretKey + "&email="+ email + "&orderid=" + orderid;
+            HttpWebResponse response = null;
+            var request = (HttpWebRequest)WebRequest.Create(heurekaURL);
+            request.Method = "HEAD";
 
+            try
+            {
+                response = (HttpWebResponse)request.GetResponse();
+            }
+            catch (WebException ex)
+            {
+                /* A WebException will be thrown if the status of the response is not `200 OK` */
+            }
+            finally
+            {
+                if (response != null)
+                {
+                    response.Close();
+                }
+            }
+        }
         /*
         [HttpPost]
         public ActionResult UpdateOrderNote(string orderNote, int orderId)

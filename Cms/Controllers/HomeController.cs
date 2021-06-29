@@ -437,7 +437,7 @@ namespace Cms.Controllers
             //model.ProductModel = db.products.Where(i => i.deleted == false && i.heureka == true).ToList();
             //var prods = db.products.Where(i => i.deleted == false && i.heureka == true).ToList();
             model.BrandsModel = db.brands.ToList();
-            model.CategoriesModel = db.categories.Where(i => i.deleted == false).ToList();
+            model.CategoriesModel = db.categories.ToList();
             var cats = db.categories.Where(i => i.deleted == false && i.heureka == true).ToList();
             model.EsettingsModel = db.e_settings.ToList();
 
@@ -497,7 +497,7 @@ namespace Cms.Controllers
                 }
 
                 XElement doc13 = new XElement("PRODUCTNO", product.number);
-                XElement doc14 = new XElement("DELIVERY_DATE", "4");
+                XElement doc14 = new XElement("DELIVERY_DATE", "0");
                 XElement doc12 = null;
                 XElement doc15 = null;
                 XElement doc16 = null;
@@ -548,9 +548,12 @@ namespace Cms.Controllers
                 foreach (var siglecat in cats2)
                 {
                     int value = int.Parse(siglecat.Value.ToString());
-                    orderedCats.Add(value);
+                    if (value != 580 && value != 603 && value != 604 && value != 605 && value != 606 && value != 607 && value != 608 && value != 609) { 
+                        orderedCats.Add(value);
+                    }
                 }
                 orderedCats.Sort();
+                orderedCats.Reverse();
 
                 foreach (var thisCatId in orderedCats.Take(1))
                 {
@@ -561,7 +564,7 @@ namespace Cms.Controllers
 
                     var cat = model.CategoriesModel.Where(o => o.id == thisCatId).FirstOrDefault();
 
-                    if (cat.maincat != "Žiadna")
+                    if (cat != null && cat.maincat != "Žiadna")
                     {
                         var catid = int.Parse(cat.maincat);
                         foreach (var topcat in model.CategoriesModel.Where(o => o.id == catid))
@@ -579,7 +582,7 @@ namespace Cms.Controllers
                             }
                         }
                     }
-                    else
+                    else if (cat != null)
                     {
                         url_part1 = cat.name;
                     }

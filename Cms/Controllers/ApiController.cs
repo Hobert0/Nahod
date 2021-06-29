@@ -47,6 +47,12 @@ namespace Cms.Controllers
             else if (searchparam)
             {
             }
+            else if (subslug == "novinky-v-e-shope")
+            {
+                //subslug - kategoria level 1
+                //subslug2 - kategoria level 2
+                result = new { data = FetchNewest().ProductModel, variants };
+            }
             else
             {
                 int id = CategoryId(catslug, subslug, subslug2, subslug3);
@@ -317,6 +323,27 @@ namespace Cms.Controllers
             return model;
         }
 
+        private MultipleIndexModel FetchNewest()
+        {
+            var model = new MultipleIndexModel();
+            var daysBefore = DateTime.Now.AddDays(-60);
+            var allProducts = db.products.Where(c => c.deleted == false && c.active == true).OrderByDescending(x => x.id).Take(200).ToList();
+
+            for (int i = 0; i < allProducts.Count(); i++)
+            {
+                var date = DateTime.Parse(allProducts[i].date);
+                if (DateTime.Compare(daysBefore, date) >= 0)
+                {
+                    allProducts.Remove(allProducts[i]);
+                }
+                
+            }
+
+            model.ProductModel = allProducts;
+
+            return model;
+        }
+
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public JsonResult FetchUser(string username, string userid)
         {
@@ -342,7 +369,7 @@ namespace Cms.Controllers
             var url_part2 = "";
             var url_part3 = "";
 
-            var filemane = "test.xml";
+            var filemane = "Objednavky.xml";
 
             var order = db.orders.ToList();
 
@@ -437,6 +464,26 @@ namespace Cms.Controllers
                 XElement doc41 = new XElement("Sleva", "0");
                 XElement doc42 = new XElement("Pojisteno", "0");
 
+                //fakturacne udaje nahod
+                var eshopInfo = db.e_settings.FirstOrDefault();
+                var sett = db.settings.FirstOrDefault();
+                XElement docFirma = new XElement("MojeFirma");
+                XElement docNazov = new XElement("Nazev", eshopInfo.companyname);
+                XElement docAdresa = new XElement("Adresa");
+                XElement docUlice= new XElement("Ulice", eshopInfo.address);
+                XElement docMisto = new XElement("Misto", eshopInfo.city);
+                XElement docPSC = new XElement("PSC", sett.psc);
+                XElement docStat = new XElement("Stat", "Slovensko");
+                XElement docKodStatu = new XElement("KodStatu", "SK");
+                XElement docEmail = new XElement("Email", sett.email);
+                XElement docICO = new XElement("ICO", eshopInfo.ico);
+                XElement docDIC = new XElement("DIC", eshopInfo.icdph);
+                XElement docDanIC = new XElement("DanIC", eshopInfo.dic);
+                XElement docUcet = new XElement("Ucet", eshopInfo.accountnumber);
+                XElement docMenaSymb = new XElement("MenaSymb", "€");
+                XElement docMenaKod = new XElement("MenaKod", "EUR");
+
+
 
                 xRoot2.Add(xRoot3);
                 xRoot3.Add(doc);
@@ -503,7 +550,7 @@ namespace Cms.Controllers
                 xRoot3.Add(doc42);
 
                 var ordermeta = db.ordermeta.Where(i => i.ordernumber == product.ordernumber).ToList();
-
+                var counter = 1;
                 foreach (var item in ordermeta)
                 {
                     XElement xRoot10 = new XElement("Polozka");
@@ -513,9 +560,14 @@ namespace Cms.Controllers
                     XElement doc46 = new XElement("SazbaDPH", "20");
                     XElement doc47 = new XElement("TypCeny", "0");
                     XElement doc48 = new XElement("Sleva", "0");
-                    XElement doc49 = new XElement("Popis", item.product + " " + item.variant + " " + item.variant2);
+                    XElement doc49 = new XElement("Poradi", counter);
 
-                    XElement xRoot11 = new XElement("KmKarta");
+                    //XElement docSklad = new XElement("Sklad");
+                    //XElement docSkladNazev = new XElement("Nazev", "Hlavný sklad");
+                    //XElement docSkladKod = new XElement("KodSkladu", "HLAVNY");
+
+
+                    XElement xRoot11 = new XElement("NesklPolozka");
 
                     XElement doc50 = new XElement("Popis", item.product + " " + item.variant + " " + item.variant2);
                     XElement doc51 = new XElement("Zkrat", item.product);
@@ -550,7 +602,7 @@ namespace Cms.Controllers
 
                     }
 
-                    xRoot9.Add(xRoot10); // Polozka
+                    xRoot3.Add(xRoot10); // Polozka
 
                     xRoot10.Add(doc43);
                     xRoot10.Add(doc44);
@@ -560,14 +612,36 @@ namespace Cms.Controllers
                     xRoot10.Add(doc48);
                     xRoot10.Add(doc49);
 
-                    xRoot10.Add(xRoot11); // KmKarta
+                    //xRoot10.Add(docSklad);
+                    //docSklad.Add(docSkladNazev);
+                    //docSklad.Add(docSkladKod);
+
+                    xRoot10.Add(xRoot11); // NesklPolozka
 
                     xRoot11.Add(doc50);
                     xRoot11.Add(doc51);
                     xRoot11.Add(doc52);
                     xRoot11.Add(doc53);
                     xRoot11.Add(doc55);
+
+                    counter++;
                 }
+
+                xRoot3.Add(docFirma); // MojeFirma
+                docFirma.Add(docNazov);
+                docFirma.Add(docAdresa);
+                docAdresa.Add(docUlice);
+                docAdresa.Add(docMisto);
+                docAdresa.Add(docPSC);
+                docAdresa.Add(docStat);
+                docAdresa.Add(docKodStatu);
+                docFirma.Add(docEmail);
+                docFirma.Add(docICO);
+                docFirma.Add(docDIC);
+                docFirma.Add(docDanIC);
+                docFirma.Add(docUcet);
+                docFirma.Add(docMenaSymb);
+                docFirma.Add(docMenaKod);
 
             }
 
