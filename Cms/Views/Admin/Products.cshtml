@@ -209,7 +209,7 @@
 <table id="productsTable" class="table">
     <thead>
         <tr>
-            <th class="hide">ID</th>
+            <th class="hide" style="display:none !important">ID</th>
             <th></th>
             <th>Kód produktu</th>
             <th>Náhľad</th>
@@ -238,7 +238,7 @@
                 onstockrange = item.custom1;
                 <tr id="product_row-@counter" class="productRow">
 
-                    <td class="hide">@item.id</td>
+                    <td class="hide" style="display:none !important">@item.id</td>
                     <td style="text-align:center;"><input type="checkbox" name="multipleEditCheckbox"></td>
                     <td class="editable" name="number">@Html.DisplayFor(modelItem => item.number)</td>
                     <td><img src="~/Uploads/@Html.DisplayFor(modelItem => item.image)" style="max-width: 50px;max-height: 50px;" /></td>
@@ -504,7 +504,7 @@
                         "pageLength": 25,
                         "lengthMenu": [10, 25, 50, 100, 500, 1000],
                         columns: [
-                            { title: "Id" },
+                            { title: "Id", className: "hide"},
                             { title: "" },
                             { title: "Kód produktu" },
                             { title: "Náhľad" },

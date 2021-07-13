@@ -161,7 +161,7 @@
                                 }
                             }
 
-                            <strong>Dostupnosť: </strong>@Html.Raw(onStock)<br />
+                            <strong>Dostupnosť: </strong><span id="stocktext">@Html.Raw(onStock)</span><br />
 
                             @Html.Raw((prod.custom8 != "" && prod.custom8 != null) ? "<strong>Typ: </strong>" + Html.Raw(prod.custom8) + "<br />" : "")
                             @Html.Raw((prod.custom9 != "" && prod.custom9 != null) ? "<strong>Výkon: </strong>" + Html.Raw(prod.custom9) + " kW<br />" : "")
@@ -334,7 +334,7 @@
                                                                 <p style="color: #c7c7c7; font-size: 12px;padding: 10px;">@attrName</p>
                                                             }
 
-                                                            options.Add(new SelectListItem { Text = variant.value, Value = (variant.price.ToString() + "|" + variant.discountprice.ToString()) + "|" + variant.number });
+                                                            options.Add(new SelectListItem { Text = variant.value, Value = (variant.price.ToString() + "|" + variant.discountprice.ToString()) + "|" + variant.number + "|" + variant.stock  });
 
                                                             lastAttrName = attrName;
                                                         }
@@ -366,7 +366,7 @@
                                                                 <p style="color: #c7c7c7; font-size: 12px;padding: 10px;">@attrName</p>
                                                             }
 
-                                                            options.Add(new SelectListItem { Text = variant.value, Value = (variant.price.ToString() + "|" + variant.discountprice.ToString()) + "|" + variant.number });
+                                                            options.Add(new SelectListItem { Text = variant.value, Value = (variant.price.ToString() + "|" + variant.discountprice.ToString()) + "|" + variant.number + "|" + variant.stock });
 
                                                             lastAttrName = attrName;
                                                         }
@@ -945,6 +945,13 @@
 
                     $prodNumber = $thisPrices[2];
                     $("#prodNumVal").text($prodNumber);
+
+                    if ($thisPrices[3] > 0) {
+                        $("#stocktext").html("<span style='color:#1e7e34;'>Skladom</span>");
+                    } else {
+                       $("#stocktext").html("<a href='#' class='watchdog-modal'><span style='color:#e89300;'>Dodanie 3-10 dní</span><br><small><u>Strážiť dostupnosť</u></small><i style='margin-left: 10px;' class='fas fa-dog'></i><br><small>Zadajte Váš e-mail a my Vám zašleme informáciu akonáhle produkt naskladníme.</small></a>");
+                    }
+                    
 
                     if ($thisDiscount == 0) {
 

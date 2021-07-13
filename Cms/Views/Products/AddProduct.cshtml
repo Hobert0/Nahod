@@ -690,15 +690,20 @@
             }
 
             //ak to nie je rovnake ako prvy typ varianty tak nie je mozne upravit cenu
-            $firstAttrId = $(".varAttrs option").eq(0).attr("attr_id");
-            if (attrId != null && attrId != $firstAttrId) {
-                $(".clonedVarSection[num=" + num + "] .varPrice").val("").prop("disabled", true);
-                $(".clonedVarSection[num=" + num + "] .varDiscountPrice").val("").prop("disabled", true);
-                $(".clonedVarSection[num=" + num + "] .varDiscountPriceType").val("eur").prop("disabled", true);
-            } else if (attrId != null && attrId == $firstAttrId) {
-                $(".clonedVarSection[num=" + num + "] .varPrice").prop("disabled", false);
-                $(".clonedVarSection[num=" + num + "] .varDiscountPrice").prop("disabled", false);
-                $(".clonedVarSection[num=" + num + "] .varDiscountPriceType").prop("disabled", false);
+            var attrsCount = $(".clonedVarSection");
+            if (attrsCount.length > 1) {
+
+                $firstAttrId = $(".varAttrs").eq(0).find('option:selected').attr("attr_id");
+
+                if (attrId != null && attrId != $firstAttrId && num != 1) {
+                    $(".clonedVarSection[num=" + num + "] .varPrice").val("").prop("disabled", true);
+                    $(".clonedVarSection[num=" + num + "] .varDiscountPrice").val("").prop("disabled", true);
+                    $(".clonedVarSection[num=" + num + "] .varDiscountPriceType").val("eur").prop("disabled", true);
+                } else if (attrId != null && attrId == $firstAttrId && num != 1) {
+                    $(".clonedVarSection[num=" + num + "] .varPrice").prop("disabled", false);
+                    $(".clonedVarSection[num=" + num + "] .varDiscountPrice").prop("disabled", false);
+                    $(".clonedVarSection[num=" + num + "] .varDiscountPriceType").prop("disabled", false);
+                    }
             }
         }
 

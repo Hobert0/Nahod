@@ -388,6 +388,18 @@ footer {
     font-size: 13px;
 }
 
+.ui-menu {
+    z-index: 999;
+    position: fixed;
+    top: 90px !important;
+}
+
+.fixedTopHeader ~ .ui-menu {
+    top: 60px !important;
+    z-index: 999;
+    position: fixed;
+}
+
 .catbutton {
     background: #303030;
     color: #fff;

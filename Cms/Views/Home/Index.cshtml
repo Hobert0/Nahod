@@ -137,7 +137,7 @@
             <img src="/uploads/images/tasky a obaly.png">
             <p class="header">Tašky a obaly</p>
         </a>
-        <a href="/kat/stojany-a-vidlicky" class="col-md-3 pr-1 pl-1 categoryblock col-6">
+        <a href="/kat/stojany-a-hlasice/stojany" class="col-md-3 pr-1 pl-1 categoryblock col-6">
             <img src="/uploads/images/stojany.png">
             <p class="header">Stojany</p>
         </a>
@@ -182,14 +182,14 @@
         <div class="col-md-12 no-gutters">
             <div class="row">
                 <h2 class="col-md-12">
-                    <a href="/kat/novinky">
+                    <a href="/kat/akcie-a-novinky/novinky-v-e-shope">
                         Novinky
                     </a>
                 </h2>
             </div>
             <div class="row products-row">
                 @{
-                    var prods2 = Model.ProductModel.OrderByDescending(o => o.id).Take(10);
+                    var prods2 = Model.ProductModel.OrderByDescending(o => o.id).Take(20);
 
                     int order = Model.ProductModel.Count() - 1;
                     if (order >= 9)
@@ -487,7 +487,7 @@
             </div>
             <div class="row products-row">
                 @{
-                    var prods3 = Model.ProductModel.Where(o => o.recommended == true).OrderByDescending(o => o.id).Take(10);
+                    var prods3 = Model.ProductModel.Where(o => o.category.Contains("608")).OrderByDescending(o => o.id).Take(20);
                     foreach (var prod in prods3)
                     {
                         bool isDiscounted = false;
@@ -526,7 +526,7 @@
                                     }
 
                                     @{
-                                        if (DateTime.Compare(DateTime.Parse(prod.date), DateTime.Parse(lastNewProd.date)) >= 0)
+                                        if (DateTime.Compare(DateTime.Parse(prod.date), DateTime.Now.AddDays(-15)) >= 0)
                                         {
                                             <span class="prod-new">novinka</span>
                                         }

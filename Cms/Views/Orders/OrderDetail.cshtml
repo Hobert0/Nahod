@@ -81,7 +81,7 @@
     var freeshipping = db.e_settings.Select(i => i.transfer5).FirstOrDefault();
 
     if (ord.finalprice >
-        decimal.Parse(freeshipping, CultureInfo.InvariantCulture))
+        decimal.Parse(freeshipping, CultureInfo.InvariantCulture) && ord.country != "Česká republika")
     {
         shipPrice = "0";
     }

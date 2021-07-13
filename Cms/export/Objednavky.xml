@@ -1,0 +1,1893 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MoneyData>
+  <SeznamObjPrij>
+    <ObjPrij>
+      <Doklad>210000</Doklad>
+      <Popis>test test</Popis>
+      <Vystaveno>31.3.2021 11:05:35</Vystaveno>
+      <DodOdb>
+        <ObchNazev>test test</ObchNazev>
+        <ObchAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>test test</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>test</Ulice>
+          <Misto>test</Misto>
+          <PSC>92601</PSC>
+          <Stat></Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+420123456789</Cislo>
+        </Tel>
+        <EMail>hersel.mario@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij />
+      <KPFromOdb>0</KPFromOdb>
+      <Celkem>147.62</Celkem>
+      <PlatPodm>Bankovým prevodom</PlatPodm>
+      <Doprava>Osobný odber</Doprava>
+      <CasVystave>31.3.2021 11:05:35</CasVystave>
+      <DatumVysta>31.3.2021 11:05:35</DatumVysta>
+      <Nadpis>Prijatá objednávka</Nadpis>
+      <PrimDoklad>210000</PrimDoklad>
+      <SazbaDPH2>20</SazbaDPH2>
+      <Sleva>0</Sleva>
+      <Pojisteno>0</Pojisteno>
+      <Polozka>
+        <Popis>Mivardi spacák  </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>10.00</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>1</Poradi>
+        <NesklPolozka>
+          <Popis>Mivardi spacák  </Popis>
+          <Zkrat>Mivardi spacák</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>M-SLBEX</UzivCode>
+          <Katalog>M-SLBEX</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <MojeFirma>
+        <Nazev>Ing. Peter Bezecný - NAHOĎ</Nazev>
+        <Adresa>
+          <Ulice>Hornomajerská 3046/10</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </Adresa>
+        <Email>info@nahod.sk</Email>
+        <ICO>47949848</ICO>
+        <DIC>SK1073398106</DIC>
+        <DanIC>107339810</DanIC>
+        <Ucet>SK7383300000002600679941</Ucet>
+        <MenaSymb>€</MenaSymb>
+        <MenaKod>EUR</MenaKod>
+      </MojeFirma>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210006</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>22.6.2021 18:01:46</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat>Česká republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat>Česká republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>holicka.robert@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij />
+      <KPFromOdb>0</KPFromOdb>
+      <Celkem>3222.95</Celkem>
+      <PlatPodm>V hotovosti pri osobnom odbere</PlatPodm>
+      <Doprava></Doprava>
+      <CasVystave>22.6.2021 18:01:46</CasVystave>
+      <DatumVysta>22.6.2021 18:01:46</DatumVysta>
+      <Nadpis>Prijatá objednávka</Nadpis>
+      <PrimDoklad>210006</PrimDoklad>
+      <SazbaDPH2>20</SazbaDPH2>
+      <Sleva>0</Sleva>
+      <Pojisteno>0</Pojisteno>
+      <Polozka>
+        <Popis>Čln Boat007 CMA290  </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>738.99</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>1</Poradi>
+        <NesklPolozka>
+          <Popis>Čln Boat007 CMA290  </Popis>
+          <Zkrat>Čln Boat007 CMA290</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>CMA290</UzivCode>
+          <Katalog>CMA290</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <Polozka>
+        <Popis>Čln Boat007 CMA250  </Popis>
+        <PocetMJ>4</PocetMJ>
+        <Cena>620.99</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>2</Poradi>
+        <NesklPolozka>
+          <Popis>Čln Boat007 CMA250  </Popis>
+          <Zkrat>Čln Boat007 CMA250</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>CMA250</UzivCode>
+          <Katalog>CMA250</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <MojeFirma>
+        <Nazev>Ing. Peter Bezecný - NAHOĎ</Nazev>
+        <Adresa>
+          <Ulice>Hornomajerská 3046/10</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </Adresa>
+        <Email>info@nahod.sk</Email>
+        <ICO>47949848</ICO>
+        <DIC>SK1073398106</DIC>
+        <DanIC>107339810</DanIC>
+        <Ucet>SK7383300000002600679941</Ucet>
+        <MenaSymb>€</MenaSymb>
+        <MenaKod>EUR</MenaKod>
+      </MojeFirma>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210008</Doklad>
+      <Popis>Robert sadas</Popis>
+      <Vystaveno>22.6.2021 18:05:43</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert sadas</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat>Česká republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert sadas</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Severna 8</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat>Česká republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908495537</Cislo>
+        </Tel>
+        <EMail>holicka.robert@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij />
+      <KPFromOdb>0</KPFromOdb>
+      <Celkem>1479.48</Celkem>
+      <PlatPodm>Dobierkou</PlatPodm>
+      <Doprava></Doprava>
+      <CasVystave>22.6.2021 18:05:43</CasVystave>
+      <DatumVysta>22.6.2021 18:05:43</DatumVysta>
+      <Nadpis>Prijatá objednávka</Nadpis>
+      <PrimDoklad>210008</PrimDoklad>
+      <SazbaDPH2>20</SazbaDPH2>
+      <Sleva>0</Sleva>
+      <Pojisteno>0</Pojisteno>
+      <Polozka>
+        <Popis>Čln Boat007 CMA290  </Popis>
+        <PocetMJ>2</PocetMJ>
+        <Cena>738.99</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>1</Poradi>
+        <NesklPolozka>
+          <Popis>Čln Boat007 CMA290  </Popis>
+          <Zkrat>Čln Boat007 CMA290</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>CMA290</UzivCode>
+          <Katalog>CMA290</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <Polozka>
+        <Popis>Dobierkou</Popis>
+        <PocetMJ>ks</PocetMJ>
+        <Cena>0.90</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>2</Poradi>
+        <NesklPolozka>
+          <Popis>Dobierkou</Popis>
+          <Zkrat>Dobierkou</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>0</UzivCode>
+          <Katalog>0</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <MojeFirma>
+        <Nazev>Ing. Peter Bezecný - NAHOĎ</Nazev>
+        <Adresa>
+          <Ulice>Hornomajerská 3046/10</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </Adresa>
+        <Email>info@nahod.sk</Email>
+        <ICO>47949848</ICO>
+        <DIC>SK1073398106</DIC>
+        <DanIC>107339810</DanIC>
+        <Ucet>SK7383300000002600679941</Ucet>
+        <MenaSymb>€</MenaSymb>
+        <MenaKod>EUR</MenaKod>
+      </MojeFirma>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210009</Doklad>
+      <Popis>Bezecny Peter</Popis>
+      <Vystaveno>22.6.2021 21:51:28</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Ing.Peter Bezecný - NAHOĎ</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Andrjw</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Ing.Peter Bezecný - NAHOĎ</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Andrjw</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0911350400</Cislo>
+        </Tel>
+        <EMail>info@nahod.sk</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij />
+      <KPFromOdb>0</KPFromOdb>
+      <Celkem>67.81</Celkem>
+      <PlatPodm>Dobierkou</PlatPodm>
+      <Doprava>Kuriérska spoločnosť</Doprava>
+      <CasVystave>22.6.2021 21:51:28</CasVystave>
+      <DatumVysta>22.6.2021 21:51:28</DatumVysta>
+      <Nadpis>Prijatá objednávka</Nadpis>
+      <PrimDoklad>210009</PrimDoklad>
+      <SazbaDPH2>20</SazbaDPH2>
+      <Sleva>0</Sleva>
+      <Pojisteno>0</Pojisteno>
+      <Polozka>
+        <Popis>Prologic komplet Carpio (bunda+tepláky) XL </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>66.31</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>1</Poradi>
+        <NesklPolozka>
+          <Popis>Prologic komplet Carpio (bunda+tepláky) XL </Popis>
+          <Zkrat>Prologic komplet Carpio (bunda+tepláky)</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>73861</UzivCode>
+          <Katalog>73861</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <Polozka>
+        <Popis>Dobierkou</Popis>
+        <PocetMJ>ks</PocetMJ>
+        <Cena>0.90</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>2</Poradi>
+        <NesklPolozka>
+          <Popis>Dobierkou</Popis>
+          <Zkrat>Dobierkou</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>0</UzivCode>
+          <Katalog>0</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <MojeFirma>
+        <Nazev>Ing. Peter Bezecný - NAHOĎ</Nazev>
+        <Adresa>
+          <Ulice>Hornomajerská 3046/10</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </Adresa>
+        <Email>info@nahod.sk</Email>
+        <ICO>47949848</ICO>
+        <DIC>SK1073398106</DIC>
+        <DanIC>107339810</DanIC>
+        <Ucet>SK7383300000002600679941</Ucet>
+        <MenaSymb>€</MenaSymb>
+        <MenaKod>EUR</MenaKod>
+      </MojeFirma>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210010</Doklad>
+      <Popis>Peter Bezecný</Popis>
+      <Vystaveno>22.6.2021 22:17:06</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Ing.Peter Bezecný - NAHOĎ</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Hlinku 34</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Ing.Peter Bezecný - NAHOĎ</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Hlinku 34</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>92601</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0911350400</Cislo>
+        </Tel>
+        <EMail>peter.blekyno@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij />
+      <KPFromOdb>0</KPFromOdb>
+      <Celkem>620.99</Celkem>
+      <PlatPodm>V hotovosti pri osobnom odbere</PlatPodm>
+      <Doprava>Osobný odber</Doprava>
+      <CasVystave>22.6.2021 22:17:06</CasVystave>
+      <DatumVysta>22.6.2021 22:17:06</DatumVysta>
+      <Nadpis>Prijatá objednávka</Nadpis>
+      <PrimDoklad>210010</PrimDoklad>
+      <SazbaDPH2>20</SazbaDPH2>
+      <Sleva>0</Sleva>
+      <Pojisteno>0</Pojisteno>
+      <Polozka>
+        <Popis>Čln Boat007 CMA250  </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>620.99</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>1</Poradi>
+        <NesklPolozka>
+          <Popis>Čln Boat007 CMA250  </Popis>
+          <Zkrat>Čln Boat007 CMA250</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>CMA250</UzivCode>
+          <Katalog>CMA250</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <MojeFirma>
+        <Nazev>Ing. Peter Bezecný - NAHOĎ</Nazev>
+        <Adresa>
+          <Ulice>Hornomajerská 3046/10</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </Adresa>
+        <Email>info@nahod.sk</Email>
+        <ICO>47949848</ICO>
+        <DIC>SK1073398106</DIC>
+        <DanIC>107339810</DanIC>
+        <Ucet>SK7383300000002600679941</Ucet>
+        <MenaSymb>€</MenaSymb>
+        <MenaKod>EUR</MenaKod>
+      </MojeFirma>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210011</Doklad>
+      <Popis>Ivan Kolarik</Popis>
+      <Vystaveno>23.6.2021 09:55:19</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Ivan Kolarik</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Na hlinách 47</Ulice>
+          <Misto>Trnava</Misto>
+          <PSC>91701</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Ivan Kolarik</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Na hlinách 47</Ulice>
+          <Misto>Trnava</Misto>
+          <PSC>91701</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0903559602</Cislo>
+        </Tel>
+        <EMail>ivan.kolarik@zoznam.sk</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij />
+      <KPFromOdb>0</KPFromOdb>
+      <Celkem>52.16</Celkem>
+      <PlatPodm>V hotovosti pri osobnom odbere</PlatPodm>
+      <Doprava>Osobný odber</Doprava>
+      <CasVystave>23.6.2021 09:55:19</CasVystave>
+      <DatumVysta>23.6.2021 09:55:19</DatumVysta>
+      <Nadpis>Prijatá objednávka</Nadpis>
+      <PrimDoklad>210011</PrimDoklad>
+      <SazbaDPH2>20</SazbaDPH2>
+      <Sleva>0</Sleva>
+      <Pojisteno>0</Pojisteno>
+      <Polozka>
+        <Popis>Prsačky Delphin HRON 44 </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>52.16</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>1</Poradi>
+        <NesklPolozka>
+          <Popis>Prsačky Delphin HRON 44 </Popis>
+          <Zkrat>Prsačky Delphin HRON</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>101000582</UzivCode>
+          <Katalog>101000582</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <MojeFirma>
+        <Nazev>Ing. Peter Bezecný - NAHOĎ</Nazev>
+        <Adresa>
+          <Ulice>Hornomajerská 3046/10</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </Adresa>
+        <Email>info@nahod.sk</Email>
+        <ICO>47949848</ICO>
+        <DIC>SK1073398106</DIC>
+        <DanIC>107339810</DanIC>
+        <Ucet>SK7383300000002600679941</Ucet>
+        <MenaSymb>€</MenaSymb>
+        <MenaKod>EUR</MenaKod>
+      </MojeFirma>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210012</Doklad>
+      <Popis>Maroš  Frič</Popis>
+      <Vystaveno>23.6.2021 17:48:30</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Maroš  Frič</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Somorová Ves 704</Ulice>
+          <Misto>Diviaky nad Nitricou</Misto>
+          <PSC>97225</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Maroš  Frič</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Somorová Ves 704</Ulice>
+          <Misto>Diviaky nad Nitricou</Misto>
+          <PSC>97225</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0903739885</Cislo>
+        </Tel>
+        <EMail>marosfric598@gmail.com </EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij />
+      <KPFromOdb>0</KPFromOdb>
+      <Celkem>71.26</Celkem>
+      <PlatPodm>Dobierkou</PlatPodm>
+      <Doprava>Kuriérska spoločnosť</Doprava>
+      <CasVystave>23.6.2021 17:48:30</CasVystave>
+      <DatumVysta>23.6.2021 17:48:30</DatumVysta>
+      <Nadpis>Prijatá objednávka</Nadpis>
+      <PrimDoklad>210012</PrimDoklad>
+      <SazbaDPH2>20</SazbaDPH2>
+      <Sleva>0</Sleva>
+      <Pojisteno>0</Pojisteno>
+      <Polozka>
+        <Popis>OKUMA AXEON BF  </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>64.86</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>1</Poradi>
+        <NesklPolozka>
+          <Popis>OKUMA AXEON BF  </Popis>
+          <Zkrat>OKUMA AXEON BF</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode></UzivCode>
+          <Katalog></Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <Polozka>
+        <Popis>Dobierkou</Popis>
+        <PocetMJ>ks</PocetMJ>
+        <Cena>0.90</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>2</Poradi>
+        <NesklPolozka>
+          <Popis>Dobierkou</Popis>
+          <Zkrat>Dobierkou</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>0</UzivCode>
+          <Katalog>0</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <MojeFirma>
+        <Nazev>Ing. Peter Bezecný - NAHOĎ</Nazev>
+        <Adresa>
+          <Ulice>Hornomajerská 3046/10</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </Adresa>
+        <Email>info@nahod.sk</Email>
+        <ICO>47949848</ICO>
+        <DIC>SK1073398106</DIC>
+        <DanIC>107339810</DanIC>
+        <Ucet>SK7383300000002600679941</Ucet>
+        <MenaSymb>€</MenaSymb>
+        <MenaKod>EUR</MenaKod>
+      </MojeFirma>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210013</Doklad>
+      <Popis>Matej Lipták</Popis>
+      <Vystaveno>24.6.2021 10:30:16</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Matej Lipták</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Krakovská 17/20</Ulice>
+          <Misto>Šúrovce</Misto>
+          <PSC>91925</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Matej Lipták</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Krakovská 17/20</Ulice>
+          <Misto>Šúrovce</Misto>
+          <PSC>91925</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421915616415</Cislo>
+        </Tel>
+        <EMail>liptak1992@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij />
+      <KPFromOdb>0</KPFromOdb>
+      <Celkem>1.71</Celkem>
+      <PlatPodm>V hotovosti pri osobnom odbere</PlatPodm>
+      <Doprava>Osobný odber</Doprava>
+      <CasVystave>24.6.2021 10:30:16</CasVystave>
+      <DatumVysta>24.6.2021 10:30:16</DatumVysta>
+      <Nadpis>Prijatá objednávka</Nadpis>
+      <PrimDoklad>210013</PrimDoklad>
+      <SazbaDPH2>20</SazbaDPH2>
+      <Sleva>0</Sleva>
+      <Pojisteno>0</Pojisteno>
+      <Polozka>
+        <Popis>Krimpy Spartan Double Crimp  </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>1.71</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>1</Poradi>
+        <NesklPolozka>
+          <Popis>Krimpy Spartan Double Crimp  </Popis>
+          <Zkrat>Krimpy Spartan Double Crimp</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>33 067</UzivCode>
+          <Katalog>33 067</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <MojeFirma>
+        <Nazev>Ing. Peter Bezecný - NAHOĎ</Nazev>
+        <Adresa>
+          <Ulice>Hornomajerská 3046/10</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </Adresa>
+        <Email>info@nahod.sk</Email>
+        <ICO>47949848</ICO>
+        <DIC>SK1073398106</DIC>
+        <DanIC>107339810</DanIC>
+        <Ucet>SK7383300000002600679941</Ucet>
+        <MenaSymb>€</MenaSymb>
+        <MenaKod>EUR</MenaKod>
+      </MojeFirma>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210014</Doklad>
+      <Popis>Matej Lipták</Popis>
+      <Vystaveno>24.6.2021 10:32:52</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Matej Lipták</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Krakovská 17/20</Ulice>
+          <Misto>Šúrovce</Misto>
+          <PSC>91925</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Matej Lipták</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Krakovská 17/20</Ulice>
+          <Misto>Šúrovce</Misto>
+          <PSC>91925</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421915616415</Cislo>
+        </Tel>
+        <EMail>liptak1992@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij />
+      <KPFromOdb>0</KPFromOdb>
+      <Celkem>4034.30</Celkem>
+      <PlatPodm>Dobierkou</PlatPodm>
+      <Doprava>Kuriérska spoločnosť</Doprava>
+      <CasVystave>24.6.2021 10:32:52</CasVystave>
+      <DatumVysta>24.6.2021 10:32:52</DatumVysta>
+      <Nadpis>Prijatá objednávka</Nadpis>
+      <PrimDoklad>210014</PrimDoklad>
+      <SazbaDPH2>20</SazbaDPH2>
+      <Sleva>0</Sleva>
+      <Pojisteno>0</Pojisteno>
+      <Polozka>
+        <Popis>FOX HORIZON X5 FULL SLIM DUPLON HANDLE (duplonová rúčka) 12ft 6in (3,81m) / 3,5lb 50mm </Popis>
+        <PocetMJ>10</PocetMJ>
+        <Cena>402.80</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>1</Poradi>
+        <NesklPolozka>
+          <Popis>FOX HORIZON X5 FULL SLIM DUPLON HANDLE (duplonová rúčka) 12ft 6in (3,81m) / 3,5lb 50mm </Popis>
+          <Zkrat>FOX HORIZON X5 FULL SLIM DUPLON HANDLE (duplonová rúčka)</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>CRD262</UzivCode>
+          <Katalog>CRD262</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <Polozka>
+        <Popis>Dobierkou</Popis>
+        <PocetMJ>ks</PocetMJ>
+        <Cena>0.90</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>2</Poradi>
+        <NesklPolozka>
+          <Popis>Dobierkou</Popis>
+          <Zkrat>Dobierkou</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>0</UzivCode>
+          <Katalog>0</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <MojeFirma>
+        <Nazev>Ing. Peter Bezecný - NAHOĎ</Nazev>
+        <Adresa>
+          <Ulice>Hornomajerská 3046/10</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </Adresa>
+        <Email>info@nahod.sk</Email>
+        <ICO>47949848</ICO>
+        <DIC>SK1073398106</DIC>
+        <DanIC>107339810</DanIC>
+        <Ucet>SK7383300000002600679941</Ucet>
+        <MenaSymb>€</MenaSymb>
+        <MenaKod>EUR</MenaKod>
+      </MojeFirma>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210015</Doklad>
+      <Popis>Ľubor Kucek</Popis>
+      <Vystaveno>26.6.2021 10:56:48</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Ľubor Kucek</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Potvorice 65</Ulice>
+          <Misto>Potvorice</Misto>
+          <PSC>91625</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Ľubor Kucek</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Potvorice 65</Ulice>
+          <Misto>Potvorice</Misto>
+          <PSC>91625</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421948319075</Cislo>
+        </Tel>
+        <EMail>kucekson@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij />
+      <KPFromOdb>0</KPFromOdb>
+      <Celkem>33.39</Celkem>
+      <PlatPodm>Dobierkou</PlatPodm>
+      <Doprava>Kuriérska spoločnosť</Doprava>
+      <CasVystave>26.6.2021 10:56:48</CasVystave>
+      <DatumVysta>26.6.2021 10:56:48</DatumVysta>
+      <Nadpis>Prijatá objednávka</Nadpis>
+      <PrimDoklad>210015</PrimDoklad>
+      <SazbaDPH2>20</SazbaDPH2>
+      <Sleva>0</Sleva>
+      <Pojisteno>0</Pojisteno>
+      <Polozka>
+        <Popis>Silon SYNAPSE ECLIPSE KATRAN 1000m / 0,309mm </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>26.99</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>1</Poradi>
+        <NesklPolozka>
+          <Popis>Silon SYNAPSE ECLIPSE KATRAN 1000m / 0,309mm </Popis>
+          <Zkrat>Silon SYNAPSE ECLIPSE KATRAN</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>208218</UzivCode>
+          <Katalog>208218</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <Polozka>
+        <Popis>Kuriérska spoločnosť</Popis>
+        <PocetMJ>ks</PocetMJ>
+        <Cena>4.90</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>2</Poradi>
+        <NesklPolozka>
+          <Popis>Kuriérska spoločnosť</Popis>
+          <Zkrat>Kuriérska spoločnosť</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>0</UzivCode>
+          <Katalog>0</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <Polozka>
+        <Popis>Dobierkou</Popis>
+        <PocetMJ>ks</PocetMJ>
+        <Cena>0.90</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>2</Poradi>
+        <NesklPolozka>
+          <Popis>Dobierkou</Popis>
+          <Zkrat>Dobierkou</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>0</UzivCode>
+          <Katalog>0</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <MojeFirma>
+        <Nazev>Ing. Peter Bezecný - NAHOĎ</Nazev>
+        <Adresa>
+          <Ulice>Hornomajerská 3046/10</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </Adresa>
+        <Email>info@nahod.sk</Email>
+        <ICO>47949848</ICO>
+        <DIC>SK1073398106</DIC>
+        <DanIC>107339810</DanIC>
+        <Ucet>SK7383300000002600679941</Ucet>
+        <MenaSymb>€</MenaSymb>
+        <MenaKod>EUR</MenaKod>
+      </MojeFirma>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210016</Doklad>
+      <Popis>Robert Révai</Popis>
+      <Vystaveno>28.6.2021 12:13:56</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Robert Révai</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Husova 17</Ulice>
+          <Misto>Nove Zamky</Misto>
+          <PSC>94002</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Robert Révai</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Husova 17</Ulice>
+          <Misto>Nove Zamky</Misto>
+          <PSC>94002</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421944908901</Cislo>
+        </Tel>
+        <EMail>robert.revai8@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij />
+      <KPFromOdb>0</KPFromOdb>
+      <Celkem>198.36</Celkem>
+      <PlatPodm>Dobierkou</PlatPodm>
+      <Doprava>Kuriérska spoločnosť</Doprava>
+      <CasVystave>28.6.2021 12:13:56</CasVystave>
+      <DatumVysta>28.6.2021 12:13:56</DatumVysta>
+      <Nadpis>Prijatá objednávka</Nadpis>
+      <PrimDoklad>210016</PrimDoklad>
+      <SazbaDPH2>20</SazbaDPH2>
+      <Sleva>0</Sleva>
+      <Pojisteno>0</Pojisteno>
+      <Polozka>
+        <Popis>GIANTS FISHING BIVAK SPECIALIST XT BIVVY 2 MAN  </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>192.56</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>1</Poradi>
+        <NesklPolozka>
+          <Popis>GIANTS FISHING BIVAK SPECIALIST XT BIVVY 2 MAN  </Popis>
+          <Zkrat>GIANTS FISHING BIVAK SPECIALIST XT BIVVY 2 MAN</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>G-22021</UzivCode>
+          <Katalog>G-22021</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <Polozka>
+        <Popis>Dobierkou</Popis>
+        <PocetMJ>ks</PocetMJ>
+        <Cena>0.90</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>2</Poradi>
+        <NesklPolozka>
+          <Popis>Dobierkou</Popis>
+          <Zkrat>Dobierkou</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>0</UzivCode>
+          <Katalog>0</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <MojeFirma>
+        <Nazev>Ing. Peter Bezecný - NAHOĎ</Nazev>
+        <Adresa>
+          <Ulice>Hornomajerská 3046/10</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </Adresa>
+        <Email>info@nahod.sk</Email>
+        <ICO>47949848</ICO>
+        <DIC>SK1073398106</DIC>
+        <DanIC>107339810</DanIC>
+        <Ucet>SK7383300000002600679941</Ucet>
+        <MenaSymb>€</MenaSymb>
+        <MenaKod>EUR</MenaKod>
+      </MojeFirma>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210017</Doklad>
+      <Popis>Martin Kováč</Popis>
+      <Vystaveno>28.6.2021 12:40:08</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Martin Kováč</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Pavla Blahu 1211/1</Ulice>
+          <Misto>Malacky</Misto>
+          <PSC>90101</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Martin Kováč</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Pavla Blahu 1211/1</Ulice>
+          <Misto>Malacky</Misto>
+          <PSC>90101</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0905339110</Cislo>
+        </Tel>
+        <EMail>sraneckeboriny@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij />
+      <KPFromOdb>0</KPFromOdb>
+      <Celkem>253.80</Celkem>
+      <PlatPodm>Dobierkou</PlatPodm>
+      <Doprava>Kuriérska spoločnosť</Doprava>
+      <CasVystave>28.6.2021 12:40:08</CasVystave>
+      <DatumVysta>28.6.2021 12:40:08</DatumVysta>
+      <Nadpis>Prijatá objednávka</Nadpis>
+      <PrimDoklad>210017</PrimDoklad>
+      <SazbaDPH2>20</SazbaDPH2>
+      <Sleva>0</Sleva>
+      <Pojisteno>0</Pojisteno>
+      <Polozka>
+        <Popis>Zfish Bivak Deluxe King Size 2 Man  </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>248.00</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>1</Poradi>
+        <NesklPolozka>
+          <Popis>Zfish Bivak Deluxe King Size 2 Man  </Popis>
+          <Zkrat>Zfish Bivak Deluxe King Size 2 Man</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>ZF-2547</UzivCode>
+          <Katalog>ZF-2547</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <Polozka>
+        <Popis>Dobierkou</Popis>
+        <PocetMJ>ks</PocetMJ>
+        <Cena>0.90</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>2</Poradi>
+        <NesklPolozka>
+          <Popis>Dobierkou</Popis>
+          <Zkrat>Dobierkou</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>0</UzivCode>
+          <Katalog>0</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <MojeFirma>
+        <Nazev>Ing. Peter Bezecný - NAHOĎ</Nazev>
+        <Adresa>
+          <Ulice>Hornomajerská 3046/10</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </Adresa>
+        <Email>info@nahod.sk</Email>
+        <ICO>47949848</ICO>
+        <DIC>SK1073398106</DIC>
+        <DanIC>107339810</DanIC>
+        <Ucet>SK7383300000002600679941</Ucet>
+        <MenaSymb>€</MenaSymb>
+        <MenaKod>EUR</MenaKod>
+      </MojeFirma>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210018</Doklad>
+      <Popis>Attila György Nagy</Popis>
+      <Vystaveno>28.6.2021 13:56:37</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Attila György Nagy</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Podbrežná 53</Ulice>
+          <Misto>Dulovce</Misto>
+          <PSC>94656</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Attila György Nagy</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Podbrežná 53</Ulice>
+          <Misto>Dulovce</Misto>
+          <PSC>94656</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908261604</Cislo>
+        </Tel>
+        <EMail>dexter86d@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij />
+      <KPFromOdb>0</KPFromOdb>
+      <Celkem>320.15</Celkem>
+      <PlatPodm>V hotovosti pri osobnom odbere</PlatPodm>
+      <Doprava>Osobný odber</Doprava>
+      <CasVystave>28.6.2021 13:56:37</CasVystave>
+      <DatumVysta>28.6.2021 13:56:37</DatumVysta>
+      <Nadpis>Prijatá objednávka</Nadpis>
+      <PrimDoklad>210018</PrimDoklad>
+      <SazbaDPH2>20</SazbaDPH2>
+      <Sleva>0</Sleva>
+      <Pojisteno>0</Pojisteno>
+      <Polozka>
+        <Popis>Banner Energy Bull 12V 100Ah 95751  </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>141.55</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>1</Poradi>
+        <NesklPolozka>
+          <Popis>Banner Energy Bull 12V 100Ah 95751  </Popis>
+          <Zkrat>Banner Energy Bull 12V 100Ah 95751</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>10132</UzivCode>
+          <Katalog>10132</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <Polozka>
+        <Popis>Elektromotor Haswing Osapian 55 Lb  </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>178.60</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>2</Poradi>
+        <NesklPolozka>
+          <Popis>Elektromotor Haswing Osapian 55 Lb  </Popis>
+          <Zkrat>Elektromotor Haswing Osapian 55 Lb</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>0844</UzivCode>
+          <Katalog>0844</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <MojeFirma>
+        <Nazev>Ing. Peter Bezecný - NAHOĎ</Nazev>
+        <Adresa>
+          <Ulice>Hornomajerská 3046/10</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </Adresa>
+        <Email>info@nahod.sk</Email>
+        <ICO>47949848</ICO>
+        <DIC>SK1073398106</DIC>
+        <DanIC>107339810</DanIC>
+        <Ucet>SK7383300000002600679941</Ucet>
+        <MenaSymb>€</MenaSymb>
+        <MenaKod>EUR</MenaKod>
+      </MojeFirma>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210019</Doklad>
+      <Popis>Petra Mekka</Popis>
+      <Vystaveno>29.6.2021 09:20:04</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Petra Mekka</ObchNazev>
+        <ObchAdresa>
+          <Ulice>SPN</Ulice>
+          <Misto>Martin 1</Misto>
+          <PSC>09098</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Petra Mekka</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>SPN</Ulice>
+          <Misto>Martin 1</Misto>
+          <PSC>09098</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908777777</Cislo>
+        </Tel>
+        <EMail>vojacik.p@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij />
+      <KPFromOdb>0</KPFromOdb>
+      <Celkem>13.80</Celkem>
+      <PlatPodm>Bankovým prevodom</PlatPodm>
+      <Doprava>Kuriérska spoločnosť</Doprava>
+      <CasVystave>29.6.2021 09:20:04</CasVystave>
+      <DatumVysta>29.6.2021 09:20:04</DatumVysta>
+      <Nadpis>Prijatá objednávka</Nadpis>
+      <PrimDoklad>210019</PrimDoklad>
+      <SazbaDPH2>20</SazbaDPH2>
+      <Sleva>0</Sleva>
+      <Pojisteno>0</Pojisteno>
+      <Polozka>
+        <Popis>Bič FLAGMAN MAGNUM BLACK POLE 4m </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>8.90</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>1</Poradi>
+        <NesklPolozka>
+          <Popis>Bič FLAGMAN MAGNUM BLACK POLE 4m </Popis>
+          <Zkrat>Bič FLAGMAN MAGNUM BLACK POLE</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>MBP4000</UzivCode>
+          <Katalog>MBP4000</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <Polozka>
+        <Popis>Kuriérska spoločnosť</Popis>
+        <PocetMJ>ks</PocetMJ>
+        <Cena>4.90</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>2</Poradi>
+        <NesklPolozka>
+          <Popis>Kuriérska spoločnosť</Popis>
+          <Zkrat>Kuriérska spoločnosť</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>0</UzivCode>
+          <Katalog>0</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <MojeFirma>
+        <Nazev>Ing. Peter Bezecný - NAHOĎ</Nazev>
+        <Adresa>
+          <Ulice>Hornomajerská 3046/10</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </Adresa>
+        <Email>info@nahod.sk</Email>
+        <ICO>47949848</ICO>
+        <DIC>SK1073398106</DIC>
+        <DanIC>107339810</DanIC>
+        <Ucet>SK7383300000002600679941</Ucet>
+        <MenaSymb>€</MenaSymb>
+        <MenaKod>EUR</MenaKod>
+      </MojeFirma>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210020</Doklad>
+      <Popis>István Szekeres</Popis>
+      <Vystaveno>29.6.2021 12:55:13</Vystaveno>
+      <DodOdb>
+        <ObchNazev>István Szekeres</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Komárňanská cesta 102</Ulice>
+          <Misto>Nové Zámky</Misto>
+          <PSC>94001</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>István Szekeres</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Komárňanská cesta 102</Ulice>
+          <Misto>Nové Zámky</Misto>
+          <PSC>94001</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>István Szekeres  ČS Slovnaft</Nazev>
+        <Adresa>
+          <Ulice>Komárňanská cesta 102</Ulice>
+          <Misto>Nové Zámky</Misto>
+          <PSC>94001</PSC>
+          <Stat>Slovenská republika</Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0908713732</Cislo>
+        </Tel>
+        <EMail>szekeres.istvan@centrum.sk</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij />
+      <KPFromOdb>0</KPFromOdb>
+      <Celkem>152.18</Celkem>
+      <PlatPodm>Dobierkou</PlatPodm>
+      <Doprava>Kuriérska spoločnosť</Doprava>
+      <CasVystave>29.6.2021 12:55:13</CasVystave>
+      <DatumVysta>29.6.2021 12:55:13</DatumVysta>
+      <Nadpis>Prijatá objednávka</Nadpis>
+      <PrimDoklad>210020</PrimDoklad>
+      <SazbaDPH2>20</SazbaDPH2>
+      <Sleva>0</Sleva>
+      <Pojisteno>0</Pojisteno>
+      <Polozka>
+        <Popis>Podložka pod ryby STANDARD UNHOOKING MAT 120X60CM  </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>21.85</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>1</Poradi>
+        <NesklPolozka>
+          <Popis>Podložka pod ryby STANDARD UNHOOKING MAT 120X60CM  </Popis>
+          <Zkrat>Podložka pod ryby STANDARD UNHOOKING MAT 120X60CM</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>9340675</UzivCode>
+          <Katalog>9340675</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <Polozka>
+        <Popis>Kaprársky podberák Delphin CAPRI  </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>29.92</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>2</Poradi>
+        <NesklPolozka>
+          <Popis>Kaprársky podberák Delphin CAPRI  </Popis>
+          <Zkrat>Kaprársky podberák Delphin CAPRI</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode></UzivCode>
+          <Katalog></Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <Polozka>
+        <Popis>NIKL dezinfekcia Carp doctor 30ml  </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>5.61</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>3</Poradi>
+        <NesklPolozka>
+          <Popis>NIKL dezinfekcia Carp doctor 30ml  </Popis>
+          <Zkrat>NIKL dezinfekcia Carp doctor 30ml</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>2013118</UzivCode>
+          <Katalog>2013118</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <Polozka>
+        <Popis>Vaziaca Siet Easy1  </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>9.03</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>4</Poradi>
+        <NesklPolozka>
+          <Popis>Vaziaca Siet Easy1  </Popis>
+          <Zkrat>Vaziaca Siet Easy1</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>M-WSE1</UzivCode>
+          <Katalog>M-WSE1</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <Polozka>
+        <Popis>Stojan Tri Pod Specialist 3 Rods +2x hlásič + 2x indikátor záberu  </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>79.98</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>5</Poradi>
+        <NesklPolozka>
+          <Popis>Stojan Tri Pod Specialist 3 Rods +2x hlásič + 2x indikátor záberu  </Popis>
+          <Zkrat>Stojan Tri Pod Specialist 3 Rods +2x hlásič + 2x indikátor záberu</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>G-20107</UzivCode>
+          <Katalog>G-20107</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <Polozka>
+        <Popis>Dobierkou</Popis>
+        <PocetMJ>ks</PocetMJ>
+        <Cena>0.90</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>6</Poradi>
+        <NesklPolozka>
+          <Popis>Dobierkou</Popis>
+          <Zkrat>Dobierkou</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>0</UzivCode>
+          <Katalog>0</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <MojeFirma>
+        <Nazev>Ing. Peter Bezecný - NAHOĎ</Nazev>
+        <Adresa>
+          <Ulice>Hornomajerská 3046/10</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </Adresa>
+        <Email>info@nahod.sk</Email>
+        <ICO>47949848</ICO>
+        <DIC>SK1073398106</DIC>
+        <DanIC>107339810</DanIC>
+        <Ucet>SK7383300000002600679941</Ucet>
+        <MenaSymb>€</MenaSymb>
+        <MenaKod>EUR</MenaKod>
+      </MojeFirma>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210021</Doklad>
+      <Popis>Petra Mekka</Popis>
+      <Vystaveno>29.6.2021 15:28:31</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Petra Mekka</ObchNazev>
+        <ObchAdresa>
+          <Ulice>SNP</Ulice>
+          <Misto>Martin</Misto>
+          <PSC>81103</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Petra Mekka</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>SNP</Ulice>
+          <Misto>Martin</Misto>
+          <PSC>81103</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>+421908777777</Cislo>
+        </Tel>
+        <EMail>vojacik.p@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij />
+      <KPFromOdb>0</KPFromOdb>
+      <Celkem>13.80</Celkem>
+      <PlatPodm>Bankovým prevodom</PlatPodm>
+      <Doprava>Kuriérska spoločnosť</Doprava>
+      <CasVystave>29.6.2021 15:28:31</CasVystave>
+      <DatumVysta>29.6.2021 15:28:31</DatumVysta>
+      <Nadpis>Prijatá objednávka</Nadpis>
+      <PrimDoklad>210021</PrimDoklad>
+      <SazbaDPH2>20</SazbaDPH2>
+      <Sleva>0</Sleva>
+      <Pojisteno>0</Pojisteno>
+      <Polozka>
+        <Popis>Bič FLAGMAN MAGNUM BLACK POLE 4m </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>8.90</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>1</Poradi>
+        <NesklPolozka>
+          <Popis>Bič FLAGMAN MAGNUM BLACK POLE 4m </Popis>
+          <Zkrat>Bič FLAGMAN MAGNUM BLACK POLE</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>MBP4000</UzivCode>
+          <Katalog>MBP4000</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <Polozka>
+        <Popis>Kuriérska spoločnosť</Popis>
+        <PocetMJ>ks</PocetMJ>
+        <Cena>4.90</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>2</Poradi>
+        <NesklPolozka>
+          <Popis>Kuriérska spoločnosť</Popis>
+          <Zkrat>Kuriérska spoločnosť</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>0</UzivCode>
+          <Katalog>0</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <MojeFirma>
+        <Nazev>Ing. Peter Bezecný - NAHOĎ</Nazev>
+        <Adresa>
+          <Ulice>Hornomajerská 3046/10</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </Adresa>
+        <Email>info@nahod.sk</Email>
+        <ICO>47949848</ICO>
+        <DIC>SK1073398106</DIC>
+        <DanIC>107339810</DanIC>
+        <Ucet>SK7383300000002600679941</Ucet>
+        <MenaSymb>€</MenaSymb>
+        <MenaKod>EUR</MenaKod>
+      </MojeFirma>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210022</Doklad>
+      <Popis>Jan Šuťak</Popis>
+      <Vystaveno>30.6.2021 06:14:36</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Jan Šuťak</ObchNazev>
+        <ObchAdresa>
+          <Ulice>286</Ulice>
+          <Misto>Červenica pri Sabinove</Misto>
+          <PSC>082 56</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Jan Šuťak</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>286</Ulice>
+          <Misto>Červenica pri Sabinove</Misto>
+          <PSC>082 56</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0910 580 734</Cislo>
+        </Tel>
+        <EMail>janik.sutak@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij />
+      <KPFromOdb>0</KPFromOdb>
+      <Celkem>135.70</Celkem>
+      <PlatPodm>Dobierkou</PlatPodm>
+      <Doprava>Kuriérska spoločnosť</Doprava>
+      <CasVystave>30.6.2021 06:14:36</CasVystave>
+      <DatumVysta>30.6.2021 06:14:36</DatumVysta>
+      <Nadpis>Prijatá objednávka</Nadpis>
+      <PrimDoklad>210022</PrimDoklad>
+      <SazbaDPH2>20</SazbaDPH2>
+      <Sleva>0</Sleva>
+      <Pojisteno>0</Pojisteno>
+      <Polozka>
+        <Popis>Mivardi Comfort XL8 lehátko  </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>129.90</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>1</Poradi>
+        <NesklPolozka>
+          <Popis>Mivardi Comfort XL8 lehátko  </Popis>
+          <Zkrat>Mivardi Comfort XL8 lehátko</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>M-BCHCO8</UzivCode>
+          <Katalog>M-BCHCO8</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <Polozka>
+        <Popis>Dobierkou</Popis>
+        <PocetMJ>ks</PocetMJ>
+        <Cena>0.90</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>2</Poradi>
+        <NesklPolozka>
+          <Popis>Dobierkou</Popis>
+          <Zkrat>Dobierkou</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>0</UzivCode>
+          <Katalog>0</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <MojeFirma>
+        <Nazev>Ing. Peter Bezecný - NAHOĎ</Nazev>
+        <Adresa>
+          <Ulice>Hornomajerská 3046/10</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </Adresa>
+        <Email>info@nahod.sk</Email>
+        <ICO>47949848</ICO>
+        <DIC>SK1073398106</DIC>
+        <DanIC>107339810</DanIC>
+        <Ucet>SK7383300000002600679941</Ucet>
+        <MenaSymb>€</MenaSymb>
+        <MenaKod>EUR</MenaKod>
+      </MojeFirma>
+    </ObjPrij>
+    <ObjPrij>
+      <Doklad>210023</Doklad>
+      <Popis>Ludo Nitran</Popis>
+      <Vystaveno>30.6.2021 14:05:57</Vystaveno>
+      <DodOdb>
+        <ObchNazev>Ludo Nitran</ObchNazev>
+        <ObchAdresa>
+          <Ulice>Jazerna</Ulice>
+          <Misto>Rovinka</Misto>
+          <PSC>90041</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </ObchAdresa>
+        <FaktNazev>Ludo Nitran</FaktNazev>
+        <ICO />
+        <DIC />
+        <FaktAdresa>
+          <Ulice>Jazerna</Ulice>
+          <Misto>Rovinka</Misto>
+          <PSC>90041</PSC>
+          <Stat>Slovenská republika</Stat>
+          <KodStatu>SK</KodStatu>
+        </FaktAdresa>
+        <Nazev>   </Nazev>
+        <Adresa>
+          <Ulice></Ulice>
+          <Misto></Misto>
+          <PSC></PSC>
+          <Stat></Stat>
+        </Adresa>
+        <Tel>
+          <Pred></Pred>
+          <Cislo>0902426666</Cislo>
+        </Tel>
+        <EMail>Lnitran@gmail.com</EMail>
+        <PlatceDPH>0</PlatceDPH>
+        <FyzOsoba></FyzOsoba>
+        <Banka></Banka>
+        <Ucet></Ucet>
+        <KodBanky></KodBanky>
+        <DICSK />
+      </DodOdb>
+      <KonecPrij />
+      <KPFromOdb>0</KPFromOdb>
+      <Celkem>190.80</Celkem>
+      <PlatPodm>Dobierkou</PlatPodm>
+      <Doprava>Kuriérska spoločnosť</Doprava>
+      <CasVystave>30.6.2021 14:05:57</CasVystave>
+      <DatumVysta>30.6.2021 14:05:57</DatumVysta>
+      <Nadpis>Prijatá objednávka</Nadpis>
+      <PrimDoklad>210023</PrimDoklad>
+      <SazbaDPH2>20</SazbaDPH2>
+      <Sleva>0</Sleva>
+      <Pojisteno>0</Pojisteno>
+      <Polozka>
+        <Popis>Elektromotor Haswing Osapian 55 Lb  </Popis>
+        <PocetMJ>1</PocetMJ>
+        <Cena>185.00</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>1</Poradi>
+        <NesklPolozka>
+          <Popis>Elektromotor Haswing Osapian 55 Lb  </Popis>
+          <Zkrat>Elektromotor Haswing Osapian 55 Lb</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>0844</UzivCode>
+          <Katalog>0844</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <Polozka>
+        <Popis>Dobierkou</Popis>
+        <PocetMJ>ks</PocetMJ>
+        <Cena>0.90</Cena>
+        <SazbaDPH>20</SazbaDPH>
+        <TypCeny>1</TypCeny>
+        <Sleva>0</Sleva>
+        <Poradi>2</Poradi>
+        <NesklPolozka>
+          <Popis>Dobierkou</Popis>
+          <Zkrat>Dobierkou</Zkrat>
+          <MJ>ks</MJ>
+          <UzivCode>0</UzivCode>
+          <Katalog>0</Katalog>
+        </NesklPolozka>
+      </Polozka>
+      <MojeFirma>
+        <Nazev>Ing. Peter Bezecný - NAHOĎ</Nazev>
+        <Adresa>
+          <Ulice>Hornomajerská 3046/10</Ulice>
+          <Misto>Sereď</Misto>
+          <PSC>926 01</PSC>
+          <Stat>Slovensko</Stat>
+          <KodStatu>SK</KodStatu>
+        </Adresa>
+        <Email>info@nahod.sk</Email>
+        <ICO>47949848</ICO>
+        <DIC>SK1073398106</DIC>
+        <DanIC>107339810</DanIC>
+        <Ucet>SK7383300000002600679941</Ucet>
+        <MenaSymb>€</MenaSymb>
+        <MenaKod>EUR</MenaKod>
+      </MojeFirma>
+    </ObjPrij>
+  </SeznamObjPrij>
+</MoneyData>

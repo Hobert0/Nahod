@@ -26,7 +26,7 @@
     }
 </style>
 <div class="container-fluid w-75">
-    @using (Html.BeginForm("NewOrder", "Orders", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform", name = "" }))
+    @using (Html.BeginForm("NewOrder", "Orders", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform-order", name = "" }))
     {
         @Html.AntiForgeryToken()
         <div class="form-horizontal">
@@ -765,12 +765,10 @@
                     <div class="col"><img src="~/Content/images/Infobox_info_icon_white.svg" alt="Zhrnutie objednávky" style="width: 30px; margin-right: 10px;" />Zhrnutie objednávky</div>
                 </div>
 
+
                 <script>
                     var transferFree = false;
-                    var transfer1 = "0";
-                    var transfer2 = "0";
-                    var transfer3 = "0";
-                    var transfer4 = "0";
+
                 </script>
 
                 @foreach (var item in Model.EsettingsModel.OrderBy(x => x.id))
@@ -818,6 +816,10 @@
                             var transfer2Free = "0";
                             var transfer3Free = "0";
                             var transfer4Free = "0";
+                            var transfer1 = "0";
+                            var transfer2 = "0";
+                            var transfer3 = "0";
+                            var transfer4 = "0";
                         </script>
                     }
                     /*
@@ -1044,32 +1046,34 @@
                             {
 
                                 var thisProd = Model.ProductModel.Where(i => i.id == item.product.Value).SingleOrDefault();
+                                if (thisProd != null)
+                                {
+                                    <tr>
+                                        <td style="text-align: center;"><img src="~/Uploads/@Html.DisplayFor(modelItem => thisProd.image)" style="max-width: 30px;max-height: 50px;" /></td>
+                                        <td><strong>@Html.Raw(thisProd.title)</strong></td>
 
-                                <tr>
-                                    <td style="text-align: center;"><img src="~/Uploads/@Html.DisplayFor(modelItem => thisProd.image)" style="max-width: 30px;max-height: 50px;" /></td>
-                                    <td><strong>@Html.Raw(thisProd.title)</strong></td>
+                                        <td style="text-align: center;">
+                                            @if (item.variant != "")
+                                            {
+                                                @Html.Raw(item.variant) @Html.Raw(" ") @Html.Raw(item.variant2)
+                                            }
+                                        </td>
 
-                                    <td style="text-align: center;">
-                                        @if (item.variant != "")
-                                        {
-                                            @Html.Raw(item.variant) @Html.Raw(" ") @Html.Raw(item.variant2)
+                                        <td style="text-align: center;">
+                                            <div class="cart-item-amount">
+                                                <input type="number" value="@Html.Raw(item.quantity)" disabled>
+                                            </div>
+                                        </td>
+
+                                        @{
+                                            productprice = Convert.ToDecimal(item.price);
+                                            quantity = Convert.ToDecimal(item.quantity);
+
+                                            decimal totalproductprice = productprice * quantity;
                                         }
-                                    </td>
-
-                                    <td style="text-align: center;">
-                                        <div class="cart-item-amount">
-                                            <input type="number" value="@Html.Raw(item.quantity)" disabled>
-                                        </div>
-                                    </td>
-
-                                    @{
-                                        productprice = Convert.ToDecimal(item.price);
-                                        quantity = Convert.ToDecimal(item.quantity);
-
-                                        decimal totalproductprice = productprice * quantity;
-                                    }
-                                    <td><strong style="font-size: 16px;">@totalproductprice.ToString("n2") €</strong><br><span class="pricePerItem" style="font-size: 13px;">@productprice.ToString("n2") €/ks</span></td>
-                                </tr>
+                                        <td><strong style="font-size: 16px;">@totalproductprice.ToString("n2") €</strong><br><span class="pricePerItem" style="font-size: 13px;">@productprice.ToString("n2") €/ks</span></td>
+                                    </tr>
+                                }
                             }
                         }
                     }
@@ -1331,7 +1335,7 @@
                     <div class="basketBackButton" style="">
                         <a class="btn btn-secondary my-4" onclick="showShipping()" style="color: #ffffff;">Späť</a>
                     </div>
-                    <div  class="basketFinishButton">
+                    <div class="basketFinishButton">
                         <input type="submit" class="btn btn-danger my-4" id="submitorder" value="Dokončiť objednávku s povinnosťou platby">
                     </div>
                 </div>
@@ -1343,12 +1347,18 @@
 <script src="~/Scripts/basket_session.js"></script>
 
 <script>
-    $("#submitorder").click(function () {
+
+    $( document ).ready(function() {
+            // Handler for .ready() called.
+            document.getElementById("submitorder").disabled = false;
+    });
+
+    $("#submitorder").click(function (e) {
             //stop submitting the form to see the disabled button effect
-            e.preventDefault();
+           // e.preventDefault();
         document.getElementById("submitorder").disabled = true;
-            //disable the submit button
-        return true;
+        //disable the submit button
+        $("#Myform-order").submit();
     });
 
     $("#cart .next-step-container a,.basketForwardButton, .basketBackButton").click(function () {

@@ -5,13 +5,13 @@
 @{
     HelperController helper = new HelperController();
 
-    var prods = Model.ProductModel.OrderByDescending(i => i.id).ToList();
+    var prods = Model.ProductModel.Where(i => i.category.Contains("606")).OrderByDescending(i => i.id).ToList();
     int prodCounter = 0;
     int discProdCounter = 0;
 
     foreach (var prod in prods)
     {
-        if (discProdCounter >= 10)
+        if (discProdCounter >= 20)
         {
             break;
         }
@@ -39,7 +39,7 @@
             }
         }
 
-        if (isDiscounted && discProdCounter < 10)
+        if (discProdCounter < 21)
         {
             var slug = helper.ToUrlSlug(prod.title);
             <div class="col-md product mx-1">
@@ -54,7 +54,7 @@
                         }
 
                         @{
-                            if (prodCounter < 10)
+                           if (DateTime.Compare(DateTime.Parse(prod.date), DateTime.Now.AddDays(-15)) >= 0)
                             {
                                 <span class="prod-new">novinka</span>
                             }

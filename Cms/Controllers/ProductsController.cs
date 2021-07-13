@@ -429,7 +429,7 @@ namespace Cms.Controllers
             return heurekaCategories;
         }
 
-public List<SelectListItem> SelectionZaradenie()
+        public List<SelectListItem> SelectionZaradenie()
         {
             List<SelectListItem> znacka = new List<SelectListItem>();
             znacka.Add(new SelectListItem { Text = "", Value = "" });
@@ -573,7 +573,15 @@ public List<SelectListItem> SelectionZaradenie()
             if (model.Discountprice != null && model.Discountprice != "") { model.Discountprice = model.Discountprice; }
 
             o.title = model.Title;
-            o.image = ulozObrazok + nazovSuboru;
+            if (model.Image != null)
+            {
+                o.image = model.Image;
+            }
+            else
+            {
+                o.image = ulozObrazok + nazovSuboru;
+            }
+
             o.number = model.Number;
             o.stock = model.Stock;
             o.price = Decimal.Parse(model.Price, CultureInfo.InvariantCulture);
@@ -758,6 +766,7 @@ public List<SelectListItem> SelectionZaradenie()
             return RedirectToAction("Products", "Admin");
         }
 
+
         public async Task<ActionResult> DuplicateProduct(int? id)
         {
             var data = db.products.Single(i => i.id == id);
@@ -797,6 +806,7 @@ public List<SelectListItem> SelectionZaradenie()
             {
                 model.HeurekaDarcekText = null;
             }
+
             model.TitleImage = null;
 
             //Varianty
@@ -808,12 +818,36 @@ public List<SelectListItem> SelectionZaradenie()
             return RedirectToAction("Products", "Admin");
         }
 
+        public class MemoryPostedFile : HttpPostedFileBase
+        {
+            private readonly byte[] fileBytes;
+
+            public MemoryPostedFile(byte[] fileBytes, string fileName = null)
+            {
+                this.fileBytes = fileBytes;
+                this.FileName = fileName;
+                this.InputStream = new MemoryStream(fileBytes);
+            }
+
+            public override int ContentLength => fileBytes.Length;
+
+            public override string FileName { get; }
+
+            public override Stream InputStream { get; }
+        }
+
 
         [HttpPost, Route("produkty/editovat-produkt/{id}")]
         public async Task<ActionResult> EditProduct(ProductModel model)
         {
 
             var o = db.products.Single(i => i.id == model.Id);
+
+            var sendWatchdog = false;
+            if (decimal.Parse(o.stock) < decimal.Parse(model.Stock))
+            {
+                sendWatchdog = true;
+            }
 
             if (model.Price != null) { model.Price = model.Price; }
             if (model.Discountprice != null) { model.Discountprice = model.Discountprice; }
@@ -923,9 +957,52 @@ public List<SelectListItem> SelectionZaradenie()
                 db.variants.Add(v);
             }
 
+            if (sendWatchdog)
+            {
+                //odosleme emaily ak existuju watchdogy na dany produkt
+                var watchdogs = db.watchdog.Where(i => i.prod_id == model.Id && i.sent == false).ToList();
+
+                foreach (var watchdog in watchdogs)
+                {
+
+                    HelperController helper = new HelperController();
+                    var slug = helper.ToUrlSlug(model.Title);
+                    var prodName = model.Title;
+                    var prodLink = "https://nahod.sk/detail-produktu/" + model.Id + "/" + slug;
+
+                    //odosleme email o uspesnom zaregistrovani
+                    OrdersController oc = new OrdersController();
+                    string body = createWatchdogEmailBody(prodName, prodLink);
+                    oc.SendHtmlFormattedEmail("Požadovaný tovar je naskladnený!", body, watchdog.email, "watchdog", "");
+
+                    watchdog.sent = true;
+                }
+            }
+
             db.SaveChanges();
 
+
+
             return RedirectToAction("EditProduct", new { model.Id });
+        }
+        private string createWatchdogEmailBody(string prodName, string prodLink)
+        {
+
+            string body = string.Empty;
+            var ownerEmail = db.settings.Select(i => i.email).FirstOrDefault();
+            //using streamreader for reading my htmltemplate   
+            using (StreamReader rea = new StreamReader(Server.MapPath("~/Views/Shared/WatchdogEmail.cshtml")))
+            {
+                body = rea.ReadToEnd();
+            }
+            ApiController api = new ApiController();
+            var str = "Požadovaný tovar <a href='" + prodLink + "'>" + prodName + "</a> je na sklade.";
+
+            body = body.Replace("{Text}", str);
+            body = body.Replace("{CompanyData}", api.CompanyDataInEmial());
+            body = body.Replace("{CustomerService}", ownerEmail);
+
+            return body;
         }
 
         [HttpPost]
@@ -1144,7 +1221,7 @@ public List<SelectListItem> SelectionZaradenie()
                         {
                             img.Resize(1000 + 1, 1000 + 1, true).Crop(1, 1);
                         }
-                       
+
 
                         if (img.ImageFormat != fileformat[1])
                         {
@@ -1194,8 +1271,8 @@ public List<SelectListItem> SelectionZaradenie()
 
                             data.image = model.Image.Substring(0, model.Image.LastIndexOf("/") + 1) + r.Next() + "_" + InputFileName;
                             db.SaveChanges();
-                            
-                           // img.Save(ServerSavePath);
+
+                            // img.Save(ServerSavePath);
                             img.Save(Path.Combine(Server.MapPath("~/Uploads/" + data.image)));
                         }
                         //assigning file uploaded status to ViewBag for showing message to user.  

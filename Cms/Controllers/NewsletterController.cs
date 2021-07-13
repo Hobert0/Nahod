@@ -4,6 +4,7 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Text.RegularExpressions;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -180,15 +181,18 @@ namespace Cms.Controllers
             {
                 subject = item.subject;
                 body = item.body;
+                body = Regex.Replace(body, @"../Uploads", "https://nahod.sk/Uploads");
             }
 
-            foreach(var singleUserNewsTrue in allUsersNewsTrue)
+                foreach (var singleUserNewsTrue in allUsersNewsTrue)
             {
 
                 MailMessage mailMessage = new MailMessage();
 
-                mailMessage.From = new MailAddress(settings);
-                mailMessage.Subject = subject;
+                    var eshopname = "NAHOD.sk";
+
+                    mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
+                    mailMessage.Subject = subject;
                 mailMessage.Body = body;
                 mailMessage.IsBodyHtml = true;
             
@@ -196,21 +200,21 @@ namespace Cms.Controllers
 
                 SmtpClient smtp = new SmtpClient();
 
-                smtp.Host = ConfigurationManager.AppSettings["Host"];
+                smtp.Host = "localhost";
 
-                smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
+                //smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
 
-                System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
+                //System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
 
-                NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"]; //reading from web.config  
+                //NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"]; //reading from web.config  
 
-                NetworkCred.Password = ConfigurationManager.AppSettings["Password"]; //reading from web.config  
+                //NetworkCred.Password = ConfigurationManager.AppSettings["Password"]; //reading from web.config  
 
-                smtp.UseDefaultCredentials = true;
+                //smtp.UseDefaultCredentials = true;
 
-                smtp.Credentials = NetworkCred;
+                //smtp.Credentials = NetworkCred;
 
-                smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
+                //smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
 
                 smtp.Send(mailMessage);
 
@@ -230,7 +234,7 @@ namespace Cms.Controllers
             if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
 
-                var template = db.newsletter.Where(t => t.id == idOfTemplate).ToList();
+            var template = db.newsletter.Where(t => t.id == idOfTemplate).ToList();
             var settings = db.settings.SingleOrDefault().email;
 
             var subject = "";
@@ -240,6 +244,7 @@ namespace Cms.Controllers
             {
                 subject = item.subject;
                 body = item.body;
+                body = Regex.Replace(body, @"../Uploads", "https://nahod.sk/Uploads");
             }
 
 
@@ -249,7 +254,9 @@ namespace Cms.Controllers
 
                 MailMessage mailMessage = new MailMessage();
 
-                mailMessage.From = new MailAddress(settings);
+                var eshopname = "NAHOD.sk";
+
+                mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
                 mailMessage.IsBodyHtml = true;
@@ -258,21 +265,21 @@ namespace Cms.Controllers
 
                 SmtpClient smtp = new SmtpClient();
 
-                smtp.Host = ConfigurationManager.AppSettings["Host"];
+                smtp.Host = "localhost";
 
-                smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
+                //smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
 
-                System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
+                //System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
 
-                NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"]; //reading from web.config  
+                //NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"]; //reading from web.config  
 
-                NetworkCred.Password = ConfigurationManager.AppSettings["Password"]; //reading from web.config  
+                //NetworkCred.Password = ConfigurationManager.AppSettings["Password"]; //reading from web.config  
 
-                smtp.UseDefaultCredentials = true;
+                //smtp.UseDefaultCredentials = true;
 
-                smtp.Credentials = NetworkCred;
+                //smtp.Credentials = NetworkCred;
 
-                smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
+                //smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
 
                 smtp.Send(mailMessage);
 

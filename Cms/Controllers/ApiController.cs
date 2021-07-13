@@ -36,13 +36,13 @@ namespace Cms.Controllers
             {
                 //subslug - kategoria level 1
                 //subslug2 - kategoria level 2
-                result = new { data = FetchByBrand(catslug, subslug, subslug2).ProductModel, variants };
+                result = new { data = FetchByBrand(catslug, subslug, subslug2).ProductModel.OrderByDescending(i => i.id), variants };
             }
             else if (type)
             {
                 //subslug - kategoria level 1
                 //subslug2 - kategoria level 2
-                result = new { data = FetchByType(catslug, subslug, subslug2).ProductModel, variants };
+                result = new { data = FetchByType(catslug, subslug, subslug2).ProductModel.OrderByDescending(i => i.id), variants };
             }
             else if (searchparam)
             {
@@ -51,7 +51,7 @@ namespace Cms.Controllers
             {
                 //subslug - kategoria level 1
                 //subslug2 - kategoria level 2
-                result = new { data = FetchNewest().ProductModel, variants };
+                result = new { data = FetchNewest().ProductModel.OrderByDescending(i => i.id), variants };
             }
             else
             {
@@ -63,7 +63,7 @@ namespace Cms.Controllers
                     topcatId = TopCatID(id);
                 }
                 var prodData =
-                result = new { data = SortByBrand(topcatId, id, catslug).ProductModel, variants };
+                result = new { data = SortByBrand(topcatId, id, catslug).ProductModel.OrderByDescending(i => i.id), variants };
             }
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -470,7 +470,7 @@ namespace Cms.Controllers
                 XElement docFirma = new XElement("MojeFirma");
                 XElement docNazov = new XElement("Nazev", eshopInfo.companyname);
                 XElement docAdresa = new XElement("Adresa");
-                XElement docUlice= new XElement("Ulice", eshopInfo.address);
+                XElement docUlice = new XElement("Ulice", eshopInfo.address);
                 XElement docMisto = new XElement("Misto", eshopInfo.city);
                 XElement docPSC = new XElement("PSC", sett.psc);
                 XElement docStat = new XElement("Stat", "Slovensko");
@@ -558,7 +558,7 @@ namespace Cms.Controllers
                     XElement doc44 = new XElement("PocetMJ", item.pieces);
                     XElement doc45 = new XElement("Cena", item.price);
                     XElement doc46 = new XElement("SazbaDPH", "20");
-                    XElement doc47 = new XElement("TypCeny", "0");
+                    XElement doc47 = new XElement("TypCeny", "1");
                     XElement doc48 = new XElement("Sleva", "0");
                     XElement doc49 = new XElement("Poradi", counter);
 
@@ -626,7 +626,95 @@ namespace Cms.Controllers
 
                     counter++;
                 }
+                
 
+                var Sql = "select `" + product.shipping + "` from `e-settings`";
+
+                var shippingPrice = db.Database.SqlQuery<string>(Sql).ToList();
+                var freeShipping = db.e_settings.FirstOrDefault().transfer5;
+
+                if (product.finalprice < decimal.Parse(freeShipping) && decimal.Parse(shippingPrice[0].Replace(".", ",").ToString()) != 0)
+                {
+                    XElement shipxRoot10 = new XElement("Polozka");
+                    XElement shipdoc43 = new XElement("Popis", ShippingType(product.shipping));
+                    XElement shipdoc44 = new XElement("PocetMJ", "1");
+                    XElement shipdoc45 = new XElement("Cena", shippingPrice[0]);
+                    XElement shipdoc46 = new XElement("SazbaDPH", "20");
+                    XElement shipdoc47 = new XElement("TypCeny", "1");
+                    XElement shipdoc48 = new XElement("Sleva", "0");
+                    XElement shipdoc49 = new XElement("Poradi", counter);
+
+                    XElement shipxRoot11 = new XElement("NesklPolozka");
+
+                    XElement shipdoc50 = new XElement("Popis", ShippingType(product.shipping));
+                    XElement shipdoc51 = new XElement("Zkrat", ShippingType(product.shipping));
+                    XElement shipdoc52 = new XElement("MJ", "ks");
+                    XElement shipdoc53 = new XElement("UzivCode", "0");
+                    XElement shipdoc55 = new XElement("Katalog", "0");
+
+                    xRoot3.Add(shipxRoot10); // Polozka
+
+                    shipxRoot10.Add(shipdoc43);
+                    shipxRoot10.Add(shipdoc44);
+                    shipxRoot10.Add(shipdoc45);
+                    shipxRoot10.Add(shipdoc46);
+                    shipxRoot10.Add(shipdoc47);
+                    shipxRoot10.Add(shipdoc48);
+                    shipxRoot10.Add(shipdoc49);
+
+                    shipxRoot10.Add(shipxRoot11); // NesklPolozka
+
+                    shipxRoot11.Add(shipdoc50);
+                    shipxRoot11.Add(shipdoc51);
+                    shipxRoot11.Add(shipdoc52);
+                    shipxRoot11.Add(shipdoc53);
+                    shipxRoot11.Add(shipdoc55);
+
+                }
+
+                var SqlPay = "select `" + product.payment + "` from `e-settings`";
+
+                var paymentPrice = db.Database.SqlQuery<string>(SqlPay).ToList();
+
+                if (decimal.Parse(paymentPrice[0].Replace(".", ",")) != 0)
+                {
+                    XElement payxRoot10 = new XElement("Polozka");
+                    XElement paydoc43 = new XElement("Popis", PaymentType(product.payment));
+                    XElement paydoc44 = new XElement("PocetMJ", "1");
+                    XElement paydoc45 = new XElement("Cena", paymentPrice[0]);
+                    XElement paydoc46 = new XElement("SazbaDPH", "20");
+                    XElement paydoc47 = new XElement("TypCeny", "1");
+                    XElement paydoc48 = new XElement("Sleva", "0");
+                    XElement paydoc49 = new XElement("Poradi", counter);
+
+                    XElement payxRoot11 = new XElement("NesklPolozka");
+
+                    XElement paydoc50 = new XElement("Popis", PaymentType(product.payment));
+                    XElement paydoc51 = new XElement("Zkrat", PaymentType(product.payment));
+                    XElement paydoc52 = new XElement("MJ", "ks");
+                    XElement paydoc53 = new XElement("UzivCode", "0");
+                    XElement paydoc55 = new XElement("Katalog", "0");
+
+                    xRoot3.Add(payxRoot10); // Polozka
+
+                    payxRoot10.Add(paydoc43);
+                    payxRoot10.Add(paydoc44);
+                    payxRoot10.Add(paydoc45);
+                    payxRoot10.Add(paydoc46);
+                    payxRoot10.Add(paydoc47);
+                    payxRoot10.Add(paydoc48);
+                    payxRoot10.Add(paydoc49);
+
+                    payxRoot10.Add(payxRoot11); // NesklPolozka
+
+                    payxRoot11.Add(paydoc50);
+                    payxRoot11.Add(paydoc51);
+                    payxRoot11.Add(paydoc52);
+                    payxRoot11.Add(paydoc53);
+                    payxRoot11.Add(paydoc55);
+
+                }
+                               
                 xRoot3.Add(docFirma); // MojeFirma
                 docFirma.Add(docNazov);
                 docFirma.Add(docAdresa);
@@ -685,7 +773,7 @@ namespace Cms.Controllers
                 }
 
                 var cena = node.SelectSingleNode("PC/Cena1/Cena").InnerText;
-                var zlava = node.SelectSingleNode("Sleva").InnerText;
+                var zlava = node.SelectSingleNode("PC/Cena2/Sleva").InnerText;
                 decimal cenasdph = 0;
                 decimal cenapozlave = 0;
                 //vypocet ceny s DPH
@@ -699,39 +787,45 @@ namespace Cms.Controllers
                     var product = db.products.Where(i => i.number == cislo).FirstOrDefault();
                     if (product != null)
                     {
+                        var sendWatchdog = false;
+                        if (decimal.Parse(product.stock) < decimal.Parse(sklad))
+                        {
+                            sendWatchdog = true;
+                        }
                         product.stock = sklad;
-                        product.price = cenasdph * decimal.Parse("1,2");
+                        product.price = cenasdph;
 
-                        //ak je produkt v zlave
+                        //ak je produkt v zlave(nepouzivame, nastavuje len v admine)
                         if (zlava != "0")
                         {
                             cenapozlave = product.price * (1 - (decimal.Parse(zlava.Replace(".", ",")) / 100));
-                            product.discountprice = cenapozlave;
+                            //product.discountprice = cenapozlave;
                         }
                         else
                         {
-                            product.discountprice = null;
+                            //product.discountprice = null;
                         }
 
+                        if (sendWatchdog) { 
                         //odosleme emaily ak existuju watchdogy na dany produkt
-                        var watchdogs = db.watchdog.Where(i => i.prod_id == product.id && i.sent == false).ToList();
+                            var watchdogs = db.watchdog.Where(i => i.prod_id == product.id && i.sent == false).ToList();
 
-                        foreach (var watchdog in watchdogs)
-                        {
+                            foreach (var watchdog in watchdogs)
+                            {
 
-                            HelperController helper = new HelperController();
-                            var slug = helper.ToUrlSlug(product.title);
-                            var prodName = product.title;
-                            var prodLink = "https://nahod.sk/detail-produktu/" + product.id + "/" + slug;
+                                HelperController helper = new HelperController();
+                                var slug = helper.ToUrlSlug(product.title);
+                                var prodName = product.title;
+                                var prodLink = "https://nahod.sk/detail-produktu/" + product.id + "/" + slug;
 
-                            //odosleme email o uspesnom zaregistrovani
-                            OrdersController oc = new OrdersController();
-                            string body = createWatchdogEmailBody(prodName, prodLink);
-                            oc.SendHtmlFormattedEmail("Požadovaný tovar je naskladnený!", body, watchdog.email, "watchdog", "");
+                                //odosleme email o uspesnom zaregistrovani
+                                OrdersController oc = new OrdersController();
+                                string body = createWatchdogEmailBody(prodName, prodLink);
+                                oc.SendHtmlFormattedEmail("Požadovaný tovar je naskladnený!", body, watchdog.email, "watchdog", "");
 
-                            watchdog.sent = true;
+                                watchdog.sent = true;
+                            }
                         }
-
                         db.SaveChanges();
                     }
                     else
@@ -745,15 +839,15 @@ namespace Cms.Controllers
                             productinvariants.stock = sklad;
                             productinvariants.price = cenasdph;
 
-                            //ak je produkt v zlave
+                            //ak je produkt v zlave (nepouzivame, nastavuje len v admine)
                             if (zlava != "0")
                             {
                                 cenapozlave = cenasdph * (1 - (decimal.Parse(zlava.Replace(".", ",")) / 100));
-                                productinvariants.discountprice = cenapozlave;
+                                //productinvariants.discountprice = cenapozlave;
                             }
                             else
                             {
-                                productinvariants.discountprice = null;
+                                //productinvariants.discountprice = null;
                             }
 
                             db.SaveChanges();
@@ -797,7 +891,7 @@ namespace Cms.Controllers
             return body;
         }
 
-        private string CompanyDataInEmial()
+        public string CompanyDataInEmial()
         {
             var stringBuilder = new StringBuilder();
             foreach (var info in db.e_settings)

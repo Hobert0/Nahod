@@ -62,11 +62,16 @@ namespace Cms.Controllers
             decimal thisSum = 0;
             foreach (var item in cartVal)
             {
+                int prodId = int.Parse(item.product.Value.ToString());
+                var thisProd = db.products.Where(i => i.id == prodId && i.deleted == false).SingleOrDefault();
+
+                if (thisProd != null) { 
 
                 decimal thisPrice = Convert.ToDecimal(item.price);
                 decimal thisQuantity = Convert.ToDecimal(item.quantity);
-
+                
                 thisSum += thisQuantity * thisPrice;
+                }
             }
             Session["cartsum"] = thisSum;
 
@@ -465,6 +470,9 @@ namespace Cms.Controllers
 
             foreach (var product in allProds)
             {
+                if (product.description == null) {
+                    product.description = "";
+                }
                 var prodDesc = Regex.Replace(product.description, "<.*?>", String.Empty);
 
                 XElement xRoot2 = new XElement("SHOPITEM");
@@ -477,6 +485,12 @@ namespace Cms.Controllers
                 XElement doc7 = new XElement("IMGURL_ALTERNATIVE", "https://nahod.sk/Uploads/" + product.image);
                 XElement doc8 = new XElement("VIDEO_URL", "");
                 XElement doc9 = new XElement("PRICE_VAT", product.price);
+
+                if (product.discountprice != null && product.discountprice > 0)
+                {
+                    doc9 = new XElement("PRICE_VAT", product.discountprice);
+                }
+
                 XElement doc10 = null;
                 if (product.custom3 != null)
                 {
@@ -497,7 +511,15 @@ namespace Cms.Controllers
                 }
 
                 XElement doc13 = new XElement("PRODUCTNO", product.number);
+
+                var deliverydate = "0";
                 XElement doc14 = new XElement("DELIVERY_DATE", "0");
+
+                if (decimal.Parse(product.stock) <= 0)
+                {
+                    doc14 = new XElement("DELIVERY_DATE", "7");
+                }
+
                 XElement doc12 = null;
                 XElement doc15 = null;
                 XElement doc16 = null;
@@ -892,7 +914,17 @@ namespace Cms.Controllers
         [HttpGet]
         public JsonResult Search(string term)
         {
-            var names = db.products.AsEnumerable().Where(p => p.title.ToLower().Contains(term.ToLower())).ToList();
+            List<products> Prods = db.products.ToList();
+            List<products> varProds = new List<products>();
+
+            var names = Prods.AsEnumerable().Where(p => p.title.ToLower().Contains(term.ToLower()) || ( p.number != null && p.number.ToLower().Contains(term.ToLower()))).ToList();
+            var allvariants = db.variants.AsEnumerable().Where(p => p.number != null && p.number.ToLower().Contains(term.ToLower())).ToList();
+
+            foreach (var item in allvariants) {
+                varProds.Add(Prods.Where(i => i.id == item.prod_id).FirstOrDefault());
+            }
+
+            names.AddRange(varProds);
 
             return Json(names, JsonRequestBehavior.AllowGet);
         }
