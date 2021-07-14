@@ -916,15 +916,48 @@ namespace Cms.Controllers
         {
             List<products> Prods = db.products.ToList();
             List<products> varProds = new List<products>();
+            
+            var termArr = term.ToLower().Split(' ');
+            var counter = 0;
+            IQueryable<products> filteredProds = null;
+            IQueryable<variants> filteredVars = null;
 
+            foreach (var termObj in termArr) {
+                if (counter == 0) {
+                    //products
+                    filteredProds = db.products.Where(p => p.title.ToLower().Contains(termObj) || (p.number != null && p.number.ToLower().Contains(termObj)));
+                    //variants
+                    filteredVars = db.variants.Where(p => p.number != null && p.number.ToLower().Contains(termObj));
+                } else {
+                    //products
+                    filteredProds = filteredProds.Where(p => p.title.ToLower().Contains(termObj) || (p.number != null && p.number.ToLower().Contains(termObj)));
+                    //variants
+                    filteredVars = filteredVars.Where(p => p.number != null && p.number.ToLower().Contains(termObj));
+                }
+                counter++;
+            }
+            var names = filteredProds.OrderByDescending(x => x.id).ToList();
+
+            foreach (var item in filteredVars)
+            {
+                varProds.Add(Prods.Where(i => i.id == item.prod_id).FirstOrDefault());
+            }
+
+            names.AddRange(varProds);
+
+            /*
             var names = Prods.AsEnumerable().Where(p => p.title.ToLower().Contains(term.ToLower()) || ( p.number != null && p.number.ToLower().Contains(term.ToLower()))).ToList();
             var allvariants = db.variants.AsEnumerable().Where(p => p.number != null && p.number.ToLower().Contains(term.ToLower())).ToList();
+            */
 
+
+            /*
             foreach (var item in allvariants) {
                 varProds.Add(Prods.Where(i => i.id == item.prod_id).FirstOrDefault());
             }
 
             names.AddRange(varProds);
+            */
 
             return Json(names, JsonRequestBehavior.AllowGet);
         }
@@ -956,8 +989,24 @@ namespace Cms.Controllers
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.ToList();
-            model.ProductsPaged = db.products.ToList().Where(p => p.title.ToLower().Contains(term.ToLower())).OrderByDescending(x => x.id)
-                     .ToPagedList(pageNumber, pageSize);
+
+            /*
+            var termArr = term.ToLower().Split(' ');
+            var counter = 0;
+            IQueryable<products> filteredProds = null;
+
+            foreach (var termObj in termArr) {
+                if (counter == 0) {
+                    filteredProds = db.products.Where(p => p.title.ToLower().Contains(termObj));
+                } else {
+                    filteredProds = filteredProds.Where(p => p.title.ToLower().Contains(termObj));
+                }
+                counter++;
+            }
+            model.ProductsPaged = filteredProds.OrderByDescending(x => x.id).ToPagedList(pageNumber, pageSize);
+            */
+
+            model.ProductsPaged = db.products.ToList().Where(p => p.title.ToLower().Contains(term.ToLower())).OrderByDescending(x => x.id).ToPagedList(pageNumber, pageSize);
 
             ViewData["Search"] = term;
 

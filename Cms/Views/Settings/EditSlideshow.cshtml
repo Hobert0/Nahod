@@ -46,6 +46,11 @@
                 </div>
                 <br />
                 <div class="col-md-10">
+                    @Html.EditorFor(model => model.Order, new { htmlAttributes = new { @class = "form-control", placeholder = "Poradie", Value = "" } })
+                    @Html.ValidationMessageFor(model => model.Order, "", new { @class = "text-danger" })
+                </div>
+                <br />
+                <div class="col-md-10">
                     @Html.EditorFor(model => model.Header, new { htmlAttributes = new { @class = "form-control", placeholder = "Nadpis", Value = "" } })
                     @Html.ValidationMessageFor(model => model.Header, "", new { @class = "text-danger" })
                 </div>
@@ -114,6 +119,8 @@
                             {
                                 <b>@Html.LabelFor(model => model.Url, "Url", htmlAttributes: new { @class = "control-label px-0" })</b>
                                 @Html.EditorFor(modelItem => item.url, new { htmlAttributes = new { @class = "form-control ", placeholder = "Slide je bez odkazu", disabled = "disabled" } })
+                                <b>@Html.LabelFor(model => model.Order, "Poradie", htmlAttributes: new { @class = "control-label px-0" })</b>
+                                @Html.EditorFor(modelItem => item.ordering, new { htmlAttributes = new { @class = "form-control ", placeholder = "Bez poradia", disabled = "disabled" } })
                                 <b>@Html.LabelFor(model => model.Header, "Nadpis", htmlAttributes: new { @class = "control-label px-0" })</b>
                                 @Html.EditorFor(modelItem => item.header, new { htmlAttributes = new { @class = "form-control ", placeholder = "Slide je bez hlavičky", disabled = "disabled" } })
                                 <b>@Html.LabelFor(model => model.Text, "Text", htmlAttributes: new { @class = "control-label px-0" })</b>
@@ -126,7 +133,7 @@
                         }
                         <br />
                         <p>Editovať URL a ostatné údaje je možné po vymazaní a opätovnom nahratí slid-u.</p>
-
+                        <br /><br />
                     </div>
                 </div>
             </div>

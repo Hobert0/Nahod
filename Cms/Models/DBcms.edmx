@@ -263,6 +263,7 @@
           <Property Name="page" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="image" Type="text" Nullable="false" />
           <Property Name="url" Type="text" Nullable="false" />
+          <Property Name="ordering" Type="int" />
           <Property Name="title" Type="varchar" MaxLength="300" Nullable="false" />
           <Property Name="header" Type="text" />
           <Property Name="text" Type="text" />
@@ -396,10 +397,8 @@
           <EntitySet Name="attributes" EntityType="hobcModel.attributes" />
           <EntitySet Name="users" EntityType="hobcModel.users" />
           <EntitySet Name="types" EntityType="hobcModel.types" />
-          <EntitySet Name="slideshow" EntityType="hobcModel.slideshow" />
           <EntitySet Name="variants" EntityType="hobcModel.variants" />
           <EntitySet Name="ordermeta" EntityType="hobcModel.ordermeta" />
-          <EntitySet Name="coupons" EntityType="hobcModel.coupons" />
           <EntitySet Name="brands" EntityType="hobcModel.brands" />
           <EntitySet Name="blog" EntityType="hobcModel.blog" />
           <EntitySet Name="orders" EntityType="hobcModel.orders" />
@@ -409,6 +408,8 @@
           <EntitySet Name="usersmeta" EntityType="hobcModel.usersmeta" />
           <EntitySet Name="userstoken" EntityType="hobcModel.userstoken" />
           <EntitySet Name="categories" EntityType="hobcModel.categories" />
+          <EntitySet Name="slideshow" EntityType="hobcModel.slideshow" />
+          <EntitySet Name="coupons" EntityType="hobcModel.coupons" />
         </EntityContainer>
         <EntityType Name="deliver_city">
           <Key>
@@ -501,21 +502,6 @@
           <Property Name="image" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="slideshow">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="page" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="image" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="url" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="title" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="header" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="text" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="subtext" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="button" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="active" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="variants">
           <Key>
             <PropertyRef Name="id" />
@@ -544,21 +530,6 @@
           <Property Name="price" Type="Decimal" Nullable="false" />
           <Property Name="variant" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="variant2" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="deleted" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="coupons">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="coupon" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="amount" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="limit" Type="Int32" />
-          <Property Name="category_id" Type="Int32" />
-          <Property Name="type_id" Type="Int32" />
-          <Property Name="brand_id" Type="Int32" />
-          <Property Name="product_id" Type="Int32" />
-          <Property Name="active" Type="Boolean" Nullable="false" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="brands">
@@ -765,6 +736,37 @@
           <Property Name="ordering" Type="Int32" Nullable="false" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="slideshow">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="page" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="image" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="url" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="ordering" Type="Int32" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="header" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="text" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="subtext" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="button" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="active" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="coupons">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="coupon" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="amount" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="limit" Type="Int32" />
+          <Property Name="category_id" Type="Int32" />
+          <Property Name="type_id" Type="Int32" />
+          <Property Name="brand_id" Type="Int32" />
+          <Property Name="product_id" Type="Int32" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -870,22 +872,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="slideshow">
-            <EntityTypeMapping TypeName="hobcModel.slideshow">
-              <MappingFragment StoreEntitySet="slideshow">
-                <ScalarProperty Name="active" ColumnName="active" />
-                <ScalarProperty Name="button" ColumnName="button" />
-                <ScalarProperty Name="subtext" ColumnName="subtext" />
-                <ScalarProperty Name="text" ColumnName="text" />
-                <ScalarProperty Name="header" ColumnName="header" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="url" ColumnName="url" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="page" ColumnName="page" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="variants">
             <EntityTypeMapping TypeName="hobcModel.variants">
               <MappingFragment StoreEntitySet="variants">
@@ -914,22 +900,6 @@
                 <ScalarProperty Name="productid" ColumnName="productid" />
                 <ScalarProperty Name="product" ColumnName="product" />
                 <ScalarProperty Name="ordernumber" ColumnName="ordernumber" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="coupons">
-            <EntityTypeMapping TypeName="hobcModel.coupons">
-              <MappingFragment StoreEntitySet="coupons">
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="active" ColumnName="active" />
-                <ScalarProperty Name="product_id" ColumnName="product_id" />
-                <ScalarProperty Name="brand_id" ColumnName="brand_id" />
-                <ScalarProperty Name="type_id" ColumnName="type_id" />
-                <ScalarProperty Name="category_id" ColumnName="category_id" />
-                <ScalarProperty Name="limit" ColumnName="limit" />
-                <ScalarProperty Name="amount" ColumnName="amount" />
-                <ScalarProperty Name="coupon" ColumnName="coupon" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1143,6 +1113,39 @@
                 <ScalarProperty Name="maincat" ColumnName="maincat" />
                 <ScalarProperty Name="slug" ColumnName="slug" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="slideshow">
+            <EntityTypeMapping TypeName="hobcModel.slideshow">
+              <MappingFragment StoreEntitySet="slideshow">
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="button" ColumnName="button" />
+                <ScalarProperty Name="subtext" ColumnName="subtext" />
+                <ScalarProperty Name="text" ColumnName="text" />
+                <ScalarProperty Name="header" ColumnName="header" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="page" ColumnName="page" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="coupons">
+            <EntityTypeMapping TypeName="hobcModel.coupons">
+              <MappingFragment StoreEntitySet="coupons">
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="brand_id" ColumnName="brand_id" />
+                <ScalarProperty Name="type_id" ColumnName="type_id" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="limit" ColumnName="limit" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="coupon" ColumnName="coupon" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
