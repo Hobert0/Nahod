@@ -283,7 +283,7 @@ namespace Cms.Controllers
 
                 //smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
 
-                //smtp.Send(mailMessage);
+                smtp.Send(mailMessage);
 
             }
 

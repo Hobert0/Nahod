@@ -65,12 +65,13 @@ namespace Cms.Controllers
                 int prodId = int.Parse(item.product.Value.ToString());
                 var thisProd = db.products.Where(i => i.id == prodId && i.deleted == false).SingleOrDefault();
 
-                if (thisProd != null) { 
+                if (thisProd != null)
+                {
 
-                decimal thisPrice = Convert.ToDecimal(item.price);
-                decimal thisQuantity = Convert.ToDecimal(item.quantity);
-                
-                thisSum += thisQuantity * thisPrice;
+                    decimal thisPrice = Convert.ToDecimal(item.price);
+                    decimal thisQuantity = Convert.ToDecimal(item.quantity);
+
+                    thisSum += thisQuantity * thisPrice;
                 }
             }
             Session["cartsum"] = thisSum;
@@ -456,7 +457,7 @@ namespace Cms.Controllers
                 finalProds.AddRange(filteredProds);
             }
 
-            foreach(var hash in finalProds)
+            foreach (var hash in finalProds)
             {
                 allProds.Add(hash);
             }
@@ -470,7 +471,8 @@ namespace Cms.Controllers
 
             foreach (var product in allProds)
             {
-                if (product.description == null) {
+                if (product.description == null)
+                {
                     product.description = "";
                 }
                 var prodDesc = Regex.Replace(product.description, "<.*?>", String.Empty);
@@ -570,7 +572,8 @@ namespace Cms.Controllers
                 foreach (var siglecat in cats2)
                 {
                     int value = int.Parse(siglecat.Value.ToString());
-                    if (value != 580 && value != 603 && value != 604 && value != 605 && value != 606 && value != 607 && value != 608 && value != 609) { 
+                    if (value != 580 && value != 603 && value != 604 && value != 605 && value != 606 && value != 607 && value != 608 && value != 609)
+                    {
                         orderedCats.Add(value);
                     }
                 }
@@ -695,18 +698,19 @@ namespace Cms.Controllers
                     xRoot2.SetAttributeValue("id", product.id);
                     XElement doc2 = new XElement("stock_quantity", product.stock);
 
-                    var dnow = DateTime.ParseExact(DateTime.Now.ToString("MM/dd/yyyy 12:00:00"), "MM/dd/yyyy HH:mm:ss",null);
+                    var dnow = DateTime.ParseExact(DateTime.Now.ToString("MM/dd/yyyy 12:00:00"), "MM/dd/yyyy HH:mm:ss", null);
 
-                    if (DateTime.Now > dnow) {
+                    if (DateTime.Now > dnow)
+                    {
                         //zajtra
                         dnow = dnow.AddDays(1);
-                    } 
-                   
+                    }
+
                     XElement doc3 = new XElement("delivery_time", dnow.AddDays(3).ToString("yyyy-MM-dd hh:mm"));
                     doc3.SetAttributeValue("orderDeadline", dnow.ToString("yyyy-MM-dd hh:mm"));
 
                     XElement doc4 = new XElement("depot");
-                    doc4.SetAttributeValue("id", 4383); 
+                    doc4.SetAttributeValue("id", 4383);
 
                     XElement doc5 = new XElement("pickup_time", dnow.AddDays(1).ToString("yyyy-MM-dd hh:mm"));
                     doc5.SetAttributeValue("orderDeadline", dnow.ToString("yyyy-MM-dd hh:mm"));
@@ -916,19 +920,23 @@ namespace Cms.Controllers
         {
             List<products> Prods = db.products.ToList();
             List<products> varProds = new List<products>();
-            
+
             var termArr = term.ToLower().Split(' ');
             var counter = 0;
             IQueryable<products> filteredProds = null;
             IQueryable<variants> filteredVars = null;
 
-            foreach (var termObj in termArr) {
-                if (counter == 0) {
+            foreach (var termObj in termArr)
+            {
+                if (counter == 0)
+                {
                     //products
                     filteredProds = db.products.Where(p => p.title.ToLower().Contains(termObj) || (p.number != null && p.number.ToLower().Contains(termObj)));
                     //variants
                     filteredVars = db.variants.Where(p => p.number != null && p.number.ToLower().Contains(termObj));
-                } else {
+                }
+                else
+                {
                     //products
                     filteredProds = filteredProds.Where(p => p.title.ToLower().Contains(termObj) || (p.number != null && p.number.ToLower().Contains(termObj)));
                     //variants
@@ -1225,8 +1233,12 @@ namespace Cms.Controllers
         [HttpPost]
         public ActionResult PasswordChangeAction(string Password, string Email, string Token)
         {
+            string mail = Email;
+            int index = mail.IndexOf("?");
+            if (index >= 0)
+                mail = mail.Substring(0, index);
 
-            var user = db.users.Where(i => i.email == Email).FirstOrDefault();
+            var user = db.users.Where(i => i.email == mail).FirstOrDefault();
 
             MD5CryptoServiceProvider md5provider = new MD5CryptoServiceProvider();
             md5provider.ComputeHash(ASCIIEncoding.ASCII.GetBytes(Password));

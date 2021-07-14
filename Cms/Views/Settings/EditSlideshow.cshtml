@@ -25,7 +25,7 @@
         <div class="row">
 
             @{ViewBag.Title = "Editovať Slideshow - " + Model.Title; }
-            @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control", style = "display:none !important;"} })
+            @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control", style = "display:none !important;" } })
             @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control", style = "display:none !important;" } })
             @Html.EditorFor(model => model.Page, new { htmlAttributes = new { @class = "form-control", style = "display:none !important;" } })
             @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", style = "display:none !important;" } })
@@ -120,8 +120,11 @@
                                 <b>@Html.LabelFor(model => model.Url, "Url", htmlAttributes: new { @class = "control-label px-0" })</b>
                                 @Html.EditorFor(modelItem => item.url, new { htmlAttributes = new { @class = "form-control ", placeholder = "Slide je bez odkazu", disabled = "disabled" } })
                                 <b>@Html.LabelFor(model => model.Order, "Poradie", htmlAttributes: new { @class = "control-label px-0" })</b>
-                                @Html.EditorFor(modelItem => item.ordering, new { htmlAttributes = new { @class = "form-control ", placeholder = "Bez poradia", disabled = "disabled" } })
-                                <b>@Html.LabelFor(model => model.Header, "Nadpis", htmlAttributes: new { @class = "control-label px-0" })</b>
+                                <div class="row ml-0">
+                                    @Html.EditorFor(modelItem => item.ordering, new { htmlAttributes = new { @class = "form-control col-2 position-" + @item.id, placeholder = "Bez poradia" } })
+                                    <button class="btn btn-warning savechange" data-slideid="@item.id">Uložiť zmenu poradia</button>
+                                    <i class="far fa-check-circle position-@item.id-done" style="color: #4caf50;font-size: 25px;margin-left: 20px;margin-top: 5px;display:none;"></i>
+                                </div><b>@Html.LabelFor(model => model.Header, "Nadpis", htmlAttributes: new { @class = "control-label px-0" })</b>
                                 @Html.EditorFor(modelItem => item.header, new { htmlAttributes = new { @class = "form-control ", placeholder = "Slide je bez hlavičky", disabled = "disabled" } })
                                 <b>@Html.LabelFor(model => model.Text, "Text", htmlAttributes: new { @class = "control-label px-0" })</b>
                                 @Html.EditorFor(modelItem => item.text, new { htmlAttributes = new { @class = "form-control ", placeholder = "Slide je bez textu", disabled = "disabled" } })
@@ -146,38 +149,55 @@
 
 <script src="http://malsup.github.com/jquery.form.js"></script>
 
-    <script>
-        $("#btn_vis").click(function () {
-            $("#bttn").trigger('click');
-        });
+<script>
+    $("#btn_vis").click(function () {
+        $("#bttn").trigger('click');
+    });
 
-        window.pressed = function () {
-            var a = document.getElementById('bttn');
-            if (a.files.length > 1) {
-                fileLabel.innerHTML = "Boli vybraté " + a.files.length + " fotografie.";
-            }
-            else if (a.files.length = 1) {
-                fileLabel.innerHTML = "Bola vybratá " + a.files.length + " fotografia.";
-            }
-        };
+    window.pressed = function () {
+        var a = document.getElementById('bttn');
+        if (a.files.length > 1) {
+            fileLabel.innerHTML = "Boli vybraté " + a.files.length + " fotografie.";
+        }
+        else if (a.files.length = 1) {
+            fileLabel.innerHTML = "Bola vybratá " + a.files.length + " fotografia.";
+        }
+    };
 
-        $("#bttn_vis").click(function () {
-            $("#btttn").trigger('click');
-        });
+    $("#bttn_vis").click(function () {
+        $("#btttn").trigger('click');
+    });
 
-        window.press = function () {
-            var a = document.getElementById('btttn');
-            if (a.files.length > 1) {
-                fileLabell.innerHTML = "Boli vybraté " + a.files.length + " fotografie.";
-            }
-            else if (a.files.length = 1) {
-                fileLabell.innerHTML = "Bola vybratá " + a.files.length + " fotografia.";
-            }
-        };
-    </script>
+    window.press = function () {
+        var a = document.getElementById('btttn');
+        if (a.files.length > 1) {
+            fileLabell.innerHTML = "Boli vybraté " + a.files.length + " fotografie.";
+        }
+        else if (a.files.length = 1) {
+            fileLabell.innerHTML = "Bola vybratá " + a.files.length + " fotografia.";
+        }
+    };
+</script>
 <script type="text/javascript">
+    $(".savechange").click(function () {
+        let slideId = $(this).data('slideid');
+        let position = $('.position-' + slideId).val();
 
-
+        $.ajax({
+            type: "POST",
+            url: "/slideposition/" + slideId,
+            //contentType: "application/json; charset=utf-8", // specify the content type
+            //dataType: 'JSON', // make sure you use the correct case for dataType
+            data: { position: position },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+            },
+            success: function () {
+                $('.position-' + slideId + '-done').fadeIn();
+                $('.position-' + slideId + '-done').delay(1000).fadeOut();
+            },
+        });
+    });
 
     function validateForm() {
         var a = document.forms["Myform"]["TitleImage"].value;

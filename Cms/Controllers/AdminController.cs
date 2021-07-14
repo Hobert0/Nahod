@@ -392,8 +392,8 @@ namespace Cms.Controllers
 
         public ActionResult EmailExist(string email)
         {
-            var emailExist = db.users.Where(i => i.username == email).Select(o => o.id).FirstOrDefault();
-            if (emailExist != 0)
+            var emailExist = db.users.Where(i => i.username == email).FirstOrDefault();
+            if (emailExist != null)
             {
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }

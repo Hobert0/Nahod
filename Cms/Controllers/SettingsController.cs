@@ -431,5 +431,13 @@ namespace Cms.Controllers
             // ReSharper disable once Mvc.ViewNotResolved
             return View();
         }
+
+        [HttpPost, Route("slideposition/{slideId}")]
+        public void SetSlidePosition(int slideId, string position)
+        {
+            var slide = db.slideshow.Where(i => i.id == slideId).FirstOrDefault();
+            slide.ordering = int.Parse(position);
+            db.SaveChanges();             
+        }
     }
 }
