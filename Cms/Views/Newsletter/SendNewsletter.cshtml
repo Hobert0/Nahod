@@ -89,11 +89,14 @@
 
             $.ajax({
                 type: "POST",
-                url: "/send-newsletter-selected/"+@idOfTemplate,
+                url: "/send-newsletter-selected/" +@idOfTemplate,
                 contentType: "application/json; charset=utf-8", // specify the content type
                 dataType: 'JSON', // make sure you use the correct case for dataType
                 data: dataToPost,
-                traditional: true
+                traditional: true,
+                error: function(xhr, ajaxOptions, thrownError){
+                    alert(xhr.status);
+                },
             });
             window.location.href = "/newsletter";
         });

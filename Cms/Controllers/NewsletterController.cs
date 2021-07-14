@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Globalization;
 
 namespace Cms.Controllers
 {
@@ -186,8 +187,9 @@ namespace Cms.Controllers
 
                 foreach (var singleUserNewsTrue in allUsersNewsTrue)
             {
+                    var emailaddress = RemoveDiacritics(singleUserNewsTrue.email);
 
-                MailMessage mailMessage = new MailMessage();
+                    MailMessage mailMessage = new MailMessage();
 
                     var eshopname = "NAHOD.sk";
 
@@ -196,7 +198,7 @@ namespace Cms.Controllers
                 mailMessage.Body = body;
                 mailMessage.IsBodyHtml = true;
             
-                mailMessage.To.Add(new MailAddress(singleUserNewsTrue.email));
+                mailMessage.To.Add(new MailAddress(emailaddress));
 
                 SmtpClient smtp = new SmtpClient();
 
@@ -228,7 +230,7 @@ namespace Cms.Controllers
             }
         }
 
-        [Route("send-newsletter-selected/{idOfTemplate}")]
+        [HttpPost, Route("send-newsletter-selected/{idOfTemplate}")]
         public ActionResult SendSelectedNewsletter(int idOfTemplate, List<string> methodParam)
         {
             if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
@@ -249,11 +251,11 @@ namespace Cms.Controllers
 
 
 
-            foreach (var singleUserNewsTrue in methodParam)
-            {
+                foreach (var singleUserNewsTrue in methodParam)
+                {
 
-                MailMessage mailMessage = new MailMessage();
-
+                    MailMessage mailMessage = new MailMessage();
+                    var emailaddress = RemoveDiacritics(singleUserNewsTrue);
                 var eshopname = "NAHOD.sk";
 
                 mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
@@ -261,7 +263,7 @@ namespace Cms.Controllers
                 mailMessage.Body = body;
                 mailMessage.IsBodyHtml = true;
 
-                mailMessage.To.Add(new MailAddress(singleUserNewsTrue));
+                mailMessage.To.Add(new MailAddress(emailaddress));
 
                 SmtpClient smtp = new SmtpClient();
 
@@ -281,7 +283,7 @@ namespace Cms.Controllers
 
                 //smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
 
-                smtp.Send(mailMessage);
+                //smtp.Send(mailMessage);
 
             }
 
@@ -383,6 +385,23 @@ namespace Cms.Controllers
                 stringBuilder.Append("<p>So srdečným pozdravom, " + info.companyname + " <br>IČ DPH: " + info.icdph + " <br>IČ: " + info.ico + " <br>" + info.address + ", " + @info.city + " " + info.custom + "</p>");
             }
             return stringBuilder.ToString();
+        }
+
+        static string RemoveDiacritics(string text)
+        {
+            var normalizedString = text.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder();
+
+            foreach (var c in normalizedString)
+            {
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
 
     }
