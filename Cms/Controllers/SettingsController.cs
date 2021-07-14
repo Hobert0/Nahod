@@ -275,6 +275,7 @@ namespace Cms.Controllers
                     Page = a.page,
                     Image = a.image,
                     Url = a.url,
+                    Order = a.ordering,
                     Header = a.header,
                     Text = a.text,
                     Subtext = a.subtext,
@@ -287,6 +288,7 @@ namespace Cms.Controllers
                     slideModel.Title = slide.Title;
                     slideModel.Page = slide.Page;
                     slideModel.Url = slide.Url;
+                    slideModel.Order = slide.Order;
                     slideModel.Header = slide.Header;
                     slideModel.Text = slide.Text;
                     slideModel.Subtext = slide.Subtext;
@@ -345,6 +347,7 @@ namespace Cms.Controllers
             o.title = model.Title;
             o.image = saveImage + fileName;
             o.url = model.Url ?? "";
+            o.ordering = model.Order;
             o.header = model.Header;
             o.text = model.Text;
             o.subtext = model.Subtext;

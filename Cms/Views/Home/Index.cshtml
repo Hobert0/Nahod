@@ -13,11 +13,11 @@
 <div class="top-banner-wrapper banner-wrapper">
     @{
 
-        var slideshows = Model.SlideshowModel.Where(o => o.page == "hp-top");
+        var slideshows = Model.SlideshowModel.Where(o => o.page == "hp-top").OrderBy(a => a.ordering);
         if (Request.Browser.IsMobileDevice)
         //if (Request.Browser.ScreenPixelsWidth < 768)
         {
-            slideshows = Model.SlideshowModel.Where(o => o.page == "hp-top-responsive");
+            slideshows = Model.SlideshowModel.Where(o => o.page == "hp-top-responsive").OrderBy(a => a.ordering);
         }
 
         foreach (var slideshow in slideshows)
@@ -431,11 +431,11 @@
 </div>
 <div class="middle-banner-wrapper banner-wrapper">
     @{
-        slideshows = Model.SlideshowModel.Where(o => o.page == "hp-middle");
+        slideshows = Model.SlideshowModel.Where(o => o.page == "hp-middle").OrderBy(a => a.ordering);
         if (Request.Browser.IsMobileDevice)
         //if (Request.Browser.ScreenPixelsWidth < 768)
         {
-            slideshows = Model.SlideshowModel.Where(o => o.page == "hp-middle-responsive");
+            slideshows = Model.SlideshowModel.Where(o => o.page == "hp-middle-responsive").OrderBy(a => a.ordering);
         }
         foreach (var slideshow in slideshows)
         {
@@ -688,11 +688,11 @@
         <div class="col-md-6 pr-1 col-6">
             <div class="bottom-banner-wrapper banner-wrapper">
                 @{
-                    slideshows = Model.SlideshowModel.Where(o => o.page == "hp-bottom-left");
+                    slideshows = Model.SlideshowModel.Where(o => o.page == "hp-bottom-left").OrderBy(a => a.ordering);
                     if (Request.Browser.IsMobileDevice)
                     //if (Request.Browser.ScreenPixelsWidth < 768)
                     {
-                        slideshows = Model.SlideshowModel.Where(o => o.page == "hp-bottom-left-responsive");
+                        slideshows = Model.SlideshowModel.Where(o => o.page == "hp-bottom-left-responsive").OrderBy(a => a.ordering);
                     }
                     foreach (var slideshow in slideshows)
                     {
@@ -718,11 +718,11 @@
         <div class="col-md-6 pl-1 col-6">
             <div class="bottom-banner-wrapper banner-wrapper">
                 @{
-                    slideshows = Model.SlideshowModel.Where(o => o.page == "hp-bottom-right");
+                    slideshows = Model.SlideshowModel.Where(o => o.page == "hp-bottom-right").OrderBy(a => a.ordering);
                     if (Request.Browser.IsMobileDevice)
                     //if (Request.Browser.ScreenPixelsWidth < 768)
                     {
-                        slideshows = Model.SlideshowModel.Where(o => o.page == "hp-bottom-right-responsive");
+                        slideshows = Model.SlideshowModel.Where(o => o.page == "hp-bottom-right-responsive").OrderBy(a => a.ordering);
                     }
                     foreach (var slideshow in slideshows)
                     {

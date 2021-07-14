@@ -13,10 +13,8 @@
         <EntityTypeShape EntityType="hobcModel.attributes" Width="1.5" PointX="3.75" PointY="0.75" />
         <EntityTypeShape EntityType="hobcModel.users" Width="1.5" PointX="11.75" PointY="13.75" />
         <EntityTypeShape EntityType="hobcModel.types" Width="1.5" PointX="0.75" PointY="14.75" />
-        <EntityTypeShape EntityType="hobcModel.slideshow" Width="1.5" PointX="7.375" PointY="14.75" />
         <EntityTypeShape EntityType="hobcModel.variants" Width="1.5" PointX="3.375" PointY="11.75" />
         <EntityTypeShape EntityType="hobcModel.ordermeta" Width="1.5" PointX="14.375" PointY="0.75" />
-        <EntityTypeShape EntityType="hobcModel.coupons" Width="1.5" PointX="3.375" PointY="15.75" />
         <EntityTypeShape EntityType="hobcModel.brands" Width="1.5" PointX="9.375" PointY="0.75" />
         <EntityTypeShape EntityType="hobcModel.blog" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="hobcModel.orders" Width="1.5" PointX="16.375" PointY="0.75" />
@@ -26,6 +24,8 @@
         <EntityTypeShape EntityType="hobcModel.usersmeta" Width="1.5" PointX="16.375" PointY="9.75" />
         <EntityTypeShape EntityType="hobcModel.userstoken" Width="1.5" PointX="6.375" PointY="0.75" />
         <EntityTypeShape EntityType="hobcModel.categories" Width="1.5" PointX="11.375" PointY="0.75" />
+        <EntityTypeShape EntityType="hobcModel.slideshow" Width="1.5" PointX="7.375" PointY="4.75" />
+        <EntityTypeShape EntityType="hobcModel.coupons" Width="1.5" PointX="5.375" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
