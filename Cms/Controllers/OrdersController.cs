@@ -34,6 +34,9 @@ namespace Cms.Controllers
             products p = new products();
             var ownerEmail = db.settings.Select(i => i.email).FirstOrDefault();
 
+            /*Save loged user id to order*/
+            var usID = 0;
+
             /*Change coupon limit*/
             string coupon = model.OrdersModel.UsedCoupon;
             if (coupon != null)
@@ -51,7 +54,18 @@ namespace Cms.Controllers
                     db.SaveChanges();
                 }
                 else { }
+
+                //ak bol pouzity kupon nahod10 obdrzany v newslettri a je pouzivatel prihlaseny tak uz mu neumoznime pouzit tento kupon
+                if (coupon == "nahod10" && Request.Cookies["userid"] != null)
+                {
+                    usID = Int32.Parse(Request.Cookies["userid"].Value);
+                    db.usersmeta.Where(a => a.userid == usID).FirstOrDefault().newsletter_coupon_used = true;
+
+                    db.SaveChanges();
+                }
             }
+
+
 
             /*Save order to DB*/
             var newordernumber = (Convert.ToInt32(db.orders.OrderByDescending(u => u.id).Select(i => i.ordernumber).FirstOrDefault()) + 1);
@@ -91,9 +105,6 @@ namespace Cms.Controllers
             o.phone_shipp = model.OrdersModel.PhoneShipp ?? "";
             o.comment = model.OrdersModel.Comment;
             o.usedcoupon = coupon ?? "";
-
-            /*Save loged user id to order*/
-            var usID = 0;
 
             if (Request.Cookies["userid"] != null)
             {
@@ -832,8 +843,36 @@ namespace Cms.Controllers
                     var amount = db.coupons.Where(m => m.coupon == coupon).Select(m => m.amount).First();
 
                     TempData["Error"] = "false";
-                    TempData["Coupons"] = coupon;
-                    TempData["Amount"] = amount;
+                    TempData["NewsError"] = "false";
+                    TempData["LimitError"] = "false";
+
+                    //Ak je to kupon nahod10, ktoru user dostava pri newsletteri, tak musi byt prihlaseny a tento kupon moze pouzit len raz
+                    if (coupon == "nahod10")
+                    {
+                        if (Request.Cookies["userid"] != null)
+                        {
+                            var userid = Int32.Parse(Request.Cookies["userid"].Value);
+                            var userNewsCount = db.usersmeta.Where(a => a.userid == userid && a.newsletter_coupon_used == false).Count();
+
+                            if (userNewsCount > 0)
+                            {
+                                TempData["Coupons"] = coupon;
+                                TempData["Amount"] = amount;
+                            } else {
+                                TempData["LimitError"] = "true";
+                            }
+                        }
+                        else
+                        {
+                            TempData["NewsError"] = "true";
+                        }
+                    }
+                    else {
+                        TempData["Coupons"] = coupon;
+                        TempData["Amount"] = amount;
+                    }
+
+
                     if (page == "basket")
                     {
                         return RedirectToAction("Basket", "Home");

@@ -41,10 +41,10 @@ namespace Cms.Models
         public virtual DbSet<products> products { get; set; }
         public virtual DbSet<watchdog> watchdog { get; set; }
         public virtual DbSet<e_settings> e_settings { get; set; }
-        public virtual DbSet<usersmeta> usersmeta { get; set; }
         public virtual DbSet<userstoken> userstoken { get; set; }
         public virtual DbSet<categories> categories { get; set; }
         public virtual DbSet<slideshow> slideshow { get; set; }
         public virtual DbSet<coupons> coupons { get; set; }
+        public virtual DbSet<usersmeta> usersmeta { get; set; }
     }
 }

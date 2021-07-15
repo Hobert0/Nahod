@@ -67,9 +67,10 @@
 <hr />
 <button class="btn btn-success" type="button" value="Create" style="margin: 5px 0 10px;padding: 7px 22px;" onclick="location.href='@Url.Action("AddProduct", "Products")'">+ Pridať produkt</button>
 <br>
-<button class="btn btn-warning" type="button" value="MultiPriceEdit" data-toggle="modal" data-target="#multiPriceEdit" style="margin: 5px 0 10px;padding: 7px 22px;">Hromadná úprava cien</button>
-<button class="btn btn-dark" type="button" value="MultiDelete" data-toggle="modal" data-target="#multiDelete" style="margin: 5px 0 10px;padding: 7px 22px;">Hromadné mazanie</button>
-<button class="btn btn-danger" type="button" value="CheckAll" style="margin: 5px 10px 10px;padding: 7px 22px;">Označiť všetky zobrazené</button>
+<button class="btn btn-outline-info" type="button" value="MultiPriceEdit" data-toggle="modal" data-target="#multiPriceEdit" style="margin: 5px 0 10px;padding: 7px 22px;"><i class="fas fa-edit"></i>&nbsp;&nbsp;Úprava cien</button>
+<button class="btn btn-outline-info" type="button" value="MultiDelete" data-toggle="modal" data-target="#multiDelete" style="margin: 5px 0 10px;padding: 7px 22px;"><i class="fas fa-times"></i>&nbsp;&nbsp;Hromadné mazanie</button>
+<button class="btn btn-outline-info" type="button" value="MultiCatEdit" data-toggle="modal" data-target="#multiCatEdit" style="margin: 5px 0 10px;padding: 7px 22px;"><i class="fas fa-list"></i>&nbsp;&nbsp;Úprava kategórií</button>
+<a id="CheckAll" style="margin: 5px 10px 10px;padding: 7px 22px;text-decoration:underline;">Označiť všetky zobrazené</a>
 <div class="modal" id="multiPriceEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -94,9 +95,9 @@
                     <div class="row">
                         <div class="col-6 text-right" style="width: 200px;">
                             <strong>Akciová cena?</strong>
-                            <small>Nová cena bude vložená ako Akciová.</small>
+                            <small style="display:block;">Nová cena bude vložená ako Akciová.</small>
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 mt-2">
                             <div class="form-group">
                                 <div class="col-md-12 text-left">
                                     <input type="checkbox" name="isDiscountMultiple" id="isDiscountMultiple" value="true">
@@ -138,6 +139,44 @@
                             <input type="hidden" name="checkedProds" value="">
 
                             <input type="submit" value="Zmazať zobrazené a označené produkty" id="btnSubmit" class="btn btn-success" disabled="true" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="multiCatEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLongTitle">Hromadná úprava kategórií</h2>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                @using (Html.BeginForm("MultipleEditCat", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "multipleEditCatForm" }))
+                {
+                    <div class="row">
+                        <div class="col-3 text-right">
+                            <strong>Kategória</strong>
+                        </div>
+                        <div class="col-9">
+                            <div class="form-group">
+                                <div class="col-md-12 text-left">
+                                    @Html.DropDownList("MultipleEditCatChoose", (IEnumerable<SelectListItem>)ViewData["kategoria"], new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div style="text-align:center">
+
+                            <input type="hidden" name="type" value="">
+                            <input type="hidden" name="checkedProds" value="">
+
+                            <input type="button" value="Pridať kategóriu do zobrazených a označených produktov" id="btnEditCatAddSubmit" class="btn btn-success" disabled="true" /><br><br>
+                            <input type="button" value="Odobrať kategóriu zo zobrazených a označených produktov" id="btnEditCatRemSubmit" class="btn btn-danger" disabled="true" />
                         </div>
                     </div>
                 }
@@ -556,7 +595,7 @@
                 }
             }).done(function () {
                 //$loading.remove();
-                $("button[value=CheckAll]").text("Označiť všetky zobrazené");
+                $("#CheckAll").text("Označiť všetky zobrazené");
 
             });
 
@@ -577,7 +616,7 @@
             return $res;
         }
 
-        $("button[value=CheckAll]").click(function () {
+        $("#CheckAll").click(function () {
             if ($(this).text() == "Označiť všetky zobrazené") {
                 $("#productsTable tbody tr input[name=multipleEditCheckbox]").each(function () {
                     $(this).prop("checked", true);
@@ -592,6 +631,7 @@
             }
         });
 
+        // hromadna editacia ceny
         $("button[value=MultiPriceEdit]").click(function () {
 
             /*
@@ -676,6 +716,63 @@
 
             $("#multipleDeleteForm").submit();
 
+        });
+
+        // hromadna editacia kategorii
+        $("button[value=MultiCatEdit]").click(function () {
+            $checkedProdsCounter = 0;
+            $("#productsTable tbody tr input[name=multipleEditCheckbox]:checked").each(function () {
+                $checkedProdsCounter++;
+            });
+
+            $("#btnEditCatAddSubmit").val("Pridať kategóriu do " + $checkedProdsCounter + "  zobrazených a označených produktov");
+            $("#btnEditCatRemSubmit").val("Odobrať kategóriu zo " + $checkedProdsCounter + "  zobrazených a označených produktov");
+
+            if ($checkedProdsCounter == 0) {
+                $("#btnEditCatAddSubmit, #btnEditCatRemSubmit").attr("disabled", true);
+            } else {
+                $("#btnEditCatAddSubmit, #btnEditCatRemSubmit").attr("disabled", false);
+            }
+        });
+
+        $("#btnEditCatAddSubmit").click(function (e) {
+            e.preventDefault();
+
+            if ($("#MultipleEditCatChoose").val() != "") {
+                //zistime pocet ceknutych produktov
+                $checkedArr = [];
+
+                //ak nie je zaskrtnute tlacidlo pre VSETKY vyfiltrovane
+                $("#productsTable tbody tr input[name=multipleEditCheckbox]:checked").each(function () {
+                    $checkedArr.push($(this).parents("tr").find("td").eq(0).text());
+                });
+
+                $("#multipleEditCatForm input[name=type]").val("add");
+                $("#multipleEditCatForm input[name=checkedProds]").val(JSON.stringify($checkedArr));
+
+                $("#multipleEditCatForm").submit();
+            }
+            
+        });
+
+        $("#btnEditCatRemSubmit").click(function (e) {
+            e.preventDefault();
+
+            if ($("#MultipleEditCatChoose").val() != "") {
+
+                //zistime pocet ceknutych produktov
+                $checkedArr = [];
+
+                //ak nie je zaskrtnute tlacidlo pre VSETKY vyfiltrovane
+                $("#productsTable tbody tr input[name=multipleEditCheckbox]:checked").each(function () {
+                    $checkedArr.push($(this).parents("tr").find("td").eq(0).text());
+                });
+
+                $("#multipleEditCatForm input[name=type]").val("rem");
+                $("#multipleEditCatForm input[name=checkedProds]").val(JSON.stringify($checkedArr));
+
+                $("#multipleEditCatForm").submit();
+            }
         });
 
         $(document).on("dblclick", ".editable", function () {

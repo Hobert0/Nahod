@@ -33,6 +33,7 @@ namespace Cms.Models
         public bool to_remove { get; set; }
         public decimal sum { get; set; }
         public int rating { get; set; }
+        public bool newsletter_coupon_used { get; set; }
         public string created { get; set; }
         public bool deleted { get; set; }
     }

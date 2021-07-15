@@ -73,24 +73,25 @@ function payMent() {
     }
 }
 
-function checkTransfer() {
+function checkTransfer($isCzech) {
 
-    var ship = document.querySelector('input[name="transfer"]:checked').value;  
+    var ship = document.querySelector('input[name="transfer"]:checked').value;
     document.getElementById("ship").value = ship;
 
     ship == '@ViewBag.Ship';
 
     if (ship == "transfer3") {
         document.getElementById("pay4").style.display = "none";
-    } else {
+    } else if ($isCzech == false) {
         document.getElementById("pay4").style.display = "block";
     }
 
     if (ship == "transfer1" || ship == "transfer2") {
         document.getElementById("pay1").style.display = "none";
-    } else {
+    } else if ($isCzech == false) {
         document.getElementById("pay1").style.display = "block";
     }
+    
 
     //vyplnime zhrnutie
     var shipName = $('input[name="transfer"]:checked').parent().find(".shipName").text();
@@ -122,7 +123,7 @@ function checkPayment() {
     } else {
         document.getElementById("transfer1").style.display = "block";
     }
-   
+
     //vyplnime zhrnutie
     var payName = $('input[name="payment"]:checked').parent().find(".payName").text();
     $(".paymentCheckText").text(payName);
@@ -149,18 +150,18 @@ function showAddress(userId) {
     //var transradio = document.getElementsByName("transfer");
     //var payradio = document.getElementsByName("payment");
     //if (validateRadio(transradio) && validateRadio(payradio)) {
-        var cart = document.getElementById("cart");
-        var shipping = document.getElementById("shipping");
-        var address = document.getElementById("address");
-        var check = document.getElementById("check");
-        cart.style.display = "none";
-        shipping.style.display = "none";
-        address.style.display = "block";
-        check.style.display = "none";
+    var cart = document.getElementById("cart");
+    var shipping = document.getElementById("shipping");
+    var address = document.getElementById("address");
+    var check = document.getElementById("check");
+    cart.style.display = "none";
+    shipping.style.display = "none";
+    address.style.display = "block";
+    check.style.display = "none";
 
-        if (userId == null) {
-            modal.style.display = "block";
-        }
+    if (userId == null) {
+        modal.style.display = "block";
+    }
 
     /*
     } else {
@@ -333,11 +334,11 @@ function validateBasketForm() {
                 $(".checkComment .value").text("");
             }
 
-            
+
 
             $(".checkNameShipp .value").text(name_ship);
             $(".checkSurnameShipp .value").text(surname_ship);
-            
+
             $(".checkAddressShip .value").text(address_ship);
             $(".checkCityShipp .value").text(city_ship);
             $(".checkZipShipp .value").text(zip_ship);
@@ -356,9 +357,22 @@ function validateBasketForm() {
 
             if (condition.checked === true) {
 
+                //ak je ceska republika krajina dorucenia, zobrazime len platbu prevodom
+                $isCzech = false;
+                if ($("#OrdersModel_CountryShipp").val() == "Česká republika") {
+                    $("#pay1,#pay2,#pay4").css("display", "none");
+                    $("#pay3").click();
+
+                    $isCzech = true;
+                } else {
+                    $("#pay1,#pay2,#pay4").css("display", "block");
+
+                    $isCzech = false;
+                }
+
                 //ak sme sa vratili a je uz zakliknuta nejaka moznost dorucenia, tak ak zmenine krajinu dorucenia automaticky zmenime aj cenu
                 if ($("input[name=transfer]").is(":checked")) {
-                    checkTransfer();
+                    checkTransfer($isCzech);
                     shippPay();
                 }
 
@@ -551,9 +565,23 @@ function validateBasketForm() {
 
             if (condition.checked == true) {
 
+                //ak je ceska republika krajina dorucenia, zobrazime len platbu prevodom
+                $isCzech = false;
+                if ($("#OrdersModel_Country").val() == "Česká republika") {
+                    $("#pay1,#pay2,#pay4").css("display", "none");
+                    $("#pay3").click();
+
+                    $isCzech = true;
+                } else {
+                    $("#pay1,#pay2,#pay4").css("display", "block");
+
+                    $isCzech = false;
+                }
+
+
                 //ak sme sa vratili a je uz zakliknuta nejaka moznost dorucenia, tak ak zmenine krajinu dorucenia automaticky zmenime aj cenu
                 if ($("input[name=transfer]").is(":checked")) {
-                    checkTransfer();
+                    checkTransfer($isCzech);
                     shippPay();
                 }
 

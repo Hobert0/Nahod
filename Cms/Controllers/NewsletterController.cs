@@ -119,7 +119,7 @@ namespace Cms.Controllers
 
         [HttpPost]
         public async Task<ActionResult> EditNewsletterInDB(NewsletterModel model)
-        { 
+        {
             if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 var data = db.newsletter.Single(i => i.id == model.Id);
@@ -161,7 +161,8 @@ namespace Cms.Controllers
 
                 return View(model);
             }
-            else {
+            else
+            {
                 return RedirectToAction("Admin", "Admin");
             }
         }
@@ -172,21 +173,21 @@ namespace Cms.Controllers
             if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
                 var allUsersNewsTrue = db.usersmeta.Where(i => i.news == true).ToList();
-            var template = db.newsletter.Where(t => t.id == id).ToList();
-            var settings = db.settings.SingleOrDefault().email;
+                var template = db.newsletter.Where(t => t.id == id).ToList();
+                var settings = db.settings.SingleOrDefault().email;
 
-            var subject = "";
-            var body = "";
+                var subject = "";
+                var body = "";
 
-            foreach (var item in template)
-            {
-                subject = item.subject;
-                body = item.body;
-                body = Regex.Replace(body, @"../Uploads", "https://nahod.sk/Uploads");
-            }
+                foreach (var item in template)
+                {
+                    subject = item.subject;
+                    body = item.body;
+                    body = Regex.Replace(body, @"../Uploads", "https://nahod.sk/Uploads");
+                }
 
                 foreach (var singleUserNewsTrue in allUsersNewsTrue)
-            {
+                {
                     var emailaddress = RemoveDiacritics(singleUserNewsTrue.email);
 
                     MailMessage mailMessage = new MailMessage();
@@ -195,34 +196,34 @@ namespace Cms.Controllers
 
                     mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
                     mailMessage.Subject = subject;
-                mailMessage.Body = body;
-                mailMessage.IsBodyHtml = true;
-            
-                mailMessage.To.Add(new MailAddress(emailaddress));
+                    mailMessage.Body = body;
+                    mailMessage.IsBodyHtml = true;
 
-                SmtpClient smtp = new SmtpClient();
+                    mailMessage.To.Add(new MailAddress(emailaddress));
 
-                smtp.Host = "localhost";
+                    SmtpClient smtp = new SmtpClient();
 
-                //smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
+                    smtp.Host = "localhost";
 
-                //System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
+                    //smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
 
-                //NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"]; //reading from web.config  
+                    //System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
 
-                //NetworkCred.Password = ConfigurationManager.AppSettings["Password"]; //reading from web.config  
+                    //NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"]; //reading from web.config  
 
-                //smtp.UseDefaultCredentials = true;
+                    //NetworkCred.Password = ConfigurationManager.AppSettings["Password"]; //reading from web.config  
 
-                //smtp.Credentials = NetworkCred;
+                    //smtp.UseDefaultCredentials = true;
 
-                //smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
+                    //smtp.Credentials = NetworkCred;
 
-                smtp.Send(mailMessage);
+                    //smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
 
-            }
+                    smtp.Send(mailMessage);
 
-            return RedirectToAction("Newsletter", "Newsletter");
+                }
+
+                return RedirectToAction("Newsletter", "Newsletter");
             }
             else
             {
@@ -236,18 +237,18 @@ namespace Cms.Controllers
             if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
             {
 
-            var template = db.newsletter.Where(t => t.id == idOfTemplate).ToList();
-            var settings = db.settings.SingleOrDefault().email;
+                var template = db.newsletter.Where(t => t.id == idOfTemplate).ToList();
+                var settings = db.settings.SingleOrDefault().email;
 
-            var subject = "";
-            var body = "";
+                var subject = "";
+                var body = "";
 
-            foreach (var item in template)
-            {
-                subject = item.subject;
-                body = item.body;
-                body = Regex.Replace(body, @"../Uploads", "https://nahod.sk/Uploads");
-            }
+                foreach (var item in template)
+                {
+                    subject = item.subject;
+                    body = item.body;
+                    body = Regex.Replace(body, @"../Uploads", "https://nahod.sk/Uploads");
+                }
 
 
 
@@ -256,43 +257,44 @@ namespace Cms.Controllers
 
                     MailMessage mailMessage = new MailMessage();
                     var emailaddress = RemoveDiacritics(singleUserNewsTrue);
-                var eshopname = "NAHOD.sk";
+                    var eshopname = "NAHOD.sk";
 
-                mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
-                mailMessage.Subject = subject;
-                mailMessage.Body = body;
-                mailMessage.IsBodyHtml = true;
+                    mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
+                    mailMessage.Subject = subject;
+                    mailMessage.Body = body;
+                    mailMessage.IsBodyHtml = true;
 
-                mailMessage.To.Add(new MailAddress(emailaddress));
+                    mailMessage.To.Add(new MailAddress(emailaddress));
 
-                SmtpClient smtp = new SmtpClient();
+                    SmtpClient smtp = new SmtpClient();
 
-                smtp.Host = "localhost";
+                    smtp.Host = "localhost";
 
-                //smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
+                    //smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
 
-                //System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
+                    //System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
 
-                //NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"]; //reading from web.config  
+                    //NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"]; //reading from web.config  
 
-                //NetworkCred.Password = ConfigurationManager.AppSettings["Password"]; //reading from web.config  
+                    //NetworkCred.Password = ConfigurationManager.AppSettings["Password"]; //reading from web.config  
 
-                //smtp.UseDefaultCredentials = true;
+                    //smtp.UseDefaultCredentials = true;
 
-                //smtp.Credentials = NetworkCred;
+                    //smtp.Credentials = NetworkCred;
 
-                //smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
+                    //smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
 
-                smtp.Send(mailMessage);
+                    smtp.Send(mailMessage);
 
+                }
+
+                return RedirectToAction("Newsletter", "Newsletter");
             }
-
-            return RedirectToAction("Newsletter", "Newsletter");
-        }
-            else {
+            else
+            {
                 return RedirectToAction("Admin", "Admin");
-    }
-}
+            }
+        }
 
         [HttpPost]
         public async Task<ActionResult> Subscribe(MultipleIndexModel model)
@@ -308,43 +310,71 @@ namespace Cms.Controllers
 
             if (status && model.UsersModel.Email != null && model.UsersModel.Email != "")
             {
-                users u = new users();
-                u.username = model.UsersModel.Email;
-                u.email = model.UsersModel.Email;
-                u.password = "123456";
-                u.role = 2;
-                u.deleted = false;
+                //overenie ci uz existuje bud newsletter konto alebo ci je pouzivatel regnuty s danym emailom a ma zasktrnute news na true
 
-                db.users.Add(u);
-                db.SaveChanges();
+                var existsNewsletterUser = db.users.Where(a => a.username == model.UsersModel.Email && a.password == "123456").FirstOrDefault();
 
-                usersmeta n = new usersmeta();
+                if (existsNewsletterUser == null)
+                {
 
-                n.userid = db.users.Select(i => i.id).Max();
-                n.email = model.UsersModel.Email;
-                n.news = true;
-                n.name = "";
-                n.surname = "";
-                n.address = "";
-                n.city = "";
-                n.companyname = "";
-                n.phone = "";
-                n.zip = "";
-                n.country = "";
-                n.deleted = false;
-                n.created = DateTime.Now.ToString();
-                n.news = true;
-                n.gdpr = true;
+                    var existsRegUser = db.users.Where(a => a.username == model.UsersModel.Email && a.password != "123456").FirstOrDefault();
 
-                db.usersmeta.Add(n);
-                db.SaveChanges();
+                    if (existsRegUser != null)
+                    {
+                        var newsUser = db.usersmeta.Where(a => a.userid == existsRegUser.id).FirstOrDefault();
 
-                //odosleme email o uspesnom zaregistrovani do newslettru
-                OrdersController oc = new OrdersController();
-                string body = createNewsletterEmailBody();
-                oc.SendHtmlFormattedEmail("Ďakujeme za registráciu do newslettru!", body, n.email, "register", "");
+                        if (newsUser.news == false)
+                        {
+                            newsUser.news = true;
 
+                            db.SaveChanges();
 
+                            //odosleme email o uspesnom zaregistrovani do newslettru
+                            OrdersController oc = new OrdersController();
+                            string body = createNewsletterEmailBody();
+                            oc.SendHtmlFormattedEmail("Ďakujeme za registráciu do newslettru!", body, existsRegUser.email, "register", "");
+                        }
+                    }
+                    else
+                    {
+
+                        users u = new users();
+                        u.username = model.UsersModel.Email;
+                        u.email = model.UsersModel.Email;
+                        u.password = "123456";
+                        u.role = 2;
+                        u.deleted = false;
+
+                        db.users.Add(u);
+                        db.SaveChanges();
+
+                        usersmeta n = new usersmeta();
+
+                        n.userid = db.users.Select(i => i.id).Max();
+                        n.email = model.UsersModel.Email;
+                        n.news = true;
+                        n.name = "";
+                        n.surname = "";
+                        n.address = "";
+                        n.city = "";
+                        n.companyname = "";
+                        n.phone = "";
+                        n.zip = "";
+                        n.country = "";
+                        n.deleted = false;
+                        n.created = DateTime.Now.ToString();
+                        n.news = true;
+                        n.gdpr = true;
+
+                        db.usersmeta.Add(n);
+                        db.SaveChanges();
+
+                        //odosleme email o uspesnom zaregistrovani do newslettru
+                        OrdersController oc = new OrdersController();
+                        string body = createNewsletterEmailBody();
+                        oc.SendHtmlFormattedEmail("Ďakujeme za registráciu do newslettru!", body, n.email, "register", "");
+                    }
+                }
                 TempData["msg"] = "<small class='text-success'>Úspešne sme Vás pridali medzi odoberateľov našeho emailu. Ďakujeme.</small>";
             }
             else

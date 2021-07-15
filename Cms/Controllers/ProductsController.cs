@@ -1142,6 +1142,48 @@ namespace Cms.Controllers
         }
 
         [HttpPost]
+        public ActionResult MultipleEditCat(string MultipleEditCatChoose, string type, string checkedProds)
+        {
+
+            var checkedProdsArr = JsonConvert.DeserializeObject<int[]>(checkedProds);
+
+            foreach (int checkedProdId in checkedProdsArr)
+            {
+
+                var product = db.products.Where(x => x.deleted == false && x.id == checkedProdId).FirstOrDefault();
+
+                var cats = JsonConvert.DeserializeObject<string[]>(product.category).ToList();
+
+                if (type == "add" && !cats.Contains(MultipleEditCatChoose))
+                {
+                    cats.Add(MultipleEditCatChoose);
+                }
+                if (type == "rem")
+                {
+                    cats.RemoveAll(item => item == MultipleEditCatChoose);
+                }
+
+                var catStr = "[";
+                foreach (var cat in cats) {
+                    catStr += cat + ",";
+                }
+
+                //vymazeme ciarku
+                if (cats.Count() > 0)
+                {
+                    catStr = catStr.Remove(catStr.Length - 1);
+                }
+                catStr += "]";
+
+                product.category = catStr;
+            }
+
+            db.SaveChanges();
+
+            return RedirectToAction("Products", "Admin");
+        }
+
+        [HttpPost]
         public async Task<ActionResult> UploadFiles(HttpPostedFileBase[] files, string foto)
         {
             //Ensure model state is valid  

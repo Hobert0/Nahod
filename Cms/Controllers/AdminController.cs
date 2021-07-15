@@ -233,6 +233,7 @@ namespace Cms.Controllers
         [HttpPost]
         public ActionResult UserRegister(MultipleIndexModel model)
         {
+
             Entities db = new Entities();
             users o = new users();
             usersmeta um = new usersmeta();
@@ -248,33 +249,68 @@ namespace Cms.Controllers
             }
             string heslo = hesloDb.ToString();
 
-            o.username = model.AdminLoginModel.Username;
-            o.password = heslo;
-            o.role = 1;
-            o.email = model.AdminLoginModel.Username;
-            db.users.Add(o);
-            db.SaveChanges();
+            //skontrolujeme, ci uz pouzivatel nema vytvorene newsletter konto
+            var existsNewsUser = db.users.Where(a => a.username == model.AdminLoginModel.Username && a.password == "123456").FirstOrDefault();
 
-            um.address = model.UsersmetaModel.Address;
-            um.city = model.UsersmetaModel.City;
-            um.companyname = model.UsersmetaModel.Companyname;
-            um.dic = model.UsersmetaModel.Dic;
-            um.email = model.AdminLoginModel.Username;
-            um.icdph = model.UsersmetaModel.Icdph;
-            um.ico = model.UsersmetaModel.Ico;
-            um.name = model.UsersmetaModel.Name;
-            um.news = model.UsersmetaModel.News;
-            um.gdpr = true;
-            um.phone = model.UsersmetaModel.Phone;
-            um.surname = model.UsersmetaModel.Surname;
-            um.zip = model.UsersmetaModel.Zip;
-            um.country = model.UsersmetaModel.Country;
-            um.created = DateTime.Now.ToString("d.M.yyyy HH:mm:ss");
-            um.rating = 1;
-            um.userid = db.users.Select(i => i.id).Max();
+            // ak uz existuje newsletter user, tak updatneme stlpce v db
+            if (existsNewsUser != null)
+            {
+                var existsNewsUserMeta = db.usersmeta.Where(a => a.userid == existsNewsUser.id).FirstOrDefault();
 
-            db.usersmeta.Add(um);
-            db.SaveChanges();
+                existsNewsUser.password = heslo;
+                existsNewsUser.role = 1;
+
+                existsNewsUserMeta.address = model.UsersmetaModel.Address;
+                existsNewsUserMeta.city = model.UsersmetaModel.City;
+                existsNewsUserMeta.companyname = model.UsersmetaModel.Companyname;
+                existsNewsUserMeta.dic = model.UsersmetaModel.Dic;
+                existsNewsUserMeta.email = model.AdminLoginModel.Username;
+                existsNewsUserMeta.icdph = model.UsersmetaModel.Icdph;
+                existsNewsUserMeta.ico = model.UsersmetaModel.Ico;
+                existsNewsUserMeta.name = model.UsersmetaModel.Name;
+                existsNewsUserMeta.news = model.UsersmetaModel.News;
+                existsNewsUserMeta.gdpr = true;
+                existsNewsUserMeta.phone = model.UsersmetaModel.Phone;
+                existsNewsUserMeta.surname = model.UsersmetaModel.Surname;
+                existsNewsUserMeta.zip = model.UsersmetaModel.Zip;
+                existsNewsUserMeta.country = model.UsersmetaModel.Country;
+                existsNewsUserMeta.rating = 1;
+
+                db.SaveChanges();
+
+            }
+            // inak vytvorime nove konto
+            else {
+                o.username = model.AdminLoginModel.Username;
+                o.password = heslo;
+                o.role = 1;
+                o.email = model.AdminLoginModel.Username;
+                db.users.Add(o);
+                db.SaveChanges();
+
+                um.address = model.UsersmetaModel.Address;
+                um.city = model.UsersmetaModel.City;
+                um.companyname = model.UsersmetaModel.Companyname;
+                um.dic = model.UsersmetaModel.Dic;
+                um.email = model.AdminLoginModel.Username;
+                um.icdph = model.UsersmetaModel.Icdph;
+                um.ico = model.UsersmetaModel.Ico;
+                um.name = model.UsersmetaModel.Name;
+                um.news = model.UsersmetaModel.News;
+                um.gdpr = true;
+                um.phone = model.UsersmetaModel.Phone;
+                um.surname = model.UsersmetaModel.Surname;
+                um.zip = model.UsersmetaModel.Zip;
+                um.country = model.UsersmetaModel.Country;
+                um.created = DateTime.Now.ToString("d.M.yyyy HH:mm:ss");
+                um.rating = 1;
+                um.userid = db.users.Select(i => i.id).Max();
+
+                db.usersmeta.Add(um);
+                db.SaveChanges();
+            }
+
+           
             TempData["IsValid"] = true;
             ViewBag.IsValid = true;
 
@@ -293,7 +329,7 @@ namespace Cms.Controllers
             //odosleme email o uspesnom zaregistrovani
             OrdersController oc = new OrdersController();
             string body = createRegisterEmailBody(um.name);
-            oc.SendHtmlFormattedEmail("Ďakujeme za registráciu!", body, o.email, "register", "");
+            oc.SendHtmlFormattedEmail("Ďakujeme za registráciu!", body, model.AdminLoginModel.Username, "register", "");
 
             string returnUrl = model.UsersmetaModel.ReturnUrl;
             return Redirect(returnUrl);
@@ -392,7 +428,7 @@ namespace Cms.Controllers
 
         public ActionResult EmailExist(string email)
         {
-            var emailExist = db.users.Where(i => i.username == email).FirstOrDefault();
+            var emailExist = db.users.Where(i => i.username == email && i.password != "123456").FirstOrDefault();
             if (emailExist != null)
             {
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
