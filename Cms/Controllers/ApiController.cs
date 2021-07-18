@@ -79,7 +79,7 @@ namespace Cms.Controllers
 
                 result = new
                 {
-                    data = isInactive ? isDiscount ? db.products.Where(i => (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]")) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo && i.discountprice != null && i.active == false).ToList() : db.products.Where(i => (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]")) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo && i.active == false).ToList() : isDiscount ? db.products.Where(i => (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]")) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo && i.discountprice != null).ToList() : db.products.Where(i => (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]")) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo).ToList(),
+                    data = isInactive ? isDiscount ? db.products.Where(i => (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]")) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo && i.discountprice != null && i.active == false).ToList() : db.products.Where(i => (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]")) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo && i.active == false).ToList() : isDiscount ? db.products.Where(i => (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]")) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo && i.discountprice != null).ToList() : db.products.Where(i => (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]")) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo).ToList(),
                     variants = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a, b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value, Stock = a.stock }).OrderByDescending(o => o.ProdId).ThenBy(o => o.AttrName).ToList(),
                     categories = db.categories.Where(x => x.deleted == false).ToList()
                 };
@@ -97,7 +97,7 @@ namespace Cms.Controllers
             {
                 result = new
                 {
-                    data = isInactive ? isDiscount ? db.products.Where(i => i.custom3 == brandId && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]")) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo && i.discountprice != null && i.active == false).ToList() : db.products.Where(i => i.custom3 == brandId && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]")) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo && i.active == false).ToList() : isDiscount ? db.products.Where(i => i.custom3 == brandId && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]")) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo && i.discountprice != null).ToList() : db.products.Where(i => i.custom3 == brandId && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]")) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo).ToList(),
+                    data = isInactive ? isDiscount ? db.products.Where(i => i.custom3 == brandId && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]")) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo && i.discountprice != null && i.active == false).ToList() : db.products.Where(i => i.custom3 == brandId && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]")) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo && i.active == false).ToList() : isDiscount ? db.products.Where(i => i.custom3 == brandId && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]")) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo && i.discountprice != null).ToList() : db.products.Where(i => i.custom3 == brandId && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]")) && i.deleted == false && i.price >= priceFrom && i.price <= priceTo).ToList(),
                     variants = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a, b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value, Stock = a.stock }).OrderByDescending(o => o.ProdId).ThenBy(o => o.AttrName).ToList(),
                     categories = db.categories.Where(x => x.deleted == false).ToList()
                 };
@@ -282,13 +282,13 @@ namespace Cms.Controllers
             {
 
                 var catId = db.categories.Where(i => i.slug == catSlug1).First().id.ToString();
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && i.custom3 == brandID && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]"))).OrderByDescending(x => x.id).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && i.custom3 == brandID && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]"))).OrderByDescending(x => x.id).ToList();
             }
             else if (catSlug1 != null && catSlug2 != null)
             {
 
                 var catId = db.categories.Where(i => i.slug == catSlug2).First().id.ToString();
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && i.custom3 == brandID && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]"))).OrderByDescending(x => x.id).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && i.custom3 == brandID && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]"))).OrderByDescending(x => x.id).ToList();
             }
             else
             {
@@ -307,17 +307,17 @@ namespace Cms.Controllers
             {
 
                 var catId = db.categories.Where(i => i.slug == catSlug1).First().id.ToString();
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && (i.type.Contains("[" + typeID + ",") || i.type.Contains("," + typeID + ",") || i.type.Contains("," + typeID + "]")) && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]"))).OrderByDescending(x => x.id).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && (i.type.Contains("[" + typeID + ",") || i.type.Contains("," + typeID + ",") || i.type.Contains("," + typeID + "]") || i.type.Contains("[" + typeID + "]")) && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]"))).OrderByDescending(x => x.id).ToList();
             }
             else if (catSlug1 != null && catSlug2 != null)
             {
 
                 var catId = db.categories.Where(i => i.slug == catSlug2).First().id.ToString();
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && (i.type.Contains("[" + typeID + ",") || i.type.Contains("," + typeID + ",") || i.type.Contains("," + typeID + "]")) && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]"))).OrderByDescending(x => x.id).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && (i.type.Contains("[" + typeID + ",") || i.type.Contains("," + typeID + ",") || i.type.Contains("," + typeID + "]") || i.type.Contains("[" + typeID + "]")) && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]"))).OrderByDescending(x => x.id).ToList();
             }
             else
             {
-                model.ProductModel = db.products.Where(c => c.deleted == false && c.active == true && (c.type.Contains("[" + typeID + ",") || c.type.Contains("," + typeID + ",") || c.type.Contains("," + typeID + "]"))).OrderByDescending(x => x.id).ToList();
+                model.ProductModel = db.products.Where(c => c.deleted == false && c.active == true && (c.type.Contains("[" + typeID + ",") || c.type.Contains("," + typeID + ",") || c.type.Contains("," + typeID + "]") || c.type.Contains("[" + typeID + "]"))).OrderByDescending(x => x.id).ToList();
             }
 
             return model;

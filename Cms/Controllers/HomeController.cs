@@ -162,7 +162,7 @@ namespace Cms.Controllers
 
             var model = new MultipleIndexModel();
 
-            model.ProductModel = db.products.Where(o => o.deleted == false && o.active == true && (o.category.Contains("[" + id.ToString() + ",") || o.category.Contains("," + id.ToString() + ",") || o.category.Contains("," + id.ToString() + "]"))).ToList();
+            model.ProductModel = db.products.Where(o => o.deleted == false && o.active == true && (o.category.Contains("[" + id.ToString() + ",") || o.category.Contains("," + id.ToString() + ",") || o.category.Contains("," + id.ToString() + "]") || o.category.Contains("[" + id.ToString() + "]"))).ToList();
             model.EsettingsModel = db.e_settings.ToList();
             model.SettingsModel = db.settings.ToList();
             model.PagesModel = db.pages.ToList();
@@ -241,14 +241,14 @@ namespace Cms.Controllers
             if (catslug != null && subslug == null)
             {
                 var catId = db.categories.Where(i => i.slug == catslug).First().id;
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && i.custom3 == brndID.ToString() && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]"))).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && i.custom3 == brndID.ToString() && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]") || i.category.Contains("[" + catId.ToString() + "]"))).ToList();
             }
 
             //3.level .. vsetky kategorie produktov ktore su v danom type a maju subkategoriu
             else if (catslug != null && subslug != null)
             {
                 var catId = db.categories.Where(i => i.slug == subslug).First().id;
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && i.custom3 == brndID.ToString() && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]"))).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && i.custom3 == brndID.ToString() && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]") || i.category.Contains("[" + catId.ToString() + "]"))).ToList();
             }
             //1.level .. vsetky unikatne kategorie danych produktov v zaradeni
             else
@@ -304,19 +304,19 @@ namespace Cms.Controllers
             if (catslug != null && subslug == null)
             {
                 var catId = db.categories.Where(i => i.slug == catslug).First().id;
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && (i.type.Contains("[" + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + "]")) && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]"))).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && (i.type.Contains("[" + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + "]") || i.type.Contains("[" + typeId.ToString() + "]")) && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]") || i.category.Contains("[" + catId.ToString() + "]"))).ToList();
             }
 
             //3.level .. vsetky kategorie produktov ktore su v danom type a maju subkategoriu
             else if (catslug != null && subslug != null)
             {
                 var catId = db.categories.Where(i => i.slug == subslug).First().id;
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && (i.type.Contains("[" + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + "]")) && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]"))).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && (i.type.Contains("[" + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + "]") || i.type.Contains("[" + typeId.ToString() + "]")) && (i.category.Contains("[" + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + ",") || i.category.Contains("," + catId.ToString() + "]") || i.category.Contains("[" + catId.ToString() + "]"))).ToList();
             }
             //1.level .. vsetky unikatne kategorie danych produktov v zaradeni
             else
             {
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && (i.type.Contains("[" + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + "]"))).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && (i.type.Contains("[" + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + ",") || i.type.Contains("," + typeId.ToString() + "]") || i.type.Contains("[" + typeId.ToString() + "]"))).ToList();
             }
 
             ViewData["Category"] = type;
@@ -453,7 +453,7 @@ namespace Cms.Controllers
             {
                 var catId = cat.id.ToString();
 
-                var filteredProds = db.products.Where(i => i.deleted == false && i.active == true && i.heureka == true && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]"))).ToList();
+                var filteredProds = db.products.Where(i => i.deleted == false && i.active == true && i.heureka == true && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]"))).ToList();
                 finalProds.AddRange(filteredProds);
             }
 
@@ -673,7 +673,7 @@ namespace Cms.Controllers
             {
                 var catId = cat.id.ToString();
 
-                var filteredProds = db.products.Where(i => i.deleted == false && i.active == true && i.heureka == true && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]"))).ToList();
+                var filteredProds = db.products.Where(i => i.deleted == false && i.active == true && i.heureka == true && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]"))).ToList();
                 finalProds.AddRange(filteredProds);
             }
 
