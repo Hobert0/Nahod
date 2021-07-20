@@ -246,7 +246,7 @@
 
             <div class="col-xl-5 col-lg-4 col-md-4 col-sm-12 search bottom">
 
-                @using (Html.BeginForm("SearchProduct", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform", @class = "form-inline search" }))
+                @using (Html.BeginForm("SearchProduct", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "MyformMainSearch", @class = "form-inline search" }))
                 {
                     @Html.Editor("term", new { htmlAttributes = new { type = "search", @class = "searchinput", placeholder = "Vyhľadať produkt" } })
                 }
@@ -311,7 +311,7 @@
 
             <div class="col-xl-5 col-lg-4 col-md-4 col-sm-12 search">
 
-                @using (Html.BeginForm("SearchProduct", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform", @class = "form-inline search" }))
+                @using (Html.BeginForm("SearchProduct", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "MyformMainSearch", @class = "form-inline search" }))
                 {
                     @Html.Editor("term", new { htmlAttributes = new { type = "search", @class = "searchinput", placeholder = "Vyhľadať produkt" } })
                 }

@@ -583,7 +583,7 @@ namespace Cms.Controllers
             }
 
             o.number = model.Number;
-            o.stock = model.Stock;
+            o.stock = model.Stock == null ? "0" : model.Stock;
             o.price = Decimal.Parse(model.Price, CultureInfo.InvariantCulture);
             o.category = model.Category;
             o.type = model.Type;
@@ -842,6 +842,8 @@ namespace Cms.Controllers
         {
 
             var o = db.products.Single(i => i.id == model.Id);
+
+            model.Stock = model.Stock == null ? "0" : model.Stock;
 
             var sendWatchdog = false;
             if (decimal.Parse(o.stock) < decimal.Parse(model.Stock))

@@ -557,7 +557,7 @@ namespace Cms.Controllers
                 
                 var model = new MultipleIndexModel();
 
-                ViewData["countries"] = SelectionCountries();
+                //ViewData["countries"] = SelectionCountries();
 
                 return View(model);
             }
@@ -576,7 +576,7 @@ namespace Cms.Controllers
                 MultipleIndexModel model = new MultipleIndexModel();
                 model.UsersmetaModel = user;
 
-                ViewData["countries"] = SelectionCountries();
+                //ViewData["countries"] = SelectionCountries();
                 ViewData["ratings"] = SelectionRatings();
 
                 return View(model);
@@ -754,6 +754,7 @@ namespace Cms.Controllers
         }
 
         /*Countries*/
+        /*
         public List<SelectListItem> SelectionCountries()
         {
             List<SelectListItem> countries = new List<SelectListItem>();
@@ -763,6 +764,7 @@ namespace Cms.Controllers
 
             return countries;
         }
+        */
 
         /*Ratings*/
         public List<SelectListItem> SelectionRatings()

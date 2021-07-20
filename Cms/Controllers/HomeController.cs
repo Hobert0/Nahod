@@ -48,7 +48,7 @@ namespace Cms.Controllers
             model.TypesModel = db.types.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.ToList();
 
-            ViewData["countries"] = new AdminController().SelectionCountries();
+            //ViewData["countries"] = new AdminController().SelectionCountries();
             ViewData["Homepage"] = "true";
             return View(model);
         }
@@ -93,7 +93,7 @@ namespace Cms.Controllers
             model.SlideshowModel = db.slideshow.ToList();
             ViewData["Homepage"] = "true";
 
-            ViewData["countries"] = new AdminController().SelectionCountries();
+            //ViewData["countries"] = new AdminController().SelectionCountries();
 
             return View(model);
         }
@@ -210,9 +210,9 @@ namespace Cms.Controllers
             var ordersCountSorted = ordersCount.OrderByDescending(o => o[1]).Take(10);
 
             ViewData["minPrice"] = prices.FirstOrDefault();
-            ViewData["maxPrice"] = prices.LastOrDefault();
+            ViewData["maxPrice"] = prices.LastOrDefault() + 1;
 
-            ViewData["countries"] = new AdminController().SelectionCountries();
+            //ViewData["countries"] = new AdminController().SelectionCountries();
 
             //najpredavanejsie
             ViewData["mostSold"] = ordersCountSorted;
@@ -278,9 +278,9 @@ namespace Cms.Controllers
             prices.Sort();
 
             ViewData["minPrice"] = prices.FirstOrDefault();
-            ViewData["maxPrice"] = prices.LastOrDefault();
+            ViewData["maxPrice"] = prices.LastOrDefault() + 1;
 
-            ViewData["countries"] = new AdminController().SelectionCountries();
+            //ViewData["countries"] = new AdminController().SelectionCountries();
 
             return View(model);
         }
@@ -341,9 +341,9 @@ namespace Cms.Controllers
             prices.Sort();
 
             ViewData["minPrice"] = prices.FirstOrDefault();
-            ViewData["maxPrice"] = prices.LastOrDefault();
+            ViewData["maxPrice"] = prices.LastOrDefault() + 1;
 
-            ViewData["countries"] = new AdminController().SelectionCountries();
+            //ViewData["countries"] = new AdminController().SelectionCountries();
 
             return View(model);
         }
@@ -387,13 +387,13 @@ namespace Cms.Controllers
             room.Sort();
 
             ViewData["minPrice"] = prices.FirstOrDefault();
-            ViewData["maxPrice"] = prices.LastOrDefault();
+            ViewData["maxPrice"] = prices.LastOrDefault() + 1;
             ViewData["minKw"] = kw.FirstOrDefault();
             ViewData["maxKw"] = kw.LastOrDefault();
             ViewData["minM2"] = room.FirstOrDefault();
             ViewData["maxM2"] = room.LastOrDefault();
 
-            ViewData["countries"] = new AdminController().SelectionCountries();
+            //ViewData["countries"] = new AdminController().SelectionCountries();
 
             return View(model);
         }
@@ -423,7 +423,7 @@ namespace Cms.Controllers
             model.PagesModel = db.pages.ToList();
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
 
-            ViewData["countries"] = new AdminController().SelectionCountries();
+            //ViewData["countries"] = new AdminController().SelectionCountries();
 
             return View(model);
         }
@@ -787,7 +787,7 @@ namespace Cms.Controllers
                 model.AllUsersMetaModel = null;
             }
 
-            ViewData["countries"] = new AdminController().SelectionCountries();
+            //ViewData["countries"] = new AdminController().SelectionCountries();
 
             return View(model);
         }
@@ -867,7 +867,7 @@ namespace Cms.Controllers
                     };
                 }
 
-                ViewData["countries"] = new AdminController().SelectionCountries();
+                //ViewData["countries"] = new AdminController().SelectionCountries();
                 model.AllUsersMetaModel = db.usersmeta.Where(i => i.userid == usID).ToList();
             }
             return View(model);
@@ -908,7 +908,7 @@ namespace Cms.Controllers
                 return View(model);
             }
 
-            ViewData["countries"] = new AdminController().SelectionCountries();
+            //ViewData["countries"] = new AdminController().SelectionCountries();
             ViewData["Detaily"] = data;
             return View(model);
         }
@@ -1116,7 +1116,7 @@ namespace Cms.Controllers
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.ToList();
 
-            ViewData["countries"] = new AdminController().SelectionCountries();
+            //ViewData["countries"] = new AdminController().SelectionCountries();
 
             return View(model);
         }
@@ -1175,7 +1175,7 @@ namespace Cms.Controllers
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.ToList();
 
-            ViewData["countries"] = new AdminController().SelectionCountries();
+            //ViewData["countries"] = new AdminController().SelectionCountries();
             ViewData["info"] = "Je potrebná aktualizácia hesla na vašom konte. Na váš email sme zaslali odkaz na aktualizáciu hesla.";
 
             return View("ForgotPassword", model);
@@ -1225,7 +1225,7 @@ namespace Cms.Controllers
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.ToList();
 
-            ViewData["countries"] = new AdminController().SelectionCountries();
+            //ViewData["countries"] = new AdminController().SelectionCountries();
 
             return View(model);
         }

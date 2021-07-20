@@ -197,7 +197,15 @@
                 <div class="col">
                     <div class="form-group">
                         <div class="col-md-14">
-                            @Html.DropDownListFor(model => model.OrdersModel.Country, (IEnumerable<SelectListItem>)ViewData["countries"], new { @class = "form-control", placeholder = "Štát*" })
+
+                            @{
+                                List<SelectListItem> countries = new List<SelectListItem>();
+
+                                countries.Add(new SelectListItem { Text = "Slovenská republika", Value = "Slovenská republika" });
+                                countries.Add(new SelectListItem { Text = "Česká republika", Value = "Česká republika" });
+                            }
+
+                            @Html.DropDownListFor(model => model.OrdersModel.Country, countries, new { @class = "form-control", placeholder = "Štát*" })
                             @Html.ValidationMessageFor(model => model.OrdersModel.Country, "", new { @class = "text-danger" })
                         </div>
                     </div>

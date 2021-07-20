@@ -18,7 +18,7 @@
 </style>
 <h2>Editovať vlastnosť</h2>
 
-@using (Html.BeginForm("EditAttributeSave", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+@using (Html.BeginForm("EditAttributeSave", "Products", FormMethod.Post, new { enctype = "multipart/form-data", id = "MyformEditAttribute" }))
 {
     @Html.AntiForgeryToken()
     @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control", id = "e-id-" + Model.Id, style = "display:none;" } })
@@ -108,7 +108,7 @@
             }
         });
 
-        $("#Myform input[type=submit]").click(function (e) {
+        $("#MyformEditAttribute input[type=submit]").click(function (e) {
             e.preventDefault();
 
             if (validateForm()) {
@@ -121,7 +121,7 @@
 
                 $("input[name = Value]").val(JSON.stringify($json));
 
-                $("#Myform").submit();
+                $("#MyformEditAttribute").submit();
             }
         });
 

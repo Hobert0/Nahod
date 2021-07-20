@@ -395,7 +395,7 @@ namespace Cms.Controllers
             model.SlideshowModel = db.slideshow.ToList();
             model.OrderDataModel = db.orders.Where(i => i.ordernumber == orderNumber).ToList();
 
-            ViewData["countries"] = new AdminController().SelectionCountries();
+            //ViewData["countries"] = new AdminController().SelectionCountries();
 
             return View(model);
         }
