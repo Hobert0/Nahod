@@ -1083,6 +1083,7 @@ namespace Cms.Controllers
 
                 //CATEGORY
                 var catsStr = "";
+                var allCategories = db.categories.ToList();
                 if (prod.category != null)
                 {
                     dynamic cats = JsonConvert.DeserializeObject(prod.category);
@@ -1090,7 +1091,7 @@ namespace Cms.Controllers
                     foreach (var cat in cats)
                     {
                         int thisCatId = Int32.Parse(cat.Value.ToString());
-                        foreach (var catDb in db.categories.Where(o => o.id == thisCatId))
+                        foreach (var catDb in allCategories.Where(o => o.id == thisCatId))
                         {
                             catsStr += catDb.name + ", ";
                         }
