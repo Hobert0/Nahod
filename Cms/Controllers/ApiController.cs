@@ -19,6 +19,8 @@ using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using OfficeOpenXml;
 using System.Text;
+using System.Web.Script.Serialization;
+using PagedList;
 
 namespace Cms.Controllers
 {
@@ -69,6 +71,7 @@ namespace Cms.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        /*
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public JsonResult FetchProductsAdminFilter(string catId, string brandId, decimal priceFrom, decimal priceTo, bool isDiscount, bool isInactive)
         {
@@ -114,6 +117,7 @@ namespace Cms.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+        */
 
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public JsonResult EditProductValues(string value, int id, string name)
@@ -282,13 +286,13 @@ namespace Cms.Controllers
             {
 
                 var catId = db.categories.Where(i => i.slug == catSlug1).First().id.ToString();
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && i.custom3 == brandID && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]"))).OrderByDescending(x => x.id).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && i.custom3 == brandID && (i.category != null && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]")))).OrderByDescending(x => x.id).ToList();
             }
             else if (catSlug1 != null && catSlug2 != null)
             {
 
                 var catId = db.categories.Where(i => i.slug == catSlug2).First().id.ToString();
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && i.custom3 == brandID && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]"))).OrderByDescending(x => x.id).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && i.custom3 == brandID && (i.category != null && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]")))).OrderByDescending(x => x.id).ToList();
             }
             else
             {
@@ -307,17 +311,17 @@ namespace Cms.Controllers
             {
 
                 var catId = db.categories.Where(i => i.slug == catSlug1).First().id.ToString();
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && (i.type.Contains("[" + typeID + ",") || i.type.Contains("," + typeID + ",") || i.type.Contains("," + typeID + "]") || i.type.Contains("[" + typeID + "]")) && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]"))).OrderByDescending(x => x.id).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && (i.type != null && (i.type.Contains("[" + typeID + ",") || i.type.Contains("," + typeID + ",") || i.type.Contains("," + typeID + "]") || i.type.Contains("[" + typeID + "]"))) && (i.category != null && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]")))).OrderByDescending(x => x.id).ToList();
             }
             else if (catSlug1 != null && catSlug2 != null)
             {
 
                 var catId = db.categories.Where(i => i.slug == catSlug2).First().id.ToString();
-                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && (i.type.Contains("[" + typeID + ",") || i.type.Contains("," + typeID + ",") || i.type.Contains("," + typeID + "]") || i.type.Contains("[" + typeID + "]")) && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]"))).OrderByDescending(x => x.id).ToList();
+                model.ProductModel = db.products.Where(i => i.deleted == false && i.active == true && (i.type != null && (i.type.Contains("[" + typeID + ",") || i.type.Contains("," + typeID + ",") || i.type.Contains("," + typeID + "]") || i.type.Contains("[" + typeID + "]"))) && (i.category != null && (i.category.Contains("[" + catId + ",") || i.category.Contains("," + catId + ",") || i.category.Contains("," + catId + "]") || i.category.Contains("[" + catId + "]")))).OrderByDescending(x => x.id).ToList();
             }
             else
             {
-                model.ProductModel = db.products.Where(c => c.deleted == false && c.active == true && (c.type.Contains("[" + typeID + ",") || c.type.Contains("," + typeID + ",") || c.type.Contains("," + typeID + "]") || c.type.Contains("[" + typeID + "]"))).OrderByDescending(x => x.id).ToList();
+                model.ProductModel = db.products.Where(c => c.deleted == false && c.active == true && (c.type != null && (c.type.Contains("[" + typeID + ",") || c.type.Contains("," + typeID + ",") || c.type.Contains("," + typeID + "]") || c.type.Contains("[" + typeID + "]")))).OrderByDescending(x => x.id).ToList();
             }
 
             return model;
@@ -336,7 +340,7 @@ namespace Cms.Controllers
                 {
                     allProducts.Remove(allProducts[i]);
                 }
-                
+
             }
 
             model.ProductModel = allProducts;
@@ -626,7 +630,7 @@ namespace Cms.Controllers
 
                     counter++;
                 }
-                
+
 
                 var Sql = "select `" + product.shipping + "` from `e-settings`";
 
@@ -714,7 +718,7 @@ namespace Cms.Controllers
                     payxRoot11.Add(paydoc55);
 
                 }
-                               
+
                 xRoot3.Add(docFirma); // MojeFirma
                 docFirma.Add(docNazov);
                 docFirma.Add(docAdresa);
@@ -806,8 +810,9 @@ namespace Cms.Controllers
                             //product.discountprice = null;
                         }
 
-                        if (sendWatchdog) { 
-                        //odosleme emaily ak existuju watchdogy na dany produkt
+                        if (sendWatchdog)
+                        {
+                            //odosleme emaily ak existuju watchdogy na dany produkt
                             var watchdogs = db.watchdog.Where(i => i.prod_id == product.id && i.sent == false).ToList();
 
                             foreach (var watchdog in watchdogs)
@@ -935,5 +940,234 @@ namespace Cms.Controllers
 
         }
 
+
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public string FetchProductsDatatable(int draw, int start, int length)
+        {
+            //zoradovanie podla stlpcov
+            var orderColumn = Request.Form["order[0][column]"];
+            var orderColumnDir = Request.Form["order[0][dir]"];
+
+            //vyhladavanie podla stlpcov
+            var search = Request.Form["search[value]"];
+
+            var pageNum = start == 0 ? 1 : (start / length) + 1;
+            IPagedList<products> prodsOrd = null;
+            IQueryable<products> prods = null;
+
+            if (search != "" && search != null)
+            {
+                prods = db.products.Where(a => a.deleted == false && (a.number.Contains(search) || a.title.Contains(search)));
+            }
+            else
+            {
+                prods = db.products.Where(a => a.deleted == false);
+            }
+
+            //filtracia
+            var filterClicked = Request.Form["filterClicked"];
+            //""
+            var filteredCat = Request.Form["category"];
+            var filteredBrand = Request.Form["brand"];
+            var filteredPriceFrom = Request.Form["priceFrom"];
+            var filteredPriceTo = Request.Form["priceTo"];
+            //"true"/"false"
+            var filteredDiscount = Request.Form["discount"];
+            var filteredInactive = Request.Form["inactive"];
+            //if (filterClicked == "true") {
+            //kategoria
+            if (filteredCat != "")
+            {
+                prods = prods.Where(i => i.category != null && (i.category.Contains("[" + filteredCat + ",") || i.category.Contains("," + filteredCat + ",") || i.category.Contains("," + filteredCat + "]") || i.category.Contains("[" + filteredCat + "]")));
+            }
+
+            if (filteredBrand != "")
+            {
+                prods = prods.Where(i => i.custom3 == filteredBrand);
+            }
+
+            if (filteredPriceFrom != "")
+            {
+                decimal filteredPriceFromDec = Decimal.Parse(filteredPriceFrom);
+                prods = prods.Where(i => i.price >= filteredPriceFromDec);
+            }
+
+            if (filteredPriceTo != "")
+            {
+                decimal filteredPriceToDec = Decimal.Parse(filteredPriceTo);
+                prods = prods.Where(i => i.price <= filteredPriceToDec);
+            }
+
+            if (filteredDiscount == "true")
+            {
+                prods = prods.Where(i => i.discountprice != null);
+            }
+
+            if (filteredInactive == "true")
+            {
+                prods = prods.Where(i => i.active == false);
+            }
+            //}
+
+            switch (orderColumn)
+            {
+                case "2":
+                    if (orderColumnDir == "asc")
+                        prodsOrd = prods.OrderBy(a => a.number).ToPagedList(pageNum, length);
+                    else
+                        prodsOrd = prods.OrderByDescending(a => a.number).ToPagedList(pageNum, length);
+
+                    break;
+                case "4":
+                    if (orderColumnDir == "asc")
+                        prodsOrd = prods.OrderBy(a => a.title).ToPagedList(pageNum, length);
+                    else
+                        prodsOrd = prods.OrderByDescending(a => a.title).ToPagedList(pageNum, length);
+
+                    break;
+                case "5":
+                    if (orderColumnDir == "asc")
+                        prodsOrd = prods.OrderBy(a => a.price).ToPagedList(pageNum, length);
+                    else
+                        prodsOrd = prods.OrderByDescending(a => a.price).ToPagedList(pageNum, length);
+
+                    break;
+                case "6":
+                    if (orderColumnDir == "asc")
+                        prodsOrd = prods.OrderBy(a => a.discountprice).ToPagedList(pageNum, length);
+                    else
+                        prodsOrd = prods.OrderByDescending(a => a.discountprice).ToPagedList(pageNum, length);
+
+                    break;
+                case "9":
+                    if (orderColumnDir == "asc")
+                        prodsOrd = prods.OrderBy(a => a.heureka).ToPagedList(pageNum, length);
+                    else
+                        prodsOrd = prods.OrderByDescending(a => a.heureka).ToPagedList(pageNum, length);
+
+                    break;
+                case "10":
+                    if (orderColumnDir == "asc")
+                        prodsOrd = prods.OrderBy(a => a.stock).ToPagedList(pageNum, length);
+                    else
+                        prodsOrd = prods.OrderByDescending(a => a.stock).ToPagedList(pageNum, length);
+
+                    break;
+                case "11":
+                    if (orderColumnDir == "asc")
+                        prodsOrd = prods.OrderBy(a => a.active).ToPagedList(pageNum, length);
+                    else
+                        prodsOrd = prods.OrderByDescending(a => a.active).ToPagedList(pageNum, length);
+
+                    break;
+                default:
+                    prodsOrd = prods.OrderByDescending(a => a.id).ToPagedList(pageNum, length);
+
+                    break;
+            }
+
+
+            List<string[]> dataList = new List<string[]>();
+            var variants = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a, b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value, Stock = a.stock }).OrderByDescending(a => a.ProdId).ThenBy(a => a.AttrName).ToList();
+
+            foreach (var prod in prodsOrd)
+            {
+
+                var id = prod.id.ToString();
+                var checkbox = "<input type='checkbox' name='multipleEditCheckbox'>";
+                var number = prod.number;
+                var img = "<img src='/Uploads/" + prod.image + "' style='max-width: 50px;max-height: 50px;' />";
+                var title = prod.title;
+                var price = prod.price + " €";
+                var discountprice = prod.discountprice != null ? prod.discountprice + " €" : "";
+
+                //CATEGORY
+                var catsStr = "";
+                if (prod.category != null)
+                {
+                    dynamic cats = JsonConvert.DeserializeObject(prod.category);
+
+                    foreach (var cat in cats)
+                    {
+                        int thisCatId = Int32.Parse(cat.Value.ToString());
+                        foreach (var catDb in db.categories.Where(o => o.id == thisCatId))
+                        {
+                            catsStr += catDb.name + ", ";
+                        }
+                    }
+                    if (catsStr != "")
+                    {
+                        catsStr.Remove(catsStr.Length - 2);
+                    }
+                }
+
+                //VARIANTS
+                //variant.number obsahuje nazov vlastnosti
+                string variantsStr = "";
+                int varsStock = 0;
+                if (variants.Where(o => o.ProdId == prod.id).ToList().Count > 0)
+                {
+                    string varType = "";
+                    foreach (var variant in variants.Where(o => o.ProdId == prod.id))
+                    {
+
+                        if (variant.Stock != "")
+                        {
+                            varsStock += Int32.Parse(variant.Stock);
+                        }
+
+                        if (varType != variant.AttrName)
+                        {
+                            variantsStr += variant.AttrName + ": ";
+                        }
+
+                        variantsStr += variant.AttrValue + ", ";
+                        varType = variant.AttrName;
+                    }
+                    variantsStr = variantsStr.Remove(variantsStr.Length - 2);
+                }
+
+                var heureka = "<input class='check-box' disabled='disabled' " + (prod.heureka == true ? "checked='checked'" : "") + " type='checkbox'>";
+
+                //STOCK
+                string stockStr = prod.stock;
+                if (variantsStr != "")
+                {
+                    stockStr = varsStock.ToString();
+                }
+
+                var active = "<input class='check-box' disabled='disabled' " + (prod.active == true ? "checked='checked'" : "") + " type='checkbox'>";
+
+                var actions = "<a class='btn btn-warning' href='/produkty/editovat-produkt/" + prod.id + "' style = 'color:#ffffff !important; font-size:13px;margin-right: 2px;' >Editovať</a><a href='/Products/DuplicateProduct/" + prod.id + "' class='btn btn-success' style='padding: 5px 10px;margin-right: 2px;' title='Duplikovať produkt'><img src='/Content/images/duplicate.png' width='15' style='margin-top: -3px;'></a><a class='btn btn-danger' style='padding: 5px 10px;' data-placement='top' data-toggle='tooltip' href='/Products/DeleteProduct/" + prod.id + "?confirm=True' onclick='return confirm(\"Naozaj chcete vymazať tento produkt?\")' title='Kliknutím nenávratne vymažete produkt.'>×</a>" +
+                            "<div class='popover__wrapper' id='info-0' style='display:none;'>" +
+                            "<a href='#'>" +
+                            "<strong class='popover__title'><img src='/Content/images/infobox_info_icon.svg' style='width: 18px;'></strong>" +
+                            "</a>" +
+                            "<div class='push popover__content'>" +
+                            "<p class='popover__message'>Skladové zásoby pod hraničnou hodnotou!</p>" +
+                            "</div>" +
+                            "</div>";
+
+                string[] prodArr = new string[] { id, checkbox, number, img, title, price, discountprice, catsStr, variantsStr, heureka, stockStr, active, actions };
+
+                dataList.Add(prodArr);
+
+            }
+
+            var productsAllCount = prods.Count();
+            //var productsFilteredCount = products.Where(a => a.deleted == false).Count();
+            var result = new
+            {
+                draw = draw,
+                recordsTotal = productsAllCount,
+                recordsFiltered = productsAllCount,
+                data = dataList.ToArray()
+            };
+
+
+            var json = new JavaScriptSerializer().Serialize(result);
+            return json;
+
+        }
     }
 }

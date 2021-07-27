@@ -5,7 +5,7 @@
 @{
     HelperController helper = new HelperController();
 
-    var prods = Model.ProductModel.Where(i => i.category.Contains("606")).OrderByDescending(i => i.id).ToList();
+    var prods = Model.ProductModel.Where(i => i.category != null && i.category.Contains("606")).OrderByDescending(i => i.id).ToList();
     int prodCounter = 0;
     int discProdCounter = 0;
 

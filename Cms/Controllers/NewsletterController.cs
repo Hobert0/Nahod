@@ -375,16 +375,15 @@ namespace Cms.Controllers
                         oc.SendHtmlFormattedEmail("Ďakujeme za registráciu do newslettru!", body, n.email, "register", "");
                     }
                 }
-                TempData["msg"] = "<small class='text-success'>Úspešne sme Vás pridali medzi odoberateľov našeho emailu. Ďakujeme.</small>";
+                TempData["newsletterMsg"] = "Úspešne sme Vás pridali medzi odoberateľov našeho emailu. Ďakujeme.";
             }
             else
             {
-                TempData["msg"] = "<small class='text-warning'>Prihlásenie medzi odoberateľov našeho newslettru sa nezdarilo. Prosím, kontaktujte nás.</small>";
+                TempData["newsletterMsg"] = "Prihlásenie medzi odoberateľov našeho newslettru sa nezdarilo. Prosím, kontaktujte nás.";
             }
 
-            return Redirect(Url.Content("/#hp-newsletter"));
-
-
+            //return Redirect(Url.Content("/#hp-newsletter"));
+            return Redirect(Url.Content("/"));
         }
 
         private string createNewsletterEmailBody()

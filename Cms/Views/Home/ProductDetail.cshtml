@@ -334,7 +334,7 @@
                                                                 <p style="color: #c7c7c7; font-size: 12px;padding: 10px;">@attrName</p>
                                                             }
 
-                                                            options.Add(new SelectListItem { Text = variant.value, Value = (variant.price.ToString() + "|" + variant.discountprice.ToString()) + "|" + variant.number + "|" + variant.stock  });
+                                                            options.Add(new SelectListItem { Text = variant.value, Value = (variant.price.ToString() + "|" + variant.discountprice.ToString()) + "|" + variant.number + "|" + variant.stock });
 
                                                             lastAttrName = attrName;
                                                         }
@@ -440,7 +440,7 @@
 
                         var lastNewProd = Model.ProductModel.OrderByDescending(o => o.id).ElementAt(order);
 
-                        var prods2 = Model.ProductModel.Where(o => o.recommended == true).OrderByDescending(o => o.id).Take(10);
+                        var prods2 = Model.ProductModel.Where(o => o.category != null && o.category.Contains("608")).OrderByDescending(o => o.id).Take(20);
                         foreach (var prod in prods2)
                         {
                             bool isDiscounted = false;
@@ -479,7 +479,7 @@
                                         }
 
                                         @{
-                                            if (DateTime.Compare(DateTime.Parse(prod.date), DateTime.Parse(lastNewProd.date)) >= 0)
+                                            if (DateTime.Compare(DateTime.Parse(prod.date), DateTime.Now.AddDays(-15)) >= 0)
                                             {
                                                 <span class="prod-new">novinka</span>
                                             }
@@ -527,10 +527,15 @@
                                                         //rating
                                                         if (Request.Cookies["username"] != null)
                                                         {
-                                                            int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
+                                                            var usermeta = Model.AllUsersMetaModel.FirstOrDefault();
+                                                            var rating = 1;
                                                             decimal defaultPrice = (decimal)variant.price;
                                                             decimal ratingPrice = 0;
 
+                                                            if (usermeta != null)
+                                                            {
+                                                                rating = usermeta.rating;
+                                                            }
                                                             switch (rating)
                                                             {
                                                                 case 1:
@@ -580,9 +585,15 @@
                                                     //rating
                                                     if (Request.Cookies["username"] != null)
                                                     {
-                                                        int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
+                                                        var usermeta = Model.AllUsersMetaModel.FirstOrDefault();
+                                                        var rating = 1;
                                                         decimal defaultPrice = prod.price;
                                                         decimal ratingPrice = 0;
+
+                                                        if (usermeta != null)
+                                                        {
+                                                            rating = usermeta.rating;
+                                                        }
 
                                                         switch (rating)
                                                         {
@@ -624,6 +635,204 @@
                         }
                     }
                 </div>
+
+                @*
+                    <div class="row products-row">
+                        @{
+                            var prods = Model.ProductModel.OrderByDescending(o => o.id).Take(10);
+                            int order = Model.ProductModel.Count() - 1;
+                            if (order >= 9)
+                            {
+                                order = 9;
+                            }
+
+                            var lastNewProd = Model.ProductModel.OrderByDescending(o => o.id).ElementAt(order);
+
+                            var prods2 = Model.ProductModel.Where(o => o.recommended == true).OrderByDescending(o => o.id).Take(10);
+                            foreach (var prod in prods2)
+                            {
+                                bool isDiscounted = false;
+                                var variants = Model.VariantModel.Where(o => o.prod_id == prod.id).OrderBy(o => o.num).ToList();
+
+                                if (variants.Count() > 0)
+                                {
+                                    foreach (var variant in variants)
+                                    {
+                                        if (variant.discountprice != null)
+                                        {
+                                            isDiscounted = true;
+
+                                            break;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (prod.discountprice != null)
+                                    {
+                                        isDiscounted = true;
+                                    }
+                                }
+
+                                var slug = helper.ToUrlSlug(prod.title);
+                                <div class="col-md product mx-1">
+                                    <a href="/detail-produktu/@prod.id/@slug">
+                                        <div class="thumb" style="background-image: url('/Uploads/@prod.image'); height: 11vw;background-size:contain;"></div>
+                                        <div class="prod-labels">
+                                            @{
+                                                if (isDiscounted == true)
+                                                {
+                                                    <span class="prod-discount">akcia</span>
+                                                }
+                                            }
+
+                                            @{
+                                                if (DateTime.Compare(DateTime.Parse(prod.date), DateTime.Parse(lastNewProd.date)) >= 0)
+                                                {
+                                                    <span class="prod-new">novinka</span>
+                                                }
+                                            }
+                                        </div>
+                                        <div class="prod-header">@Html.Raw(prod.title)</div>
+                                        @{
+                                            var shortdescription = "";
+                                            if (prod.description != null && prod.description != "")
+                                            {
+                                                shortdescription = Regex.Replace(prod.description, "<.*?>", String.Empty);
+                                                if (shortdescription.Length > 60)
+                                                {
+                                                    shortdescription = shortdescription.Substring(0, 60) + "...";
+                                                }
+                                            }
+                                        }
+                                        <div class="prod-text">@Html.Raw(shortdescription)</div>
+                                        <div class="prod-prices">
+                                            @{
+                                                decimal variantPriceFrom = 99999;
+                                                string isVariant = "false";
+                                                int firstAttrId = 0;
+                                                foreach (var variant in variants)
+                                                {
+
+                                                    if (firstAttrId == 0)
+                                                    {
+                                                        firstAttrId = variant.attribute_id;
+                                                    }
+
+                                                    if (firstAttrId == variant.attribute_id)
+                                                    {
+                                                        if (variant.discountprice != null)
+                                                        {
+                                                            if (variant.discountprice < variantPriceFrom)
+                                                            {
+                                                                variantPriceFrom = (decimal)variant.discountprice;
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+
+                                                            decimal thisPrice = 0;
+                                                            //rating
+                                                            if (Request.Cookies["username"] != null)
+                                                            {
+                                                                int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
+                                                                decimal defaultPrice = (decimal)variant.price;
+                                                                decimal ratingPrice = 0;
+
+                                                                switch (rating)
+                                                                {
+                                                                    case 1:
+                                                                        ratingPrice = (decimal)0.95 * defaultPrice;
+                                                                        break;
+                                                                    case 2:
+                                                                        ratingPrice = (decimal)0.9 * defaultPrice;
+                                                                        break;
+                                                                    case 3:
+                                                                        ratingPrice = (decimal)0.85 * defaultPrice;
+                                                                        break;
+                                                                }
+
+                                                                thisPrice = ratingPrice;
+                                                            }
+                                                            else
+                                                            {
+                                                                thisPrice = (decimal)variant.price;
+                                                            }
+
+                                                            if (thisPrice < variantPriceFrom)
+                                                            {
+                                                                variantPriceFrom = thisPrice;
+                                                            }
+
+                                                        }
+                                                    }
+
+                                                    isVariant = "true";
+                                                }
+
+                                                decimal actualPrice = (decimal)0.0;
+                                                if (variantPriceFrom != 99999)
+                                                {
+                                                    <span class="prod-price-from">od @variantPriceFrom.ToString("N2") €</span>
+                                                }
+                                                else
+                                                {
+
+                                                    if (prod.discountprice != null)
+                                                    {
+                                                        <span class="prod-discount">@prod.price.ToString("N2") €</span><span class="prod-base">@(((decimal)prod.discountprice).ToString("N2")) €</span>
+                                                        actualPrice = (decimal)prod.discountprice;
+                                                    }
+                                                    else
+                                                    {
+                                                        //rating
+                                                        if (Request.Cookies["username"] != null)
+                                                        {
+                                                            int rating = Model.AllUsersMetaModel.FirstOrDefault().rating;
+                                                            decimal defaultPrice = prod.price;
+                                                            decimal ratingPrice = 0;
+
+                                                            switch (rating)
+                                                            {
+                                                                case 1:
+                                                                    ratingPrice = (decimal)0.95 * defaultPrice;
+                                                                    break;
+                                                                case 2:
+                                                                    ratingPrice = (decimal)0.9 * defaultPrice;
+                                                                    break;
+                                                                case 3:
+                                                                    ratingPrice = (decimal)0.85 * defaultPrice;
+                                                                    break;
+                                                            }
+
+                                                            <span class="prod-discount">@defaultPrice.ToString("N2") €</span><span class="prod-base">@ratingPrice.ToString("N2") €</span>
+                                                            actualPrice = ratingPrice;
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="prod-base">@prod.price.ToString("N2") €</span>
+                                                            actualPrice = prod.price;
+                                                        }
+                                                    }
+
+                                                }
+                                            }
+                                        </div>
+                                    </a>
+
+                                    @{
+                                        var actualPriceStr = actualPrice.ToString("N2").Replace(",", ".");
+                                    }
+
+                                    <span onclick='addToCart(@prod.id, @isVariant, @actualPriceStr)' class="prod-add-to-cart">
+                                        <img class="prod-icon" src="~/Content/images/cart.svg">
+                                        <span>Pridať do košíka</span>
+                                    </span>
+                                </div>
+                            }
+                        }
+                    </div>
+                *@
             </div>
         </div>
 
@@ -949,9 +1158,9 @@
                     if ($thisPrices[3] > 0) {
                         $("#stocktext").html("<span style='color:#1e7e34;'>Skladom</span>");
                     } else {
-                       $("#stocktext").html("<a href='#' class='watchdog-modal'><span style='color:#e89300;'>Dodanie 3-10 dní</span><br><small><u>Strážiť dostupnosť</u></small><i style='margin-left: 10px;' class='fas fa-dog'></i><br><small>Zadajte Váš e-mail a my Vám zašleme informáciu akonáhle produkt naskladníme.</small></a>");
+                        $("#stocktext").html("<a href='#' class='watchdog-modal'><span style='color:#e89300;'>Dodanie 3-10 dní</span><br><small><u>Strážiť dostupnosť</u></small><i style='margin-left: 10px;' class='fas fa-dog'></i><br><small>Zadajte Váš e-mail a my Vám zašleme informáciu akonáhle produkt naskladníme.</small></a>");
                     }
-                    
+
 
                     if ($thisDiscount == 0) {
 

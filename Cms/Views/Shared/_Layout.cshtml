@@ -710,6 +710,128 @@
     </script>
 
     @{
+        //Po prihlaseni k odberu sa vypise hlaska
+        if (TempData["newsletterMsg"] != null)
+        {
+            if (TempData["newsletterMsg"].ToString() == "Úspešne sme Vás pridali medzi odoberateľov našeho emailu. Ďakujeme.")
+            {
+                <script>
+                    $(document).ready(function () {
+
+                        toastr.options = {
+                        "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-full-width",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "0",
+                            "extendedTimeOut": "0",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut",
+                            "tapToDismiss": false
+                        }
+                        toastr["success"]("@TempData["newsletterMsg"]");
+                    });
+
+                </script>
+            }
+            else
+            {
+                <script>
+                    $(document).ready(function () {
+
+                        toastr.options = {
+                        "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-full-width",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "0",
+                            "extendedTimeOut": "0",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut",
+                            "tapToDismiss": false
+                        }
+                        toastr["warning"]("@TempData["newsletterMsg"]");
+                    });
+
+                </script>
+            }
+        }
+
+        //Vypisanie hlasok pri zmene hesla.
+        if (ViewData["changePassInfo"] != null)
+        {
+            if (ViewData["changePassInfo"].ToString() == "Na váš email sme vám zaslali odkaz na zmenu hesla.")
+            {
+                <script>
+                    $(document).ready(function () {
+
+                        toastr.options = {
+                        "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-full-width",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "0",
+                            "extendedTimeOut": "0",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut",
+                            "tapToDismiss": false
+                        }
+                        toastr["success"]("@ViewData["changePassInfo"]");
+                    });
+
+                </script>
+            }
+            else
+            {
+                <script>
+                    $(document).ready(function() {
+
+                        toastr.options = {
+                        "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-full-width",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "0",
+                            "extendedTimeOut": "0",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut",
+                            "tapToDismiss": false
+                        }
+                        toastr["warning"]("@ViewData["changePassInfo"]");
+                    });
+                </script>
+            }
+        }
+
+        //Vypisanie hlasok o percentualnych zlavach pri prihlaseni.
         if (Request.Cookies["userid"] != null)
         {
             Entities db = new Entities();

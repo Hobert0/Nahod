@@ -23,7 +23,7 @@ namespace Cms.Controllers
     public class HomeController : Controller
     {
         Entities db = new Entities();
-        public ActionResult Index()
+        public ActionResult Index(string changePassInfo)
         {
             var model = new MultipleIndexModel();
 
@@ -50,6 +50,8 @@ namespace Cms.Controllers
 
             //ViewData["countries"] = new AdminController().SelectionCountries();
             ViewData["Homepage"] = "true";
+            ViewData["changePassInfo"] = changePassInfo;
+
             return View(model);
         }
 
@@ -1124,27 +1126,38 @@ namespace Cms.Controllers
         [HttpPost]
         public ActionResult ForgotPasswordSendLink(string forgotPasswordEmail)
         {
-            userstoken t = new userstoken();
+            //overime ci dany user existuje a ak ano, ci to nie je len subscribe ucet
+            var user = db.users.Where(i => i.username == forgotPasswordEmail && i.role != 2).FirstOrDefault();
 
-            t.token = RandomString(8);
-            t.time = DateTime.Now.ToString("d.M.yyyy HH:mm:ss");
-            t.type = "default";
-            t.email = forgotPasswordEmail;
+            var changePassInfoText = "";
+            if (user != null)
+            {
+                userstoken t = new userstoken();
 
-            db.userstoken.Add(t);
+                t.token = RandomString(8);
+                t.time = DateTime.Now.ToString("d.M.yyyy HH:mm:ss");
+                t.type = "default";
+                t.email = forgotPasswordEmail;
 
-            db.SaveChanges();
+                db.userstoken.Add(t);
 
-            //odosleme email o uspesnom zaregistrovani
-            OrdersController oc = new OrdersController();
-            string body = createForgotEmailBody(t.token);
-            oc.SendHtmlFormattedEmail("Obnova hesla", body, forgotPasswordEmail, "forgotEmail", "");
+                db.SaveChanges();
 
-            //odosleme email v ktorom bude linka na ktorej bude odkaz na controller funkciu ktora zavola view a overi sa token
+                //odosleme email o uspesnom zaregistrovani
+                OrdersController oc = new OrdersController();
+                string body = createForgotEmailBody(t.token);
+                oc.SendHtmlFormattedEmail("Obnova hesla", body, forgotPasswordEmail, "forgotEmail", "");
 
-            //nasledne v tej dalsej funkcii ktora bude vlastne submit form sa overi time a ak do 30 min tak to zmenime
+                //odosleme email v ktorom bude linka na ktorej bude odkaz na controller funkciu ktora zavola view a overi sa token
+                //nasledne v tej dalsej funkcii ktora bude vlastne submit form sa overi time a ak do 30 min tak to zmenime
 
-            return RedirectToAction("Index");
+                changePassInfoText = "Na váš email sme vám zaslali odkaz na zmenu hesla.";
+            }
+            else {
+                changePassInfoText = "Zadaný email v databáze používateľov neexistuje.";
+            }
+
+            return RedirectToAction("Index", "Home", new { changePassInfo = changePassInfoText });
         }
 
         public ActionResult ForgotPasswordSendLinkReset(string forgotPasswordEmail)
@@ -1238,26 +1251,34 @@ namespace Cms.Controllers
             if (index >= 0)
                 mail = mail.Substring(0, index);
 
-            var user = db.users.Where(i => i.email == mail).FirstOrDefault();
+            //nevytahujeme ucet subscribera (toto by sa nemalo stat kedze by ho to ako subscribera nemalo pustit editovat ucet)
+            var user = db.users.Where(i => i.email == mail && i.role != 2).FirstOrDefault();
 
-            MD5CryptoServiceProvider md5provider = new MD5CryptoServiceProvider();
-            md5provider.ComputeHash(ASCIIEncoding.ASCII.GetBytes(Password));
-            byte[] overHeslo = md5provider.Hash;
-            StringBuilder hesloDb = new StringBuilder();
-
-            for (int i = 0; i < overHeslo.Length; i++)
+            if (user != null)
             {
-                hesloDb.Append(overHeslo[i].ToString("x2"));
+
+                MD5CryptoServiceProvider md5provider = new MD5CryptoServiceProvider();
+                md5provider.ComputeHash(ASCIIEncoding.ASCII.GetBytes(Password));
+                byte[] overHeslo = md5provider.Hash;
+                StringBuilder hesloDb = new StringBuilder();
+
+                for (int i = 0; i < overHeslo.Length; i++)
+                {
+                    hesloDb.Append(overHeslo[i].ToString("x2"));
+                }
+                string heslo = hesloDb.ToString();
+
+                user.password = heslo;
+
+                //zmazeme token
+                var userstoken = db.userstoken.Where(i => i.token == Token).FirstOrDefault();
+                if (userstoken != null)
+                {
+                    db.userstoken.Remove(userstoken);
+                }
+
+                db.SaveChanges();
             }
-            string heslo = hesloDb.ToString();
-
-            user.password = heslo;
-
-            //zmazeme token
-            var userstoken = db.userstoken.Where(i => i.token == Token).FirstOrDefault();
-            db.userstoken.Remove(userstoken);
-
-            db.SaveChanges();
 
             return RedirectToAction("Index");
         }
