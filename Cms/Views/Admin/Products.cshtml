@@ -280,6 +280,7 @@
         $('#productsTable').DataTable({
             "processing": true,
             "serverSide": true,
+            "pageLength": 50,
             "ajax": {
                 "url": "/Api/FetchProductsDatatable",
                 "type": "POST",
@@ -522,7 +523,7 @@
                     $isChecked = $(this).find("input[type=checkbox]").is(":checked");
                     $defValue = $isChecked;
 
-                    $html = '<input class="editValue" type="checkbox" name="editValue" ' + ($isChecked ? "checked" : "") + '><br><a class="btn btn-warning editValueSave" href="#" style="margin-top:5px;">Zmeniť</a><a class="btn editValueCancel" style="margin-left:5px;margin-top:5px;">Zrušiť</a>';
+                    $html = '<input class="editValue" type="checkbox" name="editValue" ' + ($isChecked ? "checked" : "") + '><br><a class="btn btn-warning editValueSave" style="margin-top:5px;">Zmeniť</a><a class="btn editValueCancel" style="margin-left:5px;margin-top:5px;">Zrušiť</a>';
                 } else {
                     $value = $(this).text().trim();
                     $defValue = $(this).text().trim();
@@ -530,7 +531,7 @@
                         $value = $value.replace('€', '').trim();
                     }
 
-                    $html = '<input class="editValue" type="text" name="editValue" value="' + $value + '"><a class="btn btn-warning editValueSave" href="#" style="margin-top:5px;">Zmeniť</a><a class="btn editValueCancel" style="margin-left:5px;margin-top:5px;">Zrušiť</a>';
+                    $html = '<input class="editValue" type="text" name="editValue" value="' + $value + '"><a class="btn btn-warning editValueSave" style="color:#fff;margin-top:5px;">Zmeniť</a><a class="btn editValueCancel" style="margin-left:5px;margin-top:5px;">Zrušiť</a>';
                 }
 
                 $(this).attr("defValue", $defValue);
