@@ -51,41 +51,89 @@
 
                             dynamic cats = JsonConvert.DeserializeObject(prod.category);
 
-                            foreach (var cat in Model.CategoriesModel.Where(i => i.id == cats[0].Value))
+                            //
+                            //Ak je viacero kategorii, tak zoberieme tu, ktora ma nadradenu kategoriu ... topcat2 nepouzivame
+                            //
+
+                            var choosenCatId = 0;
+                            //Ak existuje kategoria, ktora ma vyplnenu topcat
+                            foreach (var thisCat in cats)
                             {
-                                foreach (var topcat in Model.CategoriesModel.Where(o => o.name == cat.name))
+                                var thisCatObj = Model.CategoriesModel.Where(i => i.id == thisCat.Value).FirstOrDefault();
+                                if (thisCatObj != null && thisCatObj.topcat != "Žiadna" && thisCatObj.maincat != "580") // zaroven ak sa nerovna kategoriam z AKCIE A NOVINKY
                                 {
-                                    var categoryname = "";
-                                    var maincatslug = "";
-                                    var categoryslug = "";
-                                    if (topcat.maincat == "Žiadna")
-                                    {
-                                        categoryname = topcat.name;
-                                        //maincatslug = topcat.slug;
-                                        categoryslug = topcat.slug;
-                                    }
-                                    else
-                                    {
-                                        var catId = int.Parse(topcat.maincat);
-                                        categoryname = Model.CategoriesModel.Where(o => o.id == catId).FirstOrDefault().name;
-                                        categoryslug = Model.CategoriesModel.Where(o => o.id == catId).FirstOrDefault().slug;
-                                        maincatslug = Model.CategoriesModel.Where(o => o.id == topcat.id).FirstOrDefault().slug;
+                                    choosenCatId = thisCatObj.id;
 
-                                    }
-                                    <li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(categoryslug) })">@categoryname</a></li>
-                                    if (topcat.maincat != "Žiadna")
+                                    break;
+                                }
+                            }
+                            //Ak existuje kategoria, ktora ma vyplnenu maincat
+                            if (choosenCatId == 0)
+                            {
+                                foreach (var thisCat in cats)
+                                {
+                                    var thisCatObj = Model.CategoriesModel.Where(i => i.id == thisCat.Value).FirstOrDefault();
+                                    if (thisCatObj != null && thisCatObj.maincat != "Žiadna" && thisCatObj.maincat != "580") // zaroven ak sa nerovna kategoriam z AKCIE A NOVINKY
                                     {
-                                        foreach (var subcat in Model.CategoriesModel.Where(o => o.name == cat.name && o.maincat == cat.maincat))
-                                        {
-                                            <li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(subcat.slug) })">@subcat.name</a></li>
+                                        choosenCatId = thisCatObj.id;
 
-                                            @*<li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(maincatslug), subslug = @Html.Raw(subcat.slug) })">@subcat.name</a></li>*@
-
-                                            @*<li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(topcat.slug), subslug = @Html.Raw(subcat.slug), subslug2 = @Html.Raw(cat.slug) })">@cat.name</a></li>*@
-                                        }
+                                        break;
                                     }
                                 }
                             }
+                            if (choosenCatId == 0)
+                            {
+                                choosenCatId = Model.CategoriesModel.Where(i => i.id == cats[0].Value).FirstOrDefault().id;
+                            }
+                            var choosenCat = Model.CategoriesModel.Where(i => i.id == choosenCatId).FirstOrDefault();
+
+                            //foreach (var cat in Model.CategoriesModel.Where(i => i.id == cats[0].Value))
+                            //{
+                            //foreach (var topcat in Model.CategoriesModel.Where(o => o.name == cat.name))
+                            //foreach (var topcat in Model.CategoriesModel.Where(o => o.name == choosenCat.name))
+                            //{
+                            var categoryname = "";
+                            var maincatslug = "";
+                            var categoryslug = "";
+                            if (choosenCat.maincat == "Žiadna")
+                            {
+                                categoryname = choosenCat.name;
+                                //maincatslug = topcat.slug;
+                                categoryslug = choosenCat.slug;
+                            }
+                            else
+                            {
+                                var catId = int.Parse(choosenCat.maincat);
+                                categoryname = Model.CategoriesModel.Where(o => o.id == catId).FirstOrDefault().name;
+                                categoryslug = Model.CategoriesModel.Where(o => o.id == catId).FirstOrDefault().slug;
+                                //maincatslug = Model.CategoriesModel.Where(o => o.id == choosenCat.id).FirstOrDefault().slug;
+
+                            }
+                            <li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(categoryslug) })">@categoryname</a></li>
+                            if (choosenCat.maincat != "Žiadna")
+                            {
+                                if (choosenCat.topcat != "Žiadna")
+                                {
+                                    var topCatId = Int32.Parse(choosenCat.topcat);
+                                    var topCatObj = Model.CategoriesModel.Where(o => o.id == topCatId).FirstOrDefault();
+                                    <li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(topCatObj.slug) })">@topCatObj.name</a></li>
+                                }
+
+                                <li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(choosenCat.slug) })">@choosenCat.name</a></li>
+
+                                /*
+                                foreach (var subcat in Model.CategoriesModel.Where(o => o.name == choosenCat.name && o.maincat == choosenCat.maincat))
+                                {
+                                    <li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(subcat.slug) })">@subcat.name</a></li>
+
+                                    @*<li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(maincatslug), subslug = @Html.Raw(subcat.slug) })">@subcat.name</a></li>*@
+
+                                    @*<li class="breadcrumb-item" style="text-decoration: underline"><a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(topcat.slug), subslug = @Html.Raw(subcat.slug), subslug2 = @Html.Raw(cat.slug) })">@cat.name</a></li>*@
+                                }
+                                */
+                            }
+                            //}
+                            //}
                         }
                         <li class="breadcrumb-item active" aria-current="page">@prod.title</li>
                     </ol>
@@ -375,7 +423,7 @@
                                                     }
                                                 }
 
-                                                @{ if (prod.active == true)
+                                                @{ if (prod.active == true && prod.deleted == false)
                                                     {
                                                         <p style="color: #c7c7c7; font-size: 12px; padding: 10px;">Množstvo</p>
                                                         <div class="cart-item-amount">
@@ -388,7 +436,7 @@
 
                                             </div>
 
-                                            @{ if (prod.active == true)
+                                            @{ if (prod.active == true && prod.deleted == false)
                                                 {
                                                     <div class="add-to-cart col-lg-8">
                                                         <button id="addproductbtn" isvariableproduct="@isVariable.ToString()" class="btn btn-color addtocart"><img src="/Content/images/cart_white.svg" style="width: 20px;" alt="search">PRIDAŤ DO KOŠÍKA</button>
@@ -1031,7 +1079,7 @@
                     }
                 </div>
             </div>
-        </div>
+        </div></div>
     </section>
 
     <!-- The Modal -->

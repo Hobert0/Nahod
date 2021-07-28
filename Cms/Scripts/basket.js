@@ -16,6 +16,7 @@
             ((Number(finalprice) + eval(ship)) * 100 / 120).toFixedNoRounding(2);
         document.getElementById("final21").innerHTML = (Number(finalprice) + eval(ship)).toFixedNoRounding(2);
         document.getElementById("final31").value = (Number(finalprice) + eval(ship)).toFixedNoRounding(2);
+        document.getElementById("base31").value = (Number(finalprice)).toFixedNoRounding(2);
 
     } else {
 
@@ -33,6 +34,7 @@
             ((Number(finalprice) + eval(ship) + pay) * 100 / 120).toFixed(2);
         document.getElementById("final21").innerHTML = (Number(finalprice) + eval(ship) + pay).toFixedNoRounding(2);
         document.getElementById("final31").value = (Number(finalprice) + eval(ship) + pay).toFixedNoRounding(2);
+        document.getElementById("base31").value = (Number(finalprice)).toFixedNoRounding(2);
     }
 }
 
@@ -53,6 +55,7 @@ function payMent() {
             ((Number(finalprice) + eval(pay)) * 100 / 120).toFixed(2);
         document.getElementById("final21").innerHTML = (Number(finalprice) + eval(pay)).toFixedNoRounding(2);
         document.getElementById("final31").value = (Number(finalprice) + eval(pay)).toFixedNoRounding(2);
+        document.getElementById("base31").value = (Number(finalprice)).toFixedNoRounding(2);
 
     } else {
         var ship = document.querySelector('input[name="transfer"]:checked').value;
@@ -69,7 +72,7 @@ function payMent() {
             ((Number(finalprice) + eval(ship) + eval(pay)) * 100 / 120).toFixed(2);
         document.getElementById("final21").innerHTML = (Number(finalprice) + eval(ship) + eval(pay)).toFixedNoRounding(2);
         document.getElementById("final31").value = (Number(finalprice) + eval(ship) + eval(pay)).toFixedNoRounding(2);
-
+        document.getElementById("base31").value = (Number(finalprice)).toFixedNoRounding(2);
     }
 }
 

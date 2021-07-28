@@ -26,6 +26,7 @@ namespace Cms.Models
         public string Shipping { get; set; }
         public int Status { get; set; }
         public string Finalprice { get; set; }
+        public string Baseprice { get; set; }
         public string Billnumber { get; set; }
         public string NameShipp { get; set; }
         public string SurnameShipp { get; set; }

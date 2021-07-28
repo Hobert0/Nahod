@@ -143,8 +143,9 @@ namespace Cms.Controllers
         public List<SelectListItem> SelectionBrand()
         {
             List<SelectListItem> brand = new List<SelectListItem>();
+            var brands = db.brands.OrderBy(a => a.name).ToList();
             brand.Add(new SelectListItem { Text = "", Value = "" });
-            foreach (var cat in db.brands)
+            foreach (var cat in brands)
             {
                 brand.Add(new SelectListItem { Text = cat.name, Value = cat.id.ToString() });
             }
@@ -155,8 +156,9 @@ namespace Cms.Controllers
         public List<SelectListItem> SelectionKategoria()
         {
             List<SelectListItem> znacka = new List<SelectListItem>();
+            var cats = db.categories.OrderBy(a => a.name).ToList();
             znacka.Add(new SelectListItem { Text = "", Value = "" });
-            foreach (var cat in db.categories)
+            foreach (var cat in cats)
             {
 
                 if (cat.topcat2 == "" || cat.topcat2 == "Žiadna")

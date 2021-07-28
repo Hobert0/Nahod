@@ -834,35 +834,6 @@
                             //var transfer4 = "0";
                         </script>
                     }
-                    /*
-                    else if (finalprice.Sum() <= 100)
-                    {
-                        <script>
-                        transfer1 = "@item.deliveryprice1";
-                        transfer2 = "@item.deliveryprice1";
-                        transfer3 = "0";
-                        transfer4 = "@item.deliveryprice1";
-                        </script>
-                    }
-                    else if (100 < finalprice.Sum() && finalprice.Sum() <= 500)
-                    {
-                        <script>
-                        transfer1 = "@item.deliveryprice2";
-                        transfer2 = "@item.deliveryprice2";
-                        transfer3 = "0";
-                        transfer4 = "@item.deliveryprice2";
-                        </script>
-                    }
-                    else if (finalprice.Sum() > 500)
-                    {
-                        <script>
-                        transfer1 = "@item.deliveryprice3";
-                        transfer2 = "@item.deliveryprice3";
-                        transfer3 = "0";
-                        transfer4 = "@item.deliveryprice3";
-                        </script>
-                    }
-                    */
 
                     <div class="row">
                         <div class="col-12 col-sm-6 pt-3 pt-sm-0">
@@ -1356,6 +1327,7 @@
                         }
                     </div>
                     @Html.EditorFor(model => model.OrdersModel.Finalprice, new { htmlAttributes = new { @class = "form-control", placeholder = "Finalnacena", id = "final31", style = "display:none;" } })
+                    @Html.EditorFor(model => model.OrdersModel.Baseprice, new { htmlAttributes = new { @class = "form-control", placeholder = "Zakladnacena", id = "base31", style = "display:none;" } })
                     @Html.EditorFor(model => model.OrdersModel.UsedCoupon, new { htmlAttributes = new { @class = "form-control", id = "usecoupon1", style = "display:none;" } })
                 </div>
 

@@ -953,15 +953,31 @@ namespace Cms.Controllers
 
             var pageNum = start == 0 ? 1 : (start / length) + 1;
             IPagedList<products> prodsOrd = null;
-            IQueryable<products> prods = null;
+            //IQueryable<products> prods = null;
+            List<products> prods = null;
 
             if (search != "" && search != null)
             {
-                prods = db.products.Where(a => a.deleted == false && (a.number.Contains(search) || a.title.Contains(search)));
+
+                var prodsDb = db.products.ToList();
+                prods = prodsDb.Where(a => a.deleted == false && (a.number != null && a.number.Contains(search)) || (a.title != null && a.title.Contains(search))).ToList();
+                
+                
+                var searchVariants = db.variants.Where(a => a.number != null && a.number.Contains(search));
+                foreach (var variant in searchVariants)
+                {
+                    //variant.prod_id;
+                    var newProd = prodsDb.Where(a => a.id == variant.prod_id).FirstOrDefault();
+
+                    if (!prods.Contains(newProd))
+                    {
+                        prods.Add(newProd);
+                    }
+                }
             }
             else
             {
-                prods = db.products.Where(a => a.deleted == false);
+                prods = db.products.Where(a => a.deleted == false).ToList();
             }
 
             //filtracia
@@ -978,34 +994,34 @@ namespace Cms.Controllers
             //kategoria
             if (filteredCat != "")
             {
-                prods = prods.Where(i => i.category != null && (i.category.Contains("[" + filteredCat + ",") || i.category.Contains("," + filteredCat + ",") || i.category.Contains("," + filteredCat + "]") || i.category.Contains("[" + filteredCat + "]")));
+                prods = prods.Where(i => i.category != null && (i.category.Contains("[" + filteredCat + ",") || i.category.Contains("," + filteredCat + ",") || i.category.Contains("," + filteredCat + "]") || i.category.Contains("[" + filteredCat + "]"))).ToList();
             }
 
             if (filteredBrand != "")
             {
-                prods = prods.Where(i => i.custom3 == filteredBrand);
+                prods = prods.Where(i => i.custom3 == filteredBrand).ToList();
             }
 
             if (filteredPriceFrom != "")
             {
                 decimal filteredPriceFromDec = Decimal.Parse(filteredPriceFrom);
-                prods = prods.Where(i => i.price >= filteredPriceFromDec);
+                prods = prods.Where(i => i.price >= filteredPriceFromDec).ToList();
             }
 
             if (filteredPriceTo != "")
             {
                 decimal filteredPriceToDec = Decimal.Parse(filteredPriceTo);
-                prods = prods.Where(i => i.price <= filteredPriceToDec);
+                prods = prods.Where(i => i.price <= filteredPriceToDec).ToList();
             }
 
             if (filteredDiscount == "true")
             {
-                prods = prods.Where(i => i.discountprice != null);
+                prods = prods.Where(i => i.discountprice != null).ToList();
             }
 
             if (filteredInactive == "true")
             {
-                prods = prods.Where(i => i.active == false);
+                prods = prods.Where(i => i.active == false).ToList();
             }
             //}
 
@@ -1105,17 +1121,18 @@ namespace Cms.Controllers
                 //VARIANTS
                 //variant.number obsahuje nazov vlastnosti
                 string variantsStr = "";
-                int varsStock = 0;
+                //int varsStock = 0;
                 if (variants.Where(o => o.ProdId == prod.id).ToList().Count > 0)
                 {
                     string varType = "";
                     foreach (var variant in variants.Where(o => o.ProdId == prod.id))
                     {
-
+                        /*
                         if (variant.Stock != "")
                         {
                             varsStock += Int32.Parse(variant.Stock);
                         }
+                        */
 
                         if (varType != variant.AttrName)
                         {
@@ -1132,10 +1149,13 @@ namespace Cms.Controllers
 
                 //STOCK
                 string stockStr = prod.stock;
+
+                /*
                 if (variantsStr != "")
                 {
                     stockStr = varsStock.ToString();
                 }
+                */
 
                 var active = "<input class='check-box' disabled='disabled' " + (prod.active == true ? "checked='checked'" : "") + " type='checkbox'>";
 

@@ -251,7 +251,7 @@
 <table id="productsTable" class="table">
     <thead>
         <tr>
-            <th class="hide" style="display:none !important">ID</th>
+            <th style="display:none !important">ID</th>
             <th></th>
             <th>Kód produktu</th>
             <th>Náhľad</th>
@@ -291,7 +291,6 @@
                     o.priceTo = $("#filterByPriceTo").val();
                     o.discount = $("#filterByDiscount").is(":checked");
                     o.inactive = $("#filterByInactive").is(":checked");
-                    //o.filterClicked = $filterClicked;
                 }
             },
             "columns": [

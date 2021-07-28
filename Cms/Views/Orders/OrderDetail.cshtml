@@ -80,8 +80,9 @@
     var shipPrice = db.Database.SqlQuery<string>(shipSql).FirstOrDefault();
     var freeshipping = db.e_settings.Select(i => i.transfer5).FirstOrDefault();
 
-    if (ord.finalprice >
-        decimal.Parse(freeshipping, CultureInfo.InvariantCulture) && ord.country != "Česká republika")
+    
+    if ((ord.baseprice == null || ord.baseprice == 0 ? ord.finalprice : ord.baseprice) >
+        decimal.Parse(freeshipping, CultureInfo.InvariantCulture) && ((ord.country_shipp == "" || ord.country_shipp == null)? ord.country : ord.country_shipp) != "Česká republika")
     {
         shipPrice = "0";
     }

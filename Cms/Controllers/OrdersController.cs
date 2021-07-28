@@ -95,6 +95,7 @@ namespace Cms.Controllers
             o.shipping = model.OrdersModel.Shipping;
             o.status = model.OrdersModel.Status;
             o.finalprice = Decimal.Parse(model.OrdersModel.Finalprice, CultureInfo.InvariantCulture);
+            o.baseprice = model.OrdersModel.Baseprice == null ? (decimal)0.0 : Decimal.Parse(model.OrdersModel.Baseprice, CultureInfo.InvariantCulture);
             o.name_shipp = model.OrdersModel.NameShipp ?? "";
             o.surname_shipp = model.OrdersModel.SurnameShipp ?? "";
             o.address_shipp = model.OrdersModel.AddressShipp ?? "";
@@ -204,9 +205,9 @@ namespace Cms.Controllers
                 db.ordermeta.Add(om);
                 db.SaveChanges();
 
-                var cartprodID = Int32.Parse(item.product.ToString());
-                var stockminus = Int32.Parse(om.pieces);
-                var variantId = thisVar == null ? 0 : thisVar.variantId;
+                //var cartprodID = Int32.Parse(item.product.ToString());
+                //var stockminus = Int32.Parse(om.pieces);
+                //var variantId = thisVar == null ? 0 : thisVar.variantId;
 
                 //OverrideOnstock(cartprodID, variantId, stockminus, "");
             }
@@ -511,7 +512,7 @@ namespace Cms.Controllers
 
                 var shipPrice = db.Database.SqlQuery<string>(shipSql).FirstOrDefault();
 
-                if (o.finalprice > decimal.Parse(freeshipping, CultureInfo.InvariantCulture))
+                if ((o.baseprice == null || o.baseprice == 0 ? o.finalprice : o.baseprice) > decimal.Parse(freeshipping, CultureInfo.InvariantCulture) && ((o.country_shipp == "" || o.country_shipp == null) ? o.country : o.country_shipp) != "Česká republika")
                 {
                     shipPrice = "0";
                 }
