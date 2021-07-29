@@ -573,13 +573,18 @@ namespace Cms.Controllers
             if (model.Discountprice != null && model.Discountprice != "") { model.Discountprice = model.Discountprice; }
 
             o.title = model.Title;
-            if (model.Image != null)
+
+            //len ak neduplikujeme produkt
+            if (model.TitleImage != null)
             {
-                o.image = model.Image;
-            }
-            else
-            {
-                o.image = ulozObrazok + nazovSuboru;
+                if (model.Image != null)
+                {
+                    o.image = model.Image;
+                }
+                else
+                {
+                    o.image = ulozObrazok + nazovSuboru;
+                }
             }
 
             o.number = model.Number;
@@ -632,7 +637,12 @@ namespace Cms.Controllers
             o.custom10 = model.Custom10; //plocha
 
             o.date = DateTime.Now.ToString();
-            o.gallery = ulozObrazok + "gallery/" ?? "";
+
+            //len ak neduplikujeme produkt
+            if (model.TitleImage != null)
+            {
+                o.gallery = ulozObrazok + "gallery/" ?? "";
+            }
 
             db.products.Add(o);
 
@@ -683,7 +693,7 @@ namespace Cms.Controllers
                 }
             }
 
-            db.SaveChanges();
+            //db.SaveChanges();
 
             if (model.TitleImage != null)
             {
@@ -706,9 +716,52 @@ namespace Cms.Controllers
 
                 }
             }
+            //Sem vojdeme len ak duplikujeme produkt (aj ked sme pri vytvarani alebo editacii produktu nevlozili ziadny title image, tak model.TitleImage nie je null az 1. prvok pola je null)
             else
             {
+                //Zistime, ci existuje Title Image
+                var titleImageSourcePath = HttpContext.Server.MapPath("~/Uploads/" + model.Image);
+                var titleImageName = model.Image.Split('/').Last();
+                var titleImageDestPath = HttpContext.Server.MapPath("~/Uploads/" + ulozObrazok + titleImageName);
+                
+                if (System.IO.File.Exists(titleImageSourcePath))
+                {
+                    //Ak ano skopirujeme ho a prepiseme v db cestu
+
+                    //vytvorime folder
+                    var duplImagePath = Directory.CreateDirectory(Server.MapPath("~/Uploads/" + ulozObrazok));
+
+                    System.IO.File.Copy(titleImageSourcePath, titleImageDestPath);
+
+                    o.image = ulozObrazok + titleImageName;
+                }
+
+
+                //Zistime, ci existuje Galeria, ak ano skopirujeme ju
+                var galleryFolderSourcePath = HttpContext.Server.MapPath("~/Uploads/" + model.Gallery);
+                var galleryFiles = Directory.GetFiles(galleryFolderSourcePath, "*", SearchOption.TopDirectoryOnly);
+                if (galleryFiles.Length > 0)
+                {
+                    //ulozime nove umiestnenie galerie pre duplikovany produkt
+                    o.gallery = ulozObrazok + "gallery/";
+                    var galleryImageDestPath = HttpContext.Server.MapPath("~/Uploads/" + o.gallery);
+
+                    var duplGalleryPath = Directory.CreateDirectory(Server.MapPath("~/Uploads/" + ulozObrazok + "gallery/"));
+
+                    //ak ano skopirujeme kazdy
+                    foreach (var galleryFile in galleryFiles)
+                    {
+                        var relativePath = galleryFile.Split(new string[] { "Uploads\\" }, StringSplitOptions.None).Last().Replace(@"\", "/");
+                        var galleryImageSourcePath = HttpContext.Server.MapPath("~/Uploads/" + relativePath);
+                        var galleryImageName = galleryImageSourcePath.Split('\\').Last();
+
+                        System.IO.File.Copy(galleryImageSourcePath, galleryImageDestPath + galleryImageName);
+                    }
+                }
+
+
                 /*AK duplikujeme produkt vytvori nove foldre*/
+                /*
                 var sourcePath = HttpContext.Server.MapPath("~/Uploads/avatar_product.jpg");
                 var destinationPath = HttpContext.Server.MapPath("~/Uploads/" + o.image);
                 var miestoUlozenia = "~/Uploads/" + ulozObrazok;
@@ -722,7 +775,11 @@ namespace Cms.Controllers
                 {
                     await UploadFiles(model.ImageGallery, o.gallery);
                 }
+                */
             }
+
+            db.SaveChanges();
+
             TempData["IsValid"] = true;
             ViewBag.IsValid = true;
             return RedirectToAction("Products", "Admin");
@@ -1166,7 +1223,8 @@ namespace Cms.Controllers
                 }
 
                 var catStr = "[";
-                foreach (var cat in cats) {
+                foreach (var cat in cats)
+                {
                     catStr += cat + ",";
                 }
 

@@ -959,7 +959,7 @@ namespace Cms.Controllers
             if (search != "" && search != null)
             {
 
-                var prodsDb = db.products.ToList();
+                var prodsDb = db.products.Where(a => a.deleted == false).ToList();
                 prods = prodsDb.Where(a => a.deleted == false && (a.number != null && a.number.Contains(search)) || (a.title != null && a.title.Contains(search))).ToList();
                 
                 
@@ -967,7 +967,7 @@ namespace Cms.Controllers
                 foreach (var variant in searchVariants)
                 {
                     //variant.prod_id;
-                    var newProd = prodsDb.Where(a => a.id == variant.prod_id).FirstOrDefault();
+                    var newProd = prodsDb.Where(a => a.deleted == false && a.id == variant.prod_id).FirstOrDefault();
 
                     if (!prods.Contains(newProd))
                     {
