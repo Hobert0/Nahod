@@ -4,6 +4,7 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Linq;
@@ -49,7 +50,7 @@ namespace Cms.Controllers
             }
             else
             {
-                return RedirectToAction("Admin");
+                return RedirectToAction("Admin", "Admin");
             }
 
         }
@@ -63,7 +64,7 @@ namespace Cms.Controllers
             }
             else
             {
-                return RedirectToAction("Admin");
+                return RedirectToAction("Admin", "Admin");
             }
         }
 
@@ -154,7 +155,7 @@ namespace Cms.Controllers
 
                 MultipleIndexModel model = new MultipleIndexModel();
 
-                model.AllUsers = db.users.Where(i => i.role == 1).ToList();
+                model.AllUsers = db.users.Where(i => i.role == 1 || i.role == 2).ToList();
                 model.AllUsersMetaModel = db.usersmeta.Where(n => n.news == true).ToList();
                 //model.AllUsersMetaModel = db.usersmeta.ToList();
                 model.AllNewslettersModel = db.newsletter.Where(k => k.id == newsletterId).ToList();
@@ -178,6 +179,7 @@ namespace Cms.Controllers
 
                 var subject = "";
                 var body = "";
+                var counter = 0;
 
                 foreach (var item in template)
                 {
@@ -188,41 +190,45 @@ namespace Cms.Controllers
 
                 foreach (var singleUserNewsTrue in allUsersNewsTrue)
                 {
-                    var emailaddress = RemoveDiacritics(singleUserNewsTrue.email);
+                    if (IsValidEmail(singleUserNewsTrue.email))
+                    {
+                        var emailaddress = RemoveDiacritics(singleUserNewsTrue.email);
 
-                    MailMessage mailMessage = new MailMessage();
+                        MailMessage mailMessage = new MailMessage();
 
-                    var eshopname = "NAHOD.sk";
+                        var eshopname = "NAHOD.sk";
 
-                    mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
-                    mailMessage.Subject = subject;
-                    mailMessage.Body = body;
-                    mailMessage.IsBodyHtml = true;
+                        mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
+                        mailMessage.Subject = subject;
+                        mailMessage.Body = body;
+                        mailMessage.IsBodyHtml = true;
 
-                    mailMessage.To.Add(new MailAddress(emailaddress));
+                        mailMessage.To.Add(new MailAddress(emailaddress));
 
-                    SmtpClient smtp = new SmtpClient();
+                        SmtpClient smtp = new SmtpClient();
 
-                    smtp.Host = "localhost";
+                        smtp.Host = "localhost";
 
-                    //smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
+                        //smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
 
-                    //System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
+                        //System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
 
-                    //NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"]; //reading from web.config  
+                        //NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"]; //reading from web.config  
 
-                    //NetworkCred.Password = ConfigurationManager.AppSettings["Password"]; //reading from web.config  
+                        //NetworkCred.Password = ConfigurationManager.AppSettings["Password"]; //reading from web.config  
 
-                    //smtp.UseDefaultCredentials = true;
+                        //smtp.UseDefaultCredentials = true;
 
-                    //smtp.Credentials = NetworkCred;
+                        //smtp.Credentials = NetworkCred;
 
-                    //smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
+                        //smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
 
-                    smtp.Send(mailMessage);
-
+                        smtp.Send(mailMessage);
+                        counter++;
+                    }
                 }
 
+                TempData["counter"] = counter;
                 return RedirectToAction("Newsletter", "Newsletter");
             }
             else
@@ -242,6 +248,7 @@ namespace Cms.Controllers
 
                 var subject = "";
                 var body = "";
+                var counter = 0;
 
                 foreach (var item in template)
                 {
@@ -254,40 +261,43 @@ namespace Cms.Controllers
 
                 foreach (var singleUserNewsTrue in methodParam)
                 {
+                    if (IsValidEmail(singleUserNewsTrue))
+                    {
+                        MailMessage mailMessage = new MailMessage();
+                        var emailaddress = RemoveDiacritics(singleUserNewsTrue);
+                        var eshopname = "NAHOD.sk";
 
-                    MailMessage mailMessage = new MailMessage();
-                    var emailaddress = RemoveDiacritics(singleUserNewsTrue);
-                    var eshopname = "NAHOD.sk";
+                        mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
+                        mailMessage.Subject = subject;
+                        mailMessage.Body = body;
+                        mailMessage.IsBodyHtml = true;
 
-                    mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
-                    mailMessage.Subject = subject;
-                    mailMessage.Body = body;
-                    mailMessage.IsBodyHtml = true;
+                        mailMessage.To.Add(new MailAddress(emailaddress));
 
-                    mailMessage.To.Add(new MailAddress(emailaddress));
+                        SmtpClient smtp = new SmtpClient();
 
-                    SmtpClient smtp = new SmtpClient();
+                        smtp.Host = "localhost";
 
-                    smtp.Host = "localhost";
+                        //smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
 
-                    //smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
+                        //System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
 
-                    //System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
+                        //NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"]; //reading from web.config  
 
-                    //NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"]; //reading from web.config  
+                        //NetworkCred.Password = ConfigurationManager.AppSettings["Password"]; //reading from web.config  
 
-                    //NetworkCred.Password = ConfigurationManager.AppSettings["Password"]; //reading from web.config  
+                        //smtp.UseDefaultCredentials = true;
 
-                    //smtp.UseDefaultCredentials = true;
+                        //smtp.Credentials = NetworkCred;
 
-                    //smtp.Credentials = NetworkCred;
+                        //smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
 
-                    //smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
-
-                    smtp.Send(mailMessage);
-
+                        smtp.Send(mailMessage);
+                        counter++;
+                    }
                 }
 
+                TempData["counter"] = counter;
                 return RedirectToAction("Newsletter", "Newsletter");
             }
             else
@@ -431,6 +441,19 @@ namespace Cms.Controllers
             }
 
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+        }
+
+        bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
     }

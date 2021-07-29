@@ -338,7 +338,7 @@
                                     <i class="icon-user"></i>
                                     <span>
                                         <span class="greeting">
-                                            @username!<br>
+                                            @username<br>
                                         </span>
                                         @if (role == "0")
                                         {
@@ -519,7 +519,7 @@
                     }
                     if (dropdowncounter > 1)
                     {
-                        <a class="dropdown-btn sub_catsmenu" style="color:#33">
+                        <a class="dropdown-btn sub_catsmenu" style="color:#333">
                             <div class="category-image" style="background-image:url('/Uploads/@subcat.image')"></div>
                             <li><strong>@Html.Raw(subcat.name)</strong></li>
                         </a>

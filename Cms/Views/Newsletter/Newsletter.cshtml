@@ -14,12 +14,12 @@
 
 <table class="table" style="">
     <thead class="thead-dark autoprofblue">
-        <tr>
-            <th>Predmet</th>
-            @*<th>Správa</th>*@
-            <th style="text-align: center">Editovať | Vymazať</th>
-            <th style="text-align: center">Odoslať</th>
-        </tr>
+    <tr>
+        <th>Predmet</th>
+        @*<th>Správa</th>*@
+        <th style="text-align: center">Editovať | Vymazať</th>
+        <th style="text-align: center">Odoslať</th>
+    </tr>
     </thead>
     @if (ViewBag.Details == null)
     {
@@ -37,3 +37,34 @@
 
 
 </table>
+@{
+//Po prihlaseni k odberu sa vypise hlaska
+if (TempData["counter"] != null)
+{
+<script>
+    $(document).ready(function () {
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-full-width",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "0",
+            "extendedTimeOut": "0",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut",
+            "tapToDismiss": false
+        }
+        toastr["success"]("Newsletter bol odoslaný na emailové adresy v počte: @TempData["counter"]");
+    });
+
+</script>
+}
+
+}

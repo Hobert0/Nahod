@@ -813,7 +813,7 @@ namespace Cms.Controllers
             var variants = JsonConvert.SerializeObject(db.variants.Where(i => i.prod_id == id));
             model.Variants = variants;
 
-            _ = await SaveProduct(model);
+            await SaveProduct(model);
 
             return RedirectToAction("Products", "Admin");
         }

@@ -22,7 +22,7 @@ namespace Cms.Controllers
             {
                 return View(db.blog.OrderByDescending(a => a.id).ToList());
             }
-            else { return RedirectToAction("Admin"); }
+            else { return RedirectToAction("Admin", "Admin"); }
         }
 
         [Route("blg/pridat-clanok")]
