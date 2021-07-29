@@ -348,12 +348,18 @@
                                     }
                                     else //ak je cena normalna
                                     {
-                                        <div class="product-cart row">
+                                        var classNegMargin ="";
+                                        //ak existuje varianta, pridame zaporny margin aby sme vyplnili prazdne miesto
+                                        if (Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).Count() > 0)
+                                        {
+                                            classNegMargin = "negMarProdDet";
+                                        }
+                                        <div class="product-cart row @classNegMargin">
                                             <div class="col-lg-4 col-sm-6 col-12 product-variation">
 
                                                 @{
-                                                    //var variants = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).ToList();
-                                                    var varFirstAttrId = 0;
+                                                        //var variants = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).ToList();
+                                                        var varFirstAttrId = 0;
 
                                                     if (Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).Count() > 0)
                                                     {

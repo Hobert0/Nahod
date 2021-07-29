@@ -1,7 +1,7 @@
 .pagination {
   display: inline-block;
   padding-left: 0;
-  margin: 20px 0;
+  margin: 20px 10px;
   border-radius: 4px;
 }
 
@@ -163,4 +163,9 @@
   color: #999999;
   cursor: not-allowed;
   background-color: #ffffff;
+}
+
+#pagination li a { color: inherit; }
+#pagination li.active a {
+    color: white;
 }

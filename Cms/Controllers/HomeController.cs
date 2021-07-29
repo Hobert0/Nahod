@@ -972,11 +972,12 @@ namespace Cms.Controllers
             return Json(names, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost, Route("vyhladavanie")]
+        [Route("vyhladavanie")]
         public async Task<ActionResult> SearchProduct(string term, string sortOrder, string currentFilter, string searchString, int? page)
         {
+
             var id = "";
-            ViewBag.CurrentSort = sortOrder;
+            /*ViewBag.CurrentSort = sortOrder;
             if (searchString != null)
             {
                 page = 1;
@@ -985,9 +986,9 @@ namespace Cms.Controllers
             {
                 searchString = currentFilter;
             }
-            ViewBag.CurrentFilter = searchString;
+            ViewBag.CurrentFilter = searchString;*/
 
-            int pageSize = 12;
+            int pageSize = 20;
             int pageNumber = (page ?? 1);
 
 
@@ -999,26 +1000,61 @@ namespace Cms.Controllers
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
             model.SlideshowModel = db.slideshow.ToList();
+            model.VariantModel = db.variants.Where(a => a.deleted == false).ToList();
 
-            /*
+            if (Request.Cookies["userid"] != null)
+            {
+                var userToSend = Int32.Parse(Request.Cookies["userid"].Value);
+                model.AllUsersMetaModel = db.usersmeta.Where(i => i.userid == userToSend).ToList();
+            }
+            else
+            {
+                model.AllUsersMetaModel = null;
+            }
+
+            List<products> Prods = db.products.ToList();
+            List<products> varProds = new List<products>();
+
             var termArr = term.ToLower().Split(' ');
             var counter = 0;
             IQueryable<products> filteredProds = null;
+            IQueryable<variants> filteredVars = null;
 
-            foreach (var termObj in termArr) {
-                if (counter == 0) {
-                    filteredProds = db.products.Where(p => p.title.ToLower().Contains(termObj));
-                } else {
-                    filteredProds = filteredProds.Where(p => p.title.ToLower().Contains(termObj));
+            foreach (var termObj in termArr)
+            {
+                if (counter == 0)
+                {
+                    //products
+                    filteredProds = db.products.Where(p => p.title.ToLower().Contains(termObj) || (p.number != null && p.number.ToLower().Contains(termObj)));
+                    //variants
+                    filteredVars = db.variants.Where(p => p.number != null && p.number.ToLower().Contains(termObj));
+                }
+                else
+                {
+                    //products
+                    filteredProds = filteredProds.Where(p => p.title.ToLower().Contains(termObj) || (p.number != null && p.number.ToLower().Contains(termObj)));
+                    //variants
+                    filteredVars = filteredVars.Where(p => p.number != null && p.number.ToLower().Contains(termObj));
                 }
                 counter++;
             }
-            model.ProductsPaged = filteredProds.OrderByDescending(x => x.id).ToPagedList(pageNumber, pageSize);
-            */
+            var names = filteredProds.OrderByDescending(x => x.id).ToList();
 
-            model.ProductsPaged = db.products.ToList().Where(p => p.title.ToLower().Contains(term.ToLower())).OrderByDescending(x => x.id).ToPagedList(pageNumber, pageSize);
+            foreach (var item in filteredVars)
+            {
+                varProds.Add(Prods.Where(i => i.id == item.prod_id).FirstOrDefault());
+            }
+
+            names.AddRange(varProds);
+
+            var totalPages = names.Count() % pageSize == 0 ? names.Count() / pageSize : (names.Count() / pageSize) + 1;
+
+            model.ProductsPaged = names.ToPagedList(pageNumber, pageSize);
 
             ViewData["Search"] = term;
+            ViewData["PageSize"] = pageSize;
+            ViewData["PageNumber"] = pageNumber;
+            ViewData["TotalPages"] = totalPages;
 
             return View(model);
         }
