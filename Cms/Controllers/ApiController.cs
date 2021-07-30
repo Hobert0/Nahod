@@ -952,15 +952,15 @@ namespace Cms.Controllers
             var search = Request.Form["search[value]"];
 
             var pageNum = start == 0 ? 1 : (start / length) + 1;
-            IPagedList<products> prodsOrd = null;
+            IPagedList<products> prodsOrd;
             //IQueryable<products> prods = null;
-            List<products> prods = null;
+            List<products> prods;
 
-            if (search != "" && search != null)
+            if (search != "" && search != null && search.Length > 1)
             {
 
                 var prodsDb = db.products.Where(a => a.deleted == false).ToList();
-                prods = prodsDb.Where(a => a.deleted == false && (a.number != null && a.number.Contains(search)) || (a.title != null && a.title.Contains(search))).ToList();
+                prods = prodsDb.Where(a => a.deleted == false && (a.number != null && a.number.Contains(search)) || (a.title != null && a.title.ToLower().Contains(search.ToLower()))).ToList();
                 
                 
                 var searchVariants = db.variants.Where(a => a.number != null && a.number.Contains(search));
@@ -977,7 +977,7 @@ namespace Cms.Controllers
             }
             else
             {
-                prods = db.products.Where(a => a.deleted == false).ToList();
+                prods = db.products.Where(a => a.deleted == false).OrderByDescending(i => i.id).ToList();
             }
 
             //filtracia
@@ -1077,7 +1077,7 @@ namespace Cms.Controllers
 
                     break;
                 default:
-                    prodsOrd = prods.OrderByDescending(a => a.id).ToPagedList(pageNum, length);
+                    prodsOrd = prods.OrderByDescending(i => i.id).ToPagedList(pageNum, length);
 
                     break;
             }
