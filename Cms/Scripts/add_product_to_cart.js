@@ -58,6 +58,19 @@ $("#addproductbtn").click(function () {
         addtocart = [];
     }
 
+    //musime overit ci neexistuju v addtocart nejake produkty, ktore uz nie su aktivne alebo su deleted
+    if (addtocart.length > 0) {
+        $.ajax({
+            url: '/checkCartDeletedInactive',
+            type: 'POST',
+            async: false,
+            data: { data: JSON.stringify(addtocart) },
+            success: function (data) {
+                addtocart = JSON.parse(data);
+            }
+        });
+    }
+
     for (var i = 0; i < addtocart.length; i++) {
         if (id === addtocart[i].product && variant === addtocart[i].variant) {
             var index = addtocart.findIndex(i => i.product === id && i.variant === variant);

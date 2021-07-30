@@ -194,13 +194,16 @@ namespace Cms.Controllers
                     {
                         var emailaddress = RemoveDiacritics(singleUserNewsTrue.email);
 
+                        var unsubscribeLink = "https://nahod.sk/unsubscribe?userId=" + singleUserNewsTrue.userid;
+                        var unsubscribeText = generateUnsubscribeText(unsubscribeLink);
+
                         MailMessage mailMessage = new MailMessage();
 
                         var eshopname = "NAHOD.sk";
 
                         mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
                         mailMessage.Subject = subject;
-                        mailMessage.Body = body;
+                        mailMessage.Body = body + unsubscribeText;
                         mailMessage.IsBodyHtml = true;
 
                         mailMessage.To.Add(new MailAddress(emailaddress));
@@ -263,17 +266,25 @@ namespace Cms.Controllers
                 {
                     if (IsValidEmail(singleUserNewsTrue))
                     {
+                        var user = db.usersmeta.Where(i => i.email == singleUserNewsTrue).FirstOrDefault();
+                        string unsubscribeText = "";
+                        if (user != null)
+                        {
+                            var unsubscribeLink = "https://nahod.sk/unsubscribe?userId=" + user.userid;
+                            unsubscribeText = generateUnsubscribeText(unsubscribeLink);
+                        }
+
                         MailMessage mailMessage = new MailMessage();
                         var emailaddress = RemoveDiacritics(singleUserNewsTrue);
                         var eshopname = "NAHOD.sk";
 
                         mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
                         mailMessage.Subject = subject;
-                        mailMessage.Body = body;
+                        mailMessage.Body = body + unsubscribeText;
                         mailMessage.IsBodyHtml = true;
 
                         mailMessage.To.Add(new MailAddress(emailaddress));
-
+                         
                         SmtpClient smtp = new SmtpClient();
 
                         smtp.Host = "localhost";
@@ -394,6 +405,29 @@ namespace Cms.Controllers
 
             //return Redirect(Url.Content("/#hp-newsletter"));
             return Redirect(Url.Content("/"));
+        }
+
+        [HttpGet, Route("unsubscribe")]
+        public ActionResult Unsubscribe(int userId)
+        {
+
+            var usersmeta = db.usersmeta.Where(a => a.userid == userId).FirstOrDefault();
+            if (usersmeta != null)
+            {
+                usersmeta.news = false;
+                db.SaveChanges();
+            }
+
+            TempData["unsubscribeMsg"] = "Boli ste odstránený zo zoznamu odoberateľov nášho newslettru.";
+
+            return Redirect(Url.Content("/"));
+        }
+
+        private string generateUnsubscribeText(string link)
+        {
+            string str = "<p style='font-size:12px; color:#C0C0C0;text-align:center;'>Pokiaľ si neželáte dostávať obchodné oznámenia, môžete sa <a href='" + link + "'>odhlásiť TU</a></p>";
+
+            return str;
         }
 
         private string createNewsletterEmailBody()

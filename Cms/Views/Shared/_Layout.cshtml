@@ -1,17 +1,57 @@
 ﻿@model Cms.Models.MultipleIndexModel
 @using Cms.Models;
+@using Newtonsoft.Json
 
 
 @{
     var count = 0;
     var pocitadlo = 0;
     List<dynamic> cartcount = new List<dynamic>();
+    Entities helpDb = new Entities();
     cartcount = (List<dynamic>)Session["cartitems"];
     var cartitems = "0";
-    decimal cartsum = Session["cartsum"] == null ? (decimal)0.0 : Convert.ToDecimal(Session["cartsum"]);
+    decimal cartsum = (decimal)0.0;
     if ((cartcount != null))
     {
+        var helpCounter = 0;
+        decimal thisSum = 0;
+        List<int> toDeleteList = new List<int>();
+        //vyberieme len tie, ktore su aktivne a nie su deleted
+        foreach (var cartcountitem in cartcount)
+        {
+            var cartProdId = (int)(cartcountitem.product);
+            var cartProdObj = helpDb.products.Where(a => a.id == cartProdId && a.deleted == false && a.active == true).FirstOrDefault();
+            if (cartProdObj != null)
+            {
+                decimal thisPrice = Convert.ToDecimal(cartcountitem.price);
+                decimal thisQuantity = Convert.ToDecimal(cartcountitem.quantity);
+
+                thisSum += thisQuantity * thisPrice;
+            }
+            else
+            {
+                toDeleteList.Add(helpCounter);
+            }
+
+            helpCounter++;
+        }
+
+        //vymazeme prvky z jsonu, ktore tam nepatria
+        var helpDeleted = 0;
+        foreach (var toDeleteItem in toDeleteList)
+        {
+            cartcount.RemoveAt(toDeleteItem - helpDeleted);
+            helpDeleted++;
+        }
+
+        //ulozime updatnute
+        //Session["cartitems"] = JsonConvert.SerializeObject(cartcount);
+        Session["cartitems"] = cartcount;
+        Session["cartsum"] = thisSum;
+
+
         cartitems = cartcount.Count.ToString();
+        cartsum = thisSum;
     }
     var username = "";
 
@@ -712,6 +752,37 @@
     </script>
 
     @{
+        //Unsubscribe
+        if (TempData["unsubscribeMsg"] != null)
+        {
+
+            <script>
+                    $(document).ready(function () {
+
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-full-width",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "0",
+                            "extendedTimeOut": "0",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut",
+                            "tapToDismiss": false
+                        }
+                        toastr["success"]("@TempData["unsubscribeMsg"]");
+                    });
+
+            </script>
+        }
+
         //Po prihlaseni k odberu sa vypise hlaska
         if (TempData["newsletterMsg"] != null)
         {

@@ -9,7 +9,7 @@
     }
 
 .multi-select-menu {
-    width: 200px !important;
+    width: 800px !important;
     padding: 10px 10px 0px 10px !important;
     position: absolute;
     left: 0;
@@ -59,6 +59,8 @@
 
 .multi-select-container--open .multi-select-menu {
     display: block;
+    max-height: 400px;
+    overflow-y: scroll;
 }
 
 .multi-select-container--open .multi-select-button:after {
@@ -67,5 +69,7 @@
 }
 
 .multi-select-menuitems label {
-    display: block !important;
+    /*display: block !important;*/
+    width: 33%;
+    display: inline-block !important;
 }

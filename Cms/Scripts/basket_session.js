@@ -32,6 +32,19 @@ function decreaseCount(productid) {
         addtocart = [];
     }
 
+    //musime overit ci neexistuju v addtocart nejake produkty, ktore uz nie su aktivne alebo su deleted
+    if (addtocart.length > 0) {
+        $.ajax({
+            url: '/checkCartDeletedInactive',
+            type: 'POST',
+            async: false,
+            data: { data: JSON.stringify(addtocart) },
+            success: function (data) {
+                addtocart = JSON.parse(data);
+            }
+        });
+    }
+
     for (var i = 0; i < addtocart.length; i++) {
         if (productid === addtocart[i].id) {
             addtocart[i].quantity = quantity.toString();
@@ -86,6 +99,19 @@ function increaseCount(productid) {
         addtocart = [];
     }
 
+    //musime overit ci neexistuju v addtocart nejake produkty, ktore uz nie su aktivne alebo su deleted
+    if (addtocart.length > 0) {
+        $.ajax({
+            url: '/checkCartDeletedInactive',
+            type: 'POST',
+            async: false,
+            data: { data: JSON.stringify(addtocart) },
+            success: function (data) {
+                addtocart = JSON.parse(data);
+            }
+        });
+    }
+
     for (var i = 0; i < addtocart.length; i++) {
         if (productid === addtocart[i].id) {
             addtocart[i].quantity = quantity.toString();
@@ -125,6 +151,19 @@ function refreshCart() {
     }
     else {
         addtocart = [];
+    }
+
+    //musime overit ci neexistuju v addtocart nejake produkty, ktore uz nie su aktivne alebo su deleted
+    if (addtocart.length > 0) {
+        $.ajax({
+            url: '/checkCartDeletedInactive',
+            type: 'POST',
+            async: false,
+            data: { data: JSON.stringify(addtocart) },
+            success: function (data) {
+                addtocart = JSON.parse(data);
+            }
+        });
     }
 
     for (var i = 0; i < addtocart.length; i++) {
@@ -169,6 +208,19 @@ function removeFromCart(event) {
     }
     else {
         addtocart = [];
+    }
+
+    //musime overit ci neexistuju v addtocart nejake produkty, ktore uz nie su aktivne alebo su deleted
+    if (addtocart.length > 0) {
+        $.ajax({
+            url: '/checkCartDeletedInactive',
+            type: 'POST',
+            async: false,
+            data: { data: JSON.stringify(addtocart) },
+            success: function (data) {
+                addtocart = JSON.parse(data);
+            }
+        });
     }
 
     for (var i = 0; i < addtocart.length; i++) {

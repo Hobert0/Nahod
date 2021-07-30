@@ -65,7 +65,7 @@ namespace Cms.Controllers
             foreach (var item in cartVal)
             {
                 int prodId = int.Parse(item.product.Value.ToString());
-                var thisProd = db.products.Where(i => i.id == prodId && i.deleted == false).SingleOrDefault();
+                var thisProd = db.products.Where(i => i.id == prodId && i.deleted == false && i.active == true).SingleOrDefault();
 
                 if (thisProd != null)
                 {
@@ -79,6 +79,36 @@ namespace Cms.Controllers
             Session["cartsum"] = thisSum;
 
             return Json(cartValues, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("checkCartDeletedInactive")]
+        public string CheckCartDeletedInactive(string data)
+        {
+            var cartVal = JsonConvert.DeserializeObject<List<dynamic>>(data);
+
+            var helpCounter = 0;
+            List<int> toDeleteList = new List<int>();
+            foreach (var item in cartVal)
+            {
+                int prodId = int.Parse(item.product.Value.ToString());
+                var thisProd = db.products.Where(i => i.id == prodId && i.deleted == false && i.active == true).SingleOrDefault();
+
+                if (thisProd == null)
+                {
+                    toDeleteList.Add(helpCounter);
+                }
+                helpCounter++;
+            }
+
+            //vymazeme prvky z jsonu, ktore tam nepatria
+            var helpDeleted = 0;
+            foreach (var toDeleteItem in toDeleteList)
+            {
+                cartVal.RemoveAt(toDeleteItem - helpDeleted);
+                helpDeleted++;
+            }
+
+            return JsonConvert.SerializeObject(cartVal);
         }
 
         [Route("blog")]

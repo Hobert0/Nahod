@@ -283,7 +283,8 @@ namespace Cms.Controllers
         public List<SelectListItem> SelectionAttributes()
         {
             List<SelectListItem> attributes = new List<SelectListItem>();
-            foreach (var attr in db.attributes)
+            var attributesDb = db.attributes.Where(a => a.deleted == false).OrderBy(i => i.name).ToList();
+            foreach (var attr in attributesDb)
             {
                 attributes.Add(new SelectListItem { Text = attr.name, Value = attr.value });
             }
@@ -293,7 +294,8 @@ namespace Cms.Controllers
         public List<int> SelectionAttributesId()
         {
             List<int> attributesId = new List<int>();
-            foreach (var attr in db.attributes)
+            var attributesDb = db.attributes.Where(a => a.deleted == false).OrderBy(i => i.name).ToList();
+            foreach (var attr in attributesDb)
             {
                 attributesId.Add(attr.id);
             }
@@ -304,7 +306,8 @@ namespace Cms.Controllers
         {
             List<SelectListItem> brand = new List<SelectListItem>();
             brand.Add(new SelectListItem { Text = "", Value = "" });
-            foreach (var cat in db.brands.OrderBy(i => i.name))
+            var brandsDb = db.brands.Where(a => a.deleted == false).OrderBy(i => i.name).ToList();
+            foreach (var cat in brandsDb)
             {
                 brand.Add(new SelectListItem { Text = cat.name, Value = cat.id.ToString() });
             }
@@ -337,7 +340,8 @@ namespace Cms.Controllers
         {
             List<SelectListItem> kategoria = new List<SelectListItem>();
             kategoria.Add(new SelectListItem { Text = "", Value = "" });
-            foreach (var cat in db.categories.Where(i => i.maincat == "Žiadna"))
+            var kategorieDb = db.categories.Where(a => a.deleted == false && a.maincat == "Žiadna").OrderBy(i => i.name).ToList();
+            foreach (var cat in kategorieDb)
             {
                 kategoria.Add(new SelectListItem { Text = cat.name, Value = cat.id.ToString() });
             }
@@ -350,7 +354,8 @@ namespace Cms.Controllers
         {
             List<SelectListItem> znacka = new List<SelectListItem>();
             znacka.Add(new SelectListItem { Text = "", Value = "" });
-            foreach (var cat in db.categories.OrderBy(i => i.name))
+            var kategorieDb = db.categories.Where(a => a.deleted == false).OrderBy(i => i.name).ToList();
+            foreach (var cat in kategorieDb)
             {
                 /*
                 if (cat.topcat2 == "" || cat.topcat2 == "Žiadna")
@@ -433,7 +438,8 @@ namespace Cms.Controllers
         {
             List<SelectListItem> znacka = new List<SelectListItem>();
             znacka.Add(new SelectListItem { Text = "", Value = "" });
-            foreach (var type in db.types.OrderBy(i => i.name))
+            var znackyDb = db.types.Where(i => i.deleted == false).OrderBy(i => i.name).ToList();
+            foreach (var type in znackyDb)
             {
                 znacka.Add(new SelectListItem { Text = type.name, Value = type.id.ToString() });
             }
@@ -445,7 +451,8 @@ namespace Cms.Controllers
         {
             List<SelectListItem> znacka = new List<SelectListItem>();
             znacka.Add(new SelectListItem { Text = "", Value = "" });
-            foreach (var cat in db.categories.Where(i => i.topcat == "Žiadna" && i.maincat != "Žiadna"))
+            var kategorieDb = db.categories.Where(i => i.topcat == "Žiadna" && i.maincat != "Žiadna" && i.deleted == false).ToList();
+            foreach (var cat in kategorieDb)
             {
                 znacka.Add(new SelectListItem { Text = cat.name, Value = cat.id.ToString() });
             }
