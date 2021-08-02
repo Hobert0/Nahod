@@ -3,6 +3,7 @@
     Layout = "~/Views/Shared/_LayoutCms.cshtml";
     ViewBag.Title = "SendNewsletter";
     var idOfTemplate = ViewContext.RouteData.Values["newsletterId"];
+    var allUsers = 0;
 }
 
 <h2>Odoslať newsletter</h2>
@@ -34,7 +35,7 @@
                     <td>@Html.DisplayFor(modelItem => meta.surname, new { htmlAttributes = new { @Value = " " } })</td>
                     <td>@Html.DisplayFor(modelItem => meta.phone, new { htmlAttributes = new { @Value = " " } })</td>
                     <td>@Html.DisplayFor(modelItem => meta.city, new { htmlAttributes = new { @Value = " " } })</td>
-
+                    allUsers++;
                 }
             </tr>
         }
@@ -50,8 +51,9 @@
             <a id="buttonDeselect"><u>Odznačiť všetkých | Označiť všetkých</u></a>
         </div>
         <div class="col" style="text-align: right;">
-            @Html.ActionLink("Odoslať všetkým", "SendAllNewsletter", "Newsletter", new { id = idOfTemplate }, new { @class = "btn btn-warning" })
-            <input type="button" id="buttonSelected" value="Odoslať vybraným" class="btn btn-primary" />
+            <input type="button" id="buttonAll" value="Odoslať všetkým" class="btn btn-warning" />
+            @*@Html.ActionLink("Odoslať všetkým", "SendAllNewsletter", "Newsletter", new {id = idOfTemplate}, new {@class = "btn btn-warning"})*@
+            <input type="button" id="buttonSelected" value="Odoslať vybraným" class="btn btn-primary"/>
         </div>
     </div>
 </div>
@@ -89,6 +91,7 @@
 
             $.ajax({
                 type: "POST",
+                async: true,
                 url: "/send-newsletter-selected/" +@idOfTemplate,
                 contentType: "application/json; charset=utf-8", // specify the content type
                 dataType: 'JSON', // make sure you use the correct case for dataType
@@ -98,7 +101,22 @@
                     alert(xhr.status);
                 },
             });
-            window.location.href = "/newsletter";
+            window.location.href = "/newsletter?sentto=" + listOfObjects.length;
+        });
+
+        $("#buttonAll").click(function (e) {
+            $.ajax({
+                type: "POST",
+                async: true,
+                url: "/send-newsletter-all/" + @idOfTemplate,
+                contentType: "application/json; charset=utf-8", // specify the content type
+                dataType: 'JSON', // make sure you use the correct case for dataType
+                traditional: true,
+                error: function(xhr, ajaxOptions, thrownError){
+                    alert(xhr.status);
+                },
+            });
+            window.location.href = "/newsletter/?sentto=" + @allUsers;
         });
     });
 </script>

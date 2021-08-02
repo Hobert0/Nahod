@@ -169,17 +169,16 @@ namespace Cms.Controllers
         }
 
         [Route("send-newsletter-all/{id}")]
-        public ActionResult SendAllNewsletter(int id)
+        public void SendAllNewsletter(int id)
         {
-            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
-            {
                 var allUsersNewsTrue = db.usersmeta.Where(i => i.news == true).ToList();
                 var template = db.newsletter.Where(t => t.id == id).ToList();
                 var settings = db.settings.SingleOrDefault().email;
 
                 var subject = "";
                 var body = "";
-                var counter = 0;
+                var counter = allUsersNewsTrue.Count;
+                TempData["counter"] = counter;
 
                 foreach (var item in template)
                 {
@@ -225,33 +224,23 @@ namespace Cms.Controllers
                         //smtp.Credentials = NetworkCred;
 
                         //smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
+                        System.Threading.Thread.Sleep(100);
 
-                        smtp.Send(mailMessage);
-                        counter++;
+                        //smtp.Send(mailMessage);
                     }
                 }
-
-                TempData["counter"] = counter;
-                return RedirectToAction("Newsletter", "Newsletter");
-            }
-            else
-            {
-                return RedirectToAction("Admin", "Admin");
-            }
         }
 
         [HttpPost, Route("send-newsletter-selected/{idOfTemplate}")]
-        public ActionResult SendSelectedNewsletter(int idOfTemplate, List<string> methodParam)
+        public void SendSelectedNewsletter(int idOfTemplate, List<string> methodParam)
         {
-            if (Request.Cookies["username"] != null && Request.Cookies["role"].Value == "0")
-            {
-
                 var template = db.newsletter.Where(t => t.id == idOfTemplate).ToList();
                 var settings = db.settings.SingleOrDefault().email;
 
                 var subject = "";
                 var body = "";
-                var counter = 0;
+                var counter = methodParam.Count;
+                TempData["counter"] = counter;
 
                 foreach (var item in template)
                 {
@@ -259,8 +248,6 @@ namespace Cms.Controllers
                     body = item.body;
                     body = Regex.Replace(body, @"../Uploads", "https://nahod.sk/Uploads");
                 }
-
-
 
                 foreach (var singleUserNewsTrue in methodParam)
                 {
@@ -302,19 +289,10 @@ namespace Cms.Controllers
                         //smtp.Credentials = NetworkCred;
 
                         //smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
-
-                        smtp.Send(mailMessage);
-                        counter++;
+                        System.Threading.Thread.Sleep(4000);
+                        //smtp.Send(mailMessage);
                     }
                 }
-
-                TempData["counter"] = counter;
-                return RedirectToAction("Newsletter", "Newsletter");
-            }
-            else
-            {
-                return RedirectToAction("Admin", "Admin");
-            }
         }
 
         [HttpPost]

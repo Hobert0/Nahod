@@ -39,7 +39,7 @@
 </table>
 @{
 //Po prihlaseni k odberu sa vypise hlaska
-if (TempData["counter"] != null)
+if (Request.Params["sentto"] != null)
 {
 <script>
     $(document).ready(function () {
@@ -61,7 +61,7 @@ if (TempData["counter"] != null)
             "hideMethod": "fadeOut",
             "tapToDismiss": false
         }
-        toastr["success"]("Newsletter bol odoslaný na emailové adresy v počte: @TempData["counter"]");
+        toastr["success"]("Newsletter bol odoslaný na emailové adresy v počte: @Request.Params["sentto"]");
     });
 
 </script>
