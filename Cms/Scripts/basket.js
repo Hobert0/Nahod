@@ -76,7 +76,7 @@ function payMent() {
     }
 }
 
-function checkTransfer($isCzech) {
+function checkTransfer() {
 
     var ship = document.querySelector('input[name="transfer"]:checked').value;
     document.getElementById("ship").value = ship;
@@ -252,6 +252,7 @@ function validateRadio(radios) {
     return false;
 }
 
+$isCzech = false;
 function validateBasketForm() {
 
     var checkBox = document.getElementById("myCheck");
@@ -361,7 +362,7 @@ function validateBasketForm() {
             if (condition.checked === true) {
 
                 //ak je ceska republika krajina dorucenia, zobrazime len platbu prevodom
-                $isCzech = false;
+                
                 if ($("#OrdersModel_CountryShipp").val() == "Česká republika") {
                     $("#pay1,#pay2,#pay4").css("display", "none");
                     $("#pay3").click();
@@ -375,7 +376,7 @@ function validateBasketForm() {
 
                 //ak sme sa vratili a je uz zakliknuta nejaka moznost dorucenia, tak ak zmenine krajinu dorucenia automaticky zmenime aj cenu
                 if ($("input[name=transfer]").is(":checked")) {
-                    checkTransfer($isCzech);
+                    checkTransfer();
                     shippPay();
                 }
 
@@ -569,7 +570,6 @@ function validateBasketForm() {
             if (condition.checked == true) {
 
                 //ak je ceska republika krajina dorucenia, zobrazime len platbu prevodom
-                $isCzech = false;
                 if ($("#OrdersModel_Country").val() == "Česká republika") {
                     $("#pay1,#pay2,#pay4").css("display", "none");
                     $("#pay3").click();
@@ -584,7 +584,7 @@ function validateBasketForm() {
 
                 //ak sme sa vratili a je uz zakliknuta nejaka moznost dorucenia, tak ak zmenine krajinu dorucenia automaticky zmenime aj cenu
                 if ($("input[name=transfer]").is(":checked")) {
-                    checkTransfer($isCzech);
+                    checkTransfer();
                     shippPay();
                 }
 
