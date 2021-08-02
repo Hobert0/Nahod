@@ -224,9 +224,9 @@ namespace Cms.Controllers
                         //smtp.Credentials = NetworkCred;
 
                         //smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
-                        System.Threading.Thread.Sleep(100);
+                        System.Threading.Thread.Sleep(4000);
 
-                        //smtp.Send(mailMessage);
+                        smtp.Send(mailMessage);
                     }
                 }
         }
@@ -290,7 +290,7 @@ namespace Cms.Controllers
 
                         //smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
                         System.Threading.Thread.Sleep(4000);
-                        //smtp.Send(mailMessage);
+                        smtp.Send(mailMessage);
                     }
                 }
         }
