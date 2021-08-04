@@ -752,6 +752,38 @@
     </script>
 
     @{
+
+        //Watchdog
+        if (TempData["watchdogInfo"] != null)
+        {
+            <script>
+                $(document).ready(function () {
+
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-full-width",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "0",
+                        "extendedTimeOut": "0",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut",
+                        "tapToDismiss": false
+                    }
+                    toastr["success"]("@TempData["watchdogInfo"]");
+                });
+
+            </script>
+
+        }
+
         //Unsubscribe
         if (TempData["unsubscribeMsg"] != null)
         {
@@ -759,8 +791,8 @@
             <script>
                     $(document).ready(function () {
 
-                        toastr.options = {
-                            "closeButton": true,
+                toastr.options = {
+                    "closeButton": true,
                             "debug": false,
                             "newestOnTop": false,
                             "progressBar": false,
@@ -777,8 +809,8 @@
                             "hideMethod": "fadeOut",
                             "tapToDismiss": false
                         }
-                        toastr["success"]("@TempData["unsubscribeMsg"]");
-                    });
+                toastr["success"]("@TempData["unsubscribeMsg"]");
+            });
 
             </script>
         }
@@ -791,7 +823,7 @@
                 <script>
                     $(document).ready(function () {
 
-                        toastr.options = {
+                    toastr.options = {
                         "closeButton": true,
                             "debug": false,
                             "newestOnTop": false,
@@ -809,8 +841,8 @@
                             "hideMethod": "fadeOut",
                             "tapToDismiss": false
                         }
-                        toastr["success"]("@TempData["newsletterMsg"]");
-                    });
+                    toastr["success"]("@TempData["newsletterMsg"]");
+                });
 
                 </script>
             }
@@ -819,7 +851,7 @@
                 <script>
                     $(document).ready(function () {
 
-                        toastr.options = {
+                    toastr.options = {
                         "closeButton": true,
                             "debug": false,
                             "newestOnTop": false,
@@ -837,8 +869,8 @@
                             "hideMethod": "fadeOut",
                             "tapToDismiss": false
                         }
-                        toastr["warning"]("@TempData["newsletterMsg"]");
-                    });
+                    toastr["warning"]("@TempData["newsletterMsg"]");
+                });
 
                 </script>
             }
@@ -852,7 +884,7 @@
                 <script>
                     $(document).ready(function () {
 
-                        toastr.options = {
+                    toastr.options = {
                         "closeButton": true,
                             "debug": false,
                             "newestOnTop": false,
@@ -870,8 +902,8 @@
                             "hideMethod": "fadeOut",
                             "tapToDismiss": false
                         }
-                        toastr["success"]("@ViewData["changePassInfo"]");
-                    });
+                    toastr["success"]("@ViewData["changePassInfo"]");
+                });
 
                 </script>
             }
@@ -880,7 +912,7 @@
                 <script>
                     $(document).ready(function() {
 
-                        toastr.options = {
+                    toastr.options = {
                         "closeButton": true,
                             "debug": false,
                             "newestOnTop": false,
@@ -898,8 +930,8 @@
                             "hideMethod": "fadeOut",
                             "tapToDismiss": false
                         }
-                        toastr["warning"]("@ViewData["changePassInfo"]");
-                    });
+                    toastr["warning"]("@ViewData["changePassInfo"]");
+                });
                 </script>
             }
         }

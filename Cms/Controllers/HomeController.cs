@@ -1169,6 +1169,8 @@ namespace Cms.Controllers
                 db.SaveChanges();
             }
 
+            TempData["watchdogInfo"] = "Vážený zákazník, stráženie dostupnosti bolo aktivované.";
+
             return Redirect(returnUrl);
         }
 

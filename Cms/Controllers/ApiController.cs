@@ -887,7 +887,7 @@ namespace Cms.Controllers
                 body = rea.ReadToEnd();
             }
 
-            var str = "Požadovaný tovar <a href='" + prodLink + "'>" + prodName + "</a> je na sklade.";
+            var str = "Vážený zákazník, požadovaný tovar <a href='" + prodLink + "'>" + prodName + "</a> je na sklade.";
 
             body = body.Replace("{Text}", str);
             body = body.Replace("{CompanyData}", CompanyDataInEmial());
