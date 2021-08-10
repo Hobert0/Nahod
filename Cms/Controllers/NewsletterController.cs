@@ -171,128 +171,131 @@ namespace Cms.Controllers
         [Route("send-newsletter-all/{id}")]
         public void SendAllNewsletter(int id)
         {
-                var allUsersNewsTrue = db.usersmeta.Where(i => i.news == true).ToList();
-                var template = db.newsletter.Where(t => t.id == id).ToList();
-                var settings = db.settings.SingleOrDefault().email;
+            var allUsersNewsTrue = db.usersmeta.Where(i => i.news == true).ToList();
+            var template = db.newsletter.Where(t => t.id == id).ToList();
+            var settings = db.settings.SingleOrDefault().email;
 
-                var subject = "";
-                var body = "";
-                var counter = allUsersNewsTrue.Count;
-                TempData["counter"] = counter;
+            var subject = "";
+            var body = "";
+            var counter = allUsersNewsTrue.Count;
+            TempData["counter"] = counter;
 
-                foreach (var item in template)
+            foreach (var item in template)
+            {
+                subject = item.subject;
+                body = item.body;
+                body = Regex.Replace(body, @"../Uploads", "https://nahod.sk/Uploads");
+            }
+
+            var count = 0;
+            foreach (var singleUserNewsTrue in allUsersNewsTrue)
+            {
+                if (IsValidEmail(singleUserNewsTrue.email))
                 {
-                    subject = item.subject;
-                    body = item.body;
-                    body = Regex.Replace(body, @"../Uploads", "https://nahod.sk/Uploads");
+                    var emailaddress = RemoveDiacritics(singleUserNewsTrue.email);
+
+                    var unsubscribeLink = "https://nahod.sk/unsubscribe?userId=" + singleUserNewsTrue.userid;
+                    var unsubscribeText = generateUnsubscribeText(unsubscribeLink);
+
+                    MailMessage mailMessage = new MailMessage();
+
+                    var eshopname = "NAHOD.sk";
+
+                    mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
+                    mailMessage.Subject = subject;
+                    mailMessage.Body = body + unsubscribeText;
+                    mailMessage.IsBodyHtml = true;
+
+                    mailMessage.To.Add(new MailAddress(emailaddress));
+
+                    SmtpClient smtp = new SmtpClient();
+
+                    smtp.Host = "bulk.smtp.cz";
+
+                    smtp.EnableSsl = true;
+
+                    System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
+
+                    NetworkCred.UserName = "obchod@nahod.sk"; //reading from web.config  
+
+                    NetworkCred.Password = "0ku3ONWfAWGV"; //reading from web.config  
+
+                    smtp.UseDefaultCredentials = true;
+
+                    smtp.Credentials = NetworkCred;
+
+                    smtp.Port = 587; //reading from web.config 
+                    System.Threading.Thread.Sleep(4000);
+                    smtp.Send(mailMessage);
+
+
+                    count++;
                 }
-
-                foreach (var singleUserNewsTrue in allUsersNewsTrue)
-                {
-                    if (IsValidEmail(singleUserNewsTrue.email))
-                    {
-                        var emailaddress = RemoveDiacritics(singleUserNewsTrue.email);
-
-                        var unsubscribeLink = "https://nahod.sk/unsubscribe?userId=" + singleUserNewsTrue.userid;
-                        var unsubscribeText = generateUnsubscribeText(unsubscribeLink);
-
-                        MailMessage mailMessage = new MailMessage();
-
-                        var eshopname = "NAHOD.sk";
-
-                        mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
-                        mailMessage.Subject = subject;
-                        mailMessage.Body = body + unsubscribeText;
-                        mailMessage.IsBodyHtml = true;
-
-                        mailMessage.To.Add(new MailAddress(emailaddress));
-
-                        SmtpClient smtp = new SmtpClient();
-
-                        smtp.Host = "localhost";
-
-                        //smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
-
-                        //System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
-
-                        //NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"]; //reading from web.config  
-
-                        //NetworkCred.Password = ConfigurationManager.AppSettings["Password"]; //reading from web.config  
-
-                        //smtp.UseDefaultCredentials = true;
-
-                        //smtp.Credentials = NetworkCred;
-
-                        //smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
-                        System.Threading.Thread.Sleep(4000);
-
-                        smtp.Send(mailMessage);
-                    }
-                }
+            }
         }
 
         [HttpPost, Route("send-newsletter-selected/{idOfTemplate}")]
         public void SendSelectedNewsletter(int idOfTemplate, List<string> methodParam)
         {
-                var template = db.newsletter.Where(t => t.id == idOfTemplate).ToList();
-                var settings = db.settings.SingleOrDefault().email;
+            var template = db.newsletter.Where(t => t.id == idOfTemplate).ToList();
+            var settings = db.settings.SingleOrDefault().email;
 
-                var subject = "";
-                var body = "";
-                var counter = methodParam.Count;
-                TempData["counter"] = counter;
+            var subject = "";
+            var body = "";
+            var counter = methodParam.Count;
+            TempData["counter"] = counter;
 
-                foreach (var item in template)
+            foreach (var item in template)
+            {
+                subject = item.subject;
+                body = item.body;
+                body = Regex.Replace(body, @"../Uploads", "https://nahod.sk/Uploads");
+            }
+
+            foreach (var singleUserNewsTrue in methodParam)
+            {
+                if (IsValidEmail(singleUserNewsTrue))
                 {
-                    subject = item.subject;
-                    body = item.body;
-                    body = Regex.Replace(body, @"../Uploads", "https://nahod.sk/Uploads");
-                }
-
-                foreach (var singleUserNewsTrue in methodParam)
-                {
-                    if (IsValidEmail(singleUserNewsTrue))
+                    var user = db.usersmeta.Where(i => i.email == singleUserNewsTrue).FirstOrDefault();
+                    string unsubscribeText = "";
+                    if (user != null)
                     {
-                        var user = db.usersmeta.Where(i => i.email == singleUserNewsTrue).FirstOrDefault();
-                        string unsubscribeText = "";
-                        if (user != null)
-                        {
-                            var unsubscribeLink = "https://nahod.sk/unsubscribe?userId=" + user.userid;
-                            unsubscribeText = generateUnsubscribeText(unsubscribeLink);
-                        }
-
-                        MailMessage mailMessage = new MailMessage();
-                        var emailaddress = RemoveDiacritics(singleUserNewsTrue);
-                        var eshopname = "NAHOD.sk";
-
-                        mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
-                        mailMessage.Subject = subject;
-                        mailMessage.Body = body + unsubscribeText;
-                        mailMessage.IsBodyHtml = true;
-
-                        mailMessage.To.Add(new MailAddress(emailaddress));
-                         
-                        SmtpClient smtp = new SmtpClient();
-
-                        smtp.Host = "localhost";
-
-                        //smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
-
-                        //System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
-
-                        //NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"]; //reading from web.config  
-
-                        //NetworkCred.Password = ConfigurationManager.AppSettings["Password"]; //reading from web.config  
-
-                        //smtp.UseDefaultCredentials = true;
-
-                        //smtp.Credentials = NetworkCred;
-
-                        //smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
-                        System.Threading.Thread.Sleep(4000);
-                        smtp.Send(mailMessage);
+                        var unsubscribeLink = "https://nahod.sk/unsubscribe?userId=" + user.userid;
+                        unsubscribeText = generateUnsubscribeText(unsubscribeLink);
                     }
+
+                    MailMessage mailMessage = new MailMessage();
+                    var emailaddress = RemoveDiacritics(singleUserNewsTrue);
+                    var eshopname = "NAHOD.sk";
+
+                    mailMessage.From = new MailAddress("eshop@nahod.sk", eshopname);
+                    mailMessage.Subject = subject;
+                    mailMessage.Body = body + unsubscribeText;
+                    mailMessage.IsBodyHtml = true;
+
+                    mailMessage.To.Add(new MailAddress(emailaddress));
+
+                    SmtpClient smtp = new SmtpClient();
+
+                    smtp.Host = "bulk.smtp.cz";
+
+                    smtp.EnableSsl = true;
+
+                    System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
+
+                    NetworkCred.UserName = "obchod@nahod.sk"; //reading from web.config  
+
+                    NetworkCred.Password = "0ku3ONWfAWGV"; //reading from web.config  
+
+                    smtp.UseDefaultCredentials = true;
+
+                    smtp.Credentials = NetworkCred;
+                    smtp.Port = 587; //reading from web.config  
+
+                    System.Threading.Thread.Sleep(4000);
+                    smtp.Send(mailMessage);
                 }
+            }
         }
 
         [HttpPost]

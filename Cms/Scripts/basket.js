@@ -115,18 +115,6 @@ function checkPayment() {
     document.getElementById("platba").value = pay;
     pay == '@ViewBag.Pay';
 
-    if (pay == "pay4") {
-        document.getElementById("transfer3").style.display = "none";
-    } else {
-        document.getElementById("transfer3").style.display = "block";
-    }
-
-    if (pay == "pay1") {
-        document.getElementById("transfer1").style.display = "none";
-    } else {
-        document.getElementById("transfer1").style.display = "block";
-    }
-
     //vyplnime zhrnutie
     var payName = $('input[name="payment"]:checked').parent().find(".payName").text();
     $(".paymentCheckText").text(payName);
