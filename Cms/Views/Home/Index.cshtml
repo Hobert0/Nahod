@@ -246,10 +246,11 @@
                                 </div>
                                 <div class="prod-header">@Html.Raw(prod.title)</div>
                                 @{
-                                    var shortdescription = "";
+                                    string shortdescription = "";
                                     if (prod.description != null && prod.description != "")
                                     {
                                         shortdescription = Regex.Replace(prod.description, "<.*?>", String.Empty);
+                                        shortdescription = WebUtility.HtmlDecode(shortdescription);
                                         if (shortdescription.Length > 60)
                                         {
                                             shortdescription = shortdescription.Substring(0, 60) + "...";
@@ -538,6 +539,8 @@
                                     if (prod.description != null && prod.description != "")
                                     {
                                         shortdescription = Regex.Replace(prod.description, "<.*?>", String.Empty);
+                                        shortdescription = WebUtility.HtmlDecode(shortdescription);
+
                                         if (shortdescription.Length > 60)
                                         {
                                             shortdescription = shortdescription.Substring(0, 60) + "...";

@@ -41,7 +41,7 @@
                 id = prod.id.ToString();
                 <input type="hidden" id="prodId" value="@id">
                 <script>
-				var id = @id;
+                    var id = @id;
                 </script>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
@@ -545,6 +545,8 @@
                                         if (prod.description != null && prod.description != "")
                                         {
                                             shortdescription = Regex.Replace(prod.description, "<.*?>", String.Empty);
+                                            shortdescription = WebUtility.HtmlDecode(shortdescription);
+
                                             if (shortdescription.Length > 60)
                                             {
                                                 shortdescription = shortdescription.Substring(0, 60) + "...";
@@ -952,6 +954,8 @@
                                         if (prod.description != null && prod.description != "")
                                         {
                                             shortdescription = Regex.Replace(prod.description, "<.*?>", String.Empty);
+                                            shortdescription = WebUtility.HtmlDecode(shortdescription);
+
                                             if (shortdescription.Length > 60)
                                             {
                                                 shortdescription = shortdescription.Substring(0, 60) + "...";
@@ -1098,7 +1102,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            @using (Html.BeginForm("askForPrice", "Products", new { id = id }, FormMethod.Post, new { enctype = "multipart/form-data", @class = "text-center" }))
+            @using (Html.BeginForm("askForPrice", "Products", new { id = id }, FormMethod.Post, new { enctype = "multipart/form-data", @class = "text-center", id = "askForPrice" }))
             {
                 foreach (var prod in (IEnumerable<Cms.Models.products>)ViewBag.Detaily)
                 {
@@ -1125,7 +1129,7 @@
 
                                 <div class="form-group row ml-0 p-0 col mb-1">
                                     <div class="col-md-8 p-0" style="margin: 0 auto;">
-                                        @Html.EditorFor(model => model.EmailSendModel.Subject, new { htmlAttributes = new { @class = "form-control", @Value = "Žiadam o cenu produktu: " + prod.title } })
+                                        @Html.EditorFor(model => model.EmailSendModel.Subject, new { htmlAttributes = new { @class = "form-control", @Value = "Žiadam o radu s produktom: " + prod.title } })
                                         @Html.ValidationMessageFor(model => model.EmailSendModel.Subject, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -1150,7 +1154,8 @@
                             <br />
                             <div class="form-group">
                                 <div class="right">
-                                    <input type="submit" value="Odoslať žiadosť o informácie" class="btn btn-color col-5" />
+                                <button data-sitekey="6LfAQx0bAAAAAGAGalVF2LJcUyuLJ7O8kNqH8W2u" class="g-recaptcha rect-button btn btn-color col-5" data-callback="validateNewsletter" data-action="submit" >Prihlásiť sa k odberu</button>
+                                    @*<input type="submit" value="Odoslať žiadosť o informácie" class="btn btn-color col-5" />*@
                                 </div>
                             </div>
                         </div>
@@ -1181,15 +1186,15 @@
                         $rating = $("input[name=userRating]").val();
 
                         switch ($rating) {
-                            case "1":
-                                return $price * 0.95;
-                                break;
-                            case "2":
-                                return $price * 0.9;
-                                break;
-                            case "3":
-                                return $price * 0.85;
-                                break;
+                        case "1":
+                            return $price * 0.95;
+                            break;
+                        case "2":
+                            return $price * 0.9;
+                            break;
+                        case "3":
+                            return $price * 0.85;
+                            break;
                         }
                     }
 
@@ -1243,7 +1248,7 @@
 
                             //ak user neni prihlaseny a nie je zlava, zobrazime info o cene po registracii
                             $afterRegPrice = $thisPrice * 0.95;
-                            $("#afterRegInfo span").text($afterRegPrice.toFixedNoRounding(2));
+                            $("#afterRegInfo strong").text($afterRegPrice.toFixedNoRounding(2));
                             $("#afterRegInfo").css("display", "block");
                         }
 
@@ -1355,15 +1360,19 @@
     <script src="~/Scripts/add_product_to_cart.js"></script>
     <script src="~/Scripts/add_to_session.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            $(".watchdog-modal").click(function () {
-                $("#myModalWatchdog").css("display", "flex");
-            });
+<script>
+    function validateNewsletter() {
+            $("#askForPrice").submit();
+    }
 
-            $("#myModalWatchdog .close").click(function () {
-                $("#myModalWatchdog").css("display", "none");
-            });
-
+    $(document).ready(function () {
+        $(".watchdog-modal").click(function () {
+            $("#myModalWatchdog").css("display", "flex");
         });
-    </script>
+
+        $("#myModalWatchdog .close").click(function () {
+            $("#myModalWatchdog").css("display", "none");
+        });
+
+    });
+</script>

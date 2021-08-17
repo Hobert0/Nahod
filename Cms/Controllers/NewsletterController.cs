@@ -218,7 +218,7 @@ namespace Cms.Controllers
 
                     NetworkCred.UserName = "obchod@nahod.sk"; //reading from web.config  
 
-                    NetworkCred.Password = "0ku3ONWfAWGV"; //reading from web.config  
+                    NetworkCred.Password = "Lqg9v0RYYMPM"; //reading from web.config  
 
                     smtp.UseDefaultCredentials = true;
 
@@ -285,7 +285,7 @@ namespace Cms.Controllers
 
                     NetworkCred.UserName = "obchod@nahod.sk"; //reading from web.config  
 
-                    NetworkCred.Password = "0ku3ONWfAWGV"; //reading from web.config  
+                    NetworkCred.Password = "Lqg9v0RYYMPM"; //reading from web.config  
 
                     smtp.UseDefaultCredentials = true;
 

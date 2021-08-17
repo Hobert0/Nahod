@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
@@ -11,6 +12,7 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using Cms.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Cms.Controllers
 {
@@ -2130,38 +2132,51 @@ namespace Cms.Controllers
         }
         public ActionResult askForPrice(MultipleIndexModel model, int? id)
         {
-            var settings = db.settings.SingleOrDefault().email;
+            //Validate Google recaptcha
+            var response = Request["g-recaptcha-response"];
+            string secretKey = "6LfAQx0bAAAAAAFaQvmwM-Q13RNOW0y5HOoanhcl";
+            var client = new WebClient();
+            var result = client.DownloadString(string.Format(
+                "https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secretKey, response));
+            var obj = JObject.Parse(result);
+            var status = (bool)obj.SelectToken("success");
 
-            MailMessage mailMessage = new MailMessage();
+            if (status && model.EmailSendModel.Email != null && model.EmailSendModel.Email != "")
+            {
 
-            mailMessage.From = new MailAddress(model.EmailSendModel.Email);
-            mailMessage.Subject = model.EmailSendModel.Subject;
-            mailMessage.Body = model.EmailSendModel.Message;
-            mailMessage.IsBodyHtml = true;
+                var settings = db.settings.SingleOrDefault().email;
 
-            mailMessage.To.Add(new MailAddress(settings));
+                MailMessage mailMessage = new MailMessage();
 
-            SmtpClient smtp = new SmtpClient();
+                mailMessage.From = new MailAddress(model.EmailSendModel.Email);
+                mailMessage.Subject = model.EmailSendModel.Subject;
+                mailMessage.Body = model.EmailSendModel.Message;
+                mailMessage.IsBodyHtml = true;
 
-            smtp.Host = ConfigurationManager.AppSettings["Host"];
+                mailMessage.To.Add(new MailAddress(settings));
 
-            smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
+                SmtpClient smtp = new SmtpClient();
 
-            System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
+                smtp.Host = ConfigurationManager.AppSettings["Host"];
 
-            NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"]; //reading from web.config  
+                smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
 
-            NetworkCred.Password = ConfigurationManager.AppSettings["Password"]; //reading from web.config  
+                System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
 
-            smtp.UseDefaultCredentials = true;
+                NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"]; //reading from web.config  
 
-            smtp.Credentials = NetworkCred;
+                NetworkCred.Password = ConfigurationManager.AppSettings["Password"]; //reading from web.config  
 
-            smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
+                smtp.UseDefaultCredentials = true;
 
-            smtp.Send(mailMessage);
+                smtp.Credentials = NetworkCred;
 
-            ViewBag.emailStatus = "true";
+                smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]); //reading from web.config  
+
+                smtp.Send(mailMessage);
+
+                ViewBag.emailStatus = "true";
+            }
 
             return RedirectToAction("ProductDetail", "Home", new { id = id, sent = "true" });
 

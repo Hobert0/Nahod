@@ -88,6 +88,8 @@
                                         if (prod.description != null && prod.description != "")
                                         {
                                             shortdescription = Regex.Replace(prod.description, "<.*?>", String.Empty);
+                                            shortdescription = WebUtility.HtmlDecode(shortdescription);
+
                                             if (shortdescription.Length > 60)
                                             {
                                                 shortdescription = shortdescription.Substring(0, 60) + "...";

@@ -950,7 +950,7 @@ namespace Cms.Controllers
         [HttpGet]
         public JsonResult Search(string term)
         {
-            List<products> Prods = db.products.ToList();
+            List<products> Prods = db.products.Where(i => i.deleted == false && i.active == true).ToList();
             List<products> varProds = new List<products>();
 
             var termArr = term.ToLower().Split(' ');
@@ -963,7 +963,7 @@ namespace Cms.Controllers
                 if (counter == 0)
                 {
                     //products
-                    filteredProds = db.products.Where(p => p.title.ToLower().Contains(termObj) || (p.number != null && p.number.ToLower().Contains(termObj)));
+                    filteredProds = db.products.Where(i => i.deleted == false && i.active == true).Where(p => p.title.ToLower().Contains(termObj) || (p.number != null && p.number.ToLower().Contains(termObj)));
                     //variants
                     filteredVars = db.variants.Where(p => p.number != null && p.number.ToLower().Contains(termObj));
                 }
@@ -1042,7 +1042,7 @@ namespace Cms.Controllers
                 model.AllUsersMetaModel = null;
             }
 
-            List<products> Prods = db.products.ToList();
+            List<products> Prods = db.products.Where(o => o.deleted == false && o.active == true).ToList();
             List<products> varProds = new List<products>();
 
             var termArr = term.ToLower().Split(' ');
@@ -1055,7 +1055,7 @@ namespace Cms.Controllers
                 if (counter == 0)
                 {
                     //products
-                    filteredProds = db.products.Where(p => p.title.ToLower().Contains(termObj) || (p.number != null && p.number.ToLower().Contains(termObj)));
+                    filteredProds = db.products.Where(o => o.deleted == false && o.active == true).Where(p => p.title.ToLower().Contains(termObj) || (p.number != null && p.number.ToLower().Contains(termObj)));
                     //variants
                     filteredVars = db.variants.Where(p => p.number != null && p.number.ToLower().Contains(termObj));
                 }

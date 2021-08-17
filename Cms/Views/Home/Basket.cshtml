@@ -161,7 +161,7 @@
                                     {
 
                                         var couponKey = TempData["Coupons"].ToString();
-                                        var coupon = Model.CouponsModel.Where(m => m.coupon == couponKey);
+                                        var coupon = Model.CouponsModel.Where(m => m.coupon.ToLower() == couponKey.ToLower());
                                         var couCategoryId = coupon.Select(m => m.category_id).FirstOrDefault();
                                         var couTypeId = coupon.Select(m => m.type_id).FirstOrDefault();
                                         var couBrandId = coupon.Select(m => m.brand_id).FirstOrDefault();

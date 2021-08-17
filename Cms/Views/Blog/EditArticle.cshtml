@@ -23,6 +23,7 @@
             <div class="col">
                 <div class="col-md-14 btnvyber">
                     <strong>@Html.LabelFor(model => model.TitleImage, "Zmeniť titulnú fotografiu", htmlAttributes: new { @class = "control-label col-md-12 vyberf" })</strong>
+                    <small>Ideálny rozmer titulnej fotografie je 1110 x 550px (š x v).</small>
                     <br /><br />
                     <a id="btn_vis" style="cursor:pointer">Vyber fotografie</a>
                     @Html.TextBoxFor(model => model.TitleImage, "", new { @type = "file", @class = "form-control", @accept = "png|jpg|jpeg|gif", @style = "max-width: 67%;height:60px;display:none;", @id = "bttn", @onchange = "pressed()" })
