@@ -201,7 +201,7 @@ namespace Cms.Controllers
 
                     var eshopname = "NAHOD.sk";
 
-                    mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
+                    mailMessage.From = new MailAddress("obchod@nahod.sk", eshopname);
                     mailMessage.Subject = subject;
                     mailMessage.Body = body + unsubscribeText;
                     mailMessage.IsBodyHtml = true;
@@ -225,9 +225,11 @@ namespace Cms.Controllers
                     smtp.Credentials = NetworkCred;
 
                     smtp.Port = 587; //reading from web.config 
-                    System.Threading.Thread.Sleep(4000);
-                    smtp.Send(mailMessage);
 
+                    if (counter > 750){
+                        System.Threading.Thread.Sleep(4000);
+                        smtp.Send(mailMessage);
+                    }
 
                     count++;
                 }
@@ -268,7 +270,7 @@ namespace Cms.Controllers
                     var emailaddress = RemoveDiacritics(singleUserNewsTrue);
                     var eshopname = "NAHOD.sk";
 
-                    mailMessage.From = new MailAddress("eshop@nahod.sk", eshopname);
+                    mailMessage.From = new MailAddress("obchod@nahod.sk", eshopname);
                     mailMessage.Subject = subject;
                     mailMessage.Body = body + unsubscribeText;
                     mailMessage.IsBodyHtml = true;
