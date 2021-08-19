@@ -72,39 +72,49 @@
 </script>
 
 <script>
-    $(document).ready(function () {
-        $("#buttonSelected").click(function (e) {
-            var cbarray = document.getElementsByName("emailSend");
-            var emailElement = "";
-            var listOfObjects = [];
-            for (var i = 0; i < cbarray.length; i++) {
-                if (cbarray[i].checked) {
-                    var element = cbarray[i].id;
-                    emailElement = document.getElementById(element);
-                    var attribute = emailElement.getAttribute("email");
-                    listOfObjects.push(attribute);
+    $(document).ready(function() {
+        $("#buttonSelected").click(function(e) {
 
+            //povolime len ak je oznacenych menej ako 500 adries
+            $checkedEmailsCount = $("input[name=emailSend]:checked").length;
+            if ($checkedEmailsCount < 500) {
+
+                var cbarray = document.getElementsByName("emailSend");
+                var emailElement = "";
+                var listOfObjects = [];
+                for (var i = 0; i < cbarray.length; i++) {
+                    if (cbarray[i].checked) {
+                        var element = cbarray[i].id;
+                        emailElement = document.getElementById(element);
+                        var attribute = emailElement.getAttribute("email");
+                        listOfObjects.push(attribute);
+
+                    }
                 }
+
+                dataToPost = JSON.stringify({ methodParam: listOfObjects });
+
+                $.ajax({
+                    type: "POST",
+                    async: true,
+                    url: "/send-newsletter-selected/" + @idOfTemplate,
+                    contentType: "application/json; charset=utf-8", // specify the content type
+                    dataType: 'JSON', // make sure you use the correct case for dataType
+                    data: dataToPost,
+                    traditional: true,
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                    },
+                });
+                window.location.href = "/newsletter?sentto=" + listOfObjects.length;
+                
+            } else {
+                alert("Označte menej ako 500 adries.");
             }
-
-            dataToPost = JSON.stringify({ methodParam: listOfObjects });
-
-            $.ajax({
-                type: "POST",
-                async: true,
-                url: "/send-newsletter-selected/" +@idOfTemplate,
-                contentType: "application/json; charset=utf-8", // specify the content type
-                dataType: 'JSON', // make sure you use the correct case for dataType
-                data: dataToPost,
-                traditional: true,
-                error: function(xhr, ajaxOptions, thrownError){
-                    alert(xhr.status);
-                },
-            });
-            window.location.href = "/newsletter?sentto=" + listOfObjects.length;
         });
 
         $("#buttonAll").click(function (e) {
+
             $.ajax({
                 type: "POST",
                 async: true,
@@ -117,6 +127,7 @@
                 },
             });
             window.location.href = "/newsletter/?sentto=" + @allUsers;
+            
         });
     });
 </script>
