@@ -945,7 +945,7 @@ namespace Cms.Controllers
 
 
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public string FetchProductsDatatable(int draw, int start, int length)
+        public JsonResult FetchProductsDatatable(int draw, int start, int length)
         {
             //zoradovanie podla stlpcov
             var orderColumn = Request.Form["order[0][column]"];
@@ -953,6 +953,11 @@ namespace Cms.Controllers
 
             //vyhladavanie podla stlpcov
             var search = Request.Form["search[value]"];
+
+            if (length == -1)
+            {
+                length = db.products.Where(a => a.deleted == false).Count();
+            }
 
             var pageNum = start == 0 ? 1 : (start / length) + 1;
             IPagedList<products> prodsOrd;
@@ -1189,8 +1194,12 @@ namespace Cms.Controllers
             };
 
 
-            var json = new JavaScriptSerializer().Serialize(result);
-            return json;
+            //var json = new JavaScriptSerializer().Serialize(result);
+            //return json;
+
+            var jsonResult = Json(result, JsonRequestBehavior.AllowGet);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
 
         }
     }
