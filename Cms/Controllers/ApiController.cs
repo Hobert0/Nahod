@@ -65,10 +65,13 @@ namespace Cms.Controllers
                     topcatId = TopCatID(id);
                 }
                 var prodData =
-                result = new { data = SortByBrand(topcatId, id, catslug).ProductModel.OrderByDescending(i => i.id), variants };
+                    result = new { data = SortByBrand(topcatId, id, catslug).ProductModel.OrderByDescending(i => i.id), variants };
             }
+            var jsonResult = Json(result, JsonRequestBehavior.AllowGet);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            //return Json(result, JsonRequestBehavior.AllowGet, Int32.MaxValue);
         }
 
         /*

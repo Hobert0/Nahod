@@ -226,7 +226,7 @@ namespace Cms.Controllers
 
                     smtp.Port = 587; //reading from web.config 
 
-                    if (counter > 750){
+                    if (count > 750){
                         System.Threading.Thread.Sleep(4000);
                         smtp.Send(mailMessage);
                     }
