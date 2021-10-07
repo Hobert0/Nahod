@@ -235,7 +235,9 @@ function shippingAddr() {
 
 function validateRadio(radios) {
     for (i = 0; i < radios.length; ++i) {
-        if (radios[i].checked) return true;
+        let labelId = radios[i].value;
+        let label = document.getElementById(labelId).style.display;
+        if (radios[i].checked && label != "none") return true;
     }
     return false;
 }
