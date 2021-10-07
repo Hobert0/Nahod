@@ -323,7 +323,7 @@
                                         }
                                     }
 
-                                    //ak nie je discount price
+                                    //ak nie je discount price //TO DO ak nie je prva varianta aj discount price
                                     if (Request.Cookies["username"] == null && prod.discountprice == null)
                                     {
                                         <!--<p style="font-size: 12px; text-align: right;"><a href="#" class="register-modal"><u>Zaregistrujte sa</u></a> a získajte zľavu ďalších 5%</p>-->
@@ -1223,6 +1223,8 @@
 
                     if ($thisDiscount == 0) {
 
+                        //console.log("a");
+
                         if ($("input[name=userRating]").length) {
 
                             $(".actual-price").text($thisPrice.toFixedNoRounding(2));
@@ -1239,10 +1241,25 @@
                             //ak user je prihlaseny, skryjeme info o cene po registracii
                             $("#afterRegInfo").css("display", "none");
                         } else {
+
+                            //console.log("d");
+
                             $(".actual-price").text($thisPrice.toFixedNoRounding(2));
                             $("#actual-price-w-tax").text(($thisPrice * 100 / 120).toFixedNoRounding(2));
 
-                            $(".discount-price-text, .discount-price-del").addClass("d-none");
+                            /*
+                             *
+                             */
+                            //toto som pridal
+                            $(".discount-label").addClass("d-none");
+                            $(".discount-price-del").addClass("d-none");
+                            $(".discount-price-text").css("margin-top", "40px");
+                            /*
+                             *
+                             */
+
+                            //toto som zakomentoval
+                            //$(".discount-price-text, .discount-price-del").addClass("d-none");
                             $(".discount-price-text small").addClass("d-none");
                             $(".w-discount-price").removeClass("d-none");
 
@@ -1253,6 +1270,8 @@
                         }
 
                     } else {
+
+                        //console.log("b");
 
                         $(".actual-price").text($thisDiscount.toFixedNoRounding(2));
                         $("#actual-price-w-tax").text(($thisDiscount * 100 / 120).toFixedNoRounding(2));
