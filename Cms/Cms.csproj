@@ -21,7 +21,7 @@
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress>true</Use64BitIISExpress>
     <IISExpressSSLPort>44334</IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication>disabled</IISExpressAnonymousAuthentication>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
