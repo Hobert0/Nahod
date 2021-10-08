@@ -197,6 +197,11 @@
                 }).each(function () {
                     $(this).autocomplete("instance")._renderItem = function (ul, item) {
                         let cena = item.price + "€";
+
+                        if (item.custom10 == "true") {
+                            cena = "od " + cena;
+                        }
+
                         var slug = string_to_slug(item.title);
 
                         return $("<li>")

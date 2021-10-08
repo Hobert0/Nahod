@@ -977,7 +977,7 @@ namespace Cms.Controllers
                     //variant.prod_id;
                     var newProd = prodsDb.Where(a => a.deleted == false && a.id == variant.prod_id).FirstOrDefault();
 
-                    if (!prods.Contains(newProd))
+                    if (newProd != null && !prods.Contains(newProd))
                     {
                         prods.Add(newProd);
                     }

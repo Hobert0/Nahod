@@ -273,7 +273,7 @@
 <script>
 
 
-    $(document).ready(function () {
+    $(document).ready(function() {
 
         //$filterClicked = false;
 
@@ -287,7 +287,7 @@
             "ajax": {
                 "url": "/Api/FetchProductsDatatable",
                 "type": "POST",
-                "data": function (o) {
+                "data": function(o) {
                     o.category = $("#filterByCategory").val();
                     o.brand = $("#filterByBrand").val();
                     o.priceFrom = $("#filterByPriceFrom").val();
@@ -314,11 +314,11 @@
             "language": {
                 "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Slovak.json"
             },
-            "drawCallback": function (settings, json) {
+            "drawCallback": function(settings, json) {
                 //upravime css
 
-                
-                $('#productsTable tbody tr').each(function () {
+
+                $('#productsTable tbody tr').each(function() {
 
                     $tds = $(this).find("td");
                     $tds.eq(0).attr("style", "display:none;");
@@ -339,9 +339,12 @@
 
                     $('#productsTable').css("width", "auto");
                 });
-                
+
+                $("#productsTable_filter input").after("<span style='font-size: 10px; margin-left: 5px;'>min. 3 znaky</span>");
+
             }
         });
+
 
         //init
         $("#filterByCategory").val("");
