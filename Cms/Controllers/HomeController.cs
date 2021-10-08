@@ -985,6 +985,53 @@ namespace Cms.Controllers
 
             names.AddRange(varProds);
 
+            List<products> newNames = new List<products>();
+            //nasledne este musime raz prejst "names" pretoze momentalne obsahuje len cenu a discount cenu pre cely produkt ale ak ma varianty tak potrebujeme vybrat ceny z variant
+            foreach (var name in names)
+            {
+                var prodVars = db.variants.Where(a => a.prod_id == name.id).ToList();
+                if (prodVars.Count > 0)
+                {
+                    //najdeme najmensiu cenu
+                    decimal min = 999999;
+                    foreach (var nameVar in prodVars)
+                    {
+                        if (nameVar.discountprice == null)
+                        {
+                            if (nameVar.price < min)
+                            {
+                                min = (decimal)nameVar.price;
+                            }
+                        }
+                        else
+                        {
+                            if (nameVar.discountprice < min)
+                            {
+                                min = (decimal)nameVar.discountprice;
+                            }
+                        }
+                    }
+
+                    name.price = min;
+                    //vyuzijeme tento stlpec aby sme vedeli povedat ze to je varianta a aby sme pred cenu vedeli doplnit Od...
+                    name.custom10 = "true";
+                    newNames.Add(name);
+                }
+                else
+                {
+                    if (name.discountprice == null)
+                    {
+                        newNames.Add(name);
+                    }
+                    else
+                    {
+                        name.price = (decimal)name.discountprice;
+                        newNames.Add(name);
+                    }
+                    
+                }
+            }
+
             /*
             var names = Prods.AsEnumerable().Where(p => p.title.ToLower().Contains(term.ToLower()) || ( p.number != null && p.number.ToLower().Contains(term.ToLower()))).ToList();
             var allvariants = db.variants.AsEnumerable().Where(p => p.number != null && p.number.ToLower().Contains(term.ToLower())).ToList();
@@ -999,7 +1046,7 @@ namespace Cms.Controllers
             names.AddRange(varProds);
             */
 
-            return Json(names, JsonRequestBehavior.AllowGet);
+            return Json(newNames, JsonRequestBehavior.AllowGet);
         }
 
         [Route("vyhladavanie")]

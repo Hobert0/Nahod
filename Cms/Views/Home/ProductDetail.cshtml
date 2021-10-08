@@ -255,7 +255,11 @@
                             <p class="discount-price-text d-none" style="text-align: right;font-size:25px; margin: 20px 0 0;color: #ff8b00;"><span class="discount-label">Akciová cena</span> <strong style="font-size:30px;"><span class="actual-price">0</span> €</strong><br class="d-none d-sm-block" /><small style="font-size: 12px;color: #333;">Na produkt sa <strong>nevzťahuje</strong> zľava po prihlásení.</small></p>
                         }
                                 @{
-                                    if (prod.discountprice != null)
+
+                                    var varsTemp = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).ToList();
+
+                                    if ((varsTemp.Count > 0 && varsTemp[0].discountprice != null) || (varsTemp.Count == 0 && prod.discountprice != null))
+                                    //if ((varsTemp.Count > 0 && varsTemp[0].discountprice != null) && prod.discountprice != null)
                                     {
                                         povodnacena = prod.price;
                                         <div class="discount-price-del" style="text-align: right;font-size:25px;">
@@ -322,9 +326,10 @@
                                             }
                                         }
                                     }
-
+                                    
                                     //ak nie je discount price
-                                    if (Request.Cookies["username"] == null && prod.discountprice == null)
+                                    //if (Request.Cookies["username"] == null && prod.discountprice == null)
+                                    if (Request.Cookies["username"] == null && ((varsTemp.Count() == 0 && prod.discountprice == null) || (varsTemp.Count() > 0 && varsTemp[0].discountprice == null)))
                                     {
                                         <!--<p style="font-size: 12px; text-align: right;"><a href="#" class="register-modal"><u>Zaregistrujte sa</u></a> a získajte zľavu ďalších 5%</p>-->
 
@@ -348,7 +353,7 @@
                                     }
                                     else //ak je cena normalna
                                     {
-                                        var classNegMargin ="";
+                                        var classNegMargin = "";
                                         //ak existuje varianta, pridame zaporny margin aby sme vyplnili prazdne miesto
                                         if (Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).Count() > 0)
                                         {
@@ -358,8 +363,8 @@
                                             <div class="col-lg-4 col-sm-6 col-12 product-variation">
 
                                                 @{
-                                                        //var variants = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).ToList();
-                                                        var varFirstAttrId = 0;
+                                                    //var variants = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).ToList();
+                                                    var varFirstAttrId = 0;
 
                                                     if (Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).Count() > 0)
                                                     {
@@ -1154,7 +1159,7 @@
                             <br />
                             <div class="form-group">
                                 <div class="right">
-                                <button data-sitekey="6LfAQx0bAAAAAGAGalVF2LJcUyuLJ7O8kNqH8W2u" class="g-recaptcha rect-button btn btn-color col-5" data-callback="validateNewsletter" data-action="submit" >Prihlásiť sa k odberu</button>
+                                    <button data-sitekey="6LfAQx0bAAAAAGAGalVF2LJcUyuLJ7O8kNqH8W2u" class="g-recaptcha rect-button btn btn-color col-5" data-callback="validateNewsletter" data-action="submit">Prihlásiť sa k odberu</button>
                                     @*<input type="submit" value="Odoslať žiadosť o informácie" class="btn btn-color col-5" />*@
                                 </div>
                             </div>
@@ -1186,15 +1191,15 @@
                         $rating = $("input[name=userRating]").val();
 
                         switch ($rating) {
-                        case "1":
-                            return $price * 0.95;
-                            break;
-                        case "2":
-                            return $price * 0.9;
-                            break;
-                        case "3":
-                            return $price * 0.85;
-                            break;
+                            case "1":
+                                return $price * 0.95;
+                                break;
+                            case "2":
+                                return $price * 0.9;
+                                break;
+                            case "3":
+                                return $price * 0.85;
+                                break;
                         }
                     }
 
@@ -1223,6 +1228,8 @@
 
                     if ($thisDiscount == 0) {
 
+                        //console.log("a");
+
                         if ($("input[name=userRating]").length) {
 
                             $(".actual-price").text($thisPrice.toFixedNoRounding(2));
@@ -1239,6 +1246,9 @@
                             //ak user je prihlaseny, skryjeme info o cene po registracii
                             $("#afterRegInfo").css("display", "none");
                         } else {
+
+                            //console.log("d");
+
                             $(".actual-price").text($thisPrice.toFixedNoRounding(2));
                             $("#actual-price-w-tax").text(($thisPrice * 100 / 120).toFixedNoRounding(2));
 
@@ -1254,10 +1264,17 @@
 
                     } else {
 
+                        //console.log("b");
+
                         $(".actual-price").text($thisDiscount.toFixedNoRounding(2));
                         $("#actual-price-w-tax").text(($thisDiscount * 100 / 120).toFixedNoRounding(2));
 
-                        $(".discount-price-del del").text($thisPrice.toFixedNoRounding(2) + " €");
+                        //ak je user prihlaseny a ak je zlava na variante tak do preciarknuteho davalo ratingPrice...
+                        if ($("input[name=userRating]").length) {
+                            $(".discount-price-del del").text($thisPriceDefault.toFixedNoRounding(2) + " €");
+                        } else {
+                            $(".discount-price-del del").text($thisPrice.toFixedNoRounding(2) + " €");
+                        }
 
                         $(".discount-label").text("Akciová cena");
 
@@ -1360,19 +1377,19 @@
     <script src="~/Scripts/add_product_to_cart.js"></script>
     <script src="~/Scripts/add_to_session.js"></script>
 
-<script>
-    function validateNewsletter() {
+    <script>
+        function validateNewsletter() {
             $("#askForPrice").submit();
-    }
+        }
 
-    $(document).ready(function () {
-        $(".watchdog-modal").click(function () {
-            $("#myModalWatchdog").css("display", "flex");
+        $(document).ready(function () {
+            $(".watchdog-modal").click(function () {
+                $("#myModalWatchdog").css("display", "flex");
+            });
+
+            $("#myModalWatchdog .close").click(function () {
+                $("#myModalWatchdog").css("display", "none");
+            });
+
         });
-
-        $("#myModalWatchdog .close").click(function () {
-            $("#myModalWatchdog").css("display", "none");
-        });
-
-    });
-</script>
+    </script>

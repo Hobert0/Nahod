@@ -964,7 +964,7 @@ namespace Cms.Controllers
             //IQueryable<products> prods = null;
             List<products> prods;
 
-            if (search != "" && search != null && search.Length > 1)
+            if (search != "" && search != null && search.Length > 2)
             {
 
                 var prodsDb = db.products.Where(a => a.deleted == false).ToList();
@@ -977,7 +977,7 @@ namespace Cms.Controllers
                     //variant.prod_id;
                     var newProd = prodsDb.Where(a => a.deleted == false && a.id == variant.prod_id).FirstOrDefault();
 
-                    if (!prods.Contains(newProd))
+                    if (newProd != null && !prods.Contains(newProd))
                     {
                         prods.Add(newProd);
                     }
