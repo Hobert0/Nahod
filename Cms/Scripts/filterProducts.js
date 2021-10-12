@@ -2,6 +2,8 @@
 var filteredData;
 
 $(document).ready(function () {
+    filteredData = allproductsdata.slice();
+    /*
     //kazdych 100ms skusame, ci je uz allproductsdata nacitany, max 5s
     var myIntervalCounter = 0;
     var myInterval = setInterval(function () {
@@ -14,6 +16,7 @@ $(document).ready(function () {
         myIntervalCounter++;
     },
         100);
+    */
 });
 
 $(".productfilter").change(function (e) {
