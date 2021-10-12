@@ -228,6 +228,7 @@
 
     .galleryimg {
         width: 100% !important;
+        max-height: none;
     }
 
     /*

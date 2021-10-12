@@ -8,7 +8,7 @@ $(document).ready(function () {
     bytype = url.pathname.includes("typ") ?? false;
     search = url.pathname.includes("vyhladavanie") ?? false;
     fetchProducts(page, bybrand, search, bytype);
-});epodarilo sa načítať produkty. Kontaktujte prosím administrátora.');
+});
 
 function fetchProducts(page, bybrand, search, bytype) {
     let params = window.location.pathname.split('/');
