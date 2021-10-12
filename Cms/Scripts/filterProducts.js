@@ -2,17 +2,15 @@
 var filteredData;
 
 $(document).ready(function () {
+    //kazdych 100ms skusame, ci je uz allproductsdata nacitany, max 5s
     var myIntervalCounter = 0;
     var myInterval = setInterval(function () {
 
         if (allproductsdata != null || myIntervalCounter == 50) {
             filteredData = allproductsdata.slice();
-
-            console.log("stopped");
-
+            //console.log("stopped");
             clearInterval(myInterval);
         }
-
         myIntervalCounter++;
     },
         100);
