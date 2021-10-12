@@ -117,25 +117,25 @@
 
                     @{
                         /*
-                            @foreach (var cat in Model.CategoriesModel.Where(i => i.maincat == catName && i.topcat == "Žiadna"))
-                            {
-                                <div class="col-md-auto subcatthumb py-2 m-1">
-                                    <a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(nameofcat), subslug = @Html.Raw(cat.slug) })">
-                                        <div style="background-image: url(/Uploads/@cat.image); background-size: contain;"></div>
-                                        <p>@cat.name</p>
-                                    </a>
-                                </div>
-                            }
-                            @foreach (var cat in Model.CategoriesModel.Where(i => i.maincat == mainCatName && i.topcat == catName))
-                            {
-                                <div class="col-md-auto subcatthumb py-2 m-1">
-                                    <a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(nameofcat), subslug = @Html.Raw(cat.slug) })">
-                                        <div style="background-image: url(/Uploads/@cat.image); background-size: contain;"></div>
-                                        <p>@cat.name</p>
-                                    </a>
-                                </div>
-                            }
-                        */
+                                        @foreach (var cat in Model.CategoriesModel.Where(i => i.maincat == catName && i.topcat == "Žiadna"))
+                                        {
+                                            <div class="col-md-auto subcatthumb py-2 m-1">
+                                                <a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(nameofcat), subslug = @Html.Raw(cat.slug) })">
+                                                    <div style="background-image: url(/Uploads/@cat.image); background-size: contain;"></div>
+                                                    <p>@cat.name</p>
+                                                </a>
+                                            </div>
+                                        }
+                                        @foreach (var cat in Model.CategoriesModel.Where(i => i.maincat == mainCatName && i.topcat == catName))
+                                        {
+                                            <div class="col-md-auto subcatthumb py-2 m-1">
+                                                <a href="@Url.Action("Category", "Home", new { catslug = @Html.Raw(nameofcat), subslug = @Html.Raw(cat.slug) })">
+                                                    <div style="background-image: url(/Uploads/@cat.image); background-size: contain;"></div>
+                                                    <p>@cat.name</p>
+                                                </a>
+                                            </div>
+                                        }
+                                    */
                     }
                 </div>
             </div>
@@ -317,9 +317,11 @@
 
     </div>
 </div>
+<!--
 <script src="~/Scripts/fetchProducts.js"></script>
 <script src="~/Scripts/filterProducts.js"></script>
 <script src="~/Scripts/add_to_session.js"></script>
+-->
 <script>
     $(".showMoreProds").click(function (e) {
         e.preventDefault();
