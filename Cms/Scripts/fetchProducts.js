@@ -40,7 +40,7 @@ function fetchProducts(page, bybrand, search, bytype) {
 
         error: function () {
             //alert('Nepodarilo sa načítať produkty. Kontaktujte prosím administrátora.');
-            location.reload();
+            location.reload(true);
         }
     }).done(function () {
         //$loading.remove();

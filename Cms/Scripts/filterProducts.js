@@ -137,7 +137,7 @@ $(".sortbyprice").click(function (e) {
 
 $("#resetfilter").click(function (e) {
     localStorage.removeItem('sorted');
-    location.reload();
+    location.reload(true);
 });
 
 
