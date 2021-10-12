@@ -39,7 +39,8 @@ function fetchProducts(page, bybrand, search, bytype) {
         },
 
         error: function () {
-            alert('Nepodarilo sa načítať produkty. Kontaktujte prosím administrátora.');
+            //alert('Nepodarilo sa načítať produkty. Kontaktujte prosím administrátora.');
+            location.reload();
         }
     }).done(function () {
         //$loading.remove();
