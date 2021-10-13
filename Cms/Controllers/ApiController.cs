@@ -33,27 +33,60 @@ namespace Cms.Controllers
         public JsonResult FetchProducts(string catslug, string subslug, string subslug2, string subslug3, bool brand, bool searchparam, bool type)
         {
             object result = null;
-            var variants = db.variants.OrderBy(o => o.num).ToList();
+            //var variants = db.variants.OrderBy(o => o.num).ToList();
             if (brand)
             {
+
+                var prods = FetchByBrand(catslug, subslug, subslug2).ProductModel.OrderByDescending(i => i.id);
+                List<variants> variants = new List<variants>();
+                foreach (var prod in prods)
+                {
+                    var tempVars = db.variants.Where(a => a.prod_id == prod.id && a.deleted == false).ToList();
+                    variants.AddRange(tempVars);
+                }
+
+                result = new { data = prods, variants };
+
                 //subslug - kategoria level 1
                 //subslug2 - kategoria level 2
-                result = new { data = FetchByBrand(catslug, subslug, subslug2).ProductModel.OrderByDescending(i => i.id), variants };
+                //result = new { data = FetchByBrand(catslug, subslug, subslug2).ProductModel.OrderByDescending(i => i.id), variants };
             }
             else if (type)
             {
+
+                var prods = FetchByType(catslug, subslug, subslug2).ProductModel.OrderByDescending(i => i.id);
+                List<variants> variants = new List<variants>();
+                foreach (var prod in prods)
+                {
+                    var tempVars = db.variants.Where(a => a.prod_id == prod.id && a.deleted == false).ToList();
+                    variants.AddRange(tempVars);
+                }
+
+                result = new { data = prods, variants };
+
                 //subslug - kategoria level 1
                 //subslug2 - kategoria level 2
-                result = new { data = FetchByType(catslug, subslug, subslug2).ProductModel.OrderByDescending(i => i.id), variants };
+                //result = new { data = FetchByType(catslug, subslug, subslug2).ProductModel.OrderByDescending(i => i.id), variants };
             }
             else if (searchparam)
             {
             }
             else if (subslug == "novinky-v-e-shope")
             {
+
+                var prods = FetchNewest().ProductModel.OrderByDescending(i => i.id);
+                List<variants> variants = new List<variants>();
+                foreach (var prod in prods)
+                {
+                    var tempVars = db.variants.Where(a => a.prod_id == prod.id && a.deleted == false).ToList();
+                    variants.AddRange(tempVars);
+                }
+
+                result = new { data = prods, variants };
+
                 //subslug - kategoria level 1
                 //subslug2 - kategoria level 2
-                result = new { data = FetchNewest().ProductModel.OrderByDescending(i => i.id), variants };
+                //result = new { data = FetchNewest().ProductModel.OrderByDescending(i => i.id), variants };
             }
             else
             {
@@ -64,8 +97,20 @@ namespace Cms.Controllers
                 {
                     topcatId = TopCatID(id);
                 }
-                var prodData =
+
+                var prods = SortByBrand(topcatId, id, catslug).ProductModel.OrderByDescending(i => i.id);
+                List<variants> variants = new List<variants>();
+                foreach (var prod in prods)
+                {
+                    var tempVars = db.variants.Where(a => a.prod_id == prod.id && a.deleted == false).ToList();
+                    variants.AddRange(tempVars);
+                }
+
+                result = new { data = prods, variants };
+
+                /*var prodData =
                     result = new { data = SortByBrand(topcatId, id, catslug).ProductModel.OrderByDescending(i => i.id), variants };
+                */
             }
             var jsonResult = Json(result, JsonRequestBehavior.AllowGet);
             jsonResult.MaxJsonLength = int.MaxValue;

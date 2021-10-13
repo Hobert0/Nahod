@@ -35,6 +35,9 @@ function fetchProducts(page, bybrand, search, bytype) {
         success: function (data) {
             allproductsdata = data.data;
             allvariants = data.variants;
+
+            console.log(data.variants);
+
             renderProducts(page, undefined, allproductsdata, allvariants);
         },
 
@@ -88,6 +91,9 @@ function string_to_slug(str) {
 
 function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars = allvariants, pagechanged = false) {
 
+
+    console.log(vars);
+
     if (page > 1) {
         window.history.pushState({}, '', '?page=' + page);
 
@@ -116,7 +122,9 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
     var $container = $('<div id="productsblock"/>').addClass('row products-row m-0');
 
     $.each(productsdata, function (i, item) {
-        var variants = vars.filter(element => element.prod_id == item.id);
+
+        //var variants = vars.filter(element => element.prod_id == item.id);
+        var variants = vars;
         var slug = string_to_slug(item.title);
         var variableproduct = "false";
         var isvariablecolor = "false";
