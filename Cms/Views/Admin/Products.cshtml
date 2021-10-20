@@ -340,7 +340,9 @@
                     $('#productsTable').css("width", "auto");
                 });
 
-                $("#productsTable_filter input").after("<span style='font-size: 10px; margin-left: 5px;'>min. 3 znaky</span>");
+                if (!$("#min_3_chars_info").length) {
+                    $("#productsTable_filter input").after("<span id='min_3_chars_info' style='font-size: 10px; margin-left: 5px;'>min. 3 znaky</span>");
+                }
 
             }
         });
