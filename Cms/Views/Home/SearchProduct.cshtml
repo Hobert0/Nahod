@@ -41,7 +41,7 @@
                         foreach (var prod in prods)
                         {
                             bool isDiscounted = false;
-                            var variants = Model.VariantModel.Where(o => o.prod_id == prod.id).OrderBy(o => o.num).ToList();
+                            var variants = Model.VariantModel.Where(o => o.prod_id == prod.id && o.deleted == false).OrderBy(o => o.num).ToList();
 
                             if (variants.Count() > 0)
                             {

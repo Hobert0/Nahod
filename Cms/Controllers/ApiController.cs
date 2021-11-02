@@ -836,7 +836,7 @@ namespace Cms.Controllers
 
                 if (cislo != "")
                 {
-                    var product = db.products.Where(i => i.number == cislo).FirstOrDefault();
+                    var product = db.products.Where(i => i.number == cislo && i.deleted == false).FirstOrDefault();
                     if (product != null)
                     {
                         var sendWatchdog = false;
@@ -884,7 +884,7 @@ namespace Cms.Controllers
                     else
                     {
                         //poku3a sa najst hladany produkt medzi variantami
-                        var productinvariants = db.variants.Where(i => i.number == cislo).FirstOrDefault();
+                        var productinvariants = db.variants.Where(i => i.number == cislo && i.deleted == false).FirstOrDefault();
                         if (productinvariants != null)
                         {
                             //var variantprice = cenasdph * decimal.Parse("1,2");

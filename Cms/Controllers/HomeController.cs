@@ -965,14 +965,14 @@ namespace Cms.Controllers
                     //products
                     filteredProds = db.products.Where(i => i.deleted == false && i.active == true).Where(p => p.title.ToLower().Contains(termObj) || (p.number != null && p.number.ToLower().Contains(termObj)));
                     //variants
-                    filteredVars = db.variants.Where(p => p.number != null && p.number.ToLower().Contains(termObj));
+                    filteredVars = db.variants.Where(p => p.number != null && p.deleted == false && p.number.ToLower().Contains(termObj));
                 }
                 else
                 {
                     //products
                     filteredProds = filteredProds.Where(p => p.title.ToLower().Contains(termObj) || (p.number != null && p.number.ToLower().Contains(termObj)));
                     //variants
-                    filteredVars = filteredVars.Where(p => p.number != null && p.number.ToLower().Contains(termObj));
+                    filteredVars = filteredVars.Where(p => p.number != null && p.deleted == false  && p.number.ToLower().Contains(termObj));
                 }
                 counter++;
             }
@@ -989,7 +989,7 @@ namespace Cms.Controllers
             //nasledne este musime raz prejst "names" pretoze momentalne obsahuje len cenu a discount cenu pre cely produkt ale ak ma varianty tak potrebujeme vybrat ceny z variant
             foreach (var name in names)
             {
-                var prodVars = db.variants.Where(a => a.prod_id == name.id).ToList();
+                var prodVars = db.variants.Where(a => a.prod_id == name.id && a.deleted == false).ToList();
                 if (prodVars.Count > 0)
                 {
                     //najdeme najmensiu cenu
@@ -1104,14 +1104,14 @@ namespace Cms.Controllers
                     //products
                     filteredProds = db.products.Where(o => o.deleted == false && o.active == true).Where(p => p.title.ToLower().Contains(termObj) || (p.number != null && p.number.ToLower().Contains(termObj)));
                     //variants
-                    filteredVars = db.variants.Where(p => p.number != null && p.number.ToLower().Contains(termObj));
+                    filteredVars = db.variants.Where(p => p.number != null && p.deleted == false && p.number.ToLower().Contains(termObj));
                 }
                 else
                 {
                     //products
                     filteredProds = filteredProds.Where(p => p.title.ToLower().Contains(termObj) || (p.number != null && p.number.ToLower().Contains(termObj)));
                     //variants
-                    filteredVars = filteredVars.Where(p => p.number != null && p.number.ToLower().Contains(termObj));
+                    filteredVars = filteredVars.Where(p => p.number != null && p.deleted == false && p.number.ToLower().Contains(termObj));
                 }
                 counter++;
             }
