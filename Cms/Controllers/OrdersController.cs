@@ -300,6 +300,8 @@ namespace Cms.Controllers
             this.SendHtmlFormattedEmail("Ďakujeme za objednávku!", body, o.email, "customer", o.ordernumber);
             this.SendHtmlFormattedEmail("OBJEDNÁVKA Č.: " + o.ordernumber + "", body_owner, ownerEmail, "owner", o.ordernumber);
 
+            TempData["tempCartItems"] = Session["cartitems"];
+
             //remove session
             Session["cartitems"] = new List<dynamic>();
             Session["cartsum"] = 0;

@@ -94,6 +94,48 @@
         }
     </div>
 </div>
+
+<!-- Meranie konverzií -->
+<script type="text/javascript">
+    var _hrq = _hrq || [];
+
+    _hrq.push(['setKey', '215A11B3BE36393F0A7B77D2E8F07B17x']);
+
+    @{
+        List<dynamic> tempCart = new List<dynamic>();
+        tempCart = (List<dynamic>) TempData["tempCartItems"];
+
+        foreach (var ordTemp in Model.OrderDataModel)
+        {
+            @Html.Raw("_hrq.push(['setOrderId', '" + ordTemp.ordernumber + "']);");
+        }
+
+        if (tempCart != null)
+        {
+            foreach (var item in tempCart)
+            {
+                var thisProd = Model.ProductModel.Where(i => i.id == item.product.Value).SingleOrDefault();
+
+                @Html.Raw("_hrq.push(['addProduct', '" + thisProd.title + "', '" + item.price.Value + "', '" + item.quantity.Value + "', '" + item.product.Value + "']);");
+            }
+        }
+    }
+
+    _hrq.push(['trackOrder']);
+
+    (function() {
+
+        var ho = document.createElement('script'); ho.type = 'text/javascript'; ho.async = true;
+
+        ho.src = 'https://im9.cz/sk/js/ext/2-roi-async.js';
+
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ho, s);
+
+    })();
+
+</script>
+
+
 <script>
 
     $(document).ready(function () {
