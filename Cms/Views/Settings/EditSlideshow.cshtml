@@ -110,11 +110,11 @@
 
                                 if (item.active == 1)
                                 {
-                                    @Html.ActionLink(HttpUtility.HtmlDecode("&#9208;"), "PauseSlide", new {id = item.id, page = Html.DisplayTextFor(model => model.Page)}, new {onclick = "return confirm('Naozaj chcete pozastaviť zobrazovanie slidu?')", @class = "btn btn-warning", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím pozastavíte zobrazovanie slidu.", style = "position: absolute; margin-top: -44px;"})
+                                    @Html.ActionLink("<i class='fas fa-pause'></i>", "PauseSlide", new {id = item.id, page = Html.DisplayTextFor(model => model.Page)}, new {onclick = "return confirm('Naozaj chcete pozastaviť zobrazovanie slidu?')", @class = "btn btn-warning", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím pozastavíte zobrazovanie slidu.", style = "position: absolute; margin-top: -44px;right:-60px;" })
                                 }
                                 else
                                 {
-                                    @Html.ActionLink(HttpUtility.HtmlDecode("&#9654;"), "UnPauseSlide", new {id = item.id, page = Html.DisplayTextFor(model => model.Page)}, new {onclick = "return confirm('Naozaj chcete obnoviť zobrazovanie slidu?')", @class = "btn btn-warning", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím obnovíte zobrazovanie slidu.", style = "position: absolute; margin-top: -44px;"})
+                                    @Html.ActionLink("<i class='fas fa-play'></i>", "UnPauseSlide", new {id = item.id, page = Html.DisplayTextFor(model => model.Page)}, new {onclick = "return confirm('Naozaj chcete obnoviť zobrazovanie slidu?')", @class = "btn btn-warning", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím obnovíte zobrazovanie slidu.", style = "position: absolute; margin-top: -44px;right:-60px;"})
                                 }
                             }
 
