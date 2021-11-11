@@ -46,7 +46,7 @@ namespace Cms.Controllers
             model.BrandsModel = db.brands.Where(o => o.deleted == false).ToList();
             model.CategoriesModel = db.categories.Where(o => o.deleted == false).ToList();
             model.TypesModel = db.types.Where(o => o.deleted == false).ToList();
-            model.SlideshowModel = db.slideshow.ToList();
+            model.SlideshowModel = db.slideshow.Where(o => o.active == 1).ToList();
 
             //ViewData["countries"] = new AdminController().SelectionCountries();
             ViewData["Homepage"] = "true";
@@ -561,26 +561,44 @@ namespace Cms.Controllers
                 {
                     if (item.transfer1_enbl && item.transfer1 != null)
                     {
+                        var finalDeliveryPrice = item.transfer1;
+                        if (product.price >= Convert.ToDecimal(item.transfer5))
+                        {
+                            finalDeliveryPrice = "0.00";
+                        }
+                        
                         doc12 = new XElement("DELIVERY",
                             new XElement("DELIVERY_ID", "DPD"),
-                            new XElement("DELIVERY_PRICE", item.transfer1),
-                            new XElement("DELIVERY_PRICE_COD", item.transfer1)
+                            new XElement("DELIVERY_PRICE", finalDeliveryPrice),
+                            new XElement("DELIVERY_PRICE_COD", finalDeliveryPrice)
                             );
                     }
                     if (item.transfer2_enbl && item.transfer2 != null)
                     {
+                        var finalDeliveryPrice = item.transfer2;
+                        if (product.price >= Convert.ToDecimal(item.transfer5))
+                        {
+                            finalDeliveryPrice = "0.00";
+                        }
+
                         doc15 = new XElement("DELIVERY",
                             new XElement("DELIVERY_ID", "SLOVENSKA_POSTA"),
-                            new XElement("DELIVERY_PRICE", item.transfer2),
-                            new XElement("DELIVERY_PRICE_COD", item.transfer2)
+                            new XElement("DELIVERY_PRICE", finalDeliveryPrice),
+                            new XElement("DELIVERY_PRICE_COD", finalDeliveryPrice)
                         );
                     }
                     if (item.transfer3_enbl && item.transfer3 != null)
                     {
+                        var finalDeliveryPrice = item.transfer3;
+                        if (product.price >= Convert.ToDecimal(item.transfer5))
+                        {
+                            finalDeliveryPrice = "0.00";
+                        }
+
                         doc16 = new XElement("DELIVERY",
                             new XElement("DELIVERY_ID", "VLASTNA_PREPRAVA"),
-                            new XElement("DELIVERY_PRICE", item.transfer3),
-                            new XElement("DELIVERY_PRICE_COD", item.transfer3)
+                            new XElement("DELIVERY_PRICE", finalDeliveryPrice),
+                            new XElement("DELIVERY_PRICE_COD", finalDeliveryPrice)
                         );
                     }
                 }

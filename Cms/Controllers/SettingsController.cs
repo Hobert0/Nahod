@@ -317,6 +317,22 @@ namespace Cms.Controllers
             return RedirectToAction("Slideshow");
         }
 
+        public ActionResult PauseSlide(int id, string page)
+        {
+            var slideshow = db.slideshow.Where(i => i.id == id).FirstOrDefault();
+            slideshow.active = 0;
+
+            db.SaveChanges();
+            return RedirectToAction("EditSlideshow", new { stranka = page });
+        }
+        public ActionResult UnPauseSlide(int id, string page)
+        {
+            var slideshow = db.slideshow.Where(i => i.id == id).FirstOrDefault();
+            slideshow.active = 1;
+
+            db.SaveChanges();
+            return RedirectToAction("EditSlideshow", new { stranka = page });
+        }
         public ActionResult DeleteSlide(int id, string url, string page)
         {
             string fullPath = Request.MapPath(url);
