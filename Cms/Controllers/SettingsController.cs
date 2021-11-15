@@ -13,6 +13,9 @@ namespace Cms.Controllers
     public class SettingsController : Controller
     {
         Entities db = new Entities();
+        Entities db1 = new Entities();
+        Entities db2 = new Entities();
+        Entities db3 = new Entities();
         [Route("nastavenia/e-shop")]
         public ActionResult EshopSettings()
         {
@@ -316,6 +319,71 @@ namespace Cms.Controllers
 
             return RedirectToAction("Slideshow");
         }
+
+        public ActionResult DeleteWithMultipleEmail()
+        {
+            //var users = db.users.GroupBy(a => a.id, a=> a.email, (key, g) => new { UserId = key, Emails = g.ToList() });
+            var users = db.users.GroupBy(x => x.email)
+                .Select(x => new { Email = x.Key, Count = x.Count() });
+            foreach (var user in users)
+            {
+                if (user.Count > 1)
+                {
+                    //var tempUser = user;
+
+                    var existsClassicPassword = db1.users.Where(a => a.email == user.Email && a.password != "reset").FirstOrDefault();
+
+                    //ak existuje heslo tak vymazeme vsetky resety
+                    if (existsClassicPassword != null)
+                    {
+                        var usersToRemove = db2.users.Where(a => a.email == user.Email && a.password == "reset").ToList();
+                        foreach (var userToRemove in usersToRemove)
+                        {
+                            var userMetaToRemove = db3.usersmeta.Where(a => a.userid == userToRemove.id).FirstOrDefault();
+
+                            if (userMetaToRemove != null)
+                            {
+                                db3.usersmeta.Remove(userMetaToRemove);
+                            }
+
+                            db2.users.Remove(userToRemove);
+                            db2.SaveChanges();
+                            db3.SaveChanges();
+                        }
+                    }
+                    //ak neexistuje heslo, tak nechame 1 reset
+                    else
+                    {
+                        var usersToRemove = db2.users.Where(a => a.email == user.Email && a.password == "reset").ToList();
+                        var counter = 0;
+                        foreach (var userToRemove in usersToRemove)
+                        {
+                            if (counter > 0)
+                            {
+
+                                var userMetaToRemove = db3.usersmeta.Where(a => a.userid == userToRemove.id).FirstOrDefault();
+
+                                if (userMetaToRemove != null)
+                                {
+                                    db3.usersmeta.Remove(userMetaToRemove);
+                                }
+
+                                db2.users.Remove(userToRemove);
+                                db2.SaveChanges();
+                                db3.SaveChanges();
+                            }
+
+                            counter++;
+                        }
+                    }
+                }
+            }
+
+                //db.SaveChanges();
+                return RedirectToAction("Admin", "Admin");
+        }
+
+
 
         public ActionResult PauseSlide(int id, string page)
         {
