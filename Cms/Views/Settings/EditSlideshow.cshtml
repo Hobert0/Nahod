@@ -102,6 +102,7 @@
                                 count = group.Count();
                             }
                         }
+  
                         @foreach (var item in db.slideshow.Where(i => i.page == Model.Page && i.image == Model.Page + "/" + img.Name))
                         {
                             if (count > 1)
@@ -110,15 +111,17 @@
 
                                 if (item.active == 1)
                                 {
-                                    @Html.ActionLink("<i class='fas fa-pause'></i>", "PauseSlide", new {id = item.id, page = Html.DisplayTextFor(model => model.Page)}, new {onclick = "return confirm('Naozaj chcete pozastaviť zobrazovanie slidu?')", @class = "btn btn-warning", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím pozastavíte zobrazovanie slidu.", style = "position: absolute; margin-top: -44px;right:-60px;" })
+                                    //@Html.ActionLink("<i class='fas fa-pause'></i>", "PauseSlide", new {id = item.id, page = Html.DisplayTextFor(model => model.Page)}, new {onclick = "return confirm('Naozaj chcete pozastaviť zobrazovanie slidu?')", @class = "btn btn-warning", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím pozastavíte zobrazovanie slidu.", style = "position: absolute; margin-top: -44px;right:-60px;" })
+                                    <a href="@Url.Action("PauseSlide", "Settings", new {id = item.id, page = Html.DisplayTextFor(model => model.Page)})" onclick="return confirm('Naozaj chcete pozastaviť zobrazovanie slidu?')" class="btn btn-warning" data_toggle="tooltip" data_placement="top" title="Kliknutím pozastavíte zobrazovanie slidu." style="position: absolute; margin-top: -44px;right:-60px;"><i class="fas fa-pause"></i></a>
                                 }
                                 else
                                 {
-                                    @Html.ActionLink("<i class='fas fa-play'></i>", "UnPauseSlide", new {id = item.id, page = Html.DisplayTextFor(model => model.Page)}, new {onclick = "return confirm('Naozaj chcete obnoviť zobrazovanie slidu?')", @class = "btn btn-warning", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím obnovíte zobrazovanie slidu.", style = "position: absolute; margin-top: -44px;right:-60px;"})
+                                    //@Html.ActionLink("<i class='fas fa-play'></i>", "UnPauseSlide", new {id = item.id, page = Html.DisplayTextFor(model => model.Page)}, new {onclick = "return confirm('Naozaj chcete obnoviť zobrazovanie slidu?')", @class = "btn btn-warning", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím obnovíte zobrazovanie slidu.", style = "position: absolute; margin-top: -44px;right:-60px;"})
+                                    <a href="@Url.Action("UnPauseSlide", "Settings", new {id = item.id, page = Html.DisplayTextFor(model => model.Page)})" onclick="return confirm('Naozaj chcete obnoviť zobrazovanie slidu?')" class="btn btn-warning" data_toggle="tooltip" data_placement="top" title="Kliknutím obnovíte zobrazovanie slidu." style="position: absolute; margin-top: -44px;right:-60px;"><i class="fas fa-play"></i></a>
                                 }
                             }
-
                         }
+                       
                     </div>
                     <div class="col-md-4">
 
