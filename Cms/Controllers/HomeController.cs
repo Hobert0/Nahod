@@ -891,8 +891,8 @@ namespace Cms.Controllers
                         foreach (var thisCat in cats)
                         {
                             var thisCatObj = model.CategoriesModel.Where(i => i.id == thisCat.Value).FirstOrDefault();
-                            //if (thisCatObj != null && thisCatObj.topcat != "Žiadna" && thisCatObj.maincat != "580" && thisCatObj.maincat != "603" && thisCatObj.maincat != "604" && thisCatObj.maincat != "605" && thisCatObj.maincat != "606" && thisCatObj.maincat != "607" && thisCatObj.maincat != "608" && thisCatObj.maincat != "609") // zaroven ak sa nerovna kategoriam z AKCIE A NOVINKY a ostatnym
-                            if (thisCatObj != null && thisCatObj.topcat != "Žiadna" && thisCatObj.maincat != "580") 
+                            if (thisCatObj != null && thisCatObj.topcat != "Žiadna" && thisCatObj.maincat != "580" && thisCatObj.maincat != "603" && thisCatObj.maincat != "604" && thisCatObj.maincat != "605" && thisCatObj.maincat != "606" && thisCatObj.maincat != "607" && thisCatObj.maincat != "608" && thisCatObj.maincat != "609") // zaroven ak sa nerovna kategoriam z AKCIE A NOVINKY a ostatnym
+                            //if (thisCatObj != null && thisCatObj.topcat != "Žiadna" && thisCatObj.maincat != "580") 
                             {
                                 choosenCatId = thisCatObj.id;
 
@@ -905,8 +905,8 @@ namespace Cms.Controllers
                             foreach (var thisCat in cats)
                             {
                                 var thisCatObj = model.CategoriesModel.Where(i => i.id == thisCat.Value).FirstOrDefault();
-                                //if (thisCatObj != null && thisCatObj.maincat != "Žiadna" && thisCatObj.maincat != "580" && thisCatObj.maincat != "603" && thisCatObj.maincat != "604" && thisCatObj.maincat != "605" && thisCatObj.maincat != "606" && thisCatObj.maincat != "607" && thisCatObj.maincat != "608" && thisCatObj.maincat != "609") // zaroven ak sa nerovna kategoriam z AKCIE A NOVINKY a ostatnym
-                                if (thisCatObj != null && thisCatObj.maincat != "Žiadna" && thisCatObj.maincat != "580")
+                                if (thisCatObj != null && thisCatObj.maincat != "Žiadna" && thisCatObj.maincat != "580" && thisCatObj.maincat != "603" && thisCatObj.maincat != "604" && thisCatObj.maincat != "605" && thisCatObj.maincat != "606" && thisCatObj.maincat != "607" && thisCatObj.maincat != "608" && thisCatObj.maincat != "609") // zaroven ak sa nerovna kategoriam z AKCIE A NOVINKY a ostatnym
+                                //if (thisCatObj != null && thisCatObj.maincat != "Žiadna" && thisCatObj.maincat != "580")
                                 {
                                     choosenCatId = thisCatObj.id;
 
