@@ -566,7 +566,7 @@ namespace Cms.Controllers
                         {
                             finalDeliveryPrice = "0.00";
                         }
-                        
+
                         doc12 = new XElement("DELIVERY",
                             new XElement("DELIVERY_ID", "DPD"),
                             new XElement("DELIVERY_PRICE", finalDeliveryPrice),
@@ -789,6 +789,241 @@ namespace Cms.Controllers
             return Content(strXml.ToString(), "application/xml");
         }
 
+        [Route("googlefeed")]
+        public ActionResult GoogleFeed()
+        {
+            MultipleIndexModel model = new MultipleIndexModel();
+            MemoryStream ms = new MemoryStream();
+            XmlWriterSettings xws = new XmlWriterSettings();
+            xws.OmitXmlDeclaration = true;
+            xws.Indent = true;
+            var url_part1 = "";
+            var url_part2 = "";
+            var url_part3 = "";
+
+            model.ProductModel = db.products.ToList();
+            model.BrandsModel = db.brands.ToList();
+            model.CategoriesModel = db.categories.ToList();
+            model.EsettingsModel = db.e_settings.ToList();
+
+            XDocument xdoc = new XDocument(
+                new XDeclaration("1.0", "utf-8", "yes")
+            );
+            XNamespace g = "http://base.google.com/ns/1.0";
+
+            XElement xRoot = new XElement("channel", new XAttribute(XNamespace.Xmlns + "g", g));
+            xdoc.Add(xRoot);
+
+            /*ZMENIT*/
+            foreach (var product in model.ProductModel.Where(i => i.deleted != true))
+            {
+                if (product.price != null)
+                {
+                    XElement xRoot2 = new XElement("item");
+                    XElement doc = new XElement(g + "id", product.id);
+                    XElement doc2 = new XElement(g + "title", product.title);
+                    XElement doc3 = new XElement(g + "condition", "new");
+
+                    if (product.description == null)
+                    {
+                        product.description = "";
+                    }
+
+                    var shortdescription = Regex.Replace(product.description, "<.*?>", String.Empty);
+                    XElement doc4 = new XElement(g + "description", shortdescription);
+                    XElement doc5 = new XElement("link",
+                        "https://nahod.sk" + Url.Action("ProductDetail", "Home",
+                            new { id = product.id, slug = ToUrlSlug(product.title) }));
+                    XElement doc6 = new XElement(g + "image_link", "https://nahod.sk/Uploads/" + product.image);
+                    XElement doc7 = new XElement("additional_image_link",
+                        "https://nahod.sk/Uploads/" + product.image);
+
+
+                    var stock = "";
+                    if (product.stock != null && product.stock != "")
+                    {
+                        if (decimal.Parse(product.stock) > 0)
+                        {
+                            stock = "in_stock";
+                        }
+                        else
+                        {
+                            stock = "out_of_stock";
+                        }
+                    }
+                    else
+                    {
+                        stock = "in_stock";
+                    }
+
+                    XElement doc8 = new XElement(g + "availability", stock);
+
+                    XElement doc9 = new XElement(g + "price", product.price + " EUR");
+
+                    XElement doc19 = null;
+                    if (product.discountprice != null)
+                    {
+                        doc19 = new XElement(g + "sale_price", product.discountprice + " EUR");
+                    }
+
+                    XElement doc10 = null;
+                    if (product.custom3 != null)
+                    {
+                        foreach (var brand in model.BrandsModel.Where(i => i.id == Int32.Parse(product.custom3)))
+                        {
+                            doc10 = new XElement(g + "brand", brand.name);
+                        }
+                    }
+
+                    if (product.category != null && product.category != "[]")
+                    {
+                        url_part1 = "";
+                        url_part2 = "";
+                        url_part3 = "";
+
+                        dynamic cats = JsonConvert.DeserializeObject(product.category);
+
+                        //
+                        //Ak je viacero kategorii, tak zoberieme tu, ktora ma nadradenu kategoriu ... topcat2 nepouzivame
+                        //
+                        var choosenCatId = 0;
+                        //Ak existuje kategoria, ktora ma vyplnenu topcat
+                        foreach (var thisCat in cats)
+                        {
+                            var thisCatObj = model.CategoriesModel.Where(i => i.id == thisCat.Value).FirstOrDefault();
+                            //if (thisCatObj != null && thisCatObj.topcat != "Žiadna" && thisCatObj.maincat != "580" && thisCatObj.maincat != "603" && thisCatObj.maincat != "604" && thisCatObj.maincat != "605" && thisCatObj.maincat != "606" && thisCatObj.maincat != "607" && thisCatObj.maincat != "608" && thisCatObj.maincat != "609") // zaroven ak sa nerovna kategoriam z AKCIE A NOVINKY a ostatnym
+                            if (thisCatObj != null && thisCatObj.topcat != "Žiadna" && thisCatObj.maincat != "580") 
+                            {
+                                choosenCatId = thisCatObj.id;
+
+                                break;
+                            }
+                        }
+                        //Ak existuje kategoria, ktora ma vyplnenu maincat
+                        if (choosenCatId == 0)
+                        {
+                            foreach (var thisCat in cats)
+                            {
+                                var thisCatObj = model.CategoriesModel.Where(i => i.id == thisCat.Value).FirstOrDefault();
+                                //if (thisCatObj != null && thisCatObj.maincat != "Žiadna" && thisCatObj.maincat != "580" && thisCatObj.maincat != "603" && thisCatObj.maincat != "604" && thisCatObj.maincat != "605" && thisCatObj.maincat != "606" && thisCatObj.maincat != "607" && thisCatObj.maincat != "608" && thisCatObj.maincat != "609") // zaroven ak sa nerovna kategoriam z AKCIE A NOVINKY a ostatnym
+                                if (thisCatObj != null && thisCatObj.maincat != "Žiadna" && thisCatObj.maincat != "580")
+                                {
+                                    choosenCatId = thisCatObj.id;
+
+                                    break;
+                                }
+                            }
+                        }
+                        if (choosenCatId == 0)
+                        {
+                            choosenCatId = model.CategoriesModel.Where(i => i.id == cats[0].Value).FirstOrDefault().id;
+                        }
+                        var choosenCat = model.CategoriesModel.Where(i => i.id == choosenCatId).FirstOrDefault();
+
+                        var categoryname = "";
+                        var maincatslug = "";
+                        var categoryslug = "";
+                        if (choosenCat.maincat == "Žiadna")
+                        {
+                            categoryname = choosenCat.name;
+                            categoryslug = choosenCat.slug;
+                        }
+                        else
+                        {
+                            var catId = int.Parse(choosenCat.maincat);
+                            categoryname = model.CategoriesModel.Where(o => o.id == catId).FirstOrDefault().name;
+                            categoryslug = model.CategoriesModel.Where(o => o.id == catId).FirstOrDefault().slug;
+
+                        }
+                        //< li class="breadcrumb-item" style="text-decoration: underline"><a href = "@Url.Action("Category", "HomeController", new {catslug = @Html.Raw(categoryslug)})">@categoryname</a></li>
+                        url_part1 = categoryname;
+
+                        if (choosenCat.maincat != "Žiadna")
+                        {
+                            if (choosenCat.topcat != "Žiadna")
+                            {
+                                var topCatId = Int32.Parse(choosenCat.topcat);
+                                var topCatObj = model.CategoriesModel.Where(o => o.id == topCatId).FirstOrDefault();
+                                //<li class="breadcrumb-item" style="text-decoration: underline"><a href = "@Url.Action("Category", "HomeController", new {catslug = @Html.Raw(topCatObj.slug)})">@topCatObj.name</a></li>
+                                url_part2 = topCatObj.name;
+                            }
+
+                            //<li class="breadcrumb-item" style="text-decoration: underline"><a href = "@Url.Action("Category", "HomeController", new {catslug = @Html.Raw(choosenCat.slug)})">@choosenCat.name</a></li>
+                            url_part3 = choosenCat.name;
+
+                        }
+
+                    }
+
+                    //3334 - Sporting Goods > Outdoor Recreation > Fishing
+                    XElement doc11 = new XElement(g + "google_product_category", "3334");
+                    XElement doc12 = new XElement(g + "product_type", (url_part1 != "" ? url_part1 : "") + (url_part2 != "" ? (" > " + url_part2) : "") + (url_part3 != "" ? (" > " + url_part3) : ""));
+
+                    XElement doc13 = new XElement(g + "mpn", product.number);
+
+                    XElement doc14 = new XElement(g + "shipping");
+                    XElement doc15 = new XElement(g + "country", "SK");
+
+                    //cena dodania
+                    var shippingPrice = model.EsettingsModel.FirstOrDefault().transfer1;
+                    var prodPrice = product.price;
+
+                    XElement doc16 = new XElement(g + "price", shippingPrice + " EUR");
+                    XElement doc17 = new XElement(g + "identifier_exists", "no");
+                    XElement doc18 = new XElement(g + "mobile_link", "https://nahod.sk" + Url.Action("ProductDetail", "Home", new { id = product.id, slug = ToUrlSlug(product.title) }));
+
+
+                    xRoot.Add(xRoot2);
+                    xRoot2.Add(doc);
+                    xRoot2.Add(doc2);
+                    xRoot2.Add(doc9);
+                    xRoot2.Add(doc19);
+                    xRoot2.Add(doc4);
+                    xRoot2.Add(doc5);
+                    xRoot2.Add(doc6);
+                    xRoot2.Add(doc7);
+                    xRoot2.Add(doc8);
+                    xRoot2.Add(doc10);
+                    xRoot2.Add(doc11);
+                    xRoot2.Add(doc12);
+                    xRoot2.Add(doc13);
+                    xRoot2.Add(doc3);
+                    xRoot2.Add(doc14);
+                    xRoot2.Add(doc17);
+                    xRoot2.Add(doc18);
+                    doc14.Add(doc15);
+                    doc14.Add(doc16);
+
+                }
+            }
+
+            return Content(xdoc.ToString(), "application/xml");
+        }
+
+        public string ToUrlSlug(string value)
+        {
+            //First to lower case
+            value = value.ToLowerInvariant();
+
+            //Remove all accents
+            var bytes = Encoding.GetEncoding("Cyrillic").GetBytes(value);
+            value = Encoding.ASCII.GetString(bytes);
+
+            //Replace spaces
+            value = Regex.Replace(value, @"\s", "-", RegexOptions.Compiled);
+
+            //Remove invalid chars
+            value = Regex.Replace(value, @"[^a-z0-9\s-_]", "", RegexOptions.Compiled);
+
+            //Trim dashes from end
+            value = value.Trim('-', '_');
+
+            //Replace double occurences of - or _
+            value = Regex.Replace(value, @"([-_]){2,}", "$1", RegexOptions.Compiled);
+
+            return value;
+        }
+
         [Route("kosik")]
         public ActionResult Basket()
         {
@@ -990,7 +1225,7 @@ namespace Cms.Controllers
                     //products
                     filteredProds = filteredProds.Where(p => p.title.ToLower().Contains(termObj) || (p.number != null && p.number.ToLower().Contains(termObj)));
                     //variants
-                    filteredVars = filteredVars.Where(p => p.number != null && p.deleted == false  && p.number.ToLower().Contains(termObj));
+                    filteredVars = filteredVars.Where(p => p.number != null && p.deleted == false && p.number.ToLower().Contains(termObj));
                 }
                 counter++;
             }
@@ -1046,7 +1281,7 @@ namespace Cms.Controllers
                         name.price = (decimal)name.discountprice;
                         newNames.Add(name);
                     }
-                    
+
                 }
             }
 
@@ -1286,7 +1521,8 @@ namespace Cms.Controllers
 
                 changePassInfoText = "Na váš email sme vám zaslali odkaz na zmenu hesla.";
             }
-            else {
+            else
+            {
                 changePassInfoText = "Zadaný email v databáze používateľov neexistuje.";
             }
 
