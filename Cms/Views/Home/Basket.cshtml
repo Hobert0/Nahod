@@ -843,7 +843,23 @@
                                 <div class="col-md-10">
                                     @if (item.transfer1_enbl && item.transfer1 != null)
                                     {
-                                        <label class="cont" id="transfer1">
+
+
+                                        var transferVal = "transfer1";
+                                        if (Model.OrdersModel != null)
+                                        {
+                                            if (Model.OrdersModel.Country == "Slovenská republika")
+                                            {
+                                                transferVal = "transfer1";
+                                            }
+                                            else if (Model.OrdersModel.Country == "Česká republika")
+                                            {
+                                                transferVal = "transfer4";
+                                            }
+                                        }
+
+
+                                        <label class="cont" id="@transferVal">
                                             <span class="shipName">Kuriérska spoločnosť</span><strong class="shipPrice" style="float: right">
                                                 <script>
                                                     if ($("#OrdersModel_Country").val() == "Slovenská republika") {
@@ -859,7 +875,7 @@
                                             </strong>
 
                                             @{
-                                                var transferVal = "transfer1";
+                                                /*var transferVal = "transfer1";
                                                 if (Model.OrdersModel != null)
                                                 {
                                                     if (Model.OrdersModel.Country == "Slovenská republika")
@@ -870,7 +886,7 @@
                                                     {
                                                         transferVal = "transfer4";
                                                     }
-                                                }
+                                                }*/
                                             }
 
                                             <input type="radio" name="transfer" value="@transferVal" onclick="checkTransfer();shippPay();">
@@ -1371,6 +1387,8 @@
         if ($("#myCheck").is(":checked") == false) {
             if ($(this).val() == "Slovenská republika") {
                 $("input[name=transfer][value=transfer4]").val("transfer1");
+                $("label[id=transfer4]").attr("id", "transfer1");
+
                 if (transferFree) {
                     $("#transfer1 .shipPrice").text(transfer1Free + " €");
                 }
@@ -1379,6 +1397,8 @@
                 }
             } else if ($(this).val() == "Česká republika") {
                 $("input[name=transfer][value=transfer1]").val("transfer4");
+                $("label[id=transfer1]").attr("id", "transfer4");
+
                 $("#transfer1 .shipPrice").text(transfer4 + " €");
             }
         }
@@ -1387,6 +1407,8 @@
     $("#OrdersModel_CountryShipp").change(function () {
         if ($(this).val() == "Slovenská republika") {
             $("input[name=transfer][value=transfer4]").val("transfer1");
+            $("label[id=transfer4]").attr("id", "transfer1");
+
             if (transferFree) {
                 $("#transfer1 .shipPrice").text(transfer1Free + " €");
             }
@@ -1395,6 +1417,8 @@
             }
         } else if ($(this).val() == "Česká republika") {
             $("input[name=transfer][value=transfer1]").val("transfer4");
+            $("label[id=transfer1]").attr("id", "transfer4");
+
             $("#transfer1 .shipPrice").text(transfer4 + " €");
         }
     });
@@ -1403,6 +1427,8 @@
         if ($("#myCheck").is(":checked")) {
             if ($("#OrdersModel_CountryShipp").val() == "Slovenská republika") {
                 $("input[name=transfer][value=transfer4]").val("transfer1");
+                $("label[id=transfer4]").attr("id", "transfer1");
+
                 if (transferFree) {
                     $("#transfer1 .shipPrice").text(transfer1Free + " €");
                 }
@@ -1411,11 +1437,15 @@
                 }
             } else if ($("#OrdersModel_CountryShipp").val() == "Česká republika") {
                 $("input[name=transfer][value=transfer1]").val("transfer4");
+                $("label[id=transfer1]").attr("id", "transfer4");
+
                 $("#transfer1 .shipPrice").text(transfer4 + " €");
             }
         } else {
             if ($("#OrdersModel_Country").val() == "Slovenská republika") {
                 $("input[name=transfer][value=transfer4]").val("transfer1");
+                ("label[id=transfer4]").attr("id", "transfer1");
+
                 if (transferFree) {
                     $("#transfer1 .shipPrice").text(transfer1Free + " €");
                 }
@@ -1424,6 +1454,8 @@
                 }
             } else if ($("#OrdersModel_Country").val() == "Česká republika") {
                 $("input[name=transfer][value=transfer1]").val("transfer4");
+                $("label[id=transfer1]").attr("id", "transfer4");
+
                 $("#transfer1 .shipPrice").text(transfer4 + " €");
             }
         }

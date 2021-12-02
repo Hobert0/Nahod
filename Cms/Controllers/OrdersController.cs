@@ -300,6 +300,7 @@ namespace Cms.Controllers
             this.SendHtmlFormattedEmail("Ďakujeme za objednávku!", body, o.email, "customer", o.ordernumber);
             this.SendHtmlFormattedEmail("OBJEDNÁVKA Č.: " + o.ordernumber + "", body_owner, ownerEmail, "owner", o.ordernumber);
 
+            //save cart items for Heureka conversions
             TempData["tempCartItems"] = Session["cartitems"];
 
             //remove session
@@ -397,8 +398,16 @@ namespace Cms.Controllers
             model.BrandsModel = db.brands.ToList();
             model.SlideshowModel = db.slideshow.ToList();
             model.OrderDataModel = db.orders.Where(i => i.ordernumber == orderNumber).ToList();
+            //model.OrderDataModel = db.orders.Where(i => i.ordernumber == "210291").ToList();
 
             //ViewData["countries"] = new AdminController().SelectionCountries();
+
+            //odosleme si temp data pre google konverzie
+            foreach (var ordTemp in model.OrderDataModel)
+            {
+                TempData["tempOrderNum"] = ordTemp.ordernumber;
+                TempData["tempOrderSum"] = ordTemp.finalprice;
+            }
 
             return View(model);
         }

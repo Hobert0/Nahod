@@ -464,6 +464,28 @@
                                                         </div>
                                                     }
                                                 }
+                                                
+                                                
+                                                <script>
+                                                    //Google Remarketing
+                                                    $final_prod_price = null;
+                                                    if ($(".discount-price-text:not(.d-none)").length) {
+                                                        $final_prod_price = $(".discount-price-text:not(.d-none) .actual-price").text().replace(",", ".");
+                                                    } else {
+                                                        $final_prod_price = $(".w-discount-price:not(.d-none) .actual-price").text().replace(",", ".");
+                                                    }
+
+                                                    gtag('event','view_item', {
+                                                        value: $final_prod_price,
+                                                        currency: 'EUR',
+                                                        items: [
+                                                            {
+                                                                id: @prod.id,
+                                                                google_business_vertical: 'retail'
+                                                            }
+                                                        ]
+                                                    });
+                                                </script>
 
 
                                             </div>
@@ -1210,15 +1232,15 @@
                         $rating = $("input[name=userRating]").val();
 
                         switch ($rating) {
-                            case "1":
-                                return $price * 0.95;
-                                break;
-                            case "2":
-                                return $price * 0.9;
-                                break;
-                            case "3":
-                                return $price * 0.85;
-                                break;
+                        case "1":
+                            return $price * 0.95;
+                            break;
+                        case "2":
+                            return $price * 0.9;
+                            break;
+                        case "3":
+                            return $price * 0.85;
+                            break;
                         }
                     }
 

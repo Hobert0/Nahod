@@ -115,5 +115,15 @@
 
         $(".cart-qty").html(result.length);
         $(".cart-total").html($sum.replace(".", ",") + " €");
+
+        //Google Remarketing
+        gtag('event', 'add_to_cart', {
+            value: $sum,
+            currency: 'EUR',
+            items: [{
+                id: id,
+                google_business_vertical: 'retail'
+            }]
+        });
     }
 }

@@ -121,6 +121,8 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
 
     var $container = $('<div id="productsblock"/>').addClass('row products-row m-0');
 
+    var $remarketingProdsArray = [];
+
     $.each(productsdata, function (i, item) {
 
         var variants = vars.filter(element => element.prod_id == item.id);
@@ -295,7 +297,15 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
         $row = $($row)
 
         $container.append($row);
+
+        $remarketingProdsArray.push({ id: item.id, google_business_vertical: 'retail'});
     });
+
+    //Google Remarketing
+    gtag('event', 'view_item_list', {
+        items: $remarketingProdsArray
+    });
+    //console.log($remarketingProdsArray);
 
     $('#ajaxProducts').html($container);
 

@@ -1,4 +1,5 @@
 ﻿@model Cms.Models.MultipleIndexModel
+@using System.Globalization
 @using Cms.Models;
 @using Newtonsoft.Json
 
@@ -127,7 +128,7 @@
         {
             <meta name="robots" content="noindex">
         }
-        
+
 
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -162,9 +163,42 @@
         <script src="https://www.google.com/recaptcha/api.js"></script>
 
 
+        <!-- Sledovania konverzií na webe - globalna znacka webu -->
+        <script async
+                src="https://www.googletagmanager.com/gtag/js?id=AW-CONVERSION_ID"></script>
+
+        <script>
+
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() { dataLayer.push(arguments); }
+
+            gtag('js', new Date());
+
+            gtag('config', '10816646683');
+            //gtag('config', 'x');
+
+        </script>
+        <!-- End Sledovania konverzií na webe - globalna znacka webu -->
+
+        <!-- Útržok udalosti pre stránku konverzie - GOOGLE (len ak thankyou page) -->
+        if (rawUrl.Split('/').Length >= 1 && rawUrl.Split('/')[1] == "dakujeme-za-objednavku")
+        {
+            <script>
+                gtag('event',
+                    'conversion',
+                    {
+                        'send_to': '10816646683/I4hGCILn-4YDEJvc46Uo',
+                        //'send_to': 'x/x',
+                        'value': @TempData["tempOrderSum"],
+                        'currency': 'EUR',
+                        'transaction_id': '@TempData["tempOrderNum"]',
+                    });
+            </script>
+        }
+        <!-- End Útržok udalosti pre stránku konverzie - GOOGLE (len ak thankyou page) -->
 
         <!-- Google Analytics -->
-
         <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -242,10 +276,12 @@
 </head>
 <body>
     <!-- Google Tag Manager (noscript) -->
+    <!--
     <noscript>
         <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PMLLRNP"
                 height="0" width="0" style="display:none;visibility:hidden"></iframe>
     </noscript>
+    -->
     <!-- End Google Tag Manager (noscript) -->
     <!-- mobile version -->
     <div class="header-container mobile-header container-fluid w-75">

@@ -95,7 +95,7 @@
     </div>
 </div>
 
-<!-- Meranie konverzií -->
+<!-- Meranie konverzií - HEUREKA -->
 <script type="text/javascript">
     var _hrq = _hrq || [];
 
@@ -134,7 +134,30 @@
     })();
 
 </script>
+<!-- End Meranie konverzií - HEUREKA -->
 
+<!-- Google Remarketing -->
+<script>
+    gtag('event','purchase', {
+        value: @TempData["tempOrderSum"],
+        transaction_id: '@TempData["tempOrderNum"]',
+        currency: 'EUR',
+        items: [
+
+            @{
+                if (tempCart != null)
+                {
+                    foreach (var item in tempCart)
+                    {
+                        @Html.Raw("{id: " + item.product.Value + ",google_business_vertical: 'retail'},");
+                    }
+                }
+            }
+
+        ]
+    });
+</script>
+<!-- End Google Remarketing -->
 
 <script>
 
