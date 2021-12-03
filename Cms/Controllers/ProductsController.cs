@@ -794,7 +794,7 @@ namespace Cms.Controllers
             return RedirectToAction("Products", "Admin");
         }
 
-        public ActionResult DeleteProduct(int? id, bool confirm)
+        public ActionResult DeleteProduct(int? id, bool confirm, int dt_page, int dt_count)
         {
 
             var product = db.products.Where(i => i.id == id).SingleOrDefault();
@@ -810,6 +810,9 @@ namespace Cms.Controllers
             ViewBag.Status = true;
 
             db.SaveChanges();
+
+            TempData["dt_page"] = (dt_page - 1) * dt_count;
+            TempData["dt_count"] = dt_count;
 
             /*
             var data = db.products.Find(id);
@@ -1108,7 +1111,7 @@ namespace Cms.Controllers
         }
 
         [HttpPost]
-        public ActionResult MultipleEditPrice(string multiplePricePerc, bool? isDiscountMultiple, string catId, string brandId, string priceFrom, string priceTo, bool? isDiscount, string checkedProds)
+        public ActionResult MultipleEditPrice(string multiplePricePerc, bool? isDiscountMultiple, string catId, string brandId, string priceFrom, string priceTo, bool? isDiscount, string checkedProds, int dt_page, int dt_count)
         {
             /*
             List<products> products = null;
@@ -1176,11 +1179,14 @@ namespace Cms.Controllers
 
             db.SaveChanges();
 
+            TempData["dt_page"] = (dt_page - 1) * dt_count;
+            TempData["dt_count"] = dt_count;
+
             return RedirectToAction("Products", "Admin");
         }
 
         [HttpPost]
-        public ActionResult MultipleDelete(string checkedProds)
+        public ActionResult MultipleDelete(string checkedProds, int dt_page, int dt_count)
         {
 
 
@@ -1206,11 +1212,14 @@ namespace Cms.Controllers
 
             db.SaveChanges();
 
+            TempData["dt_page"] = (dt_page - 1) * dt_count;
+            TempData["dt_count"] = dt_count;
+
             return RedirectToAction("Products", "Admin");
         }
 
         [HttpPost]
-        public ActionResult MultipleEditCat(string MultipleEditCatChoose, string type, string checkedProds)
+        public ActionResult MultipleEditCat(string MultipleEditCatChoose, string type, string checkedProds, int dt_page, int dt_count)
         {
 
             var checkedProdsArr = JsonConvert.DeserializeObject<int[]>(checkedProds);
@@ -1248,6 +1257,9 @@ namespace Cms.Controllers
             }
 
             db.SaveChanges();
+
+            TempData["dt_page"] = (dt_page - 1) * dt_count;
+            TempData["dt_count"] = dt_count;
 
             return RedirectToAction("Products", "Admin");
         }

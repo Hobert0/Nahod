@@ -12,33 +12,33 @@
     //var counter = 0;
 }
 @*
-<script>
-    /*GET HOW MANY ON STOCK from database*/
-    function Onstock(size, counter, onstockrange) {
+    <script>
+        /*GET HOW MANY ON STOCK from database*/
+        function Onstock(size, counter, onstockrange) {
 
-        var mycounter = counter;
-        var prod_row = document.getElementById("product_row-" + mycounter);
-        var infoicon = document.getElementById("info-" + mycounter);
+            var mycounter = counter;
+            var prod_row = document.getElementById("product_row-" + mycounter);
+            var infoicon = document.getElementById("info-" + mycounter);
 
-        if (size != "" && isNaN(size)) {
-            var j = size;
-            var json = $.parseJSON(j);
-            var countofsize = json.length;
-            var inputs = "";
-            $(json).each(function (i, val) {
-                if (val.stock <= onstockrange) {
+            if (size != "" && isNaN(size)) {
+                var j = size;
+                var json = $.parseJSON(j);
+                var countofsize = json.length;
+                var inputs = "";
+                $(json).each(function (i, val) {
+                    if (val.stock <= onstockrange) {
+                        prod_row.style.background = "#ffe2e2";
+                        infoicon.style.display = "inline-block";
+                    }
+                });
+            } else if (size != "" && !isNaN(size)) {
+                if (size <= onstockrange) {
                     prod_row.style.background = "#ffe2e2";
                     infoicon.style.display = "inline-block";
                 }
-            });
-        } else if (size != "" && !isNaN(size)) {
-            if (size <= onstockrange) {
-                prod_row.style.background = "#ffe2e2";
-                infoicon.style.display = "inline-block";
             }
         }
-    }
-</script>
+    </script>
 *@
 
 <style>
@@ -250,21 +250,21 @@
 
 <table id="productsTable" class="table">
     <thead>
-        <tr>
-            <th style="display:none !important">ID</th>
-            <th></th>
-            <th>Kód produktu</th>
-            <th>Náhľad</th>
-            <th>Názov</th>
-            <th>Cena</th>
-            <th>Cena po zľave</th>
-            <th>Kategória</th>
-            <th>Varianty</th>
-            <th>Heureka</th>
-            <th>Množstvo</th>
-            <th>Aktívne</th>
-            <th style="text-align: center; width:175px;">Akcie</th>
-        </tr>
+    <tr>
+        <th style="display:none !important">ID</th>
+        <th></th>
+        <th>Kód produktu</th>
+        <th>Náhľad</th>
+        <th>Názov</th>
+        <th>Cena</th>
+        <th>Cena po zľave</th>
+        <th>Kategória</th>
+        <th>Varianty</th>
+        <th>Heureka</th>
+        <th>Množstvo</th>
+        <th>Aktívne</th>
+        <th style="text-align: center; width:175px;">Akcie</th>
+    </tr>
     </thead>
     <tbody>
     </tbody>
@@ -273,21 +273,36 @@
 <script>
 
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         //$filterClicked = false;
 
         $.fn.DataTable.ext.pager.numbers_length = 18;
 
+        @{
+            var defPageLength = 50;
+            var defPage = 0;
+            if (TempData["dt_page"] != null)
+            {
+                defPage = Int32.Parse(TempData["dt_page"].ToString());
+            }
+            if (TempData["dt_count"] != null)
+            {
+                defPageLength = Int32.Parse(TempData["dt_count"].ToString());
+            }
+
+        }
+
         $('#productsTable').DataTable({
             "processing": true,
             "serverSide": true,
-            "pageLength": 50,
+            "pageLength": @defPageLength,
+            "displayStart": @defPage,
             "lengthMenu": [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, "Všetko"]],
             "ajax": {
                 "url": "/Api/FetchProductsDatatable",
                 "type": "POST",
-                "data": function(o) {
+                "data": function (o) {
                     o.category = $("#filterByCategory").val();
                     o.brand = $("#filterByBrand").val();
                     o.priceFrom = $("#filterByPriceFrom").val();
@@ -314,11 +329,11 @@
             "language": {
                 "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Slovak.json"
             },
-            "drawCallback": function(settings, json) {
+            "drawCallback": function (settings, json) {
                 //upravime css
 
 
-                $('#productsTable tbody tr').each(function() {
+                $('#productsTable tbody tr').each(function () {
 
                     $tds = $(this).find("td");
                     $tds.eq(0).attr("style", "display:none;");
@@ -426,6 +441,10 @@
                 $("#multipleEditPriceForm input[name=isInactive]").val($("#filterByInactive").is(":checked"));
                 $("#multipleEditPriceForm input[name=checkedProds]").val(JSON.stringify($checkedArr));
 
+                //pridame input do ktoreho ulozime danu datatable page z ktorej sme vykonali akciu
+                $("#multipleEditCatForm").append('<input type="hidden" name="dt_page" value="' + $(".dataTables_paginate a.paginate_button.current").text() + '">');
+                $("#multipleEditCatForm").append('<input type="hidden" name="dt_count" value="' + $("#productsTable_wrapper select[name=productsTable_length]").val() + '">');
+
                 $("#multipleEditPriceForm").submit();
             }
         });
@@ -459,6 +478,10 @@
             });
 
             $("#multipleDeleteForm input[name=checkedProds]").val(JSON.stringify($checkedArr));
+
+            //pridame input do ktoreho ulozime danu datatable page z ktorej sme vykonali akciu
+            $("#multipleEditCatForm").append('<input type="hidden" name="dt_page" value="' + $(".dataTables_paginate a.paginate_button.current").text() + '">');
+            $("#multipleEditCatForm").append('<input type="hidden" name="dt_count" value="' + $("#productsTable_wrapper select[name=productsTable_length]").val() + '">');
 
             $("#multipleDeleteForm").submit();
 
@@ -496,6 +519,10 @@
                 $("#multipleEditCatForm input[name=type]").val("add");
                 $("#multipleEditCatForm input[name=checkedProds]").val(JSON.stringify($checkedArr));
 
+                //pridame input do ktoreho ulozime danu datatable page z ktorej sme vykonali akciu
+                $("#multipleEditCatForm").append('<input type="hidden" name="dt_page" value="' + $(".dataTables_paginate a.paginate_button.current").text() + '">');
+                $("#multipleEditCatForm").append('<input type="hidden" name="dt_count" value="' + $("#productsTable_wrapper select[name=productsTable_length]").val() + '">');
+
                 $("#multipleEditCatForm").submit();
             }
 
@@ -517,8 +544,16 @@
                 $("#multipleEditCatForm input[name=type]").val("rem");
                 $("#multipleEditCatForm input[name=checkedProds]").val(JSON.stringify($checkedArr));
 
+                //pridame input do ktoreho ulozime danu datatable page z ktorej sme vykonali akciu
+                $("#multipleEditCatForm").append('<input type="hidden" name="dt_page" value="' + $(".dataTables_paginate a.paginate_button.current").text() + '">');
+                $("#multipleEditCatForm").append('<input type="hidden" name="dt_count" value="' + $("#productsTable_wrapper select[name=productsTable_length]").val() + '">');
+
                 $("#multipleEditCatForm").submit();
             }
+        });
+
+        $(document).on("click", ".delete_product_anchor", function () {
+            $(this).attr("href", $(this).attr("href") + "&dt_page=" + $(".dataTables_paginate a.paginate_button.current").text() + "&dt_count=" + $("#productsTable_wrapper select[name=productsTable_length]").val());
         });
 
         $(document).on("dblclick", ".editable", function () {

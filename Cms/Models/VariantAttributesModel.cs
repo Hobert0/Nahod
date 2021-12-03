@@ -12,5 +12,7 @@ namespace Cms.Models
         public int ProdId { get; set; }
         public string AttrValue { get; set; }
         public string Stock { get; set; }
+        public decimal? Price { get; set; }
+        public decimal? DiscountPrice { get; set; }
     }
 }

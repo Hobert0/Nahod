@@ -345,7 +345,7 @@ html, body {
 
 
         .hp-newsletter .hp-email-wrapper .rect-button {
-            background-color: orange;
+            background-color: rgb(254, 138, 0);
             color: white;
             display: inline-block;
             height: 40px;

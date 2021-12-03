@@ -1137,7 +1137,7 @@ namespace Cms.Controllers
 
 
             List<string[]> dataList = new List<string[]>();
-            var variants = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a, b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value, Stock = a.stock }).OrderByDescending(a => a.ProdId).ThenBy(a => a.AttrName).ToList();
+            var variants = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a, b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value, Stock = a.stock, Price = a.price, DiscountPrice = a.discountprice }).OrderByDescending(a => a.ProdId).ThenBy(a => a.AttrName).ToList();
 
             foreach (var prod in prodsOrd)
             {
@@ -1147,6 +1147,7 @@ namespace Cms.Controllers
                 var number = prod.number;
                 var img = "<img src='/Uploads/" + prod.image + "' style='max-width: 50px;max-height: 50px;' />";
                 var title = prod.title;
+
                 var price = prod.price + " €";
                 var discountprice = prod.discountprice != null ? prod.discountprice + " €" : "";
 
@@ -1174,18 +1175,29 @@ namespace Cms.Controllers
                 //VARIANTS
                 //variant.number obsahuje nazov vlastnosti
                 string variantsStr = "";
-                //int varsStock = 0;
+                int varsStock = 0;
                 if (variants.Where(o => o.ProdId == prod.id).ToList().Count > 0)
                 {
                     string varType = "";
+                    decimal varPriceMin = 99999;
+                    decimal varDiscountPriceMin = 99999;    
                     foreach (var variant in variants.Where(o => o.ProdId == prod.id))
                     {
-                        /*
+                        
                         if (variant.Stock != "")
                         {
                             varsStock += Int32.Parse(variant.Stock);
                         }
-                        */
+
+                        if (variant.Price != null && variant.Price < varPriceMin)
+                        {
+                            varPriceMin = (decimal)variant.Price;
+                        }
+
+                        if (variant.DiscountPrice != null && variant.DiscountPrice < varDiscountPriceMin)
+                        {
+                            varDiscountPriceMin = (decimal)variant.DiscountPrice;
+                        }
 
                         if (varType != variant.AttrName)
                         {
@@ -1196,23 +1208,31 @@ namespace Cms.Controllers
                         varType = variant.AttrName;
                     }
                     variantsStr = variantsStr.Remove(variantsStr.Length - 2);
+
+                    if (varPriceMin != 99999)
+                    {
+                        price = varPriceMin + " €";
+                    }
+
+                    if (varDiscountPriceMin != 99999)
+                    {
+                        discountprice = varDiscountPriceMin + " €";
+                    }
                 }
 
                 var heureka = "<input class='check-box' disabled='disabled' " + (prod.heureka == true ? "checked='checked'" : "") + " type='checkbox'>";
 
                 //STOCK
                 string stockStr = prod.stock;
-
-                /*
                 if (variantsStr != "")
                 {
                     stockStr = varsStock.ToString();
                 }
-                */
+                
 
                 var active = "<input class='check-box' disabled='disabled' " + (prod.active == true ? "checked='checked'" : "") + " type='checkbox'>";
 
-                var actions = "<a class='btn btn-warning' href='/produkty/editovat-produkt/" + prod.id + "' target='_blank' style = 'color:#ffffff !important; font-size:13px;margin-right: 2px;' >Editovať</a><a href='/Products/DuplicateProduct/" + prod.id + "' class='btn btn-success' style='padding: 5px 10px;margin-right: 2px;' title='Duplikovať produkt'><img src='/Content/images/duplicate.png' width='15' style='margin-top: -3px;'></a><a class='btn btn-danger' style='padding: 5px 10px;' data-placement='top' data-toggle='tooltip' href='/Products/DeleteProduct/" + prod.id + "?confirm=True' onclick='return confirm(\"Naozaj chcete vymazať tento produkt?\")' title='Kliknutím nenávratne vymažete produkt.'>×</a>" +
+                var actions = "<a class='btn btn-warning' href='/produkty/editovat-produkt/" + prod.id + "' target='_blank' style = 'color:#ffffff !important; font-size:13px;margin-right: 2px;' >Editovať</a><a href='/Products/DuplicateProduct/" + prod.id + "' class='btn btn-success' style='padding: 5px 10px;margin-right: 2px;' title='Duplikovať produkt'><img src='/Content/images/duplicate.png' width='15' style='margin-top: -3px;'></a><a class='btn btn-danger delete_product_anchor' style='padding: 5px 10px;' data-placement='top' data-toggle='tooltip' href='/Products/DeleteProduct/" + prod.id + "?confirm=True' onclick='return confirm(\"Naozaj chcete vymazať tento produkt?\")' title='Kliknutím nenávratne vymažete produkt.'>×</a>" +
                             "<div class='popover__wrapper' id='info-0' style='display:none;'>" +
                             "<a href='#'>" +
                             "<strong class='popover__title'><img src='/Content/images/infobox_info_icon.svg' style='width: 18px;'></strong>" +

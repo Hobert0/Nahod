@@ -556,7 +556,7 @@
                 <div class="">
                     <div class="form-group">
                         <div style="width: 150px; margin-left: 10px;">
-                            @Html.Editor("varStock1", new { htmlAttributes = new { @class = "form-control varStock", placeholder = "Na sklade" } })
+                            @Html.Editor("varStock1", new { htmlAttributes = new { @class = "form-control varStock", placeholder = "Počet na sklade" } })
                         </div>
                     </div>
                 </div>
@@ -882,7 +882,14 @@
                 $(".clonedVarSection[num=" + $i + "]").find("input.varNum").attr("name", "varNum" + $i).attr("id", "varNum" + $i).val($i);
                 $(".clonedVarSection[num=" + $i + "]").find("select.varAttrsValues").val($variants[$i - 1].value);
                 $(".clonedVarSection[num=" + $i + "]").find("input.varNumber").val($variants[$i - 1].number);
-                $(".clonedVarSection[num=" + $i + "]").find("input.varStock").val($variants[$i - 1].stock);
+
+                //ak nie je vyplneny sklad, zobrazime 0
+                $stock_var = 0;
+                if ($variants[$i - 1].stock != null && $variants[$i - 1].stock != "") {
+                    $stock_var = $variants[$i - 1].stock;
+                }
+
+                $(".clonedVarSection[num=" + $i + "]").find("input.varStock").val($stock_var);
 
                 //vyplnime hodnoty cien len ak su varianty takeho typu ako uplne prva varianta
                 $firstAttrId = $(".varAttrs option:selected").eq(0).attr("attr_id");
