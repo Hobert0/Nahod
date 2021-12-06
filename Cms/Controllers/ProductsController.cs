@@ -670,25 +670,34 @@ namespace Cms.Controllers
                     v.prod_id = o.id;
                     v.number = varP.number;
 
-                    //ak nie je vyplnena cena pre variantu, skopirujeme cenu z produktu
+                    //ak nie je vyplnena cena pre variantu, skopirujeme cenu z produktu - Zrusene
                     if (varP.price != null && varP.price.ToString() != "")
                     {
                         v.price = varP.price;
                     }
+                    //sem by sa to nemalo dostat
+                    else
+                    {
+                        v.price = null;
+                    }
+                    /*
                     else
                     {
                         v.price = Decimal.Parse(model.Price, CultureInfo.InvariantCulture);
                     }
+                    */
 
-                    //ak nie je vyplnena discount cena pre variantu, skopirujeme discount cenu z produktu
+                    //ak nie je vyplnena discount cena pre variantu, skopirujeme discount cenu z produktu - Zrusene
                     if (varP.discountprice != null && varP.discountprice.ToString() != "")
                     {
                         v.discountprice = varP.discountprice;
                     }
+                    /*
                     else if (model.Discountprice != "NaN" && model.Discountprice != "" && model.Discountprice != null)
                     {
                         v.discountprice = Decimal.Parse(model.Discountprice, CultureInfo.InvariantCulture);
                     }
+                    */
                     else
                     {
                         v.discountprice = null;
@@ -1001,20 +1010,27 @@ namespace Cms.Controllers
                 {
                     v.price = varP.price;
                 }
+                //sem by sa to nemalo dostat - JS validacia
+                else
+                {
+                    v.price = null;
+                }
+                /*
                 else
                 {
                     v.price = Decimal.Parse(model.Price, CultureInfo.InvariantCulture);
                 }
+                */
 
                 if (varP.discountprice != null && varP.discountprice != "")
                 {
                     v.discountprice = varP.discountprice;
                 }
-                else if (model.Discountprice != "NaN" && model.Discountprice != null)
+                /*else if (model.Discountprice != "NaN" && model.Discountprice != null)
                 {
 
                     v.discountprice = Decimal.Parse(model.Discountprice, CultureInfo.InvariantCulture);
-                }
+                }*/
                 else
                 {
                     v.discountprice = null;
@@ -1254,6 +1270,52 @@ namespace Cms.Controllers
                 catStr += "]";
 
                 product.category = catStr;
+            }
+
+            db.SaveChanges();
+
+            TempData["dt_page"] = (dt_page - 1) * dt_count;
+            TempData["dt_count"] = dt_count;
+
+            return RedirectToAction("Products", "Admin");
+        }
+
+        [HttpPost]
+        public ActionResult MultipleEditType(string MultipleEditTypeChoose, string actionType, string checkedProds, int dt_page, int dt_count)
+        {
+
+            var checkedProdsArr = JsonConvert.DeserializeObject<int[]>(checkedProds);
+
+            foreach (int checkedProdId in checkedProdsArr)
+            {
+
+                var product = db.products.Where(x => x.deleted == false && x.id == checkedProdId).FirstOrDefault();
+
+                var types = JsonConvert.DeserializeObject<string[]>(product.type).ToList();
+
+                if (actionType == "add" && !types.Contains(MultipleEditTypeChoose))
+                {
+                    types.Add(MultipleEditTypeChoose);
+                }
+                if (actionType == "rem")
+                {
+                    types.RemoveAll(item => item == MultipleEditTypeChoose);
+                }
+
+                var typeStr = "[";
+                foreach (var type in types)
+                {
+                    typeStr += type + ",";
+                }
+
+                //vymazeme ciarku
+                if (types.Count() > 0)
+                {
+                    typeStr = typeStr.Remove(typeStr.Length - 1);
+                }
+                typeStr += "]";
+
+                product.type = typeStr;
             }
 
             db.SaveChanges();

@@ -1172,6 +1172,27 @@ namespace Cms.Controllers
                     }
                 }
 
+                //TYPE
+                var typesStr = "";
+                var allTypes = db.types.ToList();
+                if (prod.type != null)
+                {
+                    dynamic types = JsonConvert.DeserializeObject(prod.type);
+
+                    foreach (var type in types)
+                    {
+                        int thisTypeId = Int32.Parse(type.Value.ToString());
+                        foreach (var typeDb in allTypes.Where(o => o.id == thisTypeId))
+                        {
+                            typesStr += typeDb.name + ", ";
+                        }
+                    }
+                    if (typesStr != "")
+                    {
+                        typesStr.Remove(typesStr.Length - 2);
+                    }
+                }
+
                 //VARIANTS
                 //variant.number obsahuje nazov vlastnosti
                 string variantsStr = "";
@@ -1218,6 +1239,10 @@ namespace Cms.Controllers
                     {
                         discountprice = varDiscountPriceMin + " €";
                     }
+                    else
+                    {
+                        discountprice = "";
+                    }
                 }
 
                 var heureka = "<input class='check-box' disabled='disabled' " + (prod.heureka == true ? "checked='checked'" : "") + " type='checkbox'>";
@@ -1242,7 +1267,7 @@ namespace Cms.Controllers
                             "</div>" +
                             "</div>";
 
-                string[] prodArr = new string[] { id, checkbox, number, img, title, price, discountprice, catsStr, variantsStr, heureka, stockStr, active, actions };
+                string[] prodArr = new string[] { id, checkbox, number, img, title, price, discountprice, catsStr, typesStr, variantsStr, heureka, stockStr, active, actions };
 
                 dataList.Add(prodArr);
 

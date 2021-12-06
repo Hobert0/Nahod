@@ -131,6 +131,7 @@ namespace Cms.Controllers
                 model.VariantAttributesModel = db.variants.Where(x => x.deleted == false).Join(db.attributes, a => a.attribute_id, b => b.id, (a,b) => new VariantAttributesModel { Id = a.id, ProdId = a.prod_id, AttrName = b.name, AttrValue = a.value, Stock = a.stock }).OrderByDescending(a => a.ProdId).ThenBy(a => a.AttrName).ToList();
 
                 ViewData["kategoria"] = SelectionKategoria();
+                ViewData["druh"] = SelectionDruh();
                 ViewData["znacka"] = SelectionBrand();
 
                 return View(model);
@@ -170,6 +171,19 @@ namespace Cms.Controllers
                     znacka.Add(new SelectListItem { Text = cat.name + " → " + cat.topcat2 + " → " + cat.topcat, Value = cat.id.ToString() });
                 }
 
+            }
+            return znacka;
+        }
+
+        /*Type - products - get types*/
+        public List<SelectListItem> SelectionDruh()
+        {
+            List<SelectListItem> znacka = new List<SelectListItem>();
+            var types = db.types.OrderBy(a => a.name).ToList();
+            znacka.Add(new SelectListItem { Text = "", Value = "" });
+            foreach (var type in types)
+            {
+                znacka.Add(new SelectListItem { Text = type.name, Value = type.id.ToString() });
             }
             return znacka;
         }

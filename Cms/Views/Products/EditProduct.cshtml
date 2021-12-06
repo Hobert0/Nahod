@@ -795,8 +795,18 @@
         $("#showVariants").click(function () {
             if ($("#showVariants").is(":checked")) {
                 $("#univerzalVariableProduct").css("display", "flex");
+
+                //sktyjeme hlavnu price a discount price
+                $("#Price").parents(".row").css("display", "none");
+                $("#Discountprice").parents(".row").css("display", "none");
+                $("#Stock").parents(".row").css("display", "none");
             } else {
                 $("#univerzalVariableProduct").css("display", "none");
+
+                //sktyjeme hlavnu price a discount price
+                $("#Price").parents(".row").css("display", "flex");
+                $("#Discountprice").parents(".row").css("display", "flex");
+                $("#Stock").parents(".row").css("display", "flex");
             }
         });
 
@@ -1018,31 +1028,6 @@
     function validatePrices() {
         $valid = true;
 
-        $("#Price").val($("#Price").val().replace(",", "."));
-        $("#Discountprice").val($("#Discountprice").val().replace(",", "."));
-
-        if ($("#Price").val() == "" || !$.isNumeric($("#Price").val())) {
-            $("#Price").addClass("error");
-
-            $valid = false;
-        } else {
-            $("#Price").removeClass("error");
-
-            $("#Price").val(parseFloat($("#Price").val()));
-        }
-
-        if ($("#Discountprice").val() != "" && !$.isNumeric($("#Discountprice").val())) {
-            $("#Discountprice").addClass("error");
-
-            $valid = false;
-        } else {
-            $("#Discountprice").removeClass("error");
-
-            if ($("#Discountprice").val() != "") {
-                $("#Discountprice").val(parseFloat($("#Discountprice").val()));
-            }
-        }
-
         if ($("#showVariants").is(":checked")) {
             $num = $(".clonedVarSection").length;
 
@@ -1051,7 +1036,11 @@
                 $varPrice = $(".clonedVarSection[num=" + $i + "]").find(".varPrice").val();
                 $varDiscountprice = $(".clonedVarSection[num=" + $i + "]").find(".varDiscountPrice").val();
 
-                if ($varPrice != "" && !$.isNumeric($varPrice.replace(",", "."))) {
+                if ($varPrice == "") {
+                    $(".clonedVarSection[num=" + $i + "]").find(".varPrice").addClass("error");
+
+                    $valid = false;
+                } else if ($varPrice != "" && !$.isNumeric($varPrice.replace(",", "."))) {
                     $(".clonedVarSection[num=" + $i + "]").find(".varPrice").addClass("error");
 
                     $valid = false;
@@ -1074,6 +1063,57 @@
                         $(".clonedVarSection[num=" + $i + "]").find(".varDiscountPrice").val(parseFloat($varDiscountprice.replace(",", ".")));
                     }
                 }
+            }
+
+            //ak su zobrazene varianty tak do price a discount price produktu ulozime najnizsiu ceny z variant
+            $varPriceMin = 99999;
+            $varDiscountPriceMin = 99999;
+
+            $num = $(".clonedVarSection").length;
+
+            for ($i = 1; $i <= $num; $i++) {
+
+                $varPrice = parseFloat($(".clonedVarSection[num=" + $i + "]").find(".varPrice").val());
+                $varDiscountprice = $(".clonedVarSection[num=" + $i + "]").find(".varDiscountPrice").val();
+
+                if ($varPrice < $varPriceMin) {
+                    $varPriceMin = $varPrice;
+                }
+
+
+                if ($varDiscountprice != "" && parseFloat($varDiscountprice) < $varDiscountPriceMin) {
+                    $varDiscountPriceMin = parseFloat($varDiscountprice);
+                }
+            }
+
+            $("#Price").val($varPriceMin);
+            if ($varDiscountPriceMin != 99999) {
+                $("#Discountprice").val($varDiscountPriceMin);
+            }
+        }
+
+        $("#Price").val($("#Price").val().replace(",", "."));
+        $("#Discountprice").val($("#Discountprice").val().replace(",", "."));
+
+        if ($("#Price").val() == "" || !$.isNumeric($("#Price").val())) {
+            $("#Price").addClass("error");
+
+            $valid = false;
+        } else {
+            $("#Price").removeClass("error");
+
+            $("#Price").val(parseFloat($("#Price").val()));
+        }
+
+        if ($("#Discountprice").val() != "" && !$.isNumeric($("#Discountprice").val())) {
+            $("#Discountprice").addClass("error");
+
+            $valid = false;
+        } else {
+            $("#Discountprice").removeClass("error");
+
+            if ($("#Discountprice").val() != "") {
+                $("#Discountprice").val(parseFloat($("#Discountprice").val()));
             }
         }
 
@@ -1113,9 +1153,12 @@
             //Varianty
             if (validatePrices()) {
 
-                if ($("#discountPriceType").val() == "percent") {
-                    $discountPriceFinal = $("#Price").val() - ($("#Price").val() * $("#Discountprice").val() / 100);
-                    $("#Discountprice").val($discountPriceFinal);
+                if (!$("#showVariants").is(":checked")) {
+
+                    if ($("#discountPriceType").val() == "percent") {
+                        $discountPriceFinal = $("#Price").val() - ($("#Price").val() * $("#Discountprice").val() / 100);
+                        $("#Discountprice").val($discountPriceFinal);
+                    }
                 }
 
                 //ulozenie variant do JSONU ako string
