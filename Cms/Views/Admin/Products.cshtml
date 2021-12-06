@@ -442,8 +442,8 @@
                 $("#multipleEditPriceForm input[name=checkedProds]").val(JSON.stringify($checkedArr));
 
                 //pridame input do ktoreho ulozime danu datatable page z ktorej sme vykonali akciu
-                $("#multipleEditCatForm").append('<input type="hidden" name="dt_page" value="' + $(".dataTables_paginate a.paginate_button.current").text() + '">');
-                $("#multipleEditCatForm").append('<input type="hidden" name="dt_count" value="' + $("#productsTable_wrapper select[name=productsTable_length]").val() + '">');
+                $("#multipleEditPriceForm").append('<input type="hidden" name="dt_page" value="' + $(".dataTables_paginate a.paginate_button.current").text() + '">');
+                $("#multipleEditPriceForm").append('<input type="hidden" name="dt_count" value="' + $("#productsTable_wrapper select[name=productsTable_length]").val() + '">');
 
                 $("#multipleEditPriceForm").submit();
             }
@@ -480,8 +480,8 @@
             $("#multipleDeleteForm input[name=checkedProds]").val(JSON.stringify($checkedArr));
 
             //pridame input do ktoreho ulozime danu datatable page z ktorej sme vykonali akciu
-            $("#multipleEditCatForm").append('<input type="hidden" name="dt_page" value="' + $(".dataTables_paginate a.paginate_button.current").text() + '">');
-            $("#multipleEditCatForm").append('<input type="hidden" name="dt_count" value="' + $("#productsTable_wrapper select[name=productsTable_length]").val() + '">');
+            $("#multipleDeleteForm").append('<input type="hidden" name="dt_page" value="' + $(".dataTables_paginate a.paginate_button.current").text() + '">');
+            $("#multipleDeleteForm").append('<input type="hidden" name="dt_count" value="' + $("#productsTable_wrapper select[name=productsTable_length]").val() + '">');
 
             $("#multipleDeleteForm").submit();
 
