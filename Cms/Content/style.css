@@ -1631,3 +1631,28 @@ button:focus {
     padding-left: calc(12.5% + 15px) !important;
     padding-right: calc(12.5% + 15px) !important;
 }
+
+.close-login-register-modal {
+    position: absolute;
+    bottom: 5px;
+    color: rgb(51, 51, 51);
+    font-size: 14px;
+    margin: 0px;
+    padding: 0px;
+    float: none;
+    text-align: left;
+    font-weight: bold;
+    opacity: 1;
+}
+
+    .close-login-register-modal:hover {
+        color: #fe8a00;
+    }
+
+@media only screen and (max-width: 767px) {
+    .close-login-register-modal {
+         position: relative;
+        margin-bottom: 30px;
+        display: inline-block;
+    }
+}

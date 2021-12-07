@@ -645,6 +645,7 @@ namespace Cms.Controllers
                         Attachment attachment3 = new Attachment(Server.MapPath("~/Uploads/" + pdfCancelPath));
                         mailMessage.Attachments.Add(attachment3);   //add the attachment
                     }
+                    
                 }
                 else if (toWho == "finished")
                 {

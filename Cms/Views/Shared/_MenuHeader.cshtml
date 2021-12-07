@@ -48,7 +48,7 @@
             <a class="dropbtn" style="color:#000;">výrobcovia</a>
             <div class="dropdown-content brands p-4">
                 <div class="row">
-                    @foreach (var brand in Model.BrandsModel.OrderBy(o => o.priority))
+                    @foreach (var brand in Model.BrandsModel.OrderBy(o => o.name))
                     {
                         <div class="col-2">
                             <a href="/znacka/@Html.Raw(brand.slug)">
