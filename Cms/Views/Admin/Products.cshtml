@@ -302,7 +302,7 @@
             <th>Varianty</th>
             <th>Heureka</th>
             <th>Množstvo</th>
-            <th>Aktívne</th>
+            <th style="text-align: center; width:100px;">Aktívne</th>
             <th style="text-align: center; width:175px;">Akcie</th>
         </tr>
     </thead>
@@ -381,10 +381,11 @@
                     $tds.eq(1).attr("style", "text-align: center;");
                     $tds.eq(5).attr("style", "background-color: lightyellow; text-align: center;");
                     $tds.eq(6).attr("style", "background-color: lightcyan; text-align: center;");
+                    $tds.eq(7).attr("style", "width: 350px;");
                     $tds.eq(9).attr("style", "text-align: center;");
                     $tds.eq(10).attr("style", "text-align: center;");
                     $tds.eq(11).attr("style", "text-align: center;");
-                    $tds.eq(12).attr("style", "text-align: center; width: 175px;");
+                    $tds.eq(12).attr("style", "text-align: center; ");
 
                     $tds.eq(2).addClass("editable").attr("name", "number");
                     $tds.eq(4).addClass("editable").attr("name", "title");

@@ -179,7 +179,7 @@ namespace Cms.Controllers
         public List<SelectListItem> SelectionDruh()
         {
             List<SelectListItem> znacka = new List<SelectListItem>();
-            var types = db.types.OrderBy(a => a.name).ToList();
+            var types = db.types.OrderBy(a => a.name).Where(i => i.deleted != true).ToList();
             znacka.Add(new SelectListItem { Text = "", Value = "" });
             foreach (var type in types)
             {
