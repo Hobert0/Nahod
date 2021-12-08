@@ -741,7 +741,7 @@ namespace Cms.Controllers
                 var titleImageSourcePath = HttpContext.Server.MapPath("~/Uploads/" + model.Image);
                 var titleImageName = model.Image.Split('/').Last();
                 var titleImageDestPath = HttpContext.Server.MapPath("~/Uploads/" + ulozObrazok + titleImageName);
-                
+
                 if (System.IO.File.Exists(titleImageSourcePath))
                 {
                     //Ak ano skopirujeme ho a prepiseme v db cestu
@@ -1245,7 +1245,11 @@ namespace Cms.Controllers
 
                 var product = db.products.Where(x => x.deleted == false && x.id == checkedProdId).FirstOrDefault();
 
-                var cats = JsonConvert.DeserializeObject<string[]>(product.category).ToList();
+                List<string> cats = new List<string>();
+                if (product.category != null)
+                {
+                    cats = JsonConvert.DeserializeObject<string[]>(product.category).ToList();
+                }
 
                 if (type == "add" && !cats.Contains(MultipleEditCatChoose))
                 {
@@ -1291,7 +1295,11 @@ namespace Cms.Controllers
 
                 var product = db.products.Where(x => x.deleted == false && x.id == checkedProdId).FirstOrDefault();
 
-                var types = JsonConvert.DeserializeObject<string[]>(product.type).ToList();
+                List<string> types = new List<string>();
+                if (product.type != null)
+                {
+                    types = JsonConvert.DeserializeObject<string[]>(product.type).ToList();
+                }
 
                 if (actionType == "add" && !types.Contains(MultipleEditTypeChoose))
                 {
