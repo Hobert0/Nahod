@@ -151,7 +151,10 @@ $(".sortbyprice").click(function (e) {
 
 $("#resetfilter").click(function (e) {
     localStorage.removeItem('sorted');
-    location.reload(true);
+
+    //ak bol nejaky paging, tak ho zmazeme
+    window.location = window.location.href.split("?")[0];
+    //location.reload(true);
 });
 
 

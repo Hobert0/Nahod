@@ -1055,9 +1055,9 @@ input[type="radio"][disabled] {
 
 /**PRODUCTS*/
 .pagination-container {
-    margin-top: 30px;
+    /*margin-top: 30px;*/
     text-align: center;
-    width: 100%;
+    /*width: 100%;*/
 }
 
 .subcatthumb div {
@@ -1620,9 +1620,7 @@ button:focus {
 
 .fixedBottomHeader {
     position: fixed;
-
     left: 0%;
-
     z-index: 999;
     box-shadow: 0 4px 2px -2px rgba(0, 0, 0, .20);
 }
@@ -1651,8 +1649,58 @@ button:focus {
 
 @media only screen and (max-width: 767px) {
     .close-login-register-modal {
-         position: relative;
+        position: relative;
         margin-bottom: 30px;
         display: inline-block;
     }
+}
+
+/* Category, Type Pagination and Load More Button*/
+@media only screen and (min-width: 768px) {
+    .pagination-parent-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 30px;
+    }
+
+        .pagination-parent-container #load-more-ajax {
+            margin-left: 10px;
+        }
+
+            .pagination-parent-container #load-more-ajax a {
+                display: flex;
+                padding: 0.8em 1em;
+                cursor: pointer;
+                align-items: center;
+                background-color: #ff8b00;
+                font-size: 16px;
+                color: white;
+            }
+
+        .pagination-parent-container .pagination-container {
+            margin-right: 4%;
+        }
+}
+@media only screen and (max-width: 767px) {
+    .pagination-parent-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+        flex-direction: column;
+    }
+
+    .pagination-parent-container #load-more-ajax {
+        text-align: center;
+    }
+
+    .pagination-parent-container #load-more-ajax a {
+        display: inline-block;
+        padding: 0.8em 1em;
+        cursor: pointer;
+        background-color: #ff8b00;
+        font-size: 16px;
+        color: white;
+    }
+
 }

@@ -74,7 +74,8 @@
                         HashSet<int> catIds = new HashSet<int>();
                         foreach (var prod in prods)
                         {
-                            if(prod.category != null){
+                            if (prod.category != null)
+                            {
                                 dynamic cats = JsonConvert.DeserializeObject(prod.category);
                                 foreach (var cat in cats)
                                 {
@@ -146,10 +147,14 @@
             }
             <div id="ajaxProducts" class="products m-0"></div>
 
-            <nav class="pagination-container" aria-label="Page navigation example">
-                <ul class="pagination" id="pagination">
-                </ul>
-            </nav>
+            <div class="pagination-parent-container">
+                <div id="load-more-ajax" style="visibility: hidden;"><a><span class="text1"></span>&nbsp;<span class="number"></span>&nbsp;<span class="text2"></span></a></div>
+
+                <nav class="pagination-container" aria-label="Page navigation example">
+                    <ul class="pagination" id="pagination">
+                    </ul>
+                </nav>
+            </div>
 
         </div>
 
@@ -158,7 +163,9 @@
 
 
 <script src="https://nahod.sk/Scripts/fetchProducts.js"></script>
+<!--<script src="~/Scripts/fetchProducts.js"></script>-->
 <script src="https://nahod.sk/Scripts/filterProducts.js"></script>
+<!--<script src="~/Scripts/filterProducts.js"></script>-->
 <script src="https://nahod.sk/Scripts/add_to_session.js"></script>
 
 <!--

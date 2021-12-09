@@ -8,6 +8,16 @@ $(document).ready(function () {
     bytype = url.pathname.includes("typ") ?? false;
     search = url.pathname.includes("vyhladavanie") ?? false;
     fetchProducts(page, bybrand, search, bytype);
+
+    $('#load-more-ajax a').click(function () {
+
+        var url = new URL(window.location.href);
+        page = parseInt(url.searchParams.get("page") ?? 1) + 1;
+        //console.log("page:" + url.searchParams.get("page"));
+        //console.log("in click:" + page);
+
+        renderProducts(page, undefined, allproductsdata, allvariants, undefined, "more");
+    });
 });
 
 function fetchProducts(page, bybrand, search, bytype) {
@@ -89,10 +99,7 @@ function string_to_slug(str) {
     return str;
 }
 
-function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars = allvariants, pagechanged = false) {
-
-
-    //console.log(vars);
+function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars = allvariants, pagechanged = false, fetchType = "classic") {
 
     if (page > 1) {
         window.history.pushState({}, '', '?page=' + page);
@@ -118,6 +125,7 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
     var totalRecord = Object.keys(alldata).length;
     var totalPages = (totalRecord / pagesize) + ((totalRecord % pagesize) > 0 ? 1 : 0);
     productsdata = alldata.slice((page - 1) * pagesize, pagesize * page);
+    var nextPageRecords = alldata.slice(page * pagesize, pagesize * (page + 1)).length;
 
     var $container = $('<div id="productsblock"/>').addClass('row products-row m-0');
 
@@ -298,7 +306,7 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
 
         $container.append($row);
 
-        $remarketingProdsArray.push({ id: item.id, google_business_vertical: 'retail'});
+        $remarketingProdsArray.push({ id: item.id, google_business_vertical: 'retail' });
     });
 
     //Google Remarketing
@@ -307,29 +315,38 @@ function renderProducts(page = 1, pagesize = 20, alldata = allproductsdata, vars
     });
     //console.log($remarketingProdsArray);
 
-    $('#ajaxProducts').html($container);
+    if (fetchType == "classic") {
+        $('#ajaxProducts').html($container);
+    } else if (fetchType == "more") {
+        $('#ajaxProducts').append($container);
+    }
 
-
-    renderPagination(totalPages, page);
+    renderPagination(totalPages, page, nextPageRecords);
 }
 
-function renderPagination(totalPages, page) {
+function renderPagination(totalPages, page, nextPageRecords) {
     var $pages = '';
     totalPages = Math.floor(totalPages);
 
-    if (totalPages > 1 && page > 1) {
-        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (page - 1) + ', undefined, undefined, undefined, true)" aria-label="Previous"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>';
-    }
-
-    for (i = 1; i <= totalPages; i++) {
-        let active = "";
-        if (i == page) { active = "active"; }
-        $pages += '<li class="page-item ' + active + '"><a class="page-link" onclick="renderProducts(' + i + ', undefined, undefined, undefined, true)">' + i + '</a></li>';
-    }
-
+    //button LOAD MORE
     if (totalPages > 1 && totalPages > page) {
-        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (page + 1) + ', undefined, undefined, undefined, true)" aria-label="Next"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>';
+        if (nextPageRecords == 1) {
+            $('#load-more-ajax span.text1').text("Zobraziť ďalší");
+            $('#load-more-ajax span.text2').text("produkt");
+        } else if (nextPageRecords >= 2 && nextPageRecords <= 4) {
+            $('#load-more-ajax span.text1').text("Zobraziť ďalšie");
+            $('#load-more-ajax span.text2').text("produkty");
+        } else {
+            $('#load-more-ajax span.text1').text("Zobraziť ďalších");
+            $('#load-more-ajax span.text2').text("produktov");
+        }
+        $('#load-more-ajax span.number').text(nextPageRecords);
+        $('#load-more-ajax').css('visibility', 'visible');
+    } else {
+        $('#load-more-ajax').css('visibility', 'hidden');
     }
+
+    $pages = generatePaging(page,totalPages);
 
     $pages = $($pages);
 
@@ -342,5 +359,109 @@ function stripHtml(html) {
     return tmp.textContent || tmp.innerText || "";
 }
 
+function generatePaging(page, totalPages) {
 
+    $pages = '';
 
+    if (totalPages > 1 && page > 1) {
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' +
+            (page - 1) +
+            ', undefined, undefined, undefined, true)" aria-label="Previous"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>';
+    }
+
+    //ak je menej ako 5 stranok
+    if (totalPages <= 5) {
+        for (i = 1; i <= totalPages; i++) {
+            let active = "";
+            if (i == page) {
+                active = "active";
+            }
+
+            $pages += '<li class="page-item ' +
+                active +
+                '"><a class="page-link" onclick="renderProducts(' +
+                i +
+                ', undefined, undefined, undefined, true)">' +
+                i +
+                '</a></li>';
+        }
+    }
+    //kliknuta prva stranka a zaroven celkovo viac ako 5 stranok
+    else if (totalPages > 5 && page == 1) {
+        $pages += '<li class="page-item active"><a class="page-link" onclick="renderProducts(' + page + ', undefined, undefined, undefined, true)">' + page + '</a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (parseInt(page) + 1) + ', undefined, undefined, undefined, true)">' + (parseInt(page) + 1) + '</a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (parseInt(page) + 2) + ', undefined, undefined, undefined, true)">' + (parseInt(page) + 2) + '</a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (parseInt(page) + 3) + ', undefined, undefined, undefined, true)">' + (parseInt(page) + 3) + '</a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (parseInt(page) + 4) + ', undefined, undefined, undefined, true)">' + (parseInt(page) + 4) + '</a></li>';
+
+        $pages += '<li class="page-item"><a>...</a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + totalPages + ', undefined, undefined, undefined, true)">' + totalPages + '</a></li>';
+    }
+    //kliknuta druha stranka a zaroven celkovo viac ako 5 stranok
+    else if (totalPages > 5 && page == 2) {
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (page - 1) + ', undefined, undefined, undefined, true)">' + (page - 1) + '</a></li>';
+        $pages += '<li class="page-item active"><a class="page-link" onclick="renderProducts(' + page + ', undefined, undefined, undefined, true)">' + page + '</a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (parseInt(page) + 1) + ', undefined, undefined, undefined, true)">' + (parseInt(page) + 1) + '</a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (parseInt(page) + 2) + ', undefined, undefined, undefined, true)">' + (parseInt(page) + 2) + '</a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (parseInt(page) + 3) + ', undefined, undefined, undefined, true)">' + (parseInt(page) + 3) + '</a></li>';
+
+        $pages += '<li class="page-item"><a>...</a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + totalPages + ', undefined, undefined, undefined, true)">' + totalPages + '</a></li>';
+    }
+    //kliknute stranky v strede a zaroven celkovo viac ako 5 stranok
+    else if (totalPages > 5 && page <= totalPages - 2) {
+        if (page - 2 != 1) {
+            $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + 1 + ', undefined, undefined, undefined, true)">' + 1 + '</a></li>';
+            $pages += '<li class="page-item"><a>...</a></li>';
+
+        }
+
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (page - 2) + ', undefined, undefined, undefined, true)">' + (page - 2) + '</a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (page - 1) + ', undefined, undefined, undefined, true)">' + (page - 1) + '</a></li>';
+        $pages += '<li class="page-item active"><a class="page-link" onclick="renderProducts(' + page + ', undefined, undefined, undefined, true)">' + page + '</a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (parseInt(page) + 1) + ', undefined, undefined, undefined, true)">' + (parseInt(page) + 1) + '</a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (parseInt(page) + 2) + ', undefined, undefined, undefined, true)">' + (parseInt(page) + 2) + '</a></li>';
+
+        if (page + 2 != totalPages) {
+            $pages += '<li class="page-item"><a>...</a></li>';
+            $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + totalPages + ', undefined, undefined, undefined, true)">' + totalPages + '</a></li>';
+        }
+    }
+    //kliknuta predposledna stranka a zaroven celkovo viac ako 5 stranok
+    else if (totalPages > 5 && page <= totalPages - 1) {
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + 1 + ', undefined, undefined, undefined, true)">' + 1 + '</a></li>';
+        $pages += '<li class="page-item"><a>...</a></li>';
+
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (page - 3) + ', undefined, undefined, undefined, true)">' + (page - 3) + '</a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (page - 2) + ', undefined, undefined, undefined, true)">' + (page - 2) + '</a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (page - 1) + ', undefined, undefined, undefined, true)">' + (page - 1) + '</a></li>';
+        $pages += '<li class="page-item active"><a class="page-link" onclick="renderProducts(' + page + ', undefined, undefined, undefined, true)">' + page + '</a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (parseInt(page) + 1) + ', undefined, undefined, undefined, true)">' + (parseInt(page) + 1) + '</a></li>';
+    }
+    //kliknuta posledna stranka a zaroven celkovo viac ako 5 stranok
+    else {
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + 1 + ', undefined, undefined, undefined, true)">' + 1 + '</a></li>';
+        $pages += '<li class="page-item"><a>...</a></li>';
+
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (page - 4) + ', undefined, undefined, undefined, true)">' + (page - 4) + '</a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (page - 3) + ', undefined, undefined, undefined, true)">' + (page - 3) + '</a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (page - 2) + ', undefined, undefined, undefined, true)">' + (page - 2) + '</a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (page - 1) + ', undefined, undefined, undefined, true)">' + (page - 1) + '</a></li>';
+        $pages += '<li class="page-item active"><a class="page-link" onclick="renderProducts(' + page + ', undefined, undefined, undefined, true)">' + page + '</a></li>';
+    }
+
+    /*
+    for (i = 1; i <= totalPages; i++) {
+        let active = "";
+        if (i == page) { active = "active"; }
+
+        $pages += '<li class="page-item ' + active + '"><a class="page-link" onclick="renderProducts(' + i + ', undefined, undefined, undefined, true)">' + i + '</a></li>';
+    }
+    */
+
+    if (totalPages > 1 && totalPages > page) {
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (page + 1) + ', undefined, undefined, undefined, true)" aria-label="Next"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>';
+    }
+
+    return $pages;
+}
