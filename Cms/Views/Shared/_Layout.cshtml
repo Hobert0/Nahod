@@ -165,34 +165,29 @@
         <script type="text/javascript" src="~/Scripts/purecookie.js"></script>
 
         <!-- Sledovania konverzií na webe - globalna znacka webu -->
-        <script async
-                src="https://www.googletagmanager.com/gtag/js?id=10816646683"></script>
-
+        <!-- Global site tag (gtag.js) - Google Ads: 10816646683 -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-10816646683"></script>
         <script>
-
             window.dataLayer = window.dataLayer || [];
-
-            function gtag() { dataLayer.push(arguments); }
-
+            function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
 
-            gtag('config', '10816646683');
-
+            gtag('config', 'AW-10816646683');
         </script>
+
         <!-- End Sledovania konverzií na webe - globalna znacka webu -->
 
         <!-- Útržok udalosti pre stránku konverzie - GOOGLE (len ak thankyou page) -->
         if (rawUrl.Split('/').Length >= 1 && rawUrl.Split('/')[1] == "dakujeme-za-objednavku")
         {
+        <!-- Event snippet for Nákup conversion page -->
             <script>
-                gtag('event',
-                    'conversion',
-                    {
-                        'send_to': '10816646683/I4hGCILn-4YDEJvc46Uo',
-                        'value': @TempData["tempOrderSum"],
-                        'currency': 'EUR',
-                        'transaction_id': '@TempData["tempOrderNum"]',
-                    });
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-10816646683/I4hGCILn-4YDEJvc46Uo',
+                    'value': '@TempData["tempOrderSum"]',
+                    'currency': 'EUR',
+                    'transaction_id': '@TempData["tempOrderNum"]'
+                });
             </script>
         }
         <!-- End Útržok udalosti pre stránku konverzie - GOOGLE (len ak thankyou page) -->
