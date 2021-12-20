@@ -109,21 +109,26 @@
             @{
                 Html.RenderPartial("_Filter");
             }
-            <div id="ajaxProducts" class="products m-0"></div>
 
-            <nav aria-label="Page navigation example">
-                <ul class="pagination" id="pagination">
-                </ul>
-            </nav>
+            <div id="ajaxProducts" class="products m-0">
+                <div class="loading" style="text-align:center;margin-top:100px;"><img style="width:100px;" src="/Uploads/loading.gif"></div>
+            </div>
 
+            <div class="pagination-parent-container">
+                <div id="load-more-ajax" style="visibility: hidden;cursor: pointer;"><a><span class="text1"></span>&nbsp;<span class="number"></span>&nbsp;<span class="text2"></span></a></div>
+
+                <nav class="pagination-container" aria-label="Page navigation example">
+                    <ul class="pagination" id="pagination">
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
 </div>
 
-
-<script src="https://nahod.sk/Scripts/fetchProducts.js"></script>
-<script src="https://nahod.sk/Scripts/filterProducts.js"></script>
-<script src="https://nahod.sk/Scripts/add_to_session.js"></script>
+<script src="~/Scripts/fetchProducts.js?v=1.1"></script>
+<script src="~/Scripts/filterProducts.js?v=1.1"></script>
+<script src="~/Scripts/add_to_session.js?v=1.1"></script>
 
 <!--
 <script>
