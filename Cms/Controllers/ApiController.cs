@@ -423,7 +423,7 @@ namespace Cms.Controllers
 
             var filemane = "Objednavky.xml";
 
-            var order = db.orders.ToList();
+            var order = db.orders.Where(s => s.status != 2).ToList();
 
             XDocument xdoc = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes")
