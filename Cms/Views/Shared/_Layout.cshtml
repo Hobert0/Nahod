@@ -173,6 +173,7 @@
             gtag('js', new Date());
 
             gtag('config', 'AW-10816646683');
+            gtag('config', '@item.googleanalyt');
         </script>
 
         <!-- End Sledovania konverzií na webe - globalna znacka webu -->
@@ -182,6 +183,15 @@
         {
         <!-- Event snippet for Nákup conversion page -->
             <script>
+                   gtag('event',
+                    'purchase',
+                    {
+                    'send_to': '@item.googleanalyt',
+                    'transaction_id': '@TempData["tempOrderNum"]',
+                    'value': '@TempData["tempOrderSum"]',
+                    'currency': 'EUR'  // local currency code.
+                       });
+
                 gtag('event', 'conversion', {
                     'send_to': 'AW-10816646683/I4hGCILn-4YDEJvc46Uo',
                     'value': '@TempData["tempOrderSum"]',
@@ -192,15 +202,7 @@
         }
         <!-- End Útržok udalosti pre stránku konverzie - GOOGLE (len ak thankyou page) -->
 
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=@item.googleanalyt"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', '@item.googleanalyt');
-        </script>
+  
 
         <script type='text/javascript'>
             window.smartlook||(function(d) {
