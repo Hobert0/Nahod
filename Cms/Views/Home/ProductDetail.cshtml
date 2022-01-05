@@ -265,13 +265,28 @@
 
                                         var varsTemp = Model.VariantModel.Where(o => o.prod_id == Int32.Parse(id)).ToList();
 
-                                        if ((varsTemp.Count > 0 && varsTemp[0].discountprice != null) || (varsTemp.Count == 0 && prod.discountprice != null))
-                                        //if ((varsTemp.Count > 0 && varsTemp[0].discountprice != null) && prod.discountprice != null)
+                                        // DOPLNIT
+                                        //Zistime, ci existuje aspon jedna varianta, ktora ma akciovu cenu
+                                        var existsWithDiscountPrice = false;
+                                        foreach (var varTemp in varsTemp)
+                                        {
+                                            if (varTemp.discountprice != null)
+                                            {
+                                                existsWithDiscountPrice = true;
+                                                break;
+                                            }
+                                        }
+
+                                        // DOPLNIT
+                                        if ((varsTemp.Count > 0 && existsWithDiscountPrice == true) || (varsTemp.Count == 0 && prod.discountprice != null))
                                         {
                                             povodnacena = prod.price;
                                             <div class="discount-price-del" style="text-align: right; font-size: 25px;">
                                                 <strong><del>@povodnacena.ToString("N2") €</del></strong>
                                             </div>
+
+                                            // DOPLNIT
+                                            <div class="w-discount-price d-none" style="text-align: right; font-size: 25px; color: #303030;"><strong><span class="actual-price">@cena.ToString("N2")</span> €</strong></div>
                                         }
                                         else
                                         {
@@ -334,12 +349,21 @@
                                             }
                                         }
 
-                                        //ak nie je discount price
-                                        //if (Request.Cookies["username"] == null && prod.discountprice == null)
-                                        if (Request.Cookies["username"] == null && ((varsTemp.Count() == 0 && prod.discountprice == null) || (varsTemp.Count() > 0 && varsTemp[0].discountprice == null)))
+                                        // DOPLNIT
+                                        //Zistime, ci existuje aspon jedna varianta, ktora nema akciovu cenu
+                                        var existsWithoutDiscountPrice = false;
+                                        foreach (var varTemp in varsTemp)
                                         {
-                                            <!--<p style="font-size: 12px; text-align: right;"><a href="#" class="register-modal"><u>Zaregistrujte sa</u></a> a získajte zľavu ďalších 5%</p>-->
+                                            if (varTemp.discountprice == null)
+                                            {
+                                                existsWithoutDiscountPrice = true;
+                                                break;
+                                            }
+                                        }
 
+                                        // DOPLNIT
+                                        if (Request.Cookies["username"] == null && ((varsTemp.Count() == 0 && prod.discountprice == null) || (varsTemp.Count() > 0 && existsWithoutDiscountPrice == true)))
+                                        {
                                             var priceAfterReg = prod.price * (decimal)0.95;
 
                                             <p style="font-size: 15px; text-align: right;" id="afterRegInfo">Cena po <a href="#" class="register-modal"><u>registrácii</u> (-5%)</a>: <strong style="color: #ff8b00; font-size: 30px;">@priceAfterReg.ToString("N2") €</strong></p>
@@ -464,23 +488,24 @@
                                                         </div>
                                                     }
                                                 }
-                                                
-                                                
+
+
+
                                                 <script>
                                                     //Google Remarketing
                                                     $final_prod_price = null;
-                                                    if ($(".discount-price-text:not(.d-none)").length) {
+                                        if ($(".discount-price-text:not(.d-none)").length) {
                                                         $final_prod_price = $(".discount-price-text:not(.d-none) .actual-price").text().replace(",", ".");
-                                                    } else {
+                                        } else {
                                                         $final_prod_price = $(".w-discount-price:not(.d-none) .actual-price").text().replace(",", ".");
-                                                    }
+                                        }
 
-                                                    gtag('event','view_item', {
-                                                        value: $final_prod_price,
+                                        gtag('event','view_item', {
+                                        value: $final_prod_price,
                                                         currency: 'EUR',
                                                         items: [
                                                             {
-                                                                id: @prod.id,
+                                            id: @prod.id,
                                                                 google_business_vertical: 'retail'
                                                             }
                                                         ]
@@ -1232,15 +1257,15 @@
                         $rating = $("input[name=userRating]").val();
 
                         switch ($rating) {
-                        case "1":
-                            return $price * 0.95;
-                            break;
-                        case "2":
-                            return $price * 0.9;
-                            break;
-                        case "3":
-                            return $price * 0.85;
-                            break;
+                            case "1":
+                                return $price * 0.95;
+                                break;
+                            case "2":
+                                return $price * 0.9;
+                                break;
+                            case "3":
+                                return $price * 0.85;
+                                break;
                         }
                     }
 
@@ -1250,7 +1275,6 @@
                 function initVariants() {
 
                     $thisPrices = $(".product-variation select").eq(0).val().split("|");
-
                     $thisPriceDefault = parseFloat($thisPrices[0].replace(",", "."));
                     $thisPrice = getRatingPrice($thisPriceDefault);
 
@@ -1266,11 +1290,16 @@
                         $("#stocktext").html("<a href='#' class='watchdog-modal'><span style='color:#e89300;'>Dodanie 3-10 dní</span><br><small><u>Strážiť dostupnosť</u></small><i style='margin-left: 10px;' class='fas fa-dog'></i><br><small>Zadajte Váš e-mail a my Vám zašleme informáciu akonáhle produkt naskladníme.</small></a>");
                     }
 
-
+                    //
+                    // AK EXISTUJE DISCOUNT PRICE
+                    //
                     if ($thisDiscount == 0) {
 
                         //console.log("a");
 
+                        //
+                        // AK JE USER PRIHLASENY
+                        //
                         if ($("input[name=userRating]").length) {
 
                             $(".actual-price").text($thisPrice.toFixedNoRounding(2));
@@ -1286,7 +1315,11 @@
 
                             //ak user je prihlaseny, skryjeme info o cene po registracii
                             $("#afterRegInfo").css("display", "none");
-                        } else {
+                        }
+                        //
+                        // AK NIE JE USER PRIHLASENY
+                        //
+                        else {
 
                             //console.log("d");
 
@@ -1303,7 +1336,11 @@
                             $("#afterRegInfo").css("display", "block");
                         }
 
-                    } else {
+                    }
+                    //
+                    // AK NEEXISTUJE DISCOUNT PRICE
+                    //
+                    else {
 
                         //console.log("b");
 

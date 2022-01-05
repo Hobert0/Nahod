@@ -364,9 +364,7 @@ function generatePaging(page, totalPages) {
     $pages = '';
 
     if (totalPages > 1 && page > 1) {
-        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' +
-            (page - 1) +
-            ', undefined, undefined, undefined, true)" aria-label="Previous"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>';
+        $pages += '<li class="page-item"><a class="page-link" onclick="renderProducts(' + (page - 1) + ', undefined, undefined, undefined, true)" aria-label="Previous"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>';
     }
 
     //ak je menej ako 5 stranok
@@ -377,13 +375,7 @@ function generatePaging(page, totalPages) {
                 active = "active";
             }
 
-            $pages += '<li class="page-item ' +
-                active +
-                '"><a class="page-link" onclick="renderProducts(' +
-                i +
-                ', undefined, undefined, undefined, true)">' +
-                i +
-                '</a></li>';
+            $pages += '<li class="page-item ' + active + '"><a class="page-link" onclick="renderProducts(' + i + ', undefined, undefined, undefined, true)">' + i + '</a></li>';
         }
     }
     //kliknuta prva stranka a zaroven celkovo viac ako 5 stranok
