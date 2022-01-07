@@ -2,7 +2,8 @@
 var purecookieTitle = "Cookies";
 var purecookieDesc = "Súbory cookie používame, aby sme zabezpečili čo najlepšie prezeranie našich webových stránok.";
 var purecookieLink = '<a href="/s/ochrana-osobnych-udajov" target="_blank">Ochrana osobných údajov</a>';
-var purecookieButton = "Rozumiem a prijímam";
+var purecookieButton = "Súhlasím";
+var disable = "Poprosím, len o využívanie cookies nevyhnutných pre funkčnosť webu";
 // ---        --- //
 
 
@@ -56,15 +57,23 @@ function eraseCookie(name) {
 }
 
 function cookieConsent() {
-    if (!getCookie('purecookieDismiss')) {
-        document.body.innerHTML += '<div class="cookieConsentContainer" id="cookieConsentContainer"><div class="cookieTitle"><a>' + purecookieTitle + '</a></div><div class="cookieDesc"><p>' + purecookieDesc + ' ' + purecookieLink + '</p></div><div class="cookieButton"><a onClick="purecookieDismiss();">' + purecookieButton + '</a></div></div>';
+    if (!getCookie('purecookieDismiss') && !getCookie('purecookieDisable')) {
+        document.body.innerHTML += '<div class="cookieConsentContainer" id="cookieConsentContainer"><div class="cookieTitle"><a>' + purecookieTitle + '</a></div><div class="cookieDesc"><p>' + purecookieDesc + ' ' + purecookieLink + '</p></div><div class="cookieButton"><a onClick="purecookieDismiss();">' + purecookieButton + '</a></div><a onClick="purecookieDisable();"><span style="font-size:10px;cursor:pointer;"><u>' + disable + '</u></span></a></div>';
         pureFadeIn("cookieConsentContainer");
     }
 }
 
 function purecookieDismiss() {
+    localStorage.setItem('optout', 'true');
     setCookie('purecookieDismiss', '1', 7);
     pureFadeOut("cookieConsentContainer");
+    window.location.reload(false);
+}
+
+function purecookieDisable() {
+    setCookie('purecookieDisable', '1', 1);
+    pureFadeOut("cookieConsentContainer");
+    window.location.reload(false);
 }
 
 window.onload = function () { cookieConsent(); };

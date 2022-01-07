@@ -163,7 +163,19 @@
         <script type="text/javascript" src="~/Scripts/instafeed.min.js" defer></script>
         <script src="https://www.google.com/recaptcha/api.js"></script>
         <script type="text/javascript" src="~/Scripts/purecookie.js"></script>
-
+        <script>
+            if (!localStorage.getItem('optout')) {
+                //your tracking scripts
+                window['ga-disable-@item.googleanalyt'] = true;
+            } else {
+                window.smartlook||(function(d) {
+                    var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
+                    var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+                    c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);
+                })(document);
+                smartlook('init', '4de3dd3b2fdbefc6ba4d7d1a016052aef6d3fb6c');
+            }
+        </script>
         <!-- Sledovania konverzií na webe - globalna znacka webu -->
         <!-- Global site tag (gtag.js) - Google Ads: 10816646683 -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=AW-10816646683"></script>
@@ -205,12 +217,7 @@
   
 
         <script type='text/javascript'>
-            window.smartlook||(function(d) {
-                var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
-                var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
-                c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);
-            })(document);
-            smartlook('init', '4de3dd3b2fdbefc6ba4d7d1a016052aef6d3fb6c');
+
         </script>
 
         <script type="text/javascript">

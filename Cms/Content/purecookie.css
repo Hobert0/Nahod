@@ -1,6 +1,6 @@
 ﻿.cookieConsentContainer {
     z-index: 999;
-    width: 350px;
+    width: 450px;
     min-height: 20px;
     box-sizing: border-box;
     padding: 30px 30px 30px 30px;
@@ -31,11 +31,15 @@
     margin-top: 10px;
 }
 
-.cookieConsentContainer .cookieDesc a {
-    font-family: OpenSans, arial, "sans-serif";
-    color: #FFFFFF;
-    text-decoration: underline;
-}
+    .cookieConsentContainer span {
+        color:#fff;
+    }
+
+    .cookieConsentContainer .cookieDesc a {
+        font-family: OpenSans, arial, "sans-serif";
+        color: #FFFFFF;
+        text-decoration: underline;
+    }
 
 .cookieConsentContainer .cookieButton a {
     display: inline-block;
