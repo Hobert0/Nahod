@@ -1444,7 +1444,7 @@
         } else {
             if ($("#OrdersModel_Country").val() == "Slovenská republika") {
                 $("input[name=transfer][value=transfer4]").val("transfer1");
-                ("label[id=transfer4]").attr("id", "transfer1");
+                $("label[id=transfer4]").attr("id", "transfer1");
 
                 if (transferFree) {
                     $("#transfer1 .shipPrice").text(transfer1Free + " €");
