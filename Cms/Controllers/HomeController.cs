@@ -1303,20 +1303,15 @@ namespace Cms.Controllers
         }
 
         [Route("vyhladavanie")]
-        public async Task<ActionResult> SearchProduct(string term, string sortOrder, string currentFilter, string searchString, int? page)
+        public async Task<ActionResult> SearchProduct(string term, string termMobile, string sortOrder, string currentFilter, string searchString, int? page)
         {
 
             var id = "";
-            /*ViewBag.CurrentSort = sortOrder;
-            if (searchString != null)
+            if (term == null)
             {
-                page = 1;
+                term = termMobile;
             }
-            else
-            {
-                searchString = currentFilter;
-            }
-            ViewBag.CurrentFilter = searchString;*/
+        
 
             int pageSize = 20;
             int pageNumber = (page ?? 1);
