@@ -614,22 +614,23 @@ namespace Cms.Controllers
                     XElement doc48 = new XElement("Sleva", "0");
                     XElement doc49 = new XElement("Poradi", counter);
 
-                    //XElement docSklad = new XElement("Sklad");
-                    //XElement docSkladNazev = new XElement("Nazev", "Hlavný sklad");
-                    //XElement docSkladKod = new XElement("KodSkladu", "HLAVNY");
+                    var prodId = int.Parse(item.productid);
+                    var customId = db.products.Where(i => i.id == prodId).FirstOrDefault();
 
+                    XElement docSklad = new XElement("Sklad");
+                    XElement docSkladNazev = new XElement("Nazev", "Hlavný sklad");
+                    XElement docSkladKod = new XElement("KodSkladu", "HLAVNY");
+                    //XElement docGUID = new XElement("GUID", customId.guid);
 
-                    XElement xRoot11 = new XElement("NesklPolozka");
+                    //XElement xRoot11 = new XElement("Sklad");
 
                     XElement doc50 = new XElement("Popis", item.product + " " + item.variant + " " + item.variant2);
                     XElement doc51 = new XElement("Zkrat", item.product);
                     XElement doc52 = new XElement("MJ", "ks");
 
-                    var prodId = int.Parse(item.productid);
-                    var customId = db.products.Where(i => i.id == prodId).FirstOrDefault();
-
+                  
                     XElement doc53 = new XElement("UzivCode", "0");
-                    //XElement doc54 = new XElement("GUID", "0");
+                    XElement doc54 = new XElement("GUID", customId.guid);
                     XElement doc55 = new XElement("Katalog", "0");
 
                     if (customId != null)
@@ -641,14 +642,14 @@ namespace Cms.Controllers
                             if (variant != null)
                             {
                                 doc53 = new XElement("UzivCode", variant.number);
-                                //doc54 = new XElement("GUID", customId.number);
+                                doc54 = new XElement("GUID", customId.guid);
                                 doc55 = new XElement("Katalog", variant.number);
                             }
                         }
                         else
                         {
                             doc53 = new XElement("UzivCode", customId.number);
-                            //doc54 = new XElement("GUID", customId.number);
+                            doc54 = new XElement("GUID", customId.guid);
                             doc55 = new XElement("Katalog", customId.number);
                         }
 
@@ -664,17 +665,18 @@ namespace Cms.Controllers
                     xRoot10.Add(doc48);
                     xRoot10.Add(doc49);
 
-                    //xRoot10.Add(docSklad);
-                    //docSklad.Add(docSkladNazev);
-                    //docSklad.Add(docSkladKod);
+                    xRoot10.Add(docSklad);
+                    docSklad.Add(docSkladNazev);
+                    docSklad.Add(docSkladKod);
+                    //docSklad.Add(docGUID);
 
-                    xRoot10.Add(xRoot11); // NesklPolozka
+                    //xRoot10.Add(xRoot11); // NesklPolozka
 
-                    xRoot11.Add(doc50);
-                    xRoot11.Add(doc51);
-                    xRoot11.Add(doc52);
-                    xRoot11.Add(doc53);
-                    xRoot11.Add(doc55);
+                    //xRoot11.Add(doc50);
+                    //xRoot11.Add(doc51);
+                    //xRoot11.Add(doc52);
+                    //xRoot11.Add(doc53);
+                    //xRoot11.Add(doc55);
 
                     counter++;
                 }
@@ -739,13 +741,15 @@ namespace Cms.Controllers
                     XElement paydoc48 = new XElement("Sleva", "0");
                     XElement paydoc49 = new XElement("Poradi", counter);
 
-                    XElement payxRoot11 = new XElement("NesklPolozka");
+                    XElement payxRoot11 = new XElement("Sklad");
 
                     XElement paydoc50 = new XElement("Popis", PaymentType(product.payment));
                     XElement paydoc51 = new XElement("Zkrat", PaymentType(product.payment));
                     XElement paydoc52 = new XElement("MJ", "ks");
                     XElement paydoc53 = new XElement("UzivCode", "0");
                     XElement paydoc55 = new XElement("Katalog", "0");
+                   // XElement paydoc56 = new XElement("GUID", "0");
+
 
                     xRoot3.Add(payxRoot10); // Polozka
 
@@ -757,7 +761,7 @@ namespace Cms.Controllers
                     payxRoot10.Add(paydoc48);
                     payxRoot10.Add(paydoc49);
 
-                    payxRoot10.Add(payxRoot11); // NesklPolozka
+                    payxRoot10.Add(payxRoot11); //Sklad
 
                     payxRoot11.Add(paydoc50);
                     payxRoot11.Add(paydoc51);
@@ -824,6 +828,8 @@ namespace Cms.Controllers
                     cislo = node.SelectSingleNode("KmKarta/Katalog").InnerText;
                 }
 
+                var guid = node.SelectSingleNode("KmKarta/GUID").InnerText;
+
                 var cena = node.SelectSingleNode("PC/Cena1/Cena").InnerText;
                 var zlava = node.SelectSingleNode("PC/Cena2/Sleva").InnerText;
                 decimal cenasdph = 0;
@@ -846,6 +852,7 @@ namespace Cms.Controllers
                         }
                         product.stock = sklad;
                         product.price = cenasdph;
+                        product.guid = guid;
 
                         //ak je produkt v zlave(nepouzivame, nastavuje len v admine)
                         if (zlava != "0")
