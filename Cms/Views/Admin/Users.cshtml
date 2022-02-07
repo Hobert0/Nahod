@@ -55,13 +55,13 @@
 <hr />
 <a href="@Url.Action("UserCreate", "Admin")" class="btn btn-danger">Pridať používateľa</a>
 <hr />
-<table id="myTable" class="table">
+<table id="myTableUsers" class="table">
     <thead>
         <tr>
-            <!--
+
             <th>Id</th>
-            <th>Rola</th>
-            -->
+            <!-- <th>Rola</th>
+    -->
             <th>Používateľské meno</th>
             <th>Meno</th>
             <th>Priezvisko</th>
@@ -90,10 +90,10 @@
             else if (item.role == 2) { userRole = "Newsletter subscriber"; }
 
 <tr>
-    <!--
+
     <td>@Html.DisplayFor(modelItem => item.id)</td>
-    <td>@Html.Raw(userRole)</td>
-    -->
+    <!-- <td>@Html.Raw(userRole)</td>
+     -->
 
     <td><strong>@Html.DisplayFor(modelItem => item.username)</strong></td>
     @foreach (var meta in Model.AllUsersMetaModel.Where(u => u.userid == item.id))
@@ -148,7 +148,7 @@
 
 
     <td align="center"> @Html.ActionLink("Editovať", "UserEdit", "Admin", new { id = item.id }, new { @class = "btn btn-warning", style = "color: #ffffff !important; font-size:13px;margin-right: 2px;" }) @Html.ActionLink(HttpUtility.HtmlDecode("&#215;"), "DeleteAccount", "Home", new { userId = item.id, confirm = true }, new { onclick = "return confirm('Naozaj chcete vymazať tohoto zamestnanca?')", @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne vymažete zamestnanca." })</td>
-    @{ 
+    @{
         /*
         var user = Model.AllWishlistModel.Where(i => i.userid == item.id).SingleOrDefault();
         if (user != null)
@@ -219,6 +219,18 @@
         });
         return bool;
     }
-
+    
+    $(document).ready(function () {
+        if ($('#myTableUsers').length) {
+            $('#myTableUsers').DataTable({
+                "order": [[0, "desc"]],
+                "pageLength": 100,
+                "lengthMenu": [10, 25, 50, 100, 500, 1000],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Slovak.json"
+                }
+            });
+        }
+    });
 </script>
 

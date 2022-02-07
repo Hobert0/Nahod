@@ -58,6 +58,7 @@ namespace Cms.Controllers
                     model.HeurekaKategoria = category.heurekacat;
                     model.HeurekaKategoriaNazov = category.heurekacatname;
                     model.Image = category.image;
+                    model.FbImag = category.fbimage;
                     ViewData["maincat"] = SelectionKategorieMain();
                     ViewData["topcat"] = SelectionKategorieNew();
                     ViewData["topcat2"] = SelectionKategoria();
@@ -1377,7 +1378,7 @@ namespace Cms.Controllers
         public ActionResult UploadImageCategories(CategoriesModel model)
         {
             //Zmena titulnej fotky
-            if (model.TitleImage != null)
+            if (model.TitleImage[0] != null)
             {
                 HttpPostedFileBase[] subor = model.TitleImage;
                 var miestoUlozenia = "~/Uploads/" + model.Image;
@@ -1475,7 +1476,103 @@ namespace Cms.Controllers
                 }
 
             }
-            else { }
+            else if (model.FBImage[0] != null)
+            {
+                HttpPostedFileBase[] subor = model.FBImage;
+                var miestoUlozenia = "~/Uploads/" + model.FbImag;
+                miestoUlozenia = miestoUlozenia.Substring(0, miestoUlozenia.LastIndexOf("/") + 1);
+                string fullPath = Request.MapPath(miestoUlozenia);
+
+                if (System.IO.File.Exists(fullPath))
+                {
+                    System.IO.File.Delete(fullPath);
+                }
+
+                foreach (HttpPostedFileBase file in subor)
+                {
+                    //Checking file is available to save.  
+                    if (file != null)
+                    {
+                        var InputFileName = Path.GetFileName(file.FileName);
+                        var ServerSavePath = Path.Combine(Server.MapPath(miestoUlozenia + InputFileName));
+                        var ulozObrazok = DateTime.Now.Date.ToString("dd.MM.yyyy") + "/" + DateTime.Now.ToString("HHmmss") + "/";
+                        var fileformat = InputFileName.Split('.');
+
+                        if (miestoUlozenia == "~/Uploads/")
+                        {
+                            var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia + ulozObrazok));
+                        }
+                        //Save file to server folder  
+                        byte[] fileByte;
+                        using (var reader = new BinaryReader(file.InputStream))
+                        {
+                            fileByte = reader.ReadBytes(file.ContentLength);
+                        }
+                        WebImage img = new WebImage(fileByte);
+                        if (img.Width > 1000)
+                        {
+                            img.Resize(1000 + 1, 1000 + 1, true).Crop(1, 1);
+                        }
+
+
+                        if (img.ImageFormat != fileformat[1])
+                        {
+                            InputFileName = fileformat[0] + "." + img.ImageFormat;
+
+                            if (miestoUlozenia == "~/Uploads/")
+                            {
+                                ServerSavePath = miestoUlozenia + ulozObrazok + InputFileName;
+                            }
+                            else
+                            {
+                                ServerSavePath = miestoUlozenia + InputFileName;
+                            }
+                        }
+
+                        var isTheSameImage = "";
+
+                        if (model.FbImag != null)
+                        {
+                            isTheSameImage = model.FbImag.Substring(0, model.FbImag.LastIndexOf("/") + 1) + InputFileName;
+                        }
+                        if (model.FbImag != isTheSameImage)
+                        {
+                            var data = db.categories.Single(i => i.id == model.Id);
+                            if (isTheSameImage == "")
+                            {
+                                data.fbimage = ulozObrazok + InputFileName;
+                            }
+                            else
+                            {
+                                data.fbimage = isTheSameImage;
+                            }
+                            db.SaveChanges();
+
+                            img.Save(ServerSavePath);
+                        }
+                        else
+                        {
+                            if (img.ImageFormat != fileformat[1])
+                            {
+                                InputFileName = fileformat[0] + "." + img.ImageFormat;
+                                ServerSavePath = miestoUlozenia + InputFileName;
+                            }
+
+                            Random r = new Random();
+                            var data = db.categories.Single(i => i.id == model.Id);
+
+                            data.fbimage = model.FbImag.Substring(0, model.FbImag.LastIndexOf("/") + 1) + r.Next() + "_" + InputFileName;
+                            db.SaveChanges();
+
+                            // img.Save(ServerSavePath);
+                            img.Save(Path.Combine(Server.MapPath("~/Uploads/" + data.fbimage)));
+                        }
+                        //assigning file uploaded status to ViewBag for showing message to user.  
+                        ViewBag.UploadStatus = subor.Count().ToString() + " files uploaded successfully.";
+                    }
+
+                }
+            }
             return RedirectToAction("ProductCats");
         }
 
@@ -1952,6 +2049,7 @@ namespace Cms.Controllers
         {
             categories o = new categories();
             var nazovSuboru = string.Empty;
+            var FBnazovSuboru = string.Empty;
 
             if (model.Categories.TitleImage != null)
             {
@@ -1972,6 +2070,20 @@ namespace Cms.Controllers
                 nazovSuboru = "avatar_product.jpg";
             }
 
+
+            if (model.Categories.FBImage != null)
+            {
+                HttpPostedFileBase[] subor = model.Categories.FBImage;
+                if (model.Categories.FBImage[0] != null)
+                {
+                    foreach (HttpPostedFileBase file in subor)
+                    {
+                        FBnazovSuboru = Path.GetFileName(file.FileName);
+                    }
+                }
+            }
+
+
             o.name = model.Categories.Name;
             o.slug = model.Categories.Slug;
             o.description = model.Categories.Description ?? "";
@@ -1989,7 +2101,10 @@ namespace Cms.Controllers
             {
                 o.heurekadarcektext = null;
             }
+
             o.image = ulozObrazok + nazovSuboru;
+            o.fbimage = ulozObrazok + FBnazovSuboru;
+
             o.heurekacat = null;
             o.heurekacatname = null;
 
@@ -2021,6 +2136,40 @@ namespace Cms.Controllers
                 /*AK duplikujeme produkt vytvori nove foldre*/
                 var sourcePath = HttpContext.Server.MapPath("~/Uploads/avatar_product.jpg");
                 var destinationPath = HttpContext.Server.MapPath("~/Uploads/" + o.image);
+                var miestoUlozenia = "~/Uploads/" + ulozObrazok;
+                var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia));
+                if (System.IO.File.Exists(sourcePath))
+                {
+                    System.IO.File.Copy(sourcePath, destinationPath);
+                }
+
+            }
+
+            if (model.Categories.FBImage != null)
+            {
+                if (model.Categories.FBImage[0] != null)
+                {
+                    await UploadFiles(model.Categories.FBImage, ulozObrazok);
+                }
+                else
+                {
+                    var sourcePath = HttpContext.Server.MapPath("~/Uploads/avatar_product.jpg");
+                    var destinationPath = HttpContext.Server.MapPath("~/Uploads/" + o.image);
+                    var miestoUlozenia = "~/Uploads/" + ulozObrazok;
+                    var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia));
+                    if (System.IO.File.Exists(sourcePath))
+                    {
+                        System.IO.File.Copy(sourcePath, destinationPath);
+                    }
+
+
+                }
+            }
+            else
+            {
+                /*AK duplikujeme produkt vytvori nove foldre*/
+                var sourcePath = HttpContext.Server.MapPath("~/Uploads/avatar_product.jpg");
+                var destinationPath = HttpContext.Server.MapPath("~/Uploads/" + o.fbimage);
                 var miestoUlozenia = "~/Uploads/" + ulozObrazok;
                 var path = Directory.CreateDirectory(Server.MapPath(miestoUlozenia));
                 if (System.IO.File.Exists(sourcePath))

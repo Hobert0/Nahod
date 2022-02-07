@@ -22,7 +22,11 @@ namespace Cms.Models
         public string HeurekaKategoria { get; set; }
         public string HeurekaKategoriaNazov { get; set; }
         public string Image { get; set; }
+        public string FbImag { get; set; }
+
         public int Ordering { get; set; }
         public HttpPostedFileBase[] TitleImage { get; set; }
+        public HttpPostedFileBase[] FBImage { get; set; }
+
     }
 }

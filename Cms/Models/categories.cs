@@ -22,6 +22,7 @@ namespace Cms.Models
         public string description { get; set; }
         public string topcat2 { get; set; }
         public string image { get; set; }
+        public string fbimage { get; set; }
         public Nullable<int> priority { get; set; }
         public bool heureka { get; set; }
         public bool heurekadarcek { get; set; }

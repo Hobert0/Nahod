@@ -49,6 +49,32 @@
         </div>
     </div>
 
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="col-md-14">
+                    <img src="~/Uploads/@Html.DisplayTextFor(model => model.FbImag)" style="width: 100%;" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="col-md-14 btnvyber">
+                    <strong>@Html.LabelFor(model => model.FBImage, "Zmeniť FB fotografiu", htmlAttributes: new { @class = "control-label col-md-12 vyberf" })</strong>
+                    <br /><br />
+                    <a id="btn_fb" style="cursor:pointer">Vyber fotografie</a>
+                    @Html.TextBoxFor(model => model.FBImage, "", new { @type = "file", @class = "form-control", @accept = "png|jpg|jpeg|gif", @style = "max-width: 67%;height:60px;display:none;", @id = "bttnfb", @onchange = "press()" })
+                    <label id="fileLabell">Nie je vybratá žiadna fotografia.</label>
+                    @Html.ValidationMessageFor(model => model.FBImage, "", new { @class = "text-danger" })
+                </div>
+                <br />
+                <div class="form-group">
+                    <div>
+                        <input type="submit" value="Nahrať novú FB fotografiu" class="btn btn-success" onclick="validateForm();" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <hr />
 }
 
@@ -260,6 +286,7 @@
         $("#bttn").trigger('click');
     });
 
+   
     window.pressed = function () {
         var a = document.getElementById('bttn');
         if (a.files.length > 1) {
@@ -269,12 +296,12 @@
         }
     };
 
-    $("#bttn_vis").click(function () {
-        $("#btttn").trigger('click');
+    $("#btn_fb").click(function () {
+        $("#bttnfb").trigger('click');
     });
 
     window.press = function () {
-        var a = document.getElementById('btttn');
+        var a = document.getElementById('bttnfb');
         if (a.files.length > 1) {
             fileLabell.innerHTML = "Boli vybraté " + a.files.length + " fotografie.";
         } else if (a.files.length = 1) {
