@@ -860,7 +860,7 @@
 
 
                                         <label class="cont" id="@transferVal">
-                                            <span class="shipName">Kuriérska spoločnosť</span><strong class="shipPrice" style="float: right">
+                                            <span class="shipName">Kuriérska spoločnosť (do 30kg)</span><strong class="shipPrice" style="float: right">
                                                 <script>
                                                     if ($("#OrdersModel_Country").val() == "Slovenská republika") {
                                                         if (transferFree) {
@@ -889,7 +889,7 @@
                                                 }*/
                                             }
 
-                                            <input type="radio" name="transfer" value="@transferVal" onclick="checkTransfer();shippPay();">
+                                            <input type="radio" name="transfer" value="@transferVal" onclick="checkTransfer();shippPay();"  checked="true">
                                             <span class="checkmar"></span>
                                         </label>
                                     }
@@ -953,7 +953,7 @@
                                     {
                                         <label class="cont" id="pay4">
                                             <span class="payName">Dobierkou</span><strong class="payPrice" style="float: right"> @item.pay4 €</strong>
-                                            <input type="radio" name="payment" value="pay4" onclick="checkPayment();payMent();">
+                                            <input type="radio" name="payment" value="pay4" onclick="checkPayment();payMent();" checked="true">
                                             <span class="checkmar"></span>
                                         </label>
                                     }
@@ -1359,15 +1359,16 @@
         </div>
     }
 </div>
-<script src="~/Scripts/basket.js?v=1.11"></script>
+<script src="~/Scripts/basket.js?v=1.12"></script>
 <script src="~/Scripts/basket_session.js"></script>
 
 <script>
 
     $( document ).ready(function() {
             // Handler for .ready() called.
-            document.getElementById("submitorder").disabled = false;
+        document.getElementById("submitorder").disabled = false;
     });
+   
 
     $("#submitorder").click(function (e) {
             //stop submitting the form to see the disabled button effect
@@ -1502,4 +1503,6 @@
         removeFromCart(data.target.id);
         });
 
+
+  
 </script>

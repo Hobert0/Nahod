@@ -230,6 +230,7 @@
           <Property Name="heurekadarcektext" Type="text" />
           <Property Name="active" Type="bool" Nullable="false" />
           <Property Name="deleted" Type="bool" Nullable="false" />
+          <Property Name="guid" Type="text" />
         </EntityType>
         <EntityType Name="settings">
           <Key>
@@ -346,6 +347,7 @@
           <Property Name="value" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="num" Type="int" Nullable="false" />
           <Property Name="deleted" Type="bool" Nullable="false" />
+          <Property Name="guid" Type="text" />
         </EntityType>
         <EntityType Name="watchdog">
           <Key>
@@ -639,6 +641,7 @@
           <Property Name="heurekadarcektext" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="active" Type="Boolean" Nullable="false" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="guid" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="settings">
           <Key>
@@ -755,6 +758,7 @@
           <Property Name="value" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="num" Type="Int32" Nullable="false" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="guid" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="watchdog">
           <Key>
@@ -984,6 +988,7 @@
           <EntitySetMapping Name="products">
             <EntityTypeMapping TypeName="hobcModel.products">
               <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="guid" ColumnName="guid" />
                 <ScalarProperty Name="deleted" ColumnName="deleted" />
                 <ScalarProperty Name="active" ColumnName="active" />
                 <ScalarProperty Name="heurekadarcektext" ColumnName="heurekadarcektext" />
@@ -1127,6 +1132,7 @@
           <EntitySetMapping Name="variants">
             <EntityTypeMapping TypeName="hobcModel.variants">
               <MappingFragment StoreEntitySet="variants">
+                <ScalarProperty Name="guid" ColumnName="guid" />
                 <ScalarProperty Name="deleted" ColumnName="deleted" />
                 <ScalarProperty Name="num" ColumnName="num" />
                 <ScalarProperty Name="value" ColumnName="value" />

@@ -261,13 +261,13 @@
                                 <div class="col-md-10">
                                     @if (item.transfer1_enbl && item.transfer1 != null)
                                     {
-                                        <label class="cont" id="transfer1">
-                                            Kuriérska spoločnosť<strong style="float: right">
-                                                <script>document.write(transfer1);</script> €
-                                            </strong>
-                                            <input type="radio" name="transfer" value="transfer1" onclick="checkTransfer();shippPay();">
-                                            <span class="checkmar"></span>
-                                        </label>
+                                    <label class="cont" id="transfer1">
+                                        Kuriérska spoločnosť (do 30kg)<strong style="float: right">
+                                            <script>document.write(transfer1);</script> €
+                                        </strong>
+                                        <input type="radio" name="transfer" value="transfer1" onclick="checkTransfer();shippPay();">
+                                        <span class="checkmar"></span>
+                                    </label>
                                     }
                                     @if (item.transfer2_enbl && item.transfer2 != null)
                                     {

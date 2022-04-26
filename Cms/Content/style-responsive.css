@@ -991,7 +991,7 @@
     #mySidebar {
         height: 0;
         width: 100%;
-        margin-top: 50px;
+        padding-top: 50px;
         overflow: hidden;
         padding-top: 0;
         z-index: 1;
@@ -1000,7 +1000,7 @@
         #mySidebar.active {
             height: 100%;
             overflow: scroll;
-            padding-top: 25px;
+            padding-top: 75px;
             overflow-x: hidden;
         }
 

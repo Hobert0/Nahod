@@ -163,8 +163,13 @@
     {
         foreach (var num in Model.ProductModel.Where(i => i.id == Int32.Parse(product.productid)))
         {
+            var prodnumber = num.number;
+            if (num.number == null || num.number == "")
+            {
+                prodnumber = db.variants.Where(i => i.prod_id == num.id && i.value == product.variant).Select(o => o.number).FirstOrDefault();
+            }
             <tr>
-                <td>@Html.DisplayFor(modelItem => num.number)</td>
+                <td>@prodnumber</td>
                 <td><img src="~/Uploads/@Html.DisplayFor(modelItem => product.productimage)" style="width: 50px;" /></td>
                 <td><a href="@Url.Action("ProductDetail", "Home", new { id = product.productid })" target="_blank"><strong>@Html.DisplayFor(modelItem => product.product)</strong></a></td>
                 <td>@Html.DisplayFor(modelItem => product.pieces) ks</td>

@@ -83,7 +83,9 @@
                     @foreach (var set in Model.EsettingsModel)
                     {
                         <hr />
-                        <h3>Pokyny pri platbe bankovým prevodom</h3>
+                        <h3>Pokyny pri platbe bankovým prevodom </h3>
+                        <strong class="alert-danger">(uhrádzať len v prípade, že bola zvolená platba bankovým prevodom)</strong><br /><br />
+
                         <strong>IBAN: </strong>@set.accountnumber<br />
                         <strong>Variabilný symbol: </strong>@ord.ordernumber<br />
                         <i>Tovar bude odoslaný po obdržaní platby.</i>

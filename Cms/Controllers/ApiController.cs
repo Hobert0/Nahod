@@ -14,12 +14,15 @@ using System.Xml.Serialization;
 using System.Xml;
 using System.Xml.Schema;
 using System.Data;
+using System.Net;
 using System.Xml.Linq;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using OfficeOpenXml;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using PagedList;
 
 namespace Cms.Controllers
@@ -222,26 +225,26 @@ namespace Cms.Controllers
             int id = 0;
             if (subslug == null && catslug != "novinky" && catslug != "zlavy")
             {
-                id = db.categories.Where(i => i.slug == catslug).First().id;
+                id = db.categories.Where(i => i.slug == catslug && i.deleted == false).First().id;
             }
             else if (subslug != null && subslug2 == null && catslug != "novinky" && catslug != "zlavy")
             {
-                var topcatName = db.categories.Where(i => i.slug == catslug).First().id.ToString();
-                id = db.categories.Where(i => i.slug == subslug && i.maincat == topcatName).First().id;
+                var topcatName = db.categories.Where(i => i.slug == catslug && i.deleted == false).First().id.ToString();
+                id = db.categories.Where(i => i.slug == subslug && i.maincat == topcatName && i.deleted == false).First().id;
             }
             else if (subslug2 != null && subslug3 == null && catslug != "novinky" && catslug != "zlavy")
             {
-                var topcatName = db.categories.Where(i => i.slug == catslug).First().id.ToString();
-                var topcat2Name = db.categories.Where(i => i.slug == subslug).First().id.ToString();
-                id = db.categories.Where(i => i.slug == subslug2 && i.maincat == topcatName && i.topcat == topcat2Name).First().id;
+                var topcatName = db.categories.Where(i => i.slug == catslug && i.deleted == false).First().id.ToString();
+                var topcat2Name = db.categories.Where(i => i.slug == subslug && i.deleted == false).First().id.ToString();
+                id = db.categories.Where(i => i.slug == subslug2 && i.maincat == topcatName && i.topcat == topcat2Name && i.deleted == false).First().id;
             }
             else if (subslug3 != null && catslug != "novinky" && catslug != "zlavy")
             {
-                var maincatName = db.categories.Where(i => i.slug == catslug).First().id.ToString();
-                var topcatName = db.categories.Where(i => i.slug == subslug).First().id.ToString();
-                var topcat2Name = db.categories.Where(i => i.slug == subslug2).First().id.ToString();
+                var maincatName = db.categories.Where(i => i.slug == catslug && i.deleted == false).First().id.ToString();
+                var topcatName = db.categories.Where(i => i.slug == subslug && i.deleted == false).First().id.ToString();
+                var topcat2Name = db.categories.Where(i => i.slug == subslug2 && i.deleted == false).First().id.ToString();
 
-                id = db.categories.Where(i => i.slug == subslug3 && i.maincat == maincatName && i.topcat == topcatName && i.topcat2 == topcat2Name).First().id;
+                id = db.categories.Where(i => i.slug == subslug3 && i.maincat == maincatName && i.topcat == topcatName && i.topcat2 == topcat2Name && i.deleted == false).First().id;
             }
 
             return id;
@@ -535,8 +538,6 @@ namespace Cms.Controllers
                 XElement docMenaSymb = new XElement("MenaSymb", "€");
                 XElement docMenaKod = new XElement("MenaKod", "EUR");
 
-
-
                 xRoot2.Add(xRoot3);
                 xRoot3.Add(doc);
                 xRoot3.Add(doc2);
@@ -617,21 +618,18 @@ namespace Cms.Controllers
                     var prodId = int.Parse(item.productid);
                     var customId = db.products.Where(i => i.id == prodId).FirstOrDefault();
 
-                    XElement docSklad = new XElement("Sklad");
-                    XElement docSkladNazev = new XElement("Nazev", "Hlavný sklad");
-                    XElement docSkladKod = new XElement("KodSkladu", "HLAVNY");
-                    //XElement docGUID = new XElement("GUID", customId.guid);
-
-                    //XElement xRoot11 = new XElement("Sklad");
-
-                    XElement doc50 = new XElement("Popis", item.product + " " + item.variant + " " + item.variant2);
-                    XElement doc51 = new XElement("Zkrat", item.product);
-                    XElement doc52 = new XElement("MJ", "ks");
-
-                  
                     XElement doc53 = new XElement("UzivCode", "0");
                     XElement doc54 = new XElement("GUID", customId.guid);
                     XElement doc55 = new XElement("Katalog", "0");
+                    XElement doc56 = new XElement("TypKarty", "jednoducha");
+
+                    XElement docSkladPoloz = new XElement("SklPolozka");
+
+                    if (doc54.Value != "")
+                    {
+                        docSkladPoloz = new XElement("SklPolozka");
+                    }
+
 
                     if (customId != null)
                     {
@@ -642,7 +640,7 @@ namespace Cms.Controllers
                             if (variant != null)
                             {
                                 doc53 = new XElement("UzivCode", variant.number);
-                                doc54 = new XElement("GUID", customId.guid);
+                                doc54 = new XElement("GUID", variant.guid);
                                 doc55 = new XElement("Katalog", variant.number);
                             }
                         }
@@ -655,6 +653,19 @@ namespace Cms.Controllers
 
                     }
 
+                    XElement docSklad = new XElement("Sklad");
+
+                    if (doc54.Value == "")
+                    {
+                        docSklad = new XElement("NesklPolozka");
+                    }
+                  
+                    XElement docSkladNazev = new XElement("Nazev", "Hlavný");
+                    XElement docSkladKod = new XElement("KodSkladu", "HLAVNY");
+                    XElement docGUID = new XElement("GUID", "{5167F1FE-D2AA-4D2F-869B-6EB31F9A1255}");
+
+                    XElement docKmKarta = new XElement("KmKarta");
+
                     xRoot3.Add(xRoot10); // Polozka
 
                     xRoot10.Add(doc43);
@@ -664,19 +675,19 @@ namespace Cms.Controllers
                     xRoot10.Add(doc47);
                     xRoot10.Add(doc48);
                     xRoot10.Add(doc49);
-
-                    xRoot10.Add(docSklad);
+                    xRoot10.Add(doc55);
+                    xRoot10.Add(docSkladPoloz);
+                    docSkladPoloz.Add(docSklad);
                     docSklad.Add(docSkladNazev);
                     docSklad.Add(docSkladKod);
-                    //docSklad.Add(docGUID);
+                    docSklad.Add(docGUID);
+                    docSkladPoloz.Add(docKmKarta);
+                    docKmKarta.Add(doc43);
+                    docKmKarta.Add(doc53);
+                    docKmKarta.Add(doc55);
+                    docKmKarta.Add(doc54); //GUID
+                    docKmKarta.Add(doc56);
 
-                    //xRoot10.Add(xRoot11); // NesklPolozka
-
-                    //xRoot11.Add(doc50);
-                    //xRoot11.Add(doc51);
-                    //xRoot11.Add(doc52);
-                    //xRoot11.Add(doc53);
-                    //xRoot11.Add(doc55);
 
                     counter++;
                 }
@@ -687,7 +698,7 @@ namespace Cms.Controllers
                 var shippingPrice = db.Database.SqlQuery<string>(Sql).ToList();
                 var freeShipping = db.e_settings.FirstOrDefault().transfer5;
 
-                if (product.finalprice < decimal.Parse(freeShipping) && decimal.Parse(shippingPrice[0].Replace(".", ",").ToString()) != 0)
+                if (product.baseprice < decimal.Parse(freeShipping) && decimal.Parse(shippingPrice[0].Replace(".", ",").ToString()) != 0)
                 {
                     XElement shipxRoot10 = new XElement("Polozka");
                     XElement shipdoc43 = new XElement("Popis", ShippingType(product.shipping));
@@ -741,7 +752,7 @@ namespace Cms.Controllers
                     XElement paydoc48 = new XElement("Sleva", "0");
                     XElement paydoc49 = new XElement("Poradi", counter);
 
-                    XElement payxRoot11 = new XElement("Sklad");
+                    XElement payxRoot11 = new XElement("NesklPolozka");
 
                     XElement paydoc50 = new XElement("Popis", PaymentType(product.payment));
                     XElement paydoc51 = new XElement("Zkrat", PaymentType(product.payment));
@@ -802,8 +813,13 @@ namespace Cms.Controllers
         public string ImportMonS3(string ExpZasobyName)
         {
             var path = Server.MapPath("~/import/" + ExpZasobyName);
-            XmlTextReader reader = new XmlTextReader(path);
-            while (reader.Read())
+            //var path = Server.MapPath("~/import/Zasoby.xml");
+
+            WebRequest request = WebRequest.Create(path);
+            request.Timeout = 50000;
+
+            using (WebResponse response = request.GetResponse())
+            using (XmlReader reader = XmlReader.Create(response.GetResponseStream()))
             {
                 // Do some work here on the data.
                 Console.WriteLine(reader.Name);
@@ -811,7 +827,13 @@ namespace Cms.Controllers
                 //string tempc = reader.Cena;
                 //string feels = reader.StavZasoby;
             }
+            new Task(() => { proceedExport(path); }).Start();
 
+            return "Oki";
+        }
+
+        private void proceedExport(string path) 
+        {
             XmlDocument doc1 = new XmlDocument();
             doc1.Load(path);
             XmlElement root = doc1.DocumentElement;
@@ -842,7 +864,7 @@ namespace Cms.Controllers
 
                 if (cislo != "")
                 {
-                    var product = db.products.Where(i => i.number == cislo && i.deleted == false).FirstOrDefault();
+                    var product = db.products.Where(i => i.number == cislo).FirstOrDefault();
                     if (product != null)
                     {
                         var sendWatchdog = false;
@@ -891,14 +913,14 @@ namespace Cms.Controllers
                     else
                     {
                         //poku3a sa najst hladany produkt medzi variantami
-                        var productinvariants = db.variants.Where(i => i.number == cislo && i.deleted == false).FirstOrDefault();
+                        var productinvariants = db.variants.Where(i => i.number == cislo).FirstOrDefault();
                         if (productinvariants != null)
                         {
                             //var variantprice = cenasdph * decimal.Parse("1,2");
 
                             productinvariants.stock = sklad;
                             productinvariants.price = cenasdph;
-
+                            productinvariants.guid = guid;
                             //ak je produkt v zlave (nepouzivame, nastavuje len v admine)
                             if (zlava != "0")
                             {
@@ -915,8 +937,6 @@ namespace Cms.Controllers
                     }
                 }
             }
-
-            return "Oki";
         }
         static string RemoveInvalidXmlChars(string text)
         {
@@ -1160,19 +1180,27 @@ namespace Cms.Controllers
 
                 //CATEGORY
                 var catsStr = "";
-                var allCategories = db.categories.ToList();
+                var allCategories = db.categories.Where(i => i.deleted == false).ToList();
                 if (prod.category != null)
                 {
-                    dynamic cats = JsonConvert.DeserializeObject(prod.category);
+                    List<string> cats = JsonConvert.DeserializeObject<List<string>>(prod.category);
+                    var hashset = new HashSet<string>();
 
-                    foreach (var cat in cats)
+
+                    foreach (var c in cats)
                     {
-                        int thisCatId = Int32.Parse(cat.Value.ToString());
+                        if (!hashset.Add(c))
+                        {
+                            continue;
+                        }
+
+                        int thisCatId = Int32.Parse(c.ToString());
                         foreach (var catDb in allCategories.Where(o => o.id == thisCatId))
                         {
                             catsStr += catDb.name + ", ";
                         }
                     }
+          
                     if (catsStr != "")
                     {
                         catsStr.Remove(catsStr.Length - 2);

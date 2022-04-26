@@ -24,5 +24,6 @@ namespace Cms.Models
         public string value { get; set; }
         public int num { get; set; }
         public bool deleted { get; set; }
+        public string guid { get; set; }
     }
 }

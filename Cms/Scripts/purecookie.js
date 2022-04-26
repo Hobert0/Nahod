@@ -65,7 +65,7 @@ function cookieConsent() {
 
 function purecookieDismiss() {
     localStorage.setItem('optout', 'true');
-    setCookie('purecookieDismiss', '1', 30);
+    setCookie('purecookieDismiss', '1', 365);
     pureFadeOut("cookieConsentContainer");
     window.location.reload(false);
 }

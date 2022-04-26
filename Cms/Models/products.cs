@@ -44,5 +44,6 @@ namespace Cms.Models
         public string heurekadarcektext { get; set; }
         public bool active { get; set; }
         public bool deleted { get; set; }
+        public string guid { get; set; }
     }
 }

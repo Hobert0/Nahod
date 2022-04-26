@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.Entity.Core.Mapping;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -60,7 +61,7 @@ namespace Cms.Controllers
         {
             var cartVal = JsonConvert.DeserializeObject<List<dynamic>>(cartValues);
             Session["cartitems"] = cartVal;
-
+            
             decimal thisSum = 0;
             foreach (var item in cartVal)
             {
@@ -79,6 +80,13 @@ namespace Cms.Controllers
             Session["cartsum"] = thisSum;
 
             return Json(cartValues, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("keepsessionalive")]
+        public ActionResult KeepSession()
+        {
+            Session["cartitems"] = Session["cartitems"];
+            return Json("done", JsonRequestBehavior.AllowGet);
         }
 
         [Route("checkCartDeletedInactive")]

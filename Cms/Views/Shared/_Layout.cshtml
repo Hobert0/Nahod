@@ -138,7 +138,7 @@
         <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
         <link rel="stylesheet" href="~/Content/style.css?v=1.1" />
         <link rel="stylesheet" href="~/Content/hp.css?v=1.1" />
-        <link rel="stylesheet" href="~/Content/style-responsive.css?v=1.12" />
+        <link rel="stylesheet" href="~/Content/style-responsive.css?v=1.13" />
         <link rel="stylesheet" href="~/Content/megamenu.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
@@ -162,7 +162,7 @@
         <script src="~/Scripts/toastr.js"></script>
         <script type="text/javascript" src="~/Scripts/instafeed.min.js" defer></script>
         <script src="https://www.google.com/recaptcha/api.js"></script>
-        <script type="text/javascript" src="~/Scripts/purecookie.js"></script>
+        <script type="text/javascript" src="~/Scripts/purecookie.js?v=1.01"></script>
         <script>
             if (!localStorage.getItem('optout')) {
                 //your tracking scripts
@@ -514,8 +514,8 @@
                     <p class="mt-2"><span class="font-weight-bold">Telefón: </span><span>0948 610 250, 0911 350 400</span></p>
                     <p><span class="font-weight-bold">E-Mail: </span><span>info@nahod.sk</span></p>
                     <p class="font-weight-bold mt-2">Otváracie hodiny:</p>
-                    <p>Po - Pia: od 9:00 - 17:00</p>
-                    <p>Sobota: od 8:30 - 12:00</p>
+                    <p>Po - Pia: od 8:00 - 18:00</p>
+                    <p>Sobota: od 8:00 - 12:00</p>
                     <p>Nedeľa: zatvorené</p>
                     <br>
                     @{
@@ -579,10 +579,10 @@
         Html.RenderPartial("_LoginHeader");
         Html.RenderPartial("_RegisterHeader");
     }
-    <div id="mySidebar" class="sidebar sidenav">
+<div id="mySidebar" class="sidebar sidenav">
 
-        <!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>-->
-        @*<a class="dropdown-btn sub_catsmenu"><h3 class="firstcat" style="color: #fff;padding: 20px 0 0;">Značky </h3></a><i style="margin-top: -33px;color:#fff" class="fa fa-caret-down dropdown-btn"></i>
+    <!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>-->
+    @*<a class="dropdown-btn sub_catsmenu"><h3 class="firstcat" style="color: #fff;padding: 20px 0 0;">Značky </h3></a><i style="margin-top: -33px;color:#fff" class="fa fa-caret-down dropdown-btn"></i>
             <div class="dropdown-container">
 
                 @foreach (var brand in Model.BrandsModel.OrderBy(o => o.priority))
@@ -594,61 +594,62 @@
 
             </div>*@
 
-        @foreach (var cat in Model.CategoriesModel.Where(i => i.maincat == "Žiadna").OrderByDescending(i => i.ordering))
-        {
-            <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(cat.slug)})" class="sub_catsmenu">
-                <div class="category-image" style="background-image:url('/Uploads/@cat.image')"></div>
-                <h3 class="firstcat">
-                    @Html.Raw(cat.name)
-                    <span class="toggle-category">
-                        <i class="fas fa-plus closed active"></i>
-                        <i class="fas fa-minus opened"></i>
-                    </span>
-                </h3>
-            </a>
-            <ul>
-                @foreach (var subcat in Model.CategoriesModel.Where(o => (o.maincat == cat.id.ToString() && o.topcat == "") || (o.maincat == cat.id.ToString() && o.topcat == "Žiadna")).OrderByDescending(i => i.ordering))
+    @foreach (var cat in Model.CategoriesModel.Where(i => i.maincat == "Žiadna").OrderByDescending(i => i.ordering))
+    {
+        <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(cat.slug)})" class="sub_catsmenu">
+            <div class="category-image" style="background-image:url('/Uploads/@cat.image')"></div>
+            <h3 class="firstcat">
+                @Html.Raw(cat.name)
+                <span class="toggle-category">
+                    <i class="fas fa-plus closed active"></i>
+                    <i class="fas fa-minus opened"></i>
+                </span>
+            </h3>
+        </a>
+        <ul>
+            @foreach (var subcat in Model.CategoriesModel.Where(o => (o.maincat == cat.id.ToString() && o.topcat == "") || (o.maincat == cat.id.ToString() && o.topcat == "Žiadna")).OrderByDescending(i => i.ordering))
+            {
+                var counter3 = 0;
+                var dropdowncounter = 0;
+                foreach (var isdropdown in Model.CategoriesModel.Where(o => o.topcat == subcat.name && o.maincat == cat.name))
                 {
-                    var counter3 = 0;
-                    var dropdowncounter = 0;
-                    foreach (var isdropdown in Model.CategoriesModel.Where(o => o.topcat == subcat.name && o.maincat == cat.name))
-                    {
-                        dropdowncounter++;
-                    }
-                    if (dropdowncounter > 1)
-                    {
-                        <a class="dropdown-btn sub_catsmenu" style="color:#333">
-                            <div class="category-image" style="background-image:url('/Uploads/@subcat.image')"></div>
-                            <li><strong>@Html.Raw(subcat.name)</strong></li>
-                        </a>
-
-                        /*If is more than one element in menu*/
-                        <!--<i style="color:#fff" class="fa fa-plus dropdown-btn"></i>-->
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(cat.slug), subslug = @Html.Raw(subcat.slug)})" class="sub_catsmenu" style="color:#333">
-                            <div class="category-image" style="background-image:url('/Uploads/@subcat.image')"></div>
-                            <li><strong>@Html.Raw(subcat.name)</strong></li>
-                        </a>
-
-                    }
-                    if (counter3 < 1)
-                    {
-                        <div class="dropdown-container">
-                            @foreach (var subcat2 in Model.CategoriesModel.Where(o => o.topcat2 == subcat.id.ToString() && o.topcat == cat.id.ToString()))
-                            {
-                                <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(cat.slug), subslug = @Html.Raw(subcat.slug), subslug2 = @Html.Raw(subcat2.slug)})" class="sub_catsmenu"><li>@Html.Raw(subcat2.name)</li></a>
-                            }
-                        </div>
-                    }
-                    counter3++;
+                    dropdowncounter++;
                 }
+                if (dropdowncounter > 1)
+                {
+                    <a class="dropdown-btn sub_catsmenu" style="color:#333">
+                        <div class="category-image" style="background-image:url('/Uploads/@subcat.image')"></div>
+                        <li><strong>@Html.Raw(subcat.name)</strong></li>
+                    </a>
 
-            </ul>
-        }
-    </div>
+                    /*If is more than one element in menu*/
+                    <!--<i style="color:#fff" class="fa fa-plus dropdown-btn"></i>-->
+                }
+                else
+                {
+                    <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(cat.slug), subslug = @Html.Raw(subcat.slug)})" class="sub_catsmenu" style="color:#333">
+                        <div class="category-image" style="background-image:url('/Uploads/@subcat.image')"></div>
+                        <li><strong>@Html.Raw(subcat.name)</strong></li>
+                    </a>
 
+                }
+                if (counter3 < 1)
+                {
+                    <div class="dropdown-container">
+                        @foreach (var subcat2 in Model.CategoriesModel.Where(o => o.topcat2 == subcat.id.ToString() && o.topcat == cat.id.ToString()))
+                        {
+                            <a href="@Url.Action("Category", "Home", new {catslug = @Html.Raw(cat.slug), subslug = @Html.Raw(subcat.slug), subslug2 = @Html.Raw(subcat2.slug)})" class="sub_catsmenu"><li>@Html.Raw(subcat2.name)</li></a>
+                        }
+                    </div>
+                }
+                counter3++;
+            }
+
+        </ul>
+    }
+</div>
+
+    <script src="~/Scripts/basketHeartBeat.js"></script>
     <script>
         function onSubmit(token) {
             document.getElementById("Subscribeform").submit();

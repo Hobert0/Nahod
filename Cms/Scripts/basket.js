@@ -370,6 +370,7 @@ function validateBasketForm() {
                     shippPay();
                 }
 
+                checkPayment();
                 showShipping();
 
                 return true;
@@ -577,7 +578,7 @@ function validateBasketForm() {
                     checkTransfer();
                     shippPay();
                 }
-
+                checkPayment();
                 showShipping();
 
                 return true;
