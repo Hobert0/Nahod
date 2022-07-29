@@ -618,7 +618,7 @@ namespace Cms.Controllers
                 //Zvlast nastaveny email FROM (pouziva iny server)
                 //mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["UserName"], eshopname);
 
-                mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
+                mailMessage.From = new MailAddress("obchod@nahod.sk", eshopname);
                 mailMessage.Subject = subject;
 
                 var pdfVopPath = sett1.vopPdf;
@@ -1102,7 +1102,7 @@ namespace Cms.Controllers
                 //Zvlast nastaveny email FROM (pouziva iny server)
                 //mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["UserName"], eshopname);
 
-                mailMessage.From = new MailAddress("shop@nahod.sk", eshopname);
+                mailMessage.From = new MailAddress("obchod@nahod.sk", eshopname);
                 mailMessage.Subject = "predmet";
                 mailMessage.Body = "";
                 mailMessage.IsBodyHtml = true;

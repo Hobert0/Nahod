@@ -103,7 +103,6 @@
                     data: dataToPost,
                     traditional: true,
                     error: function(xhr, ajaxOptions, thrownError) {
-                        alert(xhr.status);
                     },
                 });
                 window.location.href = "/newsletter?sentto=" + listOfObjects.length;
@@ -123,7 +122,6 @@
                 dataType: 'JSON', // make sure you use the correct case for dataType
                 traditional: true,
                 error: function(xhr, ajaxOptions, thrownError){
-                    alert(xhr.status);
                 },
             });
             window.location.href = "/newsletter/?sentto=" + @allUsers;

@@ -5,36 +5,36 @@
     if (document.querySelectorAll('input[name="payment"]:checked').length === 0) {
 
         document.getElementById("pricedph").innerHTML =
-            ((Number(finalprice) + eval(ship)) * 100 / 120).toFixedNoRounding(2);
-        document.getElementById("final").innerHTML = (Number(finalprice) + eval(ship)).toFixedNoRounding(2);
+            ((Number(finalprice) + eval(ship)) * 100 / 120).toFixed(1);
+        document.getElementById("final").innerHTML = (Number(finalprice) + eval(ship)).toFixed(1);
         //document.getElementById("pricedph2").innerHTML =
         //    (Math.round(Number(finalprice) + eval(ship)) * 100 / 120).toFixed(2);
         //document.getElementById("final2").innerHTML = (Number(finalprice) + eval(ship)).toFixed(2);
         //document.getElementById("final3").value = (Number(finalprice) + eval(ship)).toFixed(2);
 
         document.getElementById("pricedph21").innerHTML =
-            ((Number(finalprice) + eval(ship)) * 100 / 120).toFixedNoRounding(2);
-        document.getElementById("final21").innerHTML = (Number(finalprice) + eval(ship)).toFixedNoRounding(2);
-        document.getElementById("final31").value = (Number(finalprice) + eval(ship)).toFixedNoRounding(2);
-        document.getElementById("base31").value = (Number(finalprice)).toFixedNoRounding(2);
+            ((Number(finalprice) + eval(ship)) * 100 / 120).toFixed(1);
+        document.getElementById("final21").innerHTML = (Number(finalprice) + eval(ship)).toFixed(1);
+        document.getElementById("final31").value = (Number(finalprice) + eval(ship)).toFixed(1);
+        document.getElementById("base31").value = (Number(finalprice)).toFixed(1);
 
     } else {
 
         var pay = document.querySelector('input[name="payment"]:checked').value;
         if (isNaN(eval(pay))) { pay = 0; } else { pay = eval(pay); }
         document.getElementById("pricedph").innerHTML =
-            ((Number(finalprice) + eval(ship) + pay) * 100 / 120).toFixedNoRounding(2);
-        document.getElementById("final").innerHTML = (Number(finalprice) + eval(ship) + pay).toFixedNoRounding(2);
+            ((Number(finalprice) + eval(ship) + pay) * 100 / 120).toFixed(1);
+        document.getElementById("final").innerHTML = (Number(finalprice) + eval(ship) + pay).toFixed(1);
         //document.getElementById("pricedph2").innerHTML =
         //    (Math.round(Number(finalprice) + eval(ship) + pay) * 100 / 120).toFixed(2);
         //document.getElementById("final2").innerHTML = (Number(finalprice) + eval(ship) + pay).toFixed(2);
         //document.getElementById("final3").value = (Number(finalprice) + eval(ship) + pay).toFixed(2);
 
         document.getElementById("pricedph21").innerHTML =
-            ((Number(finalprice) + eval(ship) + pay) * 100 / 120).toFixed(2);
-        document.getElementById("final21").innerHTML = (Number(finalprice) + eval(ship) + pay).toFixedNoRounding(2);
-        document.getElementById("final31").value = (Number(finalprice) + eval(ship) + pay).toFixedNoRounding(2);
-        document.getElementById("base31").value = (Number(finalprice)).toFixedNoRounding(2);
+            ((Number(finalprice) + eval(ship) + pay) * 100 / 120).toFixed(1);
+        document.getElementById("final21").innerHTML = (Number(finalprice) + eval(ship) + pay).toFixed(1);
+        document.getElementById("final31").value = (Number(finalprice) + eval(ship) + pay).toFixed(1);
+        document.getElementById("base31").value = (Number(finalprice)).toFixed(1);
     }
 }
 
@@ -44,8 +44,8 @@ function payMent() {
     if (document.querySelectorAll('input[name="transfer"]:checked').length === 0) {
 
         document.getElementById("pricedph").innerHTML =
-            ((Number(finalprice) + eval(pay)) * 100 / 120).toFixedNoRounding(2);
-        document.getElementById("final").innerHTML = (Number(finalprice) + eval(pay)).toFixedNoRounding(2);
+            ((Number(finalprice) + eval(pay)) * 100 / 120).toFixed(1);
+        document.getElementById("final").innerHTML = (Number(finalprice) + eval(pay)).toFixed(1);
         //document.getElementById("pricedph2").innerHTML =
         //    (Math.round(Number(finalprice) + eval(pay)) * 100 / 120).toFixed(2);
         //document.getElementById("final2").innerHTML = (Number(finalprice) + eval(pay)).toFixed(2);
@@ -53,26 +53,26 @@ function payMent() {
 
         document.getElementById("pricedph21").innerHTML =
             ((Number(finalprice) + eval(pay)) * 100 / 120).toFixed(2);
-        document.getElementById("final21").innerHTML = (Number(finalprice) + eval(pay)).toFixedNoRounding(2);
-        document.getElementById("final31").value = (Number(finalprice) + eval(pay)).toFixedNoRounding(2);
-        document.getElementById("base31").value = (Number(finalprice)).toFixedNoRounding(2);
+        document.getElementById("final21").innerHTML = (Number(finalprice) + eval(pay)).toFixed(1);
+        document.getElementById("final31").value = (Number(finalprice) + eval(pay)).toFixed(1);
+        document.getElementById("base31").value = (Number(finalprice)).toFixed(1);
 
     } else {
         var ship = document.querySelector('input[name="transfer"]:checked').value;
         if (isNaN(eval(ship))) { ship = 0; } else { ship = eval(ship); }
         document.getElementById("pricedph").innerHTML =
-            ((Number(finalprice) + eval(ship) + eval(pay)) * 100 / 120).toFixedNoRounding(2);
-        document.getElementById("final").innerHTML = (Number(finalprice) + eval(ship) + eval(pay)).toFixedNoRounding(2);
+            ((Number(finalprice) + eval(ship) + eval(pay)) * 100 / 120).toFixed(1);
+        document.getElementById("final").innerHTML = (Number(finalprice) + eval(ship) + eval(pay)).toFixed(1);
         //document.getElementById("pricedph2").innerHTML =
         //    (Math.round(Number(finalprice) + eval(ship) + eval(pay)) * 100 / 120).toFixed(2);
         //document.getElementById("final2").innerHTML = (Number(finalprice) + eval(ship) + eval(pay)).toFixed(2);
         //document.getElementById("final3").value = (Number(finalprice) + eval(ship) + eval(pay)).toFixed(2);
 
         document.getElementById("pricedph21").innerHTML =
-            ((Number(finalprice) + eval(ship) + eval(pay)) * 100 / 120).toFixed(2);
-        document.getElementById("final21").innerHTML = (Number(finalprice) + eval(ship) + eval(pay)).toFixedNoRounding(2);
-        document.getElementById("final31").value = (Number(finalprice) + eval(ship) + eval(pay)).toFixedNoRounding(2);
-        document.getElementById("base31").value = (Number(finalprice)).toFixedNoRounding(2);
+            ((Number(finalprice) + eval(ship) + eval(pay)) * 100 / 120).toFixed(1);
+        document.getElementById("final21").innerHTML = (Number(finalprice) + eval(ship) + eval(pay)).toFixed(1);
+        document.getElementById("final31").value = (Number(finalprice) + eval(ship) + eval(pay)).toFixed(1);
+        document.getElementById("base31").value = (Number(finalprice)).toFixed(1);
     }
 }
 

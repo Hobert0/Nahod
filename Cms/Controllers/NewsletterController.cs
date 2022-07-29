@@ -187,7 +187,6 @@ namespace Cms.Controllers
                 body = Regex.Replace(body, @"../Uploads", "https://nahod.sk/Uploads");
             }
 
-            var count = 0;
             foreach (var singleUserNewsTrue in allUsersNewsTrue)
             {
                 if (IsValidEmail(singleUserNewsTrue.email))
@@ -196,8 +195,9 @@ namespace Cms.Controllers
 
                     var unsubscribeLink = "https://nahod.sk/unsubscribe?userId=" + singleUserNewsTrue.userid;
                     var unsubscribeText = generateUnsubscribeText(unsubscribeLink);
-
-                    MailMessage mailMessage = new MailMessage();
+                    try
+                    {
+                        MailMessage mailMessage = new MailMessage();
 
                     var eshopname = "NAHOD.sk";
 
@@ -218,7 +218,7 @@ namespace Cms.Controllers
 
                     NetworkCred.UserName = "obchod@nahod.sk"; //reading from web.config  
 
-                    NetworkCred.Password = "Lqg9v0RYYMPM"; //reading from web.config  
+                    NetworkCred.Password = "synDOC51CUML"; //reading from web.config  
 
                     smtp.UseDefaultCredentials = true;
 
@@ -226,12 +226,15 @@ namespace Cms.Controllers
 
                     smtp.Port = 587; //reading from web.config 
 
-                    if (count > 750){
-                        System.Threading.Thread.Sleep(4000);
-                        smtp.Send(mailMessage);
+                    
+                    System.Threading.Thread.Sleep(4000);
+                    smtp.Send(mailMessage);
+                    }
+                    catch (SmtpException ex)
+                    {
+
                     }
 
-                    count++;
                 }
             }
         }
@@ -265,7 +268,7 @@ namespace Cms.Controllers
                         var unsubscribeLink = "https://nahod.sk/unsubscribe?userId=" + user.userid;
                         unsubscribeText = generateUnsubscribeText(unsubscribeLink);
                     }
-
+                    try{
                     MailMessage mailMessage = new MailMessage();
                     var emailaddress = RemoveDiacritics(singleUserNewsTrue);
                     var eshopname = "NAHOD.sk";
@@ -287,7 +290,7 @@ namespace Cms.Controllers
 
                     NetworkCred.UserName = "obchod@nahod.sk"; //reading from web.config  
 
-                    NetworkCred.Password = "Lqg9v0RYYMPM"; //reading from web.config  
+                    NetworkCred.Password = "synDOC51CUML"; //reading from web.config  
 
                     smtp.UseDefaultCredentials = true;
 
@@ -296,6 +299,8 @@ namespace Cms.Controllers
 
                     System.Threading.Thread.Sleep(4000);
                     smtp.Send(mailMessage);
+                    }
+                    catch (SmtpException ex) { }
                 }
             }
         }
