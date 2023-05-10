@@ -426,6 +426,7 @@ namespace Cms.Controllers
 
             var filemane = "Objednavky.xml";
 
+            var lastMonth = DateTime.Now.AddDays(-30);
             var order = db.orders.Where(s => s.status != 2).ToList();
 
             XDocument xdoc = new XDocument(
@@ -439,6 +440,11 @@ namespace Cms.Controllers
 
             foreach (var product in order)
             {
+                var dateOrd = DateTime.Parse(product.date);
+                if (dateOrd > lastMonth)
+                {
+
+                
                 //var prodDesc = Regex.Replace(product.description, "<.*?>", String.Empty);
 
                 XElement xRoot3 = new XElement("ObjPrij");
@@ -797,7 +803,7 @@ namespace Cms.Controllers
                 docFirma.Add(docUcet);
                 docFirma.Add(docMenaSymb);
                 docFirma.Add(docMenaKod);
-
+                }
             }
 
             using (Stream writer = new FileStream(Server.MapPath("~/export/" + filemane), FileMode.Create))
@@ -864,7 +870,7 @@ namespace Cms.Controllers
 
                 if (cislo != "")
                 {
-                    var product = db.products.Where(i => i.number == cislo).FirstOrDefault();
+                    var product = db.products.Where(i => i.number == cislo && i.deleted == false).FirstOrDefault();
                     if (product != null)
                     {
                         var sendWatchdog = false;
@@ -913,7 +919,7 @@ namespace Cms.Controllers
                     else
                     {
                         //poku3a sa najst hladany produkt medzi variantami
-                        var productinvariants = db.variants.Where(i => i.number == cislo).FirstOrDefault();
+                        var productinvariants = db.variants.Where(i => i.number == cislo && i.deleted == false).FirstOrDefault();
                         if (productinvariants != null)
                         {
                             //var variantprice = cenasdph * decimal.Parse("1,2");

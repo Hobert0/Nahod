@@ -171,7 +171,7 @@ namespace Cms.Controllers
         [Route("send-newsletter-all/{id}")]
         public void SendAllNewsletter(int id)
         {
-            var allUsersNewsTrue = db.usersmeta.Where(i => i.news == true).ToList();
+            var allUsersNewsTrue = db.usersmeta.Where(i => i.news == true && i.id > 1263).ToList();
             var template = db.newsletter.Where(t => t.id == id).ToList();
             var settings = db.settings.SingleOrDefault().email;
 
@@ -229,10 +229,18 @@ namespace Cms.Controllers
                     
                     System.Threading.Thread.Sleep(4000);
                     smtp.Send(mailMessage);
+
+                    using (StreamWriter writetext = new StreamWriter(Server.MapPath("~/newsletter.txt"),true))
+                    {
+                        writetext.WriteLine(DateTime.Now + " " + emailaddress);
+                    }
                     }
                     catch (SmtpException ex)
                     {
-
+                        using (StreamWriter writetext = new StreamWriter(Server.MapPath("~/newsletter.txt"), true))
+                        {
+                            writetext.WriteLine(ex.ToString() + " " + ex.StatusCode);
+                        }
                     }
 
                 }
@@ -268,41 +276,57 @@ namespace Cms.Controllers
                         var unsubscribeLink = "https://nahod.sk/unsubscribe?userId=" + user.userid;
                         unsubscribeText = generateUnsubscribeText(unsubscribeLink);
                     }
-                    try{
-                    MailMessage mailMessage = new MailMessage();
-                    var emailaddress = RemoveDiacritics(singleUserNewsTrue);
-                    var eshopname = "NAHOD.sk";
 
-                    mailMessage.From = new MailAddress("obchod@nahod.sk", eshopname);
-                    mailMessage.Subject = subject;
-                    mailMessage.Body = body + unsubscribeText;
-                    mailMessage.IsBodyHtml = true;
+                    try
+                    {
+                        MailMessage mailMessage = new MailMessage();
+                        var emailaddress = RemoveDiacritics(singleUserNewsTrue);
+                        var eshopname = "NAHOD.sk";
 
-                    mailMessage.To.Add(new MailAddress(emailaddress));
+                        mailMessage.From = new MailAddress("obchod@nahod.sk", eshopname);
+                        mailMessage.Subject = subject;
+                        mailMessage.Body = body + unsubscribeText;
+                        mailMessage.IsBodyHtml = true;
 
-                    SmtpClient smtp = new SmtpClient();
+                        mailMessage.To.Add(new MailAddress(emailaddress));
 
-                    smtp.Host = "bulk.smtp.cz";
+                        SmtpClient smtp = new SmtpClient();
 
-                    smtp.EnableSsl = true;
+                        smtp.Host = "bulk.smtp.cz";
 
-                    System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
+                        smtp.EnableSsl = true;
 
-                    NetworkCred.UserName = "obchod@nahod.sk"; //reading from web.config  
+                        System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
 
-                    NetworkCred.Password = "synDOC51CUML"; //reading from web.config  
+                        NetworkCred.UserName = "obchod@nahod.sk"; //reading from web.config  
 
-                    smtp.UseDefaultCredentials = true;
+                        NetworkCred.Password = "synDOC51CUML"; //reading from web.config  
 
-                    smtp.Credentials = NetworkCred;
-                    smtp.Port = 587; //reading from web.config  
+                        smtp.UseDefaultCredentials = true;
 
-                    System.Threading.Thread.Sleep(4000);
-                    smtp.Send(mailMessage);
+                        smtp.Credentials = NetworkCred;
+                        smtp.Port = 587; //reading from web.config  
+
+                        System.Threading.Thread.Sleep(4000);
+                        smtp.Send(mailMessage);
+
+                        using (StreamWriter writetext = new StreamWriter(Server.MapPath("~/newsletter.txt"), true))
+                        {
+                            writetext.WriteLine(DateTime.Now  + " " + emailaddress);
+                        }
                     }
-                    catch (SmtpException ex) { }
+                    catch (SmtpException ex)
+                    {
+                        using (StreamWriter writetext = new StreamWriter(Server.MapPath("~/newsletter.txt"), true))
+                        {
+                            writetext.WriteLine(ex.ToString() + " " + ex.StatusCode);
+                        }
+                    }
+
                 }
-            }
+                    
+                }
+            
         }
 
         [HttpPost]

@@ -823,7 +823,7 @@ namespace Cms.Controllers
             xdoc.Add(xRoot);
 
             /*ZMENIT*/
-            foreach (var product in model.ProductModel.Where(i => i.deleted != true))
+            foreach (var product in model.ProductModel.Where(i => i.deleted != true && i.active))
             {
                 if (product.price != null)
                 {
@@ -1000,7 +1000,7 @@ namespace Cms.Controllers
                     xRoot2.Add(doc17);
                     xRoot2.Add(doc18);
                     doc14.Add(doc15);
-                    doc14.Add(doc16);
+                    //doc14.Add(doc16);
 
                 }
             }
