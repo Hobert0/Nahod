@@ -85,7 +85,7 @@ $("#addproductbtn").click(function () {
     cart.id = uniqueid;
     cart.product = id;
     cart.quantity = quantity;
-    cart.price = price;
+    cart.price = price.replace(/\s/g, '');
     cart.variant = variant;
     cart.variant2 = variant2;
     cart.userLogged = $("#userId").length ? true : false;

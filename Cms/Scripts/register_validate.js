@@ -22,7 +22,7 @@
             } else {
                 document.getElementById("emailexist").style = "display: none;";
             }
-            return true;
+            $("#regheader").submit();
         } else {
             document.getElementById("conditioncheck2").style.border = "1px solid #ff4545";
             toastr["error"]("Je potrebné súhlasiť s obchodnými podmienkami a podmienkami ochrany osobných údajov.");

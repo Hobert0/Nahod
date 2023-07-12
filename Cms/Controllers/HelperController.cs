@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using Org.BouncyCastle.Utilities.Collections;
 
 namespace Cms.Controllers
 {
@@ -53,6 +54,39 @@ namespace Cms.Controllers
             ViewData["Homepage"] = "false";
 
             return View(model);
+        }
+
+        public void DeleteSpam()
+        {
+            var usersmeta = db.usersmeta.Where(o => o.name.Contains("????")).ToList();
+            foreach (var user in usersmeta)
+            {
+                var userfind = db.users.Where(i => i.id == user.userid).FirstOrDefault();
+                if (userfind != null)
+                {
+                    db.users.Remove(userfind);
+                }
+                
+                db.usersmeta.Remove(user);
+                db.SaveChanges();
+            }
+        }
+        public void DeleteSpamUsers()
+        {
+            var userfind = db.users.ToList();
+
+            foreach (var user in userfind)
+            {
+                var usersmeta = db.usersmeta.Where(i => i.userid == user.id).ToList();
+
+                if (usersmeta.Count == 0)
+                {
+                    db.users.Remove(user);
+                }
+
+               // db.usersmeta.Remove(user);
+                db.SaveChanges();
+            }
         }
     }
 

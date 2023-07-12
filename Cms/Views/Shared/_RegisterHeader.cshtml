@@ -5,7 +5,7 @@
 }
 <!-- The Modal -->
 <div id="myModalReg" class="modalreg">
-    @using (Html.BeginForm("UserRegister", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return validateForm()" }))
+    @using (Html.BeginForm("UserRegister", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id= "regheader" }))
     {
         <!-- Modal content -->
         <div class="modal-reg">
@@ -252,7 +252,7 @@
 
                     <div class="form-group pt-3">
                         <div class="right">
-                            <input type="submit" value="Registrovať sa" class="btn btn-color col-md-5 col-12" />
+                            <button data-sitekey="6LfAQx0bAAAAAGAGalVF2LJcUyuLJ7O8kNqH8W2u" class="g-recaptcha rect-button btn btn-color col-md-5 col-12" data-callback="validateForm" data-action="submit">Registrovať sa</button>
                         </div>
                     </div>
                 </div>
@@ -264,5 +264,5 @@
 
     }
 </div>
-<script src="~/Scripts/register_validate.js"></script>
+<script src="~/Scripts/register_validate.js?v=2"></script>
 

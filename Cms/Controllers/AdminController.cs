@@ -249,8 +249,18 @@ namespace Cms.Controllers
         [HttpPost]
         public ActionResult UserRegister(MultipleIndexModel model)
         {
+            //Validate Google recaptcha
+            var response = Request["g-recaptcha-response"];
+            string secretKey = "6LfAQx0bAAAAAAFaQvmwM-Q13RNOW0y5HOoanhcl";
+            var client = new WebClient();
+            var result = client.DownloadString(string.Format(
+                "https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secretKey, response));
+            var obje = JObject.Parse(result);
+            var status = (bool)obje.SelectToken("success");
 
-            Entities db = new Entities();
+            if (status)
+            {
+                Entities db = new Entities();
             users o = new users();
             usersmeta um = new usersmeta();
 
@@ -267,6 +277,11 @@ namespace Cms.Controllers
 
             //skontrolujeme, ci uz pouzivatel nema vytvorene newsletter konto
             var existsNewsUser = db.users.Where(a => a.username == model.AdminLoginModel.Username && a.password == "123456").FirstOrDefault();
+
+            if (model.UsersmetaModel.Name.Contains("????") || model.AdminLoginModel.Username.Contains("mail.ru") || model.AdminLoginModel.Username.Contains("yandex.ru") || model.AdminLoginModel.Username.Contains("bk.ru") || model.AdminLoginModel.Username.Contains("inbox.ru"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             // ak uz existuje newsletter user, tak updatneme stlpce v db
             if (existsNewsUser != null)
@@ -349,7 +364,12 @@ namespace Cms.Controllers
 
             string returnUrl = model.UsersmetaModel.ReturnUrl;
             return Redirect(returnUrl);
-            //return RedirectToAction("Index", "Home", new { register = true });
+                //return RedirectToAction("Index", "Home", new { register = true });
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpPost]
