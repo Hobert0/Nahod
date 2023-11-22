@@ -171,7 +171,7 @@ namespace Cms.Controllers
         [Route("send-newsletter-all/{id}")]
         public void SendAllNewsletter(int id)
         {
-            var allUsersNewsTrue = db.usersmeta.Where(i => i.news == true && i.id > 1263).ToList();
+            var allUsersNewsTrue = db.usersmeta.Where(i => i.news == true && i.id > 1814).ToList();
             var template = db.newsletter.Where(t => t.id == id).ToList();
             var settings = db.settings.SingleOrDefault().email;
 

@@ -22,165 +22,184 @@
     ordNumber = ord.ordernumber;
     storno = ord.status;
     <h2>Detail objednávky č. @ord.ordernumber</h2>
-    <hr />
-    var nameshipp = ord.name_shipp;
-    var surnameshipp = ord.surname_shipp;
-    var addrship = ord.address_shipp;
-    var zipship = ord.zip_shipp;
-    var cityship = ord.city_shipp;
-    var countryship = ord.country_shipp;
-    var companyship = ord.companyname_shipp;
-    var phoneship = ord.phone_shipp;
-    if (nameshipp == "")
+    <strong>Dátum objednávky:</strong> @ord.date
+    <br />
+    <br />
+    if (ord.status == 1)
     {
-        nameshipp = ord.name;
-        surnameshipp = ord.surname;
-        addrship = ord.address;
-        zipship = ord.zip;
-        cityship = ord.city;
-        countryship = ord.country;
-        companyship = ord.companyname;
-        phoneship = ord.phone;
+        <strong class="alert alert-success">Objednávka vybavená</strong>
     }
-    var pay = "";
-    if (ord.payment == "pay1")
+    else
     {
-        pay = "V hotovosti pri osobnom odbere";
+        @Html.ActionLink(HttpUtility.HtmlDecode("&#10003; Vybavená"), "FinishedOrder", "Orders", new { orderNumber = ord.ordernumber, confirm = true }, new { onclick = "return confirm('Naozaj chcete potvdiť objednávku ako odoslanú?')", @class = "btn btn-success finished", style = "padding: 10px 30px;font-size: 15px;", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne potvrdíte objednávku." })
     }
-    else if (ord.payment == "pay2")
+    if (ord.status == 2)
     {
-        pay = "Kartou";
+        <strong class="alert alert-danger">Objednávka stornovaná</strong>
     }
-    else if (ord.payment == "pay3")
+    else
     {
-        pay = "Bankovým prevodom";
+        @Html.ActionLink(HttpUtility.HtmlDecode("&#9747; Stornovať"), "StornoOrder", "Orders", new { id = ord.ordernumber, confirm = true }, new { onclick = "return confirm('Naozaj chcete stornovať objednávku??')", @class = "btn btn-danger", style = "padding: 9px 30px;font-size: 15px;margin-left: 30px;", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne stornujete objednávku." })
     }
-    else if (ord.payment == "pay4")
-    {
-        pay = "Dobierkou";
-    }
+        <hr />
+        var nameshipp = ord.name_shipp;
+        var surnameshipp = ord.surname_shipp;
+        var addrship = ord.address_shipp;
+        var zipship = ord.zip_shipp;
+        var cityship = ord.city_shipp;
+        var countryship = ord.country_shipp;
+        var companyship = ord.companyname_shipp;
+        var phoneship = ord.phone_shipp;
+        if (nameshipp == "")
+        {
+            nameshipp = ord.name;
+            surnameshipp = ord.surname;
+            addrship = ord.address;
+            zipship = ord.zip;
+            cityship = ord.city;
+            countryship = ord.country;
+            companyship = ord.companyname;
+            phoneship = ord.phone;
+        }
+        var pay = "";
+        if (ord.payment == "pay1")
+        {
+            pay = "V hotovosti pri osobnom odbere";
+        }
+        else if (ord.payment == "pay2")
+        {
+            pay = "Kartou";
+        }
+        else if (ord.payment == "pay3")
+        {
+            pay = "Bankovým prevodom";
+        }
+        else if (ord.payment == "pay4")
+        {
+            pay = "Dobierkou";
+        }
 
-    var trans = "";
-    if (ord.shipping == "transfer1")
-    {
-        trans = "Kuriérska spoločnosť";
-    }
-    else if (ord.shipping == "transfer2")
-    {
-        trans = "Slovenská pošta";
-    }
-    else if (ord.shipping == "transfer3")
-    {
-        trans = "Osobný odber";
-    }
+        var trans = "";
+        if (ord.shipping == "transfer1")
+        {
+            trans = "Kuriérska spoločnosť";
+        }
+        else if (ord.shipping == "transfer2")
+        {
+            trans = "Slovenská pošta";
+        }
+        else if (ord.shipping == "transfer3")
+        {
+            trans = "Osobný odber";
+        }
 
-    var paySql = string.Format("select {0} from `e-settings`", ord.payment);
-    var payPrice = db.Database.SqlQuery<string>(paySql).FirstOrDefault();
-    var shipSql = string.Format("select {0} from `e-settings`", ord.shipping);
-    var shipPrice = db.Database.SqlQuery<string>(shipSql).FirstOrDefault();
-    var freeshipping = db.e_settings.Select(i => i.transfer5).FirstOrDefault();
+        var paySql = string.Format("select {0} from `e-settings`", ord.payment);
+        var payPrice = db.Database.SqlQuery<string>(paySql).FirstOrDefault();
+        var shipSql = string.Format("select {0} from `e-settings`", ord.shipping);
+        var shipPrice = db.Database.SqlQuery<string>(shipSql).FirstOrDefault();
+        var freeshipping = db.e_settings.Select(i => i.transfer5).FirstOrDefault();
 
-    
-    if ((ord.baseprice == null || ord.baseprice == 0 ? ord.finalprice : ord.baseprice) >
-        decimal.Parse(freeshipping, CultureInfo.InvariantCulture) && ((ord.country_shipp == "" || ord.country_shipp == null)? ord.country : ord.country_shipp) != "Česká republika")
-    {
-        shipPrice = "0";
-    }
-    <div class="row pt-4">
-        <div class="col">
-            <h3>Fakturačné údaje</h3>
-            <strong>Meno a priezvisko:</strong> @ord.name @ord.surname<br />
-            <strong>Adresa:</strong> @ord.address, @ord.zip @ord.city @ord.country<br />
-            <strong>E-mail:</strong> @ord.email<br />
-            <strong>Telefón:</strong> @ord.phone<br /><br />
-            <strong>Názov spoločnosti:</strong> @ord.companyname<br />
-            <strong>IČO:</strong> @ord.ico<br />
-            <strong>DIČ:</strong> @ord.dic<br />
-            <strong>IČ DPH:</strong> @ord.icdph<br />
 
-        </div>
-        <div class="col">
-            <h3>Dodacie údaje</h3>
-            <strong>Meno a priezvisko:</strong> @nameshipp @surnameshipp<br />
-            <strong>Adresa:</strong> @addrship, @zipship @cityship @countryship<br />
-            <strong>Telefón:</strong> @phoneship<br />
-            <strong>Názov spoločnosti:</strong> @companyship<br /><br />
-        </div>
-        <div class="col">
+        if ((ord.baseprice == null || ord.baseprice == 0 ? ord.finalprice : ord.baseprice) >
+            decimal.Parse(freeshipping, CultureInfo.InvariantCulture) && ((ord.country_shipp == "" || ord.country_shipp == null) ? ord.country : ord.country_shipp) != "Česká republika")
+        {
+            shipPrice = "0";
+        }
+        <div class="row pt-4">
+            <div class="col">
+                <h3>Fakturačné údaje</h3>
+                <strong>Meno a priezvisko:</strong> @ord.name @ord.surname<br />
+                <strong>Adresa:</strong> @ord.address, @ord.zip @ord.city @ord.country<br />
+                <strong>E-mail:</strong> @ord.email<br />
+                <strong>Telefón:</strong> @ord.phone<br /><br />
+                <strong>Názov spoločnosti:</strong> @ord.companyname<br />
+                <strong>IČO:</strong> @ord.ico<br />
+                <strong>DIČ:</strong> @ord.dic<br />
+                <strong>IČ DPH:</strong> @ord.icdph<br />
 
-            <div class="jumbotron">
-                <h3>Finálna cena <i style="font-weight: normal; font-size: 16px;">(zahrnutá doprava aj platba)</i></h3>
-                @if (ord.usedcoupon != "")
-                {
-                    <span>Použitý zľavový kupón <strong>@ord.usedcoupon</strong></span><br />
-                }
-                <strong style="font-size: 2em;">@{decimal final = ord.finalprice;} @final.ToString("N")€</strong>
-                @{
-                    var cenabezdph = Convert.ToDecimal(final * 100 / 120).ToString("N");
-                }
-                <br />
-                <i>Cena bez DPH @cenabezdph€</i>
+            </div>
+            <div class="col">
+                <h3>Dodacie údaje</h3>
+                <strong>Meno a priezvisko:</strong> @nameshipp @surnameshipp<br />
+                <strong>Adresa:</strong> @addrship, @zipship @cityship @countryship<br />
+                <strong>Telefón:</strong> @phoneship<br />
+                <strong>Názov spoločnosti:</strong> @companyship<br /><br />
+            </div>
+            <div class="col">
+
+                <div class="jumbotron">
+                    <h3>Finálna cena <i style="font-weight: normal; font-size: 16px;">(zahrnutá doprava aj platba)</i></h3>
+                    @if (ord.usedcoupon != "")
+                    {
+                        <span>Použitý zľavový kupón <strong>@ord.usedcoupon</strong></span><br />
+                    }
+                    <strong style="font-size: 2em;">@{decimal final = ord.finalprice;} @final.ToString("N")€</strong>
+                    @{
+                        var cenabezdph = Convert.ToDecimal(final * 100 / 120).ToString("N");
+                    }
+                    <br />
+                    <i>Cena bez DPH @cenabezdph€</i>
+                </div>
             </div>
         </div>
-    </div>
-    <hr />
-    <div class="row py-4">
-        <div class="col">
-            <h3>Doprava a platba</h3>
-            <strong>Spôsob dodania:</strong> @trans &nbsp;&nbsp;&nbsp;<strong>Cena: @shipPrice&nbsp;€</strong><br />
-            <strong>Platba:</strong> @pay  &nbsp;&nbsp;&nbsp;<strong>Cena: @payPrice&nbsp;€</strong><br /><br />
-            <h3>Poznámka k objednávke - zákazník</h3>
-            <p>@(ord.comment == "" || ord.comment == null? "Žiadna": ord.comment)</p>
+        <hr />
+        <div class="row py-4">
+            <div class="col">
+                <h3>Doprava a platba</h3>
+                <strong>Spôsob dodania:</strong> @trans &nbsp;&nbsp;&nbsp;<strong>Cena: @shipPrice&nbsp;€</strong><br />
+                <strong>Platba:</strong> @pay  &nbsp;&nbsp;&nbsp;<strong>Cena: @payPrice&nbsp;€</strong><br /><br />
+                <h3>Poznámka k objednávke - zákazník</h3>
+                <p>@(ord.comment == "" || ord.comment == null ? "Žiadna" : ord.comment)</p>
 
-            <h3>Poznámka k objednávke - admin</h3>
+                <h3>Poznámka k objednávke - admin</h3>
 
-            @using (Html.BeginForm("OrderNote", "Orders", FormMethod.Post, new { enctype = "multipart/form-data", id = "OrderNote" }))
-            {
-                <div style="width:25%;">
-                    <input type="hidden" name="ordId" value="@ord.id">
-                    <textarea name="noteText" style="width:100%;">@ord.note</textarea><br>
-                    <input type="submit" value="Uložiť" id="btnSubmit" class="btn btn-success" style="float:right;" />
-                </div>
-            }
+                @using (Html.BeginForm("OrderNote", "Orders", FormMethod.Post, new { enctype = "multipart/form-data", id = "OrderNote" }))
+                {
+                    <div style="width:25%;">
+                        <input type="hidden" name="ordId" value="@ord.id">
+                        <textarea name="noteText" style="width:100%;">@ord.note</textarea><br>
+                        <input type="submit" value="Uložiť" id="btnSubmit" class="btn btn-success" style="float:right;" />
+                    </div>
+                }
 
+            </div>
         </div>
-    </div>
 
-}
-<table class="table" style="font-size: 14px;">
-    <thead class="thead-dark">
-        <tr>
-            <th style="width: 120px;">Katalógové č.</th>
-            <th>Náhľad</th>
-            <th style="width: 350px;">Názov</th>
-            <th>Počet kusov</th>
-            <th>Variant</th>
-            <th>Cena</th>
-        </tr>
-    </thead>
-
-    @foreach (var product in Model.OrderMetaModel)
-    {
-        foreach (var num in Model.ProductModel.Where(i => i.id == Int32.Parse(product.productid)))
-        {
-            var prodnumber = num.number;
-            if (num.number == null || num.number == "")
-            {
-                prodnumber = db.variants.Where(i => i.prod_id == num.id && i.value == product.variant).Select(o => o.number).FirstOrDefault();
-            }
-            <tr>
-                <td>@prodnumber</td>
-                <td><img src="~/Uploads/@Html.DisplayFor(modelItem => product.productimage)" style="width: 50px;" /></td>
-                <td><a href="@Url.Action("ProductDetail", "Home", new { id = product.productid })" target="_blank"><strong>@Html.DisplayFor(modelItem => product.product)</strong></a></td>
-                <td>@Html.DisplayFor(modelItem => product.pieces) ks</td>
-                <td>@Html.DisplayFor(modelItem => product.variant) @Html.DisplayFor(modelItem => product.variant2)</td>
-                <td style="background-color: lightyellow; text-align: center;"><strong>@Html.DisplayFor(modelItem => product.price)&nbsp;€</strong></td>
-            </tr>
-        }
     }
-</table>
-@if (storno != 2)
-{
-    <u>@Html.ActionLink("Stornovať objednávku", "StornoOrder", "Orders", new { id = ordNumber, confirm = true }, new { onclick = "return confirm('Naozaj chcete stornovať objednávku?')", @class = "small", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne stornujete objednávku." })</u>
-}
+    <table class="table" style="font-size: 14px;">
+        <thead class="thead-dark">
+            <tr>
+                <th style="width: 120px;">Katalógové č.</th>
+                <th>Náhľad</th>
+                <th style="width: 350px;">Názov</th>
+                <th>Počet kusov</th>
+                <th>Variant</th>
+                <th>Cena</th>
+            </tr>
+        </thead>
+
+        @foreach (var product in Model.OrderMetaModel)
+        {
+            foreach (var num in Model.ProductModel.Where(i => i.id == Int32.Parse(product.productid)))
+            {
+                var prodnumber = num.number;
+                if (num.number == null || num.number == "")
+                {
+                    prodnumber = db.variants.Where(i => i.prod_id == num.id && i.value == product.variant).Select(o => o.number).FirstOrDefault();
+                }
+                <tr>
+                    <td>@prodnumber</td>
+                    <td><img src="~/Uploads/@Html.DisplayFor(modelItem => product.productimage)" style="width: 50px;" /></td>
+                    <td><a href="@Url.Action("ProductDetail", "Home", new { id = product.productid })" target="_blank"><strong>@Html.DisplayFor(modelItem => product.product)</strong></a></td>
+                    <td>@Html.DisplayFor(modelItem => product.pieces) ks</td>
+                    <td>@Html.DisplayFor(modelItem => product.variant) @Html.DisplayFor(modelItem => product.variant2)</td>
+                    <td style="background-color: lightyellow; text-align: center;"><strong>@Html.DisplayFor(modelItem => product.price)&nbsp;€</strong></td>
+                </tr>
+            }
+        }
+    </table>
+    @if (storno != 2)
+    {
+        <u>@Html.ActionLink("Stornovať objednávku", "StornoOrder", "Orders", new { id = ordNumber, confirm = true }, new { onclick = "return confirm('Naozaj chcete stornovať objednávku?')", @class = "small", data_toggle = "tooltip", data_placement = "top", title = "Kliknutím nenávratne stornujete objednávku." })</u>
+    }
 

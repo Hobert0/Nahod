@@ -110,6 +110,7 @@ namespace Cms.Controllers
             if (Request.Cookies["userid"] != null)
             {
                 usID = Int32.Parse(Request.Cookies["userid"].Value);
+                o.user_rating = db.usersmeta.Where(j => j.userid == usID).Select(j => j.rating).FirstOrDefault();
             }
 
             o.userid = usID;
